@@ -50,4 +50,5 @@ MD_EXTENSIONS =  (['codehilite','extra', 'fenced_code'])
 
 FILES_TO_COPY = (
     ("404.html", "404.html"),
+    ("googledbee14f7be5461f0.html", "googledbee14f7be5461f0.html"),
 )
