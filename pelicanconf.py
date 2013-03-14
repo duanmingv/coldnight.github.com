@@ -6,7 +6,7 @@ AUTHOR = u'Wood.D'
 SITENAME = u"Wood.D's Record"
 SITEURL = u'http://www.linuxzen.com'
 SITE_SOURCE = u"https://github.com/coldnight/coldnight.github.com"
-SITE_TAGLINE = u"分享技术,分享点滴"
+SITE_TAGLINE = u"木秀于林"
 FEED_DOMAIN = u"http://www.linuxzen.com"
 
 DISQUS_SITENAME = u"linuxzen"
@@ -20,7 +20,9 @@ THEME = "neat"
 DEFAULT_CATEGORY = u"Python"
 
 
-AUTHOR_SHORTBIO = u"喜欢Linux和Python,善用Vim编写程序,现在维护一个Gtalk群,有兴趣的可以加`clubot@vim-cn.com`"
+AUTHOR_SHORTBIO = u"喜欢Linux和Python,用Vim编写程序,曾长时间使用cold这个id,"\
+        u"现使用Wood.D作为以后长期id,现在维护一个gtalk群,有兴趣的可以加入,"\
+        u"使用xmpp帐号添加:clubot@vim-cn.com`"
 
 AUTHOR_EMAIL = u"wh_linux@126.com"
 
