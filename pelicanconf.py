@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*- #
 from hashlib import md5
 
-AUTHOR = u'Wood'
-SITENAME = u"Wood's Linux Zen"
+AUTHOR = u'Wood.D'
+SITENAME = u"Wood.D's Record"
 SITEURL = u'http://www.linuxzen.com'
 SITE_SOURCE = u"https://github.com/coldnight/coldnight.github.com"
 SITE_TAGLINE = u"分享技术,分享点滴"
