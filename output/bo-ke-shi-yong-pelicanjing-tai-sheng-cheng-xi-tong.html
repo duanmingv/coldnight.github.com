@@ -3,7 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-        <title>vLog 一个使用Python编写的轻量级博客系统</title>
+        <title>博客使用Pelican静态生成系统</title>
         <meta charset="utf-8" />
         <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
@@ -29,11 +29,11 @@
     <div class="container content">
         <article>
     <header>
-        <h2><a href="/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="bookmark">
-    vLog 一个使用Python编写的轻量级博客系统
+        <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
+    博客使用Pelican静态生成系统
 </a></h2>
-<time datetime="2013-02-05 16:43:00" pubdate>Posted on
-    二 05 二月 2013
+<time datetime="2013-03-14 15:12:00" pubdate>Posted on
+    四 14 三月 2013
 </time>
 <address class="vcard author">
     by <a class="url fn" href="./author/woodd.html">
@@ -45,68 +45,48 @@
     </header>
 
     <div class="body">
-        <h2>介绍</h2>
-<h3>何为vLog</h3>
-<p>大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用<code>Python</code>的<code>tornado</code>框架和<code>Jinja2</code>模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用<code>Markdown</code>的格式来抒写博文.</p>
-<h3>为什么vLog</h3>
-<p>vLog后台十分简单(可以说是简陋),功能也简单,就是一款简单的博客系统,提供了Python终端脚本,可以在终端来抒写博文, vLog使用一套非常简单的缓存系统,缓存使用memcached使得页面加载速度非常快.</p>
-<h3>为什么不vLog</h3>
-<p>相对与wordpress vlog非常简陋,仅仅提供简单的博客功能,而且使用Python编写主机方面支援不太多,虽然有<code>SAE</code>和<code>GAE</code>的支援,但是我没弄过,所以没有支援<code>SAE</code>和<code>GAE</code>(如果你有兴趣,可以添加相关支持)</p>
-<h2>安装</h2>
-<h3>平台</h3>
-<ul>
-<li>Linux</li>
-<li>python2.7</li>
-<li>MySQL</li>
-<li>Memcached 1.4.5</li>
-</ul>
-<h3>依赖库</h3>
-<ul>
-<li>tornado</li>
-<li>jinja2</li>
-<li>MySQLdb</li>
-<li>pylibmc</li>
-</ul>
-<h3>开始安装</h3>
-<p>首先确认config.py的DEBUG是打开的,然后执行run.py,打开浏览器输入当前地址,会跳转到安装页面.按照提示安装,安装完毕后可以关闭DEBUG</p>
-<h2>从Wordpress中导入</h2>
-<h3>从Wordpress导出</h3>
-<p>在wordpress管理后台选择工具-&gt;导出,下载导出文件可以导出一份xml</p>
-<h3>移动媒体文件</h3>
-<p>将/path/to/your/wordpress/wp-content/uploads/下的所有文件移动到/path/to/your/vlog/web/static/upload 下即可</p>
-<p>务必要先执行这一步然后再在后台里导入xml</p>
-<h3>导入到vLog</h3>
-<p>进入vLog后台,选择导入,浏览选中导出的xml, 然后选择开始,等待提示成功后即导入成功</p>
-<h3>手动更改没有生效的链接</h3>
-<p>虽然我已经竭尽所能的让你手头的工作更少,但是还不够,还是存在许多需要手动更改的地方,
-比如每篇文章的没有替换掉的图片链接</p>
-<h3>不足</h3>
-<p>网站迁移后我已经尽力的来保持原来的链接有效,但是我仅仅知道我原来的wordpress的链接,所以仅仅兼容了我原来使用wordpress的旧链接,如果没能兼容您的wordpress的链接在此表示歉意,您可以自己添加提交给我,或者将您的链接提交给我由我来给您添加</p>
-<h2>结合nginx</h2>
-<p>参阅<a href="http://www.tornadoweb.cn/documentation#_14">tornado文档</a></p>
-<h2>源代码</h2>
-<p>代码放在github上: <a href="https://github.com/coldnight/vlog">vLog</a></p>
+        <h1>介绍</h1>
+<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
+<h1>安装</h1>
+<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
+<h2>模板</h2>
+<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
+<h1>使用</h1>
+<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
+<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
+make clean  <span class="c"># 删除output</span>
+</pre></div>
+
+
+<h2>技巧</h2>
+<p>我是将生成的html通过nginx来打开(Nginx配置就很简单了, 这里就不做介绍), 那么如何确保更新呢?我将整个博客上传到github, 这样随时随地可以<code>clone</code>下来进行更改然后<code>push</code>上去,在服务器我通过crontab来定时更新html</p>
+<div class="codehilite"><pre>crontab -e
+</pre></div>
+
+
+<p>添加如下内容</p>
+<div class="codehilite"><pre>*/5 * * * * <span class="nb">cd</span> /path/to/your/blogsource/ <span class="o">&amp;&amp;</span> git pull &amp;&gt; /dev/null
+</pre></div>
+
+
+<p>这样就可以没5分钟更新一次</p>
     </div>
 
         <footer>
         <ul class="tags">            <li>
-                <a href="./tag/vlog.html">vLog</a>
-            </li>            <li>
-                <a href="./tag/tornado.html">tornado</a>
-            </li>            <li>
-                <a href="./tag/blog.html">blog</a>
-            </li>            <li>
                 <a href="./tag/bo-ke.html">博客</a>
             </li>            <li>
-                <a href="./tag/qing-liang.html">轻量</a>
+                <a href="./tag/pelican.html">Pelican</a>
             </li>            <li>
-                <a href="./tag/markdown.html">markdown</a>
+                <a href="./tag/jing-tai.html">静态</a>
+            </li>            <li>
+                <a href="./tag/qian-yi.html">迁移</a>
             </li>        </ul>
     </footer>
     
         <div id="disqus_thread"></div>
     <script>
-        var disqus_identifier = "vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html";
+        var disqus_identifier = "bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html";
         (function () {
             var dsq = document.createElement('script');
             dsq.type = 'text/javascript';

@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood.D's Record</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-02-05T16:43:00+08:00</updated><entry><title>vLog 一个使用Python编写的轻量级博客系统</title><link href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="alternate"></link><updated>2013-02-05T16:43:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-02-05:vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood.D's Record</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-03-14T15:12:00+08:00</updated><entry><title>博客使用Pelican静态生成系统</title><link href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="alternate"></link><updated>2013-03-14T15:12:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-03-14:bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html</id><summary type="html">&lt;h1&gt;介绍&lt;/h1&gt;
+&lt;p&gt;最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的&lt;code&gt;Jekyll&lt;/code&gt;使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统&lt;code&gt;Pelican&lt;/code&gt;, 试用后除了模板较少外感觉还是不错的,使用&lt;code&gt;Markdown&lt;/code&gt;和&lt;code&gt;Rst&lt;/code&gt;编写.&lt;/p&gt;
+&lt;h1&gt;安装&lt;/h1&gt;
+&lt;p&gt;可以试用&lt;code&gt;pip&lt;/code&gt;来安装&lt;code&gt;Pelican&lt;/code&gt;, 通过&lt;code&gt;pelican-quickstart&lt;/code&gt;脚本可以快速构建一个站点,详细不在描述.可以看看它的文档&lt;/p&gt;
+&lt;h2&gt;模板&lt;/h2&gt;
+&lt;p&gt;模板采用&lt;code&gt;neat&lt;/code&gt;,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接&lt;code&gt;bug&lt;/code&gt;,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.&lt;/p&gt;
+&lt;h1&gt;使用&lt;/h1&gt;
+&lt;p&gt;在执行&lt;code&gt;pelican-quickstart&lt;/code&gt;是开启Makefile, 可以通过make很简单的生成html.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;make html   &lt;span class="c"&gt;# 生成html&lt;/span&gt;
+make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;技巧&lt;/h2&gt;
+&lt;p&gt;我是将生成的html通过nginx来打开(Nginx配置就很简单了, 这里就不做介绍), 那么如何确保更新呢?我将整个博客上传到github, 这样随时随地可以&lt;code&gt;clone&lt;/code&gt;下来进行更改然后&lt;code&gt;push&lt;/code&gt;上去,在服务器我通过crontab来定时更新html&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;crontab -e
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;添加如下内容&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blogsource/ &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull &amp;amp;&amp;gt; /dev/null
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就可以没5分钟更新一次&lt;/p&gt;</summary><category term="博客"></category><category term="Pelican"></category><category term="静态"></category><category term="迁移"></category></entry><entry><title>vLog 一个使用Python编写的轻量级博客系统</title><link href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="alternate"></link><updated>2013-02-05T16:43:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-02-05:vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
 &lt;h3&gt;何为vLog&lt;/h3&gt;
 &lt;p&gt;大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用&lt;code&gt;Python&lt;/code&gt;的&lt;code&gt;tornado&lt;/code&gt;框架和&lt;code&gt;Jinja2&lt;/code&gt;模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用&lt;code&gt;Markdown&lt;/code&gt;的格式来抒写博文.&lt;/p&gt;
 &lt;h3&gt;为什么vLog&lt;/h3&gt;
@@ -39,14 +63,7 @@
 &lt;h2&gt;结合nginx&lt;/h2&gt;
 &lt;p&gt;参阅&lt;a href="http://www.tornadoweb.cn/documentation#_14"&gt;tornado文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;源代码&lt;/h2&gt;
-&lt;p&gt;代码放在github上: &lt;a href="https://github.com/coldnight/vlog"&gt;vLog&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;test&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;test
-test&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;</summary><category term="vLog"></category><category term="tornado"></category><category term="blog"></category><category term="博客"></category><category term="轻量"></category><category term="markdown"></category></entry><entry><title>使用更加高效的epoll作为pyxmpp2的主循环</title><link href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html" rel="alternate"></link><updated>2013-02-05T16:06:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-02-05:shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
+&lt;p&gt;代码放在github上: &lt;a href="https://github.com/coldnight/vlog"&gt;vLog&lt;/a&gt;&lt;/p&gt;</summary><category term="vLog"></category><category term="tornado"></category><category term="blog"></category><category term="博客"></category><category term="轻量"></category><category term="markdown"></category></entry><entry><title>使用更加高效的epoll作为pyxmpp2的主循环</title><link href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html" rel="alternate"></link><updated>2013-02-05T16:06:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-02-05:shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
 &lt;p&gt;之前&lt;a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"&gt;clubot&lt;/a&gt;使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是&lt;code&gt;clubot&lt;/code&gt;上线后资源占用非常厉害,使用&lt;code&gt;strace&lt;/code&gt;跟踪发现&lt;code&gt;clubot&lt;/code&gt;在不停的&lt;code&gt;poll&lt;/code&gt;,查看&lt;code&gt;pyxmpp2&lt;/code&gt;代码发现&lt;code&gt;pyxmpp2&lt;/code&gt;的&lt;code&gt;poll&lt;/code&gt;在使用超时阻塞时使用&lt;code&gt;最小&lt;/code&gt;超时时间,而&lt;code&gt;最小&lt;/code&gt;超时时间一直是0,所以会变成一个没有超时的非阻塞&lt;code&gt;poll&lt;/code&gt;很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的&lt;code&gt;epoll&lt;/code&gt;的mainloop&lt;/p&gt;
 &lt;h2&gt;实现&lt;/h2&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;

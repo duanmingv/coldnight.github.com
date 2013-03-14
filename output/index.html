@@ -30,6 +30,41 @@
                     
     <article>
         <header>
+            <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
+    博客使用Pelican静态生成系统
+</a></h2>
+<time datetime="2013-03-14 15:12:00" pubdate>Posted on
+    四 14 三月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h1>介绍</h1>
+<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
+<h1>安装</h1>
+<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
+<h2>模板</h2>
+<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
+<h1>使用</h1>
+<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
+<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
+make clean ...</pre></div>
+        </div>
+
+        <p>
+            <a href="./bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="bookmark">
     vLog 一个使用Python编写的轻量级博客系统
 </a></h2>
@@ -357,44 +392,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
         <p>
             <a href="./vimpei-zhi-xi-lie-cha-jian-guan-li.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html" rel="bookmark">
-    Vim打开Python源码自动添加#!行和编码行 升级版
-</a></h2>
-<time datetime="2012-12-13 14:31:00" pubdate>Posted on
-    四 13 十二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="./category/vimpython.html">
-    Vim,Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
-<div class="codehilite"><pre><span class="c">&quot;Python 注释</span>
-<span class="k">function</span> InsertPythonComment<span class="p">()</span>
-    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
-    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
-        <span class="k">return</span>
-    <span class="k">endif</span>
-    normal O
-    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
-    normal <span class="k">o</span>
-    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
-    normal <span class="k">o ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

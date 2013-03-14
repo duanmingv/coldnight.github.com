@@ -193,6 +193,41 @@ evince
         
     <article>
         <header>
+            <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
+    博客使用Pelican静态生成系统
+</a></h2>
+<time datetime="2013-03-14 15:12:00" pubdate>Posted on
+    四 14 三月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h1>介绍</h1>
+<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
+<h1>安装</h1>
+<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
+<h2>模板</h2>
+<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
+<h1>使用</h1>
+<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
+<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
+make clean ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html" rel="bookmark">
     bottle的cookie操作小记(获取不是在当前页面创建的cookie)
 </a></h2>
@@ -391,43 +426,6 @@ evince
 
         <p>
             <a href="../cong-wordpressqian-yi-dao-vlog.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html" rel="bookmark">
-    搭建ntop监测局域网内流量
-</a></h2>
-<time datetime="2012-02-20 17:37:00" pubdate>Posted on
-    一 20 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/linuxjian-kong.html">
-    Linux,监控</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
-<p>本文环境:CentOS5.5 32位</p>
-<ul>
-<li>ip:192.168.3.101</li>
-<li>rrdtool:rrdtool-1.4.7.tar.gz</li>
-<li>GeoIP:GeoIP-1.4.8.tar.gz</li>
-<li>ntop:ntop-4.1.0.tar.gz</li>
-</ul>
-<h2>一.安装依赖:</h2>
-<h3>安装rrdtool</h3>
-<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</pre></div>
-        </div>
-
-        <p>
-            <a href="../da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

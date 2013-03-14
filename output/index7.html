@@ -30,6 +30,46 @@
                     
     <article>
         <header>
+            <h2><a href="/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html" rel="bookmark">
+    根据CentOS定制自己的发行版
+</a></h2>
+<time datetime="2012-01-18 11:13:00" pubdate>Posted on
+    三 18 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="./category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>本文使用的环境为CentOS5.5 32位.
+首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
+装完系统会再root的根目录下生成3个文件,我们用到两个:
+anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
+install.log            : 记录安装过程中所安装的包
+我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:<!--more--></p>
+<div class="codehilite"><pre>mkdir /usr/cold                 <span class="c"># 创建发行版目录</span>
+mount /dev/hdc /mnt             <span class="c"># 挂载IDE光驱</span>
+<span class="c"># 或</span>
+mount /dev/cdrom /mnt
+<span class="c"># 如挂载本地ISO镜像使用下面命令</span>
+mount -o loop iso路径 /mnt
+
+<span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
+<span class="c"># 都说这个命令比cp快 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="./gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html" rel="bookmark">
     安装配置cfengine实现自动化配置Linux/Unix服务器
 </a></h2>

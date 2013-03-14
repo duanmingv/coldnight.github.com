@@ -30,6 +30,45 @@
                     
     <article>
         <header>
+            <h2><a href="/python-chang-yong-de-lie-biao-cao-zuo.html" rel="bookmark">
+    Python 常用的列表操作
+</a></h2>
+<time datetime="2012-08-10 15:48:00" pubdate>Posted on
+    五 10 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>这里介绍几个常用的列表操作</p>
+<h3>添加元素</h3>
+<p>添加元素使用列表的内置方法append</p>
+<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
+</pre></div>
+
+
+<p>可以看到强大的python列表可以嵌套任意类型</p>
+<h3>列表相加</h3>
+<p>要想连接两个列表,可以使用+号连接</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="./python-chang-yong-de-lie-biao-cao-zuo.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html" rel="bookmark">
     Python超简单截取中文字符串
 </a></h2>
@@ -394,43 +433,6 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
         <p>
             <a href="./iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html" rel="bookmark">
-    用Python写的终端下的翻译工具
-</a></h2>
-<time datetime="2012-04-23 23:23:00" pubdate>Posted on
-    一 23 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="./category/linuxpython.html">
-    Linux,Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
-<p>好了不费话了,下面放代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*-coding:utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: translate.py</span>
-<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

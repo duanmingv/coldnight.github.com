@@ -30,6 +30,41 @@
                     
     <article>
         <header>
+            <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
+    博客使用Pelican静态生成系统
+</a></h2>
+<time datetime="2013-03-14 15:12:00" pubdate>Posted on
+    四 14 三月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h1>介绍</h1>
+<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
+<h1>安装</h1>
+<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
+<h2>模板</h2>
+<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
+<h1>使用</h1>
+<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
+<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
+make clean ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="bookmark">
     vLog 一个使用Python编写的轻量级博客系统
 </a></h2>
@@ -410,53 +445,6 @@ import pdb; pdb.set_trace()
 
         <p>
             <a href="../python-duan-dian-diao-shi.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html" rel="bookmark">
-    lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作
-</a></h2>
-<time datetime="2012-08-10 16:02:00" pubdate>Posted on
-    五 10 八月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
-<h2>介绍</h2>
-<h3>lambda</h3>
-<p>Python用于支持将函数赋值给变量的一个操作符
-默认是返回的,所以不用再加return关键字,不然会报错</p>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
-<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
-<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
-</pre></div>
-
-
-<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
-<h3>map()</h3>
-<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
-<h3>filter()</h3>
-<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
-<h3>reduce()</h3>
-<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
-<h2>将上面三个函数和lambda结合使用</h2>
-<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="c"># 序列中的每个元素加1</span>
-<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">
