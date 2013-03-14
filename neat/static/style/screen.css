@@ -1,7 +1,7 @@
 body {
     color: #434343;
     font: normal 14px 'Carrois Gothic', sans-serif;
-    background-image: url(/static/upload/bg.jpg);
+    /* background-image: url(/static/upload/bg.jpg); */
 }
 
 a {
@@ -124,7 +124,7 @@ pre code {
 }
 
 header#main {
-    /*background-color: #fff;*/
+    background-color: #fff;
     border-bottom: 7px solid #003153;
     display: block;
     padding-bottom: 6px;
