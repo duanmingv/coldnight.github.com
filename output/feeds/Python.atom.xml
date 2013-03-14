@@ -2,8 +2,8 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wood.D's Record</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/Python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-03-14T16:09:00+08:00</updated><entry><title>使用WebQQ协议桥接XMPP和QQ群</title><link href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html" rel="alternate"></link><updated>2013-03-14T16:09:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-03-14:shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
 &lt;p&gt;无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将&lt;a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"&gt;clubot&lt;/a&gt;和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将&lt;code&gt;clubot&lt;/code&gt;和QQ群桥接起来.&lt;/p&gt;
 &lt;h2&gt;实施&lt;/h2&gt;
-&lt;p&gt;想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据&lt;code&gt;urllib2&lt;/code&gt;的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
-&lt;a href="https://github.com/coldnight/qxbot/tree/threading_version"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据&lt;code&gt;urllib2&lt;/code&gt;的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
+&lt;a href="https://github.com/coldnight/qxbot/tree/threading_version"&gt;thread_version&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;优化&lt;/h2&gt;
 &lt;p&gt;上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
@@ -130,11 +130,11 @@
 
 
 &lt;p&gt;主要是根据&lt;code&gt;urllib2.Request&lt;/code&gt;构建socket和socket要发送的数据, 然后将socket返回的数据构建成&lt;code&gt;response&lt;/code&gt;, 然后编写一些handlers来加入到mainloop中去,优化后的版本:
-&lt;a href="https://github.com/coldnight/qxbot/tree/master"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;a href="https://github.com/coldnight/qxbot/tree/master"&gt;epoll_version&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;这个版本使用了epoll作为主循环, 更加高效.&lt;/p&gt;
 &lt;h2&gt;最新版本&lt;/h2&gt;
 &lt;p&gt;最新版本分离了WebQQ作为一个包, 如仅需WebQQ的功能可以很方便的分离出来(当然要仿照pyxmpp2来实现一套事件机制), 源码:
-&lt;a href="https://github.com/coldnight/qxbot/"&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="WebQQ"></category><category term="xmpp"></category><category term="python"></category><category term="XMPP"></category><category term="pyxmpp2"></category></entry><entry><title>博客使用Pelican静态生成系统</title><link href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="alternate"></link><updated>2013-03-14T15:12:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-03-14:bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html</id><summary type="html">&lt;h1&gt;介绍&lt;/h1&gt;
+&lt;a href="https://github.com/coldnight/qxbot/"&gt;last&lt;/a&gt;&lt;/p&gt;</summary><category term="WebQQ"></category><category term="xmpp"></category><category term="python"></category><category term="XMPP"></category><category term="pyxmpp2"></category></entry><entry><title>博客使用Pelican静态生成系统</title><link href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="alternate"></link><updated>2013-03-14T15:12:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2013-03-14:bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html</id><summary type="html">&lt;h1&gt;介绍&lt;/h1&gt;
 &lt;p&gt;最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的&lt;code&gt;Jekyll&lt;/code&gt;使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统&lt;code&gt;Pelican&lt;/code&gt;, 试用后除了模板较少外感觉还是不错的,使用&lt;code&gt;Markdown&lt;/code&gt;和&lt;code&gt;Rst&lt;/code&gt;编写.&lt;/p&gt;
 &lt;h1&gt;安装&lt;/h1&gt;
 &lt;p&gt;可以试用&lt;code&gt;pip&lt;/code&gt;来安装&lt;code&gt;Pelican&lt;/code&gt;, 通过&lt;code&gt;pelican-quickstart&lt;/code&gt;脚本可以快速构建一个站点,详细不在描述.可以看看它的文档&lt;/p&gt;

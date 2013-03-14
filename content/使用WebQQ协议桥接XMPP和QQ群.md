@@ -7,8 +7,8 @@ Category: Python
 无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将[clubot](/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html)和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将`clubot`和QQ群桥接起来.
 
 ## 实施
-想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据`urllib2`的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
-[](https://github.com/coldnight/qxbot/tree/threading_version)
+想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据`urllib2`的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
+[thread_version](https://github.com/coldnight/qxbot/tree/threading_version)
 
 ## 优化
 上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:
@@ -136,10 +136,10 @@ class HTTPSock(object):
         return self.cookiejar._cookies
 ```
 主要是根据`urllib2.Request`构建socket和socket要发送的数据, 然后将socket返回的数据构建成`response`, 然后编写一些handlers来加入到mainloop中去,优化后的版本:
-[](https://github.com/coldnight/qxbot/tree/master)
+[epoll_version](https://github.com/coldnight/qxbot/tree/master)
 
 这个版本使用了epoll作为主循环, 更加高效.
 
 ## 最新版本
 最新版本分离了WebQQ作为一个包, 如仅需WebQQ的功能可以很方便的分离出来(当然要仿照pyxmpp2来实现一套事件机制), 源码:
-[](https://github.com/coldnight/qxbot/)
+[last](https://github.com/coldnight/qxbot/)

@@ -48,8 +48,8 @@
         <h2>介绍</h2>
 <p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
 <h2>实施</h2>
-<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
-<a href="https://github.com/coldnight/qxbot/tree/threading_version"></a></p>
+<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
+<a href="https://github.com/coldnight/qxbot/tree/threading_version">thread_version</a></p>
 <h2>优化</h2>
 <p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
@@ -176,11 +176,11 @@
 
 
 <p>主要是根据<code>urllib2.Request</code>构建socket和socket要发送的数据, 然后将socket返回的数据构建成<code>response</code>, 然后编写一些handlers来加入到mainloop中去,优化后的版本:
-<a href="https://github.com/coldnight/qxbot/tree/master"></a></p>
+<a href="https://github.com/coldnight/qxbot/tree/master">epoll_version</a></p>
 <p>这个版本使用了epoll作为主循环, 更加高效.</p>
 <h2>最新版本</h2>
 <p>最新版本分离了WebQQ作为一个包, 如仅需WebQQ的功能可以很方便的分离出来(当然要仿照pyxmpp2来实现一套事件机制), 源码:
-<a href="https://github.com/coldnight/qxbot/"></a></p>
+<a href="https://github.com/coldnight/qxbot/">last</a></p>
     </div>
 
         <footer>
