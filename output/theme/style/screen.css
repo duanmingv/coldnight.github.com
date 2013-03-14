@@ -109,7 +109,7 @@ pre {
     overflow-x: auto;
     padding: 10px 20px;
     width: 94%;
-    margin: auto;
+    margin: 0 auto;
 }
 
 pre code {
@@ -178,7 +178,7 @@ article > header.float {
 .content article {
     margin-bottom: 60px;
     width: 98%;
-    margin: auto auto;
+    margin: 60px auto;
 }
 
 .paginator {
@@ -193,7 +193,7 @@ article .body {
     font-size: 16px;
     line-height: 1.5em;
     width: 98%;
-    margin: auto;
+    margin: 0 auto;
 }
 
 article .body h3 {
@@ -213,7 +213,7 @@ article .body p {
     color: #333;
     margin-top: 20px;
     width: 98%;
-    margin: auto;
+    margin: 0 auto;
 }
 
 article .body p a {
