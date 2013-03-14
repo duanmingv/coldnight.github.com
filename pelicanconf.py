@@ -47,3 +47,7 @@ DEFAULT_PAGINATION = 10
 
 
 MD_EXTENSIONS =  (['codehilite','extra', 'fenced_code'])
+
+FILES_TO_COPY = (
+    ("404.html", "404.html"),
+)
