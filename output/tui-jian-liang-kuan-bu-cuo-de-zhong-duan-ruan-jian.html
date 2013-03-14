@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>推荐两款不错的终端软件</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <article>
+    <header>
+        <h2><a href="tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html" rel="bookmark">
+    推荐两款不错的终端软件
+</a></h2>
+<time datetime="2012-08-29 09:36:00" pubdate>Posted on
+    三 29 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="./category/linux.html">
+    Linux</a>.
+        </span>
+    </header>
+
+    <div class="body">
+        <p>一直在Linux下做开发,一个好用的终端软件能帮你节省很多时间和精力</p>
+<p>作为一个经常喜欢敲命令的人,可能要同时做很多操作,Linux各个桌面的窗口切换有多那啥,这里就不吐槽了,
+我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
+后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
+<h2>1 安装Terminator</h2>
+<div class="codehilite"><pre>sudo apt-get install terminator
+</pre></div>
+
+
+<h2>2 使用</h2>
+<p>打开Termintor按<code>Ctrl-E</code>(注意是大E要按住Shift)可以垂直分割终端
+<code>Ctrl-O</code> 可水平分割终端
+按住Alt然后按上下左右可以在不同的分割窗中切换
+<code>Ctrl-D</code> 可以关闭分割窗</p>
+<h3>2.1 配置</h3>
+<p>terminator配置文件在<code>~/.config/terminator/config</code>
+可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
+<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="c1">#设置体字</span>
+<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="c1"># 背景颜色</span>
+<span class="n">foreground_color</span> <span class="o">=</span> <span class="s">&quot;#F0F0F0&quot;</span> <span class="c1"># 字体颜色</span>
+<span class="n">cursor_blink</span> <span class="o">=</span> <span class="n">True</span>          <span class="c1"># 设置光标</span>
+<span class="n">scrollbar_position</span> <span class="o">=</span> <span class="n">disabled</span> <span class="c1"># 禁用滚动条</span>
+<span class="n">titlebars</span> <span class="o">=</span> <span class="nb">no</span> <span class="c1"># 禁用标题栏</span>
+<span class="n">background_darkness</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">background_type</span> <span class="o">=</span> <span class="n">transparent</span> <span class="c1"># 背景类型可以设置为图片</span>
+</pre></div>
+
+
+<p>更多配置可以参见配置文件:</p>
+<div class="codehilite"><pre>man terminator_config
+</pre></div>
+
+
+<h2>3 Guake</h2>
+<p><code>Guake</code>是一个下拉式的gnome桌面环境下的终端程序，因此你只需要按一个键F12就可以调用他，然后再按一次以便隐藏他。Guake支持<code>快捷键</code>、<code>标签</code>、<code>背景透明</code>等特性。</p>
+<h3>3.1 安装 Guake</h3>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">guake</span>
+</pre></div>
+
+
+<h3>3.2 使用Guake</h3>
+<p>启用guake后即可按<code>F12</code>调出来,很酷
+快捷键和gnome terminal相同</p>
+<div class="codehilite"><pre><span class="n">Ctrl</span><span class="o">-</span><span class="n">T</span> <span class="err">新建标签</span>
+<span class="n">F2</span> <span class="err">重命名标签</span>
+<span class="n">Ctrl</span><span class="o">-</span><span class="n">PageUp</span> <span class="err">上一个标签</span>
+<span class="n">Ctrl</span><span class="o">-</span><span class="n">PageDwon</span> <span class="err">下一个标签</span>
+<span class="n">F11</span> <span class="err">全屏</span>
+<span class="n">F12</span> <span class="err">隐藏</span><span class="o">/</span><span class="err">显示</span>
+</pre></div>
+    </div>
+
+        <footer>
+        <ul class="tags">            <li>
+                <a href="./tag/zhong-duan.html">终端</a>
+            </li>            <li>
+                <a href="./tag/fen-ge.html">分割</a>
+            </li>            <li>
+                <a href="./tag/terminator.html">terminator</a>
+            </li>            <li>
+                <a href="./tag/linux.html">Linux</a>
+            </li>            <li>
+                <a href="./tag/guake.html">guake</a>
+            </li>        </ul>
+    </footer>
+    
+        <div id="disqus_thread"></div>
+    <script>
+        var disqus_identifier = "tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html";
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.src = 'http://linuxzen.disqus.com/embed.js';
+            (document.head || document.body).appendChild(dsq);
+        })();
+    </script>
+    </article>
+
+<script>
+    (function () {
+        'use strict';
+        var titleElm = document.querySelector('article > header');
+        var bodyElm = document.querySelector('article > .body');
+        if (!titleElm || !bodyElm)
+            return;
+
+        var limit = titleElm.offsetTop;
+        var titleCls = titleElm.classList;
+        var bodyCls = bodyElm.classList;
+        var floating = false;
+        window.onscroll = function (evt) {
+            var scrollTop = Math.max(document.body.scrollTop,
+                    document.documentElement.scrollTop);
+            if (!floating && limit <= scrollTop) {
+                titleCls.add('float');
+                bodyCls.add('body-padding');
+                floating = true;
+            }
+            else if (limit >= scrollTop) {
+                titleCls.remove('float');
+                bodyCls.remove('body-padding');
+                floating = false;
+            }
+        };
+    })();
+</script>
+    </div>
+
+    <div class="container footnote">
+                            </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

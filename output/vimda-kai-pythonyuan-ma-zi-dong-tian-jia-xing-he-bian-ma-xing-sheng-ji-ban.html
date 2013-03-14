@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>Vim打开Python源码自动添加#!行和编码行 升级版</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <article>
+    <header>
+        <h2><a href="vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html" rel="bookmark">
+    Vim打开Python源码自动添加#!行和编码行 升级版
+</a></h2>
+<time datetime="2012-12-13 14:31:00" pubdate>Posted on
+    四 13 十二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="./category/vimpython.html">
+    Vim,Python</a>.
+        </span>
+    </header>
+
+    <div class="body">
+        <p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
+<div class="codehilite"><pre><span class="c">&quot;Python 注释</span>
+<span class="k">function</span> InsertPythonComment<span class="p">()</span>
+    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
+    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
+        <span class="k">return</span>
+    <span class="k">endif</span>
+    normal O
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   Author  :   &#39;</span>.g:python_author<span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   E-mail  :   &#39;</span>.g:python_email<span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   Date    :   &#39;</span>.strftime<span class="p">(</span><span class="s2">&quot;%y/%m/%d %H:%M:%S&quot;</span><span class="p">))</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   Desc    :   &#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> <span class="nb">cursor</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="m">17</span><span class="p">)</span>
+<span class="k">endfunction</span>
+<span class="k">function</span> InsertCommentWhenOpen<span class="p">()</span>
+    <span class="k">if</span> a:lastline <span class="p">==</span> <span class="m">1</span> &amp;&amp; <span class="p">!</span>getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="k">call</span> InsertPythonComment<span class="p">()</span>
+    <span class="k">end</span>
+endfunc
+au <span class="nb">FileType</span> python :%<span class="k">call</span> InsertCommentWhenOpen<span class="p">()</span>
+au <span class="nb">FileType</span> python map <span class="p">&lt;</span>F4<span class="p">&gt;</span> :<span class="k">call</span> InsertPythonComment<span class="p">()&lt;</span><span class="k">cr</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<p>将上面的代码放到你的vimrc中,同时在vimrc添加:</p>
+<div class="codehilite"><pre><span class="k">let</span> g:python_author <span class="p">=</span> <span class="s1">&#39;cold&#39;</span>               # 姓名
+<span class="k">let</span> g:python_email  <span class="p">=</span> <span class="s1">&#39;wh_linux@126.com&#39;</span>   # 邮箱
+</pre></div>
+
+
+<p>这样在每次打开空的python源文件时就会添加这些注释信息,并可以在非空没有这些注释的情况下按F4添加,配置玩后,打开空的python源文件效果如下:
+<img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p>
+    </div>
+
+        <footer>
+        <ul class="tags">            <li>
+                <a href="./tag/zi-dong.html">自动</a>
+            </li>            <li>
+                <a href="./tag/bian-ma-xin-xi.html">编码信息</a>
+            </li>            <li>
+                <a href="./tag/tian-jia.html">添加</a>
+            </li>            <li>
+                <a href="./tag/vim.html">vim</a>
+            </li>            <li>
+                <a href="./tag/shbang-line.html">shbang line</a>
+            </li>            <li>
+                <a href="./tag/python.html">python</a>
+            </li>        </ul>
+    </footer>
+    
+        <div id="disqus_thread"></div>
+    <script>
+        var disqus_identifier = "vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html";
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.src = 'http://linuxzen.disqus.com/embed.js';
+            (document.head || document.body).appendChild(dsq);
+        })();
+    </script>
+    </article>
+
+<script>
+    (function () {
+        'use strict';
+        var titleElm = document.querySelector('article > header');
+        var bodyElm = document.querySelector('article > .body');
+        if (!titleElm || !bodyElm)
+            return;
+
+        var limit = titleElm.offsetTop;
+        var titleCls = titleElm.classList;
+        var bodyCls = bodyElm.classList;
+        var floating = false;
+        window.onscroll = function (evt) {
+            var scrollTop = Math.max(document.body.scrollTop,
+                    document.documentElement.scrollTop);
+            if (!floating && limit <= scrollTop) {
+                titleCls.add('float');
+                bodyCls.add('body-padding');
+                floating = true;
+            }
+            else if (limit >= scrollTop) {
+                titleCls.remove('float');
+                bodyCls.remove('body-padding');
+                floating = false;
+            }
+        };
+    })();
+</script>
+    </div>
+
+    <div class="container footnote">
+                            </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

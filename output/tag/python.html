@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>Wood's Linux Zen - Articles tagged as python</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+                    
+    <article>
+        <header>
+            <h2><a href="shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html" rel="bookmark">
+    使用更加高效的epoll作为pyxmpp2的主循环
+</a></h2>
+<time datetime="2013-02-05 16:06:00" pubdate>Posted on
+    二 05 二月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>引子</h2>
+<p>之前<a href="/2012/10/29/python-使用pyxmpp2编写gtalk群/">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
+<h2>实现</h2>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="python-zhong-fu-an-zhuang-bao-bao-cuo.html" rel="bookmark">
+    Python 重复安装包报错
+</a></h2>
+<time datetime="2013-01-25 14:55:00" pubdate>Posted on
+    五 25 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近写程序用到argparse总是会报错<code>/usr/lib/python2.7/dist-packages/pygments/plugin.py:39: UserWarning: Module argparse was already imported from /usr/lib/python2.7/argparse.pyc, but /usr/local/lib/python2.7/dist-packages is being added to sys.path</code></p>
+<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
+执行<code>ls /usr/local/lib/python2 ...</code></p>
+        </div>
+
+        <p>
+            <a href="../python-zhong-fu-an-zhuang-bao-bao-cuo.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html" rel="bookmark">
+    Linux 下使用Python截图自动分享
+</a></h2>
+<time datetime="2013-01-22 16:59:00" pubdate>Posted on
+    二 22 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>引子</h2>
+<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
+<h2>实现</h2>
+<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
+<h2>代码</h2>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/21 09:54:39</span>
+<span class="c">#   Desc    :   贴代码和图片</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">import ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html" rel="bookmark">
+    vLog使用Tornado框架结合memcached缓存页面
+</a></h2>
+<time datetime="2013-01-16 16:14:00" pubdate>Posted on
+    三 16 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxmysqlpython.html">
+    Linux,MySQL,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>原因</h2>
+<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
+<h2>实现</h2>
+<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
+prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/14 09:57:31</span>
+<span class="c">#   Desc ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html" rel="bookmark">
+    Vim 结合Python编写的翻译插件
+</a></h2>
+<time datetime="2013-01-04 17:58:00" pubdate>Posted on
+    五 04 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxvimpython.html">
+    Linux,Vim,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
+<div class="codehilite"><pre><span class="c">&quot;   Author  :   cold</span>
+<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
+<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
+<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
+<span class="c">&quot;   Useage  :</span>
+<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
+<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
+<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
+
+<span class="k">function</span> GetCursorWord<span class="p">()</span>
+    <span class="k">let</span> column <span class="p">=</span> get<span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html" rel="bookmark">
+    Vim打开Python源码自动添加#!行和编码行 升级版
+</a></h2>
+<time datetime="2012-12-13 14:31:00" pubdate>Posted on
+    四 13 十二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/vimpython.html">
+    Vim,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
+<div class="codehilite"><pre><span class="c">&quot;Python 注释</span>
+<span class="k">function</span> InsertPythonComment<span class="p">()</span>
+    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
+    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
+        <span class="k">return</span>
+    <span class="k">endif</span>
+    normal O
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
+    normal <span class="k">o ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="python-shi-yong-pyxmpp2bian-xie-gtalkqun.html" rel="bookmark">
+    python 使用pyxmpp2编写gtalk群
+</a></h2>
+<time datetime="2012-10-29 14:48:00" pubdate>Posted on
+    一 29 十月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
+<p>其实主要原理就是机器人接收到消息后再将消息广播出去,从而达到群的效果.</p>
+<p>python有两个模块可以用来支持xmpp,分别是pyxmpp和pyxmpp2,之前也用pyxmpp写了一个,功能和兼容性不是很好,经常出现问题,所以又使用pyxmpp2重写了一遍,今天修复了一些bug,所以公布出来,大家可以下载测试,也可以加入我们使用gtalk进行群交流,</p>
+<p>我们的gtalk机器人是:<code>clubot@vim-cn.com</code></p>
+<p>喜欢gtalk,同时喜欢Linux/Python/Vim等爱好者的同学可以加进来交流</p>
+<p>如果对我们的代码比较感兴趣,可以访问github,我们将代码放在了github上:https://github.com/coldnight/clubot</p>
+<p>下面介绍一下安装:</p>
+<p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
+<p>下载源码:</p>
+<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
+</pre></div>
+
+
+<p>安装依赖 ...</p>
+        </div>
+
+        <p>
+            <a href="../python-shi-yong-pyxmpp2bian-xie-gtalkqun.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="bookmark">
+    Python将汉字按拼音排序--一个多音字引发的悲剧
+</a></h2>
+<time datetime="2012-10-24 18:29:00" pubdate>Posted on
+    三 24 十月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
+<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
+<span class="err">音</span>    <span class="n">yin1</span>
+</pre></div>
+
+
+<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># Author : cold night</span>
+<span class="c"># E-mail : wh_linux@126.com</span>
+<span class="c"># Date   : 12-10-24 下午3:13</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
+    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html" rel="bookmark">
+    用Vim为Python源码自动添加#!行和编码行
+</a></h2>
+<time datetime="2012-09-29 18:56:00" pubdate>Posted on
+    六 29 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/vimpython.html">
+    Vim,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
+<p>太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到<code>~/.vimrc</code>下即可每次打开如果没有上述行则会自动填充:</p>
+<div class="codehilite"><pre><span class="k">function</span> InsertPythonHeader<span class="p">()</span>
+    <span class="k">let</span> l1 <span class="p">=</span> getline<span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    <span class="k">let</span> l2 <span class="p">=</span> getline<span class="p">(</span><span class="m">2</span><span class="p">)</span>
+    <span class="k">if</span>  <span class="k">match</span><span class="p">(</span><span class="s1">&#39;\#!/&#39;</span><span class="p">,</span> l1<span class="p">)</span> <span class="p">==</span> <span class="m">0</span>
+        exec <span class="m">1</span>
+        normal O
+        <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    <span class="k">endif</span>
+    <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
+        exec ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html" rel="bookmark">
+    用Python将绝对URL替换成相对URL
+</a></h2>
+<time datetime="2012-09-29 15:52:00" pubdate>Posted on
+    六 29 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
+<p>脚本内容如下:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c"># author  : cold night</span>
+<span class="c"># email   : wh_linux@126.com</span>
+<span class="c">#</span>
+
+<span class="kn">import</span> <span class="nn">pymongo</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        <script type="text/javascript">
+        var disqus_shortname = 'linuxzen';
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.head || document.body).appendChild(s);
+        }());
+    </script>
+        </div>
+
+    <div class="container footnote">
+                            <span class="paginator">
+        Page 1 / 3
+        <a href="../tag/python2.html">&raquo;</a>
+    </span>
+    </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

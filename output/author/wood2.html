@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>Wood's Linux Zen - Articles by Wood</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+                    
+    <article>
+        <header>
+            <h2><a href="fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html" rel="bookmark">
+    分享Vim两种好用的功能:状态行和空白字符可见
+</a></h2>
+<time datetime="2012-09-29 17:30:00" pubdate>Posted on
+    六 29 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/vim.html">
+    Vim</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>马上要放假了,没事折腾了一下Vim发现了两个非常棒的功能,一个是给Vim添加一个状态栏,一个是可以在编辑的时候显示空白,</p>
+<p>我的状态栏显示了:
+正在编辑的文件名,
+选项
+是Git显示git分支(需要fugitive插件)
+文件类型
+当前目录
+当前字符的ASCII和16进制码
+右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
+fugitive 可以在git获得:</p>
+<div class="codehilite"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">http:</span><span class="sr">//gi</span><span class="n">thub</span><span class="o">.</span><span class="n">com</span><span class="sr">/tpope/</span><span class="n">vim</span><span class="o">-</span><span class="n">fugitive</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+
+
+<p>将plugin目录下的fugitive.vim复制到~/.vim/plugin下
+在~/.vimrc添加如下内容</p>
+<div class="codehilite"><pre><span class="k">if</span> has<span class="p">(</span><span class="s1">&#39;statusline&#39;</span><span class="p">)</span>
+    <span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>%<span class="p">&lt;</span>%<span class="k">f</span>\   <span class="c">&quot; 文件名</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="k">w</span>%<span class="k">h</span>%<span class="k">m</span>%<span class="k">r ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html" rel="bookmark">
+    根据CentOS定制自己的发行版
+</a></h2>
+<time datetime="2012-01-18 11:13:00" pubdate>Posted on
+    三 18 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>本文使用的环境为CentOS5.5 32位.
+首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
+装完系统会再root的根目录下生成3个文件,我们用到两个:
+anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
+install.log            : 记录安装过程中所安装的包
+我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:<!--more--></p>
+<div class="codehilite"><pre>mkdir /usr/cold                 <span class="c"># 创建发行版目录</span>
+mount /dev/hdc /mnt             <span class="c"># 挂载IDE光驱</span>
+<span class="c"># 或</span>
+mount /dev/cdrom /mnt
+<span class="c"># 如挂载本地ISO镜像使用下面命令</span>
+mount -o loop iso路径 /mnt
+
+<span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
+<span class="c"># 都说这个命令比cp快 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html" rel="bookmark">
+    Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)
+</a></h2>
+<time datetime="2012-05-16 11:05:00" pubdate>Posted on
+    三 16 五月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxnginxpython.html">
+    Linux,nginx,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
+<h2>环境:</h2>
+<p>系统:Gentoo
+ip:192.168.3.1</p>
+<p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
+首先Gentoo没有默认安装vim,先安装vim:</p>
+<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
+</pre></div>
+
+
+<h3>安装配置Python</h3>
+<p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
+Gentoo使用emerge包管理,安装Python2.7:</p>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html" rel="bookmark">
+    heartbeat实现MySQL双机高可用
+</a></h2>
+<time datetime="2012-02-12 17:01:00" pubdate>Posted on
+    日 12 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxmysql.html">
+    Linux,MySQL</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
+<p>当我们的MySQL数据库故障或MySQL数据库服务器出现故障的时候我们希望有一个备用能自动代替主MySQL数据来完成当前的任务,当主MySQL服务器恢复故障的时候备用的能切换到备用等待下一次故障出现.这里我们就结合故障检测HA来实现.</p>
+<p>HA会定时发送心跳包检测主备服务器的健康状态,当主服务器出现故障时会自动将vip切换到备用服务器,由备用服务器执行主服务器的任务,MySQL要实现这样的功能就必须保证主备服务器的数据一致.这就要用到MySQL主从双机.
+<!--more-->
+本文使用环境:
+系统:CentOS 5.5 32位
+主MySQL: ip 192.168.3.101/24 主机名:master.org
+备用MySQL:192.168.3.102/24   主机名:slave.org
+vip:192.168.3.103/24
+MySQL:mysql-5.0.95.tar.gz
+heartbeat ...</!--more--></p>
+        </div>
+
+        <p>
+            <a href="../heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="bookmark">
+    iptables:restorecon: command not found无法保存策略解决
+</a></h2>
+<time datetime="2012-04-30 10:43:00" pubdate>Posted on
+    一 30 四月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
+<p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
+<div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
+<span class="n">whereis</span> <span class="n">restorecon</span>
+</pre></div>
+
+
+<p>没结果,继续手动查看:</p>
+<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="sr">/sbin/</span> <span class="err">¦</span> <span class="nb">grep</span> <span class="n">restore</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html" rel="bookmark">
+    将cfengine集成到自己定制的发行版
+</a></h2>
+<time datetime="2012-01-19 11:35:00" pubdate>Posted on
+    四 19 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.</p>
+<p>本文完全根据<a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank">上一篇</a>文章而来,挂载光驱安装工具等等这里就不介绍了.</p>
+<!--more-->
+
+<p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
+<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+vi cfpkgs.list
+<span class="c"># 添加如下内容</span>
+keyutils-libs-devel
+zlib-devel
+e2fsprogs-devel 
+libsepol-devel
+libselinux-devel
+db4-devel
+pcre-devel
+krb5-devel
+flex
+openssl-devel 
+<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more-->
+        </div>
+
+        <p>
+            <a href="../jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html" rel="bookmark">
+    lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作
+</a></h2>
+<time datetime="2012-08-10 16:02:00" pubdate>Posted on
+    五 10 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
+<h2>介绍</h2>
+<h3>lambda</h3>
+<p>Python用于支持将函数赋值给变量的一个操作符
+默认是返回的,所以不用再加return关键字,不然会报错</p>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
+<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
+</pre></div>
+
+
+<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
+<h3>map()</h3>
+<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
+<h3>filter()</h3>
+<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
+<h3>reduce()</h3>
+<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
+<h2>将上面三个函数和lambda结合使用</h2>
+<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c"># 序列中的每个元素加1</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="linux-shelljiao-ben-diao-shi-ji-qiao.html" rel="bookmark">
+    Linux shell脚本调试技巧
+</a></h2>
+<time datetime="2012-01-17 17:04:00" pubdate>Posted on
+    二 17 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxshell.html">
+    Linux,shell</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.</p>
+<p>在脚本的最顶部加上</p>
+<div class="codehilite"><pre><span class="nb">set</span> -x
+</pre></div>
+
+
+<p>开启调试
+在脚本的最底部加上</p>
+<div class="codehilite"><pre><span class="nb">set</span> +x
+</pre></div>
+
+
+<p>关闭调试
+如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令</p>
+<p>&nbsp;</p>
+<div class="codehilite"><pre>script
+</pre></div>
+
+
+<p>然后执行要捕捉内容的命令,完成后通过</p>
+<div class="codehilite"><pre><span class="nb">exit</span>
+</pre></div>
+
+
+<p>退出,当前目录下会生成typescript,通过</p>
+<div class="codehilite"><pre>more typescript
+</pre></div>
+
+
+<p>查看调试命令.</p>
+        </div>
+
+        <p>
+            <a href="../linux-shelljiao-ben-diao-shi-ji-qiao.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html" rel="bookmark">
+    Linux 下使用Python截图自动分享
+</a></h2>
+<time datetime="2013-01-22 16:59:00" pubdate>Posted on
+    二 22 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>引子</h2>
+<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
+<h2>实现</h2>
+<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
+<h2>代码</h2>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/21 09:54:39</span>
+<span class="c">#   Desc    :   贴代码和图片</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">import ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="bookmark">
+    Linux一些比较实用的小技巧
+</a></h2>
+<time datetime="2012-02-20 11:30:00" pubdate>Posted on
+    一 20 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxshell.html">
+    Linux,shell</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<h2>文件查找</h2>
+<p>找出最近修改的文件:</p>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
+
+<p>使用通配符查找文件</p>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
+
+<h2>文本替换</h2>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
+
+<h2>显示指定行</h2>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        <script type="text/javascript">
+        var disqus_shortname = 'linuxzen';
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.head || document.body).appendChild(s);
+        }());
+    </script>
+        </div>
+
+    <div class="container footnote">
+                            <span class="paginator">
+            <a href="../author/wood.html">&laquo;</a>
+            Page 2 / 7
+        <a href="../author/wood3.html">&raquo;</a>
+    </span>
+    </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

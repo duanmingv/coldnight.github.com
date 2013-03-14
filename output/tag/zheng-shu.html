@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>Wood's Linux Zen - Articles tagged as 证书</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+                    
+    <article>
+        <header>
+            <h2><a href="sshzheng-shu-deng-lu-cuo-wu.html" rel="bookmark">
+    ssh证书登录错误
+</a></h2>
+<time datetime="2012-08-10 16:11:00" pubdate>Posted on
+    五 10 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>错误描述</h2>
+
+<p>使用证书ssh链接的时候提示下面错误信息
+<h2><code>Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).</code>
+可能原因</h2>
+authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkeys 改成600
+<h2>解决</h2>
+查看日志:
+<code>cat /var/log/secure</code>
+发现
+<code>Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys</code>
+查看.ssh权限为775
+.ssh 手动创建的时候是775权限,改成755权限后正常
+<code># chmod ...</code></p>
+        </div>
+
+        <p>
+            <a href="../sshzheng-shu-deng-lu-cuo-wu.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        <script type="text/javascript">
+        var disqus_shortname = 'linuxzen';
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.head || document.body).appendChild(s);
+        }());
+    </script>
+        </div>
+
+    <div class="container footnote">
+                            <span class="paginator">
+        Page 1 / 1
+    </span>
+    </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

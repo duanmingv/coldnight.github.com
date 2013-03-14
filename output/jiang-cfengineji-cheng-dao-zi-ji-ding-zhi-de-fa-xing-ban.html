@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>将cfengine集成到自己定制的发行版</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <article>
+    <header>
+        <h2><a href="jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html" rel="bookmark">
+    将cfengine集成到自己定制的发行版
+</a></h2>
+<time datetime="2012-01-19 11:35:00" pubdate>Posted on
+    四 19 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="./category/linux.html">
+    Linux</a>.
+        </span>
+    </header>
+
+    <div class="body">
+        <p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.</p>
+<p>本文完全根据<a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank">上一篇</a>文章而来,挂载光驱安装工具等等这里就不介绍了.</p>
+<!--more-->
+
+<p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
+<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+vi cfpkgs.list
+<span class="c"># 添加如下内容</span>
+keyutils-libs-devel
+zlib-devel
+e2fsprogs-devel 
+libsepol-devel
+libselinux-devel
+db4-devel
+pcre-devel
+krb5-devel
+flex
+openssl-devel 
+<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt/CentOS/<span class="nv">$file</span>* /usr/cold/CentOS/; <span class="k">done</span>
+</pre></div>
+
+
+<p>复制完包之后就需要编辑comps.xml,</p>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/cold/
+<span class="c"># 编辑comps.xml</span>
+vi repodata/comps.xml
+</pre></div>
+
+
+<p>向comps.xml添加这几个包group节点</p>
+<div class="codehilite"><pre>  &amp;lt;group&amp;gt;
+    &amp;lt;id&amp;gt;cfengine&amp;lt;/id&amp;gt;
+    &amp;lt;name&amp;gt;Cfengine&amp;lt;/name&amp;gt;
+    &amp;lt;name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Cfengine&amp;lt;/name&amp;gt;
+    &amp;lt;description&amp;gt;Cfengine &amp;lt;/description&amp;gt;
+    &amp;lt;description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Cfengine&amp;lt;/description&amp;gt;
+    &amp;lt;default&amp;gt;true&amp;lt;/default&amp;gt;
+    &amp;lt;uservisible&amp;gt;false&amp;lt;/uservisible&amp;gt;
+    &amp;lt;packagelist&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;keyutils-libs-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;zlib-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;e2fsprogs-devel &amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;libsepol-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;libselinux-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;db4-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;pcre-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;krb5-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;flex&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;openssl-devel &amp;lt;/packagereq&amp;gt;
+    &amp;lt;/packagelist&amp;gt;
+  &amp;lt;/group&amp;gt;
+</pre></div>
+
+
+<p>然后通过命令创建源:</p>
+<div class="codehilite"><pre>createrepo -g repodata/comps.xml  CentOS/
+</pre></div>
+
+
+<p>计算comps.xml的sha值</p>
+<div class="codehilite"><pre>sha1sum repodata/comps.xml 
+f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
+</pre></div>
+
+
+<p>编辑repomd.xml</p>
+<div class="codehilite"><pre>vi repodata/repomd.xml
+</pre></div>
+
+
+<p>将新的sha值更新到repomd.xml</p>
+<div class="codehilite"><pre>  &amp;lt;data <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;group&quot;</span>&amp;gt;
+    &amp;lt;location <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;repodata/comps.xml&quot;</span>/&amp;gt;
+    &amp;lt;checksum <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;sha&quot;</span>&amp;gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&amp;lt;/checksum&amp;gt;
+    &amp;lt;timestamp&amp;gt;1272586365&amp;lt;/timestamp&amp;gt;
+  &amp;lt;/data&amp;gt;
+</pre></div>
+
+
+<p>接下来把我们编译好的cfengine(根据<a title="安装配置cfengine实现自动化配置Linux/Unix服务器" href="/post/17" target="_blank">安装配置cfengine实现自动化配置Linux/Unix服务器</a>)复制到定制的发行版的目录下:</p>
+<div class="codehilite"><pre>cp -r /usr/local/cfengine/ /usr/cold/
+</pre></div>
+
+
+<p>然后编辑ks文件:</p>
+<div class="codehilite"><pre>vi isolinux/ks.cfg
+<span class="c"># 在末尾添加如下内容</span>
+%packages
+@core
+@useful
+@cfengine        <span class="c"># 添加cfengine软件组</span>
+<span class="c"># %post是安装后执行的脚本,</span>
+<span class="c"># 还有一种标记 %pre是安装前执行的脚本,但不推荐使用这种脚本,</span>
+<span class="c"># 因为脚本出错会导致安装失败 </span>
+<span class="c"># --nochroot是不切换根目录,这时候安装好的系统会挂载在 /mnt/sysimage下</span>
+%post --nochroot
+
+<span class="c"># 创建cfengine的工作目录</span>
+mkdir -p /mnt/sysimage/var/cfengine/masterfiles
+mkdir -p /mnt/sysimage/var/cfengine/inputs
+mkdir -p /mnt/sysimage/var/cfengine/outputs
+mkdir -p /mnt/sysimage/var/cfengine/bin
+mkdir /a
+mount /tmp/cdrom /a
+<span class="c"># 复制二进制文件和cfengine</span>
+cp /a/cfengine/sbin/cf-* /mnt/sysimage/var/cfengine/bin/
+cp -r /a/cfengine /mnt/sysimage/usr/local/
+</pre></div>
+
+
+<p>然后制作镜像:</p>
+<div class="codehilite"><pre>mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/ColdOS-0.1-i386.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table .
+</pre></div>
+
+
+<p>然后把镜像下载下来进行安装,安装完成后执行</p>
+<div class="codehilite"><pre>/var/cfengine/bin/cf-key              <span class="c"># 生成认证证书</span>
+/var/cfengine/bin/cf-agent --bootstrap --policy-server cfhubip
+/var/cfengine/bin/cf-agent   <span class="c"># 执行承诺</span>
+</pre></div>
+
+
+<p>即可从cfhubip那里下载承诺文件执行承诺,根据cfhub进行本地配置
+还可以根据%post更加自由的定制自己的系统,比如最小化安装后会无法使用本地镜像来使用yum可以定义一个局域网yum,在%post --nochroot添加如下内容:</p>
+<div class="codehilite"><pre>cat &amp;lt;&amp;lt;__EOF__ &amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
+<span class="c"># CentOS-Media.repo</span>
+<span class="c">#  yum --disablerepo=\* --enablerepo=cold [command]</span>
+<span class="o">[</span>cold<span class="o">]</span>
+<span class="nv">name</span><span class="o">=</span>CentOS-<span class="nv">$releasever</span> - Media
+<span class="nv">baseurl</span><span class="o">=</span>http://192.168.0.254/CentOS
+<span class="nv">gpgcheck</span><span class="o">=</span>1
+<span class="nv">enabled</span><span class="o">=</span>1
+<span class="nv">gpgkey</span><span class="o">=</span>file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+__EOF__
+
+mv /mnt/sysimage/etc/yum.repos.d/CentOS-Base.repo /mnt/sysimage/etc/yum.repos.d/CentOS-Base.repo.bak
+</pre></div>
+
+
+<p>这里就不详细介绍,大家可根据这个更加自由的来定制自己的Linux发行版.</p>
+    </div>
+
+        <footer>
+        <ul class="tags">            <li>
+                <a href="./tag/ji-cheng.html">集成</a>
+            </li>            <li>
+                <a href="./tag/ding-zhi.html">定制</a>
+            </li>            <li>
+                <a href="./tag/fa-xing-ban.html">发行版</a>
+            </li>            <li>
+                <a href="./tag/linux.html">Linux</a>
+            </li>            <li>
+                <a href="./tag/cfengine.html">cfengine</a>
+            </li>        </ul>
+    </footer>
+    
+        <div id="disqus_thread"></div>
+    <script>
+        var disqus_identifier = "jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html";
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.src = 'http://linuxzen.disqus.com/embed.js';
+            (document.head || document.body).appendChild(dsq);
+        })();
+    </script>
+    </article>
+
+<script>
+    (function () {
+        'use strict';
+        var titleElm = document.querySelector('article > header');
+        var bodyElm = document.querySelector('article > .body');
+        if (!titleElm || !bodyElm)
+            return;
+
+        var limit = titleElm.offsetTop;
+        var titleCls = titleElm.classList;
+        var bodyCls = bodyElm.classList;
+        var floating = false;
+        window.onscroll = function (evt) {
+            var scrollTop = Math.max(document.body.scrollTop,
+                    document.documentElement.scrollTop);
+            if (!floating && limit <= scrollTop) {
+                titleCls.add('float');
+                bodyCls.add('body-padding');
+                floating = true;
+            }
+            else if (limit >= scrollTop) {
+                titleCls.remove('float');
+                bodyCls.remove('body-padding');
+                floating = false;
+            }
+        };
+    })();
+</script>
+    </div>
+
+    <div class="container footnote">
+                            </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

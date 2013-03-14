@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>bottle的cookie操作小记(获取不是在当前页面创建的cookie)</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <article>
+    <header>
+        <h2><a href="bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html" rel="bookmark">
+    bottle的cookie操作小记(获取不是在当前页面创建的cookie)
+</a></h2>
+<time datetime="2012-06-02 17:51:00" pubdate>Posted on
+    六 02 六月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
+        </span>
+    </header>
+
+    <div class="body">
+        <p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
+<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
+      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
+           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
+      <span class="k">else</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
+
+<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
+      <span class="k">if</span>  <span class="n">username</span><span class="p">:</span>
+           <span class="k">return</span> <span class="s">&quot;Hello </span><span class="si">%s</span><span class="s">.Welcome back.&quot;</span> <span class="o">%</span> <span class="n">username</span>
+</pre></div>
+
+
+<p>虽然文档上没有但是还有一种操作cookie的方式:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span>
+    <span class="n">passwd</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">&#39;passwd&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">check_user_right</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">):</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="s">&#39;account&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/admin&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">admin</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+
+
+<p>但是无论我用哪种方式操作我都无法获取cookie,为什么呢.百思不得其解.但是我的一个处理文章点击率的提醒了我,代码如下:</p>
+<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/archrives/:aid#\d+#&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">article_show</span><span class="p">(</span><span class="n">aid</span><span class="p">):</span>
+    <span class="n">db</span> <span class="o">=</span> <span class="n">dbconn</span><span class="o">.</span><span class="n">ConnDB</span><span class="p">()</span>
+    <span class="n">artid</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">aid</span><span class="p">)</span>
+    <span class="c"># 获取客户端ip</span>
+    <span class="n">remoteip</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;REMOTE_ADDR&#39;</span><span class="p">)</span>
+
+    <span class="n">artcookie</span> <span class="o">=</span> <span class="n">remoteip</span><span class="o">+</span><span class="s">&#39;ip&#39;</span><span class="o">+</span><span class="n">aid</span>
+    <span class="k">print</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+    <span class="c"># 判断cookie是否存在</span>
+    <span class="k">if</span> <span class="n">artcookie</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="c"># 存在则更新有效时间</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="n">artcookie</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="n">artcookie</span><span class="p">][</span><span class="s">&#39;max-age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># 不存在则更新文章查看次数</span>
+        <span class="n">db</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;id&quot;</span><span class="p">:</span><span class="n">artid</span><span class="p">},</span> <span class="p">{</span><span class="s">&quot;$inc&quot;</span><span class="p">:{</span><span class="s">&quot;views&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}})</span>
+
+        <span class="c"># 并设置cookie</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="n">artcookie</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="n">artcookie</span><span class="p">][</span><span class="s">&#39;max-age&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">500</span>
+
+    <span class="n">TEMPLATE</span><span class="p">[</span><span class="s">&#39;posts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getArtList</span><span class="p">({</span><span class="s">&quot;id&quot;</span><span class="p">:</span><span class="n">artid</span><span class="p">})</span>
+    <span class="n">TEMPLATE</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">setTempVar</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">template</span><span class="p">(</span><span class="s">&#39;article.html&#39;</span><span class="p">,</span> <span class="n">TEMPLATE</span><span class="p">)</span>
+</pre></div>
+
+
+<p>这里是可以正常获取到cookie的,而且代码没有任何区别.唯一的区别就是用户认证是跳转了页面.所以我help了一下:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">response</span>
+<span class="n">help</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">)</span>
+</pre></div>
+
+
+<p>help的结果其中有两个参数一个是path,和domain:</p>
+<div class="codehilite"><pre>    <span class="p">:</span><span class="n">param</span> <span class="n">domain:</span> <span class="n">the</span> <span class="n">domain</span> <span class="n">that</span> <span class="n">is</span> <span class="n">allowed</span> <span class="n">to</span> <span class="nb">read</span> <span class="n">the</span> <span class="n">cookie</span><span class="o">.</span>
+      <span class="p">(</span><span class="n">default:</span> <span class="n">current</span> <span class="n">domain</span><span class="p">)</span>
+    <span class="p">:</span><span class="n">param</span> <span class="n">path:</span> <span class="n">limits</span> <span class="n">the</span> <span class="n">cookie</span> <span class="n">to</span> <span class="n">a</span> <span class="n">given</span> <span class="n">path</span> <span class="p">(</span><span class="n">default:</span> <span class="n">current</span> <span class="n">path</span><span class="p">)</span>
+</pre></div>
+
+
+<p>明显bottle的cookie默认只在当前路径下能读取的到,所以要别的页面读取到cookie我们的代码须改成如下:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span>
+    <span class="n">passwd</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s">&#39;passwd&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">check_user_right</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">passwd</span><span class="p">):</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="s">&#39;account&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="s">&#39;account&#39;</span><span class="p">][</span><span class="s">&#39;path&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/admin&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/admin&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">admin</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">COOKIES</span><span class="p">[</span><span class="s">&#39;user&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>这样我们就能在别的路径下访问我们设定的cookie.</p>
+    </div>
+
+        <footer>
+        <ul class="tags">            <li>
+                <a href="./tag/web.html">web</a>
+            </li>            <li>
+                <a href="./tag/python.html">python</a>
+            </li>            <li>
+                <a href="./tag/cookie.html">cookie</a>
+            </li>            <li>
+                <a href="./tag/bottle.html">bottle</a>
+            </li>        </ul>
+    </footer>
+    
+        <div id="disqus_thread"></div>
+    <script>
+        var disqus_identifier = "bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html";
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.src = 'http://linuxzen.disqus.com/embed.js';
+            (document.head || document.body).appendChild(dsq);
+        })();
+    </script>
+    </article>
+
+<script>
+    (function () {
+        'use strict';
+        var titleElm = document.querySelector('article > header');
+        var bodyElm = document.querySelector('article > .body');
+        if (!titleElm || !bodyElm)
+            return;
+
+        var limit = titleElm.offsetTop;
+        var titleCls = titleElm.classList;
+        var bodyCls = bodyElm.classList;
+        var floating = false;
+        window.onscroll = function (evt) {
+            var scrollTop = Math.max(document.body.scrollTop,
+                    document.documentElement.scrollTop);
+            if (!floating && limit <= scrollTop) {
+                titleCls.add('float');
+                bodyCls.add('body-padding');
+                floating = true;
+            }
+            else if (limit >= scrollTop) {
+                titleCls.remove('float');
+                bodyCls.remove('body-padding');
+                floating = false;
+            }
+        };
+    })();
+</script>
+    </div>
+
+    <div class="container footnote">
+                            </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>Wood's Linux Zen - Articles tagged as 安装</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+                    
+    <article>
+        <header>
+            <h2><a href="python-zhong-fu-an-zhuang-bao-bao-cuo.html" rel="bookmark">
+    Python 重复安装包报错
+</a></h2>
+<time datetime="2013-01-25 14:55:00" pubdate>Posted on
+    五 25 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近写程序用到argparse总是会报错<code>/usr/lib/python2.7/dist-packages/pygments/plugin.py:39: UserWarning: Module argparse was already imported from /usr/lib/python2.7/argparse.pyc, but /usr/local/lib/python2.7/dist-packages is being added to sys.path</code></p>
+<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
+执行<code>ls /usr/local/lib/python2 ...</code></p>
+        </div>
+
+        <p>
+            <a href="../python-zhong-fu-an-zhuang-bao-bao-cuo.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html" rel="bookmark">
+    lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)
+</a></h2>
+<time datetime="2012-03-13 13:13:00" pubdate>Posted on
+    二 13 三月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxmysqlnginx.html">
+    Linux,MySQL,nginx</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
+<p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
+<p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
+<p>nginx当前最新稳定版是nginx-1.0.13
+首先我们下载nginx,在Linux下执行下面命令:</p>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
+wget http://nginx ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html" rel="bookmark">
+    lnmp环境搭建完全手册(一)------系统安装
+</a></h2>
+<time datetime="2012-03-08 12:05:00" pubdate>Posted on
+    四 08 三月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxnginx.html">
+    Linux,nginx</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
+首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.</p>
+<p>安装VMware这里就不介绍了,给出VMware Workstation 8.0的<a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;vmware=downloadBinary&amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;pot=1&amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;tranId=70310191&amp;amp;downloadURL&quot;">下载地址</a></p>
+<p>VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
+我们还要准备CentOS5.5 的iso镜像用来安装系统.<a href="&quot;http://download.chinaunix.net/down.php?id=31679&amp;amp;ResourceID=12271&amp;amp;site=6">下载地址</a></p>
+<p>下面我们就来新建一个虚拟机安装CentOS ...</p>
+        </div>
+
+        <p>
+            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        <script type="text/javascript">
+        var disqus_shortname = 'linuxzen';
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.head || document.body).appendChild(s);
+        }());
+    </script>
+        </div>
+
+    <div class="container footnote">
+                            <span class="paginator">
+        Page 1 / 1
+    </span>
+    </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

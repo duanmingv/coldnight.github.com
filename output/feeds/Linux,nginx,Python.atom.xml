@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood's Linux Zen</title><link href="http://localhost/" rel="alternate"></link><link href="http://localhost/feeds/Linux,nginx,Python.atom.xml" rel="self"></link><id>http://localhost/</id><updated>2012-05-16T11:05:00+08:00</updated><entry><title>Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</title><link href="http://localhost/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html" rel="alternate"></link><updated>2012-05-16T11:05:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-05-16:gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html</id><summary type="html">&lt;p&gt;最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).&lt;/p&gt;
+&lt;h2&gt;环境:&lt;/h2&gt;
+&lt;p&gt;系统:Gentoo
+ip:192.168.3.1&lt;/p&gt;
+&lt;p&gt;好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
+首先Gentoo没有默认安装vim,先安装vim:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;emerge&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;安装配置Python&lt;/h3&gt;
+&lt;p&gt;最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
+Gentoo使用emerge包管理,安装Python2.7:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/portage/dev-lang/python/
+emerge python-2.7.2-r3.ebuild
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;等待安装完成后使系统默认使用python2.7,先查看默认项&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;eselect&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="n"&gt;Available&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;interpreters:&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt; 
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="mf"&gt;.2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;默认使用3.2,选择python2.7&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;eselect python &lt;span class="nb"&gt;set &lt;/span&gt;1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;选择过后别忘记执行:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;python-updater
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;好了我已经将python换成了常用的python2.7,下面来安装easy_install:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;emerge setuptools
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装完后使用easy_install安装bottle框架和mongodb驱动:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;easy_install bottle
+easy_install pymogon
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装uwsgi/nginx/virtualenv:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;emerge nginx
+emerge uwsgi
+emerge virtualenv
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用virtualenv创建应用&lt;/h3&gt;
+&lt;p&gt;我们使用virtualenv创建一个应用:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /code/python
+virtualenv /code/python
+&lt;span class="nb"&gt;source &lt;/span&gt;bin/activate
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后查看应用目录下会多出几个目录.&lt;/p&gt;
+&lt;h3&gt;配置uWSGI&lt;/h3&gt;
+&lt;p&gt;首先创建一个uwsgi配置文件,并编辑它:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
+vi /etc/conf.d/uwsgi.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;改成内如如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# Distributed under the terms of the GNU General Public License v2&lt;/span&gt;
+&lt;span class="c1"&gt;# $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $&lt;/span&gt;
+
+&lt;span class="c1"&gt;# DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Path (or name) of UNIX/TCP socket to bind to&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_SOCKET&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;            &lt;span class="c1"&gt;# 使用unix socket&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Enable threads?&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_THREADS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The path to your uWSGI application.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#UWSGI_PROGRAM=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The path to your uWSGI xml config file.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_XML_CONFIG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;               &lt;span class="c1"&gt;# 使用xml配置文件&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The number of child processes to spawn. The default is 1.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_CHILDREN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The log file path. If empty logging is disabled&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_LOG_FILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;                    &lt;span class="c1"&gt;# 定义日志&lt;/span&gt;
+
+&lt;span class="c1"&gt;# If you want to run your application inside a chroot then specify the&lt;/span&gt;
+&lt;span class="c1"&gt;# directory here. Leave this blank otherwise.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#UWSGI_CHROOT=/code/python&lt;/span&gt;
+
+&lt;span class="c1"&gt;# If you want to run your application from a specific directiory specify&lt;/span&gt;
+&lt;span class="c1"&gt;# it here. Leave this blank otherwise.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# UWSGI_DIR=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The user and group to run your application as. If you do not specify these,&lt;/span&gt;
+&lt;span class="c1"&gt;# the application will be run as root:root.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Additional options you might want to pass to uWSGI&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#UWSGI_EXTRA_OPTIONS=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后创建bottle.xml配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /code/bottle.xml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;内容如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;uwsgi&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;socket&amp;gt;&lt;/span&gt;/var/tmp/bottle.sock&lt;span class="nt"&gt;&amp;lt;/socket&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;home&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/home&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;chdir&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/chdir&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;python-path&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/python-path&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;index&lt;span class="nt"&gt;&amp;lt;/module&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;master/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;memory/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;logto&amp;gt;&lt;/span&gt;/var/log/bottle.log&lt;span class="nt"&gt;&amp;lt;/logto&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;daemonize&amp;gt;&lt;/span&gt;/var/log/uwsgi.log&lt;span class="nt"&gt;&amp;lt;/daemonize&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/uwsgi&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中&lt;module&gt;&lt;/module&gt;定义的就是你的web程序,也就是/code/python下要有一个index.py.&lt;/p&gt;
+&lt;p&gt;配置完毕后创建启动脚本:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt; &lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="sr"&gt;/uwsgi /&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="sr"&gt;/init.d/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;并加入开机启动:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置nginx&lt;/h3&gt;
+&lt;p&gt;编辑配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/etc/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改内容如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;uwsgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_PYTHOME&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_CHDIR&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                               
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_SCRIPT&lt;/span&gt;    &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_pass&lt;/span&gt;  &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;   
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;同样将nginx作为开机启动:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;p&gt;首先创建一个bottle程序供测试:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="c1"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c1"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
+
+&lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;# Author    : cold night&lt;/span&gt;
+&lt;span class="s"&gt;# Filename  : index.py                                                          &lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;bottle&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
+
+&lt;span class="nv"&gt;@route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后启动nginx和uwsgi:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后通过浏览器访问即可看到&lt;code&gt;Hello world!&lt;/code&gt;&lt;/p&gt;</summary><category term="web"></category><category term="virtualenv"></category><category term="uwsgi"></category><category term="python"></category><category term="Gentoo"></category><category term="bottle"></category></entry></feed>

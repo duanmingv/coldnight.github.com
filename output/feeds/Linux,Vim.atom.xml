@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood's Linux Zen</title><link href="http://localhost/" rel="alternate"></link><link href="http://localhost/feeds/Linux,Vim.atom.xml" rel="self"></link><id>http://localhost/</id><updated>2012-04-05T12:07:00+08:00</updated><entry><title>Linux下配置vim一键编译C/C++并执行</title><link href="http://localhost/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html" rel="alternate"></link><updated>2012-04-05T12:07:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-04-05:linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html</id><summary type="html">&lt;p&gt;最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.&lt;/p&gt;
+&lt;p&gt;首先在/usr/bin/下创建compile脚本:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;添加如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;# Filename : compile&lt;/span&gt;
+&lt;span class="c"&gt;# Describe : To compile c/c++&lt;/span&gt;
+&lt;span class="c"&gt;# Author   : cold night(www.linuxzen.com)&lt;/span&gt;
+&lt;span class="c"&gt;# Version  : 0.2&lt;/span&gt;
+&lt;span class="c"&gt;# Change   : 增加终端着色 &lt;/span&gt;
+
+clear
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$# &lt;/span&gt;-eq 1 &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;    &lt;/span&gt;&lt;span class="nv"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;
+    &lt;span class="nv"&gt;outname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;%\.*&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt;
+    &lt;span class="nv"&gt;typename&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;#*\.&lt;/span&gt;&lt;span class="k"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cpp&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cc&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;Compiling...&amp;quot;&lt;/span&gt;
+        g++ -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt; /tmp/errinfo &amp;gt;&amp;amp;2
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[32;1mSuccess!!!\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[1;44mRunning...\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            ./&lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[1;31mError!!!\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[1;44mError Info:\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            cat /tmp/errinfo
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+
+&lt;span class="k"&gt;    elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;c&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Compiling...&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+        gcc -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt;/tmp/errinfo &amp;gt;&amp;amp;2
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[32;1mSuccess!!!\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[1;44mRunning...\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            ./&lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[1;31mError!!!\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[1;44mError Info:\033[0m&amp;quot;&lt;/span&gt;
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+            cat /tmp/errinfo
+            &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+
+&lt;span class="k"&gt;    fi&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="k"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Error: No intput filename&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后给脚本赋予执行权限&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后编辑vim配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;vimrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后添加下面内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;&amp;quot; C++ complier&lt;/span&gt;
+autocmd &lt;span class="nb"&gt;FileType&lt;/span&gt; cpp map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;F8&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Esc&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;:&lt;span class="k"&gt;w&lt;/span&gt;&lt;span class="p"&gt;!&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;:&lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="k"&gt;compile&lt;/span&gt; %&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+autocmd &lt;span class="nb"&gt;FileType&lt;/span&gt; &lt;span class="k"&gt;cc&lt;/span&gt; map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;F8&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Esc&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;:&lt;span class="k"&gt;w&lt;/span&gt;&lt;span class="p"&gt;!&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;:&lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="k"&gt;compile&lt;/span&gt; %&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+autocmd &lt;span class="nb"&gt;FileType&lt;/span&gt; &lt;span class="k"&gt;c&lt;/span&gt; map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;F8&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Esc&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;:&lt;span class="k"&gt;w&lt;/span&gt;&lt;span class="p"&gt;!&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;:&lt;span class="p"&gt;!&lt;/span&gt;&lt;span class="k"&gt;compile&lt;/span&gt; %&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置完毕我们就可以用vim编辑C/C++源文件的时候按F8就可以进行一键编译执行.&lt;/p&gt;</summary><category term="编译"></category><category term="一键"></category><category term="vim"></category><category term="Linux"></category><category term="C/C++"></category></entry></feed>

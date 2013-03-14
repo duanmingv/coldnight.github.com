@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood's Linux Zen</title><link href="http://localhost/" rel="alternate"></link><link href="http://localhost/feeds/Linux,Vim,Python.atom.xml" rel="self"></link><id>http://localhost/</id><updated>2013-01-04T17:58:00+08:00</updated><entry><title>Vim 结合Python编写的翻译插件</title><link href="http://localhost/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html" rel="alternate"></link><updated>2013-01-04T17:58:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2013-01-04:vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html</id><summary type="html">&lt;p&gt;最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, &lt;Leader&gt;t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;&amp;quot;   Author  :   cold&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;   E-mail  :   wh_linux@126.com&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;   Date    :   2012/12/20 16:23&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;   Desc    :   英汉/汉英翻译插件&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;   Useage  :&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;                  &amp;lt;Leader&amp;gt; t 翻译当前光标下内容 //XXX 中文不行&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;                  &amp;lt;Leader&amp;gt; lt 翻译当前行&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;                  &amp;lt;Leader&amp;gt; vt 翻译选中的内容&lt;/span&gt;
+
+&lt;span class="k"&gt;function&lt;/span&gt; GetCursorWord&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; column &lt;span class="p"&gt;=&lt;/span&gt; get&lt;span class="p"&gt;(&lt;/span&gt;getpos&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; line &lt;span class="p"&gt;=&lt;/span&gt; getline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; strpart&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; column&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; tmp &lt;span class="p"&gt;=&lt;/span&gt; strpart&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; column &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; tmp &lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;[a-zA-Z]&amp;quot;&lt;/span&gt;
+            &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; word . tmp
+        &lt;span class="k"&gt;else&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;
+        &lt;span class="k"&gt;endif&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;endwhile&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; tmp &lt;span class="p"&gt;=&lt;/span&gt; strpart&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; column &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; tmp &lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;[a-zA-Z]&amp;#39;&lt;/span&gt;
+            &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; tmp . word
+        &lt;span class="k"&gt;else&lt;/span&gt;
+            &lt;span class="k"&gt;break&lt;/span&gt;
+        &lt;span class="k"&gt;endif&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;endwhile&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; word
+endfunc
+
+&lt;span class="k"&gt;function&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;    &amp;quot; m 1 -&amp;gt; 翻译当前行&lt;/span&gt;
+&lt;span class="c"&gt;    &amp;quot; m 2 -&amp;gt; 翻译选中&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;n&amp;#39;&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; GetCursorWord&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c"&gt;&amp;quot; 如果是命令模式则取当前字符下单词&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;span class="c"&gt;    &amp;quot;XXX Visual 模式mode()命令返回n&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; a:&lt;span class="k"&gt;m&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; getreg&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c"&gt;&amp;quot; 如果是选择模式获取选择块&lt;/span&gt;
+
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; a:&lt;span class="k"&gt;m&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; getline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+python &lt;span class="p"&gt;&amp;lt;&amp;lt;&lt;/span&gt; EOF
+
+import &lt;span class="k"&gt;vim&lt;/span&gt;
+import urllib
+import urllib2
+
+class Translate&lt;span class="p"&gt;(&lt;/span&gt;object&lt;span class="p"&gt;)&lt;/span&gt;:
+&lt;span class="c"&gt;    &amp;quot;&amp;quot;&amp;quot; 使用google进行英-&amp;gt;汉, 汉-&amp;gt;英的翻译 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;def&lt;/span&gt; __init__&lt;span class="p"&gt;(&lt;/span&gt;self&lt;span class="p"&gt;,&lt;/span&gt; text&lt;span class="p"&gt;,&lt;/span&gt; src&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;zh-CN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; dst &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
+        self.url &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://translate.google.cn/translate_a/t&amp;#39;&lt;/span&gt;
+        self.params &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;client &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;t&amp;quot;, text=text,&lt;/span&gt;
+                           &lt;span class="nb"&gt;hl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;zh-CN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;tl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; dst&lt;span class="p"&gt;,&lt;/span&gt;
+                           multires &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;prev&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;btn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                           ssel &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;sc&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; src &lt;span class="p"&gt;!=&lt;/span&gt; self.params.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;hl&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
+            self.params.&lt;span class="k"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;sl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; src&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;return&lt;/span&gt;
+
+    &lt;span class="nb"&gt;def&lt;/span&gt; loads&lt;span class="p"&gt;(&lt;/span&gt;self&lt;span class="p"&gt;,&lt;/span&gt; content&lt;span class="p"&gt;)&lt;/span&gt;:
+&lt;span class="c"&gt;        &amp;quot;&amp;quot;&amp;quot; 加载翻译结果 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;,,&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; content or &lt;span class="s1"&gt;&amp;#39;[,&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; content:
+            content &lt;span class="p"&gt;=&lt;/span&gt; content.replace&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;,,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;,&amp;quot;&amp;quot;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            content &lt;span class="p"&gt;=&lt;/span&gt; content.replace&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;[,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;[&amp;quot;&amp;quot;,&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            #content &lt;span class="p"&gt;=&lt;/span&gt; content.replace&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;,]&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;quot;,]&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        content &lt;span class="p"&gt;=&lt;/span&gt; eval&lt;span class="p"&gt;(&lt;/span&gt;content&lt;span class="p"&gt;)&lt;/span&gt;
+        result &lt;span class="p"&gt;=&lt;/span&gt; content[&lt;span class="m"&gt;0&lt;/span&gt;][&lt;span class="m"&gt;0&lt;/span&gt;]
+        desc &lt;span class="p"&gt;=&lt;/span&gt; content[&lt;span class="m"&gt;1&lt;/span&gt;]
+        pinyin &lt;span class="p"&gt;=&lt;/span&gt; result[&lt;span class="m"&gt;2&lt;/span&gt;] &lt;span class="k"&gt;if&lt;/span&gt; result[&lt;span class="m"&gt;2&lt;/span&gt;] &lt;span class="k"&gt;else&lt;/span&gt; result[&lt;span class="m"&gt;3&lt;/span&gt;]
+        others &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; desc:
+            others &lt;span class="p"&gt;+=&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;0&lt;/span&gt;] &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; i &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;1&lt;/span&gt;]:
+                others &lt;span class="p"&gt;+=&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;\t{0}\t&amp;quot;.format(i)&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; s &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;2&lt;/span&gt;]:
+                    &lt;span class="k"&gt;if&lt;/span&gt; s[&lt;span class="m"&gt;0&lt;/span&gt;] &lt;span class="p"&gt;==&lt;/span&gt; i:
+                        others &lt;span class="p"&gt;+=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;.&lt;span class="k"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;s[&lt;span class="m"&gt;1&lt;/span&gt;]&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;
+        &lt;span class="k"&gt;r&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+            result &lt;span class="p"&gt;=&lt;/span&gt; result[&lt;span class="m"&gt;0&lt;/span&gt;]&lt;span class="p"&gt;,&lt;/span&gt;
+            source &lt;span class="p"&gt;=&lt;/span&gt; result[&lt;span class="m"&gt;1&lt;/span&gt;]&lt;span class="p"&gt;,&lt;/span&gt;
+            pinyin &lt;span class="p"&gt;=&lt;/span&gt; pinyin&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;r&lt;/span&gt;
+
+    &lt;span class="nb"&gt;def&lt;/span&gt; translate&lt;span class="p"&gt;(&lt;/span&gt;self&lt;span class="p"&gt;)&lt;/span&gt;:
+&lt;span class="c"&gt;        &amp;quot;&amp;quot;&amp;quot; 调用google翻译 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+        params &lt;span class="p"&gt;=&lt;/span&gt; urllib.urlencode&lt;span class="p"&gt;(&lt;/span&gt;self.params&lt;span class="p"&gt;)&lt;/span&gt;
+        req &lt;span class="p"&gt;=&lt;/span&gt; urllib2.Request&lt;span class="p"&gt;(&lt;/span&gt;self.url&lt;span class="p"&gt;,&lt;/span&gt; params&lt;span class="p"&gt;)&lt;/span&gt;
+        req.add_header&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;User-Agent&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="c"&gt;                       &amp;quot;Mozilla/5.0+(compatible;+Googlebot/2.1;&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;                       &amp;quot;++http://www.google.com/bot.html)&amp;quot;)&lt;/span&gt;
+
+        &lt;span class="k"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; urllib2.urlopen&lt;span class="p"&gt;(&lt;/span&gt;req&lt;span class="p"&gt;)&lt;/span&gt;
+        result &lt;span class="p"&gt;=&lt;/span&gt;  &lt;span class="k"&gt;res&lt;/span&gt;.&lt;span class="k"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; self.loads&lt;span class="p"&gt;(&lt;/span&gt;result&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nb"&gt;def&lt;/span&gt; auto_translate&lt;span class="p"&gt;(&lt;/span&gt;text&lt;span class="p"&gt;)&lt;/span&gt;:
+&lt;span class="c"&gt;    &amp;quot;&amp;quot;&amp;quot; 自动检测当前语言进行翻译 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    text &lt;span class="p"&gt;=&lt;/span&gt; text.decode&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; text[&lt;span class="m"&gt;0&lt;/span&gt;] &lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;u&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;z&amp;#39;&lt;/span&gt;:
+        src &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;zh-CN&amp;#39;&lt;/span&gt;
+        dst &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;:
+        src &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;
+        dst &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;zh-CN&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;t&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;text.encode&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;utf-8&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; src&lt;span class="p"&gt;,&lt;/span&gt; dst&lt;span class="p"&gt;)&lt;/span&gt;
+    result &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;t&lt;/span&gt;.translate&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; result
+
+word &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;vim&lt;/span&gt;.eval&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;word&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+result &lt;span class="p"&gt;=&lt;/span&gt; auto_translate&lt;span class="p"&gt;(&lt;/span&gt;word.strip&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;源词: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;source&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;结果: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;result&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;拼音: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pinyin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;others&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
+    &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;其他释义: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;others&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+EOF
+
+endfunc
+nmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;t&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+nmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;lt&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;XXX 无法判断当前模式,使用映射替代&lt;/span&gt;
+map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;ts&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="翻译"></category><category term="插件"></category><category term="vim"></category><category term="python"></category></entry></feed>

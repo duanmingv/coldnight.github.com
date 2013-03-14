@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>AppArmor引起的无法启动Evince</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="./theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+        <article>
+    <header>
+        <h2><a href="apparmoryin-qi-de-wu-fa-qi-dong-evince.html" rel="bookmark">
+    AppArmor引起的无法启动Evince
+</a></h2>
+<time datetime="2012-11-15 16:05:00" pubdate>Posted on
+    四 15 十一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="./category/linux.html">
+    Linux</a>.
+        </span>
+    </header>
+
+    <div class="body">
+        <p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
+evince
+却提示:</p>
+<div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
+<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments:</span> <span class="err">无法打开显示：</span>
+</pre></div>
+
+
+<p>google说是$XAUTHORITY权限的问题,于是查看:</p>
+<div class="codehilite"><pre>ls -l <span class="nv">$XAUTHORITY</span>
+-rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
+</pre></div>
+
+
+<p>更改为如下:</p>
+<div class="codehilite"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
+</pre></div>
+
+
+<p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
+<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit</span><span class="p">(</span><span class="mf">1352965733.221</span><span class="p">:</span><span class="mi">74</span><span class="p">):</span> <span class="n">apparmor</span><span class="o">=</span><span class="s">&quot;DENIED&quot;</span> <span class="n">operation</span><span class="o">=</span><span class="s">&quot;open&quot;</span> <span class="n">parent</span><span class="o">=</span><span class="mi">1</span> <span class="n">profile</span><span class="o">=</span><span class="s">&quot;/usr/bin/evince&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;/data/home/vim/.Xauthority&quot;</span> <span class="n">pid</span><span class="o">=</span><span class="mi">7088</span> <span class="n">comm</span><span class="o">=</span><span class="s">&quot;evince&quot;</span> <span class="n">requested_mask</span><span class="o">=</span><span class="s">&quot;r&quot;</span> <span class="n">denied_mask</span><span class="o">=</span><span class="s">&quot;r&quot;</span> <span class="n">fsuid</span><span class="o">=</span><span class="mi">1000</span> <span class="n">ouid</span><span class="o">=</span><span class="mi">1000</span>
+</pre></div>
+
+
+<p>好吧,问题是一个叫做AppArmor的内核模块引起的,它阻止了evince读取.Xauthority,找到配置文件,添加:</p>
+<div class="codehilite"><pre>sudo vim /etc/apparmor.d/usr.bin.evince 
+@<span class="o">{</span>HOME<span class="o">}</span>/.Xauthority rw,
+sudo /etc/init.d/apparmor restart
+</pre></div>
+
+
+<p>做完这些还是刷同样的日志,无奈只有禁用它了:</p>
+<div class="codehilite"><pre>sudo ln -sf /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/
+</pre></div>
+
+
+<p>重启apparmor就能打开Evince了,都不知道这玩意是怎么加上的,之前都没问题.</p>
+<p>此次解决看来Linux问题解决之路是从日志开始的,长时间Linux桌面工作差点都给忘掉日志的重要性.</p>
+    </div>
+
+        <footer>
+        <ul class="tags">            <li>
+                <a href="./tag/ubuntu.html">Ubuntu</a>
+            </li>            <li>
+                <a href="./tag/evince.html">evince</a>
+            </li>            <li>
+                <a href="./tag/apparmor.html">apparmor</a>
+            </li>        </ul>
+    </footer>
+    
+        <div id="disqus_thread"></div>
+    <script>
+        var disqus_identifier = "apparmoryin-qi-de-wu-fa-qi-dong-evince.html";
+        (function () {
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.src = 'http://linuxzen.disqus.com/embed.js';
+            (document.head || document.body).appendChild(dsq);
+        })();
+    </script>
+    </article>
+
+<script>
+    (function () {
+        'use strict';
+        var titleElm = document.querySelector('article > header');
+        var bodyElm = document.querySelector('article > .body');
+        if (!titleElm || !bodyElm)
+            return;
+
+        var limit = titleElm.offsetTop;
+        var titleCls = titleElm.classList;
+        var bodyCls = bodyElm.classList;
+        var floating = false;
+        window.onscroll = function (evt) {
+            var scrollTop = Math.max(document.body.scrollTop,
+                    document.documentElement.scrollTop);
+            if (!floating && limit <= scrollTop) {
+                titleCls.add('float');
+                bodyCls.add('body-padding');
+                floating = true;
+            }
+            else if (limit >= scrollTop) {
+                titleCls.remove('float');
+                bodyCls.remove('body-padding');
+                floating = false;
+            }
+        };
+    })();
+</script>
+    </div>
+
+    <div class="container footnote">
+                            </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

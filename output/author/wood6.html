@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+        <title>Wood's Linux Zen - Articles by Wood</title>
+        <meta charset="utf-8" />
+        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
+        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
+                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+<body>
+    <header id="main">
+        <div class="container">
+            <div class="logo">
+                <a href="/index.html" title="Home">Wood's Linux Zen</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="splash">
+        <div class="container">
+            <div class="welcome">分享技术,分享点滴</div>
+        </div>
+    </div>
+
+    <div class="container content">
+                    
+    <article>
+        <header>
+            <h2><a href="vimpei-zhi-xi-lie-cha-jian-guan-li.html" rel="bookmark">
+    Vim配置系列(一) ---- 插件管理
+</a></h2>
+<time datetime="2012-12-14 08:57:00" pubdate>Posted on
+    五 14 十二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/vim.html">
+    Vim</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
+首先在你的~/.vim下或者$VIM/vimfiles($VIM是vim的安装路径)创建bundle目录</p>
+<div class="codehilite"><pre>mkdir ~/.vim/bundle
+</pre></div>
+
+
+<p>然后使用git克隆Vundle项目:</p>
+<div class="codehilite"><pre>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</pre></div>
+
+
+<p>然后在你的.vimrc里添加下面内容:</p>
+<div class="codehilite"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
+<span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../vimpei-zhi-xi-lie-cha-jian-guan-li.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html" rel="bookmark">
+    Vim配置系列(二) —- 好看的statusline
+</a></h2>
+<time datetime="2013-01-05 15:01:00" pubdate>Posted on
+    六 05 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/vim.html">
+    Vim</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
+<div class="codehilite"><pre>Bundle <span class="c">&quot;Lokaltog/vim-powerline&quot;</span>
+</pre></div>
+
+
+<p>然后重新打开vim执行</p>
+<div class="codehilite"><pre><span class="p">:</span>BundleInstall
+</pre></div>
+
+
+<p>如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加</p>
+<div class="codehilite"><pre><span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
+<span class="k">let</span> g:Powerline_symbols<span class="p">=</span><span class="s1">&#39;unicode&#39;</span>
+</pre></div>
+
+
+<p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
+<p>然后重新打开vim你就会发现一个漂亮的statusline</p>
+<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p>
+        </div>
+
+        <p>
+            <a href="../vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="bookmark">
+    vLog 一个使用Python编写的轻量级博客系统
+</a></h2>
+<time datetime="2013-02-05 16:43:00" pubdate>Posted on
+    二 05 二月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>介绍</h2>
+<h3>何为vLog</h3>
+<p>大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用<code>Python</code>的<code>tornado</code>框架和<code>Jinja2</code>模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用<code>Markdown</code>的格式来抒写博文.</p>
+<h3>为什么vLog</h3>
+<p>vLog后台十分简单(可以说是简陋),功能也简单,就是一款简单的博客系统,提供了Python终端脚本,可以在终端来抒写博文, vLog使用一套非常简单的缓存系统,缓存使用memcached使得页面加载速度非常快.</p>
+<h3>为什么不vLog</h3>
+<p>相对与wordpress vlog非常简陋,仅仅提供简单的博客功能,而且使用Python编写主机方面支援不太多,虽然有<code>SAE</code>和<code>GAE</code>的支援,但是我没弄过,所以没有支援<code>SAE</code>和<code>GAE</code>(如果你有兴趣,可以添加相关支持)</p>
+<h2>安装</h2>
+<h3>平台</h3>
+<ul>
+<li>Linux</li>
+<li>python2.7</li>
+<li>MySQL ...</li></ul>
+        </div>
+
+        <p>
+            <a href="../vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html" rel="bookmark">
+    vLog使用Tornado框架结合memcached缓存页面
+</a></h2>
+<time datetime="2013-01-16 16:14:00" pubdate>Posted on
+    三 16 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxmysqlpython.html">
+    Linux,MySQL,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>原因</h2>
+<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
+<h2>实现</h2>
+<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
+prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/14 09:57:31</span>
+<span class="c">#   Desc ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html" rel="bookmark">
+    用bottle+mongodb写的blog程序支持mysql啦
+</a></h2>
+<time datetime="2012-08-14 09:16:00" pubdate>Posted on
+    二 14 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
+<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
+<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
+<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
+<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
+<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p>
+        </div>
+
+        <p>
+            <a href="../yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-bottlemongodbxie-de-ge-blogcheng-xu.html" rel="bookmark">
+    用bottle+mongodb写的一个blog程序
+</a></h2>
+<time datetime="2012-06-16 16:20:00" pubdate>Posted on
+    六 16 六月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
+<p>前台显示文章:
+按分类显示
+按标签显示
+按月份归档显示
+最新文章
+评论
+后台管理:
+管理文章
+管理分类
+管理评论
+发表文章
+用户验证</p>
+<p>目录结构</p>
+<p>water</p>
+<p>+-app           程序目录</p>
+<p>|----admin.py  后台管理</p>
+<p>|----blog.py   前台显示</p>
+<p>|----dbconn.py 数据库连接</p>
+<p>|----encrypt.py包含加密函数</p>
+<p>+-static       静态文件目录:包括js css image</p>
+<p>+-views        模版目录</p>
+<p>+-index.py     用于启动整个程序 ...</p>
+        </div>
+
+        <p>
+            <a href="../yong-bottlemongodbxie-de-ge-blogcheng-xu.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html" rel="bookmark">
+    用pxe安装自己定制的发行版快速部署系统环境
+</a></h2>
+<time datetime="2012-02-02 11:37:00" pubdate>Posted on
+    四 02 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
+<p>这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
+基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)</p>
+<p>使用环境:CentOS 5.5 32位</p>
+<p>使用系统:根据CentOS定制的发行版ColdOS 0.1 32位</p>
+<p>ip: 静态ip192.168.3.1</p>
+<p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
+1.安装配置tftp</p>
+<p>安装tftp-server</p>
+<div class="codehilite"><pre>yum -y install tftp-server
+</pre></div>
+
+
+<p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
+<div class="codehilite"><pre>vi ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html" rel="bookmark">
+    用Python对各种编程语言进行代码高亮
+</a></h2>
+<time datetime="2012-09-29 15:11:00" pubdate>Posted on
+    六 29 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮</p>
+<p>下面来介绍一下它:</p>
+<p>首先安装很简单,使用easy_install来进行安装:</p>
+<div class="codehilite"><pre>easy_install pygments
+</pre></div>
+
+
+<p>安装完后我们来使用,Python的简单不会让大家失望:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
+<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
+
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="n">linenos</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="s">&#39;print &quot;hello, world&quot;&#39;</span><span class="p">,</span> <span class="n">PythonLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">code</span>
+</pre></div>
+
+
+<h5>结果</h5>
+<div class="codehilite"><pre>&#39;<span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">&quot;highlighttable ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html" rel="bookmark">
+    用python发带附件的邮件用来定时备份mysql数据库
+</a></h2>
+<time datetime="2012-04-21 18:26:00" pubdate>Posted on
+    六 21 四月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/linuxmysqlpython.html">
+    Linux,MySQL,Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
+<p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding: utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: mail.py</span>
+<span class="sd">#         Desc: To send email</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version: 0.0.1</span>
+<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html" rel="bookmark">
+    用Python将绝对URL替换成相对URL
+</a></h2>
+<time datetime="2012-09-29 15:52:00" pubdate>Posted on
+    六 29 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/wood.html">
+    Wood</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
+<p>脚本内容如下:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c"># author  : cold night</span>
+<span class="c"># email   : wh_linux@126.com</span>
+<span class="c">#</span>
+
+<span class="kn">import</span> <span class="nn">pymongo</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        <script type="text/javascript">
+        var disqus_shortname = 'linuxzen';
+        (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.head || document.body).appendChild(s);
+        }());
+    </script>
+        </div>
+
+    <div class="container footnote">
+                            <span class="paginator">
+            <a href="../author/wood5.html">&laquo;</a>
+            Page 6 / 7
+        <a href="../author/wood7.html">&raquo;</a>
+    </span>
+    </div>
+
+    <div class="bottom">
+        <div class="container">
+            <div class="about">
+                <h3>About me</h3>
+                <img alt="Me!" class="avatar"
+                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
+                <p>喜欢重复的造轮子</p>
+                                <p>
+                   You can contact me by emailing
+                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
+                </p>
+                <p>
+                                                            <a href="https://github.com/coldnight"
+                       title="coldnight's Profile">fork me on GitHub</a>!
+                                    </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer">
+            <span>Powered by <a href="http://docs.getpelican.com">
+                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
+                neat theme</a>.
+            </span>
+            <nav>
+                <ul>
+                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
+                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
+                                    </ul>
+            </nav>
+                    </div>
+    </footer>
+
+    </body>
+</html>

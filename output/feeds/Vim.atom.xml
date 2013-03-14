@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood's Linux Zen</title><link href="http://localhost/" rel="alternate"></link><link href="http://localhost/feeds/Vim.atom.xml" rel="self"></link><id>http://localhost/</id><updated>2013-01-05T15:01:00+08:00</updated><entry><title>Vim配置系列(二) —- 好看的statusline</title><link href="http://localhost/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html" rel="alternate"></link><updated>2013-01-05T15:01:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2013-01-05:vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html</id><summary type="html">&lt;p&gt;Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;Bundle &lt;span class="c"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后重新打开vim执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;:&lt;/span&gt;BundleInstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;laststatus&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
+&lt;span class="k"&gt;let&lt;/span&gt; g:Powerline_symbols&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;unicode&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)&lt;/p&gt;
+&lt;p&gt;然后重新打开vim你就会发现一个漂亮的statusline&lt;/p&gt;
+&lt;p&gt;&lt;img alt="好看的statusline" src="/upload/VimPythonComment1.png" /&gt;&lt;/p&gt;</summary><category term="配置"></category><category term="系列"></category><category term="漂亮"></category><category term="插件"></category><category term="vim"></category><category term="statusline"></category><category term="Powerline"></category></entry><entry><title>Vim配置系列(一) ---- 插件管理</title><link href="http://localhost/vimpei-zhi-xi-lie-cha-jian-guan-li.html" rel="alternate"></link><updated>2012-12-14T08:57:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-12-14:vimpei-zhi-xi-lie-cha-jian-guan-li.html</id><summary type="html">&lt;p&gt;最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
+首先在你的~/.vim下或者$VIM/vimfiles($VIM是vim的安装路径)创建bundle目录&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir ~/.vim/bundle
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后使用git克隆Vundle项目:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后在你的.vimrc里添加下面内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;nocompatible&lt;/span&gt;
+&lt;span class="k"&gt;filetype&lt;/span&gt; off                              &lt;span class="c"&gt;&amp;quot; 先关闭文件类型&lt;/span&gt;
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;rtp&lt;/span&gt;&lt;span class="p"&gt;+=~&lt;/span&gt;&lt;span class="sr"&gt;/.vim/&lt;/span&gt;bundle/vundle             &lt;span class="c"&gt;&amp;quot; 将vundle路径添加到插件vim路径&lt;/span&gt;
+&lt;span class="k"&gt;call&lt;/span&gt; vundle#rc&lt;span class="p"&gt;()&lt;/span&gt;                          &lt;span class="c"&gt;&amp;quot; 执行Vundle初始化&lt;/span&gt;
+Bundle &lt;span class="s1"&gt;&amp;#39;gmarik/vundle&amp;#39;&lt;/span&gt;                    &lt;span class="c"&gt;&amp;quot; 将Vundle加入到bundle&lt;/span&gt;
+
+&lt;span class="k"&gt;filetype&lt;/span&gt; indent plugin &lt;span class="k"&gt;on&lt;/span&gt;                 &lt;span class="c"&gt;&amp;quot; 安装完后打开文件类型&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如需加上插件则在Bundle 'gmarik/vundle'后加上相应的Bundle,如果是github则可以只输入后面的相对路径,如果是其他git则需输入全部url,下面给出一个完整的例子:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;nocompatible&lt;/span&gt;
+&lt;span class="k"&gt;filetype&lt;/span&gt; off
+&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;rtp&lt;/span&gt;&lt;span class="p"&gt;+=~&lt;/span&gt;&lt;span class="sr"&gt;/.vim/&lt;/span&gt;bundle/vundle
+&lt;span class="k"&gt;call&lt;/span&gt; vundle#rc&lt;span class="p"&gt;()&lt;/span&gt;
+Bundle &lt;span class="s1"&gt;&amp;#39;gmarik/vundle&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;MarcWeber/vim-addon-mw-utils&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;tomtom/tlib_vim&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;honza/snipmate-snippets&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;garbas/vim-snipmate&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;Shougo/neocomplcache&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;drakeguan/vim-vcscommand&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;scrooloose/nerdtree&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;pix/vim-taglist&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;nathanaelkane/vim-indent-guides&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;clones/vim-cecutil&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;tpope/vim-fugitive&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;c9s/bufexplorer&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;jnwhiteh/vim-golang&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;kevinw/pyflakes-vim&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;mbriggs/mark.vim&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;vim-scripts/TabBar&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/DrawIt&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/calendar.vim--Matsumoto&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/Python-mode-klen&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;vim-scripts/pydoc.vim&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/VOoM&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/qiushibaike&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/AuthorInfo&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/javacomplete&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/javaDoc.vim&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;drmingdrmer/xptemplate.git&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/Java-Syntax-and-Folding&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;filetype&lt;/span&gt; indent plugin &lt;span class="k"&gt;on&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;以上是我的Vundle配置,再后面的文章会对其中一些做出介绍:&lt;/p&gt;
+&lt;p&gt;配置完后保存使用Vim打开任意文档执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;:&lt;/span&gt;BundleInstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果网络通畅Bundle会逐个安装每个插件.&lt;/p&gt;
+&lt;p&gt;同时还有:BundleSearch用于搜索插件,非常方便.&lt;/p&gt;</summary><category term="配置"></category><category term="系列"></category><category term="管理"></category><category term="插件"></category><category term="Vundle"></category><category term="vim"></category><category term="Bundle"></category></entry><entry><title>分享Vim两种好用的功能:状态行和空白字符可见</title><link href="http://localhost/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html" rel="alternate"></link><updated>2012-09-29T17:30:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-09-29:fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html</id><summary type="html">&lt;p&gt;马上要放假了,没事折腾了一下Vim发现了两个非常棒的功能,一个是给Vim添加一个状态栏,一个是可以在编辑的时候显示空白,&lt;/p&gt;
+&lt;p&gt;我的状态栏显示了:
+正在编辑的文件名,
+选项
+是Git显示git分支(需要fugitive插件)
+文件类型
+当前目录
+当前字符的ASCII和16进制码
+右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
+fugitive 可以在git获得:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//gi&lt;/span&gt;&lt;span class="n"&gt;thub&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/tpope/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fugitive&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将plugin目录下的fugitive.vim复制到~/.vim/plugin下
+在~/.vimrc添加如下内容&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; has&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;statusline&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;laststatus&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;%&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;%&lt;span class="k"&gt;f&lt;/span&gt;\   &lt;span class="c"&gt;&amp;quot; 文件名&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;+=&lt;/span&gt;%&lt;span class="k"&gt;w&lt;/span&gt;%&lt;span class="k"&gt;h&lt;/span&gt;%&lt;span class="k"&gt;m&lt;/span&gt;%&lt;span class="k"&gt;r&lt;/span&gt; &lt;span class="c"&gt;&amp;quot; 选项&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;+=&lt;/span&gt;%{fugitive#&lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;} &lt;span class="c"&gt;&amp;quot;Git&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;+=&lt;/span&gt;\ [%{&amp;amp;&lt;span class="nb"&gt;ff&lt;/span&gt;}/%Y]            &lt;span class="c"&gt;&amp;quot; filetype&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;+=&lt;/span&gt;\ [%{getcwd&lt;span class="p"&gt;()&lt;/span&gt;}]          &lt;span class="c"&gt;&amp;quot; current dir&lt;/span&gt;
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;+=&lt;/span&gt;\ [A&lt;span class="p"&gt;=&lt;/span&gt;\%&lt;span class="m"&gt;03&lt;/span&gt;.&lt;span class="m"&gt;3&lt;/span&gt;b&lt;span class="sr"&gt;/H=\%02.2B] &amp;quot; ASCII /&lt;/span&gt; Hexadecimal value of char
+    &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;statusline&lt;/span&gt;&lt;span class="p"&gt;+=&lt;/span&gt;%&lt;span class="p"&gt;=&lt;/span&gt;%&lt;span class="m"&gt;-14&lt;/span&gt;.&lt;span class="p"&gt;(&lt;/span&gt;%&lt;span class="k"&gt;l&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;%&lt;span class="k"&gt;c&lt;/span&gt;%V%&lt;span class="p"&gt;)&lt;/span&gt;\ %&lt;span class="k"&gt;p&lt;/span&gt;%%\ %L  &lt;span class="c"&gt;&amp;quot; Right aligned file nav info&lt;/span&gt;
+&lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;要想在编辑时将空白可见可以在.vimrc中添加如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;listchars&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="k"&gt;tab&lt;/span&gt;:&lt;span class="p"&gt;&amp;gt;-,&lt;/span&gt;trail:&lt;span class="p"&gt;-,&lt;/span&gt;extends:#&lt;span class="p"&gt;,&lt;/span&gt;nbsp:&lt;span class="p"&gt;-&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;即可tab显示为&amp;gt;---,空格显示-,行尾的空白显示-,&lt;/p&gt;
+&lt;p&gt;设置完后非常的cool,上图一张:
+&lt;img alt="vim空白符" src="/upload/Screenshot-2012-09-29-173517.png" /&gt;&lt;/p&gt;</summary><category term="空白"></category><category term="字符"></category><category term="可见"></category><category term="vim"></category><category term="statusline"></category></entry></feed>

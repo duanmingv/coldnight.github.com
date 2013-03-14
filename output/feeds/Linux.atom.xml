@@ -1,0 +1,1219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wood's Linux Zen</title><link href="http://localhost/" rel="alternate"></link><link href="http://localhost/feeds/Linux.atom.xml" rel="self"></link><id>http://localhost/</id><updated>2012-12-04T13:21:00+08:00</updated><entry><title>Awesome+tmux+gnomeDo打造高效Linux桌面环境</title><link href="http://localhost/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html" rel="alternate"></link><updated>2012-12-04T13:21:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-12-04:awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html</id><summary type="html">&lt;h2&gt;引言&lt;/h2&gt;
+&lt;p&gt;近期一直在Linux下工作,使用Ubuntu 11.10,经过一段时间的使用和磨合,终于打造出一套适合自己的高效Linux桌面环境,之前也在博客中零散的写了几篇文章分享,在此做一番总结.&lt;/p&gt;
+&lt;p&gt;首先先放出桌面截图
+&lt;img alt="Awesome 桌面截图" src="/upload/MyDesktop.png" /&gt;&lt;/p&gt;
+&lt;h2&gt;Awesome&lt;/h2&gt;
+&lt;p&gt;使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.&lt;/p&gt;
+&lt;h3&gt;安装&lt;/h3&gt;
+&lt;p&gt;Awesome Ubuntu下安装十分简单:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install awesome
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置&lt;/h3&gt;
+&lt;h4&gt;拷贝配置文件&lt;/h4&gt;
+&lt;p&gt;Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp /etc/xdg/awesome/rc.lua ~/.config/awesome &lt;span class="c"&gt;#  ~/.confg下如没有awesome则手动创建&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;配置自动启程序&lt;/h4&gt;
+&lt;p&gt;使用awesome之后之前设置的自动启动就会失效,因为Awesome启动是通过配置文件控制的,在配置文件(~/.config/awesome/rc.lua)加上如下内容可以配置自启动程序:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;autorunApps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
+&lt;span class="p"&gt;{&lt;/span&gt; 
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;pidgin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;fcitx&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;dbus-launch gnome-do&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;guake&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;/opt/qq2012/wineapp/qq/qq.sh&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;autorunApps&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+        &lt;span class="n"&gt;awful&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;util&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spawn_with_shell&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;autorunApps&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在autorunApps中添加要自动启动程序的命令即可在登录时启动相应的程序&lt;/p&gt;
+&lt;h4&gt;使用gnome桌面元素&lt;/h4&gt;
+&lt;p&gt;awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
+在宿主目录创建.xinitrc,添加如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+gnome-settings-daemon &amp;amp;     &lt;span class="c"&gt;# 使用gnome桌面元素&lt;/span&gt;
+nm-applet --sm-disable &amp;amp;    &lt;span class="c"&gt;# 托盘栏添加网卡图标&lt;/span&gt;
+&lt;span class="nb"&gt;exec &lt;/span&gt;awesome
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果不生效,则执行下面命令:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ln -sf ~/.xinitrc ~/.xprofile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;美化&lt;/h3&gt;
+&lt;p&gt;可以自己编写lua脚本对Awesome进行美化,当然还有很多已经写好的配置,我们叫他为主题
+awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下载.
+我们可以使用git将主题整体克隆下来&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后修改~/.config/awesome/rc.lua的beautiful.init()的参数改为主题的路径:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;beautiful&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;/your/home/path/.config/awesome/themes/bamboo/theme.lua&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果背景图片无法显示,安装feh:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install feh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用&lt;/h3&gt;
+&lt;p&gt;配置完成后注销使用Awesome会话登录,Awesome使用Win键作为主键,几个常用的为:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以在多个桌面切换&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="err"&gt;可以重启&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="err"&gt;可以切换窗口&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;类&lt;/span&gt;&lt;span class="n"&gt;Vim&lt;/span&gt;&lt;span class="err"&gt;操作&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="sr"&gt;m/n可以最大/&lt;/span&gt;&lt;span class="err"&gt;小化窗口&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Shift&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以将当前窗口发送到其他桌面&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Shift&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="err"&gt;可以关闭当前窗口&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Space&lt;/span&gt;&lt;span class="err"&gt;可以切换布局&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="err"&gt;有多种布局&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;这里不作介绍&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;大家可以自己稍作尝试&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;下面给出完整的快捷键:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Enter&lt;/span&gt;           &lt;span class="err"&gt;打开终端&lt;/span&gt;                                               
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;               &lt;span class="err"&gt;执行程序或命令&lt;/span&gt;
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;               &lt;span class="err"&gt;打开&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="err"&gt;主菜单（鼠标右键关闭）&lt;/span&gt;                                                   
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;       &lt;span class="err"&gt;关闭当前窗口或应用&lt;/span&gt;                                     
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;     &lt;span class="err"&gt;重启&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;                                            
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="sx"&gt;q  &lt;/span&gt;     &lt;span class="err"&gt;退出&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;
+
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;               &lt;span class="err"&gt;切换到下一个窗口&lt;/span&gt;                                       
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;               &lt;span class="err"&gt;切换到前一个窗口&lt;/span&gt;                                       
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Left&lt;/span&gt;            &lt;span class="err"&gt;查看前一个&lt;/span&gt;&lt;span class="n"&gt;tag&lt;/span&gt;                                          
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Right&lt;/span&gt;           &lt;span class="err"&gt;查看后一个&lt;/span&gt;&lt;span class="n"&gt;tag&lt;/span&gt;                                          
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;             &lt;span class="err"&gt;切换到&lt;/span&gt;&lt;span class="n"&gt;tag&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;                                          
+
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;     &lt;span class="err"&gt;切换到下一个屏幕&lt;/span&gt;                                       
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;     &lt;span class="err"&gt;切换到上一个屏幕&lt;/span&gt;                                       
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;       &lt;span class="err"&gt;当前窗口和前一个窗口互换位置&lt;/span&gt;                           
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;       &lt;span class="err"&gt;当前窗口和后一个窗口互换位置&lt;/span&gt;                           
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;               &lt;span class="err"&gt;把主区域的宽度增大&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nv"&gt;%&lt;/span&gt;                                   
+&lt;span class="nv"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;               &lt;span class="err"&gt;把主区域的宽度减少&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nv"&gt;%&lt;/span&gt;
+
+&lt;span class="nv"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;               &lt;span class="err"&gt;最大化窗口&lt;/span&gt;
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;               &lt;span class="err"&gt;最小化窗口&lt;/span&gt;
+
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;       &lt;span class="err"&gt;增加主区域窗口的数量&lt;/span&gt;                                   
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;       &lt;span class="err"&gt;减少主区域窗口的数量&lt;/span&gt;                                   
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Space&lt;/span&gt;           &lt;span class="err"&gt;切换窗口布局&lt;/span&gt;                                           
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;space&lt;/span&gt;   &lt;span class="err"&gt;把当前&lt;/span&gt;&lt;span class="n"&gt;tag&lt;/span&gt;&lt;span class="err"&gt;更换为前一种布局&lt;/span&gt;                              
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;space&lt;/span&gt; &lt;span class="err"&gt;切换当前窗口是否为浮动&lt;/span&gt;                                 
+
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;       &lt;span class="err"&gt;显示当前窗口的&lt;/span&gt;&lt;span class="n"&gt;Class&lt;/span&gt;&lt;span class="err"&gt;和&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="err"&gt;，这在写脚本的时候尤其有用&lt;/span&gt;
+
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;       &lt;span class="err"&gt;重绘当前窗口&lt;/span&gt;                                           
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;               &lt;span class="err"&gt;标记窗口（可标记多个）&lt;/span&gt;                                 
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;F1&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;F9&lt;/span&gt;   &lt;span class="err"&gt;把标记的窗口移动到第&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="err"&gt;个标记上&lt;/span&gt;                        
+
+&lt;span class="n"&gt;Ctrl&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;      &lt;span class="err"&gt;把当前桌面和&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="err"&gt;桌面是显示&lt;/span&gt;                              
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt;             &lt;span class="err"&gt;恢复&lt;/span&gt;                                                   
+
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Esc&lt;/span&gt;             &lt;span class="err"&gt;快速切换到上一个桌面&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更加详尽的介绍和配置请参见http://josephpan.net/blog/?p=992&lt;/p&gt;
+&lt;h2&gt;Tmux&lt;/h2&gt;
+&lt;p&gt;tmux是一款替代screen的产品,除了拥有screen的基本功能外,还有窗口分隔,多人共享等功能.尤其是窗口分隔功能异常突出.同时tmux简化了很多快捷键.还支持vi/emacs风格的快捷键绑定&lt;/p&gt;
+&lt;h3&gt;安装&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install tmux
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置&lt;/h3&gt;
+&lt;p&gt;tmux 使用~/.tmux.conf作为配置文件,所以我们可以将配置添加到这个文件中,网上很多资料都将前缀键绑定到Ctrl+a,但我喜欢使用Ctrl+a跳到行首,所以我还是使用默认的前缀键Ctrl+b.下面是我的配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;set &lt;span class="o"&gt;-&lt;/span&gt;g default&lt;span class="o"&gt;-&lt;/span&gt;terminal &lt;span class="s"&gt;&amp;quot;screen-256color&amp;quot;&lt;/span&gt; 
+set &lt;span class="o"&gt;-&lt;/span&gt;g display&lt;span class="o"&gt;-&lt;/span&gt;time &lt;span class="m"&gt;3000&lt;/span&gt;                   
+set &lt;span class="o"&gt;-&lt;/span&gt;g escape&lt;span class="o"&gt;-&lt;/span&gt;time &lt;span class="m"&gt;0&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g history&lt;span class="o"&gt;-&lt;/span&gt;limit &lt;span class="m"&gt;65535&lt;/span&gt;                 
+set &lt;span class="o"&gt;-&lt;/span&gt;g base&lt;span class="o"&gt;-&lt;/span&gt;index &lt;span class="m"&gt;1&lt;/span&gt;                        
+setw &lt;span class="o"&gt;-&lt;/span&gt;g utf8 on                           
+
+&lt;span class="c1"&gt;# split window&lt;/span&gt;
+unbind &lt;span class="s"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt; splitw &lt;span class="o"&gt;-&lt;/span&gt;v &lt;span class="c1"&gt;# vertical split (prefix -)&lt;/span&gt;
+unbind &lt;span class="o"&gt;%&lt;/span&gt;
+bind &lt;span class="o"&gt;|&lt;/span&gt; splitw &lt;span class="o"&gt;-&lt;/span&gt;h &lt;span class="c1"&gt;# horizontal split (prefix |)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# select pane&lt;/span&gt;
+bind k selectp &lt;span class="o"&gt;-&lt;/span&gt;U &lt;span class="c1"&gt;# above (prefix k)&lt;/span&gt;
+bind j selectp &lt;span class="o"&gt;-&lt;/span&gt;D &lt;span class="c1"&gt;# below (prefix j)&lt;/span&gt;
+bind h selectp &lt;span class="o"&gt;-&lt;/span&gt;L &lt;span class="c1"&gt;# left (prefix h)&lt;/span&gt;
+bind l selectp &lt;span class="o"&gt;-&lt;/span&gt;R &lt;span class="c1"&gt;# right (prefix l)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# resize pane&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;k resizep &lt;span class="o"&gt;-&lt;/span&gt;U &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# upward (prefix Ctrl+k)&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;j resizep &lt;span class="o"&gt;-&lt;/span&gt;D &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# downward (prefix Ctrl+j)&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;h resizep &lt;span class="o"&gt;-&lt;/span&gt;L &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# to the left (prefix Ctrl+h)&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;l resizep &lt;span class="o"&gt;-&lt;/span&gt;R &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# to the right (prefix Ctrl+l)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# swap pane&lt;/span&gt;
+bind &lt;span class="o"&gt;^&lt;/span&gt;u swapp &lt;span class="o"&gt;-&lt;/span&gt;U &lt;span class="c1"&gt;# swap with the previous pane (prefix Ctrl+u)&lt;/span&gt;
+bind &lt;span class="o"&gt;^&lt;/span&gt;d swapp &lt;span class="o"&gt;-&lt;/span&gt;D &lt;span class="c1"&gt;# swap with the next pane (prefix Ctrl+d)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# misc&lt;/span&gt;
+bind e lastp  &lt;span class="c1"&gt;# select the last pane (prefix e)&lt;/span&gt;
+bind &lt;span class="o"&gt;^&lt;/span&gt;e last  &lt;span class="c1"&gt;# select the last window (prefix Ctrl+e)&lt;/span&gt;
+bind q killp  &lt;span class="c1"&gt;# kill pane (prefix q)&lt;/span&gt;
+bind &lt;span class="o"&gt;^&lt;/span&gt;q killw &lt;span class="c1"&gt;# kill window (prefix Ctrl+q)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# copy mode&lt;/span&gt;
+bind Escape copy&lt;span class="o"&gt;-&lt;/span&gt;mode             &lt;span class="c1"&gt;# enter copy mode (prefix Escape)&lt;/span&gt;
+bind &lt;span class="o"&gt;^&lt;/span&gt;p pasteb                    &lt;span class="c1"&gt;# paste buffer (prefix Ctrl+p)&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt;t vi&lt;span class="o"&gt;-&lt;/span&gt;copy v begin&lt;span class="o"&gt;-&lt;/span&gt;selection &lt;span class="c1"&gt;# select (v)&lt;/span&gt;
+bind &lt;span class="o"&gt;-&lt;/span&gt;t vi&lt;span class="o"&gt;-&lt;/span&gt;copy y copy&lt;span class="o"&gt;-&lt;/span&gt;selection  &lt;span class="c1"&gt;# copy (y)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# zoom pane &amp;lt;-&amp;gt; window &lt;/span&gt;
+&lt;span class="c1"&gt;# see also: http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh&lt;/span&gt;
+bind &lt;span class="o"&gt;^&lt;/span&gt;z run &lt;span class="s"&gt;&amp;quot;tmux-zoom&amp;quot;&lt;/span&gt;
+
+&lt;span class="c1"&gt;# app&lt;/span&gt;
+bind ! splitw htop                                     &lt;span class="c1"&gt;# htop (prefix !)&lt;/span&gt;
+bind m command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec man %%&amp;#39;&amp;quot;&lt;/span&gt;           &lt;span class="c1"&gt;# man (prefix m)&lt;/span&gt;
+bind &lt;span class="p"&gt;@&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t -f %%&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# perl func (prefix @)&lt;/span&gt;
+bind &lt;span class="o"&gt;*&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t -v %%&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# perl var (prefix *)&lt;/span&gt;
+bind &lt;span class="o"&gt;%&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t %%&amp;#39;&amp;quot;&lt;/span&gt;    &lt;span class="c1"&gt;# perl doc (prefix %)&lt;/span&gt;
+bind &lt;span class="o"&gt;/&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec ri %%&amp;#39;&amp;quot;&lt;/span&gt;            &lt;span class="c1"&gt;# ruby doc (prefix /)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# reload config (prefix r)&lt;/span&gt;
+bind r source ~&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;.&lt;/span&gt;tmux.conf \&lt;span class="p"&gt;;&lt;/span&gt; display &lt;span class="s"&gt;&amp;quot;Configuration reloaded!&amp;quot;&lt;/span&gt;
+
+setw &lt;span class="o"&gt;-&lt;/span&gt;g mode&lt;span class="o"&gt;-&lt;/span&gt;keys vi
+setw &lt;span class="o"&gt;-&lt;/span&gt;g automatic&lt;span class="o"&gt;-&lt;/span&gt;rename off
+
+&lt;span class="c1"&gt;#-- colorscheme --#&lt;/span&gt;
+&lt;span class="c1"&gt;# see also: https://github.com/daethorian/conf-tmux/blob/master/colors/zenburn.conf&lt;/span&gt;
+
+&lt;span class="c1"&gt;# modes&lt;/span&gt;
+setw &lt;span class="o"&gt;-&lt;/span&gt;g clock&lt;span class="o"&gt;-&lt;/span&gt;mode&lt;span class="o"&gt;-&lt;/span&gt;colour colour223
+setw &lt;span class="o"&gt;-&lt;/span&gt;g mode&lt;span class="o"&gt;-&lt;/span&gt;attr bold
+setw &lt;span class="o"&gt;-&lt;/span&gt;g mode&lt;span class="o"&gt;-&lt;/span&gt;fg colour223
+setw &lt;span class="o"&gt;-&lt;/span&gt;g mode&lt;span class="o"&gt;-&lt;/span&gt;bg colour235
+
+&lt;span class="c1"&gt;# panes&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g pane&lt;span class="o"&gt;-&lt;/span&gt;border&lt;span class="o"&gt;-&lt;/span&gt;bg default
+set &lt;span class="o"&gt;-&lt;/span&gt;g pane&lt;span class="o"&gt;-&lt;/span&gt;border&lt;span class="o"&gt;-&lt;/span&gt;fg colour234
+set &lt;span class="o"&gt;-&lt;/span&gt;g pane&lt;span class="o"&gt;-&lt;/span&gt;active&lt;span class="o"&gt;-&lt;/span&gt;border&lt;span class="o"&gt;-&lt;/span&gt;bg default 
+set &lt;span class="o"&gt;-&lt;/span&gt;g pane&lt;span class="o"&gt;-&lt;/span&gt;active&lt;span class="o"&gt;-&lt;/span&gt;border&lt;span class="o"&gt;-&lt;/span&gt;fg green
+
+&lt;span class="c1"&gt;# messages&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g message&lt;span class="o"&gt;-&lt;/span&gt;attr bold
+set &lt;span class="o"&gt;-&lt;/span&gt;g message&lt;span class="o"&gt;-&lt;/span&gt;fg colour223
+set &lt;span class="o"&gt;-&lt;/span&gt;g message&lt;span class="o"&gt;-&lt;/span&gt;bg default
+
+&lt;span class="c1"&gt;#-- statusbar --#&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;utf8 on
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;interval &lt;span class="m"&gt;1&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;keys vi
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;justify left
+set &lt;span class="o"&gt;-&lt;/span&gt;g display&lt;span class="o"&gt;-&lt;/span&gt;time &lt;span class="m"&gt;3000&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;bg default
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;fg white
+set&lt;span class="o"&gt;-&lt;/span&gt;window&lt;span class="o"&gt;-&lt;/span&gt;option &lt;span class="o"&gt;-&lt;/span&gt;g window&lt;span class="o"&gt;-&lt;/span&gt;status&lt;span class="o"&gt;-&lt;/span&gt;current&lt;span class="o"&gt;-&lt;/span&gt;attr default
+set&lt;span class="o"&gt;-&lt;/span&gt;window&lt;span class="o"&gt;-&lt;/span&gt;option &lt;span class="o"&gt;-&lt;/span&gt;g window&lt;span class="o"&gt;-&lt;/span&gt;status&lt;span class="o"&gt;-&lt;/span&gt;current&lt;span class="o"&gt;-&lt;/span&gt;fg red
+set&lt;span class="o"&gt;-&lt;/span&gt;window&lt;span class="o"&gt;-&lt;/span&gt;option &lt;span class="o"&gt;-&lt;/span&gt;g window&lt;span class="o"&gt;-&lt;/span&gt;status&lt;span class="o"&gt;-&lt;/span&gt;current&lt;span class="o"&gt;-&lt;/span&gt;bg default
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;left&lt;span class="o"&gt;-&lt;/span&gt;length &lt;span class="m"&gt;15&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;right&lt;span class="o"&gt;-&lt;/span&gt;length &lt;span class="m"&gt;55&lt;/span&gt;
+&lt;span class="c1"&gt;#set -g status-left &amp;quot;#[fg=white,bg=blue] &amp;gt; #I #W &amp;lt; #[default] |&amp;quot; # 0:bash&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;left &lt;span class="s"&gt;&amp;quot;#[fg=white,bg=default] &amp;gt; #S &amp;lt; #[default] |&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# session-name&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;right &lt;span class="s"&gt;&amp;quot;#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \&amp;quot;&lt;/span&gt; \&lt;span class="s"&gt;&amp;quot; -f 1,2,3))#[default]&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用&lt;/h3&gt;
+&lt;p&gt;我使用terminator配合tmux使用,更改terminator的配置(~/.config/terminator/conf)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;[profiles]&lt;/span&gt;
+  &lt;span class="k"&gt;[[default]]&lt;/span&gt;
+    &lt;span class="na"&gt;login_shell&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;True&lt;/span&gt;
+&lt;span class="s"&gt;    use_custom_command = True   # 允许自定义命令&lt;/span&gt;
+&lt;span class="s"&gt;    custom_command = tmux -2     # 打开终端时执行tmux(-2 是强制终端使用256颜色)   &lt;/span&gt;
+&lt;span class="s"&gt;    background_type = transparent&lt;/span&gt;
+&lt;span class="s"&gt;    scrollbar_position = hidden&lt;/span&gt;
+&lt;span class="s"&gt;    foreground_color = &amp;quot;#ffffff&amp;quot;&lt;/span&gt;
+&lt;span class="s"&gt;    show_titlebar = False&lt;/span&gt;
+&lt;span class="s"&gt;    background_darkness = 0.2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;常用快捷键:&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="err"&gt;创建一个水平分隔&lt;/span&gt; 
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="err"&gt;创建一个垂直分隔&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="sr"&gt;/k/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;上下左右切换分割窗&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="sr"&gt;/k/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;向上下左右扩展分割窗大小&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="err"&gt;创建一个窗口&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;重命名窗口&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;切换到下一个窗口&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="err"&gt;切换到前一个窗口&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Gnome-Do&lt;/h2&gt;
+&lt;p&gt;Gnome Do 之前博客里有介绍请看&lt;a href="/2012/9/1/Linux桌面高效工作----使用Gnome-DO/"&gt;这里&lt;/a&gt;,由于Gonme Do使用Win+Space快捷键已经被Awesome占用,所以为了正常使用Gnome Do 我将Gnome Do的快捷键绑定到&lt;code&gt;Win+G&lt;/code&gt;.&lt;/p&gt;</summary><category term="高效"></category><category term="桌面"></category><category term="Tmux"></category><category term="Linux"></category><category term="gnome do"></category><category term="awesome"></category></entry><entry><title>AppArmor引起的无法启动Evince</title><link href="http://localhost/apparmoryin-qi-de-wu-fa-qi-dong-evince.html" rel="alternate"></link><updated>2012-11-15T16:05:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-11-15:apparmoryin-qi-de-wu-fa-qi-dong-evince.html</id><summary type="html">&lt;p&gt;今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
+evince
+却提示:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;specified&lt;/span&gt;
+&lt;span class="n"&gt;Cannot&lt;/span&gt; &lt;span class="n"&gt;parse&lt;/span&gt; &lt;span class="n"&gt;arguments:&lt;/span&gt; &lt;span class="err"&gt;无法打开显示：&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;google说是$XAUTHORITY权限的问题,于是查看:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ls -l &lt;span class="nv"&gt;$XAUTHORITY&lt;/span&gt;
+-rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更改为如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;chmod +rw &lt;span class="nv"&gt;$XAUTHORITY&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;还是不行,这时候猛然想起查看日志,日志有如下一行:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Nov&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;48&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="n"&gt;Vostro&lt;/span&gt; &lt;span class="n"&gt;kernel:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;13010.203241&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1400&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1352965733.221&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;74&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;apparmor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DENIED&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;operation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;open&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/bin/evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/data/home/vim/.Xauthority&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7088&lt;/span&gt; &lt;span class="n"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;requested_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;denied_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;fsuid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt; &lt;span class="n"&gt;ouid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;好吧,问题是一个叫做AppArmor的内核模块引起的,它阻止了evince读取.Xauthority,找到配置文件,添加:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo vim /etc/apparmor.d/usr.bin.evince 
+@&lt;span class="o"&gt;{&lt;/span&gt;HOME&lt;span class="o"&gt;}&lt;/span&gt;/.Xauthority rw,
+sudo /etc/init.d/apparmor restart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;做完这些还是刷同样的日志,无奈只有禁用它了:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo ln -sf /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重启apparmor就能打开Evince了,都不知道这玩意是怎么加上的,之前都没问题.&lt;/p&gt;
+&lt;p&gt;此次解决看来Linux问题解决之路是从日志开始的,长时间Linux桌面工作差点都给忘掉日志的重要性.&lt;/p&gt;</summary><category term="Ubuntu"></category><category term="evince"></category><category term="apparmor"></category></entry><entry><title>Linux高效工作----平铺式窗体管理器Awesome</title><link href="http://localhost/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html" rel="alternate"></link><updated>2012-10-25T10:23:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-10-25:linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html</id><summary type="html">&lt;p&gt;在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:&lt;/p&gt;
+&lt;p&gt;Awesome是一款运行在Unix和类Unix(Linux/FreeBSD)等系统上的一款平铺式窗体管理器,有占用资源小,易于管理和操作等等有点,这里不罗嗦这些说说安装,Ubuntu安装很简单&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install awesome
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装好后登出会话选择awesome登录,然后你是否茫然无知没办法工作了?先简单介绍下使用方法:&lt;/p&gt;
+&lt;p&gt;按&lt;code&gt;Win键+1~9&lt;/code&gt;可以切换桌面,&lt;/p&gt;
+&lt;p&gt;没有菜单对吧 其实再右上角点一下就会出来一个菜单,打开程序会发现标题栏状态栏什么都木有了大大节省了桌面空间,可问题来了,怎么关闭啊不用担心&lt;/p&gt;
+&lt;p&gt;按 &lt;code&gt;Win键+Shift+C&lt;/code&gt;可以关闭当前窗口&lt;/p&gt;
+&lt;p&gt;打开默认终端 &lt;code&gt;Win键+Enter&lt;/code&gt;就可以打开终端&lt;/p&gt;
+&lt;p&gt;可以按住 &lt;code&gt;Win键+Shift+数字&lt;/code&gt; 可以将当前窗口发送到相应的工作区&lt;/p&gt;
+&lt;p&gt;同样可以切换工作区的是 &lt;code&gt;Win+j/Win+k&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Win+Space&lt;/code&gt;可以切换当前工作区布局&lt;/p&gt;
+&lt;p&gt;是不是很高效!是不是解放了右手,问题来了,我的&lt;code&gt;gnome-do&lt;/code&gt;无法用了,&lt;code&gt;win+space&lt;/code&gt;被占了阿,好吧我把&lt;code&gt;Gnome-Do&lt;/code&gt;的快捷键调成&lt;code&gt;Alt+Space&lt;/code&gt;,&lt;/p&gt;
+&lt;p&gt;但是如何添加开机启动程序呢,很简单Awesome的配置文件是一个lua脚本(我不懂),可以在这个脚本里添加启动程序&lt;/p&gt;
+&lt;p&gt;创建配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/
+mkdir .config/awesome/
+cp /etc/xdg/awesome/rc.lua .config/awesome/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编辑配置文件在文件末尾添加:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;autorunApps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
+&lt;span class="p"&gt;{&lt;/span&gt; 
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;pidgin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;thunderbird&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;gnome-do&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;guake&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;/opt/qq2012/wineapp/qq/qq.sh&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;#&lt;/span&gt;&lt;span class="n"&gt;autorunApps&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+        &lt;span class="n"&gt;awful&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;util&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;spawn_with_shell&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;autorunApps&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;很简单吧,应该看得出在哪里添加启动的程序吧,这里启动了&lt;code&gt;pidgin&lt;/code&gt;,&lt;code&gt;雷鸟&lt;/code&gt;,&lt;code&gt;gnome-do&lt;/code&gt;,&lt;code&gt;guake&lt;/code&gt;和&lt;code&gt;wine&lt;/code&gt;的&lt;code&gt;qq2012&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;还有很多强大的功能这里就不在介绍配置方法,可以自行google之&lt;/p&gt;</summary><category term="高效"></category><category term="管理器"></category><category term="窗体"></category><category term="桌面"></category><category term="平铺式"></category><category term="Linux"></category><category term="awesome"></category></entry><entry><title>Linux桌面高效工作----使用Gnome DO</title><link href="http://localhost/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html" rel="alternate"></link><updated>2012-09-01T08:03:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-09-01:linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html</id><summary type="html">&lt;p&gt;不知大家是否和我一样在win下系统win+r输入命令来快速启动程序,这两天在Linux下碰到一个比这更爽,更快的软件,&lt;code&gt;Gnome Do&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Gnome Do能根据用户键入的内容进行自动匹配，从而快速打开系统中已有的程序、文件、书签等。不仅如此，GNOME Do 还包括插件，从而能够做更多事,&lt;/p&gt;
+&lt;p&gt;比如你安装了pidgin插件只需输入联系人的名字即可打开与他/她的会话,安装了file这个插件输入文件/目录的名字即可打开目录或文件,&lt;/p&gt;
+&lt;p&gt;当然还有一个不足就是不支持中文&lt;/p&gt;
+&lt;p&gt;ubuntu用户可以按照下面安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install gnome-do
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动之后Gnome do不会停留任务栏或通知栏只需按&lt;code&gt;Win(ubuntu下称为super)+Space&lt;/code&gt;即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率&lt;/p&gt;</summary><category term="高效"></category><category term="桌面"></category><category term="Linux"></category><category term="gnome do"></category></entry><entry><title>推荐两款不错的终端软件</title><link href="http://localhost/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html" rel="alternate"></link><updated>2012-08-29T09:36:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-08-29:tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html</id><summary type="html">&lt;p&gt;一直在Linux下做开发,一个好用的终端软件能帮你节省很多时间和精力&lt;/p&gt;
+&lt;p&gt;作为一个经常喜欢敲命令的人,可能要同时做很多操作,Linux各个桌面的窗口切换有多那啥,这里就不吐槽了,
+我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
+后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.&lt;/p&gt;
+&lt;h2&gt;1 安装Terminator&lt;/h2&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install terminator
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;2 使用&lt;/h2&gt;
+&lt;p&gt;打开Termintor按&lt;code&gt;Ctrl-E&lt;/code&gt;(注意是大E要按住Shift)可以垂直分割终端
+&lt;code&gt;Ctrl-O&lt;/code&gt; 可水平分割终端
+按住Alt然后按上下左右可以在不同的分割窗中切换
+&lt;code&gt;Ctrl-D&lt;/code&gt; 可以关闭分割窗&lt;/p&gt;
+&lt;h3&gt;2.1 配置&lt;/h3&gt;
+&lt;p&gt;terminator配置文件在&lt;code&gt;~/.config/terminator/config&lt;/code&gt;
+可以通过这个配置文件配置&lt;code&gt;terminator&lt;/code&gt;的字体和颜色&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;font&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Monaco&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;  &lt;span class="c1"&gt;#设置体字&lt;/span&gt;
+&lt;span class="n"&gt;background_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#204070&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# 背景颜色&lt;/span&gt;
+&lt;span class="n"&gt;foreground_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#F0F0F0&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# 字体颜色&lt;/span&gt;
+&lt;span class="n"&gt;cursor_blink&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;          &lt;span class="c1"&gt;# 设置光标&lt;/span&gt;
+&lt;span class="n"&gt;scrollbar_position&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;disabled&lt;/span&gt; &lt;span class="c1"&gt;# 禁用滚动条&lt;/span&gt;
+&lt;span class="n"&gt;titlebars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;no&lt;/span&gt; &lt;span class="c1"&gt;# 禁用标题栏&lt;/span&gt;
+&lt;span class="n"&gt;background_darkness&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.4&lt;/span&gt;
+&lt;span class="n"&gt;background_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;transparent&lt;/span&gt; &lt;span class="c1"&gt;# 背景类型可以设置为图片&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更多配置可以参见配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;man terminator_config
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;3 Guake&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Guake&lt;/code&gt;是一个下拉式的gnome桌面环境下的终端程序，因此你只需要按一个键F12就可以调用他，然后再按一次以便隐藏他。Guake支持&lt;code&gt;快捷键&lt;/code&gt;、&lt;code&gt;标签&lt;/code&gt;、&lt;code&gt;背景透明&lt;/code&gt;等特性。&lt;/p&gt;
+&lt;h3&gt;3.1 安装 Guake&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;guake&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;3.2 使用Guake&lt;/h3&gt;
+&lt;p&gt;启用guake后即可按&lt;code&gt;F12&lt;/code&gt;调出来,很酷
+快捷键和gnome terminal相同&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="err"&gt;新建标签&lt;/span&gt;
+&lt;span class="n"&gt;F2&lt;/span&gt; &lt;span class="err"&gt;重命名标签&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;PageUp&lt;/span&gt; &lt;span class="err"&gt;上一个标签&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;PageDwon&lt;/span&gt; &lt;span class="err"&gt;下一个标签&lt;/span&gt;
+&lt;span class="n"&gt;F11&lt;/span&gt; &lt;span class="err"&gt;全屏&lt;/span&gt;
+&lt;span class="n"&gt;F12&lt;/span&gt; &lt;span class="err"&gt;隐藏&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;显示&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="终端"></category><category term="分割"></category><category term="terminator"></category><category term="Linux"></category><category term="guake"></category></entry><entry><title>ssh证书登录错误</title><link href="http://localhost/sshzheng-shu-deng-lu-cuo-wu.html" rel="alternate"></link><updated>2012-08-10T16:11:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-08-10:sshzheng-shu-deng-lu-cuo-wu.html</id><summary type="html">&lt;h2&gt;错误描述&lt;/h2&gt;
+
+&lt;p&gt;使用证书ssh链接的时候提示下面错误信息
+&lt;h2&gt;&lt;code&gt;Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).&lt;/code&gt;
+可能原因&lt;/h2&gt;
+authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkeys 改成600
+&lt;h2&gt;解决&lt;/h2&gt;
+查看日志:
+&lt;code&gt;cat /var/log/secure&lt;/code&gt;
+发现
+&lt;code&gt;Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys&lt;/code&gt;
+查看.ssh权限为775
+.ssh 手动创建的时候是775权限,改成755权限后正常
+&lt;code&gt;# chmod 755 ~/.ssh&lt;/code&gt;&lt;/p&gt;</summary><category term="证书"></category><category term="权限"></category><category term="ssh"></category><category term="authorized_keys"></category></entry><entry><title>iptables:restorecon: command not found无法保存策略解决</title><link href="http://localhost/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="alternate"></link><updated>2012-04-30T10:43:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-04-30:iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html</id><summary type="html">&lt;p&gt;今天更新了几条iptables,但是运行命令&lt;code&gt;service iptables save&lt;/code&gt;保存时确提示&lt;code&gt;iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;好吧,很明显的错误,找不到restorecon命令. 查找一下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
+&lt;span class="n"&gt;whereis&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;没结果,继续手动查看:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="sr"&gt;/sbin/&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
+&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;有一条但是不是我们想要的,猜测大概是包没装
+先yum搜索一下吧:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;好吧依然没有结果.google一下说是缺少policycoreutils这个包.安装这个包:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;policycoreutils&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后查看:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="sr"&gt;/sbin/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt;&lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
+&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
+&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;      &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;setfiles&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后运行命令保存iptables策略:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt; &lt;span class="n"&gt;save&lt;/span&gt;
+&lt;span class="n"&gt;iptables:&lt;/span&gt; &lt;span class="n"&gt;Saving&lt;/span&gt; &lt;span class="n"&gt;firewall&lt;/span&gt; &lt;span class="n"&gt;rules&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="sr"&gt;/etc/s&lt;/span&gt;&lt;span class="n"&gt;ysconfig&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;iptables:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;  &lt;span class="n"&gt;OK&lt;/span&gt;  &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;只是一篇笔记,记录问题方便以后遇到问题后查找.有点乱.没多少内容.&lt;/p&gt;</summary><category term="防火墙"></category><category term="策略"></category><category term="无法保存"></category><category term="restorecon"></category><category term="iptables"></category></entry><entry><title>用pxe安装自己定制的发行版快速部署系统环境</title><link href="http://localhost/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html" rel="alternate"></link><updated>2012-02-02T11:37:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-02-02:yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html</id><summary type="html">&lt;p&gt;自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.&lt;/p&gt;
+&lt;p&gt;这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
+基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)&lt;/p&gt;
+&lt;p&gt;使用环境:CentOS 5.5 32位&lt;/p&gt;
+&lt;p&gt;使用系统:根据CentOS定制的发行版ColdOS 0.1 32位&lt;/p&gt;
+&lt;p&gt;ip: 静态ip192.168.3.1&lt;/p&gt;
+&lt;p&gt;本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
+1.安装配置tftp&lt;/p&gt;
+&lt;p&gt;安装tftp-server&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install tftp-server
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置tftp-server,编辑/etc/xinetd.d/tftp&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/xinetd.d/tftp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改配置文件&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service tftp
+&lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="nv"&gt;socket_type&lt;/span&gt;             &lt;span class="o"&gt;=&lt;/span&gt; dgram
+        &lt;span class="nv"&gt;protocol&lt;/span&gt;                &lt;span class="o"&gt;=&lt;/span&gt; udp
+        &lt;span class="nb"&gt;wait&lt;/span&gt;                    &lt;span class="o"&gt;=&lt;/span&gt; yes
+        &lt;span class="nv"&gt;user&lt;/span&gt;                    &lt;span class="o"&gt;=&lt;/span&gt; root
+        &lt;span class="nv"&gt;server&lt;/span&gt;                  &lt;span class="o"&gt;=&lt;/span&gt; /usr/sbin/in.tftpd
+        &lt;span class="nv"&gt;server_args&lt;/span&gt;             &lt;span class="o"&gt;=&lt;/span&gt; -s /tftpboot      &lt;span class="c"&gt;# 根目录&lt;/span&gt;
+        &lt;span class="nv"&gt;disable&lt;/span&gt;                 &lt;span class="o"&gt;=&lt;/span&gt; no                &lt;span class="c"&gt;# 把yes改为no启动tftp&lt;/span&gt;
+        &lt;span class="nv"&gt;per_source&lt;/span&gt;              &lt;span class="o"&gt;=&lt;/span&gt; 11
+        &lt;span class="nv"&gt;cps&lt;/span&gt;                     &lt;span class="o"&gt;=&lt;/span&gt; 100 2
+        &lt;span class="nv"&gt;flags&lt;/span&gt;                   &lt;span class="o"&gt;=&lt;/span&gt; IPv4
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动tftp&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service xinetd restart
+Stopping xinetd: &lt;span class="o"&gt;[&lt;/span&gt;  OK  &lt;span class="o"&gt;]&lt;/span&gt;
+Starting xinetd: &lt;span class="o"&gt;[&lt;/span&gt;  OK  &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;2.在tftp根目录下创建启动文件供客户端下载:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 复制网卡启动文件&lt;/span&gt;
+cp /usr/lib/syslinux/pxelinux.0 /tftpboot
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将安装光盘上/image/pxeboot/initrd.img和vmlinux复制到/tftpboot/中&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 挂载光盘&lt;/span&gt;
+mount /dev/hdc /mnt
+&lt;span class="c"&gt;# 复制文件&lt;/span&gt;
+cp /mnt/isolinux/vmlinuz /tftpboot/
+cp /mnt/isolinux/initrd.img /tftpboot/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;创建pxe启动菜单:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建存放启动菜单的目录&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; /tftpboot
+mkdir pxelinux.cfg
+&lt;span class="c"&gt;# 从安装光盘内复制启动菜单命名为default&lt;/span&gt;
+cp /mnt/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编辑启动菜单:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /tftpboot/pxelinux.cfg/default
+default ColdOS
+prompt 1
+timeout 600
+label ColdOS
+  kernel vmlinuz
+  append &lt;span class="nv"&gt;ks&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;http://192.168.3.1/cold/isolinux/ks.cfg &lt;span class="nv"&gt;initrd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;initrd.img text &lt;span class="c"&gt;# 指定ks文件位置&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;3.安装配置dhcp服务器
+安装&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install dhcp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建配置文件&lt;/span&gt;
+cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
+&lt;span class="c"&gt;# 编辑配置文件&lt;/span&gt;
+vi /etc/dhcpd.conf
+&lt;span class="c"&gt;# 修改配置文件:&lt;/span&gt;
+ddns-update-style interim;
+ignore client-updates;
+next-server 192.168.3.1;             &lt;span class="c"&gt;# 指定tftp服务器&lt;/span&gt;
+filename &lt;span class="s2"&gt;&amp;quot;/pxelinux.0&amp;quot;&lt;/span&gt;;              &lt;span class="c"&gt;# 指定启动文件&lt;/span&gt;
+
+subnet 192.168.3.0 netmask 255.255.255.0 &lt;span class="o"&gt;{&lt;/span&gt;
+
+        option routers                  192.168.3.1;
+        option subnet-mask              255.255.255.0;
+
+        option nis-domain               &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;;
+        option domain-name              &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;;
+        option domain-name-servers      192.168.1.1;
+
+        option &lt;span class="nb"&gt;time&lt;/span&gt;-offset              -18000; &lt;span class="c"&gt;# Eastern Standard Time&lt;/span&gt;
+
+        range dynamic-bootp 192.168.3.128 192.168.3.254;
+        default-lease-time 21600;
+        max-lease-time 43200;
+
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="c"&gt;# 启动dhcp服务器&lt;/span&gt;
+service dhcpd start
+Starting dhcpd: &lt;span class="o"&gt;[&lt;/span&gt; OK &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;4.安装配置http服务器
+安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install httpd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;首先把安装光盘里的内容拷到本地服务器上:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建目录&lt;/span&gt;
+mkdir -p /pxe/cold/
+&lt;span class="c"&gt;# 复制文件&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold &amp;amp;amp;&amp;amp;amp; tar -xvf - &lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置apache&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 编辑配置文件:&lt;/span&gt;
+vi /etc/httpd/conf/httpd.conf
+&lt;span class="c"&gt;# 更改apache根目录(将配置文件中的两处/var/www改成/pxe)&lt;/span&gt;
+DocumentRoot &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;
+&amp;amp;lt;Directory /&amp;amp;gt;
+    Options FollowSymLinks
+    AllowOverride None
+&amp;amp;lt;/Directory&amp;amp;gt;
+&amp;amp;lt;Directory &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;&amp;amp;gt;
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+&amp;amp;lt;/Directory&amp;amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置完成后启动apache&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service httpd start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;5.更改ks文件(ks文件可在CentOS图形界面下用kickstart程序直接生成,这里不做介绍)&lt;/p&gt;
+&lt;p&gt;因为网络安装,又需要部署cfengine的话,就需要更改cfengine的获取方式,首先要将文件夹打包:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold
+tar -cvf cfengine.tar cfengine/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后编辑ks文件&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 编辑ks文件&lt;/span&gt;
+vi /pxe/cold/isolinux/ks.cfg
+install
+cdrom
+lang en_US.UTF-8
+keyboard us
+rootpw --iscrypted &lt;span class="nv"&gt;$1$OKNHES6P$tPdz9HxIp6&lt;/span&gt;.QUvulqxNwa.
+firewall --disable
+authconfig --enableshadow --enablemd5
+selinux --disabled
+timezone --utc Asia/Chongqing
+bootloader --location&lt;span class="o"&gt;=&lt;/span&gt;mbr --driveorder&lt;span class="o"&gt;=&lt;/span&gt;sda
+url --url http://192.168.3.1/cold/              &lt;span class="c"&gt;# 添加指定安装文件的语句&lt;/span&gt;
+&lt;span class="c"&gt;# The following is the partition information you requested&lt;/span&gt;
+&lt;span class="c"&gt;# Note that any partitions you deleted are not expressed&lt;/span&gt;
+&lt;span class="c"&gt;# here so unless you clear all partitions first, this is&lt;/span&gt;
+&lt;span class="c"&gt;# not guaranteed to work&lt;/span&gt;
+clearpart --linux --drives&lt;span class="o"&gt;=&lt;/span&gt;sda
+part / --fstype ext3 --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow --maxsize&lt;span class="o"&gt;=&lt;/span&gt;4096
+part /usr --fstype ext3 --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow
+part swap --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow --maxsize&lt;span class="o"&gt;=&lt;/span&gt;512
+
+%packages
+@core
+@useful
+@cfengine
+
+%post --nochroot
+mkdir -p /mnt/sysimage/var/cfengine/masterfiles
+mkdir -p /mnt/sysimage/var/cfengine/inputs
+mkdir -p /mnt/sysimage/var/cfengine/outputs
+mkdir -p /mnt/sysimage/var/cfengine/bin
+
+wget  http://192.168.3.1/cold/cfengine.tar    &lt;span class="c"&gt;# 更改cfengine获取方式&lt;/span&gt;
+tar -xvf cfengine.tar
+cp /cfengine/sbin/cf-* /mnt/sysimage/var/cfengine/bin/
+cp -r /cfengine /mnt/sysimage/usr/local/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;6.测试
+开启另一台设备测试,机器启动时一般按F12即可进入网卡启动.&lt;/p&gt;</summary><category term="网络安装"></category><category term="网卡启动"></category><category term="无人值守"></category><category term="pxe"></category><category term="Linux"></category><category term="cfengine"></category></entry><entry><title>将cfengine集成到自己定制的发行版</title><link href="http://localhost/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html" rel="alternate"></link><updated>2012-01-19T11:35:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-01-19:jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html</id><summary type="html">&lt;p&gt;上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.&lt;/p&gt;
+&lt;p&gt;本文完全根据&lt;a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank"&gt;上一篇&lt;/a&gt;文章而来,挂载光驱安装工具等等这里就不介绍了.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 把依赖包添加到cfpkgs.list&lt;/span&gt;
+vi cfpkgs.list
+&lt;span class="c"&gt;# 添加如下内容&lt;/span&gt;
+keyutils-libs-devel
+zlib-devel
+e2fsprogs-devel 
+libsepol-devel
+libselinux-devel
+db4-devel
+pcre-devel
+krb5-devel
+flex
+openssl-devel 
+&lt;span class="c"&gt;# 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:&lt;/span&gt;
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat cfpkgs.list &lt;span class="sb"&gt;`&lt;/span&gt;:; &lt;span class="k"&gt;do &lt;/span&gt;&lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; ¦ sed &lt;span class="s1"&gt;&amp;#39;s/://g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;; cp /mnt/CentOS/&lt;span class="nv"&gt;$file&lt;/span&gt;* /usr/cold/CentOS/; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;复制完包之后就需要编辑comps.xml,&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold/
+&lt;span class="c"&gt;# 编辑comps.xml&lt;/span&gt;
+vi repodata/comps.xml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;向comps.xml添加这几个包group节点&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;group&amp;amp;gt;
+    &amp;amp;lt;id&amp;amp;gt;cfengine&amp;amp;lt;/id&amp;amp;gt;
+    &amp;amp;lt;name&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;description&amp;amp;gt;Cfengine &amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;default&amp;amp;gt;true&amp;amp;lt;/default&amp;amp;gt;
+    &amp;amp;lt;uservisible&amp;amp;gt;false&amp;amp;lt;/uservisible&amp;amp;gt;
+    &amp;amp;lt;packagelist&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;keyutils-libs-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;zlib-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;e2fsprogs-devel &amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libsepol-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libselinux-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;db4-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;pcre-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;krb5-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;flex&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;openssl-devel &amp;amp;lt;/packagereq&amp;amp;gt;
+    &amp;amp;lt;/packagelist&amp;amp;gt;
+  &amp;amp;lt;/group&amp;amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后通过命令创建源:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;createrepo -g repodata/comps.xml  CentOS/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;计算comps.xml的sha值&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sha1sum repodata/comps.xml 
+f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编辑repomd.xml&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi repodata/repomd.xml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将新的sha值更新到repomd.xml&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
+    &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
+    &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&amp;amp;lt;/checksum&amp;amp;gt;
+    &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
+  &amp;amp;lt;/data&amp;amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接下来把我们编译好的cfengine(根据&lt;a title="安装配置cfengine实现自动化配置Linux/Unix服务器" href="/post/17" target="_blank"&gt;安装配置cfengine实现自动化配置Linux/Unix服务器&lt;/a&gt;)复制到定制的发行版的目录下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp -r /usr/local/cfengine/ /usr/cold/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后编辑ks文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi isolinux/ks.cfg
+&lt;span class="c"&gt;# 在末尾添加如下内容&lt;/span&gt;
+%packages
+@core
+@useful
+@cfengine        &lt;span class="c"&gt;# 添加cfengine软件组&lt;/span&gt;
+&lt;span class="c"&gt;# %post是安装后执行的脚本,&lt;/span&gt;
+&lt;span class="c"&gt;# 还有一种标记 %pre是安装前执行的脚本,但不推荐使用这种脚本,&lt;/span&gt;
+&lt;span class="c"&gt;# 因为脚本出错会导致安装失败 &lt;/span&gt;
+&lt;span class="c"&gt;# --nochroot是不切换根目录,这时候安装好的系统会挂载在 /mnt/sysimage下&lt;/span&gt;
+%post --nochroot
+
+&lt;span class="c"&gt;# 创建cfengine的工作目录&lt;/span&gt;
+mkdir -p /mnt/sysimage/var/cfengine/masterfiles
+mkdir -p /mnt/sysimage/var/cfengine/inputs
+mkdir -p /mnt/sysimage/var/cfengine/outputs
+mkdir -p /mnt/sysimage/var/cfengine/bin
+mkdir /a
+mount /tmp/cdrom /a
+&lt;span class="c"&gt;# 复制二进制文件和cfengine&lt;/span&gt;
+cp /a/cfengine/sbin/cf-* /mnt/sysimage/var/cfengine/bin/
+cp -r /a/cfengine /mnt/sysimage/usr/local/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后制作镜像:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/ColdOS-0.1-i386.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table .
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后把镜像下载下来进行安装,安装完成后执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-key              &lt;span class="c"&gt;# 生成认证证书&lt;/span&gt;
+/var/cfengine/bin/cf-agent --bootstrap --policy-server cfhubip
+/var/cfengine/bin/cf-agent   &lt;span class="c"&gt;# 执行承诺&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;即可从cfhubip那里下载承诺文件执行承诺,根据cfhub进行本地配置
+还可以根据%post更加自由的定制自己的系统,比如最小化安装后会无法使用本地镜像来使用yum可以定义一个局域网yum,在%post --nochroot添加如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat &amp;amp;lt;&amp;amp;lt;__EOF__ &amp;amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
+&lt;span class="c"&gt;# CentOS-Media.repo&lt;/span&gt;
+&lt;span class="c"&gt;#  yum --disablerepo=\* --enablerepo=cold [command]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;cold&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;CentOS-&lt;span class="nv"&gt;$releasever&lt;/span&gt; - Media
+&lt;span class="nv"&gt;baseurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;http://192.168.0.254/CentOS
+&lt;span class="nv"&gt;gpgcheck&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nv"&gt;enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nv"&gt;gpgkey&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+__EOF__
+
+mv /mnt/sysimage/etc/yum.repos.d/CentOS-Base.repo /mnt/sysimage/etc/yum.repos.d/CentOS-Base.repo.bak
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里就不详细介绍,大家可根据这个更加自由的来定制自己的Linux发行版.&lt;/p&gt;</summary><category term="集成"></category><category term="定制"></category><category term="发行版"></category><category term="Linux"></category><category term="cfengine"></category></entry><entry><title>根据CentOS定制自己的发行版</title><link href="http://localhost/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html" rel="alternate"></link><updated>2012-01-18T11:13:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-01-18:gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html</id><summary type="html">&lt;p&gt;本文使用的环境为CentOS5.5 32位.
+首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
+装完系统会再root的根目录下生成3个文件,我们用到两个:
+anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
+install.log            : 记录安装过程中所安装的包
+我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:&lt;!--more--&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /usr/cold                 &lt;span class="c"&gt;# 创建发行版目录&lt;/span&gt;
+mount /dev/hdc /mnt             &lt;span class="c"&gt;# 挂载IDE光驱&lt;/span&gt;
+&lt;span class="c"&gt;# 或&lt;/span&gt;
+mount /dev/cdrom /mnt
+&lt;span class="c"&gt;# 如挂载本地ISO镜像使用下面命令&lt;/span&gt;
+mount -o loop iso路径 /mnt
+
+&lt;span class="c"&gt;# 然后使用 tar命令把光盘的内容复制到/usr/cold&lt;/span&gt;
+&lt;span class="c"&gt;# 都说这个命令比cp快,在256内存的虚拟机测试也就快了几十秒,个人觉得最大的用处&lt;/span&gt;
+&lt;span class="c"&gt;# 就是解决了cp无法复制隐藏文件的问题&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold &amp;amp;amp;&amp;amp;amp; tar -xvfp - &lt;span class="o"&gt;)&lt;/span&gt;         &lt;span class="c"&gt;# tar -p选项是保留原有权限&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;复制完成后发行版目录应该是:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ls -la /usr/cold
+total 511
+drwxr-xr-x  7 root root   6144 Apr 30  2010 .
+drwxr-xr-x 21 root root   4096 Dec 13 18:07 ..
+drwxrwxr-x  2  501  501 421888 Apr 30  2010 CentOS
+-rw-r--r--  1 root root    112 Apr 30  2010 .discinfo
+-rw-r--r--  1 root root    212 Jun 15  2008 EULA
+-rw-r--r--  1 root root  18009 Jun 15  2008 GPL
+drwxr-xr-x  4 root root   2048 Apr 30  2010 images
+drwxr-xr-x  2 root root   2048 Apr 30  2010 isolinux
+drwxr-xr-x  2 root root  22528 Apr 27  2010 NOTES
+-rw-r--r--  1 root root    655 Apr 27  2010 RELEASE-NOTES-cs
+-rw-r--r--  1 root root   1401 Apr 27  2010 RELEASE-NOTES-cs.html
+-rw-r--r--  1 root root    839 Apr 27  2010 RELEASE-NOTES-de
+-rw-r--r--  1 root root   1571 Apr 27  2010 RELEASE-NOTES-de.html
+-rw-r--r--  1 root root    694 Apr 27  2010 RELEASE-NOTES-en
+-rw-r--r--  1 root root   1367 Apr 27  2010 RELEASE-NOTES-en.html
+-rw-r--r--  1 root root    694 Apr 27  2010 RELEASE-NOTES-en_US
+-rw-r--r--  1 root root   1367 Apr 27  2010 RELEASE-NOTES-en_US.html
+-rw-r--r--  1 root root    788 Apr 27  2010 RELEASE-NOTES-es
+-rw-r--r--  1 root root   1619 Apr 27  2010 RELEASE-NOTES-es.html
+-rw-r--r--  1 root root    852 Apr 27  2010 RELEASE-NOTES-fr
+-rw-r--r--  1 root root   1641 Apr 27  2010 RELEASE-NOTES-fr.html
+-rw-r--r--  1 root root    766 Apr 27  2010 RELEASE-NOTES-ja
+-rw-r--r--  1 root root   1565 Apr 27  2010 RELEASE-NOTES-ja.html
+-rw-r--r--  1 root root    706 Apr 27  2010 RELEASE-NOTES-nl
+-rw-r--r--  1 root root   1433 Apr 27  2010 RELEASE-NOTES-nl.html
+-rw-r--r--  1 root root    752 Apr 27  2010 RELEASE-NOTES-pt_BR
+-rw-r--r--  1 root root   1480 Apr 27  2010 RELEASE-NOTES-pt_BR.html
+-rw-r--r--  1 root root    801 Apr 27  2010 RELEASE-NOTES-ro
+-rw-r--r--  1 root root   1473 Apr 27  2010 RELEASE-NOTES-ro.html
+drwxr-xr-x  2 root root   2048 Apr 30  2010 repodata
+-rw-r--r--  1 root root   1512 Jun 15  2008 RPM-GPG-KEY-beta
+-rw-r--r--  1 root root   1504 Jun 15  2008 RPM-GPG-KEY-CentOS-5
+-r--r--r--  1 root root   7048 Apr 30  2010 TRANS.TBL
+-rw-r--r--  1 root root    413 Apr 30  2010 .treeinfo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;现在对系统进行精简:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;rm -f RELEASE-NOTES-*
+ rm -rf NOTES/
+rm -f RPM-GPG-KEY-*
+rm -f EULA
+rm -f GPL
+rm -f CentOS/*                          &lt;span class="c"&gt;# 删除所有rpm包,等会根据install.log复制过来,保证系统最小化&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;精简完后应该是这样子的:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;s -la /usr/cold/
+total 20
+drwxr-xr-x  6 root root   4096 Dec 13 19:39 .
+drwxr-xr-x 16 root root   4096 Dec 13 23:14 ..
+drwxrwxr-x  3  501  501 172032 Dec 14 02:23 CentOS
+-rw-r--r--  1 root root    112 Apr 30  2010 .discinfo
+drwxr-xr-x  4 root root   4096 Apr 30  2010 images
+drwxr-xr-x  2 root root   4096 Dec 14 00:36 isolinux
+drwxr-xr-x  2 root root   4096 Dec 14 01:42 repodata
+-r--r--r--  1 root root   7048 Apr 30  2010 TRANS.TBL
+-rw-r--r--  1 root root    413 Apr 30  2010 .treeinfo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;现在根据install.log创建packages.list,用来安装所需要的rpm包:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 根据install.log,提取其中的rpm包名,&lt;/span&gt;
+cat install.log ¦ grep Installing ¦ awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; ¦ awk -F&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ if (NF==2){ print $2} else {print $1}}&amp;#39;&lt;/span&gt; &amp;amp;gt; packages.list
+&lt;span class="c"&gt;# 如果仅仅最小化安装就失去了定制自己的发行版的意义&lt;/span&gt;
+&lt;span class="c"&gt;# 向packages.list添加几个常用的工具,需要先用yum安装一遍记住包的依赖关系&lt;/span&gt;
+&lt;span class="c"&gt;# 把依赖关系的包也放入packages.list&lt;/span&gt;
+&lt;span class="c"&gt;# 比如man依赖bzip2 groff&lt;/span&gt;
+vi packages.list
+&lt;span class="c"&gt;# 末尾添加如下内容:&lt;/span&gt;
+setuptool
+lszrz wget
+kernel-devel
+kernel-headers
+libgomp
+cpp
+glibc-headers
+glibc-devel
+gcc
+make
+which
+bzip2
+groff
+man
+&lt;span class="c"&gt;# 根据packages.list进行复制&lt;/span&gt;
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat packages.list &lt;span class="sb"&gt;`&lt;/span&gt;;&lt;span class="k"&gt;do  &lt;/span&gt;cp -p -f  /mnt/CentOS/&lt;span class="s2"&gt;&amp;quot;$i&amp;quot;&lt;/span&gt;* /usr/cold/CentOS/;done
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;复制完所需的RPM包之后我们如何来让系统安装的时候安装我们自定义添加的包呢?
+首先我们需要编辑repodata/comps.xml,但是comps.xml文件内容太杂,大概 2万多行,所以我们需要对comps.xml进行一个预处理:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# comps.xml包含最多的是各国语言&lt;/span&gt;
+&lt;span class="c"&gt;# 我们先去除不需要的语言,这里我只需要英文,&lt;/span&gt;
+sed -ri &lt;span class="s1"&gt;&amp;#39;/xml:lang/ {/en_GB/!d}&amp;#39;&lt;/span&gt; comps.xml  &lt;span class="c"&gt;# 如果需要保留其他语言比如中文,在en_GB后添加&amp;quot;¦zh_CN&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;去除了各国语言的comps.xml大概包含2000多行,现在我们要进一步处理,删除除了id为core的group的其他节点,删除完后comps.xml大概只剩下73行.现在我们要把我们自己添加的包顶一个group节点,在紧跟id为core的group节点(也就是&amp;lt;/group&amp;gt;后面)添加如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;group&amp;amp;gt;
+    &amp;amp;lt;id&amp;amp;gt;useful&amp;amp;lt;/id&amp;amp;gt;
+    &amp;amp;lt;name&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;description&amp;amp;gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor &amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;default&amp;amp;gt;true&amp;amp;lt;/default&amp;amp;gt;
+    &amp;amp;lt;uservisible&amp;amp;gt;false&amp;amp;lt;/uservisible&amp;amp;gt;
+    &amp;amp;lt;packagelist&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;setuptool&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;lszrz&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;wget&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;kernel-headers&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libgomp&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;cpp&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;glibc-headers&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;glibc-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;gcc&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;make&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;which&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;bzip2&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;groff&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;man&amp;amp;lt;/packagereq&amp;amp;gt;
+    &amp;amp;lt;/packagelist&amp;amp;gt;
+  &amp;amp;lt;/group&amp;amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面添加了一个id为useful的group节点,下面把这两个节点放到一个类别里:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;category&amp;amp;gt;
+    &amp;amp;lt;id&amp;amp;gt;cold&amp;amp;lt;/id&amp;amp;gt;
+    &amp;amp;lt;name&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;description&amp;amp;gt;Cold Linux&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold Linux&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;display_order&amp;amp;gt;92&amp;amp;lt;/display_order&amp;amp;gt;
+    &amp;amp;lt;grouplist&amp;amp;gt;
+      &amp;amp;lt;groupid&amp;amp;gt;core&amp;amp;lt;/groupid&amp;amp;gt;
+      &amp;amp;lt;groupid&amp;amp;gt;useful&amp;amp;lt;/groupid&amp;amp;gt;
+     &amp;amp;lt;/grouplist&amp;amp;gt;
+  &amp;amp;lt;/category&amp;amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后根据我们的comps.xml创建源:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 安装所需要的工具&lt;/span&gt;
+yum -y install createrepo anaconda anaconda-runtime
+&lt;span class="c"&gt;# 创建源&lt;/span&gt;
+createrepo -g /usr/cold/repodata/comps.xml /usr/cold/CentOS
+&lt;span class="c"&gt;# 完成后会有如下提示:&lt;/span&gt;
+224/224 - kudzu-1.2.57.1.24-1.el5.centos.i386.rpm
+Saving Primary metadata
+Saving file lists metadata
+Saving other metadata
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;由于我们编辑了comps.xml,所以comps.xml的sha值会改变,这样就会导致跟repomd.xml中所记录的不同,安装的时候会报错:An error occurred umounting the CD. Please make sure you'are not accessing  /mnt/source from the shell on tty2 an the click OK retry.
+所以我们更改完comps.xml要计算comps.xml的sha值&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 计算comps.xml的sha值&lt;/span&gt;
+sha1sum repodata/comps.xml
+c1d304cae50f969370a72d95e3cd2f71087fc73a  repodata/comps.xml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后更新到repomd.xml中编辑repodata/repomd.xml找到location href="repodata/comps.xml"/的一个data节点把sha值更新为刚刚计算的&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
+    &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
+    &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&amp;amp;lt;/checksum&amp;amp;gt;
+    &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
+  &amp;amp;lt;/data&amp;amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;comps.xml里新加了一个咱们的useful 组,怎么使系统安装我们定义的包呢?怎么自定义安装过程呢?下面将讲解根据anaconda-ks.cfg文件定义安装过程:
+首先复制anaconda-ks.cfg到我们的发行版目录:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp ~/anaconda-ks.cfg /usr/cold/isolinux/ks.cfg         &lt;span class="c"&gt;# 复制到isolinux下并命名为ks.cfg&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold
+&lt;span class="c"&gt;# 编辑kickstart脚本&lt;/span&gt;
+vi isolinux/ks.cfg
+install                            &lt;span class="c"&gt;# 定义安装&lt;/span&gt;
+cdrom                              &lt;span class="c"&gt;# 从光盘安装&lt;/span&gt;
+lang en_US.UTF-8                   &lt;span class="c"&gt;# 安装语言为英文&lt;/span&gt;
+keyboard us                        &lt;span class="c"&gt;# 定义键盘布局&lt;/span&gt;
+rootpw --iscrypted &lt;span class="nv"&gt;$1$OKNHES6P$tPdz9HxIp6&lt;/span&gt;.QUvulqxNwa.           &lt;span class="c"&gt;# 定义root密码(你安装的时候提供的密码)&lt;/span&gt;
+firewall --disable                                                                                    &lt;span class="c"&gt;# 禁用防火墙&lt;/span&gt;
+authconfig --enableshadow --enablemd5                                              &lt;span class="c"&gt;# 使用md5加密&lt;/span&gt;
+selinux --disabled                                                                                   &lt;span class="c"&gt;# 禁用selinux&lt;/span&gt;
+timezone --utc Asia/Chongqing                                                              &lt;span class="c"&gt;# 定义时区&lt;/span&gt;
+bootloader --location&lt;span class="o"&gt;=&lt;/span&gt;mbr --driveorder&lt;span class="o"&gt;=&lt;/span&gt;sda                                           &lt;span class="c"&gt;# 在一块硬盘上安装mbr&lt;/span&gt;
+&lt;span class="c"&gt;# The following is the partition information you requested&lt;/span&gt;
+&lt;span class="c"&gt;# Note that any partitions you deleted are not expressed&lt;/span&gt;
+&lt;span class="c"&gt;# here so unless you clear all partitions first, this is&lt;/span&gt;
+&lt;span class="c"&gt;# not guaranteed to work&lt;/span&gt;
+&lt;span class="c"&gt;# 如果想安装过程中手动分区就把下面几行注释掉&lt;/span&gt;
+clearpart --linux --drives&lt;span class="o"&gt;=&lt;/span&gt;sda                       &lt;span class="c"&gt;# 格式化sda&lt;/span&gt;
+part / --fstype ext3 --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow --maxsize&lt;span class="o"&gt;=&lt;/span&gt;4096  &lt;span class="c"&gt;# 创建/分区大小为4个G&lt;/span&gt;
+part /usr --fstype ext3 --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow              &lt;span class="c"&gt;# 创建/usr分区,大小为剩余空间&lt;/span&gt;
+part swap --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow --maxsize&lt;span class="o"&gt;=&lt;/span&gt;512              &lt;span class="c"&gt;# 创建swap大小为512M&lt;/span&gt;
+
+%packages                                            &lt;span class="c"&gt;# 定义安装时安装的包&lt;/span&gt;
+@core                                                &lt;span class="c"&gt;# 最小化安装的包&lt;/span&gt;
+@useful                                              &lt;span class="c"&gt;# 自定义的包&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后就要修改配置文件使安装时使用ks.cfg的配置来安装,修改isolinux.cfg:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi isolinux/isolinux.cfg
+default linux                                 &lt;span class="c"&gt;# 默认启动的label&lt;/span&gt;
+prompt 1
+timeout 10                                    &lt;span class="c"&gt;# 等待时间为1秒钟&lt;/span&gt;
+display boot.msg
+F1 boot.msg
+F2 options.msg
+F3 general.msg
+F4 param.msg
+F5 rescue.msg
+label linux
+  kernel vmlinuz
+  append &lt;span class="nv"&gt;ks&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;cdrom:/isolinux/ks.cfg &lt;span class="nv"&gt;initrd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;initrd.img text           &lt;span class="c"&gt;#修改默认linux的label,ks使用自定义的ks,并文本启动&lt;/span&gt;
+label text
+  kernel vmlinuz
+  append &lt;span class="nv"&gt;initrd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;initrd.img text
+label ks
+  kernel vmlinuz
+  append ks &lt;span class="nv"&gt;initrd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;initrd.img
+label &lt;span class="nb"&gt;local&lt;/span&gt;
+&lt;span class="nb"&gt;  &lt;/span&gt;localboot 1
+label memtest86
+  kernel memtest
+  append -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;到这里配置就基本完成,下面就是制作iso镜像进行安装测试:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 首先安装工具&lt;/span&gt;
+yum -y install mkisofs
+&lt;span class="c"&gt;# 创建iso镜像:&lt;/span&gt;
+&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold
+mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/ColdOS-0.1-i386.iso -b isolinux/isolinux.bin  -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table .
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后就可以把镜像下载下来进行安装测试了...下一篇就会介绍如何把之前一篇文章介绍的cfengine集成到自己的发行版&lt;/p&gt;</summary><category term="定制"></category><category term="mkisofs"></category><category term="createrepo"></category><category term="comps.xml"></category><category term="CentOS"></category></entry><entry><title>安装配置cfengine实现自动化配置Linux/Unix服务器</title><link href="http://localhost/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html" rel="alternate"></link><updated>2012-01-17T23:06:00+08:00</updated><author><name>Wood</name></author><id>tag:localhost,2012-01-17:an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html</id><summary type="html">&lt;p&gt;cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:&lt;/p&gt;
+&lt;p&gt;cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个版本控制器(subversion)用来创建策略&lt;/li&gt;
+&lt;li&gt;多个策略分发器(cfenginehub)用来分发策略----server&lt;/li&gt;
+&lt;li&gt;多个策略执行器(cfengine host)用来执行策略-----client,&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文使用的环境为:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;cfhub: 172.16.1.1/24&lt;/li&gt;
+&lt;li&gt;cfhost: 172.16.1.2/24&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.&lt;/p&gt;
+&lt;p&gt;下载:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget https://cfengine.com/source-code/download?file&lt;span class="o"&gt;=&lt;/span&gt;cfengine-3.2.3.tar.gz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装依赖:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install db4-devel pcre-devel openssl-devel flex
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编译安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf download&lt;span class="se"&gt;\?&lt;/span&gt;file&lt;span class="se"&gt;\=&lt;/span&gt;cfengine-3.2.3.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;cfengine-3.2.3/
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/cfengine
+make &amp;amp;amp;&amp;amp;amp; make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为了保证cfengine正常工作创建cfengine工作目录:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir -p /var/cfengine/masterfiles  &lt;span class="c"&gt;# 存放要分发的承诺&lt;/span&gt;
+mkdir /var/cfengine/inputs          &lt;span class="c"&gt;# 存放要执行的承诺&lt;/span&gt;
+mkdir /var/cfengine/outputs         &lt;span class="c"&gt;# 存放执行承诺的输出&lt;/span&gt;
+mkdir /var/cfengine/bin             &lt;span class="c"&gt;# 存放二进制文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;复制二进制文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
+ls -l /var/cfengine/bin/
+total 964
+-rwxr-xr-x 1 root root 235958 Jan 13  2012 cf-agent           &lt;span class="c"&gt;# 执行承诺&lt;/span&gt;
+-rwxr-xr-x 1 root root  63095 Jan 13  2012 cf-execd           &lt;span class="c"&gt;# 用于替代cron的程序,定时执行cf-agent&lt;/span&gt;
+-rwxr-xr-x 1 root root  39076 Jan 13  2012 cf-key             &lt;span class="c"&gt;# 生成用于认证的证书&lt;/span&gt;
+-rwxr-xr-x 1 root root  78711 Jan 13  2012 cf-know            &lt;span class="c"&gt;# 从大量承诺（知识建模代理）生成一个 ISO 标准的 Topic Map 的命令&lt;/span&gt;
+-rwxr-xr-x 1 root root 150846 Jan 13  2012 cf-monitord        &lt;span class="c"&gt;# 负责收集有关系统状态信息的守护进程&lt;/span&gt;
+-rwxr-xr-x 1 root root  16078 Jan 13  2012 cf-promises        &lt;span class="c"&gt;# 检查承诺语法的程序&lt;/span&gt;
+-rwxr-xr-x 1 root root 107349 Jan 13  2012 cf-report          &lt;span class="c"&gt;# 生成报告&lt;/span&gt;
+-rwxr-xr-x 1 root root  44160 Jan 13  2012 cf-runagent        &lt;span class="c"&gt;# 用来执行远程的cf-agent&lt;/span&gt;
+-rwxr-xr-x 1 root root 172251 Jan 13  2012 cf-serverd         &lt;span class="c"&gt;# 分发承诺的守护进程&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;一个cfengine的hello, world:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/inputs/test.cf                                               &lt;span class="c"&gt;# 新建一个承诺文件,添加下面内容&lt;/span&gt;
+&lt;span class="c"&gt;###################&lt;/span&gt;
+&lt;span class="c"&gt;# 这里顺便解释一下cfengine的语法,cfengine的语法大都如下&lt;/span&gt;
+&lt;span class="c"&gt;# &amp;amp;lt;它是什么&amp;amp;gt; &amp;amp;lt;它对什么起作用&amp;amp;gt; &amp;amp;lt;它叫什么&amp;amp;gt;&lt;/span&gt;
+body common control                                   &lt;span class="c"&gt;# 一个body 对common组启作用,名字是control(名字为control的common的组是最重要的一个组,cfengine以这个组为起点&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                         &lt;span class="c"&gt;# 定义要执行的承诺束为test&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;                                     &lt;span class="c"&gt;# 一个承诺束,对cf-agent起作用,叫test&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+reports:                                              &lt;span class="c"&gt;# 一个报告(仅仅显示消息,不对系统做改变)&lt;/span&gt;
+  cfengine_3::                                        &lt;span class="c"&gt;# 一个类,对cfengine 版本3的策略执行点起作用(cfengine用这个来替代程序语言里的if-else)&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;;                                 &lt;span class="c"&gt;# 承诺内容,显示&amp;quot;hello world!&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+/var/cfengine/bin/cf-promises -f /var/cfengine/inputs/test.cf        &lt;span class="c"&gt;# 检查承诺语法&lt;/span&gt;
+/var/cfengine/bin/cf-agent -f /var/cfengine/inputs/test.cf           &lt;span class="c"&gt;# 执行承诺&lt;/span&gt;
+R: Hello world!                                                      &lt;span class="c"&gt;# R:代表一个report.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为策略分发点创建配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编辑策略文件:
+新建一个cftest1.cf承诺文件&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/cftest1.cf                  &lt;span class="c"&gt;# 新建一个cftest1.cf&lt;/span&gt;
+&lt;span class="c"&gt;# 添加如下内容:&lt;/span&gt;
+bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+reports:
+  cfengine_3::
+    &lt;span class="s2"&gt;&amp;quot;I&amp;#39;am cfengine 3 client&amp;quot;&lt;/span&gt;;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后编辑promises.cf文件加入执行这个承诺束的支持:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
+body common control
+&lt;span class="o"&gt;{&lt;/span&gt;
+ &lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                                &lt;span class="c"&gt;# 将test加入的承诺束队列&lt;/span&gt;
+
+ &lt;span class="nv"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;cfengine_stdlib.cf&amp;quot;&lt;/span&gt;,
+            &lt;span class="s2"&gt;&amp;quot;cftest1.cf&amp;quot;&lt;/span&gt;,                                             &lt;span class="c"&gt;# 将cftest1.cf引入进来&lt;/span&gt;
+           &lt;span class="o"&gt;}&lt;/span&gt;;
+
+ &lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="s2"&gt;&amp;quot;Community Promises.cf 1.0.0&amp;quot;&lt;/span&gt;;
+&lt;span class="o"&gt;}&lt;/span&gt;
+.......
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;做好之后先本地同步,然后启动server:
+&lt;pre&gt;/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;到如下提示表示成功&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="sb"&gt;``&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt; 
+&lt;span class="o"&gt;-&amp;amp;&lt;/span&gt;&lt;span class="ow"&gt;gt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;Bootstrap&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mf"&gt;172.16.1.1&lt;/span&gt; &lt;span class="n"&gt;completed&lt;/span&gt; &lt;span class="n"&gt;successfully&lt;/span&gt;
+&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;cf&lt;/span&gt;
+&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5308&lt;/span&gt;                     &lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;                        &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;20173&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cf&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serverd&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后执行策略:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
+R: --&amp;amp;gt; CFE is running on cfhub
+R: I&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;am cfengine 3 client
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;cfengine默认是让本机地址的16位网络连接同步的,如果新加入一个另一网段的设备允许同步,比如允许192.168.1.网段同步,编辑/var/cfengine/masterfiles/promises.cf,找到bundle common def&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
+bundle common def
+&lt;span class="o"&gt;{&lt;/span&gt;
+ vars:                                            &lt;span class="c"&gt;# 定义变量&lt;/span&gt;
+   ... ...
+    &lt;span class="s2"&gt;&amp;quot;acl&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;slist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;$(sys.policy_hub)/16&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;192.168.1.&amp;quot;&lt;/span&gt;,          &lt;span class="c"&gt;# 这这个后面添加&lt;/span&gt;
+  ... ...
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;服务端基本配置完成,客户端(cfengine host),按照本文前面安装的部分进行安装,创建工作目录,复制二进制文件,不用创建配置文件和承诺,然后执行:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;会出现和服务器执行一样的提示,就表示成功,如果提示连接不成功,尝试关闭防火墙.同步后执行本地策略:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;cfengine官方还是建议在生产环境加一个版本控制器用来创建承诺文件,然后给策略分发点用来分发给策略执行点.更多cfengine的语法请参见手册.&lt;/p&gt;</summary><category term="自动配置"></category><category term="自动化"></category><category term="服务器"></category><category term="Unix"></category><category term="Linux"></category><category term="cfengine"></category></entry></feed>
