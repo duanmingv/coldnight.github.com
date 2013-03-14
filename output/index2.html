@@ -30,6 +30,45 @@
                     
     <article>
         <header>
+            <h2><a href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html" rel="bookmark">
+    Vim配置系列(一) ---- 插件管理
+</a></h2>
+<time datetime="2012-12-14 08:57:00" pubdate>Posted on
+    五 14 十二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="./category/vim.html">
+    Vim</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
+首先在你的~/.vim下或者$VIM/vimfiles($VIM是vim的安装路径)创建bundle目录</p>
+<div class="codehilite"><pre>mkdir ~/.vim/bundle
+</pre></div>
+
+
+<p>然后使用git克隆Vundle项目:</p>
+<div class="codehilite"><pre>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</pre></div>
+
+
+<p>然后在你的.vimrc里添加下面内容:</p>
+<div class="codehilite"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
+<span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="./vimpei-zhi-xi-lie-cha-jian-guan-li.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html" rel="bookmark">
     Vim打开Python源码自动添加#!行和编码行 升级版
 </a></h2>
@@ -407,47 +446,6 @@ fugitive 可以在git获得:</p>
 
         <p>
             <a href="./fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html" rel="bookmark">
-    用Python将绝对URL替换成相对URL
-</a></h2>
-<time datetime="2012-09-29 15:52:00" pubdate>Posted on
-    六 29 九月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="./category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
-<p>脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#</span>
-<span class="c"># author  : cold night</span>
-<span class="c"># email   : wh_linux@126.com</span>
-<span class="c">#</span>
-
-<span class="kn">import</span> <span class="nn">pymongo</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
-
-<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

@@ -30,6 +30,47 @@
                     
     <article>
         <header>
+            <h2><a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html" rel="bookmark">
+    使用WebQQ协议桥接XMPP和QQ群
+</a></h2>
+<time datetime="2013-03-14 16:09:00" pubdate>Posted on
+    四 14 三月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>介绍</h2>
+<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
+<h2>实施</h2>
+<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
+<a href="https://github.com/coldnight/qxbot/tree/threading_version"></a></p>
+<h2>优化</h2>
+<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   Wood.D</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/03/04 09:58:26</span>
+<span class="c">#   Desc    :   Http Socket 实现</span>
+<span class="c">#</span>
+<span class="kn">import ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html" rel="bookmark">
     使用更加高效的epoll作为pyxmpp2的主循环
 </a></h2>
@@ -368,47 +409,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
             <a href="../yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html#disqus_thread">comments</a>
         </p>
     </article>
-        
-    <article>
-        <header>
-            <h2><a href="/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html" rel="bookmark">
-    用Python将绝对URL替换成相对URL
-</a></h2>
-<time datetime="2012-09-29 15:52:00" pubdate>Posted on
-    六 29 九月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
-<p>脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#</span>
-<span class="c"># author  : cold night</span>
-<span class="c"># email   : wh_linux@126.com</span>
-<span class="c">#</span>
-
-<span class="kn">import</span> <span class="nn">pymongo</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
-
-<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a>
-        </p>
-    </article>
         <script type="text/javascript">
         var disqus_shortname = 'linuxzen';
         (function () {
@@ -422,7 +422,7 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
     <div class="container footnote">
                             <span class="paginator">
-        Page 1 / 3
+        Page 1 / 4
         <a href="../tag/python2.html">&raquo;</a>
     </span>
     </div>

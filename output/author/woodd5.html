@@ -298,6 +298,47 @@ checkisdir<span class="o">()</span>
         
     <article>
         <header>
+            <h2><a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html" rel="bookmark">
+    使用WebQQ协议桥接XMPP和QQ群
+</a></h2>
+<time datetime="2013-03-14 16:09:00" pubdate>Posted on
+    四 14 三月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>介绍</h2>
+<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
+<h2>实施</h2>
+<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
+<a href="https://github.com/coldnight/qxbot/tree/threading_version"></a></p>
+<h2>优化</h2>
+<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   Wood.D</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/03/04 09:58:26</span>
+<span class="c">#   Desc    :   Http Socket 实现</span>
+<span class="c">#</span>
+<span class="kn">import ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/sshzheng-shu-deng-lu-cuo-wu.html" rel="bookmark">
     ssh证书登录错误
 </a></h2>
@@ -376,43 +417,6 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 
         <p>
             <a href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html" rel="bookmark">
-    Vim 结合Python编写的翻译插件
-</a></h2>
-<time datetime="2013-01-04 17:58:00" pubdate>Posted on
-    五 04 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/linuxvimpython.html">
-    Linux,Vim,Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
-<div class="codehilite"><pre><span class="c">&quot;   Author  :   cold</span>
-<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
-<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
-<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
-<span class="c">&quot;   Useage  :</span>
-<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
-<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
-<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
-
-<span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> get<span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

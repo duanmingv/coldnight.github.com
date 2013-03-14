@@ -30,6 +30,47 @@
                     
     <article>
         <header>
+            <h2><a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html" rel="bookmark">
+    使用WebQQ协议桥接XMPP和QQ群
+</a></h2>
+<time datetime="2013-03-14 16:09:00" pubdate>Posted on
+    四 14 三月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <h2>介绍</h2>
+<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
+<h2>实施</h2>
+<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
+<a href="https://github.com/coldnight/qxbot/tree/threading_version"></a></p>
+<h2>优化</h2>
+<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   Wood.D</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/03/04 09:58:26</span>
+<span class="c">#   Desc    :   Http Socket 实现</span>
+<span class="c">#</span>
+<span class="kn">import ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
     博客使用Pelican静态生成系统
 </a></h2>
@@ -398,53 +439,6 @@ make clean ...</pre></div>
 
         <p>
             <a href="../pythonli-de-san-mu-yun-suan.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/python-duan-dian-diao-shi.html" rel="bookmark">
-    Python 断点调试
-</a></h2>
-<time datetime="2012-08-10 16:16:00" pubdate>Posted on
-    五 10 八月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <h2>pdb模块</h2>
-<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
-<h3>插入断点</h3>
-<p>在需要插入断点的地方插入如下代码可以插入一个断点
-import pdb; pdb.set_trace()
-当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="c1"># 这里会出现当前运行程序的信息,源文件和当前函数</span>
-<span class="o">-&gt;</span> <span class="c1"># 这里是将要运行的语句</span>
- <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
-</pre></div>
-
-
-<h3>pdb指令</h3>
-<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
-<ul>
-<li>l 查看代码上下文</li>
-<li>p var 监视变量var</li>
-<li>n 单步执行</li>
-<li>b line  在line行插入断点</li>
-<li>c 继续到下一个断点,没有则执行程序</li>
-<li>r 执行到函数返回前</li>
-</ul>
-        </div>
-
-        <p>
-            <a href="../python-duan-dian-diao-shi.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

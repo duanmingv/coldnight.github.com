@@ -3,7 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-        <title>Wood.D's Record - Articles tagged as XMPP</title>
+        <title>Wood.D's Record - Articles tagged as python</title>
         <meta charset="utf-8" />
         <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
@@ -30,42 +30,35 @@
                     
     <article>
         <header>
-            <h2><a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html" rel="bookmark">
-    使用WebQQ协议桥接XMPP和QQ群
+            <h2><a href="/shi-yong-pythonjin-xing-webkai-fa.html" rel="bookmark">
+    使用Python进行web开发
 </a></h2>
-<time datetime="2013-03-14 16:09:00" pubdate>Posted on
-    四 14 三月 2013
+<time datetime="2012-04-13 16:39:00" pubdate>Posted on
+    五 13 四月 2012
 </time>
 <address class="vcard author">
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
+<span class="category">in <a href="../category/linuxpython.html">
+    Linux,Python</a>.
         </span>
         </header>
 
         <div class="body">
-            <h2>介绍</h2>
-<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
-<h2>实施</h2>
-<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以在下面查看:
-<a href="https://github.com/coldnight/qxbot/tree/threading_version"></a></p>
-<h2>优化</h2>
-<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   Wood.D</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/03/04 09:58:26</span>
-<span class="c">#   Desc    :   Http Socket 实现</span>
-<span class="c">#</span>
-<span class="kn">import ...</span></pre></div>
+            <p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
+<p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
+<h3>安装easy_install</h3>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+
+
+<h3>使用easy_install安装web.py</h3>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div>
         </div>
 
         <p>
-            <a href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a>
+            <a href="../shi-yong-pythonjin-xing-webkai-fa.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">
@@ -81,7 +74,8 @@
 
     <div class="container footnote">
                             <span class="paginator">
-        Page 1 / 1
+            <a href="../tag/python3.html">&laquo;</a>
+            Page 4 / 4
     </span>
     </div>
 

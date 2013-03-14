@@ -30,6 +30,50 @@
                     
     <article>
         <header>
+            <h2><a href="/mongoengineshi-yong-bi-ji.html" rel="bookmark">
+    mongoengine使用笔记
+</a></h2>
+<time datetime="2012-06-23 10:02:00" pubdate>Posted on
+    六 23 六月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近重新拾起Django,但是Django并不支持mongodb,但是有一个模块mongoengine可以实现Django Model类似的封装.但是mongoengine的中文文档几乎没有,有的也是简短的几句介绍和使用.下面我就分享一下我在使用过程中所记录下的一些笔记,可能有点乱.大家可以参考一下.</p>
+<h2>安装mongoengine</h2>
+<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
+<span class="n">easy_install</span> <span class="n">mongoengine</span>
+</pre></div>
+
+
+<h2>基本使用</h2>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="c"># 连接数据库</span>
+<span class="n">connect</span><span class="p">(</span><span class="s">&#39;blog&#39;</span><span class="p">)</span>   <span class="c"># 连接本地blog数据库</span>
+<span class="c"># 如需验证和指定主机名</span>
+<span class="c"># connect(&#39;blog&#39;, host=&#39;192.168.3.1&#39;, username=&#39;root&#39;, password=&#39;1234&#39;)</span>
+
+<span class="c"># 定义分类文档</span>
+<span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+    <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../mongoengineshi-yong-bi-ji.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html" rel="bookmark">
     bottle使用Python装饰器巧妙解决用户验证
 </a></h2>
@@ -389,40 +433,6 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
             <a href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html#disqus_thread">comments</a>
         </p>
     </article>
-        
-    <article>
-        <header>
-            <h2><a href="/shi-yong-pythonjin-xing-webkai-fa.html" rel="bookmark">
-    使用Python进行web开发
-</a></h2>
-<time datetime="2012-04-13 16:39:00" pubdate>Posted on
-    五 13 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/linuxpython.html">
-    Linux,Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
-<p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
-<h3>安装easy_install</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
-</pre></div>
-
-
-<h3>使用easy_install安装web.py</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../shi-yong-pythonjin-xing-webkai-fa.html#disqus_thread">comments</a>
-        </p>
-    </article>
         <script type="text/javascript">
         var disqus_shortname = 'linuxzen';
         (function () {
@@ -437,7 +447,8 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
     <div class="container footnote">
                             <span class="paginator">
             <a href="../tag/python2.html">&laquo;</a>
-            Page 3 / 3
+            Page 3 / 4
+        <a href="../tag/python4.html">&raquo;</a>
     </span>
     </div>
 
