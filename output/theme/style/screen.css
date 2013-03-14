@@ -102,7 +102,8 @@ pre code {
 
 .container {
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 78%;
+    min-width: 700px;
 }
 
 header#main {
@@ -131,7 +132,8 @@ article > header.float {
     padding: 0 8px 11px;
     position: fixed;
     top: 0;
-    max-width: 716px;
+    max-width: 80%;
+    min-width: 716px;
     margin: 0 -8px;
     width: 100%;
     z-index: 999;
@@ -314,7 +316,7 @@ article ul.tags {
     float: right;
 }
 
-@media screen and (max-width: 622px) {
+@media screen and (max-width: 78%; min-width:622px) {
     .about .avatar + p {
         width: auto;
     }
