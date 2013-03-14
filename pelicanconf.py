@@ -49,6 +49,7 @@ DEFAULT_PAGINATION = 10
 MD_EXTENSIONS =  (['codehilite','extra', 'fenced_code'])
 
 FILES_TO_COPY = (
-    ("404.html", "404.html"),
-    ("googledbee14f7be5461f0.html", "googledbee14f7be5461f0.html"),
+    ("extra/404.html", "404.html"),
+    ("extra/googledbee14f7be5461f0.html", "googledbee14f7be5461f0.html"),
+    ("extra/robots.txt", "robots.txt"),
 )
