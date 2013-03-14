@@ -1,6 +1,6 @@
 Title: 用python发带附件的邮件用来定时备份mysql数据库
 Tags: 附件,邮件,定时,备份,python,pymail,MySQL,mail
-Category: Linux,MySQL,Python
+Category: Python
 Date: 2012-04-21 18:26
 最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.
 

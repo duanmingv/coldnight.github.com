@@ -1,6 +1,6 @@
 Title: 使用更加高效的epoll作为pyxmpp2的主循环
 Tags: epoll, python, gtalk, 群, Linux, clubot
-Category: Linux,Python
+Category: Python
 Date: 2013-02-05 16:06
 ## 引子
 之前[clubot](/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html)使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是`clubot`上线后资源占用非常厉害,使用`strace`跟踪发现`clubot`在不停的`poll`,查看`pyxmpp2`代码发现`pyxmpp2`的`poll`在使用超时阻塞时使用`最小`超时时间,而`最小`超时时间一直是0,所以会变成一个没有超时的非阻塞`poll`很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的`epoll`的mainloop

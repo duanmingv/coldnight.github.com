@@ -1,6 +1,6 @@
 Title: 用Vim为Python源码自动添加#!行和编码行
 Tags: 自动,编码信息,添加,vim,shbang line,python
-Category: Vim,Python
+Category: Vim
 Date: 2012-09-29 18:56
 每次开始写Python打开文件第一件事就是写上`#!/usr/bin/env python和`编码之类的东西,
 

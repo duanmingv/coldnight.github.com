@@ -1,6 +1,6 @@
 Title: 部署Tornado时iptables引发的的一个问题
 Tags: tornado,nginx,iptables,bad gateway,502
-Category: Linux,Python
+Category: Linux
 Date: 2012-09-29 19:11
 今天在CentOS上部署了一个Tornado,使用nginx做代理,
 

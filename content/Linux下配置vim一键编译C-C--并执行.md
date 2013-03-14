@@ -1,6 +1,6 @@
 Title: Linux下配置vim一键编译C/C++并执行
 Tags: 编译,一键,vim,Linux,C/C++
-Category: Linux,Vim
+Category: Vim
 Date: 2012-04-05 12:07
 最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.
 

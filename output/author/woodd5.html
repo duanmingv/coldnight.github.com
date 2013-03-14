@@ -30,53 +30,6 @@
                     
     <article>
         <header>
-            <h2><a href="/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="bookmark">
-    Python将汉字按拼音排序--一个多音字引发的悲剧
-</a></h2>
-<time datetime="2012-10-24 18:29:00" pubdate>Posted on
-    三 24 十月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
-<span class="err">音</span>    <span class="n">yin1</span>
-</pre></div>
-
-
-<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># Author : cold night</span>
-<span class="c"># E-mail : wh_linux@126.com</span>
-<span class="c"># Date   : 12-10-24 下午3:13</span>
-<span class="c">#</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="kn">import</span> <span class="nn">locale</span>
-
-<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
-    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
             <h2><a href="/pythonli-de-san-mu-yun-suan.html" rel="bookmark">
     python里的三目运算
 </a></h2>
@@ -167,8 +120,8 @@
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxmysqlnginxjian-kong.html">
-    Linux,MySQL,nginx,监控</a>.
+<span class="category">in <a href="../category/jian-kong.html">
+    监控</a>.
         </span>
         </header>
 
@@ -203,8 +156,8 @@ server:</p>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -237,8 +190,8 @@ server:</p>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxshelljian-kong-python.html">
-    Linux,shell,监控,Python</a>.
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
         </span>
         </header>
 
@@ -274,8 +227,8 @@ checkisdir<span class="o">()</span>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -415,6 +368,43 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 
         <p>
             <a href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html" rel="bookmark">
+    Vim 结合Python编写的翻译插件
+</a></h2>
+<time datetime="2013-01-04 17:58:00" pubdate>Posted on
+    五 04 一月 2013
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/vim.html">
+    Vim</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
+<div class="codehilite"><pre><span class="c">&quot;   Author  :   cold</span>
+<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
+<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
+<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
+<span class="c">&quot;   Useage  :</span>
+<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
+<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
+<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
+
+<span class="k">function</span> GetCursorWord<span class="p">()</span>
+    <span class="k">let</span> column <span class="p">=</span> get<span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

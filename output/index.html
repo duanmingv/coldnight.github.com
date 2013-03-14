@@ -152,8 +152,8 @@ make clean ...</pre></div>
     by <a class="url fn" href="./author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="./category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -186,8 +186,8 @@ make clean ...</pre></div>
     by <a class="url fn" href="./author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="./category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -218,8 +218,8 @@ make clean ...</pre></div>
     by <a class="url fn" href="./author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="./category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -258,8 +258,8 @@ make clean ...</pre></div>
     by <a class="url fn" href="./author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="./category/linuxmysqlpython.html">
-    Linux,MySQL,Python</a>.
+<span class="category">in <a href="./category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -280,37 +280,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
         <p>
             <a href="./vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/cong-wordpressqian-yi-dao-vlog.html" rel="bookmark">
-    从wordpress迁移到vLog
-</a></h2>
-<time datetime="2013-01-16 16:10:00" pubdate>Posted on
-    三 16 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="./category/wei-fen-lei.html">
-    未分类</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>博客今天开始迁移到你现在看到的平台,是一个建立在<code>Tornado</code>和<code>MySQL</code>,使用<code>Jinja2</code>作为模板引擎的轻量级博客系统,完全使用Mardown格式书写.刚刚写完就迫不及待的迁移过来,导致现在很多功能不完善,比如你回复的时候会出现不自动跳转,这是因为博主是个很懒很不喜欢写JS的原因,所以着急迁移也就没有完善和修复这一部分功能,先这样跑着吧,优化以后慢慢搞.</p>
-<hr />
-<p>至于为什么叫vLog,是因为打算一开始不提供后台页面,所有后台操作提供接口,使用Vim调用的.但是后来还是忍不住写了后台,Vim倒是还没有实现,所以留待以后慢慢写吧.</p>
-<hr />
-<p>前台模板是从<a href="http://saepy.sinaapp.com">saepy</a>上扒下来的,本来是想直接改这个程序的,但是后来还是放弃了,自己写.</p>
-<p><strong>希望您喜欢现在的博客</strong></p>
-        </div>
-
-        <p>
-            <a href="./cong-wordpressqian-yi-dao-vlog.html#disqus_thread">comments</a>
         </p>
     </article>
         
@@ -370,8 +339,8 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
     by <a class="url fn" href="./author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="./category/linuxvimpython.html">
-    Linux,Vim,Python</a>.
+<span class="category">in <a href="./category/vim.html">
+    Vim</a>.
         </span>
         </header>
 
@@ -392,6 +361,45 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
         <p>
             <a href="./vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html" rel="bookmark">
+    Vim配置系列(一) ---- 插件管理
+</a></h2>
+<time datetime="2012-12-14 08:57:00" pubdate>Posted on
+    五 14 十二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="./category/vim.html">
+    Vim</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
+首先在你的~/.vim下或者$VIM/vimfiles($VIM是vim的安装路径)创建bundle目录</p>
+<div class="codehilite"><pre>mkdir ~/.vim/bundle
+</pre></div>
+
+
+<p>然后使用git克隆Vundle项目:</p>
+<div class="codehilite"><pre>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</pre></div>
+
+
+<p>然后在你的.vimrc里添加下面内容:</p>
+<div class="codehilite"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
+<span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="./vimpei-zhi-xi-lie-cha-jian-guan-li.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

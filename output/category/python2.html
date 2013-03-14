@@ -30,6 +30,172 @@
                     
     <article>
         <header>
+            <h2><a href="/python-you-ya-de-cao-zuo-zi-dian.html" rel="bookmark">
+    Python 优雅的操作字典
+</a></h2>
+<time datetime="2012-09-17 11:42:00" pubdate>Posted on
+    一 17 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>Python 中的字典是Python中一个键值映射的数据结构,下面介绍一下如何优雅的操作字典.</p>
+<h2>1.1 创建字典</h2>
+<p>Python有两种方法可以创建字典,第一种是使用花括号,另一种是使用内建
+函数dict</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>1.2 初始化字典</h2>
+<p>Python可以在创建字典的时候初始化字典</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span> <span class="p">:</span> <span class="s">&#39;cold&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span>       <span class="c"># 更优雅</span>
+</pre></div>
+
+
+<p>很明显第二种方法更加的优雅和减少一些特殊字符的输入,但是有种情况第二种不能胜任</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">key</span> <span class="o">=</span> <span class="s">&#39;name&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span> <span class="n">key</span> <span class="p">:</span><span class="s">&#39;cold&#39;</span><span class="p">}</span>  <span class="c"># {&#39;name&#39;:&#39;cold&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span> <span class="c"># {&#39;key&#39;: &#39;cold&#39;}</span>
+</pre></div>
+
+
+<p>明显第二种方法就会引发一个不容易找到的bug</p>
+<p>Python字典还有一种初始化方式,就是使用字典的fromkeys方法可以从列表中获取元素作为键并用None或fromkeys方法的第二个参数初始化</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;blog&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="bp">None ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../python-you-ya-de-cao-zuo-zi-dian.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/python-zi-dian-he-lie-biao-xian-jing.html" rel="bookmark">
+    Python 字典和列表陷阱
+</a></h2>
+<time datetime="2012-09-17 10:22:00" pubdate>Posted on
+    一 17 九月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>Python 中有三个非常好用的数据结构,列表,元组和字典,
+元组是不可变的,列表可以保存任意类型的Python对象,并可以随意扩展没有大小限制,
+字典是一个key-value的键值映射的类型,可以存放任何Python对象,可以嵌套字典,
+值可以是字典元组或者字典</p>
+<p>这里说是Python 字典和列表的陷阱不如说是Python的一些特性,如果不了解这些特性
+就会引发一些难以寻找的bug</p>
+<p>下面我们来介绍这些特性</p>
+<p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
+如下面代码:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../python-zi-dian-he-lie-biao-xian-jing.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html" rel="bookmark">
+    用bottle+mongodb写的blog程序支持mysql啦
+</a></h2>
+<time datetime="2012-08-14 09:16:00" pubdate>Posted on
+    二 14 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
+<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
+<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
+<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
+<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
+<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p>
+        </div>
+
+        <p>
+            <a href="../yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/pythonli-de-san-mu-yun-suan.html" rel="bookmark">
+    python里的三目运算
+</a></h2>
+<time datetime="2012-08-10 16:28:00" pubdate>Posted on
+    五 10 八月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>下面说的和三目运算有点相似,但又不一样,实在不知道该如何拟定标题,先就是这个标题吧,大家都知道python中没有三目运算,但是<code>and</code>/<code>or</code>有点类似三目运算:</p>
+<h2>and/or</h2>
+<p>单独使用表示逻辑关系与和或,也可以组和使用,用法如下</p>
+<h3>and</h3>
+<p>and前后如果某一个值为假(False, '', [], {}, None…)则返回第一个假值
+如果所有值都为真则返回最后一个真值</p>
+<h3>or</h3>
+<p>如果or任意一个值为真,则立刻返回这个值
+如果所有值都为假,则or返回最后一个假值</p>
+<h3>例子</h3>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
+<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../pythonli-de-san-mu-yun-suan.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/python-duan-dian-diao-shi.html" rel="bookmark">
     Python 断点调试
 </a></h2>
@@ -292,132 +458,6 @@ import pdb; pdb.set_trace()
             <a href="../bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html#disqus_thread">comments</a>
         </p>
     </article>
-        
-    <article>
-        <header>
-            <h2><a href="/yong-bottlemongodbxie-de-ge-blogcheng-xu.html" rel="bookmark">
-    用bottle+mongodb写的一个blog程序
-</a></h2>
-<time datetime="2012-06-16 16:20:00" pubdate>Posted on
-    六 16 六月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
-<p>前台显示文章:
-按分类显示
-按标签显示
-按月份归档显示
-最新文章
-评论
-后台管理:
-管理文章
-管理分类
-管理评论
-发表文章
-用户验证</p>
-<p>目录结构</p>
-<p>water</p>
-<p>+-app           程序目录</p>
-<p>|----admin.py  后台管理</p>
-<p>|----blog.py   前台显示</p>
-<p>|----dbconn.py 数据库连接</p>
-<p>|----encrypt.py包含加密函数</p>
-<p>+-static       静态文件目录:包括js css image</p>
-<p>+-views        模版目录</p>
-<p>+-index.py     用于启动整个程序 ...</p>
-        </div>
-
-        <p>
-            <a href="../yong-bottlemongodbxie-de-ge-blogcheng-xu.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html" rel="bookmark">
-    bottle的cookie操作小记(获取不是在当前页面创建的cookie)
-</a></h2>
-<time datetime="2012-06-02 17:51:00" pubdate>Posted on
-    六 02 六月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
-<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
-      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
-           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
-      <span class="k">else</span> <span class="p">:</span>
-           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
-
-<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/shi-yong-beakerrang-bottlezhi-chi-session.html" rel="bookmark">
-    使用beaker让bottle支持session
-</a></h2>
-<time datetime="2012-05-26 11:38:00" pubdate>Posted on
-    六 26 五月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
-<p>bottle小巧支持cookie但是不支持session.为了安全起见我们有时候希望使用的session.我们可以使用中间件beaker来扩展bottle,使我们的bottle应用支持session.废话不多说.首先beaker不是内置模块,我们首先来安装它.当然你可以网上下包手动安装,我们使用最简单的:</p>
-<div class="codehilite"><pre>easy_install beaker
-</pre></div>
-
-
-<p>没有easy_install这个命令?google吧,装了之后还是没有,如过时win的话检查环境变量,将Python安装目录下的Scripts目录添加到环境变量.</p>
-<p>安装好后我们如何使用它,下面一段带面是使用的:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">beaker.middleware</span> <span class="kn">import</span> <span class="n">SessionMiddleware</span>
-
-<span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&#39;session.type ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../shi-yong-beakerrang-bottlezhi-chi-session.html#disqus_thread">comments</a>
-        </p>
-    </article>
         <script type="text/javascript">
         var disqus_shortname = 'linuxzen';
         (function () {
@@ -432,7 +472,8 @@ import pdb; pdb.set_trace()
     <div class="container footnote">
                             <span class="paginator">
             <a href="../category/python.html">&laquo;</a>
-            Page 2 / 2
+            Page 2 / 3
+        <a href="../category/python3.html">&raquo;</a>
     </span>
     </div>
 

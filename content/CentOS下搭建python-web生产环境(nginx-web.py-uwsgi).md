@@ -1,6 +1,6 @@
 Title: CentOS下搭建python web生产环境(nginx+web.py+uwsgi)
 Tags: web.py,web,uwsgi,spawn-fcgi,python,nginx
-Category: Linux,Python
+Category: Linux
 Date: 2012-04-19 17:59
 前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境
 

@@ -1,6 +1,6 @@
 Title: Linux 下使用Python截图自动分享
 Tags: Linux,scrot,截图,python
-Category: Linux,Python
+Category: Python
 Date: 2013-01-22 16:59
 ## 引子
 Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,[eleven](http://eleveni386.7axu.com)开放了一个Image上传和显示接口,提供了使用`curl`来解决,但是我们公司的网络使用`squid`禁止了`curl`的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本

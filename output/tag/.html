@@ -30,32 +30,31 @@
                     
     <article>
         <header>
-            <h2><a href="/cong-wordpressqian-yi-dao-vlog.html" rel="bookmark">
-    从wordpress迁移到vLog
+            <h2><a href="/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html" rel="bookmark">
+    lvs+keepalived实现高可用群集配置详解
 </a></h2>
-<time datetime="2013-01-16 16:10:00" pubdate>Posted on
-    三 16 一月 2013
+<time datetime="2012-04-16 14:25:00" pubdate>Posted on
+    一 16 四月 2012
 </time>
 <address class="vcard author">
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/wei-fen-lei.html">
-    未分类</a>.
+<span class="category">in <a href="../category/fu-zai-jun-heng.html">
+    负载均衡</a>.
         </span>
         </header>
 
         <div class="body">
-            <p>博客今天开始迁移到你现在看到的平台,是一个建立在<code>Tornado</code>和<code>MySQL</code>,使用<code>Jinja2</code>作为模板引擎的轻量级博客系统,完全使用Mardown格式书写.刚刚写完就迫不及待的迁移过来,导致现在很多功能不完善,比如你回复的时候会出现不自动跳转,这是因为博主是个很懒很不喜欢写JS的原因,所以着急迁移也就没有完善和修复这一部分功能,先这样跑着吧,优化以后慢慢搞.</p>
-<hr />
-<p>至于为什么叫vLog,是因为打算一开始不提供后台页面,所有后台操作提供接口,使用Vim调用的.但是后来还是忍不住写了后台,Vim倒是还没有实现,所以留待以后慢慢写吧.</p>
-<hr />
-<p>前台模板是从<a href="http://saepy.sinaapp.com">saepy</a>上扒下来的,本来是想直接改这个程序的,但是后来还是放弃了,自己写.</p>
-<p><strong>希望您喜欢现在的博客</strong></p>
+            <p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
+<p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
+工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
+IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
+DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p>
         </div>
 
         <p>
-            <a href="../cong-wordpressqian-yi-dao-vlog.html#disqus_thread">comments</a>
+            <a href="../lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

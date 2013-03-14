@@ -1,6 +1,6 @@
 Title: vLog使用Tornado框架结合memcached缓存页面
 Tags: Linux,python,Memcached,pylibmc,缓存,vLog
-Category: Linux,MySQL,Python
+Category: Python
 Date: 2013-01-16 16:14
 ## 原因
 Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.

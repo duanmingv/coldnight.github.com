@@ -3,7 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-        <title>Wood.D's Record - Articles in Linux,MySQL,Python</title>
+        <title>Wood.D's Record - Articles in 负载均衡</title>
         <meta charset="utf-8" />
         <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
@@ -30,76 +30,69 @@
                     
     <article>
         <header>
-            <h2><a href="/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html" rel="bookmark">
-    vLog使用Tornado框架结合memcached缓存页面
+            <h2><a href="/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html" rel="bookmark">
+    lvs+keepalived实现高可用群集配置详解
 </a></h2>
-<time datetime="2013-01-16 16:14:00" pubdate>Posted on
-    三 16 一月 2013
+<time datetime="2012-04-16 14:25:00" pubdate>Posted on
+    一 16 四月 2012
 </time>
 <address class="vcard author">
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxmysqlpython.html">
-    Linux,MySQL,Python</a>.
+<span class="category">in <a href="../category/fu-zai-jun-heng.html">
+    负载均衡</a>.
         </span>
         </header>
 
         <div class="body">
-            <h2>原因</h2>
-<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
-<h2>实现</h2>
-<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
-prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div>
+            <p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
+<p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
+工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
+IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
+DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p>
         </div>
 
         <p>
-            <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a>
+            <a href="../lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html#disqus_thread">comments</a>
         </p>
     </article>
         
     <article>
         <header>
-            <h2><a href="/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html" rel="bookmark">
-    用python发带附件的邮件用来定时备份mysql数据库
+            <h2><a href="/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html" rel="bookmark">
+    nginx+keepalived配置高可用HTTP群集
 </a></h2>
-<time datetime="2012-04-21 18:26:00" pubdate>Posted on
-    六 21 四月 2012
+<time datetime="2012-02-09 17:35:00" pubdate>Posted on
+    四 09 二月 2012
 </time>
 <address class="vcard author">
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxmysqlpython.html">
-    Linux,MySQL,Python</a>.
+<span class="category">in <a href="../category/fu-zai-jun-heng.html">
+    负载均衡</a>.
         </span>
         </header>
 
         <div class="body">
-            <p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
-<p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding: utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: mail.py</span>
-<span class="sd">#         Desc: To send email</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version: 0.0.1</span>
-<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div>
+            <p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+一般集群主要架构为:</p>
+<p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
+第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
+第二种方式主备同时绑定一个vip,把域名通过DNS轮询的方式解析到这两个服务器上,主机出现故障,备机就将主机绑定vip绑定到备机上,同时arping网关刷新MAC地址.实现故障转移.</p>
+<p>中间为WEB服务器作为real server,处理请求.
+后端为数据库和分布式文件系统.数据库一般为主从两台.分布式文件系统有效解决WEB服务器之间的数据同步.有的还会将图片服务器单独分离出来放在后端.</p>
+<p>本文使用环境:</p>
+<ul>
+<li>CentOS 5.5 32位</li>
+<li>nginx:nginx-1.0.11</li>
+<li>keepalived：keepalived-1.1.19.tar.gz</li>
+<li>主调度器 ...</li></ul>
         </div>
 
         <p>
-            <a href="../yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a>
+            <a href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

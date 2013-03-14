@@ -30,43 +30,6 @@
                     
     <article>
         <header>
-            <h2><a href="/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html" rel="bookmark">
-    Vim 结合Python编写的翻译插件
-</a></h2>
-<time datetime="2013-01-04 17:58:00" pubdate>Posted on
-    五 04 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/linuxvimpython.html">
-    Linux,Vim,Python</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
-<div class="codehilite"><pre><span class="c">&quot;   Author  :   cold</span>
-<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
-<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
-<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
-<span class="c">&quot;   Useage  :</span>
-<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
-<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
-<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
-
-<span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> get<span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
             <h2><a href="/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html" rel="bookmark">
     Vim打开Python源码自动添加#!行和编码行 升级版
 </a></h2>
@@ -77,8 +40,8 @@
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/vimpython.html">
-    Vim,Python</a>.
+<span class="category">in <a href="../category/vim.html">
+    Vim</a>.
         </span>
         </header>
 
@@ -236,8 +199,8 @@
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxmysqlpython.html">
-    Linux,MySQL,Python</a>.
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -423,6 +386,44 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
         <p>
             <a href="../yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html" rel="bookmark">
+    用python发带附件的邮件用来定时备份mysql数据库
+</a></h2>
+<time datetime="2012-04-21 18:26:00" pubdate>Posted on
+    六 21 四月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
+<p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding: utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: mail.py</span>
+<span class="sd">#         Desc: To send email</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version: 0.0.1</span>
+<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

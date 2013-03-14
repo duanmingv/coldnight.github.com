@@ -1,6 +1,6 @@
 Title: 使用Python进行web开发
 Tags: 开发,web.py,Ubuntu,python,Linux
-Category: Linux,Python
+Category: Python
 Date: 2012-04-13 16:39
 最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas
 

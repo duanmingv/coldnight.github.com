@@ -1,6 +1,6 @@
 Title: Python 重复安装包报错
 Tags: python,包,重复,安装,卸载
-Category: Linux,Python
+Category: Python
 Date: 2013-01-25 14:55
 最近写程序用到argparse总是会报错
 ```

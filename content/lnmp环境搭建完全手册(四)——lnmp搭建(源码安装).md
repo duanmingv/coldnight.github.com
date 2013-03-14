@@ -1,6 +1,6 @@
 Title: lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)
 Tags: 源码包,安装,php,nginx,MySQL,Linux,CentOS
-Category: Linux,MySQL,nginx
+Category: Linux
 Date: 2012-03-13 13:13
 上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.
 

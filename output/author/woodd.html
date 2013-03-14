@@ -171,8 +171,8 @@ evince
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxshellnginx.html">
-    Linux,shell,nginx</a>.
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
         </span>
         </header>
 
@@ -324,8 +324,8 @@ make clean ...</pre></div>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -372,8 +372,8 @@ make clean ...</pre></div>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -400,32 +400,38 @@ make clean ...</pre></div>
         
     <article>
         <header>
-            <h2><a href="/cong-wordpressqian-yi-dao-vlog.html" rel="bookmark">
-    从wordpress迁移到vLog
+            <h2><a href="/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html" rel="bookmark">
+    搭建ntop监测局域网内流量
 </a></h2>
-<time datetime="2013-01-16 16:10:00" pubdate>Posted on
-    三 16 一月 2013
+<time datetime="2012-02-20 17:37:00" pubdate>Posted on
+    一 20 二月 2012
 </time>
 <address class="vcard author">
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/wei-fen-lei.html">
-    未分类</a>.
+<span class="category">in <a href="../category/jian-kong.html">
+    监控</a>.
         </span>
         </header>
 
         <div class="body">
-            <p>博客今天开始迁移到你现在看到的平台,是一个建立在<code>Tornado</code>和<code>MySQL</code>,使用<code>Jinja2</code>作为模板引擎的轻量级博客系统,完全使用Mardown格式书写.刚刚写完就迫不及待的迁移过来,导致现在很多功能不完善,比如你回复的时候会出现不自动跳转,这是因为博主是个很懒很不喜欢写JS的原因,所以着急迁移也就没有完善和修复这一部分功能,先这样跑着吧,优化以后慢慢搞.</p>
-<hr />
-<p>至于为什么叫vLog,是因为打算一开始不提供后台页面,所有后台操作提供接口,使用Vim调用的.但是后来还是忍不住写了后台,Vim倒是还没有实现,所以留待以后慢慢写吧.</p>
-<hr />
-<p>前台模板是从<a href="http://saepy.sinaapp.com">saepy</a>上扒下来的,本来是想直接改这个程序的,但是后来还是放弃了,自己写.</p>
-<p><strong>希望您喜欢现在的博客</strong></p>
+            <p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
+<p>本文环境:CentOS5.5 32位</p>
+<ul>
+<li>ip:192.168.3.101</li>
+<li>rrdtool:rrdtool-1.4.7.tar.gz</li>
+<li>GeoIP:GeoIP-1.4.8.tar.gz</li>
+<li>ntop:ntop-4.1.0.tar.gz</li>
+</ul>
+<h2>一.安装依赖:</h2>
+<h3>安装rrdtool</h3>
+<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
+wget http://oss.oetiker.ch ...</pre></div>
         </div>
 
         <p>
-            <a href="../cong-wordpressqian-yi-dao-vlog.html#disqus_thread">comments</a>
+            <a href="../da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

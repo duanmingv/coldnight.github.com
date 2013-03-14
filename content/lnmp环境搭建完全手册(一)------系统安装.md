@@ -1,6 +1,6 @@
 Title: lnmp环境搭建完全手册(一)------系统安装
 Tags: 虚拟机,操作系统,安装,VMware,Linux,CentOS
-Category: Linux,nginx
+Category: Linux
 Date: 2012-03-08 12:05
 在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
 首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.

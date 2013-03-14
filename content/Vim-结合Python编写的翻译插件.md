@@ -1,6 +1,6 @@
 Title: Vim 结合Python编写的翻译插件
 Tags: 翻译,插件,vim,python
-Category: Linux,Vim,Python
+Category: Vim
 Date: 2013-01-04 17:58
 最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:
 ```vim

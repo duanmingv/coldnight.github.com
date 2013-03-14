@@ -30,53 +30,6 @@
                     
     <article>
         <header>
-            <h2><a href="/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="bookmark">
-    Linux一些比较实用的小技巧
-</a></h2>
-<time datetime="2012-02-20 11:30:00" pubdate>Posted on
-    一 20 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/linuxshell.html">
-    Linux,shell</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
-<h2>文件查找</h2>
-<p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
-</pre></div>
-
-
-<p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
-</pre></div>
-
-
-<h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
-</pre></div>
-
-
-<h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
             <h2><a href="/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html" rel="bookmark">
     Linux高效工作----平铺式窗体管理器Awesome
 </a></h2>
@@ -124,8 +77,8 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxvim.html">
-    Linux,Vim</a>.
+<span class="category">in <a href="../category/vim.html">
+    Vim</a>.
         </span>
         </header>
 
@@ -203,8 +156,8 @@ clear
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxnginx.html">
-    Linux,nginx</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -241,8 +194,8 @@ clear
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxnginx.html">
-    Linux,nginx</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -284,8 +237,8 @@ clear
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxmysqlnginx.html">
-    Linux,MySQL,nginx</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -316,8 +269,8 @@ wget http://nginx ...</pre></div>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxnginx.html">
-    Linux,nginx</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -347,8 +300,8 @@ wget http://nginx ...</pre></div>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxfu-zai-jun-heng.html">
-    Linux,负载均衡</a>.
+<span class="category">in <a href="../category/fu-zai-jun-heng.html">
+    负载均衡</a>.
         </span>
         </header>
 
@@ -406,6 +359,46 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 
         <p>
             <a href="../mongoengineshi-yong-bi-ji.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/mysqlyou-hua-bi-ji.html" rel="bookmark">
+    MySQL优化笔记
+</a></h2>
+<time datetime="2012-02-04 13:36:00" pubdate>Posted on
+    六 04 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/mysql.html">
+    MySQL</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
+MySQL预编译参数:</p>
+<div class="codehilite"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
+</pre></div>
+
+
+<p>top</p>
+<div class="codehilite"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
+</pre></div>
+
+
+<p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
+<div class="codehilite"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
+
+__ Key _________________________________________________________________ ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../mysqlyou-hua-bi-ji.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

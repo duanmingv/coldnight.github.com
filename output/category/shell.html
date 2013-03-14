@@ -3,7 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-        <title>Wood.D's Record - Articles in Linux,shell</title>
+        <title>Wood.D's Record - Articles in shell</title>
         <meta charset="utf-8" />
         <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
@@ -30,6 +30,43 @@
                     
     <article>
         <header>
+            <h2><a href="/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html" rel="bookmark">
+    使用Linux shell实时检测文件变更
+</a></h2>
+<time datetime="2012-05-18 11:16:00" pubdate>Posted on
+    五 18 五月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
+<p>下面放出脚本内容:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Author      : cold</span>
+<span class="c"># Homepage    : http://www.linuxzen.com</span>
+<span class="c"># Filename    : checkchange.sh</span>
+<span class="c"># Useage      : sh checkchange.sh [dir]</span>
+checkisdir<span class="o">()</span>
+        <span class="c"># Have one argument</span>
+        <span class="c"># The argument is a directory</span>
+        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
+        <span class="k">do ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="bookmark">
     Linux一些比较实用的小技巧
 </a></h2>
@@ -40,8 +77,8 @@
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxshell.html">
-    Linux,shell</a>.
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
         </span>
         </header>
 
@@ -77,6 +114,38 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
         
     <article>
         <header>
+            <h2><a href="/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html" rel="bookmark">
+    编写Linux shell脚本来实现nginx日志分割
+</a></h2>
+<time datetime="2012-02-17 10:27:00" pubdate>Posted on
+    五 17 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
+<p>好了,废话不多说,脚本内容如下:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Author   : cold night</span>
+<span class="c"># Filename : nglogcut.sh</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/linux-shelljiao-ben-diao-shi-ji-qiao.html" rel="bookmark">
     Linux shell脚本调试技巧
 </a></h2>
@@ -87,8 +156,8 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxshell.html">
-    Linux,shell</a>.
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
         </span>
         </header>
 

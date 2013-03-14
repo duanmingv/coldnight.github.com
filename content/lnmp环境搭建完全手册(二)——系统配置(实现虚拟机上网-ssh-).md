@@ -1,6 +1,6 @@
 Title: lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)
 Tags: 虚拟机,上网,ssh,NAT,lnmp
-Category: Linux,nginx
+Category: Linux
 Date: 2012-03-10 11:31
 上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。
 

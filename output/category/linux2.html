@@ -30,6 +30,276 @@
                     
     <article>
         <header>
+            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html" rel="bookmark">
+    lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)
+</a></h2>
+<time datetime="2012-03-13 13:13:00" pubdate>Posted on
+    二 13 三月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
+<p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
+<p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
+<p>nginx当前最新稳定版是nginx-1.0.13
+首先我们下载nginx,在Linux下执行下面命令:</p>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
+wget http://nginx ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html" rel="bookmark">
+    lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)
+</a></h2>
+<time datetime="2012-03-13 10:06:00" pubdate>Posted on
+    二 13 三月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
+<p>比如你有一个包为:</p>
+<div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
+</pre></div>
+
+
+<p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
+<div class="codehilite"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
+</pre></div>
+
+
+<p>卸载这个包使用:</p>
+<div class="codehilite"><pre>rpm -e abc
+</pre></div>
+
+
+<p>卸载只要指定包名即可卸载.</p>
+<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p>
+        </div>
+
+        <p>
+            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html" rel="bookmark">
+    lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)
+</a></h2>
+<time datetime="2012-03-10 11:31:00" pubdate>Posted on
+    六 10 三月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
+<p>要想连接ssh,首先就需要保证windows能和虚拟机Linux进行通信,我们如果想要本机能和虚拟机通信需要设置虚拟机的网卡连接关系,有3中连接关系可以和本机连通:
+一种是Bridged(桥接),就是使用你本机的连接,如果本地用的是局域网DHCP上网可以选择这种方式.
+一种是NAT,就是用NAT模式，就是让虚拟系统借助NAT(网络地址转换)功能，通过宿主机器所在的网络来访问公网。如果本地用的是静态公网ip,本地有无DHCP这个是首选
+一种host-only:这种模式不能访问外网,只能何宿主(也就是本机)主机通信.也就不能访问Internet</p>
+<p>这里介绍如何设置NAT模式上网.按说网卡选择NAT模式直接重启网卡就可以dhcp获取,但是我们在以后配置Linux服务器的时候为了方便管理肯定不会使用DHCP,所以我们使用静态ip的方式来设置NAT上网.
+首先右键你的虚拟机标签-&gt;Setting-&gt;选中Network Adapter.在右边选中NAT(也可直接双击右下角的网卡图标)
+<img alt="www.linuxzen.com" src="/upload/QQ截图20120310101223.jpg" /></p>
+<p><img alt="www.linuxzen.com" src="/upload/QQ截图20120310101241.jpg" /></p>
+<p>做完这步之后我们还要编辑一下虚拟机的虚拟卡设置,以达到我们使用静态ip上网的需求:</p>
+<p>点击虚拟机的Edit(编辑)-&gt;Virtual Network Editor(虚拟网卡编辑器):
+<img alt="www.linuxzen.com" src="/upload/QQ截图20120310101559.jpg" />
+在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP ...</p>
+        </div>
+
+        <p>
+            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html" rel="bookmark">
+    lnmp环境搭建完全手册(一)------系统安装
+</a></h2>
+<time datetime="2012-03-08 12:05:00" pubdate>Posted on
+    四 08 三月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
+首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.</p>
+<p>安装VMware这里就不介绍了,给出VMware Workstation 8.0的<a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;vmware=downloadBinary&amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;pot=1&amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;tranId=70310191&amp;amp;downloadURL&quot;">下载地址</a></p>
+<p>VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
+我们还要准备CentOS5.5 的iso镜像用来安装系统.<a href="&quot;http://download.chinaunix.net/down.php?id=31679&amp;amp;ResourceID=12271&amp;amp;site=6">下载地址</a></p>
+<p>下面我们就来新建一个虚拟机安装CentOS ...</p>
+        </div>
+
+        <p>
+            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html" rel="bookmark">
+    用pxe安装自己定制的发行版快速部署系统环境
+</a></h2>
+<time datetime="2012-02-02 11:37:00" pubdate>Posted on
+    四 02 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
+<p>这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
+基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)</p>
+<p>使用环境:CentOS 5.5 32位</p>
+<p>使用系统:根据CentOS定制的发行版ColdOS 0.1 32位</p>
+<p>ip: 静态ip192.168.3.1</p>
+<p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
+1.安装配置tftp</p>
+<p>安装tftp-server</p>
+<div class="codehilite"><pre>yum -y install tftp-server
+</pre></div>
+
+
+<p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
+<div class="codehilite"><pre>vi ...</pre></div>
+        </div>
+
+        <p>
+            <a href="../yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html" rel="bookmark">
+    将cfengine集成到自己定制的发行版
+</a></h2>
+<time datetime="2012-01-19 11:35:00" pubdate>Posted on
+    四 19 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.</p>
+<p>本文完全根据<a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank">上一篇</a>文章而来,挂载光驱安装工具等等这里就不介绍了.</p>
+<!--more-->
+
+<p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
+<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+vi cfpkgs.list
+<span class="c"># 添加如下内容</span>
+keyutils-libs-devel
+zlib-devel
+e2fsprogs-devel 
+libsepol-devel
+libselinux-devel
+db4-devel
+pcre-devel
+krb5-devel
+flex
+openssl-devel 
+<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more-->
+        </div>
+
+        <p>
+            <a href="../jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html" rel="bookmark">
+    根据CentOS定制自己的发行版
+</a></h2>
+<time datetime="2012-01-18 11:13:00" pubdate>Posted on
+    三 18 一月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>本文使用的环境为CentOS5.5 32位.
+首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
+装完系统会再root的根目录下生成3个文件,我们用到两个:
+anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
+install.log            : 记录安装过程中所安装的包
+我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:<!--more--></p>
+<div class="codehilite"><pre>mkdir /usr/cold                 <span class="c"># 创建发行版目录</span>
+mount /dev/hdc /mnt             <span class="c"># 挂载IDE光驱</span>
+<span class="c"># 或</span>
+mount /dev/cdrom /mnt
+<span class="c"># 如挂载本地ISO镜像使用下面命令</span>
+mount -o loop iso路径 /mnt
+
+<span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
+<span class="c"># 都说这个命令比cp快 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html" rel="bookmark">
     安装配置cfengine实现自动化配置Linux/Unix服务器
 </a></h2>

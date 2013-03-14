@@ -30,43 +30,6 @@
                     
     <article>
         <header>
-            <h2><a href="/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html" rel="bookmark">
-    搭建ntop监测局域网内流量
-</a></h2>
-<time datetime="2012-02-20 17:37:00" pubdate>Posted on
-    一 20 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/woodd.html">
-    Wood.D</a>
-</address>
-<span class="category">in <a href="../category/linuxjian-kong.html">
-    Linux,监控</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
-<p>本文环境:CentOS5.5 32位</p>
-<ul>
-<li>ip:192.168.3.101</li>
-<li>rrdtool:rrdtool-1.4.7.tar.gz</li>
-<li>GeoIP:GeoIP-1.4.8.tar.gz</li>
-<li>ntop:ntop-4.1.0.tar.gz</li>
-</ul>
-<h2>一.安装依赖:</h2>
-<h3>安装rrdtool</h3>
-<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</pre></div>
-        </div>
-
-        <p>
-            <a href="../da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
             <h2><a href="/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html" rel="bookmark">
     分享Vim两种好用的功能:状态行和空白字符可见
 </a></h2>
@@ -162,8 +125,8 @@ mount -o loop iso路径 /mnt
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxnginxpython.html">
-    Linux,nginx,Python</a>.
+<span class="category">in <a href="../category/linux.html">
+    Linux</a>.
         </span>
         </header>
 
@@ -201,8 +164,8 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxmysql.html">
-    Linux,MySQL</a>.
+<span class="category">in <a href="../category/mysql.html">
+    MySQL</a>.
         </span>
         </header>
 
@@ -365,8 +328,8 @@ openssl-devel
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxshell.html">
-    Linux,shell</a>.
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
         </span>
         </header>
 
@@ -420,8 +383,8 @@ openssl-devel
     by <a class="url fn" href="../author/woodd.html">
     Wood.D</a>
 </address>
-<span class="category">in <a href="../category/linuxpython.html">
-    Linux,Python</a>.
+<span class="category">in <a href="../category/python.html">
+    Python</a>.
         </span>
         </header>
 
@@ -445,6 +408,53 @@ openssl-devel
 
         <p>
             <a href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
+            <h2><a href="/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="bookmark">
+    Linux一些比较实用的小技巧
+</a></h2>
+<time datetime="2012-02-20 11:30:00" pubdate>Posted on
+    一 20 二月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="../author/woodd.html">
+    Wood.D</a>
+</address>
+<span class="category">in <a href="../category/shell.html">
+    shell</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<h2>文件查找</h2>
+<p>找出最近修改的文件:</p>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
+
+<p>使用通配符查找文件</p>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
+
+<h2>文本替换</h2>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
+
+<h2>显示指定行</h2>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="../linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">

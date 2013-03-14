@@ -1,6 +1,6 @@
 Title: lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)
 Tags: yum,nginx,man,lnmp,Linux,CentOS
-Category: Linux,nginx
+Category: Linux
 Date: 2012-03-13 10:06
 上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令
 

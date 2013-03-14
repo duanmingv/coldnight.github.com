@@ -1,6 +1,6 @@
 Title: Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)
-Tags: web,virtualenv,uwsgi,python,Gentoo,bottle
-Category: Linux,nginx,Python
+Tags: web,virtualenv,uwsgi,python,Gentoo,bottle, nginx
+Category: Linux
 Date: 2012-05-16 11:05
 最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).
 

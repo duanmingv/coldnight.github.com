@@ -343,7 +343,34 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 
 
 &lt;p&gt;很简单吧,应该看得出在哪里添加启动的程序吧,这里启动了&lt;code&gt;pidgin&lt;/code&gt;,&lt;code&gt;雷鸟&lt;/code&gt;,&lt;code&gt;gnome-do&lt;/code&gt;,&lt;code&gt;guake&lt;/code&gt;和&lt;code&gt;wine&lt;/code&gt;的&lt;code&gt;qq2012&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;还有很多强大的功能这里就不在介绍配置方法,可以自行google之&lt;/p&gt;</summary><category term="高效"></category><category term="管理器"></category><category term="窗体"></category><category term="桌面"></category><category term="平铺式"></category><category term="Linux"></category><category term="awesome"></category></entry><entry><title>Linux桌面高效工作----使用Gnome DO</title><link href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html" rel="alternate"></link><updated>2012-09-01T08:03:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-09-01:linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html</id><summary type="html">&lt;p&gt;不知大家是否和我一样在win下系统win+r输入命令来快速启动程序,这两天在Linux下碰到一个比这更爽,更快的软件,&lt;code&gt;Gnome Do&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;还有很多强大的功能这里就不在介绍配置方法,可以自行google之&lt;/p&gt;</summary><category term="高效"></category><category term="管理器"></category><category term="窗体"></category><category term="桌面"></category><category term="平铺式"></category><category term="Linux"></category><category term="awesome"></category></entry><entry><title>部署Tornado时iptables引发的的一个问题</title><link href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html" rel="alternate"></link><updated>2012-09-29T19:11:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-09-29:bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html</id><summary type="html">&lt;p&gt;今天在CentOS上部署了一个Tornado,使用nginx做代理,&lt;/p&gt;
+&lt;p&gt;tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;www.linuxzen.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_pass_header&lt;/span&gt; &lt;span class="s"&gt;Server&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_redirect&lt;/span&gt; &lt;span class="no"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Real_IP&lt;/span&gt; &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Scheme&lt;/span&gt; &lt;span class="nv"&gt;$scheme&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://127.0.0.1:8888&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;iptables filter表的INPUT链是DROP的,所以添加如下规则:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;至此,通过nginx才能正常访问tornado&lt;/p&gt;</summary><category term="tornado"></category><category term="nginx"></category><category term="iptables"></category><category term="bad gateway"></category><category term="502"></category></entry><entry><title>Linux桌面高效工作----使用Gnome DO</title><link href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html" rel="alternate"></link><updated>2012-09-01T08:03:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-09-01:linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html</id><summary type="html">&lt;p&gt;不知大家是否和我一样在win下系统win+r输入命令来快速启动程序,这两天在Linux下碰到一个比这更爽,更快的软件,&lt;code&gt;Gnome Do&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Gnome Do能根据用户键入的内容进行自动匹配，从而快速打开系统中已有的程序、文件、书签等。不仅如此，GNOME Do 还包括插件，从而能够做更多事,&lt;/p&gt;
 &lt;p&gt;比如你安装了pidgin插件只需输入联系人的名字即可打开与他/她的会话,安装了file这个插件输入文件/目录的名字即可打开目录或文件,&lt;/p&gt;
 &lt;p&gt;当然还有一个不足就是不支持中文&lt;/p&gt;
@@ -414,7 +441,221 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 &lt;code&gt;Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys&lt;/code&gt;
 查看.ssh权限为775
 .ssh 手动创建的时候是775权限,改成755权限后正常
-&lt;code&gt;# chmod 755 ~/.ssh&lt;/code&gt;&lt;/p&gt;</summary><category term="证书"></category><category term="权限"></category><category term="ssh"></category><category term="authorized_keys"></category></entry><entry><title>iptables:restorecon: command not found无法保存策略解决</title><link href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="alternate"></link><updated>2012-04-30T10:43:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-04-30:iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html</id><summary type="html">&lt;p&gt;今天更新了几条iptables,但是运行命令&lt;code&gt;service iptables save&lt;/code&gt;保存时确提示&lt;code&gt;iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found&lt;/code&gt;&lt;/p&gt;
+&lt;code&gt;# chmod 755 ~/.ssh&lt;/code&gt;&lt;/p&gt;</summary><category term="证书"></category><category term="权限"></category><category term="ssh"></category><category term="authorized_keys"></category></entry><entry><title>Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</title><link href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html" rel="alternate"></link><updated>2012-05-16T11:05:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-05-16:gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html</id><summary type="html">&lt;p&gt;最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).&lt;/p&gt;
+&lt;h2&gt;环境:&lt;/h2&gt;
+&lt;p&gt;系统:Gentoo
+ip:192.168.3.1&lt;/p&gt;
+&lt;p&gt;好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
+首先Gentoo没有默认安装vim,先安装vim:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;emerge&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;安装配置Python&lt;/h3&gt;
+&lt;p&gt;最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
+Gentoo使用emerge包管理,安装Python2.7:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/portage/dev-lang/python/
+emerge python-2.7.2-r3.ebuild
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;等待安装完成后使系统默认使用python2.7,先查看默认项&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;eselect&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
+&lt;span class="n"&gt;Available&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;interpreters:&lt;/span&gt;
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt; 
+  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="mf"&gt;.2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;默认使用3.2,选择python2.7&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;eselect python &lt;span class="nb"&gt;set &lt;/span&gt;1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;选择过后别忘记执行:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;python-updater
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;好了我已经将python换成了常用的python2.7,下面来安装easy_install:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;emerge setuptools
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装完后使用easy_install安装bottle框架和mongodb驱动:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;easy_install bottle
+easy_install pymogon
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装uwsgi/nginx/virtualenv:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;emerge nginx
+emerge uwsgi
+emerge virtualenv
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用virtualenv创建应用&lt;/h3&gt;
+&lt;p&gt;我们使用virtualenv创建一个应用:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /code/python
+virtualenv /code/python
+&lt;span class="nb"&gt;source &lt;/span&gt;bin/activate
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后查看应用目录下会多出几个目录.&lt;/p&gt;
+&lt;h3&gt;配置uWSGI&lt;/h3&gt;
+&lt;p&gt;首先创建一个uwsgi配置文件,并编辑它:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
+vi /etc/conf.d/uwsgi.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;改成内如如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# Distributed under the terms of the GNU General Public License v2&lt;/span&gt;
+&lt;span class="c1"&gt;# $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $&lt;/span&gt;
+
+&lt;span class="c1"&gt;# DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Path (or name) of UNIX/TCP socket to bind to&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_SOCKET&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;            &lt;span class="c1"&gt;# 使用unix socket&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Enable threads?&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_THREADS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The path to your uWSGI application.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#UWSGI_PROGRAM=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The path to your uWSGI xml config file.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_XML_CONFIG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;               &lt;span class="c1"&gt;# 使用xml配置文件&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The number of child processes to spawn. The default is 1.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_CHILDREN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The log file path. If empty logging is disabled&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_LOG_FILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;                    &lt;span class="c1"&gt;# 定义日志&lt;/span&gt;
+
+&lt;span class="c1"&gt;# If you want to run your application inside a chroot then specify the&lt;/span&gt;
+&lt;span class="c1"&gt;# directory here. Leave this blank otherwise.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#UWSGI_CHROOT=/code/python&lt;/span&gt;
+
+&lt;span class="c1"&gt;# If you want to run your application from a specific directiory specify&lt;/span&gt;
+&lt;span class="c1"&gt;# it here. Leave this blank otherwise.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# UWSGI_DIR=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# The user and group to run your application as. If you do not specify these,&lt;/span&gt;
+&lt;span class="c1"&gt;# the application will be run as root:root.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Additional options you might want to pass to uWSGI&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#UWSGI_EXTRA_OPTIONS=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后创建bottle.xml配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /code/bottle.xml
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;内容如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;uwsgi&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;socket&amp;gt;&lt;/span&gt;/var/tmp/bottle.sock&lt;span class="nt"&gt;&amp;lt;/socket&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;home&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/home&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;chdir&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/chdir&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;python-path&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/python-path&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;index&lt;span class="nt"&gt;&amp;lt;/module&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;master/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;memory/&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;logto&amp;gt;&lt;/span&gt;/var/log/bottle.log&lt;span class="nt"&gt;&amp;lt;/logto&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;daemonize&amp;gt;&lt;/span&gt;/var/log/uwsgi.log&lt;span class="nt"&gt;&amp;lt;/daemonize&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/uwsgi&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中&lt;module&gt;&lt;/module&gt;定义的就是你的web程序,也就是/code/python下要有一个index.py.&lt;/p&gt;
+&lt;p&gt;配置完毕后创建启动脚本:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt; &lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="sr"&gt;/uwsgi /&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="sr"&gt;/init.d/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;并加入开机启动:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置nginx&lt;/h3&gt;
+&lt;p&gt;编辑配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/etc/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改内容如下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;uwsgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_PYTHOME&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_CHDIR&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                               
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_SCRIPT&lt;/span&gt;    &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_pass&lt;/span&gt;  &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;   
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;同样将nginx作为开机启动:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;p&gt;首先创建一个bottle程序供测试:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="c1"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c1"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
+
+&lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="s"&gt;# Author    : cold night&lt;/span&gt;
+&lt;span class="s"&gt;# Filename  : index.py                                                          &lt;/span&gt;
+&lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;bottle&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
+
+&lt;span class="nv"&gt;@route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后启动nginx和uwsgi:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后通过浏览器访问即可看到&lt;code&gt;Hello world!&lt;/code&gt;&lt;/p&gt;</summary><category term="web"></category><category term="virtualenv"></category><category term="uwsgi"></category><category term="python"></category><category term="Gentoo"></category><category term="bottle"></category><category term="nginx"></category></entry><entry><title>iptables:restorecon: command not found无法保存策略解决</title><link href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="alternate"></link><updated>2012-04-30T10:43:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-04-30:iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html</id><summary type="html">&lt;p&gt;今天更新了几条iptables,但是运行命令&lt;code&gt;service iptables save&lt;/code&gt;保存时确提示&lt;code&gt;iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;好吧,很明显的错误,找不到restorecon命令. 查找一下:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
 &lt;span class="n"&gt;whereis&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
@@ -451,7 +692,664 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;只是一篇笔记,记录问题方便以后遇到问题后查找.有点乱.没多少内容.&lt;/p&gt;</summary><category term="防火墙"></category><category term="策略"></category><category term="无法保存"></category><category term="restorecon"></category><category term="iptables"></category></entry><entry><title>用pxe安装自己定制的发行版快速部署系统环境</title><link href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html" rel="alternate"></link><updated>2012-02-02T11:37:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-02-02:yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html</id><summary type="html">&lt;p&gt;自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.&lt;/p&gt;
+&lt;p&gt;只是一篇笔记,记录问题方便以后遇到问题后查找.有点乱.没多少内容.&lt;/p&gt;</summary><category term="防火墙"></category><category term="策略"></category><category term="无法保存"></category><category term="restorecon"></category><category term="iptables"></category></entry><entry><title>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</title><link href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html" rel="alternate"></link><updated>2012-04-19T17:59:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-04-19:centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html</id><summary type="html">&lt;p&gt;前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境&lt;/p&gt;
+&lt;p&gt;首先使用环境介绍:
+系统: CentOS 5.5 32位&lt;/p&gt;
+&lt;p&gt;Python版本:2.7.2&lt;/p&gt;
+&lt;p&gt;nginx:1.0.13&lt;/p&gt;
+&lt;p&gt;ip:192.168.3.3/24&lt;/p&gt;
+&lt;p&gt;由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2&lt;/p&gt;
+&lt;p&gt;首先安装python 2.7.2&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="sr"&gt;/usr/s&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;span class="nb"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;span class="c1"&gt;#下载python2.7.2&lt;/span&gt;
+&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="sr"&gt;/ftp/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="sr"&gt;/2.7.2/&lt;/span&gt;&lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
+&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jvxf&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;
+&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="sr"&gt;/configure --prefix=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;unicode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ucs4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;先别急着安装,为什么后面的步骤能顺利进行我们需要我们的python支持zlib模块,&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi Modules/Setup
+&lt;span class="c"&gt;#在454行左右找到:#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz&lt;/span&gt;
+&lt;span class="c"&gt;# 去掉注释&lt;/span&gt;
+zlib zlibmodule.c -I&lt;span class="k"&gt;$(&lt;/span&gt;prefix&lt;span class="k"&gt;)&lt;/span&gt;/include -L&lt;span class="k"&gt;$(&lt;/span&gt;exec_prefix&lt;span class="k"&gt;)&lt;/span&gt;/lib -lz
+然后接着编译
+make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装完成后我们想更方面的使用我们新安装的Python我们做如下更改.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mv /usr/bin/python /usr/bin/python24
+ln -s /usr/local/python27/bin/python /usr/bin/python
+ln -s /usr/local/python27/bin/python2.7 /usr/bin/python2.7
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样改完我们的yum就无法工作了,我们要修改yum来使yum工作:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/bin/yum
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将/#!/usr/bin/python改为#!/usr/bin/python2.4即可正常工作(版本可能不一样需查看自己系统自带的版本是什么)&lt;/p&gt;
+&lt;p&gt;现在我们执行python -V查看应该就是我们刚刚安装的2.7.2版本:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;python -V
+Python 2.7.2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们安装了python下面我们就来武装我们的新python,&lt;/p&gt;
+&lt;p&gt;我们先为新的Python安装python的setuptools,配备easy_install.easy_install用于安装Python第三方扩展包而且只要一个命令即可完成:&lt;/p&gt;
+&lt;p&gt;下载:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5&lt;span class="o"&gt;=&lt;/span&gt;fe1f997bc722265116870bc7919059ea
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后直接执行安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="n"&gt;c11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;py2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;egg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装好之后我们做一个软链接方便我们使用:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/python27/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="sr"&gt;/easy_install* /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/bin/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后我们来使用easy_install来安装Python第三方扩展&lt;/p&gt;
+&lt;p&gt;安装本文所需要的web.py&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后我们打开Python shell输入&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果没有报错则说明我们安装成功
+安装flup:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;flup&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装Spawn-fcgi :&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wegt&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lighttpd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="sr"&gt;/download/s&lt;/span&gt;&lt;span class="n"&gt;pawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;
+&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="sr"&gt;/configure --prefix=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/s&lt;/span&gt;&lt;span class="n"&gt;pawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/spawn-fcgi/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="sr"&gt;/spawn-fcgi /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/bin/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;到这里我们就完成了Python的所有包安装,下面我们来部署nginx(本博有大量文章来介绍安装nginx,这里还是再来一遍吧..)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install zlib-devel pcre-devel openssl-devel  &lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
+wget http://nginx.org/download/nginx-1.0.13.tar.gz &lt;span class="c"&gt;# 下载&lt;/span&gt;
+tar -zxvf nginx-1.0.13.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.13
+ ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx&lt;span class="se"&gt;\ &lt;/span&gt;  &lt;span class="c"&gt;# 指定安装目录为/usr/local/nginx&lt;/span&gt;
+--with-openssl&lt;span class="o"&gt;=&lt;/span&gt;/usr/include/openssl&lt;span class="se"&gt;\ &lt;/span&gt; &lt;span class="c"&gt;# 启用ssl&lt;/span&gt;
+--with-pcre&lt;span class="se"&gt;\ &lt;/span&gt;                         &lt;span class="c"&gt;# 启用正规表达式&lt;/span&gt;
+--with-http_stub_status_module        &lt;span class="c"&gt;# 安装可以查看nginx状态的程序&lt;/span&gt;
+make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们修改nginx的配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="c1"&gt;#           root   html;&lt;/span&gt;
+&lt;span class="c1"&gt;#          index  index.html index.htm;&lt;/span&gt;
+            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;PATH_INFO&lt;/span&gt; &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt; &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/tmp/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_ADDR&lt;/span&gt; &lt;span class="nv"&gt;$server_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_PORT&lt;/span&gt; &lt;span class="nv"&gt;$server_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_NAME&lt;/span&gt; &lt;span class="nv"&gt;$server_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后创建一个web.py程序:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;#-*-coding:utf8-*-&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
+&lt;span class="n"&gt;urls&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/.*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;application&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;urls&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;globals&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;GET&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Hello, world!&amp;#39;&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runwsgi&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;addr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;runfcgi&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;addr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将内容保存到/usr/local/nginx/html/下命名为index.py(或任意你喜欢的名字)
+然后赋予其执行权限:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过命令创建spawn-fcgi进程:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="sr"&gt;/ -f /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="sr"&gt;/html/i&lt;/span&gt;&lt;span class="n"&gt;ndex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/tmp/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们使用unix socket,并用nginx的用户来创建.现在我们访问http://192.168.3.3/就可以看到:&lt;code&gt;Hello, world!&lt;/code&gt;&lt;/p&gt;</summary><category term="web.py"></category><category term="web"></category><category term="uwsgi"></category><category term="spawn-fcgi"></category><category term="python"></category><category term="nginx"></category></entry><entry><title>lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html" rel="alternate"></link><updated>2012-03-13T13:13:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-03-13:lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html</id><summary type="html">&lt;p&gt;上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.&lt;/p&gt;
+&lt;p&gt;MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.&lt;/p&gt;
+&lt;p&gt;PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。&lt;/p&gt;
+&lt;p&gt;nginx当前最新稳定版是nginx-1.0.13
+首先我们下载nginx,在Linux下执行下面命令:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/src                                           &lt;span class="c"&gt;# 一般软件源码放在这个目录下&lt;/span&gt;
+wget http://nginx.org/download/nginx-1.0.13.tar.gz    &lt;span class="c"&gt;# 下载&lt;/span&gt;
+nginx会有几个依赖包,我们首先安装依赖,不要安装过程中会报错:
+yum  -y install zlib-devel pcre-devel openssl-devel
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;一般源代码安装分4个步骤(有人也会省去第一个步骤),&lt;code&gt;解压&lt;/code&gt;(tar命令)&lt;code&gt;预编译&lt;/code&gt;(执行源码包下的configure),&lt;code&gt;编译&lt;/code&gt;(make),&lt;code&gt;编译安装&lt;/code&gt;(make install)
+首先我们解压源码包:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.0.13&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里解释下加压参数,z代表gzip(也就是后面的.gz文件)x代表加压,v表示显示详细信息,-f使用档案文件或设备(必选参数)&lt;/p&gt;
+&lt;p&gt;然后我们进行预编译,一般预编译会带上一些参数,已达到我们想要安装的效果,比如启用某个功能,禁用某个功能:&lt;/p&gt;
+&lt;p&gt;进入源码包目录进行预编译:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.13
+ ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx&lt;span class="se"&gt;\ &lt;/span&gt;  &lt;span class="c"&gt;# 指定安装目录为/usr/local/nginx&lt;/span&gt;
+--with-openssl&lt;span class="o"&gt;=&lt;/span&gt;/usr/include/openssl&lt;span class="se"&gt;\ &lt;/span&gt; &lt;span class="c"&gt;# 启用ssl&lt;/span&gt;
+--with-pcre&lt;span class="se"&gt;\ &lt;/span&gt;                         &lt;span class="c"&gt;# 启用正规表达式&lt;/span&gt;
+--with-http_stub_status_module        &lt;span class="c"&gt;# 安装可以查看nginx状态的程序&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中./configure指执行当前目录下的&lt;code&gt;configure&lt;/code&gt;文件&lt;/p&gt;
+&lt;p&gt;预编译完成后我们就可以进行编译和安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt;           &lt;span class="c1"&gt;#编译&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;执行后make后会有大量输出,等待输出完成后如果没有报错就可以进行安装执行:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;   &lt;span class="c1"&gt;#安装&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装完成后我们可以到相应的目录查看安装的文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ls /usr/local/nginx/
+conf  html  logs  sbin
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;好了,下面我们启动nginx:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/s&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过查看端口看nginx是否启动成功,nginx占用TCP的80端口,执行下面命令:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt; &lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;                  &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;5946&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们查看80端口是开放的&lt;/p&gt;
+&lt;p&gt;然后打开浏览器访问http://192.168.3.120,我们会看到Welcome to nginx(之前的版本是 It's Work):&lt;/p&gt;
+&lt;p&gt;nginx安装完毕后我们来安装MySQL ,我们使用MySQl-5.0.95版首先下载:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/get/&lt;/span&gt;&lt;span class="n"&gt;Downloads&lt;/span&gt;&lt;span class="sr"&gt;/MySQL-5.0/m&lt;/span&gt;&lt;span class="n"&gt;ysql&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.0.95&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;&lt;span class="sr"&gt;/from/&lt;/span&gt;&lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//m&lt;/span&gt;&lt;span class="n"&gt;ysql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdpa&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nsysu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tw&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装之前我们先做一些准备工作,&lt;/p&gt;
+&lt;p&gt;安装依赖:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;ncurses&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;创建MySQL用户:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;useradd -M -s /sbin/nologin mysql  &lt;span class="c"&gt;# -M不创建home目录,-s指定shell为不登录&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后进行安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf mysql-5.0.95.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;mysql-5.0.95
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/mysql &lt;span class="se"&gt;\&lt;/span&gt;
+--without-debug &lt;span class="se"&gt;\ &lt;/span&gt;                                &lt;span class="c"&gt;# 取消调试模式提高性能&lt;/span&gt;
+--with-extra-charsets&lt;span class="o"&gt;=&lt;/span&gt;utf8,gbk &lt;span class="se"&gt;\ &lt;/span&gt;                 &lt;span class="c"&gt;# 仅仅指定需要的默认字符集提高性能&lt;/span&gt;
+--enable-assembler &lt;span class="se"&gt;\ &lt;/span&gt;                             &lt;span class="c"&gt;# 使用汇编模式提高性能&lt;/span&gt;
+--with-mysqld-ldflags&lt;span class="o"&gt;=&lt;/span&gt;-all-static &lt;span class="se"&gt;\ &lt;/span&gt;              &lt;span class="c"&gt;# 以静态方式编译提高性能&lt;/span&gt;
+--with-client-ldflags&lt;span class="o"&gt;=&lt;/span&gt;-all-static &lt;span class="se"&gt;\&lt;/span&gt;
+--with-unix-socket-path&lt;span class="o"&gt;=&lt;/span&gt;/tmp/mysql.sock &lt;span class="se"&gt;\ &lt;/span&gt;        &lt;span class="c"&gt;# 使用unix socket提高性能&lt;/span&gt;
+--with-ssl
+make
+make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装完成后复制配置文件和启动脚本:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp support-files/my-medium.cnf /etc/my.cnf         &lt;span class="c"&gt;# 复制配置文件&lt;/span&gt;
+cp support-files/mysql.server /etc/init.d/mysqld   &lt;span class="c"&gt;# 复制启动脚本&lt;/span&gt;
+chmod +x /etc/init.d/mysqld         &lt;span class="c"&gt;# 给启动脚本执行权限&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为了以后方便我们为所有的二进制可执行文件和动态链接库文件做一个软连接:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ln -s /usr/local/mysql/bin/* /usr/local/bin/              &lt;span class="c"&gt;# 为可执行的二进制文件做软连接&lt;/span&gt;
+ln -s /usr/local/mysql/lib/mysql/lib* /usr/lib/  &lt;span class="c"&gt;# 为动态链接库做一个软连接&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后我们初始化数据库:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql_install_db --user&lt;span class="o"&gt;=&lt;/span&gt;mysql  &lt;span class="c"&gt;# 用MySQL用户安装数据库&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;为了MySQL能正常使用我们需要更改一下MySQL安装目录和MySQL的数据库目录的属主和属组:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;chown -R root.mysql /usr/local/mysql/           &lt;span class="c"&gt;# 更改安装目录属主为root,属组为mysql&lt;/span&gt;
+chown -R mysql.mysql /usr/local/mysql/var/      &lt;span class="c"&gt;# 更改数据库目录属主和属组都为mysql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里的&lt;code&gt;-R&lt;/code&gt;参数用来应用到所有子目录和文件&lt;/p&gt;
+&lt;p&gt;配置完毕后我们启动mysql:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;mysqld&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;现在我们查看MySQL是否启动成功,MySQL占用TCP的3306端口,我们查看端口是否被占用:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;3306&lt;/span&gt;
+&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;                &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;32143&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysqld&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后我们通过mysql命令来连接mysql:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;会显示如下内容表示已经成功启动MySQL并已经连接上&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Welcome&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;monitor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;Commands&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Your&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;Server&lt;/span&gt; &lt;span class="n"&gt;version:&lt;/span&gt; &lt;span class="mf"&gt;5.0.95&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt; &lt;span class="n"&gt;Source&lt;/span&gt; &lt;span class="n"&gt;distribution&lt;/span&gt;
+
+&lt;span class="n"&gt;Copyright&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;2000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;its&lt;/span&gt; &lt;span class="n"&gt;affiliates&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;All&lt;/span&gt; &lt;span class="n"&gt;rights&lt;/span&gt; &lt;span class="n"&gt;reserved&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;registered&lt;/span&gt; &lt;span class="n"&gt;trademark&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;Corporation&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;its&lt;/span&gt;
+&lt;span class="n"&gt;affiliates&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Other&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;trademarks&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;their&lt;/span&gt; &lt;span class="n"&gt;respective&lt;/span&gt;
+&lt;span class="n"&gt;owners&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;help;&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;\h&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;\c&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;clear&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;statement&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;MySQL安装完毕下面我们就来安装PHP,安装PHP前首先要安装几个源码包依赖:&lt;code&gt;libmcrypt&lt;/code&gt; &lt;code&gt;mhash&lt;/code&gt; &lt;code&gt;mcrypt&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;首先来安装几个源码包依赖:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.bz2/download
+tar -jxvf libmcrypt-2.5.8.tar.bz2   &lt;span class="c"&gt;# 这个包是bz2的  使用-j参数解压&lt;/span&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;libmcrypt-2.5.8
+./configure
+make
+make install
+&lt;span class="c"&gt;####################################################&lt;/span&gt;
+wget http://sourceforge.net/projects/mhash/files/mhash/0.9.9.9/mhash-0.9.9.9.tar.bz2/download
+tar -jxvf mhash-0.9.9.9.tar.bz2
+&lt;span class="nb"&gt;cd &lt;/span&gt;mhash-0.9.9.9
+./configure
+make
+make install
+&lt;span class="c"&gt;# 这两个包安装完成后要把动态链接库做一个软连接到/usr/lib,以为接下来的mcrypt依赖于这两个包&lt;/span&gt;
+ln -s /usr/local/lib/libmcrypt* /usr/lib
+ln -s /usr/local/lib/libmhash.* /usr/lib/
+ln -s /usr/local/bin/libmcrypt-config /usr/bin/libmcrypt-config
+&lt;span class="c"&gt;###########################################################&lt;/span&gt;
+wget http://sourceforge.net/projects/mcrypt/files/MCrypt/2.6.8/mcrypt-2.6.8.tar.gz/download
+tar -zxvf mcrypt-2.6.8.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;mcrypt-2.6.8
+./configure
+make
+make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后下载php:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//c&lt;/span&gt;&lt;span class="n"&gt;n2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="sr"&gt;/get/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;&lt;span class="sr"&gt;/from/&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mirror&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装依赖:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="err"&gt;–&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libxml2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;curl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;libpng&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;openldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们使用nginx调用php的时候使用fpm的方式,在php 5.4中加入了对php-fpm的支持,所以就不需要打补丁了.安装PHP:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jxvf&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;
+&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="sr"&gt;/configure --prefix=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/mysql/&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zlib&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rpath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;safe&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bcmath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;shmop&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sysvsem&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curlwrappers&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fastcgi&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mcrypt&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gd&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;openssl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mhash&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sockets&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sasl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xmlrpc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;soap&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt;
+&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;到这里整个LNMP已经安装完成.下面我们就配置php和nginx能运行php网站:
+首先为php创建配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;production&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt; &lt;span class="c1"&gt;# 如果是开发就复制php.ini-development&lt;/span&gt;
+&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="sr"&gt;/php-fpm.conf.default /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="sr"&gt;/etc/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="sr"&gt;/php /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/bin/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置php-fpm,编辑php-fpm.conf&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;找到listen那一行,修改成如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="sr"&gt;/php-fpm/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;   &lt;span class="c1"&gt;# 使用unix socket&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动php-fpm&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;mkdir&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
+&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/s&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后配置nginx,编辑nginx配置文件&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/co&lt;/span&gt;&lt;span class="n"&gt;nf&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改nginx配置文件支持php:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nb"&gt;listen&lt;/span&gt;       &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;#charset koi8-r;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;#access_log  logs/host.access.log  main;&lt;/span&gt;
+
+        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;root&lt;/span&gt;   &lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="nb"&gt;index&lt;/span&gt;  &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;htm&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;         &lt;span class="c1"&gt;# 添加index.php的首页文件&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# 添加下面内容&lt;/span&gt;
+        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;\.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt;        &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="sr"&gt;/php-fpm/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_index&lt;/span&gt;       &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="nv"&gt;$document_root&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改完毕后保存退出重启nginx:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;pkill&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="n"&gt;nignx&lt;/span&gt;
+&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/s&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后在/usr/local/nginx/html下创建index.php,&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;添加下面内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class="nb"&gt;phpinfo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="cp"&gt;?&amp;gt;&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;保存退出后访问&lt;a href=""&gt;http://192.168.3.120/index.php&lt;/a&gt;,看到下面页面表示已经安装配置成功:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="linuxzen.com" src="/upload/QQ截图20120313133251.jpg" /&gt;
+到这里我们的LNMP环境就完全搭建成功,运行你的网站或者学习你的PHP吧.&lt;/p&gt;</summary><category term="源码包"></category><category term="安装"></category><category term="php"></category><category term="nginx"></category><category term="MySQL"></category><category term="Linux"></category><category term="CentOS"></category></entry><entry><title>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html" rel="alternate"></link><updated>2012-03-13T10:06:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-03-13:lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html</id><summary type="html">&lt;p&gt;上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令&lt;/p&gt;
+&lt;p&gt;比如你有一个包为:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;abc-0.1.3-el5.centos.rpm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;rpm -ivh abc-0.1.3-el5.centos.rpm    &lt;span class="c"&gt;# i是安装 v是显示详细信息,-h显示安装进度&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;卸载这个包使用:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;rpm -e abc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;卸载只要指定包名即可卸载.&lt;/p&gt;
+&lt;p&gt;因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软体包，无须繁琐地一次次下载、安装。&lt;/p&gt;
+&lt;p&gt;yum的使用需要指定一个yum仓库,我们首先来配置一个yum仓库,yum仓库可以是internet上提供的,但是rhel的yum库是收费的,但是我们用的CentOS的yum库是免费的.yum仓库还可以使用本地的yum库.我们这里使用本地yum库.资源就是使用我们的安装DVD盘.首先将我们的DVD盘放到虚拟光驱,然后在Linux下挂载光盘.
+右键虚拟机标签-&amp;gt;Setting(设置),选择CD/DVD(IDE),在右边点选Use ISO image file,然后点"Browse..",浏览找到CentOS 5.5 安装DVD盘.然后选择右上角的connect:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120311164241.jpg" /&gt;
+&lt;img alt="wwww.linuxzen.com" src="/upload/QQ截图20120311164417.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;然后ok保存,在终端或在你的ssh客户端上输入下面命令:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mount /dev/hdc /mnt    &lt;span class="c"&gt;# 将光盘挂载到/mnt下&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后修改yum配置文件,首先我们不是用默认提供的官方源,我们把CentOS-Base.repo重命名一下:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后修改本地源配置文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/yum.repos.d/CentOS-Media.repo
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;按i进入输入模式,修改成如下内容&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;[&lt;/span&gt;c5-media&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;CentOS-&lt;span class="nv"&gt;$releasever&lt;/span&gt; - Media
+&lt;span class="nv"&gt;baseurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;file:///mnt                           &lt;span class="c"&gt;# 源为挂载光盘的目录/mnt下&lt;/span&gt;
+&lt;span class="c"&gt;#       file:///media/CentOS/&lt;/span&gt;
+&lt;span class="c"&gt;#       file:///media/cdrom/&lt;/span&gt;
+&lt;span class="c"&gt;#       file:///media/cdrecorder/&lt;/span&gt;
+&lt;span class="nv"&gt;gpgcheck&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nv"&gt;enabled&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1                                     &lt;span class="c"&gt;# 改为1启用这个源&lt;/span&gt;
+&lt;span class="nv"&gt;gpgkey&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;修改完毕按&lt;/span&gt;&lt;span class="sb"&gt;`Esc`&lt;/span&gt;&lt;span class="err"&gt;进入命令模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;输入&lt;/span&gt;&lt;span class="sb"&gt;`:`&lt;/span&gt;&lt;span class="err"&gt;进入末行模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在末行模式输入&lt;/span&gt;&lt;span class="sb"&gt;`wq`&lt;/span&gt;&lt;span class="err"&gt;保存退出&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+
+&lt;span class="err"&gt;修改完毕后执行&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="sb"&gt;``&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
+&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;会看到类似下面的输入,表示我们的配置是成功的:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120313095321.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;配置完成后我们用他来安装几个常用的工具,&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install setuptool lrzsz wget gcc gcc-c++ make which bzip2 groff man
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;来介绍一下这几个工具,setuptool可以在终端界面下提供一个类似安装界面的图形化配置界面.
+lrzsz可以通过其提供的命令rz/sz过ssh客户端对服务器进行上传和下载
+wget是Linux下优秀的下载工具(http/ftp)
+gcc是一款C/C++的编译器
+make使用gcc根据makefile进行编译源代码
+which是一个查找命令的工具
+bzip2是一个压缩软件一般供tar调用
+man是一个查看手册命令,如果碰到不懂的命令可以man一下.比如你不知道wget命令的用法可以:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;man wget
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后man命令就给提供这个命令的详细手册.好了一些准备工作到这里已经做好了.接下来的文章我们就介绍安装nginx.&lt;/p&gt;</summary><category term="yum"></category><category term="nginx"></category><category term="man"></category><category term="lnmp"></category><category term="Linux"></category><category term="CentOS"></category></entry><entry><title>lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html" rel="alternate"></link><updated>2012-03-10T11:31:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-03-10:lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html</id><summary type="html">&lt;p&gt;上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。&lt;/p&gt;
+&lt;p&gt;要想连接ssh,首先就需要保证windows能和虚拟机Linux进行通信,我们如果想要本机能和虚拟机通信需要设置虚拟机的网卡连接关系,有3中连接关系可以和本机连通:
+一种是Bridged(桥接),就是使用你本机的连接,如果本地用的是局域网DHCP上网可以选择这种方式.
+一种是NAT,就是用NAT模式，就是让虚拟系统借助NAT(网络地址转换)功能，通过宿主机器所在的网络来访问公网。如果本地用的是静态公网ip,本地有无DHCP这个是首选
+一种host-only:这种模式不能访问外网,只能何宿主(也就是本机)主机通信.也就不能访问Internet&lt;/p&gt;
+&lt;p&gt;这里介绍如何设置NAT模式上网.按说网卡选择NAT模式直接重启网卡就可以dhcp获取,但是我们在以后配置Linux服务器的时候为了方便管理肯定不会使用DHCP,所以我们使用静态ip的方式来设置NAT上网.
+首先右键你的虚拟机标签-&amp;gt;Setting-&amp;gt;选中Network Adapter.在右边选中NAT(也可直接双击右下角的网卡图标)
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310101223.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310101241.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;做完这步之后我们还要编辑一下虚拟机的虚拟卡设置,以达到我们使用静态ip上网的需求:&lt;/p&gt;
+&lt;p&gt;点击虚拟机的Edit(编辑)-&amp;gt;Virtual Network Editor(虚拟网卡编辑器):
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310101559.jpg" /&gt;
+在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP,改成你想要的网段,这里使用&lt;code&gt;192.168.3.0/24&lt;/code&gt;.
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310101834.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;然后点击NAT Settting:设置Gateway IP为&lt;code&gt;192.168.3.0&lt;/code&gt;网段的一个ip,这里使用&lt;code&gt;192.168.3.254&lt;/code&gt;.
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310102222.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;设置好后然后点击OK保存退出.&lt;/p&gt;
+&lt;p&gt;一切已经就绪,下面我们就开始我们的Linux之旅.首先进入系统,在login:界面输入root用户,然后输入安装时输入的root密码.进入系统.首先我们来配置网卡.CentOS的网卡路径在"/etc/sysconifg/network-scripts/"下面,第一个网卡一般命名为eth0,网卡配置文件则是ifcfg-eth0,第二个是eth1,配置文件ifcfg-eth1,后面的以此类推.下面我们来配置网卡:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;(在这里说一下,Linux有一个很方便的功能当路径太长不方便记忆时,可打出一部分敲Tab键如果这个是唯一的就会自动补全,如果不是就敲两下Tab,就会列出所有可选内容,文件和命令一样)
+按i进入输入模式,将配置文件改成如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;DEVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;eth0                   &lt;span class="c"&gt;# 设备名&lt;/span&gt;
+&lt;span class="nv"&gt;HWADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;00:00:00:00:01         &lt;span class="c"&gt;# MAC地址&lt;/span&gt;
+&lt;span class="nv"&gt;BOOTPROTO&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static              &lt;span class="c"&gt;# IP获取方式为static,如果是dhcp则是使用DHCP获取&lt;/span&gt;
+&lt;span class="nv"&gt;ONBOOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes                    &lt;span class="c"&gt;# 是否启用网卡(也就是是否在重启设备或重启网卡时启动这个网卡)&lt;/span&gt;
+&lt;span class="nv"&gt;IPADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.120          &lt;span class="c"&gt;# IP地址&lt;/span&gt;
+&lt;span class="nv"&gt;NETMASK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;255.255.255.0         &lt;span class="c"&gt;# 掩码&lt;/span&gt;
+&lt;span class="nv"&gt;GATEWAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.254         &lt;span class="c"&gt;# 网关(也就是刚才虚拟网卡编辑器里NAT Setting里设置的网关)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编辑完成后按Esc进入末行模式然后输入:wq保存退出
+然后重启网卡,如果都是[OK]的就没有问题&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service network restart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;查看网络配置的命令是&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ifconfig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310104548.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;ping命令用来检测网络连通性,配置好后我们ping网关测试:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ping 192.168.3.254
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果显示如下则表示是通的,如果不是则表示不通
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310104753.jpg" /&gt;
+如果能正常访问网络我们还需要配置一个DNS服务器,指定一个DNS服务器的配置文件为:/etc/resolv.conf.Linux可以配置3个DNS.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/resolv.conf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;同样按i或a进入输入模式添加如下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;nameserver    192.168.3.254    &lt;span class="c"&gt;# 本地DNS&lt;/span&gt;
+nameserver    202.106.0.20     &lt;span class="c"&gt;# 北京地区网通DNS&lt;/span&gt;
+nameserver    8.8.8.8          &lt;span class="c"&gt;# google的根DNS&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后按Esc,输入:wq保存退出,然后ping &lt;a href="http://www.linuxzen.com"&gt;www.linuxzen.com&lt;/a&gt;看能否解析:
+&lt;img alt="www.linuxzen.com" src="/upload/未命名.jpg" /&gt;
+上图表示解析成功.&lt;/p&gt;
+&lt;p&gt;好了到这一步Linux已经可以访问internet了.下面我们就配置ssh连接虚拟机.连接ssh的软件有几款都是比较不错的,个人觉得最好的还是Secure CRT,这个是收费的但较低版本还是可以在百度/谷歌上找到特别码(你懂得),还有一款是putty,这一个款开源软件而且只有几百KB,很轻量级.&lt;/p&gt;
+&lt;p&gt;我们首先要关闭selinux(一款美国国家安全局贡献出来的软件,如果会配置可以开启,如果不会就关闭)
+编辑/etc/selinux/config:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/selinux/config
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后按i进入输入模式,修改SELINUX参数为disabled:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# This file controls the state of SELinux on the system.&lt;/span&gt;
+&lt;span class="c"&gt;# SELINUX= can take one of these three values:&lt;/span&gt;
+&lt;span class="c"&gt;#       enforcing - SELinux security policy is enforced.&lt;/span&gt;
+&lt;span class="c"&gt;#       permissive - SELinux prints warnings instead of enforcing.&lt;/span&gt;
+&lt;span class="c"&gt;#       disabled - SELinux is fully disabled.&lt;/span&gt;
+&lt;span class="nv"&gt;SELINUX&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;disabled   &lt;span class="c"&gt;# 修改此行&lt;/span&gt;
+&lt;span class="c"&gt;# SELINUXTYPE= type of policy in use. Possible values are:&lt;/span&gt;
+&lt;span class="c"&gt;#       targeted - Only targeted network daemons are protected.&lt;/span&gt;
+&lt;span class="c"&gt;#       strict - Full SELinux protection.&lt;/span&gt;
+&lt;span class="nv"&gt;SELINUXTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;disabled
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后重启系统&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;reboot
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后清空系统自带防火墙&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;iptables -Z
+iptables -F
+iptables -X
+service iptables save
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后我们就可以使用ssh连接Linux虚拟机
+首先确保Linux启动了ssh,ssh占用TCP的22端口.执行命令查看22端口是否开放:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;netstat -antlp | grep 22
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果出现如下内容则表示ssh已经启动:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310111326.jpg" /&gt;
+如果没有启动尝试运行下面命令:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service sshd start        &lt;span class="c"&gt;# 启动ssh服务&lt;/span&gt;
+chkconfig --add sshd      &lt;span class="c"&gt;# 加入开机启动&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果没报错则sshd启动成功&lt;/p&gt;
+&lt;p&gt;ssh也配置成功了,下面就需要本地连接ssh了,首先我们要配置本地能访问虚拟机,不知道大家注意到们装完虚拟机我们多出两个链接分别是VMware Network Adapter VMnet1和VMware Network Adapter VMnet8,VMnet1是host only,VMnet8是NAT,我们使用的是NAT,所以配置VMware Network Adapter VMnet8就可以了,把VMware Network Adapter VMnet8配置成192.168.3.x的ip,这里使用192.168.3.111,配置过程这里不做解释了.在windows的cmd下ping 192.168.3.120,能ping通就打开你的ssh客户端软件.这里使用SecureCRT.打开SecureCRT点击快速连接:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112142.jpg" /&gt;
+在弹出的界面输入主机名处输入ip地址:192.168.3.120,用户名处输入root:然后点击连接
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112351.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;会弹出是否保存密钥:点击接收并保存:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112605.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;然后输入root密码既可以连接登录
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112713.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112752.jpg" /&gt;
+好了到这里就可以用ssh连接Linux了,尽情探索把,下一节将会讲解yum库的配置和包安装.&lt;/p&gt;</summary><category term="虚拟机"></category><category term="上网"></category><category term="ssh"></category><category term="NAT"></category><category term="lnmp"></category></entry><entry><title>lnmp环境搭建完全手册(一)------系统安装</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html" rel="alternate"></link><updated>2012-03-08T12:05:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-03-08:lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html</id><summary type="html">&lt;p&gt;在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
+首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.&lt;/p&gt;
+&lt;p&gt;安装VMware这里就不介绍了,给出VMware Workstation 8.0的&lt;a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;amp;vmware=downloadBinary&amp;amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;amp;pot=1&amp;amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;amp;tranId=70310191&amp;amp;amp;downloadURL&amp;quot;"&gt;下载地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
+我们还要准备CentOS5.5 的iso镜像用来安装系统.&lt;a href="&amp;quot;http://download.chinaunix.net/down.php?id=31679&amp;amp;amp;ResourceID=12271&amp;amp;amp;site=6"&gt;下载地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面我们就来新建一个虚拟机安装CentOS
+打开虚拟机选择File-&amp;gt;New Virtual Machine
+&lt;img alt="www.linuxzen.com" src="/upload/1.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;在接下来的界面选择&lt;code&gt;Typical&lt;/code&gt;,然后点&lt;code&gt;Next&lt;/code&gt;:
+&lt;img alt="www.linuxzen.com" src="/upload/2.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;然后点选&lt;code&gt;I will install the operating system later&lt;/code&gt;,然后Next&amp;gt;,选择操作系统,为Linux,Version选择为CentOS:
+&lt;img alt="www.linuxzen.com" src="/upload/3.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;点击Next进给虚拟机命名,然后选择保存路径(最好选择一个空闲空间足够的分区)点击Next会让你选择硬盘大小,保持默认即可,点击Next&amp;gt;在弹出的界面可以查看虚拟机的虚拟硬件可以点击"Customize Hardware"进行自定义硬件,建议删除软驱,USB等无用硬件.点击Finish完成虚拟机创建.&lt;/p&gt;
+&lt;p&gt;创建完成后虚拟机界面的左边双击"CD/DVD(IDE)":
+&lt;img alt="www.linuxzen.com" src="/upload/4.jpg" /&gt;
+在弹出界面的右边选择&lt;code&gt;Use ISO image file&lt;/code&gt;,点击"Browse.."选择下载好的CentOS5.5镜像,点击OK确定:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308101907.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;然后单击虚拟机界面的左上角的&lt;code&gt;Power on this virtual machine&lt;/code&gt;启动虚拟机,第一次默认会认到光驱从光驱启动,启动后看到如下界面:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308102129.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;恭喜你,可以开始你的linux之旅了,我比较喜欢字符界面安装,节省资源,输入&lt;code&gt;linux text&lt;/code&gt;,敲回车进入字符界面安装,想图形化安装直接回车即可:
+在接下来的界面下会弹出下面对话框,按Tab选择Skip跳过检测:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308102415.jpg" /&gt;
+然后会一次弹出语言,键盘选择框选择默认既可以,然后linux会再你的硬盘上检测不到分区表询问你是否格式化整个硬盘,选择Yes:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308103037.jpg" /&gt;
+然后就会跳到分区这一块,我们选择第四个自定义分区(Create Custom layout):
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308103159.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;接下来按F2即可建立分区,一般分区有各种各样的建议,Linux必须有一个/(根)分区,建议有一个swap分区是物理内存的两倍.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308103443.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;上图建立一个/大小为&lt;code&gt;4G&lt;/code&gt;,&lt;code&gt;Mount Point&lt;/code&gt;指定挂载点,这里为&lt;code&gt;/&lt;/code&gt;,&lt;code&gt;File System Type&lt;/code&gt;指定文件系统类型,这里为&lt;code&gt;ext3&lt;/code&gt;.大小指定为&lt;code&gt;4G&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;然后建议一个&lt;code&gt;swap&lt;/code&gt;分区,同样按&lt;code&gt;F2&lt;/code&gt;在&lt;code&gt;File System Type&lt;/code&gt;里选择为&lt;code&gt;swap&lt;/code&gt;:
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308103741.jpg" /&gt;
+在根据第一步的方法创建一个/usr分区,在Size里选择"Fill all available space"把剩余的大小都给/usr
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308103957.jpg" /&gt;
+创建完毕选择ok完成分区,跳出是否安装引导(Boot loader Configuration),一直选择默认继续.接下来询问是否配置网卡,选择No跳过.会让你填Gateway和DNS不用管直接ok就行,接下来会让输入主机名,输入你想要的主机名即可
+&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120308104357.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;接下来选择时区,选择Asia/Chongqing.然后输入root密码,输入完毕后OK继续,下面就是选择要安装的包,想玩桌面的话就直接默认,这里选择Customize software selection,接下来的界面按空格去掉所有的包前面的*实现最小化安装,选择OK开始安装.完成后重启,linux系统就安装完成&lt;/p&gt;</summary><category term="虚拟机"></category><category term="操作系统"></category><category term="安装"></category><category term="VMware"></category><category term="Linux"></category><category term="CentOS"></category></entry><entry><title>用pxe安装自己定制的发行版快速部署系统环境</title><link href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html" rel="alternate"></link><updated>2012-02-02T11:37:00+08:00</updated><author><name>Wood.D</name></author><id>tag:www.linuxzen.com,2012-02-02:yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html</id><summary type="html">&lt;p&gt;自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.&lt;/p&gt;
 &lt;p&gt;这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
 基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)&lt;/p&gt;
 &lt;p&gt;使用环境:CentOS 5.5 32位&lt;/p&gt;
