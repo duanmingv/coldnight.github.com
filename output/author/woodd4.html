@@ -305,9 +305,13 @@ import pdb; pdb.set_trace()
         </header>
 
         <div class="body">
-            <p>最近写程序用到argparse总是会报错<code>/usr/lib/python2.7/dist-packages/pygments/plugin.py:39: UserWarning: Module argparse was already imported from /usr/lib/python2.7/argparse.pyc, but /usr/local/lib/python2.7/dist-packages is being added to sys.path</code></p>
+            <p>最近写程序用到argparse总是会报错</p>
+<div class="codehilite"><pre><span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="sr">/pygments/</span><span class="n">plugin</span><span class="o">.</span><span class="n">py:39:</span> <span class="n">UserWarning:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">argparse</span><span class="o">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="sr">/usr/</span><span class="nb">local</span><span class="sr">/lib/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+
+
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local/lib/python2 ...</code></p>
+执行<code>ls /usr/local ...</code></p>
         </div>
 
         <p>

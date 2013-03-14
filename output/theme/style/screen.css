@@ -337,3 +337,18 @@ footer nav ul li {
     float: left;
     padding-left: 25px;
 }
+
+code {
+    display: inline-block;
+    white-space: no-wrap;
+    background: #555;
+    color: white;
+    border: 1px solid #DDD;
+    -moz-border-radius:0.4em;
+    -webkit-border-radius: 0.4em;
+    -o-border-radius: 0.4em;
+    -khtml-border-radius: 0.4em;
+    border-radius: 0.4em;
+    padding: 0.3em;
+    margin: -1px 0;
+}
