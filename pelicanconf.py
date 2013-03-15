@@ -53,3 +53,20 @@ FILES_TO_COPY = (
     ("extra/googledbee14f7be5461f0.html", "googledbee14f7be5461f0.html"),
     ("extra/robots.txt", "robots.txt"),
 )
+
+
+PLUGINS = ['pelican.plugins.sitemap',]
+
+SITEMAP = {
+    "format": "xml",
+    "priorities": {
+        "articles": 0.7,
+        "indexes": 0.5,
+        "pages": 0.3,
+    },
+    "changefreqs": {
+        "articles": "monthly",
+        "indexes": "daily",
+        "pages": "monthly",
+    }
+}
