@@ -1,7 +1,7 @@
 body {
     color: #434343;
     font: normal 14px 'Carrois Gothic', sans-serif;
-    background-image: url(/static/upload/bg.jpg);
+    /* background-image: url(/static/upload/bg.jpg); */
 }
 
 a {
@@ -124,7 +124,7 @@ pre code {
 }
 
 header#main {
-    /*background-color: #fff;*/
+    background-color: #fff;
     border-bottom: 7px solid #003153;
     display: block;
     padding-bottom: 6px;
@@ -180,6 +180,12 @@ article > header.float {
     margin-bottom: 60px;
     width: 98%;
     margin: 0 auto 60px;
+    background: #fff;
+    -moz-border-radius:0.4em;
+    -webkit-border-radius: 0.4em;
+    -o-border-radius: 0.4em;
+    -khtml-border-radius: 0.4em;
+    border-radius: 0.4em;
 }
 
 .paginator {
@@ -193,7 +199,7 @@ article > header time {
 article .body {
     font-size: 16px;
     line-height: 1.5em;
-    width: 98%;
+    width: 96%;
     margin: 0 auto;
 }
 
