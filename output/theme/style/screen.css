@@ -1,7 +1,7 @@
 body {
     color: #434343;
     font: normal 14px 'Carrois Gothic', sans-serif;
-    background-image: url(/static/upload/bg.jpg);
+    background-image: url(/theme/img/bg.jpg);
 }
 
 a {
