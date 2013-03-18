@@ -3,7 +3,7 @@
 from hashlib import md5
 
 AUTHOR = u'Wood.D'
-SITENAME = u"Wood.D's Record"
+SITENAME = u"Wood.D's World"
 SITEURL = u'http://www.linuxzen.com'
 SITE_SOURCE = u"https://github.com/coldnight/coldnight.github.com"
 SITE_TAGLINE = u"木秀于林"
