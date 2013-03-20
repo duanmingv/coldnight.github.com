@@ -52,6 +52,7 @@ FILES_TO_COPY = (
     ("extra/404.html", "404.html"),
     ("extra/googledbee14f7be5461f0.html", "googledbee14f7be5461f0.html"),
     ("extra/robots.txt", "robots.txt"),
+    ("extra/bdsitemap.txt", "bdsitemap.txt"),
 )
 
 
