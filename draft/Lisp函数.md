@@ -1,6 +1,7 @@
 Title: Lisp 学习笔记--函数
 Tags: Lisp, 学习, 笔记, 函数
 Category: 函数
+Date: 2013-03-20
 
 ## 定义
 函数一般使用`DEFUN`宏来定义.下面是`DEFUN`的基本结构

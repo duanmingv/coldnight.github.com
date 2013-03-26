@@ -1,6 +1,7 @@
 Title: Lisp 学习笔记----变量
 Category: Lisp
 Tags: Lisp, 变量, 学习, 笔记
+Date: 2013-03-20
 
 
 ## 概述

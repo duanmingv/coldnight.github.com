@@ -1,6 +1,7 @@
 Title: Lisp 学习笔记
 Category: Lisp
 Tags: Lisp, 笔记
+Date: 2013-03-19
 
 ## 数据结构
 ### list
