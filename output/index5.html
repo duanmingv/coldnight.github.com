@@ -30,6 +30,41 @@
                     
     <article>
         <header>
+            <h2><a href="/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="bookmark">
+    iptables:restorecon: command not found无法保存策略解决
+</a></h2>
+<time datetime="2012-04-30 10:43:00" pubdate>Posted on
+    一 30 四月 2012
+</time>
+<address class="vcard author">
+    by <a class="url fn" href="./author/cold.html">
+    cold</a>
+</address>
+<span class="category">in <a href="./category/linux.html">
+    Linux</a>.
+        </span>
+        </header>
+
+        <div class="body">
+            <p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
+<p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
+<div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
+<span class="n">whereis</span> <span class="n">restorecon</span>
+</pre></div>
+
+
+<p>没结果,继续手动查看:</p>
+<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="sr">/sbin/</span> <span class="err">¦</span> <span class="nb">grep</span> <span class="n">restore</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div>
+        </div>
+
+        <p>
+            <a href="./iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a>
+        </p>
+    </article>
+        
+    <article>
+        <header>
             <h2><a href="/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html" rel="bookmark">
     用Python写的终端下的翻译工具
 </a></h2>
@@ -357,44 +392,6 @@ wget http://nginx ...</pre></div>
 
         <p>
             <a href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        
-    <article>
-        <header>
-            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html" rel="bookmark">
-    lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)
-</a></h2>
-<time datetime="2012-03-10 11:31:00" pubdate>Posted on
-    六 10 三月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
-
-        <div class="body">
-            <p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
-<p>要想连接ssh,首先就需要保证windows能和虚拟机Linux进行通信,我们如果想要本机能和虚拟机通信需要设置虚拟机的网卡连接关系,有3中连接关系可以和本机连通:
-一种是Bridged(桥接),就是使用你本机的连接,如果本地用的是局域网DHCP上网可以选择这种方式.
-一种是NAT,就是用NAT模式，就是让虚拟系统借助NAT(网络地址转换)功能，通过宿主机器所在的网络来访问公网。如果本地用的是静态公网ip,本地有无DHCP这个是首选
-一种host-only:这种模式不能访问外网,只能何宿主(也就是本机)主机通信.也就不能访问Internet</p>
-<p>这里介绍如何设置NAT模式上网.按说网卡选择NAT模式直接重启网卡就可以dhcp获取,但是我们在以后配置Linux服务器的时候为了方便管理肯定不会使用DHCP,所以我们使用静态ip的方式来设置NAT上网.
-首先右键你的虚拟机标签-&gt;Setting-&gt;选中Network Adapter.在右边选中NAT(也可直接双击右下角的网卡图标)
-<img alt="www.linuxzen.com" src="/upload/QQ截图20120310101223.jpg" /></p>
-<p><img alt="www.linuxzen.com" src="/upload/QQ截图20120310101241.jpg" /></p>
-<p>做完这步之后我们还要编辑一下虚拟机的虚拟卡设置,以达到我们使用静态ip上网的需求:</p>
-<p>点击虚拟机的Edit(编辑)-&gt;Virtual Network Editor(虚拟网卡编辑器):
-<img alt="www.linuxzen.com" src="/upload/QQ截图20120310101559.jpg" />
-在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP ...</p>
-        </div>
-
-        <p>
-            <a href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html#disqus_thread">comments</a>
         </p>
     </article>
         <script type="text/javascript">
