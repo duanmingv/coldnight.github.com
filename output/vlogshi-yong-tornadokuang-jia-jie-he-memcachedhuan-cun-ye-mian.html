@@ -9,15 +9,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="./theme/html5.js"></script>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="./theme/bootstrap.min.css" rel="stylesheet">
-    <link href="./theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="./theme/local.css" rel="stylesheet">
-    <link href="./theme/pygments.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -33,13 +33,13 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href=".">cold's world</a>
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
             <li><a href="/"> Archives </a> </li>
                     
-                            <li><a href="./pages/about.html">About</a></li>
+                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -57,13 +57,13 @@
             <h1>vLog使用Tornado框架结合memcached缓存页面</h1>
             三 16 一月 2013
 
-by <a class="url fn" href="./author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
         </div>
 	
-        <div><h2>原因</h2>
+        <div class="highlight"><h2>原因</h2>
 <p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
 <h2>实现</h2>
 <p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
@@ -213,8 +213,8 @@ Requests: 128 susceed, 0 failed.
                 Site
                 </li>
             
-                <li><a href="./">Archives</a>
-                <li><a href="./tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -226,13 +226,13 @@ Requests: 128 susceed, 0 failed.
                 Categories
                 </li>
                 
-                                <li><a href="./category/linux.html">Linux</a></li>
-                                <li><a href="./category/mysql.html">MySQL</a></li>
-                                <li><a href="./category/python.html">Python</a></li>
-                                <li><a href="./category/vim.html">Vim</a></li>
-                                <li><a href="./category/shell.html">shell</a></li>
-                                <li><a href="./category/jian-kong.html">监控</a></li>
-                                <li><a href="./category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -254,7 +254,7 @@ Requests: 128 susceed, 0 failed.
     </div>     </div> 
 <footer>
 <br />
-<p><a href=".">cold's world</a> &copy; cold 2012</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

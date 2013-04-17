@@ -9,15 +9,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="../theme/html5.js"></script>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="../theme/bootstrap.min.css" rel="stylesheet">
-    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="../theme/local.css" rel="stylesheet">
-    <link href="../theme/pygments.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -33,13 +33,13 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href="..">cold's world</a>
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
             <li><a href="/"> Archives </a> </li>
                     
-                            <li><a href="../pages/about.html">About</a></li>
+                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -59,17 +59,17 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h1>nginx+keepalived配置高可用HTTP群集</h1></a>
+            <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h1>nginx+keepalived配置高可用HTTP群集</h1></a>
             四 09 二月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
  
         </div>
         
-        <div><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+        <div class="highlight"><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
 一般集群主要架构为:</p>
 <p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
 第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
@@ -484,7 +484,7 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <li class="active"><a href="../tag/fan-xiang-dai-li.html">1</a></li>
+    <li class="active"><a href="http://www.linuxzen.com/tag/fan-xiang-dai-li.html">1</a></li>
 
     <li class="next disabled"><a href="#">&rarr; Next</a></li>
 
@@ -502,8 +502,8 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <
                 Site
                 </li>
             
-                <li><a href="../">Archives</a>
-                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -515,13 +515,13 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <
                 Categories
                 </li>
                 
-                                <li><a href="../category/linux.html">Linux</a></li>
-                                <li><a href="../category/mysql.html">MySQL</a></li>
-                                <li><a href="../category/python.html">Python</a></li>
-                                <li><a href="../category/vim.html">Vim</a></li>
-                                <li><a href="../category/shell.html">shell</a></li>
-                                <li><a href="../category/jian-kong.html">监控</a></li>
-                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -543,7 +543,7 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <
     </div>     </div> 
 <footer>
 <br />
-<p><a href="..">cold's world</a> &copy; cold 2012</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

@@ -55,8 +55,8 @@ FILES_TO_COPY = (
     ("extra/bdsitemap.txt", "bdsitemap.txt"),
 )
 
-
-PLUGINS = ['pelican.plugins.sitemap',]
+PLUGIN_PATH = u"pelican-plugins"
+PLUGINS = ['sitemap',]
 
 SITEMAP = {
     "format": "xml",

@@ -9,15 +9,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="../theme/html5.js"></script>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="../theme/bootstrap.min.css" rel="stylesheet">
-    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="../theme/local.css" rel="stylesheet">
-    <link href="../theme/pygments.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -33,13 +33,13 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href="..">cold's world</a>
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
             <li><a href="/"> Archives </a> </li>
                     
-                            <li><a href="../pages/about.html">About</a></li>
+                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -59,17 +59,17 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="../vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html"><h1>Vim打开Python源码自动添加#!行和编码行 升级版</h1></a>
+            <a href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html"><h1>Vim打开Python源码自动添加#!行和编码行 升级版</h1></a>
             四 13 十二月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
  
         </div>
         
-        <div><p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
+        <div class="highlight"><p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
 <div class="codehilite"><pre><span class="c">&quot;Python 注释</span>
 <span class="k">function</span> InsertPythonComment<span class="p">()</span>
     exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
@@ -124,10 +124,10 @@ au <span class="nb">FileType</span> python map <span class="p">&lt;</span>F4<spa
  
 
     <div class='article'>
-        <a href="../yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h2>用Vim为Python源码自动添加#!行和编码行</h2></a>
+        <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h2>用Vim为Python源码自动添加#!行和编码行</h2></a>
         <div class= "well small"> 六 29 九月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -143,14 +143,14 @@ by <a class="url fn" href="../author/cold.html">cold</a>
         <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
     <span class="k">endif</span>
     <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
-        exec ...</pre></div> <a class="btn btn-info xsmall" href="../yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
+        exec ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <li class="active"><a href="../tag/zi-dong.html">1</a></li>
+    <li class="active"><a href="http://www.linuxzen.com/tag/zi-dong.html">1</a></li>
 
     <li class="next disabled"><a href="#">&rarr; Next</a></li>
 
@@ -168,8 +168,8 @@ by <a class="url fn" href="../author/cold.html">cold</a>
                 Site
                 </li>
             
-                <li><a href="../">Archives</a>
-                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -181,13 +181,13 @@ by <a class="url fn" href="../author/cold.html">cold</a>
                 Categories
                 </li>
                 
-                                <li><a href="../category/linux.html">Linux</a></li>
-                                <li><a href="../category/mysql.html">MySQL</a></li>
-                                <li><a href="../category/python.html">Python</a></li>
-                                <li><a href="../category/vim.html">Vim</a></li>
-                                <li><a href="../category/shell.html">shell</a></li>
-                                <li><a href="../category/jian-kong.html">监控</a></li>
-                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -209,7 +209,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
     </div>     </div> 
 <footer>
 <br />
-<p><a href="..">cold's world</a> &copy; cold 2012</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

@@ -9,15 +9,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="../theme/html5.js"></script>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="../theme/bootstrap.min.css" rel="stylesheet">
-    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="../theme/local.css" rel="stylesheet">
-    <link href="../theme/pygments.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -33,13 +33,13 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href="..">cold's world</a>
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
             <li><a href="/"> Archives </a> </li>
                     
-                            <li><a href="../pages/about.html">About</a></li>
+                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -59,17 +59,17 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="../shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h1>使用更加高效的epoll作为pyxmpp2的主循环</h1></a>
+            <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h1>使用更加高效的epoll作为pyxmpp2的主循环</h1></a>
             二 05 二月 2013
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
  
         </div>
         
-        <div><h2>引子</h2>
+        <div class="highlight"><h2>引子</h2>
 <p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
 <h2>实现</h2>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
@@ -231,10 +231,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
+        <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
         <div class= "well small"> 二 22 一月 2013
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -253,7 +253,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 <span class="c">#   Desc    :   贴代码和图片</span>
 <span class="c">#</span>
 <span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
+<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
     </div>	
 				
     
@@ -263,10 +263,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
+        <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
         <div class= "well small"> 三 16 一月 2013
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -282,7 +282,7 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
+<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
     </div>	
 				
     
@@ -292,10 +292,10 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
  
 
     <div class='article'>
-        <a href="../awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html"><h2>Awesome+tmux+gnomeDo打造高效Linux桌面环境</h2></a>
+        <a href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html"><h2>Awesome+tmux+gnomeDo打造高效Linux桌面环境</h2></a>
         <div class= "well small"> 二 04 十二月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -319,7 +319,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 </pre></div>
 
 
-<h4>配置自动启程序 ...</h4> <a class="btn btn-info xsmall" href="../awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html">read more</a></div>
+<h4>配置自动启程序 ...</h4> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html">read more</a></div>
     </div>	
 				
     
@@ -329,10 +329,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html"><h2>Linux高效工作----平铺式窗体管理器Awesome</h2></a>
+        <a href="http://www.linuxzen.com/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html"><h2>Linux高效工作----平铺式窗体管理器Awesome</h2></a>
         <div class= "well small"> 四 25 十月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -348,7 +348,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 <p>没有菜单对吧 其实再右上角点一下就会出来一个菜单,打开程序会发现标题栏状态栏什么都木有了大大节省了桌面空间,可问题来了,怎么关闭啊不用担心</p>
 <p>按 <code>Win键+Shift+C</code>可以关闭当前窗口</p>
 <p>打开默认终端 <code>Win键+Enter</code>就可以打开终端</p>
-<p>可以按住 <code>Win键+Shift ...</code></p> <a class="btn btn-info xsmall" href="../linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html">read more</a></div>
+<p>可以按住 <code>Win键+Shift ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html">read more</a></div>
     </div>	
 				
     
@@ -358,10 +358,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html"><h2>Linux桌面高效工作----使用Gnome DO</h2></a>
+        <a href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html"><h2>Linux桌面高效工作----使用Gnome DO</h2></a>
         <div class= "well small"> 六 01 九月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -375,7 +375,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 </pre></div>
 
 
-<p>启动之后Gnome do不会停留任务栏或通知栏只需按<code>Win(ubuntu下称为super)+Space</code>即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率</p> <a class="btn btn-info xsmall" href="../linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html">read more</a></div>
+<p>启动之后Gnome do不会停留任务栏或通知栏只需按<code>Win(ubuntu下称为super)+Space</code>即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html">read more</a></div>
     </div>	
 				
     
@@ -385,10 +385,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html"><h2>推荐两款不错的终端软件</h2></a>
+        <a href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html"><h2>推荐两款不错的终端软件</h2></a>
         <div class= "well small"> 三 29 八月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -411,7 +411,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
 <div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="c1">#设置体字</span>
-<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="c1"># 背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
+<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="c1"># 背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
     </div>	
 				
     
@@ -421,10 +421,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
+        <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
         <div class= "well small"> 五 18 五月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -440,7 +440,7 @@ checkisdir<span class="o">()</span>
         <span class="c"># Have one argument</span>
         <span class="c"># The argument is a directory</span>
         <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="../shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
+        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
     </div>	
 				
     
@@ -450,10 +450,10 @@ checkisdir<span class="o">()</span>
  
 
     <div class='article'>
-        <a href="../yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h2>用Python写的终端下的翻译工具</h2></a>
+        <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h2>用Python写的终端下的翻译工具</h2></a>
         <div class= "well small"> 一 23 四月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -469,7 +469,7 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 <span class="sd">#       Author: cold</span>
 <span class="sd">#        Email: wh_linux@126.com</span>
 <span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="../yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
+<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
     </div>	
 				
     
@@ -479,10 +479,10 @@ by <a class="url fn" href="../author/cold.html">cold</a>
  
 
     <div class='article'>
-        <a href="../lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
+        <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
         <div class= "well small"> 一 16 四月 2012
 
-by <a class="url fn" href="../author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
@@ -491,18 +491,18 @@ by <a class="url fn" href="../author/cold.html">cold</a>
 <p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
 工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
 IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
-DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="../lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
+DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <li class="active"><a href="../tag/linux.html">1</a></li>
-    <li class=""><a href="../tag/linux2.html">2</a></li>
-    <li class=""><a href="../tag/linux3.html">3</a></li>
+    <li class="active"><a href="http://www.linuxzen.com/tag/linux.html">1</a></li>
+    <li class=""><a href="http://www.linuxzen.com/tag/linux2.html">2</a></li>
+    <li class=""><a href="http://www.linuxzen.com/tag/linux3.html">3</a></li>
 
-    <li class="next"><a href="../tag/linux2.html">Next &rarr;</a></li>
+    <li class="next"><a href="http://www.linuxzen.com/tag/linux2.html">Next &rarr;</a></li>
 
 </ul>
 </div>    
@@ -518,8 +518,8 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
                 Site
                 </li>
             
-                <li><a href="../">Archives</a>
-                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -531,13 +531,13 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
                 Categories
                 </li>
                 
-                                <li><a href="../category/linux.html">Linux</a></li>
-                                <li><a href="../category/mysql.html">MySQL</a></li>
-                                <li><a href="../category/python.html">Python</a></li>
-                                <li><a href="../category/vim.html">Vim</a></li>
-                                <li><a href="../category/shell.html">shell</a></li>
-                                <li><a href="../category/jian-kong.html">监控</a></li>
-                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -559,7 +559,7 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
     </div>     </div> 
 <footer>
 <br />
-<p><a href="..">cold's world</a> &copy; cold 2012</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->
