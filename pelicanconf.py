@@ -20,6 +20,8 @@ THEME = "tuxlite_tbs"
 
 DEFAULT_CATEGORY = u"Python"
 
+ARCHIVES_URL = "archives.html"
+
 GITHUB_URL = u"https://github.com/coldnight/coldnight.github.com"
 
 STATIC_PATHS = [u"upload", ]
