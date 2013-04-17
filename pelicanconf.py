@@ -3,7 +3,7 @@
 from hashlib import md5
 
 AUTHOR = u'cold'
-SITENAME = u"cold's World"
+SITENAME = u"cold's world"
 SITEURL = u'http://www.linuxzen.com'
 SITE_SOURCE = u"https://github.com/coldnight/coldnight.github.com"
 SITE_TAGLINE = u"木秀于林"
@@ -15,7 +15,7 @@ TIMEZONE = 'Asia/Shanghai'
 
 DEFAULT_LANG = u'zh'
 
-THEME = "neat"
+THEME = "tuxlite_tbs"
 
 DEFAULT_CATEGORY = u"Python"
 
@@ -34,14 +34,11 @@ GITHUB_BADGE = False
 
 STATIC_PATHS = [u"upload", ]
 # Blogroll
-LINKS =  (('Pelican', 'http://docs.notmyidea.org/alexis/pelican/'),
-          ('Python.org', 'http://python.org'),
-          ('Jinja2', 'http://jinja.pocoo.org'),
-          ('eleven', 'eleveni386.7axu.com'),)
+LINKS =  (('eleven', 'eleveni386.7axu.com'),)
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+#SOCIAL = (('You can add links in your config file', '#'),
+#          ('Another social link', '#'),)
 
 DEFAULT_PAGINATION = 10
 

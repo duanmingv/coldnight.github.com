@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles tagged as pymail</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html" rel="bookmark">
-    用python发带附件的邮件用来定时备份mysql数据库
-</a></h2>
-<time datetime="2012-04-21 18:26:00" pubdate>Posted on
-    六 21 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h1>用python发带附件的邮件用来定时备份mysql数据库</h1></a>
+            六 21 四月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
 <p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*- coding: utf8 -*-</span>
@@ -58,67 +80,315 @@
 <span class="sd">#        Email: wh_linux@126.com</span>
 <span class="sd">#     HomePage: http://www.linuxzen.com</span>
 <span class="sd">#      Version: 0.0.1</span>
-<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div>
-        </div>
+<span class="sd">#   LastChange: 2012-04-21 16:37:20</span>
+<span class="sd">#      History:</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
-        <p>
-            <a href="../yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">用于发送邮件,可以发送附件</span>
+<span class="sd">命令行程序</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">smtplib</span>
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+<span class="kn">from</span> <span class="nn">email.mime.multipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 1
-    </span>
+<span class="c"># 打印帮助信息</span>
+<span class="k">def</span> <span class="nf">helpinfo</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">    Useage: pymail -u user@domain -p passwd -h smtp server host -t to who [-a attachment file path] [-n attachment name]</span>
+<span class="s">    Useage: email content use . to end</span>
+<span class="s">    -h  specify smtp server host</span>
+<span class="s">    -u  which user you login the smtp server,and must with it domain</span>
+<span class="s">    -p  the password of the smtp user</span>
+<span class="s">    -t  The email recipient,multiple addresses can use &#39;,&#39; split</span>
+<span class="s">    -a  Add attachment</span>
+<span class="s">    -n  Secify attachment name in the email</span>
+
+<span class="s">    Author:cold(wh_linux@126.com)</span>
+<span class="s">    Homepge:http://www.linuxzen.com</span>
+<span class="s">    &#39;&#39;&#39;</span>
+
+<span class="c"># 所有选项</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-t&#39;</span><span class="p">,</span> <span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="s">&#39;-n&#39;</span><span class="p">,</span> <span class="s">&#39;-h&#39;</span><span class="p">,</span> <span class="s">&#39;-u&#39;</span><span class="p">,</span> <span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="s">&#39;-s&#39;</span><span class="p">]</span>
+
+<span class="c"># 获取选项长度</span>
+<span class="n">argvnum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+<span class="c"># 检测命令行参数</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">argvnum</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">i</span> <span class="o">%</span><span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">options</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&#39;Unknow option &#39;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">,</span> <span class="s">&#39;, Please use -h see help!&#39;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c"># 如果是-h或者没有命令行参数则显示帮助</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;-h&#39;</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">helpinfo</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">helpinfo</span><span class="p">()</span>
+
+<span class="c"># 检测-n参数</span>
+<span class="k">if</span> <span class="p">(</span><span class="s">&#39;-n&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s">&#39;-a&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;Error:option &quot;-n&quot; must use after -a&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c"># 下面则是获取各个参数内容</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">tmpmailto</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-t&#39;</span><span class="p">)</span>  <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">tmpmailto</span><span class="p">:</span>
+        <span class="n">mailto</span> <span class="o">=</span> <span class="n">tmpmailto</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">mailto</span> <span class="o">=</span> <span class="p">[</span><span class="n">tmpmailto</span><span class="p">,]</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Error: need Mail Recipient&#39;</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">haveattr</span><span class="o">=</span><span class="bp">True</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">attrpath</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">attrname</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-n&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span> <span class="p">]</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">attrname</span> <span class="o">=</span> <span class="n">attrpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">attrname</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">haveattr</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">attrpath</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mail_host</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-h&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Waring: No specify smtp server use 127.0.0.1&#39;</span>
+    <span class="n">mail_host</span> <span class="o">=</span> <span class="s">&#39;127.0.0.1&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mail_useremail</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-u&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&#39;Waring: No specify user, use root&#39;</span>
+    <span class="n">mail_useremail</span> <span class="o">=</span> <span class="s">&#39;root@localhost&#39;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mail_sub</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-s&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">mail_sub</span> <span class="o">=</span> <span class="s">&#39;No Subject&#39;</span>
+
+<span class="n">mail_user</span> <span class="o">=</span> <span class="n">mail_useremail</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">mail_postfix</span> <span class="o">=</span> <span class="n">mail_useremail</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;@&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">mail_pass</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="n">mail_pass</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="c"># 定义邮件发送函数</span>
+<span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">to_list</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">haveattr</span><span class="p">,</span> <span class="n">attrpath</span><span class="p">,</span> <span class="n">attrname</span><span class="p">):</span>
+    <span class="n">me</span> <span class="o">=</span> <span class="n">mail_user</span> <span class="o">+</span> <span class="s">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="n">mail_user</span><span class="o">+</span><span class="s">&quot;@&quot;</span><span class="o">+</span><span class="n">mail_postfix</span> <span class="o">+</span><span class="s">&quot;&gt;&quot;</span>
+
+    <span class="c"># 判断是否有附件</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">haveattr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">attrpath</span><span class="p">):</span>
+            <span class="k">print</span> <span class="s">&#39;Error : no input file of attachments&#39;</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="c"># 有附件则创建一个带附件的实例</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
+
+        <span class="c"># 构造附件</span>
+        <span class="n">att</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">attrpath</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span><span class="s">&#39;base64&#39;</span><span class="p">,</span> <span class="s">&#39;utf8&#39;</span><span class="p">)</span>
+        <span class="n">att</span><span class="p">[</span><span class="s">&quot;Content-Type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;application/octest-stream&#39;</span>
+        <span class="n">att</span><span class="p">[</span><span class="s">&quot;Content-Disposition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;attachment;filename=&quot;&#39;</span><span class="o">+</span> <span class="n">attrname</span> <span class="o">+</span><span class="s">&#39;&quot;&#39;</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">att</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">MIMEText</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># 无责创建一个文本的实例</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="c"># 邮件头</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">me</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">to_list</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c"># 发送邮件</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">()</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">mail_host</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mail_host</span> <span class="o">!=</span> <span class="s">&#39;127.0.0.1&#39;</span><span class="p">):</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">mail_user</span><span class="p">,</span> <span class="n">mail_pass</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">to_list</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s">&#39;.&#39;</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">content</span> <span class="o">+=</span> <span class="n">c</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">+=</span> <span class="n">line</span>
+    <span class="k">if</span> <span class="n">send_mail</span><span class="p">(</span><span class="n">mailto</span><span class="p">,</span> <span class="n">mail_sub</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">haveattr</span><span class="p">,</span> <span class="n">attrpath</span><span class="p">,</span> <span class="n">attrname</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;Failed&quot;</span>
+</pre></div>
+
+
+<p>将这个脚本保存为pymail放到/usr/bin/下,并赋予其执行权限:</p>
+<div class="codehilite"><pre><span class="nb">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">pymail</span>
+</pre></div>
+
+
+<p>可以使用 -h指定smtp发件服务器,默认认为指定-h需要认证, 所以就需要smtp服务器支持认证,同时需要-u指定用户名(需加"@域名"),-p指定密码.
+如果不指定-h就会使用本地smtp服务器,默认不需要认证,所以本地的smtp服务器就不能支持认证,同时不需指定-u,-p参数</p>
+<div class="codehilite"><pre><span class="o">-</span><span class="n">t</span> <span class="err">指定收件人多个可用</span><span class="p">,</span><span class="err">号分割</span><span class="o">.</span>
+<span class="o">-</span><span class="n">a</span> <span class="err">指定附件路径</span>
+<span class="o">-</span><span class="n">n</span> <span class="err">指定附件名</span><span class="p">(</span><span class="err">可省略</span><span class="p">)</span>
+<span class="o">-</span><span class="n">h</span> <span class="err">显示帮助信息</span><span class="o">.</span>
+<span class="o">-</span><span class="n">s</span> <span class="err">指定邮件主题</span>
+</pre></div>
+
+
+<p>执行后会要求输入邮件内容,写完用.结束
+也可以用管道下面给出几个实例:</p>
+<div class="codehilite"><pre><span class="c">#使用本地smtp服务发送</span>
+<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -s <span class="s2">&quot;Linuxzen backup&quot;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
+<span class="c"># 使用126邮箱发送</span>
+<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;Linuxzen backup &quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz </span>
+
+<span class="s1"># 不使用管道发送</span>
+<span class="s1">pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &#39;</span>hello world<span class="err">&#39;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
+Hello
+this is a <span class="nb">test </span>mail
+.
+</pre></div>
+
+
+<p>下面之前使用的mysql定时备份的脚本:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">DATE</span><span class="o">=</span><span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>
+mysqldump -u root blogdata &gt; /tmp/blogdate.<span class="s2">&quot;$DATE&quot;</span>.sql
+<span class="nb">cd</span> /tmp
+tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql
+uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz | mail -s <span class="s1">&#39;MySQL Backup&#39;</span> 123456@qq.com
+</pre></div>
+</td></tr></table>
+
+<p>没有命令uuencode安装sharutils包即可</p>
+<div class="codehilite"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">sharutils</span>
+</pre></div>
+
+
+<p>然后使用crontab调用这个脚本定时执行,前面说了 这个脚本在CentOS5.x下正常工作,但是放到CentOS6下就不带附件,所以使用我们自己编写的python脚本脚本内容如下:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">DATE</span><span class="o">=</span><span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>
+mysqldump -u root blogdata &gt; /tmp/myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
+<span class="nb">cd</span> /tmp
+tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
+<span class="nb">echo</span> <span class="s1">&#39;MySQL backup&#39;</span> | pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;MySQL backup&#39;</span> -a /tmp/blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz -t 123456@qq.com
+</pre></div>
+</td></tr></table>
+
+<p>我们使用126邮箱来发送 这样就可以把自带的sendmail 停掉:</p>
+<div class="codehilite"><pre><span class="n">service</span> <span class="n">sendmail</span> <span class="n">stop</span>
+<span class="n">chkonfig</span> <span class="o">--</span><span class="n">del</span> <span class="n">sendmail</span>
+</pre></div></div>
+        <hr />
     </div>
+		
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+    <li class="active"><a href="../tag/pymail.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>    
+ 
+  
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

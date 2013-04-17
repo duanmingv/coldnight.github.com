@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles tagged as 静态</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
-    博客使用Pelican静态生成系统
-</a></h2>
-<time datetime="2013-03-14 15:12:00" pubdate>Posted on
-    四 14 三月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <h1>介绍</h1>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html"><h1>博客使用Pelican静态生成系统</h1></a>
+            四 14 三月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><h1>介绍</h1>
 <p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
 <h1>安装</h1>
 <p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
@@ -55,67 +77,95 @@
 <h1>使用</h1>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
 <div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div>
-        </div>
+make clean  <span class="c"># 删除output</span>
+</pre></div>
 
-        <p>
-            <a href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
 
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 1
-    </span>
+<h2>技巧</h2>
+<p>我是将生成的html通过nginx来打开(Nginx配置就很简单了, 这里就不做介绍), 那么如何确保更新呢?我将整个博客上传到github, 这样随时随地可以<code>clone</code>下来进行更改然后<code>push</code>上去,在服务器我通过crontab来定时更新html</p>
+<div class="codehilite"><pre>crontab -e
+</pre></div>
+
+
+<p>添加如下内容</p>
+<div class="codehilite"><pre>*/5 * * * * <span class="nb">cd</span> /path/to/your/blogsource/ <span class="o">&amp;&amp;</span> git pull &amp;&gt; /dev/null
+</pre></div>
+
+
+<p>这样就可以没5分钟更新一次</p></div>
+        <hr />
     </div>
+		
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+    <li class="active"><a href="../tag/jing-tai.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>    
+ 
+  
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

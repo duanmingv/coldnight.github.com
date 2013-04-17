@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles tagged as 缓存</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html" rel="bookmark">
-    vLog使用Tornado框架结合memcached缓存页面
-</a></h2>
-<time datetime="2013-01-16 16:14:00" pubdate>Posted on
-    三 16 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <h2>原因</h2>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h1>vLog使用Tornado框架结合memcached缓存页面</h1></a>
+            三 16 一月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><h2>原因</h2>
 <p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
 <h2>实现</h2>
 <p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
@@ -57,67 +79,191 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div>
-        </div>
+<span class="c">#   Desc    :   </span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">config</span>
+<span class="kn">import</span> <span class="nn">pylibmc</span>
+<span class="kn">from</span> <span class="nn">tornado.web</span> <span class="kn">import</span> <span class="n">RequestHandler</span>
+<span class="c">#### 省略Cache类定义 #####</span>
 
-        <p>
-            <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
+<span class="k">class</span> <span class="nc">Memcached</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">_mc</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CACHE_HOST</span><span class="p">,</span> <span class="n">binary</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
 
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 1
-    </span>
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">CACHED</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Memcached</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Cache</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_cache</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">default</span>
+        <span class="k">return</span> <span class="n">r</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span> <span class="k">if</span> <span class="n">timeout</span> <span class="k">else</span> <span class="n">config</span><span class="o">.</span><span class="n">CACHE_TIMEOUT</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">flush_all</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Memcached</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Memcached</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">BaseHandler</span><span class="p">(</span><span class="n">RequestHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; 继承tornado请求基类,重写 prepare和on_finish方法 &quot;&quot;&quot;</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">Memcached</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; 渲染模板 &quot;&quot;&quot;</span>
+        <span class="c"># 省略渲染模板代码</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>     <span class="c"># 渲染模板后的内容</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span> <span class="ow">and</span> <span class="n">CACHED</span> <span class="ow">and</span> \
+           <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;/admin&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="c"># 将渲染后的内容缓存起来</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+        <span class="c"># 如果请求是GET方法,而且不是请求后台</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span> <span class="ow">and</span> <span class="n">CACHED</span> <span class="ow">and</span> \
+           <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;/admin&quot;</span><span class="p">):</span>
+
+            <span class="c"># 尝试获取当前页面的缓存</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+            <span class="c"># 获取缓存则输出页面,结束请求</span>
+            <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; 重写结束请求前的方法函数 &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>
+            <span class="c"># 如果遇到POST提交则清空缓存</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</pre></div>
+
+
+<p>缓存系统在<code>redis</code>和<code>Memcached</code>选择了很久,因为只是单纯的缓存页面所以最后选择了<code>memcached</code>,使用<code>pylibmc</code> python库.</p>
+<h2>测试</h2>
+<p>使用webbench 网站压力测试对比了缓存前后的结果:
+使用缓存前</p>
+<div class="codehilite"><pre><span class="nv">$ </span>webbench -c 500 -t 30 http://www.linuxzen.com/
+Webbench - Simple Web Benchmark 1.5
+Copyright <span class="o">(</span>c<span class="o">)</span> Radim Kolar 1997-2004, GPL Open Source Software.
+
+Benchmarking: GET http://www.linuxzen.com/
+500 clients, running 30 sec.
+
+<span class="nv">Speed</span><span class="o">=</span>54 pages/min, 38160 bytes/sec.
+Requests: 27 susceed, 0 failed.
+</pre></div>
+
+
+<p>使用缓存后:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>webbench -c 500 -t 30 http://www.linuxzen.com/
+Webbench - Simple Web Benchmark 1.5
+Copyright <span class="o">(</span>c<span class="o">)</span> Radim Kolar 1997-2004, GPL Open Source Software.
+
+Benchmarking: GET http://www.linuxzen.com/
+500 clients, running 30 sec.
+
+<span class="nv">Speed</span><span class="o">=</span>256 pages/min, 238544 bytes/sec.
+Requests: 128 susceed, 0 failed.
+</pre></div>
+
+
+<p>明显快了很多...</p></div>
+        <hr />
     </div>
+		
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+    <li class="active"><a href="../tag/huan-cun.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>    
+ 
+  
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

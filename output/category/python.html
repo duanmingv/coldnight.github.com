@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles in Python</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html" rel="bookmark">
-    使用Tornado进行网络异步编程
-</a></h2>
-<time datetime="2013-04-15 16:09:00" pubdate>Posted on
-    一 15 四月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <h2>Tornado</h2>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h1>使用Tornado进行网络异步编程</h1></a>
+            一 15 四月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><h2>Tornado</h2>
 <p><code>Tornado</code> 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用<code>Tornado</code>编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以<code>Tornado</code>不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器</p>
 <p>Torando 在Linux和FreeBSD上使用高效的异步I/O模型 <code>epoll</code> 和<code>kqueue</code>来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高</p>
 <h2>接口</h2>
@@ -55,33 +77,145 @@
 <h3>add_handler</h3>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div>
-        </div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</pre></div>
 
-        <p>
-            <a href="../shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html#disqus_thread">comments</a>
-        </p>
-    </article>
+
+<p><code>add_handler</code>用于添加socket到主循环中, 接受三个参数:
+<em> fd 是socket的文件描述符
+</em> handler 是处理此socket的 callback函数
+* events 是此socket注册的事件</p>
+<h3>update_handler</h3>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">update_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">modify</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>update_handler</code>用于更新住循环中已存在的socket响应事件, 接受两个参数:
+<em> fd 是socket对应的文件描述符
+</em> events 是注册的新事件</p>
+<h3>remove_handler</h3>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">remove_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_events</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">gen_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Error deleting fd from IOLoop&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>remove_handler</code>用于移除主循环中已存在的socket</p>
+<h2>事件</h2>
+<p><code>tornado.ioloop.IOLoop</code>同时提供了4种响应事件:
+<em> <code>tornado.ioloop.IOLoop.NONE</code>    无事件
+</em> <code>tornado.ioloop.IOLoop.READ</code>    读事件
+<em> <code>tornado.ioloop.IOLoop.WRITE</code>   写事件
+</em> <code>tornado.ioloop.IOLoop.ERROR</code>   发生错误的事件</p>
+<h2>实例</h2>
+<p>根据上面的接口和事件我们就可以写出一个简单的 echo server</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/04/15 15:08:51</span>
+<span class="c">#   Desc    :   Tornado Echo Server</span>
+<span class="c">#   HOME    :   http://www.linuxzen.com</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">tornado.ioloop</span> <span class="kn">import</span> <span class="n">IOLoop</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>              <span class="c"># 将socket设置为非阻塞</span>
+
+<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">fd_map</span> <span class="o">=</span> <span class="p">{}</span>              <span class="c"># 文件描述符到socket的映射</span>
+<span class="n">message_queue_map</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c"># socket到消息队列的映射</span>
+
+<span class="n">fd</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+<span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">sock</span>
+
+<span class="n">ioloop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">handle_client</span><span class="p">(</span><span class="n">cli_addr</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;     received &#39;</span><span class="si">%s</span><span class="s">&#39; from </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cli_addr</span><span class="p">)</span>
+            <span class="c"># 接收到消息更改事件为写, 用于发送数据到对端</span>
+            <span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
+            <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;     closing </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span>
+            <span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">next_msg</span> <span class="o">=</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> queue empty&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span>
+            <span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;sending &quot;</span><span class="si">%s</span><span class="s">&quot; to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">next_msg</span><span class="p">,</span> <span class="n">cli_addr</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">next_msg</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot; exception on </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span>
+        <span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">handle_server</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
+        <span class="n">conn</span><span class="p">,</span> <span class="n">cli_addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;     connection </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">conn_fd</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+        <span class="n">fd_map</span><span class="p">[</span><span class="n">conn_fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">conn</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">handle_client</span><span class="p">,</span> <span class="n">cli_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>   <span class="c"># 将cli_addr作为第一个参数</span>
+        <span class="c"># 将连接和handle注册为读事件加入到 tornado ioloop</span>
+        <span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">conn_fd</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+        <span class="n">message_queue_map</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>   <span class="c"># 创建对应的消息队列</span>
+
+<span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">handle_server</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+
+<span class="n">ioloop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>上面代码就建立了一个非阻塞的高效的异步的echo server</p></div>
+        <hr />
+    </div>
+		
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html" rel="bookmark">
-    使用WebQQ协议桥接XMPP和QQ群
-</a></h2>
-<time datetime="2013-03-14 16:09:00" pubdate>Posted on
-    四 14 三月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h2>介绍</h2>
+ 
+
+    <div class='article'>
+        <a href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h2>使用WebQQ协议桥接XMPP和QQ群</h2></a>
+        <div class= "well small"> 四 14 三月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>介绍</h2>
 <p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
 <h2>实施</h2>
 <p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
@@ -94,33 +228,25 @@
 <span class="c">#   Author  :   Wood.D</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/03/04 09:58:26</span>
-<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="../shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html" rel="bookmark">
-    博客使用Pelican静态生成系统
-</a></h2>
-<time datetime="2013-03-14 15:12:00" pubdate>Posted on
-    四 14 三月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h1>介绍</h1>
+ 
+
+    <div class='article'>
+        <a href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html"><h2>博客使用Pelican静态生成系统</h2></a>
+        <div class= "well small"> 四 14 三月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h1>介绍</h1>
 <p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
 <h1>安装</h1>
 <p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
@@ -129,33 +255,25 @@
 <h1>使用</h1>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
 <div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div>
-        </div>
-
-        <p>
-            <a href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html#disqus_thread">comments</a>
-        </p>
-    </article>
+make clean ...</pre></div> <a class="btn btn-info xsmall" href="../bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="bookmark">
-    vLog 一个使用Python编写的轻量级博客系统
-</a></h2>
-<time datetime="2013-02-05 16:43:00" pubdate>Posted on
-    二 05 二月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h2>介绍</h2>
+ 
+
+    <div class='article'>
+        <a href="../vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h2>vLog 一个使用Python编写的轻量级博客系统</h2></a>
+        <div class= "well small"> 二 05 二月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>介绍</h2>
 <h3>何为vLog</h3>
 <p>大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用<code>Python</code>的<code>tornado</code>框架和<code>Jinja2</code>模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用<code>Markdown</code>的格式来抒写博文.</p>
 <h3>为什么vLog</h3>
@@ -167,33 +285,25 @@ make clean ...</pre></div>
 <ul>
 <li>Linux</li>
 <li>python2.7</li>
-<li>MySQL ...</li></ul>
-        </div>
-
-        <p>
-            <a href="../vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<li>MySQL ...</li></ul> <a class="btn btn-info xsmall" href="../vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html" rel="bookmark">
-    使用更加高效的epoll作为pyxmpp2的主循环
-</a></h2>
-<time datetime="2013-02-05 16:06:00" pubdate>Posted on
-    二 05 二月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h2>引子</h2>
+ 
+
+    <div class='article'>
+        <a href="../shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
+        <div class= "well small"> 二 05 二月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>引子</h2>
 <p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
 <h2>实现</h2>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
@@ -201,65 +311,49 @@ make clean ...</pre></div>
 <span class="c">#</span>
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="../shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/python-zhong-fu-an-zhuang-bao-bao-cuo.html" rel="bookmark">
-    Python 重复安装包报错
-</a></h2>
-<time datetime="2013-01-25 14:55:00" pubdate>Posted on
-    五 25 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>最近写程序用到argparse总是会报错</p>
+ 
+
+    <div class='article'>
+        <a href="../python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
+        <div class= "well small"> 五 25 一月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
 <div class="codehilite"><pre><span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="sr">/pygments/</span><span class="n">plugin</span><span class="o">.</span><span class="n">py:39:</span> <span class="n">UserWarning:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">argparse</span><span class="o">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="sr">/usr/</span><span class="nb">local</span><span class="sr">/lib/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
 </pre></div>
 
 
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p>
-        </div>
-
-        <p>
-            <a href="../python-zhong-fu-an-zhuang-bao-bao-cuo.html#disqus_thread">comments</a>
-        </p>
-    </article>
+执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="../python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html" rel="bookmark">
-    Linux 下使用Python截图自动分享
-</a></h2>
-<time datetime="2013-01-22 16:59:00" pubdate>Posted on
-    二 22 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h2>引子</h2>
+ 
+
+    <div class='article'>
+        <a href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
+        <div class= "well small"> 二 22 一月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>引子</h2>
 <p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
 <h2>实现</h2>
 <p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
@@ -273,33 +367,25 @@ make clean ...</pre></div>
 <span class="c">#   Desc    :   贴代码和图片</span>
 <span class="c">#</span>
 <span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="../linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html" rel="bookmark">
-    vLog使用Tornado框架结合memcached缓存页面
-</a></h2>
-<time datetime="2013-01-16 16:14:00" pubdate>Posted on
-    三 16 一月 2013
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h2>原因</h2>
+ 
+
+    <div class='article'>
+        <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
+        <div class= "well small"> 三 16 一月 2013
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>原因</h2>
 <p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
 <h2>实现</h2>
 <p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
@@ -310,33 +396,25 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="../vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="bookmark">
-    Python将汉字按拼音排序--一个多音字引发的悲剧
-</a></h2>
-<time datetime="2012-10-24 18:29:00" pubdate>Posted on
-    三 24 十月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
+ 
+
+    <div class='article'>
+        <a href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h2>Python将汉字按拼音排序--一个多音字引发的悲剧</h2></a>
+        <div class= "well small"> 三 24 十月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
 <div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
 <span class="err">音</span>    <span class="n">yin1</span>
 </pre></div>
@@ -357,33 +435,25 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
     <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a>
-        </p>
-    </article>
+        <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html" rel="bookmark">
-    用Python将绝对URL替换成相对URL
-</a></h2>
-<time datetime="2012-09-29 15:52:00" pubdate>Posted on
-    六 29 九月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
+ 
+
+    <div class='article'>
+        <a href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h2>用Python将绝对URL替换成相对URL</h2></a>
+        <div class= "well small"> 六 29 九月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
 <p>脚本内容如下:</p>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*- coding:utf-8 -*-</span>
@@ -398,68 +468,81 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
 
 <span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div>
+<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div> <a class="btn btn-info xsmall" href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">read more</a></div>
+    </div>	
+				
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+
+    <li class="active"><a href="../category/python.html">1</a></li>
+    <li class=""><a href="../category/python2.html">2</a></li>
+    <li class=""><a href="../category/python3.html">3</a></li>
+
+    <li class="next"><a href="../category/python2.html">Next &rarr;</a></li>
+
+</ul>
+</div>    
+ 
+  
         </div>
+        
+        <div class="span3">
 
-        <p>
-            <a href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
-
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 3
-        <a href="../category/python2.html">&raquo;</a>
-    </span>
-    </div>
-
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

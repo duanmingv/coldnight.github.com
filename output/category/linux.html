@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles in Linux</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html" rel="bookmark">
-    Awesome+tmux+gnomeDo打造高效Linux桌面环境
-</a></h2>
-<time datetime="2012-12-04 13:21:00" pubdate>Posted on
-    二 04 十二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <h2>引言</h2>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html"><h1>Awesome+tmux+gnomeDo打造高效Linux桌面环境</h1></a>
+            二 04 十二月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><h2>引言</h2>
 <p>近期一直在Linux下工作,使用Ubuntu 11.10,经过一段时间的使用和磨合,终于打造出一套适合自己的高效Linux桌面环境,之前也在博客中零散的写了几篇文章分享,在此做一番总结.</p>
 <p>首先先放出桌面截图
 <img alt="Awesome 桌面截图" src="/upload/MyDesktop.png" /></p>
@@ -65,33 +87,271 @@
 </pre></div>
 
 
-<h4>配置自动启程序 ...</h4>
-        </div>
+<h4>配置自动启程序</h4>
+<p>使用awesome之后之前设置的自动启动就会失效,因为Awesome启动是通过配置文件控制的,在配置文件(~/.config/awesome/rc.lua)加上如下内容可以配置自启动程序:</p>
+<div class="codehilite"><pre><span class="n">autorun</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">autorunApps</span> <span class="o">=</span> 
+<span class="p">{</span> 
+    <span class="s2">&quot;</span><span class="s">pidgin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">fcitx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">dbus-launch gnome-do&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">guake&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">/opt/qq2012/wineapp/qq/qq.sh&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
-        <p>
-            <a href="../awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="k">if</span> <span class="n">autorun</span> <span class="k">then</span>
+    <span class="k">for</span> <span class="n">app</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">autorunApps</span> <span class="k">do</span>
+        <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn_with_shell</span><span class="p">(</span><span class="n">autorunApps</span><span class="p">[</span><span class="n">app</span><span class="p">])</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<p>在autorunApps中添加要自动启动程序的命令即可在登录时启动相应的程序</p>
+<h4>使用gnome桌面元素</h4>
+<p>awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
+在宿主目录创建.xinitrc,添加如下内容:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+gnome-settings-daemon &amp;     <span class="c"># 使用gnome桌面元素</span>
+nm-applet --sm-disable &amp;    <span class="c"># 托盘栏添加网卡图标</span>
+<span class="nb">exec </span>awesome
+</pre></div>
+
+
+<p>如果不生效,则执行下面命令:</p>
+<div class="codehilite"><pre>ln -sf ~/.xinitrc ~/.xprofile
+</pre></div>
+
+
+<h3>美化</h3>
+<p>可以自己编写lua脚本对Awesome进行美化,当然还有很多已经写好的配置,我们叫他为主题
+awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下载.
+我们可以使用git将主题整体克隆下来</p>
+<div class="codehilite"><pre>git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
+</pre></div>
+
+
+<p>然后修改~/.config/awesome/rc.lua的beautiful.init()的参数改为主题的路径:</p>
+<div class="codehilite"><pre><span class="n">beautiful</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">/your/home/path/.config/awesome/themes/bamboo/theme.lua&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>如果背景图片无法显示,安装feh:</p>
+<div class="codehilite"><pre>sudo apt-get install feh
+</pre></div>
+
+
+<h3>使用</h3>
+<p>配置完成后注销使用Awesome会话登录,Awesome使用Win键作为主键,几个常用的为:</p>
+<div class="codehilite"><pre><span class="n">Win</span><span class="o">+</span><span class="n">num</span> <span class="err">可以在多个桌面切换</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">r</span> <span class="err">可以重启</span><span class="n">Awesome</span><span class="p">,</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">k</span><span class="o">/</span><span class="n">j</span><span class="err">可以切换窗口</span><span class="p">(</span><span class="err">类</span><span class="n">Vim</span><span class="err">操作</span><span class="p">),</span>
+<span class="n">Win</span><span class="o">+</span><span class="sr">m/n可以最大/</span><span class="err">小化窗口</span><span class="p">,</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Shift</span><span class="o">+</span><span class="n">num</span> <span class="err">可以将当前窗口发送到其他桌面</span><span class="o">.</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Shift</span><span class="o">+</span><span class="n">C</span><span class="err">可以关闭当前窗口</span><span class="p">,</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Space</span><span class="err">可以切换布局</span><span class="p">,</span><span class="n">Awesome</span><span class="err">有多种布局</span><span class="p">,</span><span class="err">这里不作介绍</span><span class="p">,</span><span class="err">大家可以自己稍作尝试</span><span class="o">.</span>
+</pre></div>
+
+
+<p>下面给出完整的快捷键:</p>
+<div class="codehilite"><pre><span class="n">Mod4</span> <span class="o">+</span> <span class="n">Enter</span>           <span class="err">打开终端</span>                                               
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">r</span>               <span class="err">执行程序或命令</span>
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">w</span>               <span class="err">打开</span><span class="n">Awesome</span><span class="err">主菜单（鼠标右键关闭）</span>                                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">c</span>       <span class="err">关闭当前窗口或应用</span>                                     
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">r</span>     <span class="err">重启</span><span class="n">Awesome</span>                                            
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="sx">q  </span>     <span class="err">退出</span><span class="n">Awesome</span>
+
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">j</span>               <span class="err">切换到下一个窗口</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">k</span>               <span class="err">切换到前一个窗口</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Left</span>            <span class="err">查看前一个</span><span class="n">tag</span>                                          
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Right</span>           <span class="err">查看后一个</span><span class="n">tag</span>                                          
+<span class="n">Mod4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">-</span><span class="mi">9</span>             <span class="err">切换到</span><span class="n">tag</span> <span class="mi">1</span><span class="o">-</span><span class="mi">9</span>                                          
+
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">j</span>     <span class="err">切换到下一个屏幕</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">k</span>     <span class="err">切换到上一个屏幕</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">j</span>       <span class="err">当前窗口和前一个窗口互换位置</span>                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">k</span>       <span class="err">当前窗口和后一个窗口互换位置</span>                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">h</span>               <span class="err">把主区域的宽度增大</span><span class="mi">5</span><span class="nv">%</span>                                   
+<span class="nv">Mod4</span> <span class="o">+</span> <span class="n">l</span>               <span class="err">把主区域的宽度减少</span><span class="mi">5</span><span class="nv">%</span>
+
+<span class="nv">Mod4</span> <span class="o">+</span> <span class="n">m</span>               <span class="err">最大化窗口</span>
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">n</span>               <span class="err">最小化窗口</span>
+
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">h</span>       <span class="err">增加主区域窗口的数量</span>                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">l</span>       <span class="err">减少主区域窗口的数量</span>                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Space</span>           <span class="err">切换窗口布局</span>                                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">space</span>   <span class="err">把当前</span><span class="n">tag</span><span class="err">更换为前一种布局</span>                              
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">space</span> <span class="err">切换当前窗口是否为浮动</span>                                 
+
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">i</span>       <span class="err">显示当前窗口的</span><span class="n">Class</span><span class="err">和</span><span class="n">instance</span><span class="err">，这在写脚本的时候尤其有用</span>
+
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">r</span>       <span class="err">重绘当前窗口</span>                                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">t</span>               <span class="err">标记窗口（可标记多个）</span>                                 
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">F1</span><span class="o">~</span><span class="n">F9</span>   <span class="err">把标记的窗口移动到第</span><span class="mi">1</span><span class="o">~</span><span class="mi">9</span><span class="err">个标记上</span>                        
+
+<span class="n">Ctrl</span> <span class="o">+</span> <span class="n">Mod4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">~</span><span class="mi">9</span>      <span class="err">把当前桌面和</span><span class="mi">1</span><span class="o">~</span><span class="mi">9</span><span class="err">桌面是显示</span>                              
+<span class="n">Mod4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">~</span><span class="mi">9</span>             <span class="err">恢复</span>                                                   
+
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Esc</span>             <span class="err">快速切换到上一个桌面</span>
+</pre></div>
+
+
+<p>更加详尽的介绍和配置请参见http://josephpan.net/blog/?p=992</p>
+<h2>Tmux</h2>
+<p>tmux是一款替代screen的产品,除了拥有screen的基本功能外,还有窗口分隔,多人共享等功能.尤其是窗口分隔功能异常突出.同时tmux简化了很多快捷键.还支持vi/emacs风格的快捷键绑定</p>
+<h3>安装</h3>
+<div class="codehilite"><pre>sudo apt-get install tmux
+</pre></div>
+
+
+<h3>配置</h3>
+<p>tmux 使用~/.tmux.conf作为配置文件,所以我们可以将配置添加到这个文件中,网上很多资料都将前缀键绑定到Ctrl+a,但我喜欢使用Ctrl+a跳到行首,所以我还是使用默认的前缀键Ctrl+b.下面是我的配置文件:</p>
+<div class="codehilite"><pre>set <span class="o">-</span>g default<span class="o">-</span>terminal <span class="s">&quot;screen-256color&quot;</span> 
+set <span class="o">-</span>g display<span class="o">-</span>time <span class="m">3000</span>                   
+set <span class="o">-</span>g escape<span class="o">-</span>time <span class="m">0</span>
+set <span class="o">-</span>g history<span class="o">-</span>limit <span class="m">65535</span>                 
+set <span class="o">-</span>g base<span class="o">-</span>index <span class="m">1</span>                        
+setw <span class="o">-</span>g utf8 on                           
+
+<span class="c1"># split window</span>
+unbind <span class="s">&#39;&quot;&#39;</span>
+bind <span class="o">-</span> splitw <span class="o">-</span>v <span class="c1"># vertical split (prefix -)</span>
+unbind <span class="o">%</span>
+bind <span class="o">|</span> splitw <span class="o">-</span>h <span class="c1"># horizontal split (prefix |)</span>
+
+<span class="c1"># select pane</span>
+bind k selectp <span class="o">-</span>U <span class="c1"># above (prefix k)</span>
+bind j selectp <span class="o">-</span>D <span class="c1"># below (prefix j)</span>
+bind h selectp <span class="o">-</span>L <span class="c1"># left (prefix h)</span>
+bind l selectp <span class="o">-</span>R <span class="c1"># right (prefix l)</span>
+
+<span class="c1"># resize pane</span>
+bind <span class="o">-</span>r <span class="o">^</span>k resizep <span class="o">-</span>U <span class="m">5</span> <span class="c1"># upward (prefix Ctrl+k)</span>
+bind <span class="o">-</span>r <span class="o">^</span>j resizep <span class="o">-</span>D <span class="m">5</span> <span class="c1"># downward (prefix Ctrl+j)</span>
+bind <span class="o">-</span>r <span class="o">^</span>h resizep <span class="o">-</span>L <span class="m">5</span> <span class="c1"># to the left (prefix Ctrl+h)</span>
+bind <span class="o">-</span>r <span class="o">^</span>l resizep <span class="o">-</span>R <span class="m">5</span> <span class="c1"># to the right (prefix Ctrl+l)</span>
+
+<span class="c1"># swap pane</span>
+bind <span class="o">^</span>u swapp <span class="o">-</span>U <span class="c1"># swap with the previous pane (prefix Ctrl+u)</span>
+bind <span class="o">^</span>d swapp <span class="o">-</span>D <span class="c1"># swap with the next pane (prefix Ctrl+d)</span>
+
+<span class="c1"># misc</span>
+bind e lastp  <span class="c1"># select the last pane (prefix e)</span>
+bind <span class="o">^</span>e last  <span class="c1"># select the last window (prefix Ctrl+e)</span>
+bind q killp  <span class="c1"># kill pane (prefix q)</span>
+bind <span class="o">^</span>q killw <span class="c1"># kill window (prefix Ctrl+q)</span>
+
+<span class="c1"># copy mode</span>
+bind Escape copy<span class="o">-</span>mode             <span class="c1"># enter copy mode (prefix Escape)</span>
+bind <span class="o">^</span>p pasteb                    <span class="c1"># paste buffer (prefix Ctrl+p)</span>
+bind <span class="o">-</span>t vi<span class="o">-</span>copy v begin<span class="o">-</span>selection <span class="c1"># select (v)</span>
+bind <span class="o">-</span>t vi<span class="o">-</span>copy y copy<span class="o">-</span>selection  <span class="c1"># copy (y)</span>
+
+<span class="c1"># zoom pane &lt;-&gt; window </span>
+<span class="c1"># see also: http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh</span>
+bind <span class="o">^</span>z run <span class="s">&quot;tmux-zoom&quot;</span>
+
+<span class="c1"># app</span>
+bind ! splitw htop                                     <span class="c1"># htop (prefix !)</span>
+bind m command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec man %%&#39;&quot;</span>           <span class="c1"># man (prefix m)</span>
+bind <span class="p">@</span> command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec perldoc -t -f %%&#39;&quot;</span> <span class="c1"># perl func (prefix @)</span>
+bind <span class="o">*</span> command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec perldoc -t -v %%&#39;&quot;</span> <span class="c1"># perl var (prefix *)</span>
+bind <span class="o">%</span> command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec perldoc -t %%&#39;&quot;</span>    <span class="c1"># perl doc (prefix %)</span>
+bind <span class="o">/</span> command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec ri %%&#39;&quot;</span>            <span class="c1"># ruby doc (prefix /)</span>
+
+<span class="c1"># reload config (prefix r)</span>
+bind r source ~<span class="o">/</span><span class="m">.</span>tmux.conf \<span class="p">;</span> display <span class="s">&quot;Configuration reloaded!&quot;</span>
+
+setw <span class="o">-</span>g mode<span class="o">-</span>keys vi
+setw <span class="o">-</span>g automatic<span class="o">-</span>rename off
+
+<span class="c1">#-- colorscheme --#</span>
+<span class="c1"># see also: https://github.com/daethorian/conf-tmux/blob/master/colors/zenburn.conf</span>
+
+<span class="c1"># modes</span>
+setw <span class="o">-</span>g clock<span class="o">-</span>mode<span class="o">-</span>colour colour223
+setw <span class="o">-</span>g mode<span class="o">-</span>attr bold
+setw <span class="o">-</span>g mode<span class="o">-</span>fg colour223
+setw <span class="o">-</span>g mode<span class="o">-</span>bg colour235
+
+<span class="c1"># panes</span>
+set <span class="o">-</span>g pane<span class="o">-</span>border<span class="o">-</span>bg default
+set <span class="o">-</span>g pane<span class="o">-</span>border<span class="o">-</span>fg colour234
+set <span class="o">-</span>g pane<span class="o">-</span>active<span class="o">-</span>border<span class="o">-</span>bg default 
+set <span class="o">-</span>g pane<span class="o">-</span>active<span class="o">-</span>border<span class="o">-</span>fg green
+
+<span class="c1"># messages</span>
+set <span class="o">-</span>g message<span class="o">-</span>attr bold
+set <span class="o">-</span>g message<span class="o">-</span>fg colour223
+set <span class="o">-</span>g message<span class="o">-</span>bg default
+
+<span class="c1">#-- statusbar --#</span>
+set <span class="o">-</span>g status<span class="o">-</span>utf8 on
+set <span class="o">-</span>g status<span class="o">-</span>interval <span class="m">1</span>
+set <span class="o">-</span>g status<span class="o">-</span>keys vi
+set <span class="o">-</span>g status<span class="o">-</span>justify left
+set <span class="o">-</span>g display<span class="o">-</span>time <span class="m">3000</span>
+set <span class="o">-</span>g status<span class="o">-</span>bg default
+set <span class="o">-</span>g status<span class="o">-</span>fg white
+set<span class="o">-</span>window<span class="o">-</span>option <span class="o">-</span>g window<span class="o">-</span>status<span class="o">-</span>current<span class="o">-</span>attr default
+set<span class="o">-</span>window<span class="o">-</span>option <span class="o">-</span>g window<span class="o">-</span>status<span class="o">-</span>current<span class="o">-</span>fg red
+set<span class="o">-</span>window<span class="o">-</span>option <span class="o">-</span>g window<span class="o">-</span>status<span class="o">-</span>current<span class="o">-</span>bg default
+set <span class="o">-</span>g status<span class="o">-</span>left<span class="o">-</span>length <span class="m">15</span>
+set <span class="o">-</span>g status<span class="o">-</span>right<span class="o">-</span>length <span class="m">55</span>
+<span class="c1">#set -g status-left &quot;#[fg=white,bg=blue] &gt; #I #W &lt; #[default] |&quot; # 0:bash</span>
+set <span class="o">-</span>g status<span class="o">-</span>left <span class="s">&quot;#[fg=white,bg=default] &gt; #S &lt; #[default] |&quot;</span> <span class="c1"># session-name</span>
+set <span class="o">-</span>g status<span class="o">-</span>right <span class="s">&quot;#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \&quot;</span> \<span class="s">&quot; -f 1,2,3))#[default]&quot;</span>
+</pre></div>
+
+
+<h3>使用</h3>
+<p>我使用terminator配合tmux使用,更改terminator的配置(~/.config/terminator/conf)</p>
+<div class="codehilite"><pre><span class="k">[profiles]</span>
+  <span class="k">[[default]]</span>
+    <span class="na">login_shell</span> <span class="o">=</span> <span class="s">True</span>
+<span class="s">    use_custom_command = True   # 允许自定义命令</span>
+<span class="s">    custom_command = tmux -2     # 打开终端时执行tmux(-2 是强制终端使用256颜色)   </span>
+<span class="s">    background_type = transparent</span>
+<span class="s">    scrollbar_position = hidden</span>
+<span class="s">    foreground_color = &quot;#ffffff&quot;</span>
+<span class="s">    show_titlebar = False</span>
+<span class="s">    background_darkness = 0.2</span>
+</pre></div>
+
+
+<h3>常用快捷键:</h3>
+<div class="codehilite"><pre><span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">-</span> <span class="err">创建一个水平分隔</span> 
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">|</span> <span class="err">创建一个垂直分隔</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">j</span><span class="sr">/k/</span><span class="n">h</span><span class="o">/</span><span class="n">l</span> <span class="err">上下左右切换分割窗</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">j</span><span class="sr">/k/</span><span class="n">h</span><span class="o">/</span><span class="n">l</span> <span class="err">向上下左右扩展分割窗大小</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">c</span> <span class="err">创建一个窗口</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="p">,</span> <span class="err">重命名窗口</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">n</span> <span class="err">切换到下一个窗口</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">p</span> <span class="err">切换到前一个窗口</span>
+</pre></div>
+
+
+<h2>Gnome-Do</h2>
+<p>Gnome Do 之前博客里有介绍请看<a href="/2012/9/1/Linux桌面高效工作----使用Gnome-DO/">这里</a>,由于Gonme Do使用Win+Space快捷键已经被Awesome占用,所以为了正常使用Gnome Do 我将Gnome Do的快捷键绑定到<code>Win+G</code>.</p></div>
+        <hr />
+    </div>
+		
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/apparmoryin-qi-de-wu-fa-qi-dong-evince.html" rel="bookmark">
-    AppArmor引起的无法启动Evince
-</a></h2>
-<time datetime="2012-11-15 16:05:00" pubdate>Posted on
-    四 15 十一月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
+ 
+
+    <div class='article'>
+        <a href="../apparmoryin-qi-de-wu-fa-qi-dong-evince.html"><h2>AppArmor引起的无法启动Evince</h2></a>
+        <div class= "well small"> 四 15 十一月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
 evince
 却提示:</p>
 <div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
@@ -111,33 +371,25 @@ evince
 
 
 <p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../apparmoryin-qi-de-wu-fa-qi-dong-evince.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="../apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html" rel="bookmark">
-    Linux高效工作----平铺式窗体管理器Awesome
-</a></h2>
-<time datetime="2012-10-25 10:23:00" pubdate>Posted on
-    四 25 十月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:</p>
+ 
+
+    <div class='article'>
+        <a href="../linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html"><h2>Linux高效工作----平铺式窗体管理器Awesome</h2></a>
+        <div class= "well small"> 四 25 十月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:</p>
 <p>Awesome是一款运行在Unix和类Unix(Linux/FreeBSD)等系统上的一款平铺式窗体管理器,有占用资源小,易于管理和操作等等有点,这里不罗嗦这些说说安装,Ubuntu安装很简单</p>
 <div class="codehilite"><pre>sudo apt-get install awesome
 </pre></div>
@@ -148,33 +400,25 @@ evince
 <p>没有菜单对吧 其实再右上角点一下就会出来一个菜单,打开程序会发现标题栏状态栏什么都木有了大大节省了桌面空间,可问题来了,怎么关闭啊不用担心</p>
 <p>按 <code>Win键+Shift+C</code>可以关闭当前窗口</p>
 <p>打开默认终端 <code>Win键+Enter</code>就可以打开终端</p>
-<p>可以按住 <code>Win键+Shift ...</code></p>
-        </div>
-
-        <p>
-            <a href="../linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<p>可以按住 <code>Win键+Shift ...</code></p> <a class="btn btn-info xsmall" href="../linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html" rel="bookmark">
-    部署Tornado时iptables引发的的一个问题
-</a></h2>
-<time datetime="2012-09-29 19:11:00" pubdate>Posted on
-    六 29 九月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
+ 
+
+    <div class='article'>
+        <a href="../bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h2>部署Tornado时iptables引发的的一个问题</h2></a>
+        <div class= "well small"> 六 29 九月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
 <p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
 <div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
     <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
@@ -196,33 +440,25 @@ evince
 </pre></div>
 
 
-<p>但是访问nginx总是返回502 Bad ...</p>
-        </div>
-
-        <p>
-            <a href="../bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<p>但是访问nginx总是返回502 Bad ...</p> <a class="btn btn-info xsmall" href="../bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html" rel="bookmark">
-    Linux桌面高效工作----使用Gnome DO
-</a></h2>
-<time datetime="2012-09-01 08:03:00" pubdate>Posted on
-    六 01 九月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>不知大家是否和我一样在win下系统win+r输入命令来快速启动程序,这两天在Linux下碰到一个比这更爽,更快的软件,<code>Gnome Do</code>.</p>
+ 
+
+    <div class='article'>
+        <a href="../linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html"><h2>Linux桌面高效工作----使用Gnome DO</h2></a>
+        <div class= "well small"> 六 01 九月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>不知大家是否和我一样在win下系统win+r输入命令来快速启动程序,这两天在Linux下碰到一个比这更爽,更快的软件,<code>Gnome Do</code>.</p>
 <p>Gnome Do能根据用户键入的内容进行自动匹配，从而快速打开系统中已有的程序、文件、书签等。不仅如此，GNOME Do 还包括插件，从而能够做更多事,</p>
 <p>比如你安装了pidgin插件只需输入联系人的名字即可打开与他/她的会话,安装了file这个插件输入文件/目录的名字即可打开目录或文件,</p>
 <p>当然还有一个不足就是不支持中文</p>
@@ -231,33 +467,25 @@ evince
 </pre></div>
 
 
-<p>启动之后Gnome do不会停留任务栏或通知栏只需按<code>Win(ubuntu下称为super)+Space</code>即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率</p>
-        </div>
-
-        <p>
-            <a href="../linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<p>启动之后Gnome do不会停留任务栏或通知栏只需按<code>Win(ubuntu下称为super)+Space</code>即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率</p> <a class="btn btn-info xsmall" href="../linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html" rel="bookmark">
-    推荐两款不错的终端软件
-</a></h2>
-<time datetime="2012-08-29 09:36:00" pubdate>Posted on
-    三 29 八月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>一直在Linux下做开发,一个好用的终端软件能帮你节省很多时间和精力</p>
+ 
+
+    <div class='article'>
+        <a href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html"><h2>推荐两款不错的终端软件</h2></a>
+        <div class= "well small"> 三 29 八月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>一直在Linux下做开发,一个好用的终端软件能帮你节省很多时间和精力</p>
 <p>作为一个经常喜欢敲命令的人,可能要同时做很多操作,Linux各个桌面的窗口切换有多那啥,这里就不吐槽了,
 我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
 后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
@@ -275,33 +503,25 @@ evince
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
 <div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="c1">#设置体字</span>
-<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="c1"># 背景颜色 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="c1"># 背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="../tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/sshzheng-shu-deng-lu-cuo-wu.html" rel="bookmark">
-    ssh证书登录错误
-</a></h2>
-<time datetime="2012-08-10 16:11:00" pubdate>Posted on
-    五 10 八月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <h2>错误描述</h2>
+ 
+
+    <div class='article'>
+        <a href="../sshzheng-shu-deng-lu-cuo-wu.html"><h2>ssh证书登录错误</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>错误描述</h2>
 
 <p>使用证书ssh链接的时候提示下面错误信息
 <h2><code>Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).</code>
@@ -314,33 +534,25 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 <code>Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys</code>
 查看.ssh权限为775
 .ssh 手动创建的时候是775权限,改成755权限后正常
-<code># chmod ...</code></p>
-        </div>
-
-        <p>
-            <a href="../sshzheng-shu-deng-lu-cuo-wu.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<code># chmod ...</code></p> <a class="btn btn-info xsmall" href="../sshzheng-shu-deng-lu-cuo-wu.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html" rel="bookmark">
-    Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)
-</a></h2>
-<time datetime="2012-05-16 11:05:00" pubdate>Posted on
-    三 16 五月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
+ 
+
+    <div class='article'>
+        <a href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h2>Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h2></a>
+        <div class= "well small"> 三 16 五月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
 <h2>环境:</h2>
 <p>系统:Gentoo
 ip:192.168.3.1</p>
@@ -353,33 +565,25 @@ ip:192.168.3.1</p>
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div>
-        </div>
-
-        <p>
-            <a href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="bookmark">
-    iptables:restorecon: command not found无法保存策略解决
-</a></h2>
-<time datetime="2012-04-30 10:43:00" pubdate>Posted on
-    一 30 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
+ 
+
+    <div class='article'>
+        <a href="../iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h2>iptables:restorecon: command not found无法保存策略解决</h2></a>
+        <div class= "well small"> 一 30 四月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
 <p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
 <div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
 <span class="n">whereis</span> <span class="n">restorecon</span>
@@ -388,33 +592,25 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
 <p>没结果,继续手动查看:</p>
 <div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="sr">/sbin/</span> <span class="err">¦</span> <span class="nb">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="../iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html" rel="bookmark">
-    CentOS下搭建python web生产环境(nginx+web.py+uwsgi)
-</a></h2>
-<time datetime="2012-04-19 17:59:00" pubdate>Posted on
-    四 19 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
+ 
+
+    <div class='article'>
+        <a href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h2>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h2></a>
+        <div class= "well small"> 四 19 四月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
 <p>首先使用环境介绍:
 系统: CentOS 5.5 32位</p>
 <p>Python版本:2.7.2</p>
@@ -426,68 +622,80 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 <span class="nb">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="c1">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http ...</span></pre></div>
+<span class="n">wget</span> <span class="n">http ...</span></pre></div> <a class="btn btn-info xsmall" href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+    </div>	
+				
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+
+    <li class="active"><a href="../category/linux.html">1</a></li>
+    <li class=""><a href="../category/linux2.html">2</a></li>
+
+    <li class="next"><a href="../category/linux2.html">Next &rarr;</a></li>
+
+</ul>
+</div>    
+ 
+  
         </div>
+        
+        <div class="span3">
 
-        <p>
-            <a href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
-
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 2
-        <a href="../category/linux2.html">&raquo;</a>
-    </span>
-    </div>
-
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

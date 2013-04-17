@@ -1,52 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="./theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="./theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="./theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="./theme/bootstrap.min.css" rel="stylesheet">
+    <link href="./theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="./theme/local.css" rel="stylesheet">
+    <link href="./theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href=".">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="bookmark">
-    iptables:restorecon: command not found无法保存策略解决
-</a></h2>
-<time datetime="2012-04-30 10:43:00" pubdate>Posted on
-    一 30 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
+                            <li><a href="./pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+ 
+
+    <div class='article'>
+        <a href="./iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h2>iptables:restorecon: command not found无法保存策略解决</h2></a>
+        <div class= "well small"> 一 30 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
 <p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
 <div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
 <span class="n">whereis</span> <span class="n">restorecon</span>
@@ -55,33 +75,25 @@
 
 <p>没结果,继续手动查看:</p>
 <div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="sr">/sbin/</span> <span class="err">¦</span> <span class="nb">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="./iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html" rel="bookmark">
-    用Python写的终端下的翻译工具
-</a></h2>
-<time datetime="2012-04-23 23:23:00" pubdate>Posted on
-    一 23 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
+ 
+
+    <div class='article'>
+        <a href="./yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h2>用Python写的终端下的翻译工具</h2></a>
+        <div class= "well small"> 一 23 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*-coding:utf8 -*-</span>
@@ -92,33 +104,25 @@
 <span class="sd">#       Author: cold</span>
 <span class="sd">#        Email: wh_linux@126.com</span>
 <span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="./yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html" rel="bookmark">
-    用python发带附件的邮件用来定时备份mysql数据库
-</a></h2>
-<time datetime="2012-04-21 18:26:00" pubdate>Posted on
-    六 21 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
+ 
+
+    <div class='article'>
+        <a href="./yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h2>用python发带附件的邮件用来定时备份mysql数据库</h2></a>
+        <div class= "well small"> 六 21 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
 <p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
 <div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*- coding: utf8 -*-</span>
@@ -130,33 +134,25 @@
 <span class="sd">#        Email: wh_linux@126.com</span>
 <span class="sd">#     HomePage: http://www.linuxzen.com</span>
 <span class="sd">#      Version: 0.0.1</span>
-<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div> <a class="btn btn-info xsmall" href="./yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html" rel="bookmark">
-    CentOS下搭建python web生产环境(nginx+web.py+uwsgi)
-</a></h2>
-<time datetime="2012-04-19 17:59:00" pubdate>Posted on
-    四 19 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
+ 
+
+    <div class='article'>
+        <a href="./centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h2>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h2></a>
+        <div class= "well small"> 四 19 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
 <p>首先使用环境介绍:
 系统: CentOS 5.5 32位</p>
 <p>Python版本:2.7.2</p>
@@ -168,63 +164,47 @@
 <span class="nb">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="c1">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="n">wget</span> <span class="n">http ...</span></pre></div> <a class="btn btn-info xsmall" href="./centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html" rel="bookmark">
-    lvs+keepalived实现高可用群集配置详解
-</a></h2>
-<time datetime="2012-04-16 14:25:00" pubdate>Posted on
-    一 16 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/fu-zai-jun-heng.html">
-    负载均衡</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
+ 
+
+    <div class='article'>
+        <a href="./lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
+        <div class= "well small"> 一 16 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
 <p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
 工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
 IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
-DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p>
-        </div>
-
-        <p>
-            <a href="./lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html#disqus_thread">comments</a>
-        </p>
-    </article>
+DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="./lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/shi-yong-pythonjin-xing-webkai-fa.html" rel="bookmark">
-    使用Python进行web开发
-</a></h2>
-<time datetime="2012-04-13 16:39:00" pubdate>Posted on
-    五 13 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/python.html">
-    Python</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
+ 
+
+    <div class='article'>
+        <a href="./shi-yong-pythonjin-xing-webkai-fa.html"><h2>使用Python进行web开发</h2></a>
+        <div class= "well small"> 五 13 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
 <p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
 <h3>安装easy_install</h3>
 <div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
@@ -232,33 +212,25 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 
 
 <h3>使用easy_install安装web.py</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./shi-yong-pythonjin-xing-webkai-fa.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="./shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html" rel="bookmark">
-    Linux下配置vim一键编译C/C++并执行
-</a></h2>
-<time datetime="2012-04-05 12:07:00" pubdate>Posted on
-    四 05 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/vim.html">
-    Vim</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
+ 
+
+    <div class='article'>
+        <a href="./linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h2>Linux下配置vim一键编译C/C++并执行</h2></a>
+        <div class= "well small"> 四 05 四月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
 <p>首先在/usr/bin/下创建compile脚本:</p>
 <div class="codehilite"><pre><span class="n">vi</span> <span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
 </pre></div>
@@ -276,33 +248,25 @@ clear
 <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
 <span class="k">then</span>
 <span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
-    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="./linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html#disqus_thread">comments</a>
-        </p>
-    </article>
+    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="./linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/shi-yong-cactigou-jian-jian-kong-xi-tong.html" rel="bookmark">
-    使用cacti构建监控系统
-</a></h2>
-<time datetime="2012-03-14 14:02:00" pubdate>Posted on
-    三 14 三月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/jian-kong.html">
-    监控</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
+ 
+
+    <div class='article'>
+        <a href="./shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h2>使用cacti构建监控系统</h2></a>
+        <div class= "well small"> 三 14 三月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
 <p>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。</p>
 <p>cacti依赖于PHP+MYSQL环境,前面的几篇文章已经详细讲解了如何在Linux部署LNMP环境,这篇文章我们就是用前面几章所搭建的环境,所以这里不再讲解如何搭建环境,如果您不会可以先看看前几篇文章.</p>
 <p>下面就介绍如何来部署cacti.</p>
@@ -312,65 +276,49 @@ server:</p>
 <p>ip:192.168.3.120</p>
 <p>cacti:cacti-0.8.7i.tar.gz</p>
 <p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install ...</pre></div>
-        </div>
-
-        <p>
-            <a href="./shi-yong-cactigou-jian-jian-kong-xi-tong.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="./shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html" rel="bookmark">
-    lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)
-</a></h2>
-<time datetime="2012-03-13 13:13:00" pubdate>Posted on
-    二 13 三月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
+ 
+
+    <div class='article'>
+        <a href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h2>lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h2></a>
+        <div class= "well small"> 二 13 三月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
 <p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
 <div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div>
-        </div>
-
-        <p>
-            <a href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a>
-        </p>
-    </article>
+wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html" rel="bookmark">
-    lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)
-</a></h2>
-<time datetime="2012-03-13 10:06:00" pubdate>Posted on
-    二 13 三月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="./author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="./category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
+ 
+
+    <div class='article'>
+        <a href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h2>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h2></a>
+        <div class= "well small"> 二 13 三月 2012
+
+by <a class="url fn" href="./author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
 <div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
 </pre></div>
@@ -387,69 +335,85 @@ wget http://nginx ...</pre></div>
 
 
 <p>卸载只要指定包名即可卸载.</p>
-<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p>
+<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
+    </div>	
+				
+            <div class="pagination">
+<ul>
+    <li class="prev"><a href="./index4.html">&larr; Previous</a></li>
+
+    <li class=""><a href="./index.html">1</a></li>
+    <li class=""><a href="./index2.html">2</a></li>
+    <li class=""><a href="./index3.html">3</a></li>
+    <li class=""><a href="./index4.html">4</a></li>
+    <li class="active"><a href="./index5.html">5</a></li>
+    <li class=""><a href="./index6.html">6</a></li>
+    <li class=""><a href="./index7.html">7</a></li>
+
+    <li class="next"><a href="./index6.html">Next &rarr;</a></li>
+
+</ul>
+</div>    
+ 
+  
         </div>
+        
+        <div class="span3">
 
-        <p>
-            <a href="./lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
-
-    <div class="container footnote">
-                            <span class="paginator">
-            <a href="./index4.html">&laquo;</a>
-            Page 5 / 7
-        <a href="./index6.html">&raquo;</a>
-    </span>
-    </div>
-
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="./">Archives</a>
+                <li><a href="./tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="./category/linux.html">Linux</a></li>
+                                <li><a href="./category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="./category/mysql.html">MySQL</a></li>
+                                <li><a href="./category/python.html">Python</a></li>
+                                <li><a href="./category/vim.html">Vim</a></li>
+                                <li><a href="./category/shell.html">shell</a></li>
+                                <li><a href="./category/jian-kong.html">监控</a></li>
+                                <li><a href="./category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href=".">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

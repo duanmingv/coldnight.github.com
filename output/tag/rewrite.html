@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles tagged as rewrite</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html" rel="bookmark">
-    nginx平台搭建nagios监控系统
-</a></h2>
-<time datetime="2012-02-26 10:48:00" pubdate>Posted on
-    日 26 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/jian-kong.html">
-    监控</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h1>nginx平台搭建nagios监控系统</h1></a>
+            日 26 二月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
 <p>Nagios 功能:</p>
 <ul>
 <li>监视网络服务 (SMTP, POP3, HTTP, NNTP, PING等)</li>
@@ -63,67 +85,289 @@
 <li>系统:CentOS 5.5 32bit</li>
 <li>ip:192.168.3.3</li>
 <li>nagios core:nagios-3.3.1.tar.gz</li>
-<li>web:nginx(nginx-1 ...</li></ul>
-        </div>
+<li>web:nginx(nginx-1.0.5.tar.gz)</li>
+</ul>
+<h2>安装:</h2>
+<h3>安装准备</h3>
+<p>创建nagios系统用户:</p>
+<div class="codehilite"><pre>useradd  nagios
+</pre></div>
 
-        <p>
-            <a href="../nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
 
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 1
-    </span>
+<p>安装依赖:</p>
+<div class="codehilite"><pre>yum -y install gd-devel libpng-devel libtool-ltdl-devel
+</pre></div>
+
+
+<p>下载nagios内核:</p>
+<div class="codehilite"><pre>wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
+</pre></div>
+
+
+<h3>安装nagios内核:</h3>
+<div class="codehilite"><pre>tar -zxvf nagios-3.3.1.tar.gz
+<span class="nb">cd </span>nagios
+./configure --prefix<span class="o">=</span>/usr/local/nagios
+make all
+make install               <span class="c"># 安装主要程序,CGI和HTML</span>
+make install-commandmode   <span class="c"># 使外部命令有访问nagios配置文件的权限</span>
+make install-config        <span class="c"># 安装配置文件</span>
+make install-init          <span class="c"># 安装nagios启动脚本</span>
+</pre></div>
+
+
+<h3>安装插件:</h3>
+<p>nagios没有什么都做不了的,插件极大的扩展了nagios功能,除了安装官方常用插件外,也可以根据自己需求编写插件.</p>
+<div class="codehilite"><pre>wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
+tar -zxvf nagios-plugins-1.4.15.tar.gz
+<span class="nb">cd </span>nagios-plugins-1.4.15
+./configure --prefix<span class="o">=</span>/usr/local/nagios
+make  &amp;amp;&amp;amp; make install
+</pre></div>
+
+
+<h3>安装WEB服务器</h3>
+<p>web服务器不是nagios所必须的,但是如果你无法忍受通过日志文件来监控各个主机状态,那么web服务器就至关重要,所以我们还是花上一点时间为之后的节省更多的时间.</p>
+<p>这里web服务器使用当前主流的nginx:</p>
+<p>安装nginx</p>
+<div class="codehilite"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
+&amp;amp;nbsp;yum&amp;amp;nbsp;&amp;amp;nbsp;-y&amp;amp;nbsp;install&amp;amp;nbsp;zlib-devel&amp;amp;nbsp;pcre-devel&amp;amp;nbsp;openssl-devel &amp;amp;nbsp;# 安装依赖
+tar -zxvf nginx-1.0.11.tar.gz
+<span class="nb">cd </span>nginx-1.0.11
+./configure --prefix<span class="o">=</span>/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
+make &amp;amp;&amp;amp; make install
+</pre></div>
+
+
+<p>配置nginx支持cgi:</p>
+<div class="codehilite"><pre>wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
+tar -zxvf FCGI-0.67.tar.gz
+<span class="nb">cd </span>FCGI-0.67
+perl Makefile.PL
+make &amp;amp;&amp;amp; make install
+<span class="nb">cd</span> ..
+wget http://cpan.wenzk.com/authors/id/G/GB/GBJK/FCGI-ProcManager-0.19.tar.gz
+tar -zxvf FCGI-ProcManager-0.19.tar.gz
+<span class="nb">cd </span>FCGI-ProcManager-0.19
+perl Makefile.PL
+make &amp;amp;&amp;amp; make install
+<span class="nb">cd</span> ..
+wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/IO-All-0.39.tar.gz
+tar zxvf IO-All-0.39.tar.gz
+<span class="nb">cd </span>IO-All-0.39
+perl Makefile.PL
+make &amp;amp;&amp;amp; make install
+</pre></div>
+
+
+<p>创建cgiwarp-fcgi.pl(内容参照<a href="http://wiki.nginx.org/NginxSimpleCGI">这里</a>),将cgiwarp-fcgi.pl放到/usr/local/bin下给执行权限,并执行:</p>
+<div class="codehilite"><pre>chmod +x /usr/local/bin/cgiwarp-fcgi.pl
+mkdir -p /var/run/nginx/
+perl /usr/local/bin/cgiwarp-fcgi.pl
+chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  <span class="c"># 改变属主为nobody,是nginx正常使用</span>
+</pre></div>
+
+
+<p>配置nginx支持身份验证</p>
+<div class="codehilite"><pre>yum -y install httpd
+chkconfig --del httpd
+mkdir /usr/local/nginx/conf/htpasswd
+htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   <span class="c"># 添加nagiosadmin用户</span>
+</pre></div>
+
+
+<p>还需要配置nginx支持php,这里使用php-fpm的方式,这里就不介绍.</p>
+<h2>配置</h2>
+<p>首先配置nginx:</p>
+<div class="codehilite"><pre>    server <span class="o">{</span>
+        listen  192.168.3.3:80;
+        server_name 192.168.3.3;
+        auth_basic <span class="s2">&quot;Nagios&quot;</span>;
+        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios;
+
+        <span class="c"># 为了正常使用css和显示图片做一个url重写</span>
+        <span class="k">if</span> <span class="o">(</span> <span class="nv">$request_filename</span> ~ <span class="se">\.</span><span class="o">(</span>gif¦png¦jpg¦jpeg¦ico<span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
+            rewrite ^/nagios/<span class="o">(</span>images/.*<span class="o">)</span> /<span class="nv">$1</span> <span class="nb">break</span>;
+        <span class="o">}</span>   
+
+        <span class="k">if</span> <span class="o">(</span> <span class="nv">$request_filename</span> ~ <span class="se">\.</span><span class="o">(</span>css<span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
+            rewrite ^/nagios/<span class="o">(</span>stylesheets/.*<span class="o">)</span> /<span class="nv">$1</span> <span class="nb">break</span>;
+        <span class="o">}</span>   
+
+        <span class="c"># 支持php的配置</span>
+        location / <span class="o">{</span>
+            root /usr/local/nagios/share/;
+            index index.php;
+            fastcgi_pass unix:/var/run/php/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span>;
+            include fastcgi_params;
+            include fastcgi.conf;
+        <span class="o">}</span>
+
+        <span class="c"># 支持cgi的配置</span>
+        location ~ <span class="se">\.</span>cgi<span class="nv">$ </span><span class="o">{</span>
+            root /usr/local/nagios/sbin/;
+            rewrite ^/nagios/cgi-bin/<span class="o">(</span>.*<span class="o">)</span><span class="se">\.</span>cgi<span class="o">(</span>.*<span class="o">)</span> /<span class="nv">$1</span>.cgi<span class="nv">$2</span> <span class="nb">break</span>;
+            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock;
+            fastcgi_index   index.cgi;
+            fastcgi_param SCRIPT_FILENAME  <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span>;
+            fastcgi_param QUERY_STRING     <span class="nv">$query_string</span>;
+            fastcgi_param REQUEST_METHOD   <span class="nv">$request_method</span>;
+            fastcgi_param CONTENT_TYPE     <span class="nv">$content_type</span>;
+            fastcgi_param CONTENT_LENGTH   <span class="nv">$content_length</span>;
+            fastcgi_param GATEWAY_INTERFACE  CGI/1.1;
+            fastcgi_param SERVER_SOFTWARE    nginx;
+            fastcgi_param SCRIPT_NAME        <span class="nv">$fastcgi_script_name</span>;
+            fastcgi_param REQUEST_URI        <span class="nv">$request_uri</span>;
+            fastcgi_param DOCUMENT_URI       <span class="nv">$document_uri</span>;
+            fastcgi_param DOCUMENT_ROOT      <span class="nv">$document_root</span>;
+            fastcgi_param SERVER_PROTOCOL    <span class="nv">$server_protocol</span>;
+            fastcgi_param REMOTE_ADDR        <span class="nv">$remote_addr</span>;
+            fastcgi_param REMOTE_PORT        <span class="nv">$remote_port</span>;
+            fastcgi_param SERVER_ADDR        <span class="nv">$server_addr</span>;
+            fastcgi_param SERVER_PORT        <span class="nv">$server_port</span>;
+            fastcgi_param SERVER_NAME        <span class="nv">$server_name</span>;
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+</pre></div>
+
+
+<p>修改nagios主配文件,修改nagios运行账户:</p>
+<div class="codehilite"><pre>vi /usr/local/nagios/etc/nagios.cfg
+
+<span class="c"># 编辑下面选项:</span>
+<span class="nv">nagios_user</span><span class="o">=</span>nobody
+</pre></div>
+
+
+<p>修改cgi.cfg配置文件
+修改默认认证cgi用户的为刚才用htpasswd创建的nagiosadmin,或用htpasswd新建一个用户用来认证cgi文件(不然nagios报错:<code>It appears as though you do not have permission to view information for any of the hosts you requested...</code>)</p>
+<div class="codehilite"><pre>vi /usr/local/nagios/etc/cgi.cfg
+<span class="nv">default_user_name</span><span class="o">=</span>nagiosadmin
+</pre></div>
+
+
+<p>修改localhost.cfg添加一个新的监控主机:</p>
+<div class="codehilite"><pre>vi /usr/local/nagios/etc/objects/localhost.cfg
+
+<span class="c">#  通过定义host添加一个主机</span>
+<span class="c">#  添加一个ip为192.168.3.102的监控主机</span>
+define host<span class="o">{</span>
+        use                     linux-server
+        host_name               slave.org
+        <span class="nb">alias                   </span>102
+        address                 192.168.3.102
+        <span class="o">}</span>
+....
+<span class="c"># 通过定义service定义监控的服务:</span>
+<span class="c"># 通过ping来监控主机是否存活</span>
+define service<span class="o">{</span>
+        use                             <span class="nb">local</span>-service
+        host_name                       slave.org
+        service_description             PING
+        check_command                   check_ping!100.0,20%!500.0,%60
+        <span class="o">}</span>
+</pre></div>
+
+
+<p>修改nagios安装目录权限:</p>
+<div class="codehilite"><pre>chown -R nobody.nagios /usr/local/nagios
+chmod -R 775 /usr/local/nagios/
+</pre></div>
+
+
+<p>检查nagios配置文件:</p>
+<div class="codehilite"><pre>/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+</pre></div>
+
+
+<p>在最后看到如下则表示成功:</p>
+<p>Total Warnings: 0
+Total Errors:   0
+Things look okay - No serious problems were detected during the pre-flight check</p>
+<p>启动nagios:</p>
+<div class="codehilite"><pre>service nagios start
+Starting nagios: <span class="k">done</span>.
+</pre></div>
+
+
+<p>这时候在浏览器里输入<code>http://ip/</code>查看状态,现在能看到所有监控主机的的状态了.</p>
+<p><img alt="www.linuxzen.com" src="/upload/blog001.jpg" /></p></div>
+        <hr />
     </div>
+		
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+    <li class="active"><a href="../tag/rewrite.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>    
+ 
+  
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

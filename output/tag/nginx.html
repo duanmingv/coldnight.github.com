@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles tagged as nginx</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html" rel="bookmark">
-    部署Tornado时iptables引发的的一个问题
-</a></h2>
-<time datetime="2012-09-29 19:11:00" pubdate>Posted on
-    六 29 九月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h1>部署Tornado时iptables引发的的一个问题</h1></a>
+            六 29 九月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
 <p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
 <div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
     <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
@@ -68,33 +90,31 @@
 </pre></div>
 
 
-<p>但是访问nginx总是返回502 Bad ...</p>
-        </div>
+<p>但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条</p>
+<div class="codehilite"><pre>iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+</pre></div>
 
-        <p>
-            <a href="../bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html#disqus_thread">comments</a>
-        </p>
-    </article>
+
+<p>至此,通过nginx才能正常访问tornado</p></div>
+        <hr />
+    </div>
+		
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html" rel="bookmark">
-    Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)
-</a></h2>
-<time datetime="2012-05-16 11:05:00" pubdate>Posted on
-    三 16 五月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
+ 
+
+    <div class='article'>
+        <a href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h2>Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h2></a>
+        <div class= "well small"> 三 16 五月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
 <h2>环境:</h2>
 <p>系统:Gentoo
 ip:192.168.3.1</p>
@@ -107,33 +127,25 @@ ip:192.168.3.1</p>
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div>
-        </div>
-
-        <p>
-            <a href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="../gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html" rel="bookmark">
-    CentOS下搭建python web生产环境(nginx+web.py+uwsgi)
-</a></h2>
-<time datetime="2012-04-19 17:59:00" pubdate>Posted on
-    四 19 四月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
+ 
+
+    <div class='article'>
+        <a href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h2>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h2></a>
+        <div class= "well small"> 四 19 四月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
 <p>首先使用环境介绍:
 系统: CentOS 5.5 32位</p>
 <p>Python版本:2.7.2</p>
@@ -145,65 +157,49 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 <span class="nb">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="c1">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="n">wget</span> <span class="n">http ...</span></pre></div> <a class="btn btn-info xsmall" href="../centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html" rel="bookmark">
-    lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)
-</a></h2>
-<time datetime="2012-03-13 13:13:00" pubdate>Posted on
-    二 13 三月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
+ 
+
+    <div class='article'>
+        <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h2>lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h2></a>
+        <div class= "well small"> 二 13 三月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
 <p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
 <div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div>
-        </div>
-
-        <p>
-            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a>
-        </p>
-    </article>
+wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html" rel="bookmark">
-    lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)
-</a></h2>
-<time datetime="2012-03-13 10:06:00" pubdate>Posted on
-    二 13 三月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/linux.html">
-    Linux</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
+ 
+
+    <div class='article'>
+        <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h2>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h2></a>
+        <div class= "well small"> 二 13 三月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
 <div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
 </pre></div>
@@ -220,33 +216,25 @@ wget http://nginx ...</pre></div>
 
 
 <p>卸载只要指定包名即可卸载.</p>
-<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p>
-        </div>
-
-        <p>
-            <a href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="../lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html" rel="bookmark">
-    nginx平台搭建nagios监控系统
-</a></h2>
-<time datetime="2012-02-26 10:48:00" pubdate>Posted on
-    日 26 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/jian-kong.html">
-    监控</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
+ 
+
+    <div class='article'>
+        <a href="../nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h2>nginx平台搭建nagios监控系统</h2></a>
+        <div class= "well small"> 日 26 二月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
 <p>Nagios 功能:</p>
 <ul>
 <li>监视网络服务 (SMTP, POP3, HTTP, NNTP, PING等)</li>
@@ -263,65 +251,49 @@ wget http://nginx ...</pre></div>
 <li>系统:CentOS 5.5 32bit</li>
 <li>ip:192.168.3.3</li>
 <li>nagios core:nagios-3.3.1.tar.gz</li>
-<li>web:nginx(nginx-1 ...</li></ul>
-        </div>
-
-        <p>
-            <a href="../nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<li>web:nginx(nginx-1 ...</li></ul> <a class="btn btn-info xsmall" href="../nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html" rel="bookmark">
-    编写Linux shell脚本来实现nginx日志分割
-</a></h2>
-<time datetime="2012-02-17 10:27:00" pubdate>Posted on
-    五 17 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/shell.html">
-    shell</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
+ 
+
+    <div class='article'>
+        <a href="../bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
+        <div class= "well small"> 五 17 二月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
 <div class="codehilite"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div>
-        </div>
-
-        <p>
-            <a href="../bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html#disqus_thread">comments</a>
-        </p>
-    </article>
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="../bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+    </div>	
+				
+    
+ 
         
-    <article>
-        <header>
-            <h2><a href="/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html" rel="bookmark">
-    nginx+keepalived配置高可用HTTP群集
-</a></h2>
-<time datetime="2012-02-09 17:35:00" pubdate>Posted on
-    四 09 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/fu-zai-jun-heng.html">
-    负载均衡</a>.
-        </span>
-        </header>
 
-        <div class="body">
-            <p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+ 
+
+    <div class='article'>
+        <a href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h2>nginx+keepalived配置高可用HTTP群集</h2></a>
+        <div class= "well small"> 四 09 二月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
 一般集群主要架构为:</p>
 <p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
 第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
@@ -333,67 +305,79 @@ wget http://nginx ...</pre></div>
 <li>CentOS 5.5 32位</li>
 <li>nginx:nginx-1.0.11</li>
 <li>keepalived：keepalived-1.1.19.tar.gz</li>
-<li>主调度器 ...</li></ul>
+<li>主调度器 ...</li></ul> <a class="btn btn-info xsmall" href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">read more</a></div>
+    </div>	
+				
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+
+    <li class="active"><a href="../tag/nginx.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>    
+ 
+  
         </div>
+        
+        <div class="span3">
 
-        <p>
-            <a href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
-
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 1
-    </span>
-    </div>
-
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>

@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
     <meta charset="utf-8">
-        <title>cold's World - Articles tagged as 反向代理</title>
-        <meta charset="utf-8" />
-        <link href='http://fonts.googleapis.com/css?family=ABeeZee|Carrois+Gothic|Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../theme/style/reset.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/screen.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/style/print.css" type="text/css" media="print" />
-                                <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="../theme/bootstrap.min.css" rel="stylesheet">
+    <link href="../theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="../theme/local.css" rel="stylesheet">
+    <link href="../theme/pygments.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <header id="main">
-        <div class="container">
-            <div class="logo">
-                <a href="/index.html" title="Home">cold's World</a>
-            </div>
-        </div>
-    </header>
 
-    <div class="splash">
-        <div class="container">
-            <div class="welcome">木秀于林</div>
-        </div>
-    </div>
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
 
-    <div class="container content">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="..">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            <li><a href="/"> Archives </a> </li>
                     
-    <article>
-        <header>
-            <h2><a href="/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html" rel="bookmark">
-    nginx+keepalived配置高可用HTTP群集
-</a></h2>
-<time datetime="2012-02-09 17:35:00" pubdate>Posted on
-    四 09 二月 2012
-</time>
-<address class="vcard author">
-    by <a class="url fn" href="../author/cold.html">
-    cold</a>
-</address>
-<span class="category">in <a href="../category/fu-zai-jun-heng.html">
-    负载均衡</a>.
-        </span>
-        </header>
+                            <li><a href="../pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
 
-        <div class="body">
-            <p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+                
+
+        
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h1>nginx+keepalived配置高可用HTTP群集</h1></a>
+            四 09 二月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ 
+        </div>
+        
+        <div><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
 一般集群主要架构为:</p>
 <p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
 第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
@@ -58,67 +80,475 @@
 <li>CentOS 5.5 32位</li>
 <li>nginx:nginx-1.0.11</li>
 <li>keepalived：keepalived-1.1.19.tar.gz</li>
-<li>主调度器 ...</li></ul>
-        </div>
+<li>主调度器:192.168.3.1</li>
+<li>备调度器:192.168.3.2</li>
+<li>real server:192.168.3.4/5/6</li>
+</ul>
+<p>本文采用第一种方式来进行vip为:192.168.3.253</p>
+<h2>一、在主备服务器上部署nginx</h2>
+<h3>1.下载</h3>
+<div class="codehilite"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
+</pre></div>
 
-        <p>
-            <a href="../nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html#disqus_thread">comments</a>
-        </p>
-    </article>
-        <script type="text/javascript">
-        var disqus_shortname = 'linuxzen';
-        (function () {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.head || document.body).appendChild(s);
-        }());
-    </script>
-        </div>
 
-    <div class="container footnote">
-                            <span class="paginator">
-        Page 1 / 1
-    </span>
+<h3>2.安装</h3>
+<div class="codehilite"><pre> yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
+tar -zxvf nginx-1.0.11.tar.gz
+<span class="nb">cd </span>nginx-1.0.11
+./configure --prefix<span class="o">=</span>/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
+make &amp;amp;&amp;amp; make install
+</pre></div>
+
+
+<p>3.配置</p>
+<p>配置主调度器的nginx,编辑nginx.conf</p>
+<div class="codehilite"><pre>vi /usr/local/nginx/conf/nginx.conf
+
+http <span class="o">{</span>
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    <span class="c">#log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span>
+    <span class="c">#                  &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;</span>
+    <span class="c">#                  &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;</span>
+
+    <span class="c">#access_log  logs/access.log  main;</span>
+
+    sendfile        on;
+    <span class="c">#tcp_nopush     on;</span>
+
+    <span class="c">#keepalive_timeout  0;</span>
+    keepalive_timeout  65;
+
+    <span class="c">#gzip  on;</span>
+
+    <span class="c"># 添加一组真实的服务器地址池</span>
+    <span class="c"># 供proxy_pass和fastcgi_pass指令中使用的代理服务器</span>
+    upstream real_server_pool <span class="o">{</span>
+      <span class="c"># 后台如果有动态应用的时候,ip_hash指令可以通过hash算法</span>
+      <span class="c"># 将客户端请求定位到同一台后端服务器上,解决session共享,</span>
+      <span class="c"># 但建议用动态应用做session共享</span>
+      <span class="c"># ip_hash;</span>
+
+      <span class="c"># server用于指定一个后端服务器的名称和参数</span>
+      <span class="c"># weight代表权,重默认为1,权重越高被分配的客户端越多</span>
+      <span class="c"># max_fails 指定时间内对后端请求失败的次数</span>
+      <span class="c"># fail_timeout 达到max_fails指定的失败次数后暂停的时间</span>
+      server  192.168.3.4:80 <span class="nv">weight</span><span class="o">=</span>1 <span class="nv">max_fails</span><span class="o">=</span>2 <span class="nv">fail_timeout</span><span class="o">=</span>30s;
+      <span class="c"># down参数用来标记为离线,不参与负载均衡.在ip_hash下使用</span>
+      <span class="c"># 在此做演示,后面测试会去掉</span>
+      server  192.168.3.5:80 <span class="nv">weight</span><span class="o">=</span>1 <span class="nv">max_fails</span><span class="o">=</span>2 <span class="nv">fail_timeout</span><span class="o">=</span>30s down;
+      <span class="c"># backup仅仅在非backup服务器宕机或繁忙的时候使用</span>
+      <span class="c"># (在此做演示,后面测试会去掉)</span>
+      server  192.168.3.6:80 <span class="nv">weight</span><span class="o">=</span>1 <span class="nv">max_fails</span><span class="o">=</span>2 <span class="nv">fail_timeout</span><span class="o">=</span>30s backup;
+    <span class="o">}</span>
+    server <span class="o">{</span>
+        listen       192.168.3.1:80;
+        server_name  localhost;
+
+        <span class="c">#charset koi8-r;</span>
+
+        <span class="c">#access_log  logs/host.access.log  main;</span>
+
+        location / <span class="o">{</span>
+            <span class="c">#root   html;</span>
+            <span class="c">#index  index.html index.htm;</span>
+            <span class="c"># 使用upstream设置的一组代理服务器</span>
+            <span class="c"># 如果后端服务器出现502或504等执行错误时,</span>
+            <span class="c"># 将自动将请求转发给负载均衡池中的另一台服务器.</span>
+            proxy_next_upstream http_502 http_504 error timeout invalid_header;
+            proxy_pass http://real_server_pool;
+            proxy_set_header Host <span class="nv">$host</span>;
+            proxy_set_header X-Forwarded-For <span class="nv">$remote_addr</span>;
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>(<code>注意:</code>配置文件中注释ip_hash,以为ip_hash这个功能将保证这个客户端请求总是被转发到一台服务器上,所以如果启用了ip_hash指令,将不能再使用weight(权重参数),配置文件中加入为解释ip_hash指令)
+配置备用nginx,将监听ip改为备用调度器的ip</p>
+<div class="codehilite"><pre>http <span class="o">{</span>
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    <span class="c">#log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span>
+    <span class="c">#                  &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;</span>
+    <span class="c">#                  &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;</span>
+
+    <span class="c">#access_log  logs/access.log  main;</span>
+
+    sendfile        on;
+    <span class="c">#tcp_nopush     on;</span>
+
+    <span class="c">#keepalive_timeout  0;</span>
+    keepalive_timeout  65;
+
+    <span class="c">#gzip  on;</span>
+
+    upstream real_server_pool <span class="o">{</span>
+      <span class="c">#ip_hash;</span>
+      server  192.168.3.4:80 <span class="nv">weight</span><span class="o">=</span>1 <span class="nv">max_fails</span><span class="o">=</span>2 <span class="nv">fail_timeout</span><span class="o">=</span>30s;
+      server  192.168.3.5:80 <span class="nv">weight</span><span class="o">=</span>1 <span class="nv">max_fails</span><span class="o">=</span>2 <span class="nv">fail_timeout</span><span class="o">=</span>30s;
+      server  192.168.3.6:80 <span class="nv">weight</span><span class="o">=</span>1 <span class="nv">max_fails</span><span class="o">=</span>2 <span class="nv">fail_timeout</span><span class="o">=</span>30s;
+    <span class="o">}</span>
+    server <span class="o">{</span>
+        listen       192.168.3.2:80;             <span class="c"># 监听ip改为本地ip</span>
+        server_name  localhost;
+
+        <span class="c">#charset koi8-r;</span>
+
+        <span class="c">#access_log  logs/host.access.log  main;</span>
+
+        location / <span class="o">{</span>
+            <span class="c">#root   html;</span>
+            <span class="c">#index  index.html index.htm;</span>
+            proxy_next_upstream http_502 http_504 error timeout invalid_header;
+            proxy_pass http://real_server_pool;
+            proxy_set_header Host <span class="nv">$host</span>;
+            proxy_set_header X-Forwarded-For <span class="nv">$remote_addr</span>;
+        <span class="o">}</span>
+</pre></div>
+
+
+<p>然后启动主备nginx:</p>
+<div class="codehilite"><pre>/usr/local/nginx/sbin/nginx
+</pre></div>
+
+
+<h2>二、在主备服务器上部署keepalived</h2>
+<p>安装
+安装依赖:</p>
+<div class="codehilite"><pre>yum -y install kernel-devel              <span class="c"># 安装依赖</span>
+</pre></div>
+
+
+<p>开启路由转发:</p>
+<div class="codehilite"><pre>vi /etc/sysctl.conf
+net.ipv4.ip_forward <span class="o">=</span> 1 <span class="c"># 此参数改为1</span>
+sysctl -p <span class="c"># 使修改生效</span>
+</pre></div>
+
+
+<p>首先安装ipvs:</p>
+<div class="codehilite"><pre>ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  <span class="c"># ipvs需要内核文件,做一个软连接</span>
+<span class="c"># 下载</span>
+wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
+tar -zxvf ipvsadm-1.24.tar.gz
+<span class="nb">cd </span>ipvsadm-1.24
+make
+make install
+</pre></div>
+
+
+<p>然后安装keepalived</p>
+<div class="codehilite"><pre><span class="c"># 下载</span>
+wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
+tar -zxvf keepalived-1.1.19.tar.gz
+<span class="nb">cd </span>keepalived-1.1.19
+./configure --prefix<span class="o">=</span>/ <span class="se">\ </span>           <span class="c"># 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)</span>
+--mandir<span class="o">=</span>/usr/local/share/man/ <span class="se">\</span>
+--with-kernel-dir<span class="o">=</span>/usr/src/kernels/2.6.18-194.el5-i686/    <span class="c"># 需要内核的头文件</span>
+make &amp;amp;&amp;amp; make install
+</pre></div>
+
+
+<h3>配置keepalived</h3>
+<p>编辑主调度器配置文件/etc/keepalived/keepalived.conf ###</p>
+<div class="codehilite"><pre>global_defs <span class="o">{</span>
+   notification_email <span class="o">{</span>
+        cold_night@linuxzen.com             <span class="c"># 定义通知邮箱,有多个可以换行添加</span>
+<span class="o">}</span>
+   notification_email_from root@linuxzen.com# 定义发送邮件的邮箱
+   smtp_server www.linuxzen.com             <span class="c"># 定义发件服务器</span>
+   smtp_connect_timeout 30                  <span class="c"># 定义连接smtp服务器超时时间</span>
+   router_id LVS_DEVEL
+<span class="o">}</span>
+
+vrrp_instance VI_1 <span class="o">{</span>
+    state MASTER                   <span class="c"># 标示主备,备机上改为BACKUP</span>
+    interface eth0                 <span class="c"># HA监测的端口</span>
+    virtual_router_id 51           <span class="c"># 主备的virtual_router_id的值必须相同</span>
+    priority 100                   <span class="c"># 优先级,通常主要比备稍大</span>
+    advert_int 1                   <span class="c"># VRRP Multicast 广播周期秒数</span>
+    authentication <span class="o">{</span>               <span class="c"># 定义认证</span>
+        auth_type PASS             <span class="c"># 认证方式</span>
+        auth_pass 1111             <span class="c"># 认证口令字</span>
+    <span class="o">}</span>
+    virtual_ipaddress <span class="o">{</span>            <span class="c"># 定义vip</span>
+        192.168.3.253              <span class="c"># 多个可换行添加,一行一个</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+virtual_server 192.168.3.253 80 <span class="o">{</span>
+    delay_loop 6             <span class="c"># 每隔 6 秒查询 realserver 状态</span>
+    lb_algo rr
+    lb_kind NAT
+    nat_mask 255.255.255.0
+    persistence_timeout 50   <span class="c"># 同一IP 的连接50秒内被分配到同一台realserver</span>
+    protocol TCP             <span class="c"># 用TCP监测realserver的状态</span>
+
+    real_server 192.168.3.1 80 <span class="o">{</span>
+        weight 3                <span class="c"># 权重</span>
+        TCP_CHECK <span class="o">{</span>
+            connect_timeout 10  <span class="c"># 10秒无响应超时</span>
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port 80
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    real_server 192.168.3.2 80 <span class="o">{</span>
+        weight 3
+        TCP_CHECK <span class="o">{</span>
+            connect_timeout 3
+            delay_before_retry 3
+            connect_port 80
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>配置备用调度器的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:</p>
+<div class="codehilite"><pre>global_defs <span class="o">{</span>
+   notification_email <span class="o">{</span>
+        cold_night@linuxzen.com
+<span class="o">}</span>
+   notification_email_from root@linuxzen.com
+   smtp_server www.linuxzen.com
+   smtp_connect_timeout 30
+   router_id LVS_DEVEL
+<span class="o">}</span>
+
+vrrp_instance VI_1 <span class="o">{</span>
+    state BACKUP                   <span class="c"># 备机上改为BACKUP</span>
+    interface eth0
+    virtual_router_id 51           <span class="c"># 主备的virtual_router_id的值必须相同</span>
+    priority 99                    <span class="c"># 备用优先级小于主调度器</span>
+    advert_int 1
+    authentication <span class="o">{</span>
+        auth_type PASS
+        auth_pass 1111
+    <span class="o">}</span>
+    virtual_ipaddress <span class="o">{</span>
+        192.168.3.253
+    <span class="o">}</span>
+<span class="o">}</span>
+
+virtual_server 192.168.3.253 80 <span class="o">{</span>
+    delay_loop 6
+   lb_algo rr
+    lb_kind NAT
+    nat_mask 255.255.255.0
+    persistence_timeout 50
+    protocol TCP        
+
+    real_server 192.168.3.1 80 <span class="o">{</span>
+        weight 3
+        TCP_CHECK <span class="o">{</span>
+            connect_timeout 10
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port 80
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    real_server 192.168.3.2 80 <span class="o">{</span>
+        weight 3
+        TCP_CHECK <span class="o">{</span>
+            connect_timeout 3
+            delay_before_retry 3
+            connect_port 80
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>主备上启动keepalived:</p>
+<div class="codehilite"><pre>service keepalived start
+</pre></div>
+
+
+<h2>三、测试-----部署后端服务器</h2>
+<p>在后端服务器安装nginx,这里仅部署一台然后创建3个基于ip的虚拟主机供测试:
+绑定ip:</p>
+<div class="codehilite"><pre>ifconfig eth0:1 192.168.3.4/24
+ifconfig eth0:2 192.168.3.5/24
+ifconfig eth0:3 192.168.3.6/24
+</pre></div>
+
+
+<p>安装nginx后编辑配置文件,在http块里添加:</p>
+<div class="codehilite"><pre>http <span class="o">{</span>
+    server <span class="o">{</span>
+        listen  192.168.3.4:80;
+        server_name     192.168.3.4;
+
+        location / <span class="o">{</span>
+             root html/s1;
+             index index.html index.htm;
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    server <span class="o">{</span>
+        listen  192.168.3.5:80;
+        server_name     192.168.3.5;
+
+        location / <span class="o">{</span>
+            root html/s2;
+            index index.html index.htm;
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    server <span class="o">{</span>
+        listen 192.168.3.6:80;
+        server_name     192.168.3.5;
+
+        location / <span class="o">{</span>
+            root html/s3;
+            index index.html index.htm;
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>创建虚拟主机根目录,并创建不通的首页文档:</p>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/local/nginx/html/
+mkdir s1 s2 s3
+<span class="nb">echo </span>server1 &amp;gt; s1/index.html
+<span class="nb">echo </span>server2 &amp;gt; s2/index.html
+<span class="nb">echo </span>server3 &amp;gt; s3/index.html
+</pre></div>
+
+
+<p>启动nginx:</p>
+<div class="codehilite"><pre>/usr/local/nginx/sbin/nginx
+</pre></div>
+
+
+<p>打开浏览器访问<code>http://192.168.3.253</code></p>
+<p>刷新会看到显示不同的内容:server1,server2,server3(生产中的服务器应该是一样的)
+[gallery link="file" order="DESC"]
+现在停掉主调度器的keepalived</p>
+<div class="codehilite"><pre>pkill keepalived
+</pre></div>
+
+
+<p>查看备调度器的日志:</p>
+<div class="codehilite"><pre>cat /var/log/messages
+Feb 10 16:36:27 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> Transition to MASTER STATE
+Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> Entering MASTER STATE
+Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> setting protocol VIPs.
+Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> Sending gratuitous ARPs on eth0 <span class="k">for </span>192.168.3.253
+Feb 10 16:36:28 cfhost Keepalived_vrrp: Netlink reflector reports IP 192.168.3.253 added
+Feb 10 16:36:28 cfhost Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.253 added
+Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> Sending gratuitous ARPs on eth0 <span class="k">for </span>192.168.3.253
+</pre></div>
+
+
+<p>&nbsp;</p>
+<p>现在访问<code>http://192.168.3.253</code>依然可以访问.
+大家也看到了备机keepalived只有检测主机的keepalived停止的时候才会切换vip,而不是检测一台real server的某一服务(比如检测80端口的HTTP)切换vip,所以在nginx进程停止的时候,如果服务器没有宕机这时候就无法实现故障转移,所以我们编写一个检测nginx状态的脚本结合keepalived实现故障转移:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="c">#filename:nsc.sh</span>
+ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <span class="c"># 过滤nginx进程</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>               <span class="c"># 如果过滤有nginx进程会返回0则认为nginx存活</span>
+<span class="k">then</span>
+<span class="k">    </span>sleep 5                     <span class="c"># 使脚本进入休眠</span>
+<span class="k">else</span>
+<span class="c"># 如果nginx没有存活尝试启动nginx,如果失败则杀死keepalived的进程</span>
+    /usr/local/nginx/sbin/nginx
+    ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>
+    <span class="k">then</span>
+<span class="k">        </span>pkill keepalived
+    <span class="k">fi</span>
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>然后后台运行此脚本:</p>
+<div class="codehilite"><pre>nohup sh nsc.sh &amp;
+</pre></div>
+
+
+<p>这样就实现了群集的高可靠和高可用.</p></div>
+        <hr />
     </div>
+		
+            <div class="pagination">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <div class="bottom">
-        <div class="container">
-            <div class="about">
-                <h3>About me</h3>
-                <img alt="Me!" class="avatar"
-                     src="http://www.gravatar.com/avatar/d82fd064a3fd1b02c9e77a2d3197e33e?size=64">
-                <p>喜欢Linux和Python,用Vim编写程序,现在维护一个gtalk群,有兴趣的可以加入,使用xmpp帐号添加:clubot@vim-cn.com`</p>
-                                <p>
-                   You can contact me by emailing
-                   <a href="mailto:wh_linux@126.com">wh_linux@126.com</a>.
-                </p>
-                <p>
-                                                            <a href="https://github.com/coldnight"
-                       title="coldnight's Profile">fork me on GitHub</a>!
-                                    </p>
+    <li class="active"><a href="../tag/fan-xiang-dai-li.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>    
+ 
+  
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="../">Archives</a>
+                <li><a href="../tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/" rel="alternate">Atom feed</a></li>
+                            </ul>
             </div>
-        </div>
-    </div>
 
-    <footer>
-        <div class="container footer">
-            <span>Powered by <a href="http://docs.getpelican.com">
-                Pelican</a> using <a href="https://github.com/BYK/pelican-neat">
-                neat theme</a>.
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" /></a>本站所有作品均采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/">知识共享署名-相同方式共享 3.0 中国大陆许可协议</a>进行许可。
-            </span>
-            <nav>
-                <ul>
-                    <li><a href="archives.html" title="Archive"><strong>Archive</strong></a></li>
-                                        <li><a href="https://github.com/coldnight/coldnight.github.com" title="Source code">Source code</a></li>
-                                        <li>
-                    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-                    </li>
-                </ul>
-            </nav>
-                    </div>
-    </footer>
 
-    </body>
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="../category/linux.html">Linux</a></li>
+                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
+                                <li><a href="../category/mysql.html">MySQL</a></li>
+                                <li><a href="../category/python.html">Python</a></li>
+                                <li><a href="../category/vim.html">Vim</a></li>
+                                <li><a href="../category/shell.html">shell</a></li>
+                                <li><a href="../category/jian-kong.html">监控</a></li>
+                                <li><a href="../category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="..">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+ 
+</body>
 </html>
