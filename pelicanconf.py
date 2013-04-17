@@ -33,9 +33,11 @@ GITHUB_USERNAME = u'coldnight'
 
 GITHUB_BADGE = False
 
+GITHUB_URL = u"https://github.com/coldnight/coldnight.github.com"
+
 STATIC_PATHS = [u"upload", ]
 # Blogroll
-LINKS =  (('eleven', 'eleveni386.7axu.com'),)
+LINKS =  (('eleven', 'http://eleveni386.7axu.com'),)
 
 # Social widget
 #SOCIAL = (('You can add links in your config file', '#'),
