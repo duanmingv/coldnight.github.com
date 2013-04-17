@@ -11,6 +11,12 @@
     <!--[if lt IE 9]>
     <script src="{{ SITEURL }}/theme/html5.js"></script>
     <![endif]-->
+    {% if FEED_ATOM %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
+    {% endif %}
+    {% if FEED_RSS %}
+    <link href="{{ FEED_DOMAIN }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
+    {% endif %}
 
     <!-- Le styles -->
     <link href="{{ SITEURL }}/theme/bootstrap.min.css" rel="stylesheet">

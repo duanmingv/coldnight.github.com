@@ -8,6 +8,7 @@ SITEURL = u'http://www.linuxzen.com'
 SITE_SOURCE = u"https://github.com/coldnight/coldnight.github.com"
 SITE_TAGLINE = u"木秀于林"
 FEED_DOMAIN = u"http://www.linuxzen.com"
+FEED_ATOM = u"feeds/all.atom.xml"
 
 DISQUS_SITENAME = u"linuxzen"
 
