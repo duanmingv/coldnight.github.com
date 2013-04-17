@@ -1,6 +1,6 @@
 Title: python 使用pyxmpp2编写gtalk群
 Tags: 群,xmpp,pyxmpp2,python,gtalk,bot
-Category: Linux,Python
+Category: Python
 Date: 2012-10-29 14:48
 gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.
 

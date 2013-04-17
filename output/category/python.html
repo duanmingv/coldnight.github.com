@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>cold's world</title>
+    <title> Python | cold's world </title>
     <meta name="description" content="">
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -406,6 +406,37 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
  
 
     <div class='article'>
+        <a href="../python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h2>python 使用pyxmpp2编写gtalk群</h2></a>
+        <div class= "well small"> 一 29 十月 2012
+
+by <a class="url fn" href="../author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
+<p>其实主要原理就是机器人接收到消息后再将消息广播出去,从而达到群的效果.</p>
+<p>python有两个模块可以用来支持xmpp,分别是pyxmpp和pyxmpp2,之前也用pyxmpp写了一个,功能和兼容性不是很好,经常出现问题,所以又使用pyxmpp2重写了一遍,今天修复了一些bug,所以公布出来,大家可以下载测试,也可以加入我们使用gtalk进行群交流,</p>
+<p>我们的gtalk机器人是:<code>clubot@vim-cn.com</code></p>
+<p>喜欢gtalk,同时喜欢Linux/Python/Vim等爱好者的同学可以加进来交流</p>
+<p>如果对我们的代码比较感兴趣,可以访问github,我们将代码放在了github上:https://github.com/coldnight/clubot</p>
+<p>下面介绍一下安装:</p>
+<p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
+<p>下载源码:</p>
+<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
+</pre></div>
+
+
+<p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="../python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h2>Python将汉字按拼音排序--一个多音字引发的悲剧</h2></a>
         <div class= "well small"> 三 24 十月 2012
 
@@ -436,39 +467,6 @@ by <a class="url fn" href="../author/cold.html">cold</a>
     <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="../pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h2>用Python将绝对URL替换成相对URL</h2></a>
-        <div class= "well small"> 六 29 九月 2012
-
-by <a class="url fn" href="../author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
-<p>脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#</span>
-<span class="c"># author  : cold night</span>
-<span class="c"># email   : wh_linux@126.com</span>
-<span class="c">#</span>
-
-<span class="kn">import</span> <span class="nn">pymongo</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
-
-<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div> <a class="btn btn-info xsmall" href="../yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
@@ -509,7 +507,6 @@ by <a class="url fn" href="../author/cold.html">cold</a>
                 </li>
                 
                                 <li><a href="../category/linux.html">Linux</a></li>
-                                <li><a href="../category/linuxpython.html">Linux,Python</a></li>
                                 <li><a href="../category/mysql.html">MySQL</a></li>
                                 <li><a href="../category/python.html">Python</a></li>
                                 <li><a href="../category/vim.html">Vim</a></li>
