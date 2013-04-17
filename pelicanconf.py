@@ -20,19 +20,6 @@ THEME = "tuxlite_tbs"
 
 DEFAULT_CATEGORY = u"Python"
 
-
-AUTHOR_SHORTBIO = u"喜欢Linux和Python,用Vim编写程序,"\
-        u"现在维护一个gtalk群,有兴趣的可以加入,"\
-        u"使用xmpp帐号添加:clubot@vim-cn.com`"
-
-AUTHOR_EMAIL = u"wh_linux@126.com"
-
-AUTHOR_EMAIL_HASH = md5(AUTHOR_EMAIL).hexdigest()
-
-GITHUB_USERNAME = u'coldnight'
-
-GITHUB_BADGE = False
-
 GITHUB_URL = u"https://github.com/coldnight/coldnight.github.com"
 
 STATIC_PATHS = [u"upload", ]
