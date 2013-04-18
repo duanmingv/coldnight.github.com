@@ -61,6 +61,22 @@ pelican-quickstart
 
 
 &lt;p&gt;开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:&lt;code&gt;http://localhost:8000&lt;/code&gt;来访问这个测试服务器, 然后就可以欣赏到你的博客了&lt;/p&gt;
+&lt;h3&gt;创建一个页面&lt;/h3&gt;
+&lt;p&gt;这里以创建 &lt;code&gt;About&lt;/code&gt;页面为例&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;content&lt;/code&gt;目录创建&lt;code&gt;pages&lt;/code&gt;目录&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir content/pages
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后创建&lt;code&gt;About.md&lt;/code&gt;并填入下面内容&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;Title: About Me
+Date: 2013-04-18
+
+About me content
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;执行 &lt;code&gt;make html&lt;/code&gt; 生成html, 然后打开 &lt;code&gt;http://localhost:8000&lt;/code&gt;查看效果&lt;/p&gt;
 &lt;h2&gt;评论&lt;/h2&gt;
 &lt;p&gt;Pelican 使用&lt;code&gt;Disqus&lt;/code&gt;评论, 可以申请在&lt;a href="https://disqus.com/"&gt;Disqus&lt;/a&gt;上申请一个站点, 然后在&lt;code&gt;pelicanconf.py&lt;/code&gt;里添加或修改&lt;code&gt;DISQUS_SITENAME&lt;/code&gt;项:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;DISQUS_SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;quot;linuxzen&amp;quot;&lt;/span&gt;
@@ -152,7 +168,7 @@ pelican-quickstart
 
 &lt;p&gt;然后 Pelican 就会将 &lt;code&gt;img&lt;/code&gt;目录拷贝到 &lt;code&gt;output/static/&lt;/code&gt; 下&lt;/p&gt;
 &lt;h2&gt;部署&lt;/h2&gt;
-&lt;p&gt;上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 结合nginx或者apache等web服务器部署这里就不在详述&lt;/p&gt;</summary><category term="Python"></category><category term="静态"></category><category term="生成"></category><category term="Pelican"></category><category term="博客"></category></entry><entry><title>使用Tornado进行网络异步编程</title><link href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html" rel="alternate"></link><updated>2013-04-15T16:09:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-15:shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html</id><summary type="html">&lt;h2&gt;Tornado&lt;/h2&gt;
+&lt;p&gt;上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 上传到服务器并结合nginx或者apache等web服务器部署这里就不在详述&lt;/p&gt;</summary><category term="Python"></category><category term="静态"></category><category term="生成"></category><category term="Pelican"></category><category term="博客"></category></entry><entry><title>使用Tornado进行网络异步编程</title><link href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html" rel="alternate"></link><updated>2013-04-15T16:09:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-15:shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html</id><summary type="html">&lt;h2&gt;Tornado&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Tornado&lt;/code&gt; 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用&lt;code&gt;Tornado&lt;/code&gt;编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以&lt;code&gt;Tornado&lt;/code&gt;不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器&lt;/p&gt;
 &lt;p&gt;Torando 在Linux和FreeBSD上使用高效的异步I/O模型 &lt;code&gt;epoll&lt;/code&gt; 和&lt;code&gt;kqueue&lt;/code&gt;来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高&lt;/p&gt;
 &lt;h2&gt;接口&lt;/h2&gt;

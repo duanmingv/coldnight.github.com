@@ -66,6 +66,22 @@ make html
 ```
 开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:`http://localhost:8000`来访问这个测试服务器, 然后就可以欣赏到你的博客了
 
+### 创建一个页面
+这里以创建 `About`页面为例
+
+在`content`目录创建`pages`目录
+```bash
+mkdir content/pages
+```
+然后创建`About.md`并填入下面内容
+```bash
+Title: About Me
+Date: 2013-04-18
+
+About me content
+```
+执行 `make html` 生成html, 然后打开 `http://localhost:8000`查看效果
+
 
 ## 评论
 Pelican 使用`Disqus`评论, 可以申请在[Disqus](https://disqus.com/)上申请一个站点, 然后在`pelicanconf.py`里添加或修改`DISQUS_SITENAME`项:
@@ -155,4 +171,4 @@ make html
 然后 Pelican 就会将 `img`目录拷贝到 `output/static/` 下
 
 ## 部署
-上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 结合nginx或者apache等web服务器部署这里就不在详述
+上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 上传到服务器并结合nginx或者apache等web服务器部署这里就不在详述
