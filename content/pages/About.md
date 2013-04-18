@@ -13,4 +13,4 @@ Date: 2013-03-14
 ## 联系
 博主现在维护一个 `Gtalk`群, 喜欢使用`Gtalk`的用户可以添加 `clubot@vim-cn.com`交流
 
-也可以给我发送邮件: `wh_linux@126.com`
+也可以给我发送邮件: `d2hfbGludXhAMTI2LmNvbQ==`
