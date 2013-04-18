@@ -24,6 +24,8 @@ ARCHIVES_URL = "archives.html"
 
 GITHUB_URL = u"https://github.com/coldnight/coldnight.github.com"
 
+FLOW_CONTENT = u"""<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>"""
+
 STATIC_PATHS = [u"upload", ]
 # Blogroll
 LINKS =  (('eleven', 'http://eleveni386.7axu.com'),)
