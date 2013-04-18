@@ -25,7 +25,7 @@ git clone git://github.com/getpelican/pelican.git            # 代码
 cd pelican
 python setup.py install
 ```
-上面步骤完成后就安装Pelican
+上面步骤完成后就安装了Pelican
 
 ## 开始一个博客
 ```bash

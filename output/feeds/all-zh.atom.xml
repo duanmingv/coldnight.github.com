@@ -19,7 +19,7 @@ python setup.py install
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;上面步骤完成后就安装Pelican&lt;/p&gt;
+&lt;p&gt;上面步骤完成后就安装了Pelican&lt;/p&gt;
 &lt;h2&gt;开始一个博客&lt;/h2&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /path/to/your/blog
 &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blog
