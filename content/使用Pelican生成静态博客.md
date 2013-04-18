@@ -1,4 +1,4 @@
-Title: 使用Pelican打造博客静态生成系统
+Title: 使用Pelican博客静态生成系统
 Tags: 博客,Pelican, 静态, 迁移
 Date: 2013-3-14 15:12
 
