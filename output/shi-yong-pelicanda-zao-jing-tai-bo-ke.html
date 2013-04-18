@@ -140,7 +140,7 @@ About me content
 
 
 <p>执行 <code>make html</code> 生成html, 然后打开 <code>http://localhost:8000</code>查看效果</p>
-<h2>评论</h2>
+<h3>让Pelican支持评论</h3>
 <p>Pelican 使用<code>Disqus</code>评论, 可以申请在<a href="https://disqus.com/">Disqus</a>上申请一个站点, 然后在<code>pelicanconf.py</code>里添加或修改<code>DISQUS_SITENAME</code>项:</p>
 <div class="codehilite"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
 </pre></div>
@@ -152,7 +152,7 @@ About me content
 
 
 <p>浏览器打开 <code>http://localhost:8000</code>查看效果</p>
-<h2>主题</h2>
+<h3>更换主题</h3>
 <p>Pelican本身也提供了一些主题可供选择, 可以从github克隆下来</p>
 <div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
 </pre></div>
@@ -174,7 +174,7 @@ About me content
 
 
 <p>然后打开 <code>http://localhost:8000</code> 查看效果</p>
-<h2>插件</h2>
+<h3>使用插件</h3>
 <p>Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行</p>
 <div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
 </pre></div>
@@ -210,7 +210,7 @@ About me content
 
 
 <p>打开浏览器请求 <code>http://localhost:8000/sitemap.xml</code>即可看到生成的 Sitemap 了</p>
-<h2>静态文件</h2>
+<h3>拷贝静态文件</h3>
 <p>如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以<code>robots.txt</code> 为例, 在我们的 content/extra 下面我们放了一个定义好的 <code>robots.txt</code>文件, 在<code>pelicanconf.py</code>更改或添加 <code>FILES_TO_COPY</code>项:</p>
 <div class="codehilite"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
     <span class="p">(</span><span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span> <span class="s">&quot;robots.txt&quot;</span><span class="p">),</span>
@@ -219,6 +219,7 @@ About me content
 
 
 <p>这样在每次生成html的时候都会把 <code>content/extra</code>下的 <code>robots.txt</code> 拷贝到 <code>output</code>目录下</p>
+<h3>拷贝静态目录</h3>
 <p>如果是一个静目录怎么办? 我们可以在<code>pelicanconf.py</code>里添加或修改 <code>STATIC_PATHS</code>项, 比如我们有个<code>img</code>目录用来放文章所使用的图片, 我们可以在<code>pelicanconf.py</code>添加</p>
 <div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
 </pre></div>

@@ -83,7 +83,7 @@ About me content
 执行 `make html` 生成html, 然后打开 `http://localhost:8000`查看效果
 
 
-## 评论
+### 让Pelican支持评论
 Pelican 使用`Disqus`评论, 可以申请在[Disqus](https://disqus.com/)上申请一个站点, 然后在`pelicanconf.py`里添加或修改`DISQUS_SITENAME`项:
 ```python
 DISQUS_SITENAME = u"linuxzen"
@@ -94,7 +94,7 @@ make html
 ```
 浏览器打开 `http://localhost:8000`查看效果
 
-## 主题
+### 更换主题
 Pelican本身也提供了一些主题可供选择, 可以从github克隆下来
 ```bash
 git clone git://github.com/getpelican/pelican-themes.git     # 主题
@@ -114,7 +114,7 @@ make html
 ```
 然后打开 `http://localhost:8000` 查看效果
 
-## 插件
+### 使用插件
 Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行
 ```bash
 git clone git://github.com/getpelican/pelican-plugins.git    # 插件
@@ -150,7 +150,7 @@ make html
 ```
 打开浏览器请求 `http://localhost:8000/sitemap.xml`即可看到生成的 Sitemap 了
 
-## 静态文件
+### 拷贝静态文件
 如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以`robots.txt` 为例, 在我们的 content/extra 下面我们放了一个定义好的 `robots.txt`文件, 在`pelicanconf.py`更改或添加 `FILES_TO_COPY`项:
 ```python
 FILES_TO_COPY = (
@@ -159,6 +159,7 @@ FILES_TO_COPY = (
 ```
 这样在每次生成html的时候都会把 `content/extra`下的 `robots.txt` 拷贝到 `output`目录下
 
+### 拷贝静态目录
 如果是一个静目录怎么办? 我们可以在`pelicanconf.py`里添加或修改 `STATIC_PATHS`项, 比如我们有个`img`目录用来放文章所使用的图片, 我们可以在`pelicanconf.py`添加
 ```python
 STATIC_PATHS = [u"img"]

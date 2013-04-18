@@ -77,7 +77,7 @@ About me content
 
 
 &lt;p&gt;执行 &lt;code&gt;make html&lt;/code&gt; 生成html, 然后打开 &lt;code&gt;http://localhost:8000&lt;/code&gt;查看效果&lt;/p&gt;
-&lt;h2&gt;评论&lt;/h2&gt;
+&lt;h3&gt;让Pelican支持评论&lt;/h3&gt;
 &lt;p&gt;Pelican 使用&lt;code&gt;Disqus&lt;/code&gt;评论, 可以申请在&lt;a href="https://disqus.com/"&gt;Disqus&lt;/a&gt;上申请一个站点, 然后在&lt;code&gt;pelicanconf.py&lt;/code&gt;里添加或修改&lt;code&gt;DISQUS_SITENAME&lt;/code&gt;项:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;DISQUS_SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;quot;linuxzen&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -89,7 +89,7 @@ About me content
 
 
 &lt;p&gt;浏览器打开 &lt;code&gt;http://localhost:8000&lt;/code&gt;查看效果&lt;/p&gt;
-&lt;h2&gt;主题&lt;/h2&gt;
+&lt;h3&gt;更换主题&lt;/h3&gt;
 &lt;p&gt;Pelican本身也提供了一些主题可供选择, 可以从github克隆下来&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/getpelican/pelican-themes.git     &lt;span class="c"&gt;# 主题&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -111,7 +111,7 @@ About me content
 
 
 &lt;p&gt;然后打开 &lt;code&gt;http://localhost:8000&lt;/code&gt; 查看效果&lt;/p&gt;
-&lt;h2&gt;插件&lt;/h2&gt;
+&lt;h3&gt;使用插件&lt;/h3&gt;
 &lt;p&gt;Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/getpelican/pelican-plugins.git    &lt;span class="c"&gt;# 插件&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -147,7 +147,7 @@ About me content
 
 
 &lt;p&gt;打开浏览器请求 &lt;code&gt;http://localhost:8000/sitemap.xml&lt;/code&gt;即可看到生成的 Sitemap 了&lt;/p&gt;
-&lt;h2&gt;静态文件&lt;/h2&gt;
+&lt;h3&gt;拷贝静态文件&lt;/h3&gt;
 &lt;p&gt;如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以&lt;code&gt;robots.txt&lt;/code&gt; 为例, 在我们的 content/extra 下面我们放了一个定义好的 &lt;code&gt;robots.txt&lt;/code&gt;文件, 在&lt;code&gt;pelicanconf.py&lt;/code&gt;更改或添加 &lt;code&gt;FILES_TO_COPY&lt;/code&gt;项:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;FILES_TO_COPY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;extra/robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
@@ -156,6 +156,7 @@ About me content
 
 
 &lt;p&gt;这样在每次生成html的时候都会把 &lt;code&gt;content/extra&lt;/code&gt;下的 &lt;code&gt;robots.txt&lt;/code&gt; 拷贝到 &lt;code&gt;output&lt;/code&gt;目录下&lt;/p&gt;
+&lt;h3&gt;拷贝静态目录&lt;/h3&gt;
 &lt;p&gt;如果是一个静目录怎么办? 我们可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;里添加或修改 &lt;code&gt;STATIC_PATHS&lt;/code&gt;项, 比如我们有个&lt;code&gt;img&lt;/code&gt;目录用来放文章所使用的图片, 我们可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;添加&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;u&amp;quot;img&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
