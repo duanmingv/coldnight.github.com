@@ -58,8 +58,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h1>使用Tornado进行网络异步编程</h1></a>
-            一 15 四月 2013
+            <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h1>使用Pelican打造静态博客</h1></a>
+            四 18 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -68,7 +68,179 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
         </div>
         
-        <div class="highlight"><h2>Tornado</h2>
+        <div class="highlight"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间最近主体</p>
+<h2>介绍</h2>
+<p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
+<h2>安装</h2>
+<p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
+<h3>建立 virtualenv</h3>
+<div class="codehilite"><pre>virtualenv pelican      <span class="c"># 创建</span>
+<span class="nb">cd </span>pelican
+sh bin/activate            <span class="c"># 激活虚拟环境</span>
+</pre></div>
+
+
+<p>上面建立了一个Python的虚拟环境(这个命令不是内置可以使用 <code>easy_install virtualenv</code> 安装)</p>
+<h3>从github克隆最新代码安装Pelican</h3>
+<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican.git            <span class="c"># 代码</span>
+<span class="nb">cd </span>pelican
+python setup.py install
+</pre></div>
+
+
+<p>上面步骤完成后就安装Pelican</p>
+<h2>开始一个博客</h2>
+<div class="codehilite"><pre>mkdir /path/to/your/blog
+<span class="nb">cd</span> /path/to/your/blog
+pelican-quickstart
+</pre></div>
+
+
+<p>再问答一系列问题过后你的博客就建成的, 主要生成下列文件:</p>
+<div class="codehilite"><pre>.
+|-- content                <span class="c"># 所有文章放于此目录</span>
+|-- develop_server.sh      <span class="c"># 用于开启测试服务器</span>
+|-- Makefile               <span class="c"># 方便管理博客的Makefile</span>
+|-- output                 <span class="c"># 静态生成文件</span>
+|-- pelicanconf.py         <span class="c"># 配置文件</span>
+|-- publishconf.py         <span class="c"># 配置文件</span>
+</pre></div>
+
+
+<h3>写一篇文章</h3>
+<p>在 <code>content</code> 目录新建一个 <code>test.md</code>文件, 填入一下内容:</p>
+<div class="codehilite"><pre><span class="n">Title:</span> <span class="err">文章标题</span>
+<span class="n">Date:</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">18</span>
+<span class="n">Category:</span> <span class="err">文章类别</span>
+<span class="n">Tag:</span> <span class="err">标签</span><span class="mi">1</span><span class="p">,</span> <span class="err">标签</span><span class="mi">2</span>
+
+<span class="err">这里是内容</span>
+</pre></div>
+
+
+<p>然后执行:</p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>用以生成html</p>
+<p>然后执行</p>
+<div class="codehilite"><pre>./develop_server.sh start
+</pre></div>
+
+
+<p>开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:<code>http://localhost:8000</code>来访问这个测试服务器, 然后就可以欣赏到你的博客了</p>
+<h2>评论</h2>
+<p>Pelican 使用<code>Disqus</code>评论, 可以申请在<a href="https://disqus.com/">Disqus</a>上申请一个站点, 然后在<code>pelicanconf.py</code>里添加或修改<code>DISQUS_SITENAME</code>项:</p>
+<div class="codehilite"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
+</pre></div>
+
+
+<p>执行</p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>浏览器打开 <code>http://localhost:8000</code>查看效果</p>
+<h2>主题</h2>
+<p>Pelican本身也提供了一些主题可供选择, 可以从github克隆下来</p>
+<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
+</pre></div>
+
+
+<p>然后在里面找到想要的主题, 然后拷到博客项目当前目录, 这里已<code>neat</code>为例</p>
+<div class="codehilite"><pre>cp -r /path/to/themes/from/github/neat .
+</pre></div>
+
+
+<p>然后在 <code>pelicanconf.py</code> 配置文件里添加或修改 <code>THEME</code>项为 <code>neat</code></p>
+<div class="codehilite"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="s">&quot;neat&quot;</span>
+</pre></div>
+
+
+<p>重新执行 </p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>然后打开 <code>http://localhost:8000</code> 查看效果</p>
+<h2>插件</h2>
+<p>Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行</p>
+<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
+</pre></div>
+
+
+<p>现在我们博客目录就新添了一个 <code>pelican-plugins</code>目录, 我们已配置<code>sitemap</code>插件为例,
+<code>sitemap</code>插件可以生成 <code>sitemap.xml</code> 供搜索引擎使用</p>
+<p>在<code>pelicanconf.py</code>配置文件里加上如下项:</p>
+<div class="codehilite"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&quot;pelican-plugins&quot;</span>
+
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;sitemap&quot;</span><span class="p">]</span>
+
+<span class="c">## 配置sitemap 插件</span>
+<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="s">&quot;xml&quot;</span><span class="p">,</span>
+    <span class="s">&quot;priorities&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s">&quot;changefreqs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
+        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="s">&quot;daily&quot;</span><span class="p">,</span>
+        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>然后再执行</p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>打开浏览器请求 <code>http://localhost:8000/sitemap.xml</code>即可看到生成的 Sitemap 了</p>
+<h2>静态文件</h2>
+<p>如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以<code>robots.txt</code> 为例, 在我们的 content/extra 下面我们放了一个定义好的 <code>robots.txt</code>文件, 在<code>pelicanconf.py</code>更改或添加 <code>FILES_TO_COPY</code>项:</p>
+<div class="codehilite"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span> <span class="s">&quot;robots.txt&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>这样在每次生成html的时候都会把 <code>content/extra</code>下的 <code>robots.txt</code> 拷贝到 <code>output</code>目录下</p>
+<p>如果是一个静目录怎么办? 我们可以在<code>pelicanconf.py</code>里添加或修改 <code>STATIC_PATHS</code>项, 比如我们有个<code>img</code>目录用来放文章所使用的图片, 我们可以在<code>pelicanconf.py</code>添加</p>
+<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>然后执行 </p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>然后 Pelican 就会将 <code>img</code>目录拷贝到 <code>output/static/</code> 下</p>
+<h2>部署</h2>
+<p>上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 结合nginx或者apache等web服务器部署这里就不在详述</p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h2>使用Tornado进行网络异步编程</h2></a>
+        <div class= "well small"> 一 15 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>Tornado</h2>
 <p><code>Tornado</code> 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用<code>Tornado</code>编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以<code>Tornado</code>不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器</p>
 <p>Torando 在Linux和FreeBSD上使用高效的异步I/O模型 <code>epoll</code> 和<code>kqueue</code>来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高</p>
 <h2>接口</h2>
@@ -77,129 +249,9 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>add_handler</h3>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-</pre></div>
-
-
-<p><code>add_handler</code>用于添加socket到主循环中, 接受三个参数:
-<em> fd 是socket的文件描述符
-</em> handler 是处理此socket的 callback函数
-* events 是此socket注册的事件</p>
-<h3>update_handler</h3>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">update_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">modify</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-</pre></div>
-
-
-<p><code>update_handler</code>用于更新住循环中已存在的socket响应事件, 接受两个参数:
-<em> fd 是socket对应的文件描述符
-</em> events 是注册的新事件</p>
-<h3>remove_handler</h3>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">remove_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_events</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">gen_log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Error deleting fd from IOLoop&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-
-
-<p><code>remove_handler</code>用于移除主循环中已存在的socket</p>
-<h2>事件</h2>
-<p><code>tornado.ioloop.IOLoop</code>同时提供了4种响应事件:
-<em> <code>tornado.ioloop.IOLoop.NONE</code>    无事件
-</em> <code>tornado.ioloop.IOLoop.READ</code>    读事件
-<em> <code>tornado.ioloop.IOLoop.WRITE</code>   写事件
-</em> <code>tornado.ioloop.IOLoop.ERROR</code>   发生错误的事件</p>
-<h2>实例</h2>
-<p>根据上面的接口和事件我们就可以写出一个简单的 echo server</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/04/15 15:08:51</span>
-<span class="c">#   Desc    :   Tornado Echo Server</span>
-<span class="c">#   HOME    :   http://www.linuxzen.com</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">Queue</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-
-<span class="kn">from</span> <span class="nn">tornado.ioloop</span> <span class="kn">import</span> <span class="n">IOLoop</span>
-
-<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>              <span class="c"># 将socket设置为非阻塞</span>
-
-<span class="n">server_address</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
-
-<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">server_address</span><span class="p">)</span>
-<span class="n">sock</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="n">fd_map</span> <span class="o">=</span> <span class="p">{}</span>              <span class="c"># 文件描述符到socket的映射</span>
-<span class="n">message_queue_map</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c"># socket到消息队列的映射</span>
-
-<span class="n">fd</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
-<span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">sock</span>
-
-<span class="n">ioloop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">handle_client</span><span class="p">(</span><span class="n">cli_addr</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;     received &#39;</span><span class="si">%s</span><span class="s">&#39; from </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cli_addr</span><span class="p">)</span>
-            <span class="c"># 接收到消息更改事件为写, 用于发送数据到对端</span>
-            <span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
-            <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;     closing </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span>
-            <span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-            <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="k">del</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
-
-    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">next_msg</span> <span class="o">=</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
-        <span class="k">except</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> queue empty&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span>
-            <span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&#39;sending &quot;</span><span class="si">%s</span><span class="s">&quot; to </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">next_msg</span><span class="p">,</span> <span class="n">cli_addr</span><span class="p">)</span>
-            <span class="n">s</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">next_msg</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot; exception on </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span>
-        <span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">del</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">handle_server</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
-        <span class="n">conn</span><span class="p">,</span> <span class="n">cli_addr</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-        <span class="k">print</span> <span class="s">&quot;     connection </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">cli_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">conn</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">conn_fd</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
-        <span class="n">fd_map</span><span class="p">[</span><span class="n">conn_fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">conn</span>
-        <span class="n">handle</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">handle_client</span><span class="p">,</span> <span class="n">cli_addr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>   <span class="c"># 将cli_addr作为第一个参数</span>
-        <span class="c"># 将连接和handle注册为读事件加入到 tornado ioloop</span>
-        <span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">conn_fd</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
-        <span class="n">message_queue_map</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>   <span class="c"># 创建对应的消息队列</span>
-
-<span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">handle_server</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
-
-<span class="n">ioloop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<p>上面代码就建立了一个非阻塞的高效的异步的echo server</p></div>
-        <hr />
-    </div>
-		
+    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">read more</a></div>
+    </div>	
+				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>

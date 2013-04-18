@@ -1,5 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-15T16:09:00+08:00</updated><entry><title>使用Tornado进行网络异步编程</title><link href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html" rel="alternate"></link><updated>2013-04-15T16:09:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-15:shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html</id><summary type="html">&lt;h2&gt;Tornado&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-18T09:40:00+08:00</updated><entry><title>使用Pelican打造静态博客</title><link href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html" rel="alternate"></link><updated>2013-04-18T09:40:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-18:shi-yong-pelicanda-zao-jing-tai-bo-ke.html</id><summary type="html">&lt;p&gt;前面有文章介绍本站采用了&lt;code&gt;Python&lt;/code&gt;编写的&lt;code&gt;Pelican&lt;/code&gt;静态生成博客系统, 之所以没有使用当前很火的&lt;code&gt;Jekyll&lt;/code&gt;, 是因为它是&lt;code&gt;Ruby&lt;/code&gt;编写, 而我又对&lt;code&gt;Ruby&lt;/code&gt;没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间最近主体&lt;/p&gt;
+&lt;h2&gt;介绍&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Pelican&lt;/code&gt;是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用&lt;code&gt;MarkDown&lt;/code&gt; &lt;code&gt;reStructuredText&lt;/code&gt; 和 &lt;code&gt;AsiiDoc&lt;/code&gt; 的格式来抒写, 同时使用 &lt;code&gt;Disqus&lt;/code&gt;评论系统, 支持 &lt;code&gt;RSS&lt;/code&gt;和&lt;code&gt;Atom&lt;/code&gt;输出, 插件, 主题, 代码高亮等功能, 采用&lt;code&gt;Jajin2&lt;/code&gt;模板引擎, 可以很容易的更改模板&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;可以从&lt;code&gt;github&lt;/code&gt;克隆最新的代码安装, 并且建议在&lt;code&gt;virtualenv&lt;/code&gt;下使用:&lt;/p&gt;
+&lt;h3&gt;建立 virtualenv&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;virtualenv pelican      &lt;span class="c"&gt;# 创建&lt;/span&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;pelican
+sh bin/activate            &lt;span class="c"&gt;# 激活虚拟环境&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面建立了一个Python的虚拟环境(这个命令不是内置可以使用 &lt;code&gt;easy_install virtualenv&lt;/code&gt; 安装)&lt;/p&gt;
+&lt;h3&gt;从github克隆最新代码安装Pelican&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/getpelican/pelican.git            &lt;span class="c"&gt;# 代码&lt;/span&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;pelican
+python setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面步骤完成后就安装Pelican&lt;/p&gt;
+&lt;h2&gt;开始一个博客&lt;/h2&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /path/to/your/blog
+&lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blog
+pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;再问答一系列问题过后你的博客就建成的, 主要生成下列文件:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;.
+|-- content                &lt;span class="c"&gt;# 所有文章放于此目录&lt;/span&gt;
+|-- develop_server.sh      &lt;span class="c"&gt;# 用于开启测试服务器&lt;/span&gt;
+|-- Makefile               &lt;span class="c"&gt;# 方便管理博客的Makefile&lt;/span&gt;
+|-- output                 &lt;span class="c"&gt;# 静态生成文件&lt;/span&gt;
+|-- pelicanconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
+|-- publishconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;写一篇文章&lt;/h3&gt;
+&lt;p&gt;在 &lt;code&gt;content&lt;/code&gt; 目录新建一个 &lt;code&gt;test.md&lt;/code&gt;文件, 填入一下内容:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Title:&lt;/span&gt; &lt;span class="err"&gt;文章标题&lt;/span&gt;
+&lt;span class="n"&gt;Date:&lt;/span&gt; &lt;span class="mi"&gt;2013&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;
+&lt;span class="n"&gt;Category:&lt;/span&gt; &lt;span class="err"&gt;文章类别&lt;/span&gt;
+&lt;span class="n"&gt;Tag:&lt;/span&gt; &lt;span class="err"&gt;标签&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;标签&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+
+&lt;span class="err"&gt;这里是内容&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后执行:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;用以生成html&lt;/p&gt;
+&lt;p&gt;然后执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;./develop_server.sh start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:&lt;code&gt;http://localhost:8000&lt;/code&gt;来访问这个测试服务器, 然后就可以欣赏到你的博客了&lt;/p&gt;
+&lt;h2&gt;评论&lt;/h2&gt;
+&lt;p&gt;Pelican 使用&lt;code&gt;Disqus&lt;/code&gt;评论, 可以申请在&lt;a href="https://disqus.com/"&gt;Disqus&lt;/a&gt;上申请一个站点, 然后在&lt;code&gt;pelicanconf.py&lt;/code&gt;里添加或修改&lt;code&gt;DISQUS_SITENAME&lt;/code&gt;项:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;DISQUS_SITENAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;quot;linuxzen&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;浏览器打开 &lt;code&gt;http://localhost:8000&lt;/code&gt;查看效果&lt;/p&gt;
+&lt;h2&gt;主题&lt;/h2&gt;
+&lt;p&gt;Pelican本身也提供了一些主题可供选择, 可以从github克隆下来&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/getpelican/pelican-themes.git     &lt;span class="c"&gt;# 主题&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后在里面找到想要的主题, 然后拷到博客项目当前目录, 这里已&lt;code&gt;neat&lt;/code&gt;为例&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cp -r /path/to/themes/from/github/neat .
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后在 &lt;code&gt;pelicanconf.py&lt;/code&gt; 配置文件里添加或修改 &lt;code&gt;THEME&lt;/code&gt;项为 &lt;code&gt;neat&lt;/code&gt;&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;neat&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重新执行 &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后打开 &lt;code&gt;http://localhost:8000&lt;/code&gt; 查看效果&lt;/p&gt;
+&lt;h2&gt;插件&lt;/h2&gt;
+&lt;p&gt;Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/getpelican/pelican-plugins.git    &lt;span class="c"&gt;# 插件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;现在我们博客目录就新添了一个 &lt;code&gt;pelican-plugins&lt;/code&gt;目录, 我们已配置&lt;code&gt;sitemap&lt;/code&gt;插件为例,
+&lt;code&gt;sitemap&lt;/code&gt;插件可以生成 &lt;code&gt;sitemap.xml&lt;/code&gt; 供搜索引擎使用&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;pelicanconf.py&lt;/code&gt;配置文件里加上如下项:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;PLUGIN_PATH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;u&amp;quot;pelican-plugins&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;PLUGINS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;sitemap&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;## 配置sitemap 插件&lt;/span&gt;
+&lt;span class="n"&gt;SITEMAP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;format&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;xml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;priorities&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;articles&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;indexes&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;changefreqs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;articles&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;monthly&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;indexes&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;daily&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;pages&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;monthly&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后再执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;打开浏览器请求 &lt;code&gt;http://localhost:8000/sitemap.xml&lt;/code&gt;即可看到生成的 Sitemap 了&lt;/p&gt;
+&lt;h2&gt;静态文件&lt;/h2&gt;
+&lt;p&gt;如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以&lt;code&gt;robots.txt&lt;/code&gt; 为例, 在我们的 content/extra 下面我们放了一个定义好的 &lt;code&gt;robots.txt&lt;/code&gt;文件, 在&lt;code&gt;pelicanconf.py&lt;/code&gt;更改或添加 &lt;code&gt;FILES_TO_COPY&lt;/code&gt;项:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;FILES_TO_COPY&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;extra/robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样在每次生成html的时候都会把 &lt;code&gt;content/extra&lt;/code&gt;下的 &lt;code&gt;robots.txt&lt;/code&gt; 拷贝到 &lt;code&gt;output&lt;/code&gt;目录下&lt;/p&gt;
+&lt;p&gt;如果是一个静目录怎么办? 我们可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;里添加或修改 &lt;code&gt;STATIC_PATHS&lt;/code&gt;项, 比如我们有个&lt;code&gt;img&lt;/code&gt;目录用来放文章所使用的图片, 我们可以在&lt;code&gt;pelicanconf.py&lt;/code&gt;添加&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;u&amp;quot;img&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后执行 &lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后 Pelican 就会将 &lt;code&gt;img&lt;/code&gt;目录拷贝到 &lt;code&gt;output/static/&lt;/code&gt; 下&lt;/p&gt;
+&lt;h2&gt;部署&lt;/h2&gt;
+&lt;p&gt;上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 结合nginx或者apache等web服务器部署这里就不在详述&lt;/p&gt;</summary><category term="Python"></category><category term="静态"></category><category term="生成"></category><category term="Pelican"></category><category term="博客"></category></entry><entry><title>使用Tornado进行网络异步编程</title><link href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html" rel="alternate"></link><updated>2013-04-15T16:09:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-15:shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html</id><summary type="html">&lt;h2&gt;Tornado&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Tornado&lt;/code&gt; 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用&lt;code&gt;Tornado&lt;/code&gt;编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以&lt;code&gt;Tornado&lt;/code&gt;不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器&lt;/p&gt;
 &lt;p&gt;Torando 在Linux和FreeBSD上使用高效的异步I/O模型 &lt;code&gt;epoll&lt;/code&gt; 和&lt;code&gt;kqueue&lt;/code&gt;来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高&lt;/p&gt;
 &lt;h2&gt;接口&lt;/h2&gt;

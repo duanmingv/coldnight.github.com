@@ -58,8 +58,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html"><h1>博客使用Pelican静态生成系统</h1></a>
-            四 14 三月 2013
+            <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h1>使用Pelican打造静态博客</h1></a>
+            四 18 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -68,7 +68,179 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
         </div>
         
-        <div class="highlight"><h1>介绍</h1>
+        <div class="highlight"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间最近主体</p>
+<h2>介绍</h2>
+<p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
+<h2>安装</h2>
+<p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
+<h3>建立 virtualenv</h3>
+<div class="codehilite"><pre>virtualenv pelican      <span class="c"># 创建</span>
+<span class="nb">cd </span>pelican
+sh bin/activate            <span class="c"># 激活虚拟环境</span>
+</pre></div>
+
+
+<p>上面建立了一个Python的虚拟环境(这个命令不是内置可以使用 <code>easy_install virtualenv</code> 安装)</p>
+<h3>从github克隆最新代码安装Pelican</h3>
+<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican.git            <span class="c"># 代码</span>
+<span class="nb">cd </span>pelican
+python setup.py install
+</pre></div>
+
+
+<p>上面步骤完成后就安装Pelican</p>
+<h2>开始一个博客</h2>
+<div class="codehilite"><pre>mkdir /path/to/your/blog
+<span class="nb">cd</span> /path/to/your/blog
+pelican-quickstart
+</pre></div>
+
+
+<p>再问答一系列问题过后你的博客就建成的, 主要生成下列文件:</p>
+<div class="codehilite"><pre>.
+|-- content                <span class="c"># 所有文章放于此目录</span>
+|-- develop_server.sh      <span class="c"># 用于开启测试服务器</span>
+|-- Makefile               <span class="c"># 方便管理博客的Makefile</span>
+|-- output                 <span class="c"># 静态生成文件</span>
+|-- pelicanconf.py         <span class="c"># 配置文件</span>
+|-- publishconf.py         <span class="c"># 配置文件</span>
+</pre></div>
+
+
+<h3>写一篇文章</h3>
+<p>在 <code>content</code> 目录新建一个 <code>test.md</code>文件, 填入一下内容:</p>
+<div class="codehilite"><pre><span class="n">Title:</span> <span class="err">文章标题</span>
+<span class="n">Date:</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">18</span>
+<span class="n">Category:</span> <span class="err">文章类别</span>
+<span class="n">Tag:</span> <span class="err">标签</span><span class="mi">1</span><span class="p">,</span> <span class="err">标签</span><span class="mi">2</span>
+
+<span class="err">这里是内容</span>
+</pre></div>
+
+
+<p>然后执行:</p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>用以生成html</p>
+<p>然后执行</p>
+<div class="codehilite"><pre>./develop_server.sh start
+</pre></div>
+
+
+<p>开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:<code>http://localhost:8000</code>来访问这个测试服务器, 然后就可以欣赏到你的博客了</p>
+<h2>评论</h2>
+<p>Pelican 使用<code>Disqus</code>评论, 可以申请在<a href="https://disqus.com/">Disqus</a>上申请一个站点, 然后在<code>pelicanconf.py</code>里添加或修改<code>DISQUS_SITENAME</code>项:</p>
+<div class="codehilite"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
+</pre></div>
+
+
+<p>执行</p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>浏览器打开 <code>http://localhost:8000</code>查看效果</p>
+<h2>主题</h2>
+<p>Pelican本身也提供了一些主题可供选择, 可以从github克隆下来</p>
+<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
+</pre></div>
+
+
+<p>然后在里面找到想要的主题, 然后拷到博客项目当前目录, 这里已<code>neat</code>为例</p>
+<div class="codehilite"><pre>cp -r /path/to/themes/from/github/neat .
+</pre></div>
+
+
+<p>然后在 <code>pelicanconf.py</code> 配置文件里添加或修改 <code>THEME</code>项为 <code>neat</code></p>
+<div class="codehilite"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="s">&quot;neat&quot;</span>
+</pre></div>
+
+
+<p>重新执行 </p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>然后打开 <code>http://localhost:8000</code> 查看效果</p>
+<h2>插件</h2>
+<p>Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行</p>
+<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
+</pre></div>
+
+
+<p>现在我们博客目录就新添了一个 <code>pelican-plugins</code>目录, 我们已配置<code>sitemap</code>插件为例,
+<code>sitemap</code>插件可以生成 <code>sitemap.xml</code> 供搜索引擎使用</p>
+<p>在<code>pelicanconf.py</code>配置文件里加上如下项:</p>
+<div class="codehilite"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&quot;pelican-plugins&quot;</span>
+
+<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;sitemap&quot;</span><span class="p">]</span>
+
+<span class="c">## 配置sitemap 插件</span>
+<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="s">&quot;xml&quot;</span><span class="p">,</span>
+    <span class="s">&quot;priorities&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s">&quot;changefreqs&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
+        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="s">&quot;daily&quot;</span><span class="p">,</span>
+        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>然后再执行</p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>打开浏览器请求 <code>http://localhost:8000/sitemap.xml</code>即可看到生成的 Sitemap 了</p>
+<h2>静态文件</h2>
+<p>如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以<code>robots.txt</code> 为例, 在我们的 content/extra 下面我们放了一个定义好的 <code>robots.txt</code>文件, 在<code>pelicanconf.py</code>更改或添加 <code>FILES_TO_COPY</code>项:</p>
+<div class="codehilite"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span> <span class="s">&quot;robots.txt&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>这样在每次生成html的时候都会把 <code>content/extra</code>下的 <code>robots.txt</code> 拷贝到 <code>output</code>目录下</p>
+<p>如果是一个静目录怎么办? 我们可以在<code>pelicanconf.py</code>里添加或修改 <code>STATIC_PATHS</code>项, 比如我们有个<code>img</code>目录用来放文章所使用的图片, 我们可以在<code>pelicanconf.py</code>添加</p>
+<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>然后执行 </p>
+<div class="codehilite"><pre>make html
+</pre></div>
+
+
+<p>然后 Pelican 就会将 <code>img</code>目录拷贝到 <code>output/static/</code> 下</p>
+<h2>部署</h2>
+<p>上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 结合nginx或者apache等web服务器部署这里就不在详述</p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html"><h2>博客使用Pelican静态生成系统</h2></a>
+        <div class= "well small"> 四 14 三月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h1>介绍</h1>
 <p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
 <h1>安装</h1>
 <p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
@@ -77,25 +249,9 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h1>使用</h1>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
 <div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean  <span class="c"># 删除output</span>
-</pre></div>
-
-
-<h2>技巧</h2>
-<p>我是将生成的html通过nginx来打开(Nginx配置就很简单了, 这里就不做介绍), 那么如何确保更新呢?我将整个博客上传到github, 这样随时随地可以<code>clone</code>下来进行更改然后<code>push</code>上去,在服务器我通过crontab来定时更新html</p>
-<div class="codehilite"><pre>crontab -e
-</pre></div>
-
-
-<p>添加如下内容</p>
-<div class="codehilite"><pre>*/5 * * * * <span class="nb">cd</span> /path/to/your/blogsource/ <span class="o">&amp;&amp;</span> git pull &amp;&gt; /dev/null
-</pre></div>
-
-
-<p>这样就可以没5分钟更新一次</p></div>
-        <hr />
-    </div>
-		
+make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html">read more</a></div>
+    </div>	
+				
     
  
         

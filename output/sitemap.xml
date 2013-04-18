@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html</loc>
+<lastmod>2013-04-18T09:40:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -488,1582 +495,1589 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/linux.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/category/mysql.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/category/python.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/category/vim.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/category/shell.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/category/jian-kong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/category/fu-zai-jun-heng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/scrot.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cha-jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yi-bu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cao-zuo-xi-tong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/nosql.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/webpy.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xmpp.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xu-ni-ji.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mysqlfu-wu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/shbang-line.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/lnmp.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/restorecon.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bian-yi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/evince.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/session.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/google.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/shi-shi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/nat.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mysql.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pyxmpp2.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/wu-fa-bao-cun.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/find.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pin-yin.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/web.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cut.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xi-lie.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/gentoo.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jie-qu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fang-huo-qiang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bo-ke.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ti-huan.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/blog.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/dict.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/apparmor.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/san-mu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fu-wu-qi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zi-dian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/iptables.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/authorized_keys.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xiang-dui.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mkisofs.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/createrepo.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mongoengine.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ju-yu-wang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/nginx.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/sshshang-chuan-xia-zai.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ssh.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/sorted.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/quan-xian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/you-hua.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ding-shi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zi-fu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ji-qiao.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/centos.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/webqq.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zheng-shu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/list.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/wang-luo.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/compsxml.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/clubot.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fa-xing-ban.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/debug.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mycnf.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ding-zhi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/you-jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fan-xiang-dai-li.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jue-dui.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zhuo-mian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fan-yi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/reduce.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/sheng-cheng.html</loc>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/kong-bai.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/sed.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xian-jing.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/an-zhuang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/virtualenv.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/gtalk.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/guan-li.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/statusline.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xiang-mu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/keepalived.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/rz.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zhong-duan.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/utf8.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pylibmc.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pai-xu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/uwsgi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ji-cheng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pei-zhi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/wen-jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jing-tai.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/gnome-do.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/shang-wang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/nginxren-zheng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/guake.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/kai-fa.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cookie.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yi-zi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cao-zuo.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/gao-liang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/gao-ke-yong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/beaker.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fen-ge.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xmpp.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yi-zi-pai-xu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bot.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/filter.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zhong-fu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bian-ma-xin-xi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yum.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fu-zai-jun-heng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/heartbeat.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/qian-yi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pdb.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/lambda.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jie-tu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/markdown.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bian-yi-can-shu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/shi-li.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jian-ce.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/vim.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/vip.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pygments.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xie-zai.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bao.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/piao-liang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pxe.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/or.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/log.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/qun-ji.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yin-yong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/rewrite.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bundle.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/nginxzhi-chi-cgi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/wang-qia-qi-dong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/vmware.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ubuntu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/fu-jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/502.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/vundle.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zhi-chi-mysql.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/shell.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/guan-li-qi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cc.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pelican.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yong-hu.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/lrzsz.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/else.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/chuang-ti.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zhuang-shi-qi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zi-dong-hua.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/you-ya.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/shuang-ji.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bian-cheng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ping-pu-shi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cacti.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/lvs.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yan-zheng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/tmux.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/unix.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xin-tiao.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/duan-dian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pymail.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bian-geng.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/and.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zi-dong-pei-zhi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/spawn-fcgi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/awesome.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/powerline.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/vlog.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/nagios.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/tian-jia.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zi-dong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/terminator.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/jian-kong.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mail.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/diao-shi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/if.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/duo-yin-zi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/qun.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/dan-xing.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/memcached.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/epoll.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/cfengine.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ri-zhi.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/pymongo.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xiang-jia.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/map.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/gao-xiao.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/tornado.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mongodb.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ntop.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ke-jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/wang-luo-an-zhuang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ming-ling.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/xiang-jie.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/awk.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/liu-liang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/zi-fu-chuan.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/huan-cun.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/wu-ren-zhi-shou.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/php.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/man.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/sz.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/ce-lue.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/url.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/dai-ma.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/lie-biao.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/mysqlpei-zhi-wen-jian.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bottle.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/linux.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/qing-liang.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bad-gateway.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/bei-fen.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tag/yuan-ma-bao.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2013-04-18T09:39:04-00:00</lastmod>
+<lastmod>2013-04-18T10:35:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

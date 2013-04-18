@@ -58,6 +58,43 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html"><h2>分享Vim两种好用的功能:状态行和空白字符可见</h2></a>
+        <div class= "well small"> 六 29 九月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>马上要放假了,没事折腾了一下Vim发现了两个非常棒的功能,一个是给Vim添加一个状态栏,一个是可以在编辑的时候显示空白,</p>
+<p>我的状态栏显示了:
+正在编辑的文件名,
+选项
+是Git显示git分支(需要fugitive插件)
+文件类型
+当前目录
+当前字符的ASCII和16进制码
+右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
+fugitive 可以在git获得:</p>
+<div class="codehilite"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">http:</span><span class="sr">//gi</span><span class="n">thub</span><span class="o">.</span><span class="n">com</span><span class="sr">/tpope/</span><span class="n">vim</span><span class="o">-</span><span class="n">fugitive</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+
+
+<p>将plugin目录下的fugitive.vim复制到~/.vim/plugin下
+在~/.vimrc添加如下内容</p>
+<div class="codehilite"><pre><span class="k">if</span> has<span class="p">(</span><span class="s1">&#39;statusline&#39;</span><span class="p">)</span>
+    <span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>%<span class="p">&lt;</span>%<span class="k">f</span>\   <span class="c">&quot; 文件名</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="k">w</span>%<span class="k">h</span>%<span class="k">m</span>%<span class="k">r ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h2>用Python将绝对URL替换成相对URL</h2></a>
         <div class= "well small"> 六 29 九月 2012
 
@@ -356,37 +393,6 @@ import pdb; pdb.set_trace()
 <li>c 继续到下一个断点,没有则执行程序</li>
 <li>r 执行到函数返回前</li>
 </ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html"><h2>ssh证书登录错误</h2></a>
-        <div class= "well small"> 五 10 八月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><h2>错误描述</h2>
-
-<p>使用证书ssh链接的时候提示下面错误信息
-<h2><code>Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).</code>
-可能原因</h2>
-authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkeys 改成600
-<h2>解决</h2>
-查看日志:
-<code>cat /var/log/secure</code>
-发现
-<code>Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys</code>
-查看.ssh权限为775
-.ssh 手动创建的时候是775权限,改成755权限后正常
-<code># chmod ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

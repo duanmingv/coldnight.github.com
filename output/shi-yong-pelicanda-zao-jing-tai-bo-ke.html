@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title> 静态 | cold's world </title>
+    <title> 使用Pelican打造静态博客 | cold's world </title>
     <meta name="description" content="">
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,23 +51,17 @@
     <div class="row">
 
         <div class="span9">
-                
-
-        
-
-
-    <div class='article'>
+            <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h1>使用Pelican打造静态博客</h1></a>
+            <h1>使用Pelican打造静态博客</h1>
             四 18 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 
- 
         </div>
-        
+	
         <div class="highlight"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间最近主体</p>
 <h2>介绍</h2>
 <p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
@@ -222,48 +216,23 @@ pelican-quickstart
 <p>然后 Pelican 就会将 <code>img</code>目录拷贝到 <code>output/static/</code> 下</p>
 <h2>部署</h2>
 <p>上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 结合nginx或者apache等web服务器部署这里就不在详述</p></div>
-        <hr />
+	
+        <hr>
+    	   
+        <h2>Comments</h2>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'linuxzen'; 
+    var disqus_title = '使用Pelican打造静态博客';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-		
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html"><h2>博客使用Pelican静态生成系统</h2></a>
-        <div class= "well small"> 四 14 三月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><h1>介绍</h1>
-<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
-<h1>安装</h1>
-<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
-<h2>模板</h2>
-<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
-<h1>使用</h1>
-<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
-<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bo-ke-shi-yong-pelicanjing-tai-sheng-cheng-xi-tong.html">read more</a></div>
-    </div>	
-				
-            <div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-
-    <li class="active"><a href="http://www.linuxzen.com/tag/jing-tai.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>    
- 
-  
         </div>
         
         <div class="span3">
