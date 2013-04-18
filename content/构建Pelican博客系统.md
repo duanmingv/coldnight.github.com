@@ -3,7 +3,7 @@ Date: 2013-04-18 09:40
 Category: Python
 Tags: Python, 静态, 生成, Pelican, 博客
 
-前面有文章介绍本站采用了`Python`编写的`Pelican`静态生成博客系统, 之所以没有使用当前很火的`Jekyll`, 是因为它是`Ruby`编写, 而我又对`Ruby`没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间最近主体
+前面有文章介绍本站采用了`Python`编写的`Pelican`静态生成博客系统, 之所以没有使用当前很火的`Jekyll`, 是因为它是`Ruby`编写, 而我又对`Ruby`没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来
 
 ## 介绍
 `Pelican`是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用`MarkDown` `reStructuredText` 和 `AsiiDoc` 的格式来抒写, 同时使用 `Disqus`评论系统, 支持 `RSS`和`Atom`输出, 插件, 主题, 代码高亮等功能, 采用`Jajin2`模板引擎, 可以很容易的更改模板
