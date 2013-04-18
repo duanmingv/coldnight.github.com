@@ -33,7 +33,7 @@ mkdir /path/to/your/blog
 cd /path/to/your/blog
 pelican-quickstart
 ```
-再问答一系列问题过后你的博客就建成的, 主要生成下列文件:
+在回答一系列问题过后你的博客就建成的, 主要生成下列文件:
 ```bash
 .
 |-- content                # 所有文章放于此目录

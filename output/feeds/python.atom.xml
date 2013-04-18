@@ -27,7 +27,7 @@ pelican-quickstart
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;再问答一系列问题过后你的博客就建成的, 主要生成下列文件:&lt;/p&gt;
+&lt;p&gt;在回答一系列问题过后你的博客就建成的, 主要生成下列文件:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;.
 |-- content                &lt;span class="c"&gt;# 所有文章放于此目录&lt;/span&gt;
 |-- develop_server.sh      &lt;span class="c"&gt;# 用于开启测试服务器&lt;/span&gt;
