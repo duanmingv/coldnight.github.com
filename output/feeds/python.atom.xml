@@ -210,11 +210,33 @@ About me content
 
 &lt;p&gt;&lt;code&gt;remove_handler&lt;/code&gt;用于移除主循环中已存在的socket&lt;/p&gt;
 &lt;h2&gt;事件&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;tornado.ioloop.IOLoop&lt;/code&gt;同时提供了4种响应事件:
-&lt;em&gt; &lt;code&gt;tornado.ioloop.IOLoop.NONE&lt;/code&gt;    无事件
-&lt;/em&gt; &lt;code&gt;tornado.ioloop.IOLoop.READ&lt;/code&gt;    读事件
-&lt;em&gt; &lt;code&gt;tornado.ioloop.IOLoop.WRITE&lt;/code&gt;   写事件
-&lt;/em&gt; &lt;code&gt;tornado.ioloop.IOLoop.ERROR&lt;/code&gt;   发生错误的事件&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;tornado.ioloop.IOLoop&lt;/code&gt;同时提供了4种响应事件:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;事件&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;tornado.ioloop.IOLoop.NONE&lt;/td&gt;
+&lt;td&gt;无事件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tornado.ioloop.IOLoop.READ&lt;/td&gt;
+&lt;td&gt;读事件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tornado.ioloop.IOLoop.WRITE&lt;/td&gt;
+&lt;td&gt;写事件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;tornado.ioloop.IOLoop.ERROR&lt;/td&gt;
+&lt;td&gt;发生错误的事件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;h2&gt;实例&lt;/h2&gt;
 &lt;p&gt;根据上面的接口和事件我们就可以写出一个简单的 echo server&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;

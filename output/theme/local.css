@@ -90,3 +90,11 @@ h3 { margin-top: 2.5em; }
 .footer ul.tags {
     float: right;
 }
+
+table thead tr {
+    border-bottom: 1px solid;
+}
+
+table tbody tr td {
+    padding: 5px 15px 5px 5px;
+}

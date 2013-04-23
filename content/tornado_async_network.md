@@ -48,10 +48,13 @@ def remove_handler(self, fd):
 
 ## 事件
 `tornado.ioloop.IOLoop`同时提供了4种响应事件:
-* `tornado.ioloop.IOLoop.NONE`    无事件
-* `tornado.ioloop.IOLoop.READ`    读事件
-* `tornado.ioloop.IOLoop.WRITE`   写事件
-* `tornado.ioloop.IOLoop.ERROR`   发生错误的事件
+
+事件                       |       描述
+-------------------------- | --------------
+tornado.ioloop.IOLoop.NONE |    无事件
+tornado.ioloop.IOLoop.READ |    读事件
+tornado.ioloop.IOLoop.WRITE |    写事件
+tornado.ioloop.IOLoop.ERROR |   发生错误的事件
 
 ## 实例
 根据上面的接口和事件我们就可以写出一个简单的 echo server
