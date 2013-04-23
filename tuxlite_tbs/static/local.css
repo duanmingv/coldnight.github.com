@@ -85,3 +85,6 @@ h3 { margin-top: 2.5em; }
     font-style: italic;
 }
 
+.footer ul.tags {
+    float: right;
+}
