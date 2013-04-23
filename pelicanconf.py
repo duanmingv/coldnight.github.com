@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
-from hashlib import md5
 
 AUTHOR = u'cold'
 SITENAME = u"cold's world"
@@ -62,3 +61,9 @@ SITEMAP = {
         "pages": "monthly",
     }
 }
+
+DESCRIPTION = u"博主一个爱好开源技术的人, 对Python比较熟悉,"\
+        u"也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,"\
+        u"其中包括但不限于Linux/Python/Vim."
+
+KEYWORDS = u"Python, Linux, vim, 开源"
