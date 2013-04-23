@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h1>使用Pelican打造静态博客</h1></a>
-            四 18 四月 2013
+            <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h1>借用Tornado实现高效的WebQQ机器人</h1></a>
+            二 23 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,182 +70,107 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
+        <div class="highlight"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+<p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
+<h2>引子</h2>
+<p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
+<h2>原理</h2>
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request</code> 是一个 <code>urllib2.Request</code>的实例, 和一个可选参数:<code>readback</code>是一个接受一个<code>urllib2.urlopen(request)</code>返回的<code>Response</code>参数的读取函数, 代码如下:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># 省略若干代码</span>
+    <span class="k">def</span> <span class="nf">add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">readback</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Not a invaid requset&quot;</span>
+
+        <span class="c"># 此处易触发timeout异常, 省略处理异常代码</span>
+        <span class="n">sock</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_http_sock_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">sock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fd_request_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span>
+        <span class="n">callback</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_events</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>HTTPStream.add_request</code>将<code>urllib2.Request</code>的实例解析出一个<code>socket</code>和一个用于<code>socket</code>发送的数据.前面文章介绍过了, <code>tornado.ioloop.IOLoop.add_handler</code>用于将注册socket, 其需要三个参数: socket的文件描述符, 接受文件描述符和事件参数的回调, 和注册的事件.</p>
+<p>我们用到的回调是<code>HTTPStream._handle_events</code>:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># 省略若干代码</span>
+    <span class="k">def</span> <span class="nf">_handle_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; 用于处理Tornado事件</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            `request`   -   urllib.Request</span>
+<span class="sd">            `data`      -   socket要写入的数据</span>
+<span class="sd">            `readback`  -   读取函数</span>
+<span class="sd">            以上参数应当使用partial封装然后将此方法作为IOLoop.add_handler的callback</span>
+<span class="sd">            `fd`        -   IOLoop传递 文件描述符</span>
+<span class="sd">            `event`     -   IOLoop传递 tornado</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
+            <span class="c"># 省略错误处理</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">readback</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_delay_request</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">)</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">readback</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+
+
+<p>它接受的参数上面注释写的很清楚, 不做解释, 所以将此方法通过<code>functools.partial</code>封装做为<code>callback</code>传递给<code>tornado.ioloop.IOLoop.add_handler</code>, 并注册为<code>写</code>事件, 以便发送<code>HTTP</code>请求.</p>
+<p><code>HTTPStream._handle_events</code>用于处理事件, 当事件为写时就发送<code>HTTP</code>请求(根据<code>urllib2.Request</code>生成的用于发送的数据), 并判断是否有读取函数, 有则注册<code>读</code>事件, 当事件为读时就从socket中构建一个<code>Response</code>并传递给读取函数, 读取函数会返回3个值, 分别为: 下一个请求, 请求的读取函数(可为None, 为None则只请求不读取), 下一个请求的延迟(多长事件后添加此请求, 可选, 单位为秒)</p>
+<p>依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码</p>
+<p><code>HTTPStream.http_sock.make_response</code>执行时会将<code>socket</code>设为阻塞, 因为不设置阻塞会出现<code>httplib.BadStatusLine</code>异常.读取函数执行完毕,重新将<code>socket</code>设置为非阻塞, 并移除此<code>socket</code>(虽然做了这样的处理但是QQ连接时间稍长还是会触发<code>httplib.BadStatusLine</code>异常)</p>
+<h2>存在问题</h2>
+<ul>
+<li>在线时间过长会引发<code>httplib.BadStatusline</code></li>
+<li>没有重试机制</li>
+</ul></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
+        <div class= "well small"> 四 18 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
 <h2>介绍</h2>
 <p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
 <h2>安装</h2>
 <p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
-<h3>建立 virtualenv</h3>
-<div class="codehilite"><pre>virtualenv pelican      <span class="c"># 创建</span>
-<span class="nb">cd </span>pelican
-sh bin/activate            <span class="c"># 激活虚拟环境</span>
-</pre></div>
-
-
-<p>上面建立了一个Python的虚拟环境(这个命令不是内置可以使用 <code>easy_install virtualenv</code> 安装)</p>
-<h3>从github克隆最新代码安装Pelican</h3>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican.git            <span class="c"># 代码</span>
-<span class="nb">cd </span>pelican
-python setup.py install
-</pre></div>
-
-
-<p>上面步骤完成后就安装了Pelican</p>
-<h2>开始一个博客</h2>
-<div class="codehilite"><pre>mkdir /path/to/your/blog
-<span class="nb">cd</span> /path/to/your/blog
-pelican-quickstart
-</pre></div>
-
-
-<p>在回答一系列问题过后你的博客就建成的, 主要生成下列文件:</p>
-<div class="codehilite"><pre>.
-|-- content                <span class="c"># 所有文章放于此目录</span>
-|-- develop_server.sh      <span class="c"># 用于开启测试服务器</span>
-|-- Makefile               <span class="c"># 方便管理博客的Makefile</span>
-|-- output                 <span class="c"># 静态生成文件</span>
-|-- pelicanconf.py         <span class="c"># 配置文件</span>
-|-- publishconf.py         <span class="c"># 配置文件</span>
-</pre></div>
-
-
-<h3>写一篇文章</h3>
-<p>在 <code>content</code> 目录新建一个 <code>test.md</code>文件, 填入一下内容:</p>
-<div class="codehilite"><pre><span class="n">Title:</span> <span class="err">文章标题</span>
-<span class="n">Date:</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">18</span>
-<span class="n">Category:</span> <span class="err">文章类别</span>
-<span class="n">Tag:</span> <span class="err">标签</span><span class="mi">1</span><span class="p">,</span> <span class="err">标签</span><span class="mi">2</span>
-
-<span class="err">这里是内容</span>
-</pre></div>
-
-
-<p>然后执行:</p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>用以生成html</p>
-<p>然后执行</p>
-<div class="codehilite"><pre>./develop_server.sh start
-</pre></div>
-
-
-<p>开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:<code>http://localhost:8000</code>来访问这个测试服务器, 然后就可以欣赏到你的博客了</p>
-<h3>创建一个页面</h3>
-<p>这里以创建 <code>About</code>页面为例</p>
-<p>在<code>content</code>目录创建<code>pages</code>目录</p>
-<div class="codehilite"><pre>mkdir content/pages
-</pre></div>
-
-
-<p>然后创建<code>About.md</code>并填入下面内容</p>
-<div class="codehilite"><pre>Title: About Me
-Date: 2013-04-18
-
-About me content
-</pre></div>
-
-
-<p>执行 <code>make html</code> 生成html, 然后打开 <code>http://localhost:8000</code>查看效果</p>
-<h3>让Pelican支持评论</h3>
-<p>Pelican 使用<code>Disqus</code>评论, 可以申请在<a href="https://disqus.com/">Disqus</a>上申请一个站点, 然后在<code>pelicanconf.py</code>里添加或修改<code>DISQUS_SITENAME</code>项:</p>
-<div class="codehilite"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
-</pre></div>
-
-
-<p>执行</p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>浏览器打开 <code>http://localhost:8000</code>查看效果</p>
-<h3>更换主题</h3>
-<p>Pelican本身也提供了一些主题可供选择, 可以从github克隆下来</p>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
-</pre></div>
-
-
-<p>然后在里面找到想要的主题, 然后拷到博客项目当前目录, 这里已<code>neat</code>为例</p>
-<div class="codehilite"><pre>cp -r /path/to/themes/from/github/neat .
-</pre></div>
-
-
-<p>然后在 <code>pelicanconf.py</code> 配置文件里添加或修改 <code>THEME</code>项为 <code>neat</code></p>
-<div class="codehilite"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="s">&quot;neat&quot;</span>
-</pre></div>
-
-
-<p>重新执行 </p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>然后打开 <code>http://localhost:8000</code> 查看效果</p>
-<h3>使用插件</h3>
-<p>Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行</p>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
-</pre></div>
-
-
-<p>现在我们博客目录就新添了一个 <code>pelican-plugins</code>目录, 我们已配置<code>sitemap</code>插件为例,
-<code>sitemap</code>插件可以生成 <code>sitemap.xml</code> 供搜索引擎使用</p>
-<p>在<code>pelicanconf.py</code>配置文件里加上如下项:</p>
-<div class="codehilite"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&quot;pelican-plugins&quot;</span>
-
-<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;sitemap&quot;</span><span class="p">]</span>
-
-<span class="c">## 配置sitemap 插件</span>
-<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="s">&quot;xml&quot;</span><span class="p">,</span>
-    <span class="s">&quot;priorities&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
-        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s">&quot;changefreqs&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
-        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="s">&quot;daily&quot;</span><span class="p">,</span>
-        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>然后再执行</p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>打开浏览器请求 <code>http://localhost:8000/sitemap.xml</code>即可看到生成的 Sitemap 了</p>
-<h3>拷贝静态文件</h3>
-<p>如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以<code>robots.txt</code> 为例, 在我们的 content/extra 下面我们放了一个定义好的 <code>robots.txt</code>文件, 在<code>pelicanconf.py</code>更改或添加 <code>FILES_TO_COPY</code>项:</p>
-<div class="codehilite"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span> <span class="s">&quot;robots.txt&quot;</span><span class="p">),</span>
-<span class="p">)</span>
-</pre></div>
-
-
-<p>这样在每次生成html的时候都会把 <code>content/extra</code>下的 <code>robots.txt</code> 拷贝到 <code>output</code>目录下</p>
-<h3>拷贝静态目录</h3>
-<p>如果是一个静目录怎么办? 我们可以在<code>pelicanconf.py</code>里添加或修改 <code>STATIC_PATHS</code>项, 比如我们有个<code>img</code>目录用来放文章所使用的图片, 我们可以在<code>pelicanconf.py</code>添加</p>
-<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
-</pre></div>
-
-
-<p>然后执行 </p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>然后 Pelican 就会将 <code>img</code>目录拷贝到 <code>output/static/</code> 下</p>
-<h2>部署</h2>
-<p>上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 上传到服务器并结合nginx或者apache等web服务器部署这里就不在详述</p>
-<h2>参考</h2>
-<p>如果还有其他问题请参考<a href="http://docs.getpelican.com/">官方手册</a></p></div>
-        <hr />
-    </div>
-		
+<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
+    </div>	
+				
     
  
         
@@ -478,43 +403,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/01/14 09:57:31</span>
 <span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
-        <div class= "well small"> 六 05 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
- </div>
-        <div class="summary"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
-<div class="codehilite"><pre>Bundle <span class="c">&quot;Lokaltog/vim-powerline&quot;</span>
-</pre></div>
-
-
-<p>然后重新打开vim执行</p>
-<div class="codehilite"><pre><span class="p">:</span>BundleInstall
-</pre></div>
-
-
-<p>如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加</p>
-<div class="codehilite"><pre><span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
-<span class="k">let</span> g:Powerline_symbols<span class="p">=</span><span class="s1">&#39;unicode&#39;</span>
-</pre></div>
-
-
-<p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
-<p>然后重新打开vim你就会发现一个漂亮的statusline</p>
-<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

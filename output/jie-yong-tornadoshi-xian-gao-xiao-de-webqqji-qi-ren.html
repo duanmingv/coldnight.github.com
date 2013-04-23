@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title> 借用Tornado实现高效的WebQQ机器人 | cold's world </title>
+    <meta name="description" content=" &lt;p&gt;之前有写过一篇文章介绍使用&lt;code&gt;Pyxmpp2&lt;/code&gt;桥接QQ和xmpp的文章(&lt;a href=&#34;/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html&#34;&gt;这里&lt;/a&gt;).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了&lt;code&gt;pyxmpp2&lt;/code&gt;的mainloop, 但是跑起来问题多多, ... " />
+    <meta name="keywords" content=" tornado,高效,webqq,并发,协议 " />
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
+    <![endif]-->
+        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
+        
+    <!-- Le styles -->
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+                    
+                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+                        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+            <div class='article'>
+        <div class="content-title">
+            <h1>借用Tornado实现高效的WebQQ机器人</h1>
+            二 23 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+        </div>
+	
+        <div class="highlight"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+<p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
+<h2>引子</h2>
+<p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
+<h2>原理</h2>
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request</code> 是一个 <code>urllib2.Request</code>的实例, 和一个可选参数:<code>readback</code>是一个接受一个<code>urllib2.urlopen(request)</code>返回的<code>Response</code>参数的读取函数, 代码如下:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># 省略若干代码</span>
+    <span class="k">def</span> <span class="nf">add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">readback</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Not a invaid requset&quot;</span>
+
+        <span class="c"># 此处易触发timeout异常, 省略处理异常代码</span>
+        <span class="n">sock</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_http_sock_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">sock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fd_request_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span>
+        <span class="n">callback</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_events</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>HTTPStream.add_request</code>将<code>urllib2.Request</code>的实例解析出一个<code>socket</code>和一个用于<code>socket</code>发送的数据.前面文章介绍过了, <code>tornado.ioloop.IOLoop.add_handler</code>用于将注册socket, 其需要三个参数: socket的文件描述符, 接受文件描述符和事件参数的回调, 和注册的事件.</p>
+<p>我们用到的回调是<code>HTTPStream._handle_events</code>:</p>
+<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c"># 省略若干代码</span>
+    <span class="k">def</span> <span class="nf">_handle_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; 用于处理Tornado事件</span>
+<span class="sd">        Arguments:</span>
+<span class="sd">            `request`   -   urllib.Request</span>
+<span class="sd">            `data`      -   socket要写入的数据</span>
+<span class="sd">            `readback`  -   读取函数</span>
+<span class="sd">            以上参数应当使用partial封装然后将此方法作为IOLoop.add_handler的callback</span>
+<span class="sd">            `fd`        -   IOLoop传递 文件描述符</span>
+<span class="sd">            `event`     -   IOLoop传递 tornado</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
+            <span class="c"># 省略错误处理</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">readback</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_delay_request</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">)</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">:</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">readback</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+
+
+<p>它接受的参数上面注释写的很清楚, 不做解释, 所以将此方法通过<code>functools.partial</code>封装做为<code>callback</code>传递给<code>tornado.ioloop.IOLoop.add_handler</code>, 并注册为<code>写</code>事件, 以便发送<code>HTTP</code>请求.</p>
+<p><code>HTTPStream._handle_events</code>用于处理事件, 当事件为写时就发送<code>HTTP</code>请求(根据<code>urllib2.Request</code>生成的用于发送的数据), 并判断是否有读取函数, 有则注册<code>读</code>事件, 当事件为读时就从socket中构建一个<code>Response</code>并传递给读取函数, 读取函数会返回3个值, 分别为: 下一个请求, 请求的读取函数(可为None, 为None则只请求不读取), 下一个请求的延迟(多长事件后添加此请求, 可选, 单位为秒)</p>
+<p>依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码</p>
+<p><code>HTTPStream.http_sock.make_response</code>执行时会将<code>socket</code>设为阻塞, 因为不设置阻塞会出现<code>httplib.BadStatusLine</code>异常.读取函数执行完毕,重新将<code>socket</code>设置为非阻塞, 并移除此<code>socket</code>(虽然做了这样的处理但是QQ连接时间稍长还是会触发<code>httplib.BadStatusLine</code>异常)</p>
+<h2>存在问题</h2>
+<ul>
+<li>在线时间过长会引发<code>httplib.BadStatusline</code></li>
+<li>没有重试机制</li>
+</ul></div>
+
+        	    <div class="footer">
+            <ul class="tags">                <li>
+                    <a href="http://www.linuxzen.com/tag/tornado.html">tornado</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/gao-xiao.html">高效</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/webqq.html">webqq</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/bing-fa.html">并发</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/xie-yi.html">协议</a>
+                </li>            </ul>
+        </div>
+        
+        <hr>
+    	   
+        <h2>Comments</h2>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'linuxzen'; 
+    var disqus_title = '借用Tornado实现高效的WebQQ机器人';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                            </ul>
+            </div>
+
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                   
+            </ul>
+            </div>
+            
+
+                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                        </ul>
+            </div>
+            
+
+            
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
+<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+ 
+</body>
+</html>

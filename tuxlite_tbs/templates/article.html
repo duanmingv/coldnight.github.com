@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block description %} {{ article.content | truncate(200) }} {% endblock %}
+{% block description %} {{ article.content | truncate(200) | escape }} {% endblock %}
 {% block keywords %} {{ article.tags | join(',') }} {% endblock %}
 {% block windowtitle %} {{ article.title}} | {{ SITENAME }} {% endblock %}
 {% block content %}

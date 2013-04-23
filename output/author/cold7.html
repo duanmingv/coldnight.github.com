@@ -59,6 +59,39 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html"><h2>用pxe安装自己定制的发行版快速部署系统环境</h2></a>
+        <div class= "well small"> 四 02 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+ </div>
+        <div class="summary"><p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
+<p>这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
+基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)</p>
+<p>使用环境:CentOS 5.5 32位</p>
+<p>使用系统:根据CentOS定制的发行版ColdOS 0.1 32位</p>
+<p>ip: 静态ip192.168.3.1</p>
+<p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
+1.安装配置tftp</p>
+<p>安装tftp-server</p>
+<div class="codehilite"><pre>yum -y install tftp-server
+</pre></div>
+
+
+<p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
+<div class="codehilite"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html"><h2>用Python对各种编程语言进行代码高亮</h2></a>
         <div class= "well small"> 六 29 九月 2012
 
