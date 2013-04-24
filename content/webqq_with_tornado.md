@@ -80,5 +80,16 @@ class HTTPStream(object):
 `HTTPStream.http_sock.make_response`执行时会将`socket`设为阻塞, 因为不设置阻塞会出现`httplib.BadStatusLine`异常.读取函数执行完毕,重新将`socket`设置为非阻塞, 并移除此`socket`(虽然做了这样的处理但是QQ连接时间稍长还是会触发`httplib.BadStatusLine`异常)
 
 ## 存在问题
-* 在线时间过长会引发`httplib.BadStatusline`
-* 没有重试机制
+1. 在线时间稍长, 当经过多次请求后会触发`socket.gaierror(-2, 'Name or service not known')` 异常
+2. 在线时间过长会引发`httplib.BadStatusline`
+3. 没有重试机制
+
+## 问题解决
+针对存在的问题1可以将请求最多的两个域名或WebQQ所有域名都加入到hosts文件中, 这里提供一份:
+```
+121.14.91.24    check.ptlogin2.qq.com
+119.147.65.31   ssl.ptlogin2.qq.com
+112.95.241.149  d.web2.qq.com
+58.250.135.158  s.web2.qq.com
+112.90.143.178  web.qq.com
+```

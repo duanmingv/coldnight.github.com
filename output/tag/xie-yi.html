@@ -140,10 +140,19 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码</p>
 <p><code>HTTPStream.http_sock.make_response</code>执行时会将<code>socket</code>设为阻塞, 因为不设置阻塞会出现<code>httplib.BadStatusLine</code>异常.读取函数执行完毕,重新将<code>socket</code>设置为非阻塞, 并移除此<code>socket</code>(虽然做了这样的处理但是QQ连接时间稍长还是会触发<code>httplib.BadStatusLine</code>异常)</p>
 <h2>存在问题</h2>
-<ul>
+<ol>
+<li>在线时间稍长, 当经过多次请求后会触发<code>socket.gaierror(-2, 'Name or service not known')</code> 异常</li>
 <li>在线时间过长会引发<code>httplib.BadStatusline</code></li>
 <li>没有重试机制</li>
-</ul></div>
+</ol>
+<h2>问题解决</h2>
+<p>针对存在的问题1可以将请求最多的两个域名或WebQQ所有域名都加入到hosts文件中, 这里提供一份:</p>
+<div class="codehilite"><pre><span class="mf">121.14.91.24</span>    <span class="n">check</span><span class="o">.</span><span class="n">ptlogin2</span><span class="o">.</span><span class="sx">qq.com</span>
+<span class="sx">119.</span><span class="mf">147.65.31</span>   <span class="n">ssl</span><span class="o">.</span><span class="n">ptlogin2</span><span class="o">.</span><span class="sx">qq.com</span>
+<span class="sx">112.</span><span class="mf">95.241.149</span>  <span class="n">d</span><span class="o">.</span><span class="n">web2</span><span class="o">.</span><span class="sx">qq.com</span>
+<span class="sx">58.</span><span class="mf">250.135.158</span>  <span class="n">s</span><span class="o">.</span><span class="n">web2</span><span class="o">.</span><span class="sx">qq.com</span>
+<span class="sx">112.</span><span class="mf">90.143.178</span>  <span class="n">web</span><span class="o">.</span><span class="n">qq</span><span class="o">.</span><span class="n">com</span>
+</pre></div></div>
         <hr />
     </div>
 		
