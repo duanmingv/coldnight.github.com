@@ -59,6 +59,37 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h2>nginx+keepalived配置高可用HTTP群集</h2></a>
+        <div class= "well small"> 四 09 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
+
+ </div>
+        <div class="summary"><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+一般集群主要架构为:</p>
+<p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
+第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
+第二种方式主备同时绑定一个vip,把域名通过DNS轮询的方式解析到这两个服务器上,主机出现故障,备机就将主机绑定vip绑定到备机上,同时arping网关刷新MAC地址.实现故障转移.</p>
+<p>中间为WEB服务器作为real server,处理请求.
+后端为数据库和分布式文件系统.数据库一般为主从两台.分布式文件系统有效解决WEB服务器之间的数据同步.有的还会将图片服务器单独分离出来放在后端.</p>
+<p>本文使用环境:</p>
+<ul>
+<li>CentOS 5.5 32位</li>
+<li>nginx:nginx-1.0.11</li>
+<li>keepalived：keepalived-1.1.19.tar.gz</li>
+<li>主调度器 ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h2>MySQL优化笔记</h2></a>
         <div class= "well small"> 六 04 二月 2012
 

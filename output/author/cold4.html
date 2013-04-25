@@ -59,6 +59,39 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h2>MySQL优化笔记</h2></a>
+        <div class= "well small"> 六 04 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
+
+ </div>
+        <div class="summary"><p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
+MySQL预编译参数:</p>
+<div class="codehilite"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
+</pre></div>
+
+
+<p>top</p>
+<div class="codehilite"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
+</pre></div>
+
+
+<p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
+<div class="codehilite"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
+
+__ Key _________________________________________________________________ ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h2>nginx+keepalived配置高可用HTTP群集</h2></a>
         <div class= "well small"> 四 09 二月 2012
 
@@ -360,46 +393,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
 
 <p>就这么简单</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h2>Python将汉字按拼音排序--一个多音字引发的悲剧</h2></a>
-        <div class= "well small"> 三 24 十月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
-<span class="err">音</span>    <span class="n">yin1</span>
-</pre></div>
-
-
-<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># Author : cold night</span>
-<span class="c"># E-mail : wh_linux@126.com</span>
-<span class="c"># Date   : 12-10-24 下午3:13</span>
-<span class="c">#</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="kn">import</span> <span class="nn">locale</span>
-
-<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
-    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

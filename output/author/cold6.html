@@ -59,6 +59,38 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h2>使用WebQQ协议桥接XMPP和QQ群</h2></a>
+        <div class= "well small"> 四 14 三月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>介绍</h2>
+<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
+<h2>实施</h2>
+<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
+<a href="https://github.com/coldnight/qxbot/tree/threading_version">thread_version</a></p>
+<h2>优化</h2>
+<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   Wood.D</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/03/04 09:58:26</span>
+<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html"><h2>ssh证书登录错误</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -334,47 +366,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
 <p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
 <p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html"><h2>用bottle+mongodb写的一个blog程序</h2></a>
-        <div class= "well small"> 六 16 六月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
-<p>前台显示文章:
-按分类显示
-按标签显示
-按月份归档显示
-最新文章
-评论
-后台管理:
-管理文章
-管理分类
-管理评论
-发表文章
-用户验证</p>
-<p>目录结构</p>
-<p>water</p>
-<p>+-app           程序目录</p>
-<p>|----admin.py  后台管理</p>
-<p>|----blog.py   前台显示</p>
-<p>|----dbconn.py 数据库连接</p>
-<p>|----encrypt.py包含加密函数</p>
-<p>+-static       静态文件目录:包括js css image</p>
-<p>+-views        模版目录</p>
-<p>+-index.py     用于启动整个程序 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

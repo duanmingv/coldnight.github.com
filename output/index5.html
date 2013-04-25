@@ -59,6 +59,38 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html"><h2>使用beaker让bottle支持session</h2></a>
+        <div class= "well small"> 六 26 五月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
+<p>bottle小巧支持cookie但是不支持session.为了安全起见我们有时候希望使用的session.我们可以使用中间件beaker来扩展bottle,使我们的bottle应用支持session.废话不多说.首先beaker不是内置模块,我们首先来安装它.当然你可以网上下包手动安装,我们使用最简单的:</p>
+<div class="codehilite"><pre>easy_install beaker
+</pre></div>
+
+
+<p>没有easy_install这个命令?google吧,装了之后还是没有,如过时win的话检查环境变量,将Python安装目录下的Scripts目录添加到环境变量.</p>
+<p>安装好后我们如何使用它,下面一段带面是使用的:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">beaker.middleware</span> <span class="kn">import</span> <span class="n">SessionMiddleware</span>
+
+<span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
         <div class= "well small"> 五 18 五月 2012
 
@@ -319,35 +351,6 @@ clear
 <span class="k">then</span>
 <span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
     <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h2>使用cacti构建监控系统</h2></a>
-        <div class= "well small"> 三 14 三月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
-
- </div>
-        <div class="summary"><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
-<p>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。</p>
-<p>cacti依赖于PHP+MYSQL环境,前面的几篇文章已经详细讲解了如何在Linux部署LNMP环境,这篇文章我们就是用前面几章所搭建的环境,所以这里不再讲解如何搭建环境,如果您不会可以先看看前几篇文章.</p>
-<p>下面就介绍如何来部署cacti.</p>
-<p>首先介绍本文所使用的环境:
-server:</p>
-<p>系统为CentOS 5.5 32bit</p>
-<p>ip:192.168.3.120</p>
-<p>cacti:cacti-0.8.7i.tar.gz</p>
-<p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

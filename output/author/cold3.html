@@ -59,6 +59,46 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
+        <div class= "well small"> 一 20 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+
+ </div>
+        <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<h2>文件查找</h2>
+<p>找出最近修改的文件:</p>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
+
+<p>使用通配符查找文件</p>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
+
+<h2>文本替换</h2>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
+
+<h2>显示指定行</h2>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html"><h2>Linux高效工作----平铺式窗体管理器Awesome</h2></a>
         <div class= "well small"> 四 25 十月 2012
 
@@ -321,39 +361,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
     <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h2>MySQL优化笔记</h2></a>
-        <div class= "well small"> 六 04 二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
-
- </div>
-        <div class="summary"><p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
-MySQL预编译参数:</p>
-<div class="codehilite"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
-</pre></div>
-
-
-<p>top</p>
-<div class="codehilite"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
-</pre></div>
-
-
-<p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
-<div class="codehilite"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
-
-__ Key _________________________________________________________________ ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

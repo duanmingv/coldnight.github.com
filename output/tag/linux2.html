@@ -59,6 +59,29 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
+        <div class= "well small"> 一 16 四月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
+
+ </div>
+        <div class="summary"><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
+<p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
+工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
+IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
+DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h2>使用Python进行web开发</h2></a>
         <div class= "well small"> 五 13 四月 2012
 
@@ -334,31 +357,6 @@ find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</
 <h2>显示指定行</h2>
 <div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
 sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
-        <div class= "well small"> 五 17 二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
-<p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
-<span class="c"># Author   : cold night</span>
-<span class="c"># Filename : nglogcut.sh</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

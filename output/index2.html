@@ -59,6 +59,36 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
+        <div class= "well small"> 三 16 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>原因</h2>
+<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
+<h2>实现</h2>
+<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
+prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/14 09:57:31</span>
+<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
         <div class= "well small"> 六 05 一月 2013
 
@@ -359,47 +389,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h2>部署Tornado时iptables引发的的一个问题</h2></a>
-        <div class= "well small"> 六 29 九月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
-<p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
-
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
-</pre></div>
-
-
-<p>但是访问nginx总是返回502 Bad ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
