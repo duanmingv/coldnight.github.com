@@ -83,13 +83,3 @@ class HTTPStream(object):
 1. 在线时间稍长, 当经过多次请求后会触发`socket.gaierror(-2, 'Name or service not known')` 异常
 2. 在线时间过长会引发`httplib.BadStatusline`
 3. 没有重试机制
-
-## 问题解决
-针对存在的问题1可以将请求最多的两个域名或WebQQ所有域名都加入到hosts文件中, 这里提供一份:
-```
-121.14.91.24    check.ptlogin2.qq.com
-119.147.65.31   ssl.ptlogin2.qq.com
-112.95.241.149  d.web2.qq.com
-58.250.135.158  s.web2.qq.com
-112.90.143.178  web.qq.com
-```
