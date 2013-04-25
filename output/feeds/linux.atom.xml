@@ -5,7 +5,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;经过漫长的等待, 这个命令还没结束, 我忍不住看了下 tmp的内容, 我发现我找到了这段代码, 这挽救了我一个下午的时间.&lt;/p&gt;
+&lt;p&gt;经过漫长的等待, 这个命令还没结束, 我忍不住看了下 tmp的内容, 我发现我找到了这段代码&lt;/p&gt;
 &lt;p&gt;当然损失并不是没有, 损失就是中文注释全部乱码, 但我满足了, 我只要重写注释就可以了.&lt;/p&gt;</summary><category term="Linux"></category><category term="grep"></category><category term="rm"></category><category term="-f"></category><category term="恢复"></category></entry><entry><title>Awesome+tmux+gnomeDo打造高效Linux桌面环境</title><link href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html" rel="alternate"></link><updated>2012-12-04T13:21:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-12-04:awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html</id><summary type="html">&lt;h2&gt;引言&lt;/h2&gt;
 &lt;p&gt;近期一直在Linux下工作,使用Ubuntu 11.10,经过一段时间的使用和磨合,终于打造出一套适合自己的高效Linux桌面环境,之前也在博客中零散的写了几篇文章分享,在此做一番总结.&lt;/p&gt;
 &lt;p&gt;首先先放出桌面截图
