@@ -24,7 +24,7 @@ clubot_members | CREATE TABLE `clubot_members` (
   UNIQUE KEY `nick` (`nick`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 ```
-发现原来创建表的时候用的`latin1`编码, 而老的表是用`utf-8`编码创建的, `SQLAlchemy`中并没有发现有指定创建表时的编码方法. 所以只能在`MySQL`本身来找:
+发现原来创建表的时候用的`latin1`编码, 而老的表是用`utf-8`编码创建的, `SQLAlchemy`中并没有发现有创建表时指定指定编码的方法. 所以只能在`MySQL`本身来找:
 ```mysql
 > show VARIABLES like "character%%";
 +--------------------------+-----------------------------+

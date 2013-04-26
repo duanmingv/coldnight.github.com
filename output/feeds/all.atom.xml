@@ -47,7 +47,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;发现原来创建表的时候用的&lt;code&gt;latin1&lt;/code&gt;编码, 而老的表是用&lt;code&gt;utf-8&lt;/code&gt;编码创建的, &lt;code&gt;SQLAlchemy&lt;/code&gt;中并没有发现有指定创建表时的编码方法. 所以只能在&lt;code&gt;MySQL&lt;/code&gt;本身来找:&lt;/p&gt;
+&lt;p&gt;发现原来创建表的时候用的&lt;code&gt;latin1&lt;/code&gt;编码, 而老的表是用&lt;code&gt;utf-8&lt;/code&gt;编码创建的, &lt;code&gt;SQLAlchemy&lt;/code&gt;中并没有发现有创建表时指定指定编码的方法. 所以只能在&lt;code&gt;MySQL&lt;/code&gt;本身来找:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;VARIABLES&lt;/span&gt; &lt;span class="k"&gt;like&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;character%%&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;+--------------------------+-----------------------------+&lt;/span&gt;
 &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Variable_name&lt;/span&gt;            &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Value&lt;/span&gt;                       &lt;span class="o"&gt;|&lt;/span&gt;

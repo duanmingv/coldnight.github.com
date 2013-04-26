@@ -92,7 +92,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 </pre></div>
 
 
-<p>发现原来创建表的时候用的<code>latin1</code>编码, 而老的表是用<code>utf-8</code>编码创建的, <code>SQLAlchemy</code>中并没有发现有指定创建表时的编码方法. 所以只能在<code>MySQL</code>本身来找:</p>
+<p>发现原来创建表的时候用的<code>latin1</code>编码, 而老的表是用<code>utf-8</code>编码创建的, <code>SQLAlchemy</code>中并没有发现有创建表时指定指定编码的方法. 所以只能在<code>MySQL</code>本身来找:</p>
 <div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="n">VARIABLES</span> <span class="k">like</span> <span class="s2">&quot;character%%&quot;</span><span class="p">;</span>
 <span class="o">+--------------------------+-----------------------------+</span>
 <span class="o">|</span> <span class="n">Variable_name</span>            <span class="o">|</span> <span class="n">Value</span>                       <span class="o">|</span>
