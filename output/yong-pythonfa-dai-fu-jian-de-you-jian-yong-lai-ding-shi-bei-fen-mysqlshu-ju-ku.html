@@ -240,16 +240,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
 
 <p>将这个脚本保存为pymail放到/usr/bin/下,并赋予其执行权限:</p>
-<div class="codehilite"><pre><span class="nb">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="sr">/usr/</span><span class="n">bin</span><span class="o">/</span><span class="n">pymail</span>
+<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pymail</span>
 </pre></div>
 
 
 <p>可以使用 -h指定smtp发件服务器,默认认为指定-h需要认证, 所以就需要smtp服务器支持认证,同时需要-u指定用户名(需加"@域名"),-p指定密码.
 如果不指定-h就会使用本地smtp服务器,默认不需要认证,所以本地的smtp服务器就不能支持认证,同时不需指定-u,-p参数</p>
-<div class="codehilite"><pre><span class="o">-</span><span class="n">t</span> <span class="err">指定收件人多个可用</span><span class="p">,</span><span class="err">号分割</span><span class="o">.</span>
+<div class="codehilite"><pre><span class="o">-</span><span class="n">t</span> <span class="err">指定收件人多个可用</span><span class="p">,</span><span class="err">号分割</span><span class="p">.</span>
 <span class="o">-</span><span class="n">a</span> <span class="err">指定附件路径</span>
 <span class="o">-</span><span class="n">n</span> <span class="err">指定附件名</span><span class="p">(</span><span class="err">可省略</span><span class="p">)</span>
-<span class="o">-</span><span class="n">h</span> <span class="err">显示帮助信息</span><span class="o">.</span>
+<span class="o">-</span><span class="n">h</span> <span class="err">显示帮助信息</span><span class="p">.</span>
 <span class="o">-</span><span class="n">s</span> <span class="err">指定邮件主题</span>
 </pre></div>
 

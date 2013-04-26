@@ -78,8 +78,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
 
 <p>没结果,继续手动查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="sr">/sbin/</span> <span class="err">¦</span> <span class="nb">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
+<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
 </pre></div>
 
 
@@ -95,15 +95,15 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
 
 <p>然后查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="sr">/sbin/</span> <span class="o">-</span><span class="n">l</span> <span class="err">¦</span><span class="nb">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>      <span class="mi">8</span> <span class="n">Apr</span> <span class="mi">30</span> <span class="mi">10</span><span class="p">:</span><span class="mi">31</span> <span class="n">restorecon</span> <span class="o">-&gt;</span> <span class="n">setfiles</span>
+<div class="codehilite"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="o">-</span><span class="n">l</span> <span class="err">¦</span><span class="n">grep</span> <span class="n">restore</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>      <span class="mi">8</span> <span class="n">Apr</span> <span class="mi">30</span> <span class="mi">10</span><span class="o">:</span><span class="mi">31</span> <span class="n">restorecon</span> <span class="o">-&gt;</span> <span class="n">setfiles</span>
 </pre></div>
 
 
 <p>然后运行命令保存iptables策略:</p>
 <div class="codehilite"><pre><span class="n">service</span> <span class="n">iptables</span> <span class="n">save</span>
-<span class="n">iptables:</span> <span class="n">Saving</span> <span class="n">firewall</span> <span class="n">rules</span> <span class="n">to</span> <span class="sr">/etc/s</span><span class="n">ysconfig</span><span class="o">/</span><span class="n">iptables:</span> <span class="p">[</span>  <span class="n">OK</span>  <span class="p">]</span>
+<span class="nl">iptables:</span> <span class="n">Saving</span> <span class="n">firewall</span> <span class="n">rules</span> <span class="n">to</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">iptables</span><span class="o">:</span> <span class="p">[</span>  <span class="n">OK</span>  <span class="p">]</span>
 </pre></div>
 
 

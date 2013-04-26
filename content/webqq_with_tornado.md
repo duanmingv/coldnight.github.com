@@ -79,7 +79,8 @@ class HTTPStream(object):
 
 `HTTPStream.http_sock.make_response`执行时会将`socket`设为阻塞, 因为不设置阻塞会出现`httplib.BadStatusLine`异常.读取函数执行完毕,重新将`socket`设置为非阻塞, 并移除此`socket`(虽然做了这样的处理但是QQ连接时间稍长还是会触发`httplib.BadStatusLine`异常)
 
+## 2013-04-26 更新
+* 解决 在线时间稍长, 当经过多次请求后会触发`socket.gaierror(-2, 'Name or service not known')` 异常
+
 ## 存在问题
-1. 在线时间稍长, 当经过多次请求后会触发`socket.gaierror(-2, 'Name or service not known')` 异常
-2. 在线时间过长会引发`httplib.BadStatusline`
-3. 没有重试机制
+1. 没有重试机制

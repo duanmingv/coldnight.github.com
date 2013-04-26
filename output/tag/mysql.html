@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h1>用bottle+mongodb写的blog程序支持mysql啦</h1></a>
-            二 14 八月 2012
+            <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h1>SQLAlchemy MySQL数据库乱码解决</h1></a>
+            五 26 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,15 +70,104 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
+        <div class="highlight"><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
+<div class="codehilite"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>但是这并不行, 然后查看表信息:</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
+<span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`isonline`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`join_date`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">),</span>
+  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="ss">`email`</span> <span class="p">(</span><span class="ss">`email`</span><span class="p">),</span>
+  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="ss">`nick`</span> <span class="p">(</span><span class="ss">`nick`</span><span class="p">)</span>
+<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">20</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">latin1</span><span class="p">;</span>
+</pre></div>
+
+
+<p>发现原来创建表的时候用的<code>latin1</code>编码, 而老的表是用<code>utf-8</code>编码创建的, <code>SQLAlchemy</code>中并没有发现有指定创建表时的编码方法. 所以只能在<code>MySQL</code>本身来找:</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="n">VARIABLES</span> <span class="k">like</span> <span class="s2">&quot;character%%&quot;</span><span class="p">;</span>
+<span class="o">+--------------------------+-----------------------------+</span>
+<span class="o">|</span> <span class="n">Variable_name</span>            <span class="o">|</span> <span class="n">Value</span>                       <span class="o">|</span>
+<span class="o">+--------------------------+-----------------------------+</span>
+<span class="o">|</span> <span class="n">character_set_client</span>     <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_set_connection</span> <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_set_database</span>   <span class="o">|</span> <span class="n">latin1</span>                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_set_filesystem</span> <span class="o">|</span> <span class="k">binary</span>                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_set_results</span>    <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_set_server</span>     <span class="o">|</span> <span class="n">latin1</span>                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_set_system</span>     <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
+<span class="o">|</span> <span class="n">character_sets_dir</span>       <span class="o">|</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">charsets</span><span class="o">/</span> <span class="o">|</span>
+<span class="o">+--------------------------+-----------------------------+</span>
+<span class="mi">8</span> <span class="n">rows</span> <span class="k">in</span> <span class="kt">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">database</span> <span class="n">clubot</span><span class="p">;</span>
+<span class="o">+----------+-------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="k">Database</span> <span class="o">|</span> <span class="k">Create</span> <span class="k">Database</span>                                                   <span class="o">|</span>
+<span class="o">+----------+-------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">clubot</span>   <span class="o">|</span> <span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="ss">`clubot`</span> <span class="cm">/*!40100 DEFAULT CHARACTER SET latin1 */</span> <span class="o">|</span>
+<span class="o">+----------+-------------------------------------------------------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="k">in</span> <span class="kt">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+
+
+<p>发现 <code>MySQL</code>默认的和数据库都是<code>latin1</code>的编码, 所以更改数据库配置</p>
+<div class="codehilite"><pre>vi /etc/mysql/my.cnf      <span class="c"># MySQL配置文件在Ubuntu上的位置, 其他系统可能有差异</span>
+</pre></div>
+
+
+<p>分别在<code>[client]</code> <code>[mysqld]</code>下添加</p>
+<div class="codehilite"><pre><span class="k">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="n">set</span> <span class="o">=</span> <span class="n">utf8</span>
+</pre></div>
+
+
+<p>这时重启MySQL居然起不来, 说<code>default-character-set</code>是无效的变量, 查看<code>MySQL</code>版本发现是5.5, 找资料说5.5的服务端编码设置变量是<code>character-set-server</code>, 所以将<code>[mysqld]</code>上的<code>default-character-set = utf8</code>改为 <code>character-set-server = utf8</code>, 并重启<code>MySQL</code></p>
+<p>然后更改数据库编码:</p>
+<div class="codehilite"><pre><span class="k">alter</span> <span class="k">database</span> <span class="n">clubot</span> <span class="k">character</span> <span class="kt">set</span> <span class="n">utf8</span><span class="p">;</span>
+</pre></div>
+
+
+<p>删除新建的表, 并重新导入数据中文就正常了</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">use</span> <span class="n">clubot</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_status</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_infos</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_history</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
+</pre></div></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h2>用bottle+mongodb写的blog程序支持mysql啦</h2></a>
+        <div class= "well small"> 二 14 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
 <p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
 <p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
 <p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
 <p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
-<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p></div>
-        <hr />
-    </div>
-		
+<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">read more</a></div>
+    </div>	
+				
     
  
         

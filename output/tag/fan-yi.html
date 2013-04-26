@@ -81,13 +81,13 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 <span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
 
 <span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> get<span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span>
+    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span>
     <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
     <span class="k">let</span> word <span class="p">=</span> strpart<span class="p">(</span>line<span class="p">,</span> column<span class="p">,</span> <span class="m">1</span><span class="p">)</span>
     <span class="k">let</span> <span class="k">start</span> <span class="p">=</span> <span class="m">1</span>
     <span class="k">while</span> <span class="m">1</span>
         <span class="k">let</span> tmp <span class="p">=</span> strpart<span class="p">(</span>line<span class="p">,</span> column <span class="p">+</span> <span class="k">start</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
-        <span class="k">if</span> tmp <span class="p">=~</span> <span class="c">&quot;[a-zA-Z]&quot;</span>
+        <span class="k">if</span> tmp <span class="p">=~</span> <span class="s2">&quot;[a-zA-Z]&quot;</span>
             <span class="k">let</span> word <span class="p">=</span> word . tmp
         <span class="k">else</span>
             <span class="k">break</span>
@@ -114,11 +114,11 @@ endfunc
         <span class="k">let</span> word <span class="p">=</span> GetCursorWord<span class="p">()</span> <span class="c">&quot; 如果是命令模式则取当前字符下单词</span>
     <span class="k">endif</span>
 <span class="c">    &quot;XXX Visual 模式mode()命令返回n</span>
-    <span class="k">if</span> a:<span class="k">m</span> <span class="p">==</span> <span class="m">2</span>
+    <span class="k">if</span> <span class="k">a</span>:<span class="k">m</span> <span class="p">==</span> <span class="m">2</span>
         <span class="k">let</span> word <span class="p">=</span> getreg<span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>     <span class="c">&quot; 如果是选择模式获取选择块</span>
 
     <span class="k">endif</span>
-    <span class="k">if</span> a:<span class="k">m</span> <span class="p">==</span> <span class="m">1</span>
+    <span class="k">if</span> <span class="k">a</span>:<span class="k">m</span> <span class="p">==</span> <span class="m">1</span>
         <span class="k">let</span> word <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
     <span class="k">endif</span>
 python <span class="p">&lt;&lt;</span> EOF
@@ -131,11 +131,11 @@ class Translate<span class="p">(</span>object<span class="p">)</span>:
 <span class="c">    &quot;&quot;&quot; 使用google进行英-&gt;汉, 汉-&gt;英的翻译 &quot;&quot;&quot;</span>
     <span class="nb">def</span> __init__<span class="p">(</span>self<span class="p">,</span> text<span class="p">,</span> src<span class="p">=</span><span class="s1">&#39;zh-CN&#39;</span><span class="p">,</span> dst <span class="p">=</span> <span class="s1">&#39;en&#39;</span><span class="p">)</span>:
         self.url <span class="p">=</span> <span class="s1">&#39;http://translate.google.cn/translate_a/t&#39;</span>
-        self.params <span class="p">=</span> <span class="nb">dict</span><span class="p">(</span>client <span class="p">=</span> <span class="c">&quot;t&quot;, text=text,</span>
+        self.params <span class="p">=</span> <span class="nb">dict</span><span class="p">(</span>client <span class="p">=</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> text<span class="p">=</span>text<span class="p">,</span>
                            <span class="nb">hl</span> <span class="p">=</span> <span class="s1">&#39;zh-CN&#39;</span><span class="p">,</span> <span class="k">tl</span> <span class="p">=</span> dst<span class="p">,</span>
                            multires <span class="p">=</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="k">prev</span> <span class="p">=</span> <span class="s1">&#39;btn&#39;</span><span class="p">,</span>
                            ssel <span class="p">=</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="nb">sc</span> <span class="p">=</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
-        <span class="k">if</span> src <span class="p">!=</span> self.params.get<span class="p">(</span><span class="s1">&#39;hl&#39;</span><span class="p">)</span>:
+        <span class="k">if</span> src <span class="p">!=</span> self.params.<span class="k">get</span><span class="p">(</span><span class="s1">&#39;hl&#39;</span><span class="p">)</span>:
             self.params.<span class="k">update</span><span class="p">(</span><span class="k">sl</span> <span class="p">=</span> src<span class="p">)</span>
 
         <span class="k">return</span>
@@ -153,11 +153,11 @@ class Translate<span class="p">(</span>object<span class="p">)</span>:
         others <span class="p">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">for</span> <span class="k">d</span> <span class="k">in</span> desc:
             others <span class="p">+=</span> <span class="k">d</span>[<span class="m">0</span>] <span class="p">+</span> <span class="s1">&#39;\n&#39;</span>
-            <span class="k">for</span> i <span class="k">in</span> <span class="k">d</span>[<span class="m">1</span>]:
-                others <span class="p">+=</span> <span class="c">&quot;\t{0}\t&quot;.format(i)</span>
-                <span class="k">for</span> s <span class="k">in</span> <span class="k">d</span>[<span class="m">2</span>]:
-                    <span class="k">if</span> s[<span class="m">0</span>] <span class="p">==</span> i:
-                        others <span class="p">+=</span><span class="s1">&#39;,&#39;</span>.<span class="k">join</span><span class="p">(</span>s[<span class="m">1</span>]<span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;\n&#39;</span>
+            <span class="k">for</span> <span class="k">i</span> <span class="k">in</span> <span class="k">d</span>[<span class="m">1</span>]:
+                others <span class="p">+=</span> <span class="s2">&quot;\t{0}\t&quot;</span>.format<span class="p">(</span><span class="k">i</span><span class="p">)</span>
+                <span class="k">for</span> <span class="k">s</span> <span class="k">in</span> <span class="k">d</span>[<span class="m">2</span>]:
+                    <span class="k">if</span> <span class="k">s</span>[<span class="m">0</span>] <span class="p">==</span> <span class="k">i</span>:
+                        others <span class="p">+=</span><span class="s1">&#39;,&#39;</span>.<span class="k">join</span><span class="p">(</span><span class="k">s</span>[<span class="m">1</span>]<span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;\n&#39;</span>
         <span class="k">r</span> <span class="p">=</span> <span class="nb">dict</span><span class="p">(</span>
             result <span class="p">=</span> result[<span class="m">0</span>]<span class="p">,</span>
             source <span class="p">=</span> result[<span class="m">1</span>]<span class="p">,</span>
@@ -174,7 +174,7 @@ class Translate<span class="p">(</span>object<span class="p">)</span>:
 <span class="c">                       &quot;++http://www.google.com/bot.html)&quot;)</span>
 
         <span class="k">res</span> <span class="p">=</span> urllib2.urlopen<span class="p">(</span>req<span class="p">)</span>
-        result <span class="p">=</span>  <span class="k">res</span>.<span class="k">read</span><span class="p">()</span>
+        result <span class="p">=</span>  <span class="k">res</span>.read<span class="p">()</span>
         <span class="k">return</span> self.loads<span class="p">(</span>result<span class="p">)</span>
 
 <span class="nb">def</span> auto_translate<span class="p">(</span>text<span class="p">)</span>:
@@ -192,12 +192,12 @@ class Translate<span class="p">(</span>object<span class="p">)</span>:
 
 word <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s1">&#39;word&#39;</span><span class="p">)</span>
 result <span class="p">=</span> auto_translate<span class="p">(</span>word.strip<span class="p">())</span>
-<span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;源词: &#39;</span> <span class="p">+</span> result.get<span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
-<span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;结果: &#39;</span> <span class="p">+</span> result.get<span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
-<span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;拼音: &#39;</span> <span class="p">+</span> result.get<span class="p">(</span><span class="s2">&quot;pinyin&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
-<span class="k">if</span> result.get<span class="p">(</span><span class="s1">&#39;others&#39;</span><span class="p">)</span>:
+<span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;源词: &#39;</span> <span class="p">+</span> result.<span class="k">get</span><span class="p">(</span><span class="s2">&quot;source&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;结果: &#39;</span> <span class="p">+</span> result.<span class="k">get</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;拼音: &#39;</span> <span class="p">+</span> result.<span class="k">get</span><span class="p">(</span><span class="s2">&quot;pinyin&quot;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="k">if</span> result.<span class="k">get</span><span class="p">(</span><span class="s1">&#39;others&#39;</span><span class="p">)</span>:
     <span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;其他释义: &quot;&#39;</span><span class="p">)</span>
-    <span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;&#39;</span> <span class="p">+</span> result.get<span class="p">(</span><span class="s1">&#39;others&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+    <span class="k">vim</span>.command<span class="p">(</span><span class="s1">&#39;echo &quot;&#39;</span> <span class="p">+</span> result.<span class="k">get</span><span class="p">(</span><span class="s1">&#39;others&#39;</span><span class="p">)</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
 
 EOF
 

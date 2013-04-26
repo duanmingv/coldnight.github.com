@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h1>借用Tornado实现高效的WebQQ机器人</h1></a>
-            二 23 四月 2013
+            <a href="http://www.linuxzen.com/jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html"><h1>解决WebQQ机器人连接时间长触发 socket.gaierror</h1></a>
+            五 26 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,84 +70,99 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+        <div class="highlight"></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h2>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h2></a>
+        <div class= "well small"> 五 26 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+<h2>更新内容</h2>
+<ol>
+<li>数据库使用<code>SQLAlchemy</code>重写</li>
+<li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
+<li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
+<li>废弃一些不常用的命令</li>
+<li>改变数据库表结构</li>
+<li>废弃<code>channel</code>功能, <code>cd</code>命令仅支持切换聊天和安静模式</li>
+<li>删除一些不用的配置</li>
+</ol>
+<h2>如何升级</h2>
+<p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
+<p>本次更新添加了依赖, 现在依赖包括:
+<em> pyxmpp2
+    * dnspython ...</em></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h2>SQLAlchemy MySQL数据库乱码解决</h2></a>
+        <div class= "well small"> 五 26 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
+<div class="codehilite"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>但是这并不行, 然后查看表信息:</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
+<span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h2>借用Tornado实现高效的WebQQ机器人</h2></a>
+        <div class= "well small"> 二 23 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
 <p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
 <h2>引子</h2>
 <p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
 <h2>原理</h2>
-<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request</code> 是一个 <code>urllib2.Request</code>的实例, 和一个可选参数:<code>readback</code>是一个接受一个<code>urllib2.urlopen(request)</code>返回的<code>Response</code>参数的读取函数, 代码如下:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="c"># 省略若干代码</span>
-    <span class="k">def</span> <span class="nf">add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">readback</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Not a invaid requset&quot;</span>
-
-        <span class="c"># 此处易触发timeout异常, 省略处理异常代码</span>
-        <span class="n">sock</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_http_sock_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-
-        <span class="n">fd</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">sock</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fd_request_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span>
-        <span class="n">callback</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_events</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
-</pre></div>
-
-
-<p><code>HTTPStream.add_request</code>将<code>urllib2.Request</code>的实例解析出一个<code>socket</code>和一个用于<code>socket</code>发送的数据.前面文章介绍过了, <code>tornado.ioloop.IOLoop.add_handler</code>用于将注册socket, 其需要三个参数: socket的文件描述符, 接受文件描述符和事件参数的回调, 和注册的事件.</p>
-<p>我们用到的回调是<code>HTTPStream._handle_events</code>:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="c"># 省略若干代码</span>
-    <span class="k">def</span> <span class="nf">_handle_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 用于处理Tornado事件</span>
-<span class="sd">        Arguments:</span>
-<span class="sd">            `request`   -   urllib.Request</span>
-<span class="sd">            `data`      -   socket要写入的数据</span>
-<span class="sd">            `readback`  -   读取函数</span>
-<span class="sd">            以上参数应当使用partial封装然后将此方法作为IOLoop.add_handler的callback</span>
-<span class="sd">            `fd`        -   IOLoop传递 文件描述符</span>
-<span class="sd">            `event`     -   IOLoop传递 tornado</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
-            <span class="c"># 省略错误处理</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="n">readback</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-            <span class="n">s</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_delay_request</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">)</span>
-                <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-                <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">:</span>
-            <span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">readback</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
-            <span class="k">pass</span>
-</pre></div>
-
-
-<p>它接受的参数上面注释写的很清楚, 不做解释, 所以将此方法通过<code>functools.partial</code>封装做为<code>callback</code>传递给<code>tornado.ioloop.IOLoop.add_handler</code>, 并注册为<code>写</code>事件, 以便发送<code>HTTP</code>请求.</p>
-<p><code>HTTPStream._handle_events</code>用于处理事件, 当事件为写时就发送<code>HTTP</code>请求(根据<code>urllib2.Request</code>生成的用于发送的数据), 并判断是否有读取函数, 有则注册<code>读</code>事件, 当事件为读时就从socket中构建一个<code>Response</code>并传递给读取函数, 读取函数会返回3个值, 分别为: 下一个请求, 请求的读取函数(可为None, 为None则只请求不读取), 下一个请求的延迟(多长事件后添加此请求, 可选, 单位为秒)</p>
-<p>依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码</p>
-<p><code>HTTPStream.http_sock.make_response</code>执行时会将<code>socket</code>设为阻塞, 因为不设置阻塞会出现<code>httplib.BadStatusLine</code>异常.读取函数执行完毕,重新将<code>socket</code>设置为非阻塞, 并移除此<code>socket</code>(虽然做了这样的处理但是QQ连接时间稍长还是会触发<code>httplib.BadStatusLine</code>异常)</p>
-<h2>存在问题</h2>
-<ol>
-<li>在线时间稍长, 当经过多次请求后会触发<code>socket.gaierror(-2, 'Name or service not known')</code> 异常</li>
-<li>在线时间过长会引发<code>httplib.BadStatusline</code></li>
-<li>没有重试机制</li>
-</ol></div>
-        <hr />
-    </div>
-		
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">read more</a></div>
+    </div>	
+				
     
  
         
@@ -318,94 +333,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
-        <div class= "well small"> 五 25 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="sr">/pygments/</span><span class="n">plugin</span><span class="o">.</span><span class="n">py:39:</span> <span class="n">UserWarning:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">argparse</span><span class="o">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="sr">/usr/</span><span class="nb">local</span><span class="sr">/lib/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
-</pre></div>
-
-
-<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
-        <div class= "well small"> 二 22 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><h2>引子</h2>
-<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
-<h2>实现</h2>
-<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
-<h2>代码</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/21 09:54:39</span>
-<span class="c">#   Desc    :   贴代码和图片</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
-        <div class= "well small"> 三 16 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><h2>原因</h2>
-<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
-<h2>实现</h2>
-<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
-prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
@@ -413,6 +340,7 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
     <li class="active"><a href="http://www.linuxzen.com/category/python.html">1</a></li>
     <li class=""><a href="http://www.linuxzen.com/category/python2.html">2</a></li>
     <li class=""><a href="http://www.linuxzen.com/category/python3.html">3</a></li>
+    <li class=""><a href="http://www.linuxzen.com/category/python4.html">4</a></li>
 
     <li class="next"><a href="http://www.linuxzen.com/category/python2.html">Next &rarr;</a></li>
 

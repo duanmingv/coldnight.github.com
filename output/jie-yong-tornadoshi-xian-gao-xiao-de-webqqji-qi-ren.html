@@ -133,10 +133,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p><code>HTTPStream._handle_events</code>用于处理事件, 当事件为写时就发送<code>HTTP</code>请求(根据<code>urllib2.Request</code>生成的用于发送的数据), 并判断是否有读取函数, 有则注册<code>读</code>事件, 当事件为读时就从socket中构建一个<code>Response</code>并传递给读取函数, 读取函数会返回3个值, 分别为: 下一个请求, 请求的读取函数(可为None, 为None则只请求不读取), 下一个请求的延迟(多长事件后添加此请求, 可选, 单位为秒)</p>
 <p>依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码</p>
 <p><code>HTTPStream.http_sock.make_response</code>执行时会将<code>socket</code>设为阻塞, 因为不设置阻塞会出现<code>httplib.BadStatusLine</code>异常.读取函数执行完毕,重新将<code>socket</code>设置为非阻塞, 并移除此<code>socket</code>(虽然做了这样的处理但是QQ连接时间稍长还是会触发<code>httplib.BadStatusLine</code>异常)</p>
+<h2>2013-04-26 更新</h2>
+<ul>
+<li>解决 在线时间稍长, 当经过多次请求后会触发<code>socket.gaierror(-2, 'Name or service not known')</code> 异常</li>
+</ul>
 <h2>存在问题</h2>
 <ol>
-<li>在线时间稍长, 当经过多次请求后会触发<code>socket.gaierror(-2, 'Name or service not known')</code> 异常</li>
-<li>在线时间过长会引发<code>httplib.BadStatusline</code></li>
 <li>没有重试机制</li>
 </ol></div>
 

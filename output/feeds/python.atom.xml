@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-23T13:36:00+08:00</updated><entry><title>借用Tornado实现高效的WebQQ机器人</title><link href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html" rel="alternate"></link><updated>2013-04-23T13:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-23:jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html</id><summary type="html">&lt;p&gt;之前有写过一篇文章介绍使用&lt;code&gt;Pyxmpp2&lt;/code&gt;桥接QQ和xmpp的文章(&lt;a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"&gt;这里&lt;/a&gt;).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了&lt;code&gt;pyxmpp2&lt;/code&gt;的mainloop, 但是跑起来问题多多, 所以我又研究了利用&lt;code&gt;Tornado&lt;/code&gt;进行网络编程(&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;这里&lt;/a&gt;), 所以我放弃了&lt;code&gt;Pyxmpp2&lt;/code&gt;的mainloop,使用&lt;code&gt;Tornado&lt;/code&gt;进行重写&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-26T16:36:00+08:00</updated><entry><title>解决WebQQ机器人连接时间长触发 socket.gaierror</title><link href="http://www.linuxzen.com/jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html" rel="alternate"></link><updated>2013-04-26T16:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-26:jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html</id><summary type="html"></summary><category term="webqq"></category><category term="socket.gaierror"></category><category term="python"></category></entry><entry><title>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</title><link href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html" rel="alternate"></link><updated>2013-04-26T15:40:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-26:clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html</id><summary type="html">&lt;p&gt;&lt;a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"&gt;clubot&lt;/a&gt;在我的vps上跑了有一段时间了, 最近接触了&lt;code&gt;SQLAlchemy&lt;/code&gt; 然后反观&lt;code&gt;clubot&lt;/code&gt;的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用&lt;code&gt;SQLAlchemy&lt;/code&gt;重写了数据库模块, 并将&lt;code&gt;epoll&lt;/code&gt;的MainLoop改成&lt;a href="http://lilydjwg.is-programmer.com/"&gt;仙子君&lt;/a&gt;所写的&lt;a href="https://github.com/lilydjwg/pyxmpp2"&gt;TornadoMainLoop&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;更新内容&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;数据库使用&lt;code&gt;SQLAlchemy&lt;/code&gt;重写&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MainLoop&lt;/code&gt;改用&lt;code&gt;TornadoMainLoop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将&lt;code&gt;history&lt;/code&gt;命令改为&lt;code&gt;old&lt;/code&gt;, 并支持时间查询&lt;/li&gt;
+&lt;li&gt;废弃一些不常用的命令&lt;/li&gt;
+&lt;li&gt;改变数据库表结构&lt;/li&gt;
+&lt;li&gt;废弃&lt;code&gt;channel&lt;/code&gt;功能, &lt;code&gt;cd&lt;/code&gt;命令仅支持切换聊天和安静模式&lt;/li&gt;
+&lt;li&gt;删除一些不用的配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;如何升级&lt;/h2&gt;
+&lt;p&gt;数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上&lt;code&gt;clubot_&lt;/code&gt;前缀, 并配以&lt;code&gt;update.py&lt;/code&gt;脚本用以支持将旧的数据导入.&lt;/p&gt;
+&lt;p&gt;本次更新添加了依赖, 现在依赖包括:
+&lt;em&gt; pyxmpp2
+    * dnspython
+&lt;/em&gt; tornado
+* sqlalchemy
+    * MySQL-python&lt;/p&gt;
+&lt;h2&gt;乱码&lt;/h2&gt;
+&lt;p&gt;如果数据导入后乱码, 可以参考&lt;a href="/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"&gt;这篇文章&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;项目地址&lt;/h2&gt;
+&lt;p&gt;最后放上&lt;a href="https://github.com/coldnight/clubot"&gt;项目地址&lt;/a&gt;&lt;/p&gt;</summary><category term="clubot"></category><category term="pyxmpp2"></category><category term="gtalk"></category><category term="xmpp"></category><category term="更新"></category><category term="重写"></category><category term="SQLAlchemy"></category><category term="tornado"></category></entry><entry><title>SQLAlchemy MySQL数据库乱码解决</title><link href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html" rel="alternate"></link><updated>2013-04-26T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-26:sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html</id><summary type="html">&lt;p&gt;今天对&lt;a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"&gt;clubot&lt;/a&gt;进行了&lt;a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"&gt;升级&lt;/a&gt;, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;engine&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;create_engine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;mysql://root:@localhost:3306/clubot?charset=utf8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;但是这并不行, 然后查看表信息:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="k"&gt;create&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_members&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;clubot_members&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="ss"&gt;`clubot_members`&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+  &lt;span class="ss"&gt;`id`&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;NOT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt; &lt;span class="kp"&gt;AUTO_INCREMENT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="ss"&gt;`email`&lt;/span&gt; &lt;span class="kt"&gt;varchar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="ss"&gt;`nick`&lt;/span&gt; &lt;span class="kt"&gt;varchar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="ss"&gt;`last_say`&lt;/span&gt; &lt;span class="kt"&gt;timestamp&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="ss"&gt;`last_change`&lt;/span&gt; &lt;span class="kt"&gt;timestamp&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="ss"&gt;`isonline`&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="ss"&gt;`join_date`&lt;/span&gt; &lt;span class="kt"&gt;timestamp&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="no"&gt;NULL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;`id`&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="k"&gt;UNIQUE&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="ss"&gt;`email`&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;`email`&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+  &lt;span class="k"&gt;UNIQUE&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="ss"&gt;`nick`&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;`nick`&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kp"&gt;ENGINE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;InnoDB&lt;/span&gt; &lt;span class="kp"&gt;AUTO_INCREMENT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="k"&gt;DEFAULT&lt;/span&gt; &lt;span class="kp"&gt;CHARSET&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;latin1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;发现原来创建表的时候用的&lt;code&gt;latin1&lt;/code&gt;编码, 而老的表是用&lt;code&gt;utf-8&lt;/code&gt;编码创建的, &lt;code&gt;SQLAlchemy&lt;/code&gt;中并没有发现有指定创建表时的编码方法. 所以只能在&lt;code&gt;MySQL&lt;/code&gt;本身来找:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="n"&gt;VARIABLES&lt;/span&gt; &lt;span class="k"&gt;like&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;character%%&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;+--------------------------+-----------------------------+&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Variable_name&lt;/span&gt;            &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Value&lt;/span&gt;                       &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;+--------------------------+-----------------------------+&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_client&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;utf8&lt;/span&gt;                        &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_connection&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;utf8&lt;/span&gt;                        &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_database&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;latin1&lt;/span&gt;                      &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_filesystem&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;binary&lt;/span&gt;                      &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_results&lt;/span&gt;    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;utf8&lt;/span&gt;                        &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_server&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;latin1&lt;/span&gt;                      &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_set_system&lt;/span&gt;     &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;utf8&lt;/span&gt;                        &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;character_sets_dir&lt;/span&gt;       &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;charsets&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;+--------------------------+-----------------------------+&lt;/span&gt;
+&lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;rows&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="kt"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="n"&gt;sec&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;show&lt;/span&gt; &lt;span class="k"&gt;create&lt;/span&gt; &lt;span class="k"&gt;database&lt;/span&gt; &lt;span class="n"&gt;clubot&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;+----------+-------------------------------------------------------------------+&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;Database&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;Create&lt;/span&gt; &lt;span class="k"&gt;Database&lt;/span&gt;                                                   &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;+----------+-------------------------------------------------------------------+&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;clubot&lt;/span&gt;   &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;DATABASE&lt;/span&gt; &lt;span class="ss"&gt;`clubot`&lt;/span&gt; &lt;span class="cm"&gt;/*!40100 DEFAULT CHARACTER SET latin1 */&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="o"&gt;+----------+-------------------------------------------------------------------+&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;row&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="kt"&gt;set&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;00&lt;/span&gt; &lt;span class="n"&gt;sec&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;发现 &lt;code&gt;MySQL&lt;/code&gt;默认的和数据库都是&lt;code&gt;latin1&lt;/code&gt;的编码, 所以更改数据库配置&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/mysql/my.cnf      &lt;span class="c"&gt;# MySQL配置文件在Ubuntu上的位置, 其他系统可能有差异&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;分别在&lt;code&gt;[client]&lt;/code&gt; &lt;code&gt;[mysqld]&lt;/code&gt;下添加&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;character&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;utf8&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这时重启MySQL居然起不来, 说&lt;code&gt;default-character-set&lt;/code&gt;是无效的变量, 查看&lt;code&gt;MySQL&lt;/code&gt;版本发现是5.5, 找资料说5.5的服务端编码设置变量是&lt;code&gt;character-set-server&lt;/code&gt;, 所以将&lt;code&gt;[mysqld]&lt;/code&gt;上的&lt;code&gt;default-character-set = utf8&lt;/code&gt;改为 &lt;code&gt;character-set-server = utf8&lt;/code&gt;, 并重启&lt;code&gt;MySQL&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后更改数据库编码:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;alter&lt;/span&gt; &lt;span class="k"&gt;database&lt;/span&gt; &lt;span class="n"&gt;clubot&lt;/span&gt; &lt;span class="k"&gt;character&lt;/span&gt; &lt;span class="kt"&gt;set&lt;/span&gt; &lt;span class="n"&gt;utf8&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;删除新建的表, 并重新导入数据中文就正常了&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;use&lt;/span&gt; &lt;span class="n"&gt;clubot&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_status&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_infos&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_history&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_members&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="sqlalchemy"></category><category term="MySQL"></category><category term="数据库"></category><category term="乱码"></category><category term="utf8"></category></entry><entry><title>借用Tornado实现高效的WebQQ机器人</title><link href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html" rel="alternate"></link><updated>2013-04-23T13:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-23:jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html</id><summary type="html">&lt;p&gt;之前有写过一篇文章介绍使用&lt;code&gt;Pyxmpp2&lt;/code&gt;桥接QQ和xmpp的文章(&lt;a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"&gt;这里&lt;/a&gt;).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了&lt;code&gt;pyxmpp2&lt;/code&gt;的mainloop, 但是跑起来问题多多, 所以我又研究了利用&lt;code&gt;Tornado&lt;/code&gt;进行网络编程(&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;这里&lt;/a&gt;), 所以我放弃了&lt;code&gt;Pyxmpp2&lt;/code&gt;的mainloop,使用&lt;code&gt;Tornado&lt;/code&gt;进行重写&lt;/p&gt;
 &lt;p&gt;首先放出&lt;a href="https://github.com/coldnight/pual_bot"&gt;项目代码&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;引子&lt;/h2&gt;
 &lt;p&gt;WebQQ协议是一套基于&lt;code&gt;HTTP&lt;/code&gt;的QQ协议, 而用&lt;code&gt;Python&lt;/code&gt;的&lt;code&gt;urllib2&lt;/code&gt;库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而&lt;code&gt;Tornado&lt;/code&gt;简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择&lt;code&gt;Tornado&lt;/code&gt;作为网络框架.&lt;/p&gt;
@@ -68,10 +160,12 @@
 &lt;p&gt;&lt;code&gt;HTTPStream._handle_events&lt;/code&gt;用于处理事件, 当事件为写时就发送&lt;code&gt;HTTP&lt;/code&gt;请求(根据&lt;code&gt;urllib2.Request&lt;/code&gt;生成的用于发送的数据), 并判断是否有读取函数, 有则注册&lt;code&gt;读&lt;/code&gt;事件, 当事件为读时就从socket中构建一个&lt;code&gt;Response&lt;/code&gt;并传递给读取函数, 读取函数会返回3个值, 分别为: 下一个请求, 请求的读取函数(可为None, 为None则只请求不读取), 下一个请求的延迟(多长事件后添加此请求, 可选, 单位为秒)&lt;/p&gt;
 &lt;p&gt;依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;HTTPStream.http_sock.make_response&lt;/code&gt;执行时会将&lt;code&gt;socket&lt;/code&gt;设为阻塞, 因为不设置阻塞会出现&lt;code&gt;httplib.BadStatusLine&lt;/code&gt;异常.读取函数执行完毕,重新将&lt;code&gt;socket&lt;/code&gt;设置为非阻塞, 并移除此&lt;code&gt;socket&lt;/code&gt;(虽然做了这样的处理但是QQ连接时间稍长还是会触发&lt;code&gt;httplib.BadStatusLine&lt;/code&gt;异常)&lt;/p&gt;
+&lt;h2&gt;2013-04-26 更新&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;解决 在线时间稍长, 当经过多次请求后会触发&lt;code&gt;socket.gaierror(-2, 'Name or service not known')&lt;/code&gt; 异常&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;存在问题&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;在线时间稍长, 当经过多次请求后会触发&lt;code&gt;socket.gaierror(-2, 'Name or service not known')&lt;/code&gt; 异常&lt;/li&gt;
-&lt;li&gt;在线时间过长会引发&lt;code&gt;httplib.BadStatusline&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;没有重试机制&lt;/li&gt;
 &lt;/ol&gt;</summary><category term="tornado"></category><category term="高效"></category><category term="webqq"></category><category term="并发"></category><category term="协议"></category></entry><entry><title>使用Pelican打造静态博客</title><link href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html" rel="alternate"></link><updated>2013-04-18T09:40:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-18:shi-yong-pelicanda-zao-jing-tai-bo-ke.html</id><summary type="html">&lt;p&gt;前面有文章介绍本站采用了&lt;code&gt;Python&lt;/code&gt;编写的&lt;code&gt;Pelican&lt;/code&gt;静态生成博客系统, 之所以没有使用当前很火的&lt;code&gt;Jekyll&lt;/code&gt;, 是因为它是&lt;code&gt;Ruby&lt;/code&gt;编写, 而我又对&lt;code&gt;Ruby&lt;/code&gt;没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来&lt;/p&gt;
 &lt;h2&gt;介绍&lt;/h2&gt;
@@ -114,10 +208,10 @@ pelican-quickstart
 
 &lt;h3&gt;写一篇文章&lt;/h3&gt;
 &lt;p&gt;在 &lt;code&gt;content&lt;/code&gt; 目录新建一个 &lt;code&gt;test.md&lt;/code&gt;文件, 填入一下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Title:&lt;/span&gt; &lt;span class="err"&gt;文章标题&lt;/span&gt;
-&lt;span class="n"&gt;Date:&lt;/span&gt; &lt;span class="mi"&gt;2013&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;
-&lt;span class="n"&gt;Category:&lt;/span&gt; &lt;span class="err"&gt;文章类别&lt;/span&gt;
-&lt;span class="n"&gt;Tag:&lt;/span&gt; &lt;span class="err"&gt;标签&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;标签&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nl"&gt;Title:&lt;/span&gt; &lt;span class="err"&gt;文章标题&lt;/span&gt;
+&lt;span class="nl"&gt;Date:&lt;/span&gt; &lt;span class="mi"&gt;2013&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;18&lt;/span&gt;
+&lt;span class="nl"&gt;Category:&lt;/span&gt; &lt;span class="err"&gt;文章类别&lt;/span&gt;
+&lt;span class="nl"&gt;Tag:&lt;/span&gt; &lt;span class="err"&gt;标签&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;标签&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
 
 &lt;span class="err"&gt;这里是内容&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -746,7 +840,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 &lt;p&gt;epoll仅仅在&lt;code&gt;Linux&lt;/code&gt;下支持&lt;/p&gt;
 &lt;h2&gt;写在后面的话&lt;/h2&gt;
 &lt;p&gt;欢迎大家加入到&lt;code&gt;clubot@vim-cn.com&lt;/code&gt;中来讨论有关Python/vim/Linux/开源等话题&lt;/p&gt;</summary><category term="epoll"></category><category term="python"></category><category term="gtalk"></category><category term="群"></category><category term="Linux"></category><category term="clubot"></category></entry><entry><title>Python 重复安装包报错</title><link href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html" rel="alternate"></link><updated>2013-01-25T14:55:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-01-25:python-zhong-fu-an-zhuang-bao-bao-cuo.html</id><summary type="html">&lt;p&gt;最近写程序用到argparse总是会报错&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="sr"&gt;/python2.7/&lt;/span&gt;&lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="sr"&gt;/pygments/&lt;/span&gt;&lt;span class="n"&gt;plugin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py:39:&lt;/span&gt; &lt;span class="n"&gt;UserWarning:&lt;/span&gt; &lt;span class="n"&gt;Module&lt;/span&gt; &lt;span class="n"&gt;argparse&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;already&lt;/span&gt; &lt;span class="n"&gt;imported&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="sr"&gt;/python2.7/&lt;/span&gt;&lt;span class="n"&gt;argparse&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pyc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;but&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/lib/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;being&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pygments&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;plugin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;UserWarning&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Module&lt;/span&gt; &lt;span class="n"&gt;argparse&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;already&lt;/span&gt; &lt;span class="n"&gt;imported&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;argparse&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pyc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;but&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dist&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;being&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1239,7 +1333,7 @@ Requests: 128 susceed, 0 failed.
 
 
 &lt;h5&gt;结果&lt;/h5&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;#39;&lt;span class="nt"&gt;&amp;lt;table&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;highlighttable&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;linenos&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;linenodiv&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;pre&amp;gt;&lt;/span&gt;1&lt;span class="nt"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;code&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;highlight&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;pre&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;k&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;print&lt;span class="nt"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;&amp;lt;span&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;&lt;span class="ni"&gt;&amp;amp;quot;&lt;/span&gt;hello, world&lt;span class="ni"&gt;&amp;amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;\n&lt;span class="nt"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;\n&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&lt;/span&gt;&amp;#39;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;table class=&amp;quot;highlighttable&amp;quot;&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td class=&amp;quot;linenos&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;linenodiv&amp;quot;&amp;gt;&amp;lt;pre&amp;gt;1&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td class=&amp;quot;code&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;highlight&amp;quot;&amp;gt;&amp;lt;pre&amp;gt;&amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;print&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;s&amp;quot;&amp;gt;&amp;amp;quot;hello, world&amp;amp;quot;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1476,8 +1570,8 @@ if为真时候结果为result,为假的时候结果为fresult&lt;/p&gt;
 &lt;p&gt;在需要插入断点的地方插入如下代码可以插入一个断点
 import pdb; pdb.set_trace()
 当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="c1"&gt;# 这里会出现当前运行程序的信息,源文件和当前函数&lt;/span&gt;
-&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="c1"&gt;# 这里是将要运行的语句&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;这里会出现当前运行程序的信息&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;源文件和当前函数&lt;/span&gt;
+&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;这里是将要运行的语句&lt;/span&gt;
  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pdb&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -2017,9 +2111,9 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 
 
 &lt;p&gt;help的结果其中有两个参数一个是path,和domain:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt; &lt;span class="n"&gt;domain:&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;domain&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;allowed&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;cookie&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;default:&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt; &lt;span class="n"&gt;path:&lt;/span&gt; &lt;span class="n"&gt;limits&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;cookie&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;given&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;default:&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt; &lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;domain&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;allowed&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;read&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;cookie&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;param&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;limits&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;cookie&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;given&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -2076,9 +2170,9 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 
 
 &lt;p&gt;运行这段代码,会提示:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bottle&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="n"&gt;starting&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="n"&gt;WSGIRefServer&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
-&lt;span class="n"&gt;Listening&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="mf"&gt;127.0.0.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;8080&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-&lt;span class="n"&gt;Hit&lt;/span&gt; &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;quit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bottle&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="n"&gt;starting&lt;/span&gt; &lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="n"&gt;WSGIRefServer&lt;/span&gt;&lt;span class="p"&gt;())...&lt;/span&gt;
+&lt;span class="n"&gt;Listening&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//127.0.0.1:8080/&lt;/span&gt;
+&lt;span class="n"&gt;Hit&lt;/span&gt; &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;quit&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -2171,18 +2265,18 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 
 
 &lt;p&gt;为了更方便的使用我们把这个脚本命名位pytranslate,放到/usr/bin下,并赋予执行权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pytranslate&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pytranslate&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后我们就可以使用它进行翻译了:
 翻译英文到中文:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;pytranslate&lt;/span&gt; &lt;span class="n"&gt;en2zh&lt;/span&gt; &lt;span class="n"&gt;extent&lt;/span&gt;
-&lt;span class="err"&gt;源词&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;extent&lt;/span&gt;
-&lt;span class="err"&gt;结果&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="err"&gt;程度&lt;/span&gt;
-&lt;span class="err"&gt;拼音&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Ch&lt;/span&gt;&lt;span class="err"&gt;é&lt;/span&gt;&lt;span class="n"&gt;ngd&lt;/span&gt;&lt;span class="err"&gt;ù&lt;/span&gt;
-&lt;span class="err"&gt;词性&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="err"&gt;名词&lt;/span&gt;
-&lt;span class="err"&gt;其他释义&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="err"&gt;源词&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;extent&lt;/span&gt;
+&lt;span class="err"&gt;结果&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;程度&lt;/span&gt;
+&lt;span class="err"&gt;拼音&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Ch&lt;/span&gt;&lt;span class="err"&gt;é&lt;/span&gt;&lt;span class="n"&gt;ngd&lt;/span&gt;&lt;span class="err"&gt;ù&lt;/span&gt;
+&lt;span class="err"&gt;词性&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;名词&lt;/span&gt;
+&lt;span class="err"&gt;其他释义&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 &lt;span class="err"&gt;程度&lt;/span&gt;
 &lt;span class="err"&gt;范围&lt;/span&gt;
 &lt;span class="err"&gt;幅度&lt;/span&gt;
@@ -2198,11 +2292,11 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 &lt;span class="n"&gt;en&lt;/span&gt;
 &lt;span class="err"&gt;翻译中文到英文&lt;/span&gt;
 &lt;span class="n"&gt;pytranslate&lt;/span&gt; &lt;span class="n"&gt;zh2en&lt;/span&gt; &lt;span class="err"&gt;中国&lt;/span&gt;
-&lt;span class="err"&gt;源词&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="err"&gt;中国&lt;/span&gt;
-&lt;span class="err"&gt;结果&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;China&lt;/span&gt;
-&lt;span class="err"&gt;拼音&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Zh&lt;/span&gt;&lt;span class="err"&gt;ō&lt;/span&gt;&lt;span class="n"&gt;nggu&lt;/span&gt;&lt;span class="err"&gt;ó&lt;/span&gt;
-&lt;span class="err"&gt;词性&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="err"&gt;名词&lt;/span&gt;
-&lt;span class="err"&gt;其他释义&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="err"&gt;源词&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;中国&lt;/span&gt;
+&lt;span class="err"&gt;结果&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;China&lt;/span&gt;
+&lt;span class="err"&gt;拼音&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Zh&lt;/span&gt;&lt;span class="err"&gt;ō&lt;/span&gt;&lt;span class="n"&gt;nggu&lt;/span&gt;&lt;span class="err"&gt;ó&lt;/span&gt;
+&lt;span class="err"&gt;词性&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;名词&lt;/span&gt;
+&lt;span class="err"&gt;其他释义&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 &lt;span class="n"&gt;China&lt;/span&gt;
 &lt;span class="n"&gt;zh&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;CN&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -2384,16 +2478,16 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 
 
 &lt;p&gt;将这个脚本保存为pymail放到/usr/bin/下,并赋予其执行权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pymail&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pymail&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;可以使用 -h指定smtp发件服务器,默认认为指定-h需要认证, 所以就需要smtp服务器支持认证,同时需要-u指定用户名(需加"@域名"),-p指定密码.
 如果不指定-h就会使用本地smtp服务器,默认不需要认证,所以本地的smtp服务器就不能支持认证,同时不需指定-u,-p参数&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="err"&gt;指定收件人多个可用&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;号分割&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="err"&gt;指定收件人多个可用&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;号分割&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="err"&gt;指定附件路径&lt;/span&gt;
 &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;指定附件名&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;可省略&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="err"&gt;显示帮助信息&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="err"&gt;显示帮助信息&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="err"&gt;指定邮件主题&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -2463,13 +2557,13 @@ tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.
 
 
 &lt;h3&gt;使用easy_install安装web.py&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;测试是否安装成功:&lt;/h3&gt;
 &lt;p&gt;在python shell中执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -2491,7 +2585,7 @@ tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.
 
 
 &lt;p&gt;然后保存为&lt;code&gt;hello.py&lt;/code&gt;并运行它&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

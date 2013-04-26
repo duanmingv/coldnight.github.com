@@ -59,6 +59,120 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html"><h2>python里的三目运算</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>下面说的和三目运算有点相似,但又不一样,实在不知道该如何拟定标题,先就是这个标题吧,大家都知道python中没有三目运算,但是<code>and</code>/<code>or</code>有点类似三目运算:</p>
+<h2>and/or</h2>
+<p>单独使用表示逻辑关系与和或,也可以组和使用,用法如下</p>
+<h3>and</h3>
+<p>and前后如果某一个值为假(False, '', [], {}, None…)则返回第一个假值
+如果所有值都为真则返回最后一个真值</p>
+<h3>or</h3>
+<p>如果or任意一个值为真,则立刻返回这个值
+如果所有值都为假,则or返回最后一个假值</p>
+<h3>例子</h3>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
+<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h2>Python 断点调试</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>pdb模块</h2>
+<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
+<h3>插入断点</h3>
+<p>在需要插入断点的地方插入如下代码可以插入一个断点
+import pdb; pdb.set_trace()
+当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
+<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
+ <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>pdb指令</h3>
+<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
+<ul>
+<li>l 查看代码上下文</li>
+<li>p var 监视变量var</li>
+<li>n 单步执行</li>
+<li>b line  在line行插入断点</li>
+<li>c 继续到下一个断点,没有则执行程序</li>
+<li>r 执行到函数返回前</li>
+</ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h2>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
+<h2>介绍</h2>
+<h3>lambda</h3>
+<p>Python用于支持将函数赋值给变量的一个操作符
+默认是返回的,所以不用再加return关键字,不然会报错</p>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
+<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
+</pre></div>
+
+
+<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
+<h3>map()</h3>
+<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
+<h3>filter()</h3>
+<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
+<h3>reduce()</h3>
+<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
+<h2>将上面三个函数和lambda结合使用</h2>
+<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c"># 序列中的每个元素加1</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h2>Python 常用的列表操作</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -300,94 +414,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
                 <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h2>用Python写的终端下的翻译工具</h2></a>
-        <div class= "well small"> 一 23 四月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
-<p>好了不费话了,下面放代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*-coding:utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: translate.py</span>
-<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h2>用python发带附件的邮件用来定时备份mysql数据库</h2></a>
-        <div class= "well small"> 六 21 四月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
-<p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding: utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: mail.py</span>
-<span class="sd">#         Desc: To send email</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version: 0.0.1</span>
-<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h2>使用Python进行web开发</h2></a>
-        <div class= "well small"> 五 13 四月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
-<p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
-<h3>安装easy_install</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
-</pre></div>
-
-
-<h3>使用easy_install安装web.py</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev"><a href="http://www.linuxzen.com/category/python2.html">&larr; Previous</a></li>
@@ -395,8 +421,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <li class=""><a href="http://www.linuxzen.com/category/python.html">1</a></li>
     <li class=""><a href="http://www.linuxzen.com/category/python2.html">2</a></li>
     <li class="active"><a href="http://www.linuxzen.com/category/python3.html">3</a></li>
+    <li class=""><a href="http://www.linuxzen.com/category/python4.html">4</a></li>
 
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+    <li class="next"><a href="http://www.linuxzen.com/category/python4.html">Next &rarr;</a></li>
 
 </ul>
 </div>    

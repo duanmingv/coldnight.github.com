@@ -59,28 +59,107 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h1>grep挽救了我一个下午: 恢复rm -f删除的代码</h1></a>
-            四 25 四月 2013
+            <a href="http://www.linuxzen.com/jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html"><h1>解决WebQQ机器人连接时间长触发 socket.gaierror</h1></a>
+            五 26 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ 
+        </div>
+        
+        <div class="highlight"></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h2>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h2></a>
+        <div class= "well small"> 五 26 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+<h2>更新内容</h2>
+<ol>
+<li>数据库使用<code>SQLAlchemy</code>重写</li>
+<li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
+<li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
+<li>废弃一些不常用的命令</li>
+<li>改变数据库表结构</li>
+<li>废弃<code>channel</code>功能, <code>cd</code>命令仅支持切换聊天和安静模式</li>
+<li>删除一些不用的配置</li>
+</ol>
+<h2>如何升级</h2>
+<p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
+<p>本次更新添加了依赖, 现在依赖包括:
+<em> pyxmpp2
+    * dnspython ...</em></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h2>SQLAlchemy MySQL数据库乱码解决</h2></a>
+        <div class= "well small"> 五 26 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
+<div class="codehilite"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>但是这并不行, 然后查看表信息:</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
+<span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h2>grep挽救了我一个下午: 恢复rm -f删除的代码</h2></a>
+        <div class= "well small"> 四 25 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
-        </div>
-        
-        <div class="highlight"><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
+ </div>
+        <div class="summary"><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
 <p>好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个<code>Logics</code>类并且上面差不多30行, 往下差不多300行的样子, 我删除<code>logics.py</code>所在的分区是<code>/dev/sda7</code>, 所以我运行了下面命令:</p>
-<div class="codehilite"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 &gt; tmp
-</pre></div>
-
-
-<p>经过漫长的等待, 这个命令还没结束, 我忍不住看了下 tmp的内容, 我发现我找到了这段代码</p>
-<p>当然损失并不是没有, 损失就是中文注释全部乱码, 但我满足了, 我只要重写注释就可以了.</p></div>
-        <hr />
-    </div>
-		
+<div class="codehilite"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html">read more</a></div>
+    </div>	
+				
     
  
         
@@ -246,91 +325,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <li>Linux</li>
 <li>python2.7</li>
 <li>MySQL ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
-        <div class= "well small"> 二 05 二月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><h2>引子</h2>
-<p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
-<h2>实现</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
-        <div class= "well small"> 五 25 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="sr">/pygments/</span><span class="n">plugin</span><span class="o">.</span><span class="n">py:39:</span> <span class="n">UserWarning:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="sr">/usr/</span><span class="n">lib</span><span class="sr">/python2.7/</span><span class="n">argparse</span><span class="o">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="sr">/usr/</span><span class="nb">local</span><span class="sr">/lib/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
-</pre></div>
-
-
-<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
-        <div class= "well small"> 二 22 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><h2>引子</h2>
-<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
-<h2>实现</h2>
-<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
-<h2>代码</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/21 09:54:39</span>
-<span class="c">#   Desc    :   贴代码和图片</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

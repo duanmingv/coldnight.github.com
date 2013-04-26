@@ -59,6 +59,91 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
+        <div class= "well small"> 二 05 二月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>引子</h2>
+<p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
+<h2>实现</h2>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
+        <div class= "well small"> 五 25 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
+<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
+</pre></div>
+
+
+<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
+执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
+        <div class= "well small"> 二 22 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>引子</h2>
+<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
+<h2>实现</h2>
+<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
+<h2>代码</h2>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/21 09:54:39</span>
+<span class="c">#   Desc    :   贴代码和图片</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
         <div class= "well small"> 三 16 一月 2013
 
@@ -99,7 +184,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
-<div class="codehilite"><pre>Bundle <span class="c">&quot;Lokaltog/vim-powerline&quot;</span>
+<div class="codehilite"><pre>Bundle <span class="s2">&quot;Lokaltog/vim-powerline&quot;</span>
 </pre></div>
 
 
@@ -110,7 +195,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
 <p>如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加</p>
 <div class="codehilite"><pre><span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
-<span class="k">let</span> g:Powerline_symbols<span class="p">=</span><span class="s1">&#39;unicode&#39;</span>
+<span class="k">let</span> <span class="k">g</span>:Powerline_symbols<span class="p">=</span><span class="s1">&#39;unicode&#39;</span>
 </pre></div>
 
 
@@ -146,7 +231,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 <span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
 
 <span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> get<span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
+    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
     </div>	
 				
     
@@ -270,7 +355,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 evince
 却提示:</p>
 <div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
-<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments:</span> <span class="err">无法打开显示：</span>
+<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
 </pre></div>
 
 
@@ -286,109 +371,7 @@ evince
 
 
 <p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h2>python 使用pyxmpp2编写gtalk群</h2></a>
-        <div class= "well small"> 一 29 十月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
-<p>其实主要原理就是机器人接收到消息后再将消息广播出去,从而达到群的效果.</p>
-<p>python有两个模块可以用来支持xmpp,分别是pyxmpp和pyxmpp2,之前也用pyxmpp写了一个,功能和兼容性不是很好,经常出现问题,所以又使用pyxmpp2重写了一遍,今天修复了一些bug,所以公布出来,大家可以下载测试,也可以加入我们使用gtalk进行群交流,</p>
-<p>我们的gtalk机器人是:<code>clubot@vim-cn.com</code></p>
-<p>喜欢gtalk,同时喜欢Linux/Python/Vim等爱好者的同学可以加进来交流</p>
-<p>如果对我们的代码比较感兴趣,可以访问github,我们将代码放在了github上:https://github.com/coldnight/clubot</p>
-<p>下面介绍一下安装:</p>
-<p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
-<p>下载源码:</p>
-<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
-</pre></div>
-
-
-<p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html"><h2>Linux高效工作----平铺式窗体管理器Awesome</h2></a>
-        <div class= "well small"> 四 25 十月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:</p>
-<p>Awesome是一款运行在Unix和类Unix(Linux/FreeBSD)等系统上的一款平铺式窗体管理器,有占用资源小,易于管理和操作等等有点,这里不罗嗦这些说说安装,Ubuntu安装很简单</p>
-<div class="codehilite"><pre>sudo apt-get install awesome
-</pre></div>
-
-
-<p>安装好后登出会话选择awesome登录,然后你是否茫然无知没办法工作了?先简单介绍下使用方法:</p>
-<p>按<code>Win键+1~9</code>可以切换桌面,</p>
-<p>没有菜单对吧 其实再右上角点一下就会出来一个菜单,打开程序会发现标题栏状态栏什么都木有了大大节省了桌面空间,可问题来了,怎么关闭啊不用担心</p>
-<p>按 <code>Win键+Shift+C</code>可以关闭当前窗口</p>
-<p>打开默认终端 <code>Win键+Enter</code>就可以打开终端</p>
-<p>可以按住 <code>Win键+Shift ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h2>Python将汉字按拼音排序--一个多音字引发的悲剧</h2></a>
-        <div class= "well small"> 三 24 十月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
-<span class="err">音</span>    <span class="n">yin1</span>
-</pre></div>
-
-
-<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># Author : cold night</span>
-<span class="c"># E-mail : wh_linux@126.com</span>
-<span class="c"># Date   : 12-10-24 下午3:13</span>
-<span class="c">#</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="kn">import</span> <span class="nn">locale</span>
-
-<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
-    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

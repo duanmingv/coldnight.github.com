@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/vim.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-01-05T15:01:00+08:00</updated><entry><title>Vim配置系列(二) —- 好看的statusline</title><link href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html" rel="alternate"></link><updated>2013-01-05T15:01:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-01-05:vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html</id><summary type="html">&lt;p&gt;Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;Bundle &lt;span class="c"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;Bundle &lt;span class="s2"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -11,7 +11,7 @@
 
 &lt;p&gt;如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;laststatus&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;
-&lt;span class="k"&gt;let&lt;/span&gt; g:Powerline_symbols&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;unicode&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:Powerline_symbols&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;unicode&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -28,13 +28,13 @@
 &lt;span class="c"&gt;&amp;quot;                  &amp;lt;Leader&amp;gt; vt 翻译选中的内容&lt;/span&gt;
 
 &lt;span class="k"&gt;function&lt;/span&gt; GetCursorWord&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="k"&gt;let&lt;/span&gt; column &lt;span class="p"&gt;=&lt;/span&gt; get&lt;span class="p"&gt;(&lt;/span&gt;getpos&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; column &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;getpos&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;-&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
     &lt;span class="k"&gt;let&lt;/span&gt; line &lt;span class="p"&gt;=&lt;/span&gt; getline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; strpart&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; column&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
     &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
         &lt;span class="k"&gt;let&lt;/span&gt; tmp &lt;span class="p"&gt;=&lt;/span&gt; strpart&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; column &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="k"&gt;start&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; tmp &lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;[a-zA-Z]&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; tmp &lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[a-zA-Z]&amp;quot;&lt;/span&gt;
             &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; word . tmp
         &lt;span class="k"&gt;else&lt;/span&gt;
             &lt;span class="k"&gt;break&lt;/span&gt;
@@ -61,11 +61,11 @@ endfunc
         &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; GetCursorWord&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c"&gt;&amp;quot; 如果是命令模式则取当前字符下单词&lt;/span&gt;
     &lt;span class="k"&gt;endif&lt;/span&gt;
 &lt;span class="c"&gt;    &amp;quot;XXX Visual 模式mode()命令返回n&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; a:&lt;span class="k"&gt;m&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt;:&lt;span class="k"&gt;m&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt;
         &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; getreg&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;     &lt;span class="c"&gt;&amp;quot; 如果是选择模式获取选择块&lt;/span&gt;
 
     &lt;span class="k"&gt;endif&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; a:&lt;span class="k"&gt;m&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt;:&lt;span class="k"&gt;m&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
         &lt;span class="k"&gt;let&lt;/span&gt; word &lt;span class="p"&gt;=&lt;/span&gt; getline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;endif&lt;/span&gt;
 python &lt;span class="p"&gt;&amp;lt;&amp;lt;&lt;/span&gt; EOF
@@ -78,11 +78,11 @@ class Translate&lt;span class="p"&gt;(&lt;/span&gt;object&lt;span class="p"&gt;)
 &lt;span class="c"&gt;    &amp;quot;&amp;quot;&amp;quot; 使用google进行英-&amp;gt;汉, 汉-&amp;gt;英的翻译 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
     &lt;span class="nb"&gt;def&lt;/span&gt; __init__&lt;span class="p"&gt;(&lt;/span&gt;self&lt;span class="p"&gt;,&lt;/span&gt; text&lt;span class="p"&gt;,&lt;/span&gt; src&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;zh-CN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; dst &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;en&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
         self.url &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://translate.google.cn/translate_a/t&amp;#39;&lt;/span&gt;
-        self.params &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;client &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;t&amp;quot;, text=text,&lt;/span&gt;
+        self.params &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;client &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;t&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; text&lt;span class="p"&gt;=&lt;/span&gt;text&lt;span class="p"&gt;,&lt;/span&gt;
                            &lt;span class="nb"&gt;hl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;zh-CN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;tl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; dst&lt;span class="p"&gt;,&lt;/span&gt;
                            multires &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;prev&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;btn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
                            ssel &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;sc&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; src &lt;span class="p"&gt;!=&lt;/span&gt; self.params.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;hl&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
+        &lt;span class="k"&gt;if&lt;/span&gt; src &lt;span class="p"&gt;!=&lt;/span&gt; self.params.&lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;hl&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
             self.params.&lt;span class="k"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;sl&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; src&lt;span class="p"&gt;)&lt;/span&gt;
 
         &lt;span class="k"&gt;return&lt;/span&gt;
@@ -100,11 +100,11 @@ class Translate&lt;span class="p"&gt;(&lt;/span&gt;object&lt;span class="p"&gt;)
         others &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
         &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; desc:
             others &lt;span class="p"&gt;+=&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;0&lt;/span&gt;] &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;
-            &lt;span class="k"&gt;for&lt;/span&gt; i &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;1&lt;/span&gt;]:
-                others &lt;span class="p"&gt;+=&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;\t{0}\t&amp;quot;.format(i)&lt;/span&gt;
-                &lt;span class="k"&gt;for&lt;/span&gt; s &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;2&lt;/span&gt;]:
-                    &lt;span class="k"&gt;if&lt;/span&gt; s[&lt;span class="m"&gt;0&lt;/span&gt;] &lt;span class="p"&gt;==&lt;/span&gt; i:
-                        others &lt;span class="p"&gt;+=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;.&lt;span class="k"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;s[&lt;span class="m"&gt;1&lt;/span&gt;]&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="k"&gt;i&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;1&lt;/span&gt;]:
+                others &lt;span class="p"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\t{0}\t&amp;quot;&lt;/span&gt;.format&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+                &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="k"&gt;d&lt;/span&gt;[&lt;span class="m"&gt;2&lt;/span&gt;]:
+                    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;[&lt;span class="m"&gt;0&lt;/span&gt;] &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="k"&gt;i&lt;/span&gt;:
+                        others &lt;span class="p"&gt;+=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;,&amp;#39;&lt;/span&gt;.&lt;span class="k"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;s&lt;/span&gt;[&lt;span class="m"&gt;1&lt;/span&gt;]&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;
         &lt;span class="k"&gt;r&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
             result &lt;span class="p"&gt;=&lt;/span&gt; result[&lt;span class="m"&gt;0&lt;/span&gt;]&lt;span class="p"&gt;,&lt;/span&gt;
             source &lt;span class="p"&gt;=&lt;/span&gt; result[&lt;span class="m"&gt;1&lt;/span&gt;]&lt;span class="p"&gt;,&lt;/span&gt;
@@ -121,7 +121,7 @@ class Translate&lt;span class="p"&gt;(&lt;/span&gt;object&lt;span class="p"&gt;)
 &lt;span class="c"&gt;                       &amp;quot;++http://www.google.com/bot.html)&amp;quot;)&lt;/span&gt;
 
         &lt;span class="k"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; urllib2.urlopen&lt;span class="p"&gt;(&lt;/span&gt;req&lt;span class="p"&gt;)&lt;/span&gt;
-        result &lt;span class="p"&gt;=&lt;/span&gt;  &lt;span class="k"&gt;res&lt;/span&gt;.&lt;span class="k"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        result &lt;span class="p"&gt;=&lt;/span&gt;  &lt;span class="k"&gt;res&lt;/span&gt;.read&lt;span class="p"&gt;()&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; self.loads&lt;span class="p"&gt;(&lt;/span&gt;result&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="nb"&gt;def&lt;/span&gt; auto_translate&lt;span class="p"&gt;(&lt;/span&gt;text&lt;span class="p"&gt;)&lt;/span&gt;:
@@ -139,12 +139,12 @@ class Translate&lt;span class="p"&gt;(&lt;/span&gt;object&lt;span class="p"&gt;)
 
 word &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;vim&lt;/span&gt;.eval&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;word&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 result &lt;span class="p"&gt;=&lt;/span&gt; auto_translate&lt;span class="p"&gt;(&lt;/span&gt;word.strip&lt;span class="p"&gt;())&lt;/span&gt;
-&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;源词: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;source&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;结果: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;result&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;拼音: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pinyin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;if&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;others&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
+&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;源词: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.&lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;source&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;结果: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.&lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;result&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;拼音: &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.&lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pinyin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; result.&lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;others&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;:
     &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;其他释义: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.get&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;others&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;echo &amp;quot;&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; result.&lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;others&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 EOF
 
@@ -185,30 +185,30 @@ Bundle &lt;span class="s1"&gt;&amp;#39;gmarik/vundle&amp;#39;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;tomtom/tlib_vim&amp;quot;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;honza/snipmate-snippets&amp;quot;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;garbas/vim-snipmate&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;Shougo/neocomplcache&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;drakeguan/vim-vcscommand&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;scrooloose/nerdtree&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;pix/vim-taglist&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;nathanaelkane/vim-indent-guides&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;clones/vim-cecutil&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;tpope/vim-fugitive&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;Shougo/neocomplcache&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;drakeguan/vim-vcscommand&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;scrooloose/nerdtree&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;pix/vim-taglist&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;nathanaelkane/vim-indent-guides&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;clones/vim-cecutil&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;tpope/vim-fugitive&amp;quot;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;c9s/bufexplorer&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;jnwhiteh/vim-golang&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;kevinw/pyflakes-vim&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;mbriggs/mark.vim&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;jnwhiteh/vim-golang&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;kevinw/pyflakes-vim&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;mbriggs/mark.vim&amp;quot;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;vim-scripts/TabBar&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/DrawIt&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/calendar.vim--Matsumoto&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/Python-mode-klen&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/DrawIt&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/calendar.vim--Matsumoto&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/Python-mode-klen&amp;quot;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;Bundle &amp;quot;vim-scripts/pydoc.vim&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/VOoM&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/qiushibaike&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/AuthorInfo&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/javacomplete&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/javaDoc.vim&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;drmingdrmer/xptemplate.git&amp;quot;&lt;/span&gt;
-Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/Java-Syntax-and-Folding&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/VOoM&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/qiushibaike&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/AuthorInfo&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/javacomplete&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/javaDoc.vim&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;drmingdrmer/xptemplate.git&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;vim-scripts/Java-Syntax-and-Folding&amp;quot;&lt;/span&gt;
 
 &lt;span class="k"&gt;filetype&lt;/span&gt; indent plugin &lt;span class="k"&gt;on&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -236,9 +236,9 @@ Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/Java-Syntax-and-Folding&amp;q
     normal &lt;span class="k"&gt;o&lt;/span&gt;
     &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     normal &lt;span class="k"&gt;o&lt;/span&gt;
-    &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#   Author  :   &amp;#39;&lt;/span&gt;.g:python_author&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#   Author  :   &amp;#39;&lt;/span&gt;.&lt;span class="k"&gt;g&lt;/span&gt;:python_author&lt;span class="p"&gt;)&lt;/span&gt;
     normal &lt;span class="k"&gt;o&lt;/span&gt;
-    &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#   E-mail  :   &amp;#39;&lt;/span&gt;.g:python_email&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#   E-mail  :   &amp;#39;&lt;/span&gt;.&lt;span class="k"&gt;g&lt;/span&gt;:python_email&lt;span class="p"&gt;)&lt;/span&gt;
     normal &lt;span class="k"&gt;o&lt;/span&gt;
     &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#   Date    :   &amp;#39;&lt;/span&gt;.strftime&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;%y/%m/%d %H:%M:%S&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
     normal &lt;span class="k"&gt;o&lt;/span&gt;
@@ -246,21 +246,21 @@ Bundle &lt;span class="c"&gt;&amp;quot;vim-scripts/Java-Syntax-and-Folding&amp;q
     normal &lt;span class="k"&gt;o&lt;/span&gt;
     &lt;span class="k"&gt;call&lt;/span&gt; setline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;#&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     normal &lt;span class="k"&gt;o&lt;/span&gt;
-    &lt;span class="k"&gt;call&lt;/span&gt; &lt;span class="nb"&gt;cursor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;call&lt;/span&gt; cursor&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;17&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;endfunction&lt;/span&gt;
 &lt;span class="k"&gt;function&lt;/span&gt; InsertCommentWhenOpen&lt;span class="p"&gt;()&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; a:lastline &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &amp;amp;&amp;amp; &lt;span class="p"&gt;!&lt;/span&gt;getline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt;:lastline &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; &amp;amp;&amp;amp; &lt;span class="p"&gt;!&lt;/span&gt;getline&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;call&lt;/span&gt; InsertPythonComment&lt;span class="p"&gt;()&lt;/span&gt;
     &lt;span class="k"&gt;end&lt;/span&gt;
 endfunc
-au &lt;span class="nb"&gt;FileType&lt;/span&gt; python :%&lt;span class="k"&gt;call&lt;/span&gt; InsertCommentWhenOpen&lt;span class="p"&gt;()&lt;/span&gt;
-au &lt;span class="nb"&gt;FileType&lt;/span&gt; python map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;F4&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; InsertPythonComment&lt;span class="p"&gt;()&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="k"&gt;au&lt;/span&gt; &lt;span class="nb"&gt;FileType&lt;/span&gt; python :%&lt;span class="k"&gt;call&lt;/span&gt; InsertCommentWhenOpen&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;au&lt;/span&gt; &lt;span class="nb"&gt;FileType&lt;/span&gt; python map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;F4&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; InsertPythonComment&lt;span class="p"&gt;()&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;将上面的代码放到你的vimrc中,同时在vimrc添加:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; g:python_author &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;cold&amp;#39;&lt;/span&gt;               # 姓名
-&lt;span class="k"&gt;let&lt;/span&gt; g:python_email  &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;wh_linux@126.com&amp;#39;&lt;/span&gt;   # 邮箱
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:python_author &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;cold&amp;#39;&lt;/span&gt;               # 姓名
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;g&lt;/span&gt;:python_email  &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;wh_linux@126.com&amp;#39;&lt;/span&gt;   # 邮箱
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -282,7 +282,7 @@ au &lt;span class="nb"&gt;FileType&lt;/span&gt; python map &lt;span class="p"&gt
     &lt;span class="k"&gt;endif&lt;/span&gt;
 &lt;span class="k"&gt;endfunction&lt;/span&gt;
 
-au &lt;span class="nb"&gt;FileType&lt;/span&gt; python &lt;span class="k"&gt;call&lt;/span&gt; InsertPythonHeader&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="k"&gt;au&lt;/span&gt; &lt;span class="nb"&gt;FileType&lt;/span&gt; python &lt;span class="k"&gt;call&lt;/span&gt; InsertPythonHeader&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="自动"></category><category term="编码信息"></category><category term="添加"></category><category term="vim"></category><category term="shbang line"></category><category term="python"></category></entry><entry><title>分享Vim两种好用的功能:状态行和空白字符可见</title><link href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html" rel="alternate"></link><updated>2012-09-29T17:30:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-09-29:fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html</id><summary type="html">&lt;p&gt;马上要放假了,没事折腾了一下Vim发现了两个非常棒的功能,一个是给Vim添加一个状态栏,一个是可以在编辑的时候显示空白,&lt;/p&gt;
 &lt;p&gt;我的状态栏显示了:
 正在编辑的文件名,
@@ -293,7 +293,7 @@ au &lt;span class="nb"&gt;FileType&lt;/span&gt; python &lt;span class="k"&gt;cal
 当前字符的ASCII和16进制码
 右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
 fugitive 可以在git获得:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//gi&lt;/span&gt;&lt;span class="n"&gt;thub&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/tpope/&lt;/span&gt;&lt;span class="n"&gt;vim&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fugitive&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//github.com/tpope/vim-fugitive.git&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -321,7 +321,7 @@ fugitive 可以在git获得:&lt;/p&gt;
 &lt;p&gt;设置完后非常的cool,上图一张:
 &lt;img alt="vim空白符" src="/upload/Screenshot-2012-09-29-173517.png" /&gt;&lt;/p&gt;</summary><category term="空白"></category><category term="字符"></category><category term="可见"></category><category term="vim"></category><category term="statusline"></category></entry><entry><title>Linux下配置vim一键编译C/C++并执行</title><link href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html" rel="alternate"></link><updated>2012-04-05T12:07:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-04-05:linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html</id><summary type="html">&lt;p&gt;最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.&lt;/p&gt;
 &lt;p&gt;首先在/usr/bin/下创建compile脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -390,12 +390,12 @@ clear
 
 
 &lt;p&gt;然后给脚本赋予执行权限&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后编辑vim配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;vimrc&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vimrc&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

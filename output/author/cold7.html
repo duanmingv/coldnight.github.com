@@ -59,6 +59,91 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h2>vLog 一个使用Python编写的轻量级博客系统</h2></a>
+        <div class= "well small"> 二 05 二月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>介绍</h2>
+<h3>何为vLog</h3>
+<p>大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用<code>Python</code>的<code>tornado</code>框架和<code>Jinja2</code>模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用<code>Markdown</code>的格式来抒写博文.</p>
+<h3>为什么vLog</h3>
+<p>vLog后台十分简单(可以说是简陋),功能也简单,就是一款简单的博客系统,提供了Python终端脚本,可以在终端来抒写博文, vLog使用一套非常简单的缓存系统,缓存使用memcached使得页面加载速度非常快.</p>
+<h3>为什么不vLog</h3>
+<p>相对与wordpress vlog非常简陋,仅仅提供简单的博客功能,而且使用Python编写主机方面支援不太多,虽然有<code>SAE</code>和<code>GAE</code>的支援,但是我没弄过,所以没有支援<code>SAE</code>和<code>GAE</code>(如果你有兴趣,可以添加相关支持)</p>
+<h2>安装</h2>
+<h3>平台</h3>
+<ul>
+<li>Linux</li>
+<li>python2.7</li>
+<li>MySQL ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h2>vLog使用Tornado框架结合memcached缓存页面</h2></a>
+        <div class= "well small"> 三 16 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>原因</h2>
+<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
+<h2>实现</h2>
+<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
+prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/14 09:57:31</span>
+<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h2>用bottle+mongodb写的blog程序支持mysql啦</h2></a>
+        <div class= "well small"> 二 14 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
+<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
+<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
+<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
+<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
+<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html"><h2>用bottle+mongodb写的一个blog程序</h2></a>
         <div class= "well small"> 六 16 六月 2012
 
@@ -162,7 +247,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
 
 <h5>结果</h5>
-<div class="codehilite"><pre>&#39;<span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">&quot;highlighttable ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
+<div class="codehilite"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
     </div>	
 				
     

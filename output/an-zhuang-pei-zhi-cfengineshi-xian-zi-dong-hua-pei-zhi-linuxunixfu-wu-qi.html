@@ -180,11 +180,11 @@ body common control
 <p>&nbsp;</p>
 <p>做好之后先本地同步,然后启动server:
 <pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1</p>
-<div class="codehilite"><pre><span class="err">到如下提示表示成功</span><span class="p">:</span>
-<span class="sb">``</span><span class="err">`</span><span class="n">bash</span> 
-<span class="o">-&amp;</span><span class="ow">gt</span><span class="p">;</span> <span class="n">Bootstrap</span> <span class="n">to</span> <span class="mf">172.16.1.1</span> <span class="n">completed</span> <span class="n">successfully</span>
-<span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="o">|</span> <span class="nb">grep</span> <span class="n">cf</span>
-<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="o">::</span><span class="p">:</span><span class="mi">5308</span>                     <span class="o">::</span><span class="p">:</span><span class="o">*</span>                        <span class="n">LISTEN</span>      <span class="mi">20173</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">serverd</span>
+<div class="codehilite"><pre><span class="err">到如下提示表示成功</span><span class="o">:</span>
+<span class="err">```</span><span class="n">bash</span> 
+<span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bootstrap</span> <span class="n">to</span> <span class="mf">172.16.1.1</span> <span class="n">completed</span> <span class="n">successfully</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">cf</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="o">:::</span><span class="mi">5308</span>                     <span class="o">:::*</span>                        <span class="n">LISTEN</span>      <span class="mi">20173</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">serverd</span>
 </pre></div>
 
 

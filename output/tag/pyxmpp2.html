@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h1>使用WebQQ协议桥接XMPP和QQ群</h1></a>
-            四 14 三月 2013
+            <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h1>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h1></a>
+            五 26 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,7 +70,49 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><h2>介绍</h2>
+        <div class="highlight"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+<h2>更新内容</h2>
+<ol>
+<li>数据库使用<code>SQLAlchemy</code>重写</li>
+<li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
+<li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
+<li>废弃一些不常用的命令</li>
+<li>改变数据库表结构</li>
+<li>废弃<code>channel</code>功能, <code>cd</code>命令仅支持切换聊天和安静模式</li>
+<li>删除一些不用的配置</li>
+</ol>
+<h2>如何升级</h2>
+<p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
+<p>本次更新添加了依赖, 现在依赖包括:
+<em> pyxmpp2
+    * dnspython
+</em> tornado
+* sqlalchemy
+    * MySQL-python</p>
+<h2>乱码</h2>
+<p>如果数据导入后乱码, 可以参考<a href="/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">这篇文章</a></p>
+<h2>项目地址</h2>
+<p>最后放上<a href="https://github.com/coldnight/clubot">项目地址</a></p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h2>使用WebQQ协议桥接XMPP和QQ群</h2></a>
+        <div class= "well small"> 四 14 三月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>介绍</h2>
 <p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
 <h2>实施</h2>
 <p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
@@ -83,132 +125,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="c">#   Author  :   Wood.D</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/03/04 09:58:26</span>
-<span class="c">#   Desc    :   Http Socket 实现</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">ssl</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">urllib</span>
-<span class="kn">import</span> <span class="nn">urllib2</span>
-<span class="kn">import</span> <span class="nn">httplib</span>
-<span class="kn">import</span> <span class="nn">urlparse</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">import</span> <span class="nn">cookielib</span>
-<span class="kn">from</span> <span class="nn">lib.utils</span> <span class="kn">import</span> <span class="n">Form</span>
-
-<span class="k">class</span> <span class="nc">HTTPSock</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; 构建支持Cookie的HTTP socket</span>
-<span class="sd">    供可复用的I/O模型调用&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">cookiefile</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mktemp</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span> <span class="o">=</span> <span class="n">cookielib</span><span class="o">.</span><span class="n">MozillaCookieJar</span><span class="p">(</span><span class="n">cookiefile</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;GET&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 根据url 参数 构建 urllib2.Request &quot;&quot;&quot;</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">Form</span><span class="p">):</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">get_content_type</span><span class="p">())</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">form</span><span class="p">)))</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">form</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
-            <span class="n">params</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span><span class="p">:</span>
-                <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;{0}?{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-                <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-                <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;application/x-www-form-urlencoded&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">add_cookie_header</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-        <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">unredirected_hdrs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">request</span>
-
-    <span class="k">def</span> <span class="nf">make_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 根据socket和urlib2.Request 构建Response &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">httplib</span><span class="o">.</span><span class="n">HTTPResponse</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">strict</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="n">method</span><span class="p">,</span> <span class="n">buffering</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="n">r</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
-
-        <span class="n">r</span><span class="o">.</span><span class="n">recv</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">read</span>
-        <span class="n">fp</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">_fileobject</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">close</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">addinfourl</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">msg</span><span class="p">,</span> <span class="n">req</span><span class="o">.</span><span class="n">get_full_url</span><span class="p">())</span>
-        <span class="n">resp</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">resp</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">reason</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">extract_cookies</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="n">req</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">resp</span>
-
-    <span class="k">def</span> <span class="nf">make_http_sock_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 根据urllib2.Request 构建socket和用于发送的HTTP源数据 &quot;&quot;&quot;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_full_url</span><span class="p">()</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
-        <span class="n">parse</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">splitport</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">netloc</span><span class="p">)</span>
-        <span class="n">typ</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">scheme</span>
-        <span class="n">port</span> <span class="o">=</span> <span class="n">port</span> <span class="k">if</span> <span class="n">port</span> <span class="k">else</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">httplib</span><span class="p">,</span> <span class="n">typ</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;_PORT&quot;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">get_http_source</span><span class="p">(</span><span class="n">parse</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;do_&quot;</span> <span class="o">+</span> <span class="n">typ</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;do_&quot;</span><span class="o">+</span><span class="n">typ</span><span class="p">)(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">data</span>
-
-    <span class="k">def</span> <span class="nf">do_http</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
-        <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)))</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">sock</span>
-
-    <span class="k">def</span> <span class="nf">do_https</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">keyfile</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">certfile</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
-        <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">host</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)))</span>
-        <span class="n">sock</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">wrap_socket</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">keyfile</span><span class="p">,</span> <span class="n">certfile</span><span class="p">)</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">sock</span>
-
-    <span class="k">def</span> <span class="nf">get_http_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parse</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="p">):</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">path</span>
-        <span class="n">query</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">query</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s">&quot;?&quot;</span> <span class="o">+</span> <span class="n">query</span> <span class="k">if</span> <span class="n">query</span> <span class="k">else</span> <span class="n">path</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">path</span> <span class="k">if</span> <span class="n">path</span> <span class="k">else</span> <span class="s">&quot;/&quot;</span>
-        <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;POST&quot;</span> <span class="k">if</span> <span class="n">data</span> <span class="k">else</span> <span class="s">&quot;GET&quot;</span>
-        <span class="n">_buffer</span><span class="o">=</span> <span class="p">[</span><span class="s">&quot;{0} {1} HTTP/1.1&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">)]</span>
-        <span class="n">e_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Host&quot;</span><span class="p">,</span> <span class="n">parse</span><span class="o">.</span><span class="n">netloc</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Connection&quot;</span><span class="p">,</span> <span class="s">&quot;keep-alive&quot;</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Accept&quot;</span><span class="p">,</span> <span class="s">&quot;*/*&quot;</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Accept-Charset&quot;</span><span class="p">,</span> <span class="s">&quot;UTF-8,*;q=0.5&quot;</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Accept-Encoding&quot;</span><span class="p">,</span> <span class="s">&quot;gzip,deflate,sdch&quot;</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Accept-Language&quot;</span><span class="p">,</span> <span class="s">&quot;zh-CN,zh;q=0.8&quot;</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;User-Agent&quot;</span><span class="p">,</span> <span class="s">&quot;Mozilla/5.0 (X11; Linux x86_64)&quot;</span>\
-                        <span class="s">&quot; AppleWebKit/537.11 (KHTML, like Gecko)&quot;</span>\
-                        <span class="s">&quot; Chrome/23.0.1271.97 Safari/537.11&quot;</span><span class="p">))</span>
-        <span class="n">headers</span><span class="o">+=</span> <span class="n">e_headers</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">headers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s">&quot;Content-Length&quot;</span><span class="p">,</span>   <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
-            <span class="n">_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;{0}: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">title</span><span class="p">(),</span> <span class="n">value</span><span class="p">))</span>
-        <span class="n">_buffer</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_buffer</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">+=</span> <span class="n">data</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cookie</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cookiejar</span><span class="o">.</span><span class="n">_cookies</span>
-</pre></div>
-
-
-<p>主要是根据<code>urllib2.Request</code>构建socket和socket要发送的数据, 然后将socket返回的数据构建成<code>response</code>, 然后编写一些handlers来加入到mainloop中去,优化后的版本:
-<a href="https://github.com/coldnight/qxbot/tree/master">epoll_version</a></p>
-<p>这个版本使用了epoll作为主循环, 更加高效.</p>
-<h2>最新版本</h2>
-<p>最新版本分离了WebQQ作为一个包, 如仅需WebQQ的功能可以很方便的分离出来(当然要仿照pyxmpp2来实现一套事件机制), 源码:
-<a href="https://github.com/coldnight/qxbot/">last</a></p></div>
-        <hr />
-    </div>
-		
+<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+    </div>	
+				
     
  
         

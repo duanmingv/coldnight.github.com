@@ -59,6 +59,100 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
+        <div class= "well small"> 一 20 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+
+ </div>
+        <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<h2>文件查找</h2>
+<p>找出最近修改的文件:</p>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
+
+<p>使用通配符查找文件</p>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
+
+<h2>文本替换</h2>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
+
+<h2>显示指定行</h2>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
+        <div class= "well small"> 五 17 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+
+ </div>
+        <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
+<p>好了,废话不多说,脚本内容如下:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Author   : cold night</span>
+<span class="c"># Filename : nglogcut.sh</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h2>heartbeat实现MySQL双机高可用</h2></a>
+        <div class= "well small"> 日 12 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
+
+ </div>
+        <div class="summary"><p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
+<p>当我们的MySQL数据库故障或MySQL数据库服务器出现故障的时候我们希望有一个备用能自动代替主MySQL数据来完成当前的任务,当主MySQL服务器恢复故障的时候备用的能切换到备用等待下一次故障出现.这里我们就结合故障检测HA来实现.</p>
+<p>HA会定时发送心跳包检测主备服务器的健康状态,当主服务器出现故障时会自动将vip切换到备用服务器,由备用服务器执行主服务器的任务,MySQL要实现这样的功能就必须保证主备服务器的数据一致.这就要用到MySQL主从双机.
+<!--more-->
+本文使用环境:
+系统:CentOS 5.5 32位
+主MySQL: ip 192.168.3.101/24 主机名:master.org
+备用MySQL:192.168.3.102/24   主机名:slave.org
+vip:192.168.3.103/24
+MySQL:mysql-5.0.95.tar.gz
+heartbeat ...</!--more--></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h2>nginx+keepalived配置高可用HTTP群集</h2></a>
         <div class= "well small"> 四 09 二月 2012
 

@@ -139,7 +139,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 evince
 却提示:</p>
 <div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
-<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments:</span> <span class="err">无法打开显示：</span>
+<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
 </pre></div>
 
 
@@ -155,7 +155,7 @@ evince
 
 
 <p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
     </div>	
 				
     
@@ -290,8 +290,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <h3>2.1 配置</h3>
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
-<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="c1">#设置体字</span>
-<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="c1"># 背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
+<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
     </div>	
 				
     
@@ -382,8 +382,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
 
 <p>没结果,继续手动查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="sr">/sbin/</span> <span class="err">¦</span> <span class="nb">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="p">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

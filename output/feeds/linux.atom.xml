@@ -84,10 +84,10 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以在多个桌面切换&lt;/span&gt;
 &lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="err"&gt;可以重启&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="err"&gt;可以切换窗口&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;类&lt;/span&gt;&lt;span class="n"&gt;Vim&lt;/span&gt;&lt;span class="err"&gt;操作&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="sr"&gt;m/n可以最大/&lt;/span&gt;&lt;span class="err"&gt;小化窗口&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Shift&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以将当前窗口发送到其他桌面&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;可以最大&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;小化窗口&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Shift&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以将当前窗口发送到其他桌面&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Shift&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="err"&gt;可以关闭当前窗口&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Space&lt;/span&gt;&lt;span class="err"&gt;可以切换布局&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="err"&gt;有多种布局&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;这里不作介绍&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;大家可以自己稍作尝试&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Space&lt;/span&gt;&lt;span class="err"&gt;可以切换布局&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="err"&gt;有多种布局&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;这里不作介绍&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;大家可以自己稍作尝试&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -97,7 +97,7 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;               &lt;span class="err"&gt;打开&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="err"&gt;主菜单（鼠标右键关闭）&lt;/span&gt;                                                   
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;       &lt;span class="err"&gt;关闭当前窗口或应用&lt;/span&gt;                                     
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;     &lt;span class="err"&gt;重启&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;                                            
-&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="sx"&gt;q  &lt;/span&gt;     &lt;span class="err"&gt;退出&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;       &lt;span class="err"&gt;退出&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;
 
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;               &lt;span class="err"&gt;切换到下一个窗口&lt;/span&gt;                                       
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;               &lt;span class="err"&gt;切换到前一个窗口&lt;/span&gt;                                       
@@ -109,10 +109,10 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Control&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;     &lt;span class="err"&gt;切换到上一个屏幕&lt;/span&gt;                                       
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;       &lt;span class="err"&gt;当前窗口和前一个窗口互换位置&lt;/span&gt;                           
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;       &lt;span class="err"&gt;当前窗口和后一个窗口互换位置&lt;/span&gt;                           
-&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;               &lt;span class="err"&gt;把主区域的宽度增大&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nv"&gt;%&lt;/span&gt;                                   
-&lt;span class="nv"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;               &lt;span class="err"&gt;把主区域的宽度减少&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="nv"&gt;%&lt;/span&gt;
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;               &lt;span class="err"&gt;把主区域的宽度增大&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;                                   
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;l&lt;/span&gt;               &lt;span class="err"&gt;把主区域的宽度减少&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;
 
-&lt;span class="nv"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;               &lt;span class="err"&gt;最大化窗口&lt;/span&gt;
+&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;               &lt;span class="err"&gt;最大化窗口&lt;/span&gt;
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;               &lt;span class="err"&gt;最小化窗口&lt;/span&gt;
 
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;h&lt;/span&gt;       &lt;span class="err"&gt;增加主区域窗口的数量&lt;/span&gt;                                   
@@ -155,50 +155,50 @@ setw &lt;span class="o"&gt;-&lt;/span&gt;g utf8 on
 unbind &lt;span class="s"&gt;&amp;#39;&amp;quot;&amp;#39;&lt;/span&gt;
 bind &lt;span class="o"&gt;-&lt;/span&gt; splitw &lt;span class="o"&gt;-&lt;/span&gt;v &lt;span class="c1"&gt;# vertical split (prefix -)&lt;/span&gt;
 unbind &lt;span class="o"&gt;%&lt;/span&gt;
-bind &lt;span class="o"&gt;|&lt;/span&gt; splitw &lt;span class="o"&gt;-&lt;/span&gt;h &lt;span class="c1"&gt;# horizontal split (prefix |)&lt;/span&gt;
+&lt;span class="o"&gt;bind | splitw -h # horizontal split (prefix |)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# select pane&lt;/span&gt;
-bind k selectp &lt;span class="o"&gt;-&lt;/span&gt;U &lt;span class="c1"&gt;# above (prefix k)&lt;/span&gt;
-bind j selectp &lt;span class="o"&gt;-&lt;/span&gt;D &lt;span class="c1"&gt;# below (prefix j)&lt;/span&gt;
-bind h selectp &lt;span class="o"&gt;-&lt;/span&gt;L &lt;span class="c1"&gt;# left (prefix h)&lt;/span&gt;
-bind l selectp &lt;span class="o"&gt;-&lt;/span&gt;R &lt;span class="c1"&gt;# right (prefix l)&lt;/span&gt;
+&lt;span class="o"&gt;# select pane&lt;/span&gt;
+&lt;span class="o"&gt;bind k selectp -U # above (prefix k)&lt;/span&gt;
+&lt;span class="o"&gt;bind j selectp -D # below (prefix j)&lt;/span&gt;
+&lt;span class="o"&gt;bind h selectp -L # left (prefix h)&lt;/span&gt;
+&lt;span class="o"&gt;bind l selectp -R # right (prefix l)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# resize pane&lt;/span&gt;
-bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;k resizep &lt;span class="o"&gt;-&lt;/span&gt;U &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# upward (prefix Ctrl+k)&lt;/span&gt;
-bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;j resizep &lt;span class="o"&gt;-&lt;/span&gt;D &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# downward (prefix Ctrl+j)&lt;/span&gt;
-bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;h resizep &lt;span class="o"&gt;-&lt;/span&gt;L &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# to the left (prefix Ctrl+h)&lt;/span&gt;
-bind &lt;span class="o"&gt;-&lt;/span&gt;r &lt;span class="o"&gt;^&lt;/span&gt;l resizep &lt;span class="o"&gt;-&lt;/span&gt;R &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="c1"&gt;# to the right (prefix Ctrl+l)&lt;/span&gt;
+&lt;span class="o"&gt;# resize pane&lt;/span&gt;
+&lt;span class="o"&gt;bind -r ^k resizep -U 5 # upward (prefix Ctrl+k)&lt;/span&gt;
+&lt;span class="o"&gt;bind -r ^j resizep -D 5 # downward (prefix Ctrl+j)&lt;/span&gt;
+&lt;span class="o"&gt;bind -r ^h resizep -L 5 # to the left (prefix Ctrl+h)&lt;/span&gt;
+&lt;span class="o"&gt;bind -r ^l resizep -R 5 # to the right (prefix Ctrl+l)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# swap pane&lt;/span&gt;
-bind &lt;span class="o"&gt;^&lt;/span&gt;u swapp &lt;span class="o"&gt;-&lt;/span&gt;U &lt;span class="c1"&gt;# swap with the previous pane (prefix Ctrl+u)&lt;/span&gt;
-bind &lt;span class="o"&gt;^&lt;/span&gt;d swapp &lt;span class="o"&gt;-&lt;/span&gt;D &lt;span class="c1"&gt;# swap with the next pane (prefix Ctrl+d)&lt;/span&gt;
+&lt;span class="o"&gt;# swap pane&lt;/span&gt;
+&lt;span class="o"&gt;bind ^u swapp -U # swap with the previous pane (prefix Ctrl+u)&lt;/span&gt;
+&lt;span class="o"&gt;bind ^d swapp -D # swap with the next pane (prefix Ctrl+d)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# misc&lt;/span&gt;
-bind e lastp  &lt;span class="c1"&gt;# select the last pane (prefix e)&lt;/span&gt;
-bind &lt;span class="o"&gt;^&lt;/span&gt;e last  &lt;span class="c1"&gt;# select the last window (prefix Ctrl+e)&lt;/span&gt;
-bind q killp  &lt;span class="c1"&gt;# kill pane (prefix q)&lt;/span&gt;
-bind &lt;span class="o"&gt;^&lt;/span&gt;q killw &lt;span class="c1"&gt;# kill window (prefix Ctrl+q)&lt;/span&gt;
+&lt;span class="o"&gt;# misc&lt;/span&gt;
+&lt;span class="o"&gt;bind e lastp  # select the last pane (prefix e)&lt;/span&gt;
+&lt;span class="o"&gt;bind ^e last  # select the last window (prefix Ctrl+e)&lt;/span&gt;
+&lt;span class="o"&gt;bind q killp  # kill pane (prefix q)&lt;/span&gt;
+&lt;span class="o"&gt;bind ^q killw # kill window (prefix Ctrl+q)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# copy mode&lt;/span&gt;
-bind Escape copy&lt;span class="o"&gt;-&lt;/span&gt;mode             &lt;span class="c1"&gt;# enter copy mode (prefix Escape)&lt;/span&gt;
-bind &lt;span class="o"&gt;^&lt;/span&gt;p pasteb                    &lt;span class="c1"&gt;# paste buffer (prefix Ctrl+p)&lt;/span&gt;
-bind &lt;span class="o"&gt;-&lt;/span&gt;t vi&lt;span class="o"&gt;-&lt;/span&gt;copy v begin&lt;span class="o"&gt;-&lt;/span&gt;selection &lt;span class="c1"&gt;# select (v)&lt;/span&gt;
-bind &lt;span class="o"&gt;-&lt;/span&gt;t vi&lt;span class="o"&gt;-&lt;/span&gt;copy y copy&lt;span class="o"&gt;-&lt;/span&gt;selection  &lt;span class="c1"&gt;# copy (y)&lt;/span&gt;
+&lt;span class="o"&gt;# copy mode&lt;/span&gt;
+&lt;span class="o"&gt;bind Escape copy-mode             # enter copy mode (prefix Escape)&lt;/span&gt;
+&lt;span class="o"&gt;bind ^p pasteb                    # paste buffer (prefix Ctrl+p)&lt;/span&gt;
+&lt;span class="o"&gt;bind -t vi-copy v begin-selection # select (v)&lt;/span&gt;
+&lt;span class="o"&gt;bind -t vi-copy y copy-selection  # copy (y)&lt;/span&gt;
 
-&lt;span class="c1"&gt;# zoom pane &amp;lt;-&amp;gt; window &lt;/span&gt;
-&lt;span class="c1"&gt;# see also: http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh&lt;/span&gt;
-bind &lt;span class="o"&gt;^&lt;/span&gt;z run &lt;span class="s"&gt;&amp;quot;tmux-zoom&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;# zoom pane &amp;lt;-&amp;gt; window &lt;/span&gt;
+&lt;span class="o"&gt;# see also: http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh&lt;/span&gt;
+&lt;span class="o"&gt;bind ^z run &amp;quot;tmux-zoom&amp;quot;&lt;/span&gt;
 
-&lt;span class="c1"&gt;# app&lt;/span&gt;
-bind ! splitw htop                                     &lt;span class="c1"&gt;# htop (prefix !)&lt;/span&gt;
-bind m command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec man %%&amp;#39;&amp;quot;&lt;/span&gt;           &lt;span class="c1"&gt;# man (prefix m)&lt;/span&gt;
-bind &lt;span class="p"&gt;@&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t -f %%&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# perl func (prefix @)&lt;/span&gt;
-bind &lt;span class="o"&gt;*&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t -v %%&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# perl var (prefix *)&lt;/span&gt;
-bind &lt;span class="o"&gt;%&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t %%&amp;#39;&amp;quot;&lt;/span&gt;    &lt;span class="c1"&gt;# perl doc (prefix %)&lt;/span&gt;
+&lt;span class="o"&gt;# app&lt;/span&gt;
+&lt;span class="o"&gt;bind ! splitw htop                                     # htop (prefix !)&lt;/span&gt;
+&lt;span class="o"&gt;bind m command-prompt &amp;quot;splitw &amp;#39;exec man %%&amp;#39;&amp;quot;           # man (prefix m)&lt;/span&gt;
+&lt;span class="o"&gt;bind @ command-prompt &amp;quot;splitw &amp;#39;exec perldoc -t -f %%&amp;#39;&amp;quot; # perl func (prefix @)&lt;/span&gt;
+&lt;span class="o"&gt;bind * command-prompt &amp;quot;splitw &amp;#39;exec perldoc -t -v %%&amp;#39;&amp;quot; # perl var (prefix *)&lt;/span&gt;
+&lt;span class="o"&gt;bind %&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec perldoc -t %%&amp;#39;&amp;quot;&lt;/span&gt;    &lt;span class="c1"&gt;# perl doc (prefix %)&lt;/span&gt;
 bind &lt;span class="o"&gt;/&lt;/span&gt; command&lt;span class="o"&gt;-&lt;/span&gt;prompt &lt;span class="s"&gt;&amp;quot;splitw &amp;#39;exec ri %%&amp;#39;&amp;quot;&lt;/span&gt;            &lt;span class="c1"&gt;# ruby doc (prefix /)&lt;/span&gt;
 
 &lt;span class="c1"&gt;# reload config (prefix r)&lt;/span&gt;
-bind r source ~&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;.&lt;/span&gt;tmux.conf \&lt;span class="p"&gt;;&lt;/span&gt; display &lt;span class="s"&gt;&amp;quot;Configuration reloaded!&amp;quot;&lt;/span&gt;
+bind r source &lt;span class="o"&gt;~/&lt;/span&gt;.tmux.conf \&lt;span class="p"&gt;;&lt;/span&gt; display &lt;span class="s"&gt;&amp;quot;Configuration reloaded!&amp;quot;&lt;/span&gt;
 
 setw &lt;span class="o"&gt;-&lt;/span&gt;g mode&lt;span class="o"&gt;-&lt;/span&gt;keys vi
 setw &lt;span class="o"&gt;-&lt;/span&gt;g automatic&lt;span class="o"&gt;-&lt;/span&gt;rename off
@@ -238,7 +238,7 @@ set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span
 set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;right&lt;span class="o"&gt;-&lt;/span&gt;length &lt;span class="m"&gt;55&lt;/span&gt;
 &lt;span class="c1"&gt;#set -g status-left &amp;quot;#[fg=white,bg=blue] &amp;gt; #I #W &amp;lt; #[default] |&amp;quot; # 0:bash&lt;/span&gt;
 set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;left &lt;span class="s"&gt;&amp;quot;#[fg=white,bg=default] &amp;gt; #S &amp;lt; #[default] |&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# session-name&lt;/span&gt;
-set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;right &lt;span class="s"&gt;&amp;quot;#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \&amp;quot;&lt;/span&gt; \&lt;span class="s"&gt;&amp;quot; -f 1,2,3))#[default]&amp;quot;&lt;/span&gt;
+set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span&gt;right &lt;span class="s"&gt;&amp;quot;#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \&amp;quot; \&amp;quot; -f 1,2,3))#[default]&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -260,8 +260,8 @@ set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span
 &lt;h3&gt;常用快捷键:&lt;/h3&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="err"&gt;创建一个水平分隔&lt;/span&gt; 
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="err"&gt;创建一个垂直分隔&lt;/span&gt;
-&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="sr"&gt;/k/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;上下左右切换分割窗&lt;/span&gt;
-&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="sr"&gt;/k/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;向上下左右扩展分割窗大小&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;上下左右切换分割窗&lt;/span&gt;
+&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;向上下左右扩展分割窗大小&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="err"&gt;创建一个窗口&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;重命名窗口&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="err"&gt;切换到下一个窗口&lt;/span&gt;
@@ -274,7 +274,7 @@ set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span
 evince
 却提示:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;specified&lt;/span&gt;
-&lt;span class="n"&gt;Cannot&lt;/span&gt; &lt;span class="n"&gt;parse&lt;/span&gt; &lt;span class="n"&gt;arguments:&lt;/span&gt; &lt;span class="err"&gt;无法打开显示：&lt;/span&gt;
+&lt;span class="n"&gt;Cannot&lt;/span&gt; &lt;span class="n"&gt;parse&lt;/span&gt; &lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;无法打开显示：&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -290,7 +290,7 @@ evince
 
 
 &lt;p&gt;还是不行,这时候猛然想起查看日志,日志有如下一行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Nov&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;48&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="n"&gt;Vostro&lt;/span&gt; &lt;span class="n"&gt;kernel:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;13010.203241&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1400&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1352965733.221&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;74&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt; &lt;span class="n"&gt;apparmor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DENIED&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;operation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;open&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/bin/evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/data/home/vim/.Xauthority&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7088&lt;/span&gt; &lt;span class="n"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;requested_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;denied_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;fsuid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt; &lt;span class="n"&gt;ouid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Nov&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;48&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="n"&gt;Vostro&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;13010.203241&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1400&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1352965733.221&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;74&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;apparmor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DENIED&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;operation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;open&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/bin/evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/data/home/vim/.Xauthority&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7088&lt;/span&gt; &lt;span class="n"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;requested_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;denied_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;fsuid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt; &lt;span class="n"&gt;ouid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -403,14 +403,14 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 &lt;h3&gt;2.1 配置&lt;/h3&gt;
 &lt;p&gt;terminator配置文件在&lt;code&gt;~/.config/terminator/config&lt;/code&gt;
 可以通过这个配置文件配置&lt;code&gt;terminator&lt;/code&gt;的字体和颜色&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;font&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Monaco&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;  &lt;span class="c1"&gt;#设置体字&lt;/span&gt;
-&lt;span class="n"&gt;background_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#204070&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# 背景颜色&lt;/span&gt;
-&lt;span class="n"&gt;foreground_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#F0F0F0&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;# 字体颜色&lt;/span&gt;
-&lt;span class="n"&gt;cursor_blink&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;          &lt;span class="c1"&gt;# 设置光标&lt;/span&gt;
-&lt;span class="n"&gt;scrollbar_position&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;disabled&lt;/span&gt; &lt;span class="c1"&gt;# 禁用滚动条&lt;/span&gt;
-&lt;span class="n"&gt;titlebars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;no&lt;/span&gt; &lt;span class="c1"&gt;# 禁用标题栏&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;font&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Monaco&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;  &lt;span class="err"&gt;#设置体字&lt;/span&gt;
+&lt;span class="n"&gt;background_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#204070&amp;quot;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;背景颜色&lt;/span&gt;
+&lt;span class="n"&gt;foreground_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#F0F0F0&amp;quot;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;字体颜色&lt;/span&gt;
+&lt;span class="n"&gt;cursor_blink&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;设置光标&lt;/span&gt;
+&lt;span class="n"&gt;scrollbar_position&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;disabled&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;禁用滚动条&lt;/span&gt;
+&lt;span class="n"&gt;titlebars&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;no&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;禁用标题栏&lt;/span&gt;
 &lt;span class="n"&gt;background_darkness&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;0.4&lt;/span&gt;
-&lt;span class="n"&gt;background_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;transparent&lt;/span&gt; &lt;span class="c1"&gt;# 背景类型可以设置为图片&lt;/span&gt;
+&lt;span class="n"&gt;background_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;transparent&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;背景类型可以设置为图片&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -468,7 +468,7 @@ emerge python-2.7.2-r3.ebuild
 
 &lt;p&gt;等待安装完成后使系统默认使用python2.7,先查看默认项&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;eselect&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
-&lt;span class="n"&gt;Available&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;interpreters:&lt;/span&gt;
+&lt;span class="n"&gt;Available&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;interpreters&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt; 
   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="mf"&gt;.2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -519,53 +519,53 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;改成内如如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# Distributed under the terms of the GNU General Public License v2&lt;/span&gt;
-&lt;span class="c1"&gt;# $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# Distributed under the terms of the GNU General Public License v2&lt;/span&gt;
+&lt;span class="cp"&gt;# $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $&lt;/span&gt;
 
-&lt;span class="c1"&gt;# DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!&lt;/span&gt;
+&lt;span class="cp"&gt;# DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Path (or name) of UNIX/TCP socket to bind to&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="n"&gt;UWSGI_SOCKET&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;            &lt;span class="c1"&gt;# 使用unix socket&lt;/span&gt;
+&lt;span class="cp"&gt;# Path (or name) of UNIX/TCP socket to bind to&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_SOCKET&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;            &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用&lt;/span&gt;&lt;span class="n"&gt;unix&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Enable threads?&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;# Enable threads?&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
 &lt;span class="n"&gt;UWSGI_THREADS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
 
-&lt;span class="c1"&gt;# The path to your uWSGI application.&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="c1"&gt;#UWSGI_PROGRAM=&lt;/span&gt;
+&lt;span class="cp"&gt;# The path to your uWSGI application.&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;#UWSGI_PROGRAM=&lt;/span&gt;
 
-&lt;span class="c1"&gt;# The path to your uWSGI xml config file.&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="n"&gt;UWSGI_XML_CONFIG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;               &lt;span class="c1"&gt;# 使用xml配置文件&lt;/span&gt;
+&lt;span class="cp"&gt;# The path to your uWSGI xml config file.&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_XML_CONFIG&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;               &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt;&lt;span class="err"&gt;配置文件&lt;/span&gt;
 
-&lt;span class="c1"&gt;# The number of child processes to spawn. The default is 1.&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;# The number of child processes to spawn. The default is 1.&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
 &lt;span class="n"&gt;UWSGI_CHILDREN&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
 
-&lt;span class="c1"&gt;# The log file path. If empty logging is disabled&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="n"&gt;UWSGI_LOG_FILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;                    &lt;span class="c1"&gt;# 定义日志&lt;/span&gt;
+&lt;span class="cp"&gt;# The log file path. If empty logging is disabled&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;UWSGI_LOG_FILE&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;                    &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义日志&lt;/span&gt;
 
-&lt;span class="c1"&gt;# If you want to run your application inside a chroot then specify the&lt;/span&gt;
-&lt;span class="c1"&gt;# directory here. Leave this blank otherwise.&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="c1"&gt;#UWSGI_CHROOT=/code/python&lt;/span&gt;
+&lt;span class="cp"&gt;# If you want to run your application inside a chroot then specify the&lt;/span&gt;
+&lt;span class="cp"&gt;# directory here. Leave this blank otherwise.&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;#UWSGI_CHROOT=/code/python&lt;/span&gt;
 
-&lt;span class="c1"&gt;# If you want to run your application from a specific directiory specify&lt;/span&gt;
-&lt;span class="c1"&gt;# it here. Leave this blank otherwise.&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="c1"&gt;# UWSGI_DIR=&lt;/span&gt;
+&lt;span class="cp"&gt;# If you want to run your application from a specific directiory specify&lt;/span&gt;
+&lt;span class="cp"&gt;# it here. Leave this blank otherwise.&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;# UWSGI_DIR=&lt;/span&gt;
 
-&lt;span class="c1"&gt;# The user and group to run your application as. If you do not specify these,&lt;/span&gt;
-&lt;span class="c1"&gt;# the application will be run as root:root.&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;# The user and group to run your application as. If you do not specify these,&lt;/span&gt;
+&lt;span class="cp"&gt;# the application will be run as root:root.&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
 &lt;span class="n"&gt;UWSGI_USER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
 
-&lt;span class="c1"&gt;# Additional options you might want to pass to uWSGI&lt;/span&gt;
-&lt;span class="c1"&gt;#&lt;/span&gt;
-&lt;span class="c1"&gt;#UWSGI_EXTRA_OPTIONS=&lt;/span&gt;
+&lt;span class="cp"&gt;# Additional options you might want to pass to uWSGI&lt;/span&gt;
+&lt;span class="cp"&gt;#&lt;/span&gt;
+&lt;span class="cp"&gt;#UWSGI_EXTRA_OPTIONS=&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -591,74 +591,74 @@ vi /etc/conf.d/uwsgi.py
 
 &lt;p&gt;其中&lt;module&gt;&lt;/module&gt;定义的就是你的web程序,也就是/code/python下要有一个index.py.&lt;/p&gt;
 &lt;p&gt;配置完毕后创建启动脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt; &lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="sr"&gt;/uwsgi /&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="sr"&gt;/init.d/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;并加入开机启动:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;配置nginx&lt;/h3&gt;
 &lt;p&gt;编辑配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/etc/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改内容如下:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-        &lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        &lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access_log&lt;/span&gt; &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;error_log&lt;/span&gt; &lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-        &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
         &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
             &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;uwsgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_PYTHOME&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_CHDIR&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                               
-            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_SCRIPT&lt;/span&gt;    &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;uwsgi_pass&lt;/span&gt;  &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_PYTHOME&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_CHDIR&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                               
+            &lt;span class="n"&gt;uwsgi_param&lt;/span&gt; &lt;span class="n"&gt;UWSGI_SCRIPT&lt;/span&gt;    &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;uwsgi_pass&lt;/span&gt;  &lt;span class="n"&gt;unix&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bottle&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;   
     &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;同样将nginx作为开机启动:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;default&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;首先创建一个bottle程序供测试:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/code/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
-&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;span class="c1"&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;span class="c1"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="cp"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="cp"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
 
-&lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class="s"&gt;# Author    : cold night&lt;/span&gt;
-&lt;span class="s"&gt;# Filename  : index.py                                                          &lt;/span&gt;
-&lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;bottle&lt;/span&gt; &lt;span class="nb"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
+&lt;span class="err"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="cp"&gt;# Author    : cold night&lt;/span&gt;
+&lt;span class="cp"&gt;# Filename  : index.py                                                          &lt;/span&gt;
+&lt;span class="err"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;bottle&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
 
-&lt;span class="nv"&gt;@route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="nl"&gt;else:&lt;/span&gt;
     &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后启动nginx和uwsgi:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
-&lt;span class="sr"&gt;/etc/i&lt;/span&gt;&lt;span class="n"&gt;nit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -670,8 +670,8 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;没结果,继续手动查看:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="sr"&gt;/sbin/&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
-&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
+&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -687,15 +687,15 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;然后查看:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="sr"&gt;/sbin/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt;&lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
-&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
-&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;      &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;setfiles&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
+&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
+&lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;      &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;setfiles&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后运行命令保存iptables策略:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt; &lt;span class="n"&gt;save&lt;/span&gt;
-&lt;span class="n"&gt;iptables:&lt;/span&gt; &lt;span class="n"&gt;Saving&lt;/span&gt; &lt;span class="n"&gt;firewall&lt;/span&gt; &lt;span class="n"&gt;rules&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="sr"&gt;/etc/s&lt;/span&gt;&lt;span class="n"&gt;ysconfig&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;iptables:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;  &lt;span class="n"&gt;OK&lt;/span&gt;  &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="nl"&gt;iptables:&lt;/span&gt; &lt;span class="n"&gt;Saving&lt;/span&gt; &lt;span class="n"&gt;firewall&lt;/span&gt; &lt;span class="n"&gt;rules&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sysconfig&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;  &lt;span class="n"&gt;OK&lt;/span&gt;  &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -707,14 +707,14 @@ vi /etc/conf.d/uwsgi.py
 &lt;p&gt;ip:192.168.3.3/24&lt;/p&gt;
 &lt;p&gt;由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2&lt;/p&gt;
 &lt;p&gt;首先安装python 2.7.2&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="sr"&gt;/usr/s&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
-&lt;span class="nb"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
-&lt;span class="c1"&gt;#下载python2.7.2&lt;/span&gt;
-&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;org&lt;/span&gt;&lt;span class="sr"&gt;/ftp/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="sr"&gt;/2.7.2/&lt;/span&gt;&lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
-&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jvxf&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
+&lt;span class="cp"&gt;#下载python2.7.2&lt;/span&gt;
+&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//www.python.org/ftp/python/2.7.2/Python-2.7.2.tar.bz2&lt;/span&gt;
+&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jvxf&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.7.2&lt;/span&gt;
-&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="sr"&gt;/configure --prefix=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;unicode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ucs4&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;unicode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;ucs4&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -755,18 +755,18 @@ Python 2.7.2
 
 
 &lt;p&gt;然后直接执行安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="n"&gt;c11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;py2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;egg&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="n"&gt;c11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;py2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;egg&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装好之后我们做一个软链接方便我们使用:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/python27/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="sr"&gt;/easy_install* /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/bin/&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后我们来使用easy_install来安装Python第三方扩展&lt;/p&gt;
 &lt;p&gt;安装本文所需要的web.py&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -782,12 +782,12 @@ Python 2.7.2
 
 
 &lt;p&gt;安装Spawn-fcgi :&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wegt&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lighttpd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="sr"&gt;/download/s&lt;/span&gt;&lt;span class="n"&gt;pawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
-&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wegt&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz&lt;/span&gt;
+&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;
-&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="sr"&gt;/configure --prefix=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/s&lt;/span&gt;&lt;span class="n"&gt;pawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;
 &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
-&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/spawn-fcgi/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="sr"&gt;/spawn-fcgi /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/bin/&lt;/span&gt;
+&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -806,15 +806,15 @@ make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;p&gt;我们修改nginx的配置文件:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;span class="c1"&gt;#           root   html;&lt;/span&gt;
-&lt;span class="c1"&gt;#          index  index.html index.htm;&lt;/span&gt;
+&lt;span class="cp"&gt;#           root   html;&lt;/span&gt;
+&lt;span class="cp"&gt;#          index  index.html index.htm;&lt;/span&gt;
             &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;PATH_INFO&lt;/span&gt; &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt; &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/tmp/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_ADDR&lt;/span&gt; &lt;span class="nv"&gt;$server_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_PORT&lt;/span&gt; &lt;span class="nv"&gt;$server_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_NAME&lt;/span&gt; &lt;span class="nv"&gt;$server_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;PATH_INFO&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt; &lt;span class="n"&gt;unix&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_ADDR&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;server_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_PORT&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;server_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SERVER_NAME&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;server_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -838,12 +838,12 @@ make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;p&gt;将内容保存到/usr/local/nginx/html/下命名为index.py(或任意你喜欢的名字)
 然后赋予其执行权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过命令创建spawn-fcgi进程:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="sr"&gt;/ -f /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="sr"&gt;/html/i&lt;/span&gt;&lt;span class="n"&gt;ndex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/tmp/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -861,7 +861,7 @@ yum  -y install zlib-devel pcre-devel openssl-devel
 
 &lt;p&gt;一般源代码安装分4个步骤(有人也会省去第一个步骤),&lt;code&gt;解压&lt;/code&gt;(tar命令)&lt;code&gt;预编译&lt;/code&gt;(执行源码包下的configure),&lt;code&gt;编译&lt;/code&gt;(make),&lt;code&gt;编译安装&lt;/code&gt;(make install)
 首先我们解压源码包:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.0.13&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.0.13&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -878,12 +878,12 @@ yum  -y install zlib-devel pcre-devel openssl-devel
 
 &lt;p&gt;其中./configure指执行当前目录下的&lt;code&gt;configure&lt;/code&gt;文件&lt;/p&gt;
 &lt;p&gt;预编译完成后我们就可以进行编译和安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt;           &lt;span class="c1"&gt;#编译&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt;           &lt;span class="err"&gt;#编译&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;执行后make后会有大量输出,等待输出完成后如果没有报错就可以进行安装执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;   &lt;span class="c1"&gt;#安装&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;   &lt;span class="err"&gt;#安装&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -894,20 +894,20 @@ conf  html  logs  sbin
 
 
 &lt;p&gt;好了,下面我们启动nginx:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/s&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过查看端口看nginx是否启动成功,nginx占用TCP的80端口,执行下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt; &lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
-&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;                  &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;5946&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt; &lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;                  &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;5946&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;我们查看80端口是开放的&lt;/p&gt;
 &lt;p&gt;然后打开浏览器访问http://192.168.3.120,我们会看到Welcome to nginx(之前的版本是 It's Work):&lt;/p&gt;
 &lt;p&gt;nginx安装完毕后我们来安装MySQL ,我们使用MySQl-5.0.95版首先下载:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="sr"&gt;/get/&lt;/span&gt;&lt;span class="n"&gt;Downloads&lt;/span&gt;&lt;span class="sr"&gt;/MySQL-5.0/m&lt;/span&gt;&lt;span class="n"&gt;ysql&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.0.95&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;&lt;span class="sr"&gt;/from/&lt;/span&gt;&lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//m&lt;/span&gt;&lt;span class="n"&gt;ysql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cdpa&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;nsysu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;edu&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tw&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -969,8 +969,8 @@ chown -R mysql.mysql /usr/local/mysql/var/      &lt;span class="c"&gt;# 更改�
 
 
 &lt;p&gt;现在我们查看MySQL是否启动成功,MySQL占用TCP的3306端口,我们查看端口是否被占用:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;3306&lt;/span&gt;
-&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;                &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;32143&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysqld&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;3306&lt;/span&gt;
+&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;                &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;32143&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysqld&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -980,17 +980,17 @@ chown -R mysql.mysql /usr/local/mysql/var/      &lt;span class="c"&gt;# 更改�
 
 
 &lt;p&gt;会显示如下内容表示已经成功启动MySQL并已经连接上&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Welcome&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;monitor&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;Commands&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="o"&gt;\&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Welcome&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;monitor&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;Commands&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Your&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
-&lt;span class="n"&gt;Server&lt;/span&gt; &lt;span class="n"&gt;version:&lt;/span&gt; &lt;span class="mf"&gt;5.0.95&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nb"&gt;log&lt;/span&gt; &lt;span class="n"&gt;Source&lt;/span&gt; &lt;span class="n"&gt;distribution&lt;/span&gt;
+&lt;span class="n"&gt;Server&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;5.0.95&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="n"&gt;Source&lt;/span&gt; &lt;span class="n"&gt;distribution&lt;/span&gt;
 
-&lt;span class="n"&gt;Copyright&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;2000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;its&lt;/span&gt; &lt;span class="n"&gt;affiliates&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;All&lt;/span&gt; &lt;span class="n"&gt;rights&lt;/span&gt; &lt;span class="n"&gt;reserved&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Copyright&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="mi"&gt;2000&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2011&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;its&lt;/span&gt; &lt;span class="n"&gt;affiliates&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;All&lt;/span&gt; &lt;span class="n"&gt;rights&lt;/span&gt; &lt;span class="n"&gt;reserved&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-&lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;registered&lt;/span&gt; &lt;span class="n"&gt;trademark&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;Corporation&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="n"&gt;its&lt;/span&gt;
-&lt;span class="n"&gt;affiliates&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Other&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;trademarks&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;their&lt;/span&gt; &lt;span class="n"&gt;respective&lt;/span&gt;
-&lt;span class="n"&gt;owners&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;registered&lt;/span&gt; &lt;span class="n"&gt;trademark&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Oracle&lt;/span&gt; &lt;span class="n"&gt;Corporation&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;its&lt;/span&gt;
+&lt;span class="n"&gt;affiliates&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Other&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;trademarks&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;their&lt;/span&gt; &lt;span class="n"&gt;respective&lt;/span&gt;
+&lt;span class="n"&gt;owners&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-&lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;help;&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;\h&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;\c&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;clear&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;statement&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;\h&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;\c&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;clear&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;current&lt;/span&gt; &lt;span class="n"&gt;input&lt;/span&gt; &lt;span class="n"&gt;statement&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
 &lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1026,7 +1026,7 @@ make install
 
 
 &lt;p&gt;然后下载php:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http:&lt;/span&gt;&lt;span class="sr"&gt;//c&lt;/span&gt;&lt;span class="n"&gt;n2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="sr"&gt;/get/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;&lt;span class="sr"&gt;/from/&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mirror&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//cn2.php.net/get/php-5.4.0.tar.bz2/from/this/mirror&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1036,9 +1036,9 @@ make install
 
 
 &lt;p&gt;我们使用nginx调用php的时候使用fpm的方式,在php 5.4中加入了对php-fpm的支持,所以就不需要打补丁了.安装PHP:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jxvf&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jxvf&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;
-&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="sr"&gt;/configure --prefix=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/mysql/&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zlib&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rpath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;safe&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bcmath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;shmop&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sysvsem&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curlwrappers&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fastcgi&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mcrypt&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gd&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;openssl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mhash&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sockets&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sasl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xmlrpc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;soap&lt;/span&gt;
+&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zlib&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rpath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;safe&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bcmath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;shmop&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sysvsem&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curlwrappers&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fastcgi&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mcrypt&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gd&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;openssl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mhash&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sockets&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sasl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xmlrpc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;soap&lt;/span&gt;
 &lt;span class="n"&gt;make&lt;/span&gt;
 &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1046,73 +1046,73 @@ make install
 
 &lt;p&gt;到这里整个LNMP已经安装完成.下面我们就配置php和nginx能运行php网站:
 首先为php创建配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;production&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt; &lt;span class="c1"&gt;# 如果是开发就复制php.ini-development&lt;/span&gt;
-&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="sr"&gt;/php-fpm.conf.default /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/local/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="sr"&gt;/etc/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
-&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="sr"&gt;/php /&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="sr"&gt;/bin/&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;production&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;如果是开发就复制&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;development&lt;/span&gt;
+&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;配置php-fpm,编辑php-fpm.conf&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;找到listen那一行,修改成如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="sr"&gt;/php-fpm/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;   &lt;span class="c1"&gt;# 使用unix socket&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用&lt;/span&gt;&lt;span class="n"&gt;unix&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;启动php-fpm&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;mkdir&lt;/span&gt; &lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
-&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/php/s&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后配置nginx,编辑nginx配置文件&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/co&lt;/span&gt;&lt;span class="n"&gt;nf&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改nginx配置文件支持php:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-        &lt;span class="nb"&gt;listen&lt;/span&gt;       &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-        &lt;span class="c1"&gt;#charset koi8-r;&lt;/span&gt;
+        &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;charset&lt;/span&gt; &lt;span class="n"&gt;koi8&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-        &lt;span class="c1"&gt;#access_log  logs/host.access.log  main;&lt;/span&gt;
+        &lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="n"&gt;access_log&lt;/span&gt;  &lt;span class="n"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;  &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
         &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
             &lt;span class="n"&gt;root&lt;/span&gt;   &lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="nb"&gt;index&lt;/span&gt;  &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;htm&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;         &lt;span class="c1"&gt;# 添加index.php的首页文件&lt;/span&gt;
+            &lt;span class="n"&gt;index&lt;/span&gt;  &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;htm&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;添加&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="err"&gt;的首页文件&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
 
-        &lt;span class="c1"&gt;# 添加下面内容&lt;/span&gt;
-        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="o"&gt;\.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="nv"&gt;$&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt;        &lt;span class="n"&gt;unix:&lt;/span&gt;&lt;span class="sr"&gt;/var/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="sr"&gt;/php-fpm/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_index&lt;/span&gt;       &lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="nv"&gt;$document_root&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;添加下面内容&lt;/span&gt;
+        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_pass&lt;/span&gt;        &lt;span class="n"&gt;unix&lt;/span&gt;&lt;span class="o"&gt;:/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_index&lt;/span&gt;       &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;fastcgi_param&lt;/span&gt; &lt;span class="n"&gt;SCRIPT_FILENAME&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;document_root&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
             &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改完毕后保存退出重启nginx:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;pkill&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="n"&gt;nignx&lt;/span&gt;
-&lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/s&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后在/usr/local/nginx/html下创建index.php,&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="sr"&gt;/usr/&lt;/span&gt;&lt;span class="nb"&gt;local&lt;/span&gt;&lt;span class="sr"&gt;/nginx/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nb"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;添加下面内容:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
 &lt;span class="nb"&gt;phpinfo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
-&lt;span class="cp"&gt;?&amp;gt;&lt;/span&gt;&lt;span class="x"&gt;&lt;/span&gt;
+&lt;span class="cp"&gt;?&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1168,10 +1168,10 @@ make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;修改完毕按&lt;/span&gt;&lt;span class="sb"&gt;`Esc`&lt;/span&gt;&lt;span class="err"&gt;进入命令模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;输入&lt;/span&gt;&lt;span class="sb"&gt;`:`&lt;/span&gt;&lt;span class="err"&gt;进入末行模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在末行模式输入&lt;/span&gt;&lt;span class="sb"&gt;`wq`&lt;/span&gt;&lt;span class="err"&gt;保存退出&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;修改完毕按`&lt;/span&gt;&lt;span class="n"&gt;Esc&lt;/span&gt;&lt;span class="err"&gt;`进入命令模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;输入`&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="err"&gt;`进入末行模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在末行模式输入`&lt;/span&gt;&lt;span class="n"&gt;wq&lt;/span&gt;&lt;span class="err"&gt;`保存退出&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
-&lt;span class="err"&gt;修改完毕后执行&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;span class="sb"&gt;``&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
+&lt;span class="err"&gt;修改完毕后执行&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
 &lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="n"&gt;update&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -2082,11 +2082,11 @@ body common control
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;做好之后先本地同步,然后启动server:
 &lt;pre&gt;/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;到如下提示表示成功&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;span class="sb"&gt;``&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt; 
-&lt;span class="o"&gt;-&amp;amp;&lt;/span&gt;&lt;span class="ow"&gt;gt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;Bootstrap&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mf"&gt;172.16.1.1&lt;/span&gt; &lt;span class="n"&gt;completed&lt;/span&gt; &lt;span class="n"&gt;successfully&lt;/span&gt;
-&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="nb"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;cf&lt;/span&gt;
-&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;5308&lt;/span&gt;                     &lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;                        &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;20173&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cf&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serverd&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;到如下提示表示成功&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt; 
+&lt;span class="o"&gt;-&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;gt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;Bootstrap&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mf"&gt;172.16.1.1&lt;/span&gt; &lt;span class="n"&gt;completed&lt;/span&gt; &lt;span class="n"&gt;successfully&lt;/span&gt;
+&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;cf&lt;/span&gt;
+&lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;:::&lt;/span&gt;&lt;span class="mi"&gt;5308&lt;/span&gt;                     &lt;span class="o"&gt;:::*&lt;/span&gt;                        &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;20173&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cf&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;serverd&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
