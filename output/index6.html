@@ -59,29 +59,6 @@
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
-        <div class= "well small"> 一 16 四月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
-
- </div>
-        <div class="summary"><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
-<p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
-工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
-IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
-DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
         <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h2>使用Python进行web开发</h2></a>
         <div class= "well small"> 五 13 四月 2012
 
@@ -348,6 +325,46 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 <h3>安装rrdtool</h3>
 <div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
 wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
+        <div class= "well small"> 一 20 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+
+ </div>
+        <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<h2>文件查找</h2>
+<p>找出最近修改的文件:</p>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
+
+<p>使用通配符查找文件</p>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
+
+<h2>文本替换</h2>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
+
+<h2>显示指定行</h2>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -18,11 +18,10 @@ tags: clubot, pyxmpp2, gtalk, xmpp, 更新, 重写, SQLAlchemy, tornado
 数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上`clubot_`前缀, 并配以`update.py`脚本用以支持将旧的数据导入.
 
 本次更新添加了依赖, 现在依赖包括:
-* pyxmpp2
-    * dnspython
+* pyxmpp2(dnspython)
 * tornado
 * sqlalchemy
-    * MySQL-python
+* MySQL-python
 
 
 ## 乱码

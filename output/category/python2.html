@@ -59,31 +59,6 @@
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
-        <div class= "well small"> 五 25 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
-</pre></div>
-
-
-<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
         <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
         <div class= "well small"> 二 22 一月 2013
 
@@ -387,6 +362,40 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
 <p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
 <p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html"><h2>python里的三目运算</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>下面说的和三目运算有点相似,但又不一样,实在不知道该如何拟定标题,先就是这个标题吧,大家都知道python中没有三目运算,但是<code>and</code>/<code>or</code>有点类似三目运算:</p>
+<h2>and/or</h2>
+<p>单独使用表示逻辑关系与和或,也可以组和使用,用法如下</p>
+<h3>and</h3>
+<p>and前后如果某一个值为假(False, '', [], {}, None…)则返回第一个假值
+如果所有值都为真则返回最后一个真值</p>
+<h3>or</h3>
+<p>如果or任意一个值为真,则立刻返回这个值
+如果所有值都为假,则or返回最后一个假值</p>
+<h3>例子</h3>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
+<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

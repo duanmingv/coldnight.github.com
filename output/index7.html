@@ -59,46 +59,6 @@
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
-        <div class= "well small"> 一 20 二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
-<h2>文件查找</h2>
-<p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
-</pre></div>
-
-
-<p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
-</pre></div>
-
-
-<h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
-</pre></div>
-
-
-<h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
         <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
         <div class= "well small"> 五 17 二月 2012
 

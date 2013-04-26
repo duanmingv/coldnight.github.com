@@ -59,7 +59,7 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html"><h1>解决WebQQ机器人连接时间长触发 socket.gaierror</h1></a>
+            <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h1>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h1></a>
             五 26 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
@@ -70,27 +70,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"></div>
-        <hr />
-    </div>
-		
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h2>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h2></a>
-        <div class= "well small"> 五 26 四月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+        <div class="highlight"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
 <h2>更新内容</h2>
 <ol>
 <li>数据库使用<code>SQLAlchemy</code>重写</li>
@@ -104,10 +84,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>如何升级</h2>
 <p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
 <p>本次更新添加了依赖, 现在依赖包括:
-<em> pyxmpp2
-    * dnspython ...</em></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">read more</a></div>
-    </div>	
-				
+<em> pyxmpp2(dnspython)
+</em> tornado
+<em> sqlalchemy
+</em> MySQL-python</p>
+<h2>乱码</h2>
+<p>如果数据导入后乱码, 可以参考<a href="/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">这篇文章</a></p>
+<h2>项目地址</h2>
+<p>最后放上<a href="https://github.com/coldnight/clubot">项目地址</a></p></div>
+        <hr />
+    </div>
+		
     
  
         
@@ -331,6 +318,31 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
+        <div class= "well small"> 五 25 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
+<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
+</pre></div>
+
+
+<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
+执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -59,7 +59,7 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html"><h1>解决WebQQ机器人连接时间长触发 socket.gaierror</h1></a>
+            <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h1>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h1></a>
             五 26 四月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
@@ -70,27 +70,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"></div>
-        <hr />
-    </div>
-		
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h2>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h2></a>
-        <div class= "well small"> 五 26 四月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+        <div class="highlight"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
 <h2>更新内容</h2>
 <ol>
 <li>数据库使用<code>SQLAlchemy</code>重写</li>
@@ -104,10 +84,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>如何升级</h2>
 <p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
 <p>本次更新添加了依赖, 现在依赖包括:
-<em> pyxmpp2
-    * dnspython ...</em></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">read more</a></div>
-    </div>	
-				
+<em> pyxmpp2(dnspython)
+</em> tornado
+<em> sqlalchemy
+</em> MySQL-python</p>
+<h2>乱码</h2>
+<p>如果数据导入后乱码, 可以参考<a href="/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">这篇文章</a></p>
+<h2>项目地址</h2>
+<p>最后放上<a href="https://github.com/coldnight/clubot">项目地址</a></p></div>
+        <hr />
+    </div>
+		
     
  
         
@@ -325,6 +312,33 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <li>Linux</li>
 <li>python2.7</li>
 <li>MySQL ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
+        <div class= "well small"> 二 05 二月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>引子</h2>
+<p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
+<h2>实现</h2>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -59,29 +59,6 @@
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
-        <div class= "well small"> 一 16 四月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
-
- </div>
-        <div class="summary"><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
-<p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
-工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
-IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
-DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
         <a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html"><h2>mongoengine使用笔记</h2></a>
         <div class= "well small"> 六 23 六月 2012
 
@@ -385,6 +362,40 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
 执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h2>Python 字典和列表陷阱</h2></a>
+        <div class= "well small"> 一 17 九月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>Python 中有三个非常好用的数据结构,列表,元组和字典,
+元组是不可变的,列表可以保存任意类型的Python对象,并可以随意扩展没有大小限制,
+字典是一个key-value的键值映射的类型,可以存放任何Python对象,可以嵌套字典,
+值可以是字典元组或者字典</p>
+<p>这里说是Python 字典和列表的陷阱不如说是Python的一些特性,如果不了解这些特性
+就会引发一些难以寻找的bug</p>
+<p>下面我们来介绍这些特性</p>
+<p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
+如下面代码:</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

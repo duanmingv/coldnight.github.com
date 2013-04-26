@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-26T16:36:00+08:00</updated><entry><title>解决WebQQ机器人连接时间长触发 socket.gaierror</title><link href="http://www.linuxzen.com/jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html" rel="alternate"></link><updated>2013-04-26T16:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-26:jie-jue-webqqji-qi-ren-lian-jie-shi-jian-chang-hong-fa-socketgaierror.html</id><summary type="html"></summary><category term="webqq"></category><category term="socket.gaierror"></category><category term="python"></category></entry><entry><title>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</title><link href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html" rel="alternate"></link><updated>2013-04-26T15:40:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-26:clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html</id><summary type="html">&lt;p&gt;&lt;a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"&gt;clubot&lt;/a&gt;在我的vps上跑了有一段时间了, 最近接触了&lt;code&gt;SQLAlchemy&lt;/code&gt; 然后反观&lt;code&gt;clubot&lt;/code&gt;的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用&lt;code&gt;SQLAlchemy&lt;/code&gt;重写了数据库模块, 并将&lt;code&gt;epoll&lt;/code&gt;的MainLoop改成&lt;a href="http://lilydjwg.is-programmer.com/"&gt;仙子君&lt;/a&gt;所写的&lt;a href="https://github.com/lilydjwg/pyxmpp2"&gt;TornadoMainLoop&lt;/a&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-26T15:40:00+08:00</updated><entry><title>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</title><link href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html" rel="alternate"></link><updated>2013-04-26T15:40:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-26:clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html</id><summary type="html">&lt;p&gt;&lt;a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"&gt;clubot&lt;/a&gt;在我的vps上跑了有一段时间了, 最近接触了&lt;code&gt;SQLAlchemy&lt;/code&gt; 然后反观&lt;code&gt;clubot&lt;/code&gt;的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用&lt;code&gt;SQLAlchemy&lt;/code&gt;重写了数据库模块, 并将&lt;code&gt;epoll&lt;/code&gt;的MainLoop改成&lt;a href="http://lilydjwg.is-programmer.com/"&gt;仙子君&lt;/a&gt;所写的&lt;a href="https://github.com/lilydjwg/pyxmpp2"&gt;TornadoMainLoop&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;更新内容&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;数据库使用&lt;code&gt;SQLAlchemy&lt;/code&gt;重写&lt;/li&gt;
@@ -13,11 +13,10 @@
 &lt;h2&gt;如何升级&lt;/h2&gt;
 &lt;p&gt;数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上&lt;code&gt;clubot_&lt;/code&gt;前缀, 并配以&lt;code&gt;update.py&lt;/code&gt;脚本用以支持将旧的数据导入.&lt;/p&gt;
 &lt;p&gt;本次更新添加了依赖, 现在依赖包括:
-&lt;em&gt; pyxmpp2
-    * dnspython
+&lt;em&gt; pyxmpp2(dnspython)
 &lt;/em&gt; tornado
-* sqlalchemy
-    * MySQL-python&lt;/p&gt;
+&lt;em&gt; sqlalchemy
+&lt;/em&gt; MySQL-python&lt;/p&gt;
 &lt;h2&gt;乱码&lt;/h2&gt;
 &lt;p&gt;如果数据导入后乱码, 可以参考&lt;a href="/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"&gt;这篇文章&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;项目地址&lt;/h2&gt;
