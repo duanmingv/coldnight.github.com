@@ -4,6 +4,7 @@
 &lt;ol&gt;
 &lt;li&gt;数据库使用&lt;code&gt;SQLAlchemy&lt;/code&gt;重写&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;MainLoop&lt;/code&gt;改用&lt;code&gt;TornadoMainLoop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;改变代码结构, 清理部分代码&lt;/li&gt;
 &lt;li&gt;将&lt;code&gt;history&lt;/code&gt;命令改为&lt;code&gt;old&lt;/code&gt;, 并支持时间查询&lt;/li&gt;
 &lt;li&gt;废弃一些不常用的命令&lt;/li&gt;
 &lt;li&gt;改变数据库表结构&lt;/li&gt;
@@ -12,6 +13,7 @@
 &lt;/ol&gt;
 &lt;h2&gt;如何升级&lt;/h2&gt;
 &lt;p&gt;数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上&lt;code&gt;clubot_&lt;/code&gt;前缀, 并配以&lt;code&gt;update.py&lt;/code&gt;脚本用以支持将旧的数据导入.&lt;/p&gt;
+&lt;h2&gt;新的依赖&lt;/h2&gt;
 &lt;p&gt;本次更新添加了依赖, 现在依赖包括:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;pyxmpp2&lt;/li&gt;

@@ -69,6 +69,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <ol>
 <li>数据库使用<code>SQLAlchemy</code>重写</li>
 <li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
+<li>改变代码结构, 清理部分代码</li>
 <li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
 <li>废弃一些不常用的命令</li>
 <li>改变数据库表结构</li>
@@ -77,6 +78,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 </ol>
 <h2>如何升级</h2>
 <p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
+<h2>新的依赖</h2>
 <p>本次更新添加了依赖, 现在依赖包括:</p>
 <ul>
 <li>pyxmpp2</li>
