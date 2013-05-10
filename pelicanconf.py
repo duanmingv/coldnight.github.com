@@ -27,7 +27,9 @@ FLOW_CONTENT = u"""<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3
 
 STATIC_PATHS = [u"upload", ]
 # Blogroll
-LINKS =  (('eleven', 'http://eleveni386.7axu.com'),)
+LINKS =  (('eleven', 'http://eleveni386.7axu.com'),
+          (u'小邪兽_deppin',"http://neteue.com"),
+          )
 
 # Social widget
 #SOCIAL = (('You can add links in your config file', '#'),
