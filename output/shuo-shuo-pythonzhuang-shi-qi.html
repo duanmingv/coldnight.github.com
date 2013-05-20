@@ -92,7 +92,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 </pre></div>
 
 
-<p>被装饰的函数或在解释器运行一开始就被加载, 从而将被装饰的函数展开成如上方式, 因为 <code>run_time</code>装饰器返回<code>wrapper</code>函数, 所以当调用<code>test</code>函数时其实就是对<code>wrapper</code>的调用</p>
+<p>装饰器将在解释器运行一开始就被加载, 从而将被装饰的函数将被展开成如上方式, 因为 <code>run_time</code>装饰器返回<code>wrapper</code>函数, 所以当调用<code>test</code>函数时其实就是对<code>wrapper</code>的调用</p>
 <p>如果你在Python shell下执行以上语句就会发现定义完<code>test</code>函数然后查看<code>test</code>时, shell所展示的是wrapper函数:
 <a href="http://www.linuxzen.com"><img alt="说说Python装饰器" src="/static/upload/pyshell.png" /></a></p>
 <hr />

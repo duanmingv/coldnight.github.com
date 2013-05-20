@@ -27,7 +27,7 @@ def test():
 ```python
 test = run_time(test)
 ```
-被装饰的函数或在解释器运行一开始就被加载, 从而将被装饰的函数展开成如上方式, 因为 `run_time`装饰器返回`wrapper`函数, 所以当调用`test`函数时其实就是对`wrapper`的调用
+装饰器将在解释器运行一开始就被加载, 从而将被装饰的函数将被展开成如上方式, 因为 `run_time`装饰器返回`wrapper`函数, 所以当调用`test`函数时其实就是对`wrapper`的调用
 
 如果你在Python shell下执行以上语句就会发现定义完`test`函数然后查看`test`时, shell所展示的是wrapper函数:
 [![说说Python装饰器](/static/upload/pyshell.png)](http://www.linuxzen.com)
