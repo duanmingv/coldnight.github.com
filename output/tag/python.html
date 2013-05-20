@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h1>使用Pelican打造静态博客</h1></a>
-            四 18 四月 2013
+            <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h1>说说Python装饰器</h1></a>
+            一 20 五月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,182 +70,81 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
+        <div class="highlight"><p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
+<p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="k">return</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+
+
+<p>我们用这个装饰器装饰一个<code>test</code>函数</p>
+<div class="codehilite"><pre><span class="nd">@run_time</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
+</pre></div>
+
+
+<p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
+<div class="codehilite"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</pre></div>
+
+
+<p>被装饰的函数或在解释器运行一开始就被加载, 从而将被装饰的函数展开成如上方式, 因为 <code>run_time</code>装饰器返回<code>wrapper</code>函数, 所以当调用<code>test</code>函数时其实就是对<code>wrapper</code>的调用</p>
+<p>如果你在Python shell下执行以上语句就会发现定义完<code>test</code>函数然后查看<code>test</code>时, shell所展示的是wrapper函数:
+<a href="http://www.linuxzen.com"><img alt="说说Python装饰器" src="/static/upload/pyshell.png" /></a></p>
+<hr />
+<p>接下来说说如何编写带参数的装饰器, 大家如果细心的话就可以发现其实带参数的装饰器是经过调用"装饰器"函数返回的一个装饰器, 之所以装饰器上打引号是说明其实这个所谓的"装饰器"只不过是一个普通的函数, 但这个普通的函数返回一个装饰器, 可以参看下面例子:</p>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">route</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="n">func</span><span class="o">.</span><span class="n">__url__</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="k">return</span> <span class="n">func</span>
+    <span class="k">return</span> <span class="n">decorator</span>
+
+<span class="nd">@route</span><span class="p">(</span><span class="s">r&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s">&quot;Hi&quot;</span>
+</pre></div>
+
+
+<p>大家可以发现在使用<code>route</code>装饰器时我们其实是调用了<code>route</code>函数, <code>route</code>函数返回一个<code>decorator</code>装饰器, 因为我们不需要在装饰器内运行函数, 所以不需要一个<code>wrapper</code>函数来收集参数.</p>
+<hr />
+<p>以上就是全部内容, 希望对装饰器一知半解的人有些许帮助</p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
+        <div class= "well small"> 四 18 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
 <h2>介绍</h2>
 <p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
 <h2>安装</h2>
 <p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
-<h3>建立 virtualenv</h3>
-<div class="codehilite"><pre>virtualenv pelican      <span class="c"># 创建</span>
-<span class="nb">cd </span>pelican
-sh bin/activate            <span class="c"># 激活虚拟环境</span>
-</pre></div>
-
-
-<p>上面建立了一个Python的虚拟环境(这个命令不是内置可以使用 <code>easy_install virtualenv</code> 安装)</p>
-<h3>从github克隆最新代码安装Pelican</h3>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican.git            <span class="c"># 代码</span>
-<span class="nb">cd </span>pelican
-python setup.py install
-</pre></div>
-
-
-<p>上面步骤完成后就安装了Pelican</p>
-<h2>开始一个博客</h2>
-<div class="codehilite"><pre>mkdir /path/to/your/blog
-<span class="nb">cd</span> /path/to/your/blog
-pelican-quickstart
-</pre></div>
-
-
-<p>在回答一系列问题过后你的博客就建成的, 主要生成下列文件:</p>
-<div class="codehilite"><pre>.
-|-- content                <span class="c"># 所有文章放于此目录</span>
-|-- develop_server.sh      <span class="c"># 用于开启测试服务器</span>
-|-- Makefile               <span class="c"># 方便管理博客的Makefile</span>
-|-- output                 <span class="c"># 静态生成文件</span>
-|-- pelicanconf.py         <span class="c"># 配置文件</span>
-|-- publishconf.py         <span class="c"># 配置文件</span>
-</pre></div>
-
-
-<h3>写一篇文章</h3>
-<p>在 <code>content</code> 目录新建一个 <code>test.md</code>文件, 填入一下内容:</p>
-<div class="codehilite"><pre><span class="nl">Title:</span> <span class="err">文章标题</span>
-<span class="nl">Date:</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">18</span>
-<span class="nl">Category:</span> <span class="err">文章类别</span>
-<span class="nl">Tag:</span> <span class="err">标签</span><span class="mi">1</span><span class="p">,</span> <span class="err">标签</span><span class="mi">2</span>
-
-<span class="err">这里是内容</span>
-</pre></div>
-
-
-<p>然后执行:</p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>用以生成html</p>
-<p>然后执行</p>
-<div class="codehilite"><pre>./develop_server.sh start
-</pre></div>
-
-
-<p>开启一个测试服务器, 这会在本地 8000 端口建立一个测试web服务器, 可以使用浏览器打开:<code>http://localhost:8000</code>来访问这个测试服务器, 然后就可以欣赏到你的博客了</p>
-<h3>创建一个页面</h3>
-<p>这里以创建 <code>About</code>页面为例</p>
-<p>在<code>content</code>目录创建<code>pages</code>目录</p>
-<div class="codehilite"><pre>mkdir content/pages
-</pre></div>
-
-
-<p>然后创建<code>About.md</code>并填入下面内容</p>
-<div class="codehilite"><pre>Title: About Me
-Date: 2013-04-18
-
-About me content
-</pre></div>
-
-
-<p>执行 <code>make html</code> 生成html, 然后打开 <code>http://localhost:8000</code>查看效果</p>
-<h3>让Pelican支持评论</h3>
-<p>Pelican 使用<code>Disqus</code>评论, 可以申请在<a href="https://disqus.com/">Disqus</a>上申请一个站点, 然后在<code>pelicanconf.py</code>里添加或修改<code>DISQUS_SITENAME</code>项:</p>
-<div class="codehilite"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
-</pre></div>
-
-
-<p>执行</p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>浏览器打开 <code>http://localhost:8000</code>查看效果</p>
-<h3>更换主题</h3>
-<p>Pelican本身也提供了一些主题可供选择, 可以从github克隆下来</p>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
-</pre></div>
-
-
-<p>然后在里面找到想要的主题, 然后拷到博客项目当前目录, 这里已<code>neat</code>为例</p>
-<div class="codehilite"><pre>cp -r /path/to/themes/from/github/neat .
-</pre></div>
-
-
-<p>然后在 <code>pelicanconf.py</code> 配置文件里添加或修改 <code>THEME</code>项为 <code>neat</code></p>
-<div class="codehilite"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="s">&quot;neat&quot;</span>
-</pre></div>
-
-
-<p>重新执行 </p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>然后打开 <code>http://localhost:8000</code> 查看效果</p>
-<h3>使用插件</h3>
-<p>Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行</p>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
-</pre></div>
-
-
-<p>现在我们博客目录就新添了一个 <code>pelican-plugins</code>目录, 我们已配置<code>sitemap</code>插件为例,
-<code>sitemap</code>插件可以生成 <code>sitemap.xml</code> 供搜索引擎使用</p>
-<p>在<code>pelicanconf.py</code>配置文件里加上如下项:</p>
-<div class="codehilite"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&quot;pelican-plugins&quot;</span>
-
-<span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;sitemap&quot;</span><span class="p">]</span>
-
-<span class="c">## 配置sitemap 插件</span>
-<span class="n">SITEMAP</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">&quot;format&quot;</span><span class="p">:</span> <span class="s">&quot;xml&quot;</span><span class="p">,</span>
-    <span class="s">&quot;priorities&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
-        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
-    <span class="p">},</span>
-    <span class="s">&quot;changefreqs&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s">&quot;articles&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
-        <span class="s">&quot;indexes&quot;</span><span class="p">:</span> <span class="s">&quot;daily&quot;</span><span class="p">,</span>
-        <span class="s">&quot;pages&quot;</span><span class="p">:</span> <span class="s">&quot;monthly&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
-
-<p>然后再执行</p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>打开浏览器请求 <code>http://localhost:8000/sitemap.xml</code>即可看到生成的 Sitemap 了</p>
-<h3>拷贝静态文件</h3>
-<p>如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以<code>robots.txt</code> 为例, 在我们的 content/extra 下面我们放了一个定义好的 <code>robots.txt</code>文件, 在<code>pelicanconf.py</code>更改或添加 <code>FILES_TO_COPY</code>项:</p>
-<div class="codehilite"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="p">(</span><span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span> <span class="s">&quot;robots.txt&quot;</span><span class="p">),</span>
-<span class="p">)</span>
-</pre></div>
-
-
-<p>这样在每次生成html的时候都会把 <code>content/extra</code>下的 <code>robots.txt</code> 拷贝到 <code>output</code>目录下</p>
-<h3>拷贝静态目录</h3>
-<p>如果是一个静目录怎么办? 我们可以在<code>pelicanconf.py</code>里添加或修改 <code>STATIC_PATHS</code>项, 比如我们有个<code>img</code>目录用来放文章所使用的图片, 我们可以在<code>pelicanconf.py</code>添加</p>
-<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
-</pre></div>
-
-
-<p>然后执行 </p>
-<div class="codehilite"><pre>make html
-</pre></div>
-
-
-<p>然后 Pelican 就会将 <code>img</code>目录拷贝到 <code>output/static/</code> 下</p>
-<h2>部署</h2>
-<p>上面都弄完之后你就可以得到一个功能健全的博客系统, 接下来就是部署到服务器, 上传到服务器并结合nginx或者apache等web服务器部署这里就不在详述</p>
-<h2>参考</h2>
-<p>如果还有其他问题请参考<a href="http://docs.getpelican.com/">官方手册</a></p></div>
-        <hr />
-    </div>
-		
+<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
+    </div>	
+				
     
  
         
