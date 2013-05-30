@@ -7,7 +7,7 @@
 &lt;/ul&gt;
 &lt;hr /&gt;
 &lt;p&gt;总而言之就是一个被动型的辅助机器人, 群里有同学建议&lt;code&gt;AI&lt;/code&gt;功能, 但是我水平不够没办法设计和实现&lt;code&gt;AI&lt;/code&gt;部分, 所以想调用&lt;code&gt;SimSimi&lt;/code&gt;实现&lt;code&gt;AI&lt;/code&gt;, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有&lt;code&gt;AI&lt;/code&gt;功能了, 只要在有Pual的群里发送&lt;code&gt;Pual&lt;/code&gt;打头的消息 就可以和&lt;code&gt;Pual&lt;/code&gt;互动&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/coldngiht/pual_bot"&gt;项目地址&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/coldnight/pual_bot"&gt;项目地址&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏&lt;/p&gt;</summary><category term="Pual"></category><category term="Python"></category><category term="bot"></category><category term="SimSimi"></category></entry><entry><title>说说Python装饰器</title><link href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html" rel="alternate"></link><updated>2013-05-20T14:52:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-05-20:shuo-shuo-pythonzhuang-shi-qi.html</id><summary type="html">&lt;p&gt;装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解&lt;/p&gt;
 &lt;p&gt;所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
