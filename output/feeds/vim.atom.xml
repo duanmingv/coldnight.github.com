@@ -342,7 +342,7 @@ clear
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cpp&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cc&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;Compiling...&amp;quot;&lt;/span&gt;
-        g++ -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt; /tmp/errinfo &amp;gt;&amp;amp;2
+        g++ -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt; /tmp/errinfo &amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;2
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[32;1mSuccess!!!\033[0m&amp;quot;&lt;/span&gt;
@@ -364,7 +364,7 @@ clear
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Compiling...&amp;quot;&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
-        gcc -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt;/tmp/errinfo &amp;gt;&amp;amp;2
+        gcc -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt;/tmp/errinfo &amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;2
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[32;1mSuccess!!!\033[0m&amp;quot;&lt;/span&gt;

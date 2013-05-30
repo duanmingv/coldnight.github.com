@@ -17,7 +17,7 @@ server:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
 yum -y install cairo-devel glib2-devel pango-devel intltool   &lt;span class="c"&gt;# 安装rrdtool依赖&lt;/span&gt;
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -32,8 +32,8 @@ chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
 
 
 &lt;p&gt;然后进入到数据库创建cacti数据和创建一个用户:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
-grant all on cactidb.* to cactiuser@localhost identified by &lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;; &lt;span class="c"&gt;# 创建一个mysql用户&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
+grant all on cactidb.* to cactiuser@localhost identified by &lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# 创建一个mysql用户&lt;/span&gt;
 use cactidb   &lt;span class="c"&gt;# 使用刚才创建的数据库&lt;/span&gt;
 &lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/nginx/html/cacti/cacti.sql &lt;span class="c"&gt;# 导入cacti数据&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -46,28 +46,28 @@ vi include/config.php
 
 
 &lt;p&gt;编辑下面内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
-&lt;span class="nv"&gt;$database_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactidb&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库名字&lt;/span&gt;
-&lt;span class="nv"&gt;$database_hostname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库主机&lt;/span&gt;
-&lt;span class="nv"&gt;$database_username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactiuser&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库用户&lt;/span&gt;
-&lt;span class="nv"&gt;$database_password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库密码&lt;/span&gt;
-&lt;span class="nv"&gt;$database_port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;3306&amp;quot;&lt;/span&gt;;             &lt;span class="c"&gt;# 数据库端口&lt;/span&gt;
-&lt;span class="nv"&gt;$database_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
+&lt;span class="nv"&gt;$database_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactidb&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;       &lt;span class="c"&gt;# 数据库名字&lt;/span&gt;
+&lt;span class="nv"&gt;$database_hostname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;    &lt;span class="c"&gt;# 数据库主机&lt;/span&gt;
+&lt;span class="nv"&gt;$database_username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactiuser&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;    &lt;span class="c"&gt;# 数据库用户&lt;/span&gt;
+&lt;span class="nv"&gt;$database_password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;       &lt;span class="c"&gt;# 数据库密码&lt;/span&gt;
+&lt;span class="nv"&gt;$database_port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;3306&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c"&gt;# 数据库端口&lt;/span&gt;
+&lt;span class="nv"&gt;$database_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后修改nginx配置文件像下面:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;        location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root   html;
-            index  index.php;
+            root   html&lt;span class="p"&gt;;&lt;/span&gt;
+            index  index.php&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
 
         location ~ &lt;span class="se"&gt;\.&lt;/span&gt;php&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
-            fastcgi_index       index.php;
-            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
-            include fastcgi_params;
-            include fastcgi.conf;
+            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_index       index.php&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            include fastcgi_params&lt;span class="p"&gt;;&lt;/span&gt;
+            include fastcgi.conf&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -85,7 +85,7 @@ vi include/global_constants.php
 
 
 &lt;p&gt;在第二行添加&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;;
+&lt;div class="codehilite"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -195,7 +195,7 @@ make install-init          &lt;span class="c"&gt;# 安装nagios启动脚本&lt;/
 tar -zxvf nagios-plugins-1.4.15.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nagios-plugins-1.4.15
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios
-make  &amp;amp;amp;&amp;amp;amp; make install
+make  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -204,11 +204,11 @@ make  &amp;amp;amp;&amp;amp;amp; make install
 &lt;p&gt;这里web服务器使用当前主流的nginx:&lt;/p&gt;
 &lt;p&gt;安装nginx&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
-&amp;amp;amp;nbsp;yum&amp;amp;amp;nbsp;&amp;amp;amp;nbsp;-y&amp;amp;amp;nbsp;install&amp;amp;amp;nbsp;zlib-devel&amp;amp;amp;nbsp;pcre-devel&amp;amp;amp;nbsp;openssl-devel &amp;amp;amp;nbsp;# 安装依赖
+&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;yum&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;-y&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;install&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;zlib-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;pcre-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;openssl-devel &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
 tar -zxvf nginx-1.0.11.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -217,19 +217,19 @@ make &amp;amp;amp;&amp;amp;amp; make install
 tar -zxvf FCGI-0.67.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-0.67
 perl Makefile.PL
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 wget http://cpan.wenzk.com/authors/id/G/GB/GBJK/FCGI-ProcManager-0.19.tar.gz
 tar -zxvf FCGI-ProcManager-0.19.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-ProcManager-0.19
 perl Makefile.PL
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/IO-All-0.39.tar.gz
 tar zxvf IO-All-0.39.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;IO-All-0.39
 perl Makefile.PL
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -253,54 +253,54 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="
 &lt;h2&gt;配置&lt;/h2&gt;
 &lt;p&gt;首先配置nginx:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;    server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen  192.168.3.3:80;
-        server_name 192.168.3.3;
-        auth_basic &lt;span class="s2"&gt;&amp;quot;Nagios&amp;quot;&lt;/span&gt;;
-        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios;
+        listen  192.168.3.3:80&lt;span class="p"&gt;;&lt;/span&gt;
+        server_name 192.168.3.3&lt;span class="p"&gt;;&lt;/span&gt;
+        auth_basic &lt;span class="s2"&gt;&amp;quot;Nagios&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios&lt;span class="p"&gt;;&lt;/span&gt;
 
         &lt;span class="c"&gt;# 为了正常使用css和显示图片做一个url重写&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nv"&gt;$request_filename&lt;/span&gt; ~ &lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;gif¦png¦jpg¦jpeg¦ico&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;images/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
+            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;images/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;   
 
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nv"&gt;$request_filename&lt;/span&gt; ~ &lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;css&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;stylesheets/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
+            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;stylesheets/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;   
 
         &lt;span class="c"&gt;# 支持php的配置&lt;/span&gt;
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root /usr/local/nagios/share/;
-            index index.php;
-            fastcgi_pass unix:/var/run/php/php-fpm.sock;
-            fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
-            include fastcgi_params;
-            include fastcgi.conf;
+            root /usr/local/nagios/share/&lt;span class="p"&gt;;&lt;/span&gt;
+            index index.php&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_pass unix:/var/run/php/php-fpm.sock&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_index index.php&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            include fastcgi_params&lt;span class="p"&gt;;&lt;/span&gt;
+            include fastcgi.conf&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
 
         &lt;span class="c"&gt;# 支持cgi的配置&lt;/span&gt;
         location ~ &lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-            root /usr/local/nagios/sbin/;
-            rewrite ^/nagios/cgi-bin/&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt;.cgi&lt;span class="nv"&gt;$2&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
-            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock;
-            fastcgi_index   index.cgi;
-            fastcgi_param SCRIPT_FILENAME  &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
-            fastcgi_param QUERY_STRING     &lt;span class="nv"&gt;$query_string&lt;/span&gt;;
-            fastcgi_param REQUEST_METHOD   &lt;span class="nv"&gt;$request_method&lt;/span&gt;;
-            fastcgi_param CONTENT_TYPE     &lt;span class="nv"&gt;$content_type&lt;/span&gt;;
-            fastcgi_param CONTENT_LENGTH   &lt;span class="nv"&gt;$content_length&lt;/span&gt;;
-            fastcgi_param GATEWAY_INTERFACE  CGI/1.1;
-            fastcgi_param SERVER_SOFTWARE    nginx;
-            fastcgi_param SCRIPT_NAME        &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
-            fastcgi_param REQUEST_URI        &lt;span class="nv"&gt;$request_uri&lt;/span&gt;;
-            fastcgi_param DOCUMENT_URI       &lt;span class="nv"&gt;$document_uri&lt;/span&gt;;
-            fastcgi_param DOCUMENT_ROOT      &lt;span class="nv"&gt;$document_root&lt;/span&gt;;
-            fastcgi_param SERVER_PROTOCOL    &lt;span class="nv"&gt;$server_protocol&lt;/span&gt;;
-            fastcgi_param REMOTE_ADDR        &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
-            fastcgi_param REMOTE_PORT        &lt;span class="nv"&gt;$remote_port&lt;/span&gt;;
-            fastcgi_param SERVER_ADDR        &lt;span class="nv"&gt;$server_addr&lt;/span&gt;;
-            fastcgi_param SERVER_PORT        &lt;span class="nv"&gt;$server_port&lt;/span&gt;;
-            fastcgi_param SERVER_NAME        &lt;span class="nv"&gt;$server_name&lt;/span&gt;;
+            root /usr/local/nagios/sbin/&lt;span class="p"&gt;;&lt;/span&gt;
+            rewrite ^/nagios/cgi-bin/&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt;.cgi&lt;span class="nv"&gt;$2&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_index   index.cgi&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SCRIPT_FILENAME  &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param QUERY_STRING     &lt;span class="nv"&gt;$query_string&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param REQUEST_METHOD   &lt;span class="nv"&gt;$request_method&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param CONTENT_TYPE     &lt;span class="nv"&gt;$content_type&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param CONTENT_LENGTH   &lt;span class="nv"&gt;$content_length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param GATEWAY_INTERFACE  CGI/1.1&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SERVER_SOFTWARE    nginx&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SCRIPT_NAME        &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param REQUEST_URI        &lt;span class="nv"&gt;$request_uri&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param DOCUMENT_URI       &lt;span class="nv"&gt;$document_uri&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param DOCUMENT_ROOT      &lt;span class="nv"&gt;$document_root&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SERVER_PROTOCOL    &lt;span class="nv"&gt;$server_protocol&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param REMOTE_ADDR        &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param REMOTE_PORT        &lt;span class="nv"&gt;$remote_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SERVER_ADDR        &lt;span class="nv"&gt;$server_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SERVER_PORT        &lt;span class="nv"&gt;$server_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_param SERVER_NAME        &lt;span class="nv"&gt;$server_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
 
     &lt;span class="o"&gt;}&lt;/span&gt;
@@ -381,7 +381,7 @@ Starting nagios: &lt;span class="k"&gt;done&lt;/span&gt;.
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  &lt;span class="c"&gt;# 下载&lt;/span&gt;
 tar -zxvf rrdtool-1.4.7.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;rrdtool-1.4.7
-./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
+./configure &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -389,7 +389,7 @@ tar -zxvf rrdtool-1.4.7.tar.gz
 &lt;div class="codehilite"&gt;&lt;pre&gt;wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
 tar -zxvf GeoIP-1.4.8.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;GeoIP-1.4.8
-./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
+./configure &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -405,7 +405,7 @@ tar -zxvf GeoIP-1.4.8.tar.gz
 tar -zxvf ntop-4.1.0.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;ntop-4.1.0
 ./autogen.sh --with-tcpwrap --with-rrd-home&lt;span class="o"&gt;=&lt;/span&gt;/opt/rrdtool-1.4.7/
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 

@@ -154,25 +154,25 @@ cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
 <span class="c"># 编辑配置文件</span>
 vi /etc/dhcpd.conf
 <span class="c"># 修改配置文件:</span>
-ddns-update-style interim;
-ignore client-updates;
-next-server 192.168.3.1;             <span class="c"># 指定tftp服务器</span>
-filename <span class="s2">&quot;/pxelinux.0&quot;</span>;              <span class="c"># 指定启动文件</span>
+ddns-update-style interim<span class="p">;</span>
+ignore client-updates<span class="p">;</span>
+next-server 192.168.3.1<span class="p">;</span>             <span class="c"># 指定tftp服务器</span>
+filename <span class="s2">&quot;/pxelinux.0&quot;</span><span class="p">;</span>              <span class="c"># 指定启动文件</span>
 
 subnet 192.168.3.0 netmask 255.255.255.0 <span class="o">{</span>
 
-        option routers                  192.168.3.1;
-        option subnet-mask              255.255.255.0;
+        option routers                  192.168.3.1<span class="p">;</span>
+        option subnet-mask              255.255.255.0<span class="p">;</span>
 
-        option nis-domain               <span class="s2">&quot;domain.org&quot;</span>;
-        option domain-name              <span class="s2">&quot;domain.org&quot;</span>;
-        option domain-name-servers      192.168.1.1;
+        option nis-domain               <span class="s2">&quot;domain.org&quot;</span><span class="p">;</span>
+        option domain-name              <span class="s2">&quot;domain.org&quot;</span><span class="p">;</span>
+        option domain-name-servers      192.168.1.1<span class="p">;</span>
 
-        option <span class="nb">time</span>-offset              -18000; <span class="c"># Eastern Standard Time</span>
+        option <span class="nb">time</span>-offset              -18000<span class="p">;</span> <span class="c"># Eastern Standard Time</span>
 
-        range dynamic-bootp 192.168.3.128 192.168.3.254;
-        default-lease-time 21600;
-        max-lease-time 43200;
+        range dynamic-bootp 192.168.3.128 192.168.3.254<span class="p">;</span>
+        default-lease-time 21600<span class="p">;</span>
+        max-lease-time 43200<span class="p">;</span>
 
 <span class="o">}</span>
 <span class="c"># 启动dhcp服务器</span>
@@ -191,7 +191,7 @@ Starting dhcpd: <span class="o">[</span> OK <span class="o">]</span>
 <div class="codehilite"><pre><span class="c"># 创建目录</span>
 mkdir -p /pxe/cold/
 <span class="c"># 复制文件</span>
-<span class="o">(</span> <span class="nb">cd</span> /mnt/ &amp;amp;&amp;amp; tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /pxe/cold &amp;amp;&amp;amp; tar -xvf - <span class="o">)</span>
+<span class="o">(</span> <span class="nb">cd</span> /mnt/ <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /pxe/cold <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> tar -xvf - <span class="o">)</span>
 </pre></div>
 
 
@@ -200,16 +200,16 @@ mkdir -p /pxe/cold/
 vi /etc/httpd/conf/httpd.conf
 <span class="c"># 更改apache根目录(将配置文件中的两处/var/www改成/pxe)</span>
 DocumentRoot <span class="s2">&quot;/pxe&quot;</span>
-&amp;lt;Directory /&amp;gt;
+<span class="p">&amp;</span>lt<span class="p">;</span>Directory /<span class="p">&amp;</span>gt<span class="p">;</span>
     Options FollowSymLinks
     AllowOverride None
-&amp;lt;/Directory&amp;gt;
-&amp;lt;Directory <span class="s2">&quot;/pxe&quot;</span>&amp;gt;
+<span class="p">&amp;</span>lt<span class="p">;</span>/Directory<span class="p">&amp;</span>gt<span class="p">;</span>
+<span class="p">&amp;</span>lt<span class="p">;</span>Directory <span class="s2">&quot;/pxe&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>
     Options Indexes FollowSymLinks
     AllowOverride None
     Order allow,deny
     Allow from all
-&amp;lt;/Directory&amp;gt;
+<span class="p">&amp;</span>lt<span class="p">;</span>/Directory<span class="p">&amp;</span>gt<span class="p">;</span>
 </pre></div>
 
 

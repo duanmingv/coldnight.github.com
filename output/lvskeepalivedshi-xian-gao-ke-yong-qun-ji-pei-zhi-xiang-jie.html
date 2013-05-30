@@ -281,13 +281,13 @@ make <span class="o">&amp;&amp;</span> make install
         <span class="c"># 设置tcp tcpfin  udp的超时连接值</span>
         ipvsadm --set 30 120 300
         ipvsadm
-        ;;
+        <span class="p">;;</span>
 
         stop<span class="o">)</span>
         <span class="nb">echo</span> <span class="s2">&quot;Stop LVS DR&quot;</span>
         ifconfig eth0:0 down
         ipvsadm -C
-        ;;
+        <span class="p">;;</span>
         *<span class="o">)</span>
         <span class="nb">echo</span> <span class="s2">&quot;Usage:$0 {start ¦ stop}&quot;</span>
         <span class="nb">exit </span>1
@@ -321,7 +321,7 @@ make <span class="o">&amp;&amp;</span> make install
         <span class="nb">echo</span> <span class="s2">&quot;2&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_announce
         <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_ignore
         <span class="nb">echo</span> <span class="s2">&quot;2&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_announce
-        ;;
+        <span class="p">;;</span>
         stop<span class="o">)</span>
         <span class="nb">echo</span> <span class="s2">&quot;lo:0 port closing&quot;</span>
         ifconfig lo:0 down
@@ -329,7 +329,7 @@ make <span class="o">&amp;&amp;</span> make install
     <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_announce
     <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_ignore
     <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_announce
-        ;;
+        <span class="p">;;</span>
         *<span class="o">)</span>
         <span class="nb">echo</span> <span class="s2">&quot;Usage: $0 {start ¦ stop}&quot;</span>
         <span class="nb">exit </span>1

@@ -50,8 +50,8 @@
 &lt;p&gt;awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
 在宿主目录创建.xinitrc,添加如下内容:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
-gnome-settings-daemon &amp;amp;     &lt;span class="c"&gt;# 使用gnome桌面元素&lt;/span&gt;
-nm-applet --sm-disable &amp;amp;    &lt;span class="c"&gt;# 托盘栏添加网卡图标&lt;/span&gt;
+gnome-settings-daemon &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;     &lt;span class="c"&gt;# 使用gnome桌面元素&lt;/span&gt;
+nm-applet --sm-disable &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;    &lt;span class="c"&gt;# 托盘栏添加网卡图标&lt;/span&gt;
 &lt;span class="nb"&gt;exec &lt;/span&gt;awesome
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -634,24 +634,24 @@ vi /etc/conf.d/uwsgi.py
 
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;首先创建一个bottle程序供测试:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
-&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
-&lt;span class="cp"&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;span class="cp"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
 
-&lt;span class="err"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class="cp"&gt;# Author    : cold night&lt;/span&gt;
-&lt;span class="cp"&gt;# Filename  : index.py                                                          &lt;/span&gt;
-&lt;span class="err"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;bottle&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="sd"&gt;# Author    : cold night&lt;/span&gt;
+&lt;span class="sd"&gt;# Filename  : index.py                                                          &lt;/span&gt;
+&lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;bottle&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
 
-&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="nd"&gt;@route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nl"&gt;else:&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1299,7 +1299,7 @@ service iptables save
 
 &lt;p&gt;然后我们就可以使用ssh连接Linux虚拟机
 首先确保Linux启动了ssh,ssh占用TCP的22端口.执行命令查看22端口是否开放:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;netstat -antlp | grep 22
+&lt;div class="codehilite"&gt;&lt;pre&gt;netstat -antlp &lt;span class="p"&gt;|&lt;/span&gt; grep 22
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1446,25 +1446,25 @@ cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
 &lt;span class="c"&gt;# 编辑配置文件&lt;/span&gt;
 vi /etc/dhcpd.conf
 &lt;span class="c"&gt;# 修改配置文件:&lt;/span&gt;
-ddns-update-style interim;
-ignore client-updates;
-next-server 192.168.3.1;             &lt;span class="c"&gt;# 指定tftp服务器&lt;/span&gt;
-filename &lt;span class="s2"&gt;&amp;quot;/pxelinux.0&amp;quot;&lt;/span&gt;;              &lt;span class="c"&gt;# 指定启动文件&lt;/span&gt;
+ddns-update-style interim&lt;span class="p"&gt;;&lt;/span&gt;
+ignore client-updates&lt;span class="p"&gt;;&lt;/span&gt;
+next-server 192.168.3.1&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c"&gt;# 指定tftp服务器&lt;/span&gt;
+filename &lt;span class="s2"&gt;&amp;quot;/pxelinux.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;              &lt;span class="c"&gt;# 指定启动文件&lt;/span&gt;
 
 subnet 192.168.3.0 netmask 255.255.255.0 &lt;span class="o"&gt;{&lt;/span&gt;
 
-        option routers                  192.168.3.1;
-        option subnet-mask              255.255.255.0;
+        option routers                  192.168.3.1&lt;span class="p"&gt;;&lt;/span&gt;
+        option subnet-mask              255.255.255.0&lt;span class="p"&gt;;&lt;/span&gt;
 
-        option nis-domain               &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;;
-        option domain-name              &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;;
-        option domain-name-servers      192.168.1.1;
+        option nis-domain               &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        option domain-name              &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        option domain-name-servers      192.168.1.1&lt;span class="p"&gt;;&lt;/span&gt;
 
-        option &lt;span class="nb"&gt;time&lt;/span&gt;-offset              -18000; &lt;span class="c"&gt;# Eastern Standard Time&lt;/span&gt;
+        option &lt;span class="nb"&gt;time&lt;/span&gt;-offset              -18000&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# Eastern Standard Time&lt;/span&gt;
 
-        range dynamic-bootp 192.168.3.128 192.168.3.254;
-        default-lease-time 21600;
-        max-lease-time 43200;
+        range dynamic-bootp 192.168.3.128 192.168.3.254&lt;span class="p"&gt;;&lt;/span&gt;
+        default-lease-time 21600&lt;span class="p"&gt;;&lt;/span&gt;
+        max-lease-time 43200&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="c"&gt;# 启动dhcp服务器&lt;/span&gt;
@@ -1483,7 +1483,7 @@ Starting dhcpd: &lt;span class="o"&gt;[&lt;/span&gt; OK &lt;span class="o"&gt;]&
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建目录&lt;/span&gt;
 mkdir -p /pxe/cold/
 &lt;span class="c"&gt;# 复制文件&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold &amp;amp;amp;&amp;amp;amp; tar -xvf - &lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -xvf - &lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1492,16 +1492,16 @@ mkdir -p /pxe/cold/
 vi /etc/httpd/conf/httpd.conf
 &lt;span class="c"&gt;# 更改apache根目录(将配置文件中的两处/var/www改成/pxe)&lt;/span&gt;
 DocumentRoot &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;
-&amp;amp;lt;Directory /&amp;amp;gt;
+&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;Directory /&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
     Options FollowSymLinks
     AllowOverride None
-&amp;amp;lt;/Directory&amp;amp;gt;
-&amp;amp;lt;Directory &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;&amp;amp;gt;
+&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/Directory&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;Directory &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
     Options Indexes FollowSymLinks
     AllowOverride None
     Order allow,deny
     Allow from all
-&amp;amp;lt;/Directory&amp;amp;gt;
+&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/Directory&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1579,7 +1579,7 @@ krb5-devel
 flex
 openssl-devel 
 &lt;span class="c"&gt;# 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:&lt;/span&gt;
-&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat cfpkgs.list &lt;span class="sb"&gt;`&lt;/span&gt;:; &lt;span class="k"&gt;do &lt;/span&gt;&lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; ¦ sed &lt;span class="s1"&gt;&amp;#39;s/://g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;; cp /mnt/CentOS/&lt;span class="nv"&gt;$file&lt;/span&gt;* /usr/cold/CentOS/; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat cfpkgs.list &lt;span class="sb"&gt;`&lt;/span&gt;:&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do &lt;/span&gt;&lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; ¦ sed &lt;span class="s1"&gt;&amp;#39;s/://g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; cp /mnt/CentOS/&lt;span class="nv"&gt;$file&lt;/span&gt;* /usr/cold/CentOS/&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1591,27 +1591,27 @@ vi repodata/comps.xml
 
 
 &lt;p&gt;向comps.xml添加这几个包group节点&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;group&amp;amp;gt;
-    &amp;amp;lt;id&amp;amp;gt;cfengine&amp;amp;lt;/id&amp;amp;gt;
-    &amp;amp;lt;name&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
-    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
-    &amp;amp;lt;description&amp;amp;gt;Cfengine &amp;amp;lt;/description&amp;amp;gt;
-    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/description&amp;amp;gt;
-    &amp;amp;lt;default&amp;amp;gt;true&amp;amp;lt;/default&amp;amp;gt;
-    &amp;amp;lt;uservisible&amp;amp;gt;false&amp;amp;lt;/uservisible&amp;amp;gt;
-    &amp;amp;lt;packagelist&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;keyutils-libs-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;zlib-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;e2fsprogs-devel &amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libsepol-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libselinux-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;db4-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;pcre-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;krb5-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;flex&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;openssl-devel &amp;amp;lt;/packagereq&amp;amp;gt;
-    &amp;amp;lt;/packagelist&amp;amp;gt;
-  &amp;amp;lt;/group&amp;amp;gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;keyutils-libs-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;zlib-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;e2fsprogs-devel &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;libsepol-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;libselinux-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;db4-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;pcre-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;krb5-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;flex&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;openssl-devel &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1632,11 +1632,11 @@ f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
 
 
 &lt;p&gt;将新的sha值更新到repomd.xml&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
-    &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
-    &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&amp;amp;lt;/checksum&amp;amp;gt;
-    &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
-  &amp;amp;lt;/data&amp;amp;gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/checksum&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;1272586365&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/data&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1685,7 +1685,7 @@ cp -r /a/cfengine /mnt/sysimage/usr/local/
 
 &lt;p&gt;即可从cfhubip那里下载承诺文件执行承诺,根据cfhub进行本地配置
 还可以根据%post更加自由的定制自己的系统,比如最小化安装后会无法使用本地镜像来使用yum可以定义一个局域网yum,在%post --nochroot添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat &amp;amp;lt;&amp;amp;lt;__EOF__ &amp;amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;__EOF__ &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
 &lt;span class="c"&gt;# CentOS-Media.repo&lt;/span&gt;
 &lt;span class="c"&gt;#  yum --disablerepo=\* --enablerepo=cold [command]&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;cold&lt;span class="o"&gt;]&lt;/span&gt;
@@ -1716,7 +1716,7 @@ mount -o loop iso路径 /mnt
 &lt;span class="c"&gt;# 然后使用 tar命令把光盘的内容复制到/usr/cold&lt;/span&gt;
 &lt;span class="c"&gt;# 都说这个命令比cp快,在256内存的虚拟机测试也就快了几十秒,个人觉得最大的用处&lt;/span&gt;
 &lt;span class="c"&gt;# 就是解决了cp无法复制隐藏文件的问题&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold &amp;amp;amp;&amp;amp;amp; tar -xvfp - &lt;span class="o"&gt;)&lt;/span&gt;         &lt;span class="c"&gt;# tar -p选项是保留原有权限&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -xvfp - &lt;span class="o"&gt;)&lt;/span&gt;         &lt;span class="c"&gt;# tar -p选项是保留原有权限&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1787,7 +1787,7 @@ drwxr-xr-x  2 root root   4096 Dec 14 01:42 repodata
 
 &lt;p&gt;现在根据install.log创建packages.list,用来安装所需要的rpm包:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 根据install.log,提取其中的rpm包名,&lt;/span&gt;
-cat install.log ¦ grep Installing ¦ awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; ¦ awk -F&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ if (NF==2){ print $2} else {print $1}}&amp;#39;&lt;/span&gt; &amp;amp;gt; packages.list
+cat install.log ¦ grep Installing ¦ awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; ¦ awk -F&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ if (NF==2){ print $2} else {print $1}}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; packages.list
 &lt;span class="c"&gt;# 如果仅仅最小化安装就失去了定制自己的发行版的意义&lt;/span&gt;
 &lt;span class="c"&gt;# 向packages.list添加几个常用的工具,需要先用yum安装一遍记住包的依赖关系&lt;/span&gt;
 &lt;span class="c"&gt;# 把依赖关系的包也放入packages.list&lt;/span&gt;
@@ -1809,7 +1809,7 @@ bzip2
 groff
 man
 &lt;span class="c"&gt;# 根据packages.list进行复制&lt;/span&gt;
-&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat packages.list &lt;span class="sb"&gt;`&lt;/span&gt;;&lt;span class="k"&gt;do  &lt;/span&gt;cp -p -f  /mnt/CentOS/&lt;span class="s2"&gt;&amp;quot;$i&amp;quot;&lt;/span&gt;* /usr/cold/CentOS/;done
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat packages.list &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;do  &lt;/span&gt;cp -p -f  /mnt/CentOS/&lt;span class="s2"&gt;&amp;quot;$i&amp;quot;&lt;/span&gt;* /usr/cold/CentOS/&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1822,47 +1822,47 @@ sed -ri &lt;span class="s1"&gt;&amp;#39;/xml:lang/ {/en_GB/!d}&amp;#39;&lt;/span
 
 
 &lt;p&gt;去除了各国语言的comps.xml大概包含2000多行,现在我们要进一步处理,删除除了id为core的group的其他节点,删除完后comps.xml大概只剩下73行.现在我们要把我们自己添加的包顶一个group节点,在紧跟id为core的group节点(也就是&amp;lt;/group&amp;gt;后面)添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;group&amp;amp;gt;
-    &amp;amp;lt;id&amp;amp;gt;useful&amp;amp;lt;/id&amp;amp;gt;
-    &amp;amp;lt;name&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
-    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
-    &amp;amp;lt;description&amp;amp;gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor &amp;amp;lt;/description&amp;amp;gt;
-    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor&amp;amp;lt;/description&amp;amp;gt;
-    &amp;amp;lt;default&amp;amp;gt;true&amp;amp;lt;/default&amp;amp;gt;
-    &amp;amp;lt;uservisible&amp;amp;gt;false&amp;amp;lt;/uservisible&amp;amp;gt;
-    &amp;amp;lt;packagelist&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;setuptool&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;lszrz&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;wget&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;kernel-headers&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libgomp&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;cpp&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;glibc-headers&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;glibc-devel&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;gcc&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;make&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;which&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;bzip2&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;groff&amp;amp;lt;/packagereq&amp;amp;gt;
-      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;man&amp;amp;lt;/packagereq&amp;amp;gt;
-    &amp;amp;lt;/packagelist&amp;amp;gt;
-  &amp;amp;lt;/group&amp;amp;gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;setuptool&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;lszrz&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;wget&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;kernel-headers&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;libgomp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;cpp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;glibc-headers&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;glibc-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;gcc&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;make&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;which&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;bzip2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;groff&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;man&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;上面添加了一个id为useful的group节点,下面把这两个节点放到一个类别里:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;category&amp;amp;gt;
-    &amp;amp;lt;id&amp;amp;gt;cold&amp;amp;lt;/id&amp;amp;gt;
-    &amp;amp;lt;name&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
-    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
-    &amp;amp;lt;description&amp;amp;gt;Cold Linux&amp;amp;lt;/description&amp;amp;gt;
-    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold Linux&amp;amp;lt;/description&amp;amp;gt;
-    &amp;amp;lt;display_order&amp;amp;gt;92&amp;amp;lt;/display_order&amp;amp;gt;
-    &amp;amp;lt;grouplist&amp;amp;gt;
-      &amp;amp;lt;groupid&amp;amp;gt;core&amp;amp;lt;/groupid&amp;amp;gt;
-      &amp;amp;lt;groupid&amp;amp;gt;useful&amp;amp;lt;/groupid&amp;amp;gt;
-     &amp;amp;lt;/grouplist&amp;amp;gt;
-  &amp;amp;lt;/category&amp;amp;gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;category&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;cold&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold Linux&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold Linux&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;display_order&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;92&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/display_order&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;grouplist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;core&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+     &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/grouplist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/category&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1888,11 +1888,11 @@ c1d304cae50f969370a72d95e3cd2f71087fc73a  repodata/comps.xml
 
 
 &lt;p&gt;然后更新到repomd.xml中编辑repodata/repomd.xml找到location href="repodata/comps.xml"/的一个data节点把sha值更新为刚刚计算的&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
-    &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
-    &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&amp;amp;lt;/checksum&amp;amp;gt;
-    &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
-  &amp;amp;lt;/data&amp;amp;gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/checksum&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;1272586365&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/data&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1993,7 +1993,7 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
 &lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf download&lt;span class="se"&gt;\?&lt;/span&gt;file&lt;span class="se"&gt;\=&lt;/span&gt;cfengine-3.2.3.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;cfengine-3.2.3/
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/cfengine
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -2028,14 +2028,14 @@ total 964
 &lt;span class="c"&gt;# &amp;amp;lt;它是什么&amp;amp;gt; &amp;amp;lt;它对什么起作用&amp;amp;gt; &amp;amp;lt;它叫什么&amp;amp;gt;&lt;/span&gt;
 body common control                                   &lt;span class="c"&gt;# 一个body 对common组启作用,名字是control(名字为control的common的组是最重要的一个组,cfengine以这个组为起点&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
-&lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                         &lt;span class="c"&gt;# 定义要执行的承诺束为test&lt;/span&gt;
+&lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                         &lt;span class="c"&gt;# 定义要执行的承诺束为test&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;                                     &lt;span class="c"&gt;# 一个承诺束,对cf-agent起作用,叫test&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
 reports:                                              &lt;span class="c"&gt;# 一个报告(仅仅显示消息,不对系统做改变)&lt;/span&gt;
   cfengine_3::                                        &lt;span class="c"&gt;# 一个类,对cfengine 版本3的策略执行点起作用(cfengine用这个来替代程序语言里的if-else)&lt;/span&gt;
-      &lt;span class="s2"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;;                                 &lt;span class="c"&gt;# 承诺内容,显示&amp;quot;hello world!&amp;quot;&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                                 &lt;span class="c"&gt;# 承诺内容,显示&amp;quot;hello world!&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 /var/cfengine/bin/cf-promises -f /var/cfengine/inputs/test.cf        &lt;span class="c"&gt;# 检查承诺语法&lt;/span&gt;
@@ -2057,7 +2057,7 @@ bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
 reports:
   cfengine_3::
-    &lt;span class="s2"&gt;&amp;quot;I&amp;#39;am cfengine 3 client&amp;quot;&lt;/span&gt;;
+    &lt;span class="s2"&gt;&amp;quot;I&amp;#39;am cfengine 3 client&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -2066,14 +2066,14 @@ reports:
 &lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
 body common control
 &lt;span class="o"&gt;{&lt;/span&gt;
- &lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                                &lt;span class="c"&gt;# 将test加入的承诺束队列&lt;/span&gt;
+ &lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                                &lt;span class="c"&gt;# 将test加入的承诺束队列&lt;/span&gt;
 
- &lt;span class="nv"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt;
+ &lt;span class="nv"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="s2"&gt;&amp;quot;cfengine_stdlib.cf&amp;quot;&lt;/span&gt;,
             &lt;span class="s2"&gt;&amp;quot;cftest1.cf&amp;quot;&lt;/span&gt;,                                             &lt;span class="c"&gt;# 将cftest1.cf引入进来&lt;/span&gt;
-           &lt;span class="o"&gt;}&lt;/span&gt;;
+           &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
- &lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="s2"&gt;&amp;quot;Community Promises.cf 1.0.0&amp;quot;&lt;/span&gt;;
+ &lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Community Promises.cf 1.0.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 .......
 &lt;/pre&gt;&lt;/div&gt;
@@ -2092,7 +2092,7 @@ body common control
 
 &lt;p&gt;然后执行策略:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
-R: --&amp;amp;gt; CFE is running on cfhub
+R: --&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; CFE is running on cfhub
 R: I&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;am cfengine 3 client
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -2104,7 +2104,7 @@ bundle common def
 &lt;span class="o"&gt;{&lt;/span&gt;
  vars:                                            &lt;span class="c"&gt;# 定义变量&lt;/span&gt;
    ... ...
-    &lt;span class="s2"&gt;&amp;quot;acl&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;slist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;acl&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;slist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
                 &lt;span class="s2"&gt;&amp;quot;$(sys.policy_hub)/16&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;192.168.1.&amp;quot;&lt;/span&gt;,          &lt;span class="c"&gt;# 这这个后面添加&lt;/span&gt;
   ... ...
 &lt;span class="o"&gt;}&lt;/span&gt;

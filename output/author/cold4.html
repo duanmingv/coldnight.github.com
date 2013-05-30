@@ -196,6 +196,31 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h2>Pual 更新支持SimSimi可以进行互动</h2></a>
+        <div class= "well small"> 四 30 五月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:
+<em> 英汉互译
+</em> 为每个用户分配一个session的含有上下文的Python shell
+* 贴代码</p>
+<p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
+<p><a href="https://github.com/coldngiht/pual_bot">项目地址</a></p>
+<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h2>Python 常用的列表操作</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -364,40 +389,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h2>Python 字典和列表陷阱</h2></a>
-        <div class= "well small"> 一 17 九月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>Python 中有三个非常好用的数据结构,列表,元组和字典,
-元组是不可变的,列表可以保存任意类型的Python对象,并可以随意扩展没有大小限制,
-字典是一个key-value的键值映射的类型,可以存放任何Python对象,可以嵌套字典,
-值可以是字典元组或者字典</p>
-<p>这里说是Python 字典和列表的陷阱不如说是Python的一些特性,如果不了解这些特性
-就会引发一些难以寻找的bug</p>
-<p>下面我们来介绍这些特性</p>
-<p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
-如下面代码:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev"><a href="http://www.linuxzen.com/author/cold3.html">&larr; Previous</a></li>
@@ -409,6 +400,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <li class=""><a href="http://www.linuxzen.com/author/cold5.html">5</a></li>
     <li class=""><a href="http://www.linuxzen.com/author/cold6.html">6</a></li>
     <li class=""><a href="http://www.linuxzen.com/author/cold7.html">7</a></li>
+    <li class=""><a href="http://www.linuxzen.com/author/cold8.html">8</a></li>
 
     <li class="next"><a href="http://www.linuxzen.com/author/cold5.html">Next &rarr;</a></li>
 

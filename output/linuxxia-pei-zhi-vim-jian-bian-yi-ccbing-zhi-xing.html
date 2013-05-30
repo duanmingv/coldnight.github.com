@@ -89,7 +89,7 @@ clear
     <span class="k">if</span> <span class="o">(</span> <span class="nb">test</span> <span class="s2">&quot;$typename&quot;</span> <span class="o">=</span> <span class="s2">&quot;cpp&quot;</span> <span class="o">||</span> <span class="s2">&quot;$typename&quot;</span> <span class="o">=</span> <span class="s2">&quot;cc&quot;</span> <span class="o">)</span>
     <span class="k">then</span>
 <span class="k">        </span><span class="nb">echo</span> -n <span class="s2">&quot;Compiling...&quot;</span>
-        g++ -o <span class="s2">&quot;$outname&quot;</span> <span class="s2">&quot;$filename&quot;</span> 2&gt; /tmp/errinfo &gt;&amp;2
+        g++ -o <span class="s2">&quot;$outname&quot;</span> <span class="s2">&quot;$filename&quot;</span> 2&gt; /tmp/errinfo &gt;<span class="p">&amp;</span>2
         <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
         <span class="k">then</span>
 <span class="k">            </span><span class="nb">echo</span> -e <span class="s2">&quot;       \033[32;1mSuccess!!!\033[0m&quot;</span>
@@ -111,7 +111,7 @@ clear
     <span class="k">then</span>
 <span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;Compiling...&quot;</span>
         <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-        gcc -o <span class="s2">&quot;$outname&quot;</span> <span class="s2">&quot;$filename&quot;</span> 2&gt;/tmp/errinfo &gt;&amp;2
+        gcc -o <span class="s2">&quot;$outname&quot;</span> <span class="s2">&quot;$filename&quot;</span> 2&gt;/tmp/errinfo &gt;<span class="p">&amp;</span>2
         <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
         <span class="k">then</span>
 <span class="k">            </span><span class="nb">echo</span> -e <span class="s2">&quot;       \033[32;1mSuccess!!!\033[0m&quot;</span>

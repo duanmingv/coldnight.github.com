@@ -111,8 +111,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
 在宿主目录创建.xinitrc,添加如下内容:</p>
 <div class="codehilite"><pre><span class="c">#!/bin/sh</span>
-gnome-settings-daemon &amp;     <span class="c"># 使用gnome桌面元素</span>
-nm-applet --sm-disable &amp;    <span class="c"># 托盘栏添加网卡图标</span>
+gnome-settings-daemon <span class="p">&amp;</span>     <span class="c"># 使用gnome桌面元素</span>
+nm-applet --sm-disable <span class="p">&amp;</span>    <span class="c"># 托盘栏添加网卡图标</span>
 <span class="nb">exec </span>awesome
 </pre></div>
 

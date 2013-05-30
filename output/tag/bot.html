@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h1>python 使用pyxmpp2编写gtalk群</h1></a>
-            一 29 十月 2012
+            <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h1>Pual 更新支持SimSimi可以进行互动</h1></a>
+            四 30 五月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,7 +70,33 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
+        <div class="highlight"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:
+<em> 英汉互译
+</em> 为每个用户分配一个session的含有上下文的Python shell
+* 贴代码</p>
+<p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
+<p><a href="https://github.com/coldngiht/pual_bot">项目地址</a></p>
+<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h2>python 使用pyxmpp2编写gtalk群</h2></a>
+        <div class= "well small"> 一 29 十月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
 <p>其实主要原理就是机器人接收到消息后再将消息广播出去,从而达到群的效果.</p>
 <p>python有两个模块可以用来支持xmpp,分别是pyxmpp和pyxmpp2,之前也用pyxmpp写了一个,功能和兼容性不是很好,经常出现问题,所以又使用pyxmpp2重写了一遍,今天修复了一些bug,所以公布出来,大家可以下载测试,也可以加入我们使用gtalk进行群交流,</p>
 <p>我们的gtalk机器人是:<code>clubot@vim-cn.com</code></p>
@@ -83,22 +109,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 </pre></div>
 
 
-<p>安装依赖:</p>
-<div class="codehilite"><pre>easy_install pyxmpp2
-</pre></div>
-
-
-<p>修改settings.py文件,填入bot的账户和密码,执行:</p>
-<div class="codehilite"><pre>python clubot.py
-</pre></div>
-
-
-<p>即可开启群bot,群bot支持翻译,天气查询,贴代码等等待功能.</p>
-<p>如果您想贡献代码可以加入我们的bot群:<code>clubot@vim-cn.com</code></p>
-<p>如果您有bug可以提交在评论里</p></div>
-        <hr />
-    </div>
-		
+<p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
+    </div>	
+				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>

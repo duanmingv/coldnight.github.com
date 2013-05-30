@@ -256,24 +256,24 @@ vi /etc/conf.d/uwsgi.py
 
 <h2>测试</h2>
 <p>首先创建一个bottle程序供测试:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
-<span class="err">参考内容如下</span><span class="o">:</span>
-<span class="cp">#!/usr/bin/env python</span>
-<span class="cp">#-*- coding: utf8 -*-</span>
+<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">py</span>
+<span class="err">参考内容如下</span><span class="p">:</span>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding: utf8 -*-</span>
 
-<span class="err">&#39;&#39;&#39;</span>
-<span class="cp"># Author    : cold night</span>
-<span class="cp"># Filename  : index.py                                                          </span>
-<span class="err">&#39;&#39;&#39;</span>
-<span class="n">from</span> <span class="n">bottle</span> <span class="n">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd"># Author    : cold night</span>
+<span class="sd"># Filename  : index.py                                                          </span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span>
 
-<span class="err">@</span><span class="n">route</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">)</span>
-<span class="n">def</span> <span class="n">index</span><span class="p">()</span><span class="o">:</span>
+<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
         <span class="k">return</span> <span class="s">&quot;Hello world!&quot;</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="o">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8888</span><span class="p">)</span>
-<span class="nl">else:</span>
+<span class="k">else</span><span class="p">:</span>
     <span class="n">application</span> <span class="o">=</span> <span class="n">default_app</span><span class="p">()</span>
 </pre></div>
 

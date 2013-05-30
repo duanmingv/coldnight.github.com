@@ -257,9 +257,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>执行后会要求输入邮件内容,写完用.结束
 也可以用管道下面给出几个实例:</p>
 <div class="codehilite"><pre><span class="c">#使用本地smtp服务发送</span>
-<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -s <span class="s2">&quot;Linuxzen backup&quot;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
+<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> <span class="p">|</span> pymail -s <span class="s2">&quot;Linuxzen backup&quot;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
 <span class="c"># 使用126邮箱发送</span>
-<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;Linuxzen backup &quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz </span>
+<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> <span class="p">|</span> pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;Linuxzen backup &quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz </span>
 
 <span class="s1"># 不使用管道发送</span>
 <span class="s1">pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &#39;</span>hello world<span class="err">&#39;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
@@ -282,7 +282,7 @@ this is a <span class="nb">test </span>mail
 mysqldump -u root blogdata &gt; /tmp/blogdate.<span class="s2">&quot;$DATE&quot;</span>.sql
 <span class="nb">cd</span> /tmp
 tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql
-uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz | mail -s <span class="s1">&#39;MySQL Backup&#39;</span> 123456@qq.com
+uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz <span class="p">|</span> mail -s <span class="s1">&#39;MySQL Backup&#39;</span> 123456@qq.com
 </pre></div>
 </td></tr></table>
 
@@ -304,7 +304,7 @@ uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.
 mysqldump -u root blogdata &gt; /tmp/myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
 <span class="nb">cd</span> /tmp
 tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
-<span class="nb">echo</span> <span class="s1">&#39;MySQL backup&#39;</span> | pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;MySQL backup&#39;</span> -a /tmp/blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz -t 123456@qq.com
+<span class="nb">echo</span> <span class="s1">&#39;MySQL backup&#39;</span> <span class="p">|</span> pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;MySQL backup&#39;</span> -a /tmp/blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz -t 123456@qq.com
 </pre></div>
 </td></tr></table>
 

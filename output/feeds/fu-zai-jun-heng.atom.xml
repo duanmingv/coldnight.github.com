@@ -215,13 +215,13 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
         &lt;span class="c"&gt;# 设置tcp tcpfin  udp的超时连接值&lt;/span&gt;
         ipvsadm --set 30 120 300
         ipvsadm
-        ;;
+        &lt;span class="p"&gt;;;&lt;/span&gt;
 
         stop&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Stop LVS DR&amp;quot;&lt;/span&gt;
         ifconfig eth0:0 down
         ipvsadm -C
-        ;;
+        &lt;span class="p"&gt;;;&lt;/span&gt;
         *&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage:$0 {start ¦ stop}&amp;quot;&lt;/span&gt;
         &lt;span class="nb"&gt;exit &lt;/span&gt;1
@@ -255,7 +255,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
-        ;;
+        &lt;span class="p"&gt;;;&lt;/span&gt;
         stop&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;lo:0 port closing&amp;quot;&lt;/span&gt;
         ifconfig lo:0 down
@@ -263,7 +263,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
-        ;;
+        &lt;span class="p"&gt;;;&lt;/span&gt;
         *&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage: $0 {start ¦ stop}&amp;quot;&lt;/span&gt;
         &lt;span class="nb"&gt;exit &lt;/span&gt;1
@@ -389,7 +389,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 tar -zxvf nginx-1.0.11.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -398,8 +398,8 @@ make &amp;amp;amp;&amp;amp;amp; make install
 &lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nginx/conf/nginx.conf
 
 http &lt;span class="o"&gt;{&lt;/span&gt;
-    include       mime.types;
-    default_type  application/octet-stream;
+    include       mime.types&lt;span class="p"&gt;;&lt;/span&gt;
+    default_type  application/octet-stream&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="c"&gt;#log_format  main  &amp;#39;$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; &amp;#39;&lt;/span&gt;
     &lt;span class="c"&gt;#                  &amp;#39;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt;
@@ -407,11 +407,11 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 
     &lt;span class="c"&gt;#access_log  logs/access.log  main;&lt;/span&gt;
 
-    sendfile        on;
+    sendfile        on&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;#tcp_nopush     on;&lt;/span&gt;
 
     &lt;span class="c"&gt;#keepalive_timeout  0;&lt;/span&gt;
-    keepalive_timeout  65;
+    keepalive_timeout  65&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="c"&gt;#gzip  on;&lt;/span&gt;
 
@@ -427,17 +427,17 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
       &lt;span class="c"&gt;# weight代表权,重默认为1,权重越高被分配的客户端越多&lt;/span&gt;
       &lt;span class="c"&gt;# max_fails 指定时间内对后端请求失败的次数&lt;/span&gt;
       &lt;span class="c"&gt;# fail_timeout 达到max_fails指定的失败次数后暂停的时间&lt;/span&gt;
-      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
       &lt;span class="c"&gt;# down参数用来标记为离线,不参与负载均衡.在ip_hash下使用&lt;/span&gt;
       &lt;span class="c"&gt;# 在此做演示,后面测试会去掉&lt;/span&gt;
-      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s down;
+      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s down&lt;span class="p"&gt;;&lt;/span&gt;
       &lt;span class="c"&gt;# backup仅仅在非backup服务器宕机或繁忙的时候使用&lt;/span&gt;
       &lt;span class="c"&gt;# (在此做演示,后面测试会去掉)&lt;/span&gt;
-      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s backup;
+      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s backup&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen       192.168.3.1:80;
-        server_name  localhost;
+        listen       192.168.3.1:80&lt;span class="p"&gt;;&lt;/span&gt;
+        server_name  localhost&lt;span class="p"&gt;;&lt;/span&gt;
 
         &lt;span class="c"&gt;#charset koi8-r;&lt;/span&gt;
 
@@ -449,10 +449,10 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="c"&gt;# 使用upstream设置的一组代理服务器&lt;/span&gt;
             &lt;span class="c"&gt;# 如果后端服务器出现502或504等执行错误时,&lt;/span&gt;
             &lt;span class="c"&gt;# 将自动将请求转发给负载均衡池中的另一台服务器.&lt;/span&gt;
-            proxy_next_upstream http_502 http_504 error timeout invalid_header;
-            proxy_pass http://real_server_pool;
-            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;;
-            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
+            proxy_next_upstream http_502 http_504 error timeout invalid_header&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_pass http://real_server_pool&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -462,8 +462,8 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;p&gt;(&lt;code&gt;注意:&lt;/code&gt;配置文件中注释ip_hash,以为ip_hash这个功能将保证这个客户端请求总是被转发到一台服务器上,所以如果启用了ip_hash指令,将不能再使用weight(权重参数),配置文件中加入为解释ip_hash指令)
 配置备用nginx,将监听ip改为备用调度器的ip&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
-    include       mime.types;
-    default_type  application/octet-stream;
+    include       mime.types&lt;span class="p"&gt;;&lt;/span&gt;
+    default_type  application/octet-stream&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="c"&gt;#log_format  main  &amp;#39;$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; &amp;#39;&lt;/span&gt;
     &lt;span class="c"&gt;#                  &amp;#39;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt;
@@ -471,23 +471,23 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 
     &lt;span class="c"&gt;#access_log  logs/access.log  main;&lt;/span&gt;
 
-    sendfile        on;
+    sendfile        on&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="c"&gt;#tcp_nopush     on;&lt;/span&gt;
 
     &lt;span class="c"&gt;#keepalive_timeout  0;&lt;/span&gt;
-    keepalive_timeout  65;
+    keepalive_timeout  65&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="c"&gt;#gzip  on;&lt;/span&gt;
 
     upstream real_server_pool &lt;span class="o"&gt;{&lt;/span&gt;
       &lt;span class="c"&gt;#ip_hash;&lt;/span&gt;
-      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
-      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
-      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
+      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
+      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen       192.168.3.2:80;             &lt;span class="c"&gt;# 监听ip改为本地ip&lt;/span&gt;
-        server_name  localhost;
+        listen       192.168.3.2:80&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c"&gt;# 监听ip改为本地ip&lt;/span&gt;
+        server_name  localhost&lt;span class="p"&gt;;&lt;/span&gt;
 
         &lt;span class="c"&gt;#charset koi8-r;&lt;/span&gt;
 
@@ -496,10 +496,10 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
         location / &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="c"&gt;#root   html;&lt;/span&gt;
             &lt;span class="c"&gt;#index  index.html index.htm;&lt;/span&gt;
-            proxy_next_upstream http_502 http_504 error timeout invalid_header;
-            proxy_pass http://real_server_pool;
-            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;;
-            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
+            proxy_next_upstream http_502 http_504 error timeout invalid_header&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_pass http://real_server_pool&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -542,7 +542,7 @@ tar -zxvf keepalived-1.1.19.tar.gz
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/ &lt;span class="se"&gt;\ &lt;/span&gt;           &lt;span class="c"&gt;# 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)&lt;/span&gt;
 --mandir&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/share/man/ &lt;span class="se"&gt;\&lt;/span&gt;
 --with-kernel-dir&lt;span class="o"&gt;=&lt;/span&gt;/usr/src/kernels/2.6.18-194.el5-i686/    &lt;span class="c"&gt;# 需要内核的头文件&lt;/span&gt;
-make &amp;amp;amp;&amp;amp;amp; make install
+make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -676,32 +676,32 @@ ifconfig eth0:3 192.168.3.6/24
 &lt;p&gt;安装nginx后编辑配置文件,在http块里添加:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen  192.168.3.4:80;
-        server_name     192.168.3.4;
+        listen  192.168.3.4:80&lt;span class="p"&gt;;&lt;/span&gt;
+        server_name     192.168.3.4&lt;span class="p"&gt;;&lt;/span&gt;
 
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-             root html/s1;
-             index index.html index.htm;
+             root html/s1&lt;span class="p"&gt;;&lt;/span&gt;
+             index index.html index.htm&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen  192.168.3.5:80;
-        server_name     192.168.3.5;
+        listen  192.168.3.5:80&lt;span class="p"&gt;;&lt;/span&gt;
+        server_name     192.168.3.5&lt;span class="p"&gt;;&lt;/span&gt;
 
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root html/s2;
-            index index.html index.htm;
+            root html/s2&lt;span class="p"&gt;;&lt;/span&gt;
+            index index.html index.htm&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen 192.168.3.6:80;
-        server_name     192.168.3.5;
+        listen 192.168.3.6:80&lt;span class="p"&gt;;&lt;/span&gt;
+        server_name     192.168.3.5&lt;span class="p"&gt;;&lt;/span&gt;
 
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root html/s3;
-            index index.html index.htm;
+            root html/s3&lt;span class="p"&gt;;&lt;/span&gt;
+            index index.html index.htm&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -711,9 +711,9 @@ ifconfig eth0:3 192.168.3.6/24
 &lt;p&gt;创建虚拟主机根目录,并创建不通的首页文档:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/
 mkdir s1 s2 s3
-&lt;span class="nb"&gt;echo &lt;/span&gt;server1 &amp;amp;gt; s1/index.html
-&lt;span class="nb"&gt;echo &lt;/span&gt;server2 &amp;amp;gt; s2/index.html
-&lt;span class="nb"&gt;echo &lt;/span&gt;server3 &amp;amp;gt; s3/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server1 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; s1/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server2 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; s2/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server3 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; s3/index.html
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -747,14 +747,14 @@ Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;
 大家也看到了备机keepalived只有检测主机的keepalived停止的时候才会切换vip,而不是检测一台real server的某一服务(比如检测80端口的HTTP)切换vip,所以在nginx进程停止的时候,如果服务器没有宕机这时候就无法实现故障转移,所以我们编写一个检测nginx状态的脚本结合keepalived实现故障转移:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c"&gt;#filename:nsc.sh&lt;/span&gt;
-ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤nginx进程&lt;/span&gt;
+ps aux ¦ grep nginx ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2   &lt;span class="c"&gt;# 过滤nginx进程&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有nginx进程会返回0则认为nginx存活&lt;/span&gt;
 &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;    &lt;/span&gt;sleep 5                     &lt;span class="c"&gt;# 使脚本进入休眠&lt;/span&gt;
 &lt;span class="k"&gt;else&lt;/span&gt;
 &lt;span class="c"&gt;# 如果nginx没有存活尝试启动nginx,如果失败则杀死keepalived的进程&lt;/span&gt;
     /usr/local/nginx/sbin/nginx
-    ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2
+    ps aux ¦ grep nginx ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;pkill keepalived
@@ -764,7 +764,7 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;a
 
 
 &lt;p&gt;然后后台运行此脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;nohup sh nsc.sh &amp;amp;
+&lt;div class="codehilite"&gt;&lt;pre&gt;nohup sh nsc.sh &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
