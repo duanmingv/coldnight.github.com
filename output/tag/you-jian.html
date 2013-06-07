@@ -96,6 +96,8 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="kn">from</span> <span class="nn">email.mime.multipart</span> <span class="kn">import</span> <span class="n">MIMEMultipart</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+
+
 <span class="c"># 打印帮助信息</span>
 <span class="k">def</span> <span class="nf">helpinfo</span><span class="p">():</span>
     <span class="k">print</span> <span class="s">&#39;&#39;&#39;</span>
@@ -111,6 +113,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="s">    Author:cold(wh_linux@126.com)</span>
 <span class="s">    Homepge:http://www.linuxzen.com</span>
 <span class="s">    &#39;&#39;&#39;</span>
+
 
 <span class="c"># 所有选项</span>
 <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;-t&#39;</span><span class="p">,</span> <span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="s">&#39;-n&#39;</span><span class="p">,</span> <span class="s">&#39;-h&#39;</span><span class="p">,</span> <span class="s">&#39;-u&#39;</span><span class="p">,</span> <span class="s">&#39;-p&#39;</span><span class="p">,</span> <span class="s">&#39;-s&#39;</span><span class="p">]</span>
@@ -131,6 +134,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <span class="n">helpinfo</span><span class="p">()</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">helpinfo</span><span class="p">()</span>
+
 
 <span class="c"># 检测-n参数</span>
 <span class="k">if</span> <span class="p">(</span><span class="s">&#39;-n&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="s">&#39;-a&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">):</span>
@@ -161,11 +165,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <span class="n">haveattr</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="n">attrpath</span> <span class="o">=</span> <span class="bp">None</span>
 
+
 <span class="k">try</span><span class="p">:</span>
     <span class="n">mail_host</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-h&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">]</span>
 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
     <span class="k">print</span> <span class="s">&#39;Waring: No specify smtp server use 127.0.0.1&#39;</span>
     <span class="n">mail_host</span> <span class="o">=</span> <span class="s">&#39;127.0.0.1&#39;</span>
+
 
 <span class="k">try</span><span class="p">:</span>
     <span class="n">mail_useremail</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-u&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">]</span>
@@ -185,6 +191,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <span class="n">mail_pass</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;-p&#39;</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="p">]</span>
 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
     <span class="n">mail_pass</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+
+
 
 <span class="c"># 定义邮件发送函数</span>
 <span class="k">def</span> <span class="nf">send_mail</span><span class="p">(</span><span class="n">to_list</span><span class="p">,</span> <span class="n">sub</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">haveattr</span><span class="p">,</span> <span class="n">attrpath</span><span class="p">,</span> <span class="n">attrname</span><span class="p">):</span>
@@ -208,6 +217,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <span class="k">else</span><span class="p">:</span>
         <span class="c"># 无责创建一个文本的实例</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
 
     <span class="c"># 邮件头</span>
     <span class="n">msg</span><span class="p">[</span><span class="s">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span>
@@ -263,9 +273,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>执行后会要求输入邮件内容,写完用.结束
 也可以用管道下面给出几个实例:</p>
 <div class="codehilite"><pre><span class="c">#使用本地smtp服务发送</span>
-<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> <span class="p">|</span> pymail -s <span class="s2">&quot;Linuxzen backup&quot;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
+<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -s <span class="s2">&quot;Linuxzen backup&quot;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
 <span class="c"># 使用126邮箱发送</span>
-<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> <span class="p">|</span> pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;Linuxzen backup &quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz </span>
+<span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;Linuxzen backup &quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz </span>
 
 <span class="s1"># 不使用管道发送</span>
 <span class="s1">pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &#39;</span>hello world<span class="err">&#39;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
@@ -288,7 +298,7 @@ this is a <span class="nb">test </span>mail
 mysqldump -u root blogdata &gt; /tmp/blogdate.<span class="s2">&quot;$DATE&quot;</span>.sql
 <span class="nb">cd</span> /tmp
 tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql
-uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz <span class="p">|</span> mail -s <span class="s1">&#39;MySQL Backup&#39;</span> 123456@qq.com
+uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz | mail -s <span class="s1">&#39;MySQL Backup&#39;</span> 123456@qq.com
 </pre></div>
 </td></tr></table>
 
@@ -310,7 +320,7 @@ uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.
 mysqldump -u root blogdata &gt; /tmp/myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
 <span class="nb">cd</span> /tmp
 tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
-<span class="nb">echo</span> <span class="s1">&#39;MySQL backup&#39;</span> <span class="p">|</span> pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;MySQL backup&#39;</span> -a /tmp/blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz -t 123456@qq.com
+<span class="nb">echo</span> <span class="s1">&#39;MySQL backup&#39;</span> | pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;MySQL backup&#39;</span> -a /tmp/blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz -t 123456@qq.com
 </pre></div>
 </td></tr></table>
 
@@ -360,6 +370,7 @@ tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz myblog.<s
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

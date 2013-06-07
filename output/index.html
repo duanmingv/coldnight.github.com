@@ -59,18 +59,68 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h1>Pual 更新支持SimSimi可以进行互动</h1></a>
-            四 30 五月 2013
+            <a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html"><h1>解决git提交敏感信息(回退git版本库到某一个commit)</h1></a>
+            五 07 六月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/git.html">git</a>
+
+ 
+        </div>
+        
+        <div class="highlight"><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+<h2>备份本地代码</h2>
+<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
+<h2>回退本地代码的commit</h2>
+<p>备份完数据, 我们就可以先回退本地的版本库</p>
+<div class="codehilite"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
+</pre></div>
+
+
+<h2>回退远端版本库</h2>
+<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
+<h3>新建一个分支, 并提交</h3>
+<div class="codehilite"><pre>git checkout -b temp
+git push origin temp:temp
+</pre></div>
+
+
+<h3>重建主分支</h3>
+<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
+<div class="codehilite"><pre>git push origin --delete master   <span class="c"># 删除远端主分支</span>
+git branch -d master              <span class="c"># 删除本地主分支</span>
+git checkout -b master            <span class="c"># 新建主分支并切换到主分支</span>
+git push origin master            <span class="c"># 提交主分支</span>
+</pre></div>
+
+
+<p>这样我们就删除之前提交的敏感信息(如果是<code>github</code>现在就可以把默认分支切换到 <code>master</code>)</p>
+<h3>删除临时分支</h3>
+<div class="codehilite"><pre>git branch -d temp
+git push origin --delete temp
+</pre></div></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h2>Pual 更新支持SimSimi可以进行互动</h2></a>
+        <div class= "well small"> 四 30 五月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
 in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
-        </div>
-        
-        <div class="highlight"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
+ </div>
+        <div class="summary"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
 <ul>
 <li>英汉互译</li>
 <li>为每个用户分配一个session的含有上下文的Python shell</li>
@@ -79,10 +129,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <hr />
 <p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
 <p><a href="https://github.com/coldnight/pual_bot">项目地址</a></p>
-<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p></div>
-        <hr />
-    </div>
-		
+<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">read more</a></div>
+    </div>	
+				
     
  
         
@@ -322,34 +371,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h2>使用Pelican博客静态生成系统</h2></a>
-        <div class= "well small"> 四 14 三月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><h1>介绍</h1>
-<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
-<h1>安装</h1>
-<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
-<h2>模板</h2>
-<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
-<h1>使用</h1>
-<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
-<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
@@ -396,6 +417,7 @@ make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linux
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

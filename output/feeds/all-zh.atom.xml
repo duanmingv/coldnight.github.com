@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-05-30T09:50:00+08:00</updated><entry><title>Pual 更新支持SimSimi可以进行互动</title><link href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html" rel="alternate"></link><updated>2013-05-30T09:50:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-05-30:pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;Pual&lt;/a&gt; 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-06-07T00:00:00+08:00</updated><entry><title>解决git提交敏感信息(回退git版本库到某一个commit)</title><link href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html" rel="alternate"></link><updated>2013-06-07T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-06-07:jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html</id><summary type="html">&lt;p&gt;git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.&lt;/p&gt;
+&lt;h2&gt;备份本地代码&lt;/h2&gt;
+&lt;p&gt;首先我们将本地代码的更改备份一下, 以防丢失更改&lt;/p&gt;
+&lt;h2&gt;回退本地代码的commit&lt;/h2&gt;
+&lt;p&gt;备份完数据, 我们就可以先回退本地的版本库&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git reset --hard HEAD~1        &lt;span class="c"&gt;# 回退到上一次的提交, 如果是上n次就将1改成对应的数字&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;回退远端版本库&lt;/h2&gt;
+&lt;p&gt;接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作&lt;/p&gt;
+&lt;h3&gt;新建一个分支, 并提交&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git checkout -b temp
+git push origin temp:temp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;重建主分支&lt;/h3&gt;
+&lt;p&gt;下面我们可以删除并重建主分支, 如果是&lt;code&gt;github&lt;/code&gt;的话需要将&lt;code&gt;Default Branch&lt;/code&gt;切换到别的分支(项目主页-&amp;gt;Settings即可看到)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git push origin --delete master   &lt;span class="c"&gt;# 删除远端主分支&lt;/span&gt;
+git branch -d master              &lt;span class="c"&gt;# 删除本地主分支&lt;/span&gt;
+git checkout -b master            &lt;span class="c"&gt;# 新建主分支并切换到主分支&lt;/span&gt;
+git push origin master            &lt;span class="c"&gt;# 提交主分支&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样我们就删除之前提交的敏感信息(如果是&lt;code&gt;github&lt;/code&gt;现在就可以把默认分支切换到 &lt;code&gt;master&lt;/code&gt;)&lt;/p&gt;
+&lt;h3&gt;删除临时分支&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git branch -d temp
+git push origin --delete temp
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="git"></category><category term="敏感信息"></category><category term="回退"></category><category term="commit"></category><category term="版本库"></category></entry><entry><title>Pual 更新支持SimSimi可以进行互动</title><link href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html" rel="alternate"></link><updated>2013-05-30T09:50:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-05-30:pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;Pual&lt;/a&gt; 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;英汉互译&lt;/li&gt;
 &lt;li&gt;为每个用户分配一个session的含有上下文的Python shell&lt;/li&gt;
@@ -264,12 +294,12 @@ pelican-quickstart
 
 &lt;p&gt;在回答一系列问题过后你的博客就建成的, 主要生成下列文件:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;.
-&lt;span class="p"&gt;|&lt;/span&gt;-- content                &lt;span class="c"&gt;# 所有文章放于此目录&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- develop_server.sh      &lt;span class="c"&gt;# 用于开启测试服务器&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- Makefile               &lt;span class="c"&gt;# 方便管理博客的Makefile&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- output                 &lt;span class="c"&gt;# 静态生成文件&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- pelicanconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- publishconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
+|-- content                &lt;span class="c"&gt;# 所有文章放于此目录&lt;/span&gt;
+|-- develop_server.sh      &lt;span class="c"&gt;# 用于开启测试服务器&lt;/span&gt;
+|-- Makefile               &lt;span class="c"&gt;# 方便管理博客的Makefile&lt;/span&gt;
+|-- output                 &lt;span class="c"&gt;# 静态生成文件&lt;/span&gt;
+|-- pelicanconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
+|-- publishconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -537,6 +567,7 @@ About me content
         &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
         &lt;span class="k"&gt;del&lt;/span&gt; &lt;span class="n"&gt;message_queue_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
+
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;handle_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fd_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;READ&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -549,6 +580,7 @@ About me content
         &lt;span class="c"&gt;# 将连接和handle注册为读事件加入到 tornado ioloop&lt;/span&gt;
         &lt;span class="n"&gt;ioloop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;conn_fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;READ&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="n"&gt;message_queue_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Queue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;   &lt;span class="c"&gt;# 创建对应的消息队列&lt;/span&gt;
+
 
 &lt;span class="n"&gt;ioloop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;handle_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;READ&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
@@ -622,6 +654,7 @@ About me content
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cookiejar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extract_cookies&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cookiejar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resp&lt;/span&gt;
+
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;make_http_sock_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 根据urllib2.Request 构建socket和用于发送的HTTP源数据 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -711,7 +744,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 
 
 &lt;p&gt;添加如下内容&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blogsource/ &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt; /dev/null
+&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blogsource/ &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull &amp;amp;&amp;gt; /dev/null
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -774,6 +807,8 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyxmpp2.mainloop.base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MainLoopBase&lt;/span&gt;
 
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plugin.util&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_logger&lt;/span&gt;
+
+
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;EpollMainLoop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MainLoopBase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Main event loop based on the epoll() syscall on Linux system &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -985,6 +1020,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
         &lt;span class="n"&gt;flattened&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\r\n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;flattened&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
+
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HttpHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
@@ -1112,6 +1148,7 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__setattr__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Memcached&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BaseHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RequestHandler&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 继承tornado请求基类,重写 prepare和on_finish方法 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -1485,8 +1522,8 @@ endfunc
 &lt;p&gt;awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
 在宿主目录创建.xinitrc,添加如下内容:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
-gnome-settings-daemon &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;     &lt;span class="c"&gt;# 使用gnome桌面元素&lt;/span&gt;
-nm-applet --sm-disable &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;    &lt;span class="c"&gt;# 托盘栏添加网卡图标&lt;/span&gt;
+gnome-settings-daemon &amp;amp;     &lt;span class="c"&gt;# 使用gnome桌面元素&lt;/span&gt;
+nm-applet --sm-disable &amp;amp;    &lt;span class="c"&gt;# 托盘栏添加网卡图标&lt;/span&gt;
 &lt;span class="nb"&gt;exec &lt;/span&gt;awesome
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -2091,7 +2128,7 @@ fugitive 可以在git获得:&lt;/p&gt;
 
 
 &lt;h5&gt;结果&lt;/h5&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;#39;&lt;span class="nt"&gt;&amp;lt;table&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;highlighttable&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;linenos&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;linenodiv&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;pre&amp;gt;&lt;/span&gt;1&lt;span class="nt"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;code&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;highlight&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;pre&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;k&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;print&lt;span class="nt"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;&amp;lt;span&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;&lt;span class="ni"&gt;&amp;amp;quot;&lt;/span&gt;hello, world&lt;span class="ni"&gt;&amp;amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;\n&lt;span class="nt"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;\n&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&lt;/span&gt;&amp;#39;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;table class=&amp;quot;highlighttable&amp;quot;&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td class=&amp;quot;linenos&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;linenodiv&amp;quot;&amp;gt;&amp;lt;pre&amp;gt;1&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td class=&amp;quot;code&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;highlight&amp;quot;&amp;gt;&amp;lt;pre&amp;gt;&amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;print&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;s&amp;quot;&amp;gt;&amp;amp;quot;hello, world&amp;amp;quot;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -3016,7 +3053,7 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 checkisdir&lt;span class="o"&gt;()&lt;/span&gt;
         &lt;span class="c"&gt;# Have one argument&lt;/span&gt;
         &lt;span class="c"&gt;# The argument is a directory&lt;/span&gt;
-        &lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sed -e &lt;span class="s1"&gt;&amp;#39;s/ /\n/g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$1&lt;/span&gt; | sed -e &lt;span class="s1"&gt;&amp;#39;s/ /\n/g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
         &lt;span class="k"&gt;do&lt;/span&gt;
 &lt;span class="k"&gt;                if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -d &lt;span class="nv"&gt;$1&lt;/span&gt;/&lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
                 &lt;span class="k"&gt;then&lt;/span&gt;
@@ -3040,11 +3077,11 @@ checkisdir&lt;span class="o"&gt;()&lt;/span&gt;
                 &lt;span class="k"&gt;do&lt;/span&gt;
 &lt;span class="k"&gt;                        if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e /tmp/patch.tmp &lt;span class="o"&gt;]&lt;/span&gt;
                         &lt;span class="k"&gt;then&lt;/span&gt;
-&lt;span class="k"&gt;                                &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep Change &amp;gt; /tmp/nstat.tmp
+&lt;span class="k"&gt;                                &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; | grep Change &amp;gt; /tmp/nstat.tmp
                                 rm -f /tmp/patch.tmp
                                 &lt;span class="k"&gt;continue&lt;/span&gt;
 &lt;span class="k"&gt;                        fi&lt;/span&gt;
-&lt;span class="k"&gt;                        &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep Change &amp;gt;&amp;gt; /tmp/nstat.tmp
+&lt;span class="k"&gt;                        &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; | grep Change &amp;gt;&amp;gt; /tmp/nstat.tmp
                 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;span class="k"&gt;                &lt;/span&gt;diff /tmp/stat.tmp /tmp/nstat.tmp &amp;gt; /tmp/patch.tmp
                 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
@@ -3057,7 +3094,7 @@ checkisdir&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;        else&lt;/span&gt;
 &lt;span class="k"&gt;                for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;checkisdir &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
                 &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;span class="k"&gt;                        &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep Change &amp;gt;&amp;gt; /tmp/stat.tmp
+&lt;span class="k"&gt;                        &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; | grep Change &amp;gt;&amp;gt; /tmp/stat.tmp
                 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;span class="k"&gt;                continue&lt;/span&gt;
 &lt;span class="k"&gt;        fi&lt;/span&gt;
@@ -3066,7 +3103,7 @@ checkisdir&lt;span class="o"&gt;()&lt;/span&gt;
 
 
 &lt;p&gt;这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sh checkchange.sh /code/python &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sh checkchange.sh /code/python &amp;amp;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -3080,13 +3117,13 @@ checkisdir&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /code/python
-        svn up &lt;span class="p"&gt;|&lt;/span&gt; grep At &amp;gt; /dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1
+        svn up | grep At &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;                &lt;/span&gt;sleep 30
         &lt;span class="k"&gt;fi&lt;/span&gt;
 
-&lt;span class="k"&gt;        &lt;/span&gt;svn up &lt;span class="p"&gt;|&lt;/span&gt; grep Updated &amp;gt; /dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1
+&lt;span class="k"&gt;        &lt;/span&gt;svn up | grep Updated &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
                 /etc/init.d/uwsgi.py restart
@@ -3278,24 +3315,24 @@ vi /etc/conf.d/uwsgi.py
 
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;首先创建一个bottle程序供测试:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
-&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
-&lt;span class="c"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;span class="cp"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="cp"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
 
-&lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class="sd"&gt;# Author    : cold night&lt;/span&gt;
-&lt;span class="sd"&gt;# Filename  : index.py                                                          &lt;/span&gt;
-&lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;bottle&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
+&lt;span class="err"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="cp"&gt;# Author    : cold night&lt;/span&gt;
+&lt;span class="cp"&gt;# Filename  : index.py                                                          &lt;/span&gt;
+&lt;span class="err"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;bottle&lt;/span&gt; &lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;
 
-&lt;span class="nd"&gt;@route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="nl"&gt;else:&lt;/span&gt;
     &lt;span class="n"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;default_app&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -3494,6 +3531,8 @@ vi /etc/conf.d/uwsgi.py
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;email.mime.multipart&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MIMEMultipart&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
 
+
+
 &lt;span class="c"&gt;# 打印帮助信息&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;helpinfo&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
@@ -3509,6 +3548,7 @@ vi /etc/conf.d/uwsgi.py
 &lt;span class="s"&gt;    Author:cold(wh_linux@126.com)&lt;/span&gt;
 &lt;span class="s"&gt;    Homepge:http://www.linuxzen.com&lt;/span&gt;
 &lt;span class="s"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+
 
 &lt;span class="c"&gt;# 所有选项&lt;/span&gt;
 &lt;span class="n"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-t&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-u&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
@@ -3529,6 +3569,7 @@ vi /etc/conf.d/uwsgi.py
         &lt;span class="n"&gt;helpinfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;helpinfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
 
 &lt;span class="c"&gt;# 检测-n参数&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-n&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-a&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -3559,11 +3600,13 @@ vi /etc/conf.d/uwsgi.py
     &lt;span class="n"&gt;haveattr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
     &lt;span class="n"&gt;attrpath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 
+
 &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;mail_host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Waring: No specify smtp server use 127.0.0.1&amp;#39;&lt;/span&gt;
     &lt;span class="n"&gt;mail_host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
+
 
 &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;mail_useremail&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-u&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
@@ -3583,6 +3626,9 @@ vi /etc/conf.d/uwsgi.py
     &lt;span class="n"&gt;mail_pass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;mail_pass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+
+
+
 
 &lt;span class="c"&gt;# 定义邮件发送函数&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;send_mail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;to_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sub&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;haveattr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attrpath&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attrname&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -3606,6 +3652,7 @@ vi /etc/conf.d/uwsgi.py
     &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="c"&gt;# 无责创建一个文本的实例&lt;/span&gt;
         &lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MIMEText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
 
     &lt;span class="c"&gt;# 邮件头&lt;/span&gt;
     &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Subject&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sub&lt;/span&gt;
@@ -3661,9 +3708,9 @@ vi /etc/conf.d/uwsgi.py
 &lt;p&gt;执行后会要求输入邮件内容,写完用.结束
 也可以用管道下面给出几个实例:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#使用本地smtp服务发送&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; pymail -s &lt;span class="s2"&gt;&amp;quot;Linuxzen backup&amp;quot;&lt;/span&gt; -t 123456@qq.com -a /tmp/linuxzen.tar.gz
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; | pymail -s &lt;span class="s2"&gt;&amp;quot;Linuxzen backup&amp;quot;&lt;/span&gt; -t 123456@qq.com -a /tmp/linuxzen.tar.gz
 &lt;span class="c"&gt;# 使用126邮箱发送&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;Linuxzen backup &amp;quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz &lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; | pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;Linuxzen backup &amp;quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz &lt;/span&gt;
 
 &lt;span class="s1"&gt;# 不使用管道发送&lt;/span&gt;
 &lt;span class="s1"&gt;pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &amp;#39;&lt;/span&gt;hello world&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; -t 123456@qq.com -a /tmp/linuxzen.tar.gz
@@ -3686,7 +3733,7 @@ this is a &lt;span class="nb"&gt;test &lt;/span&gt;mail
 mysqldump -u root blogdata &amp;gt; /tmp/blogdate.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
 &lt;span class="nb"&gt;cd&lt;/span&gt; /tmp
 tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
-uuencode blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz &lt;span class="p"&gt;|&lt;/span&gt; mail -s &lt;span class="s1"&gt;&amp;#39;MySQL Backup&amp;#39;&lt;/span&gt; 123456@qq.com
+uuencode blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz | mail -s &lt;span class="s1"&gt;&amp;#39;MySQL Backup&amp;#39;&lt;/span&gt; 123456@qq.com
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
@@ -3708,7 +3755,7 @@ uuencode blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.
 mysqldump -u root blogdata &amp;gt; /tmp/myblog.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
 &lt;span class="nb"&gt;cd&lt;/span&gt; /tmp
 tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz myblog.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; -a /tmp/blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz -t 123456@qq.com
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; | pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; -a /tmp/blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz -t 123456@qq.com
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
@@ -4079,13 +4126,13 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
         &lt;span class="c"&gt;# 设置tcp tcpfin  udp的超时连接值&lt;/span&gt;
         ipvsadm --set 30 120 300
         ipvsadm
-        &lt;span class="p"&gt;;;&lt;/span&gt;
+        ;;
 
         stop&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Stop LVS DR&amp;quot;&lt;/span&gt;
         ifconfig eth0:0 down
         ipvsadm -C
-        &lt;span class="p"&gt;;;&lt;/span&gt;
+        ;;
         *&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage:$0 {start ¦ stop}&amp;quot;&lt;/span&gt;
         &lt;span class="nb"&gt;exit &lt;/span&gt;1
@@ -4119,7 +4166,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
-        &lt;span class="p"&gt;;;&lt;/span&gt;
+        ;;
         stop&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;lo:0 port closing&amp;quot;&lt;/span&gt;
         ifconfig lo:0 down
@@ -4127,7 +4174,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
-        &lt;span class="p"&gt;;;&lt;/span&gt;
+        ;;
         *&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage: $0 {start ¦ stop}&amp;quot;&lt;/span&gt;
         &lt;span class="nb"&gt;exit &lt;/span&gt;1
@@ -4239,7 +4286,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;h3&gt;测试是否安装成功:&lt;/h3&gt;
 &lt;p&gt;在python shell中执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4291,7 +4338,7 @@ clear
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cpp&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$typename&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cc&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;Compiling...&amp;quot;&lt;/span&gt;
-        g++ -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt; /tmp/errinfo &amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;2
+        g++ -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt; /tmp/errinfo &amp;gt;&amp;amp;2
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[32;1mSuccess!!!\033[0m&amp;quot;&lt;/span&gt;
@@ -4313,7 +4360,7 @@ clear
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Compiling...&amp;quot;&lt;/span&gt;
         &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;------------------------&amp;quot;&lt;/span&gt;
-        gcc -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt;/tmp/errinfo &amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;2
+        gcc -o &lt;span class="s2"&gt;&amp;quot;$outname&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;$filename&amp;quot;&lt;/span&gt; 2&amp;gt;/tmp/errinfo &amp;gt;&amp;amp;2
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;       \033[32;1mSuccess!!!\033[0m&amp;quot;&lt;/span&gt;
@@ -4374,7 +4421,7 @@ server:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
 yum -y install cairo-devel glib2-devel pango-devel intltool   &lt;span class="c"&gt;# 安装rrdtool依赖&lt;/span&gt;
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4389,8 +4436,8 @@ chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
 
 
 &lt;p&gt;然后进入到数据库创建cacti数据和创建一个用户:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
-grant all on cactidb.* to cactiuser@localhost identified by &lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# 创建一个mysql用户&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
+grant all on cactidb.* to cactiuser@localhost identified by &lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;; &lt;span class="c"&gt;# 创建一个mysql用户&lt;/span&gt;
 use cactidb   &lt;span class="c"&gt;# 使用刚才创建的数据库&lt;/span&gt;
 &lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/nginx/html/cacti/cacti.sql &lt;span class="c"&gt;# 导入cacti数据&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -4403,28 +4450,28 @@ vi include/config.php
 
 
 &lt;p&gt;编辑下面内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
-&lt;span class="nv"&gt;$database_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactidb&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;       &lt;span class="c"&gt;# 数据库名字&lt;/span&gt;
-&lt;span class="nv"&gt;$database_hostname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;    &lt;span class="c"&gt;# 数据库主机&lt;/span&gt;
-&lt;span class="nv"&gt;$database_username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactiuser&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;    &lt;span class="c"&gt;# 数据库用户&lt;/span&gt;
-&lt;span class="nv"&gt;$database_password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;       &lt;span class="c"&gt;# 数据库密码&lt;/span&gt;
-&lt;span class="nv"&gt;$database_port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;3306&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c"&gt;# 数据库端口&lt;/span&gt;
-&lt;span class="nv"&gt;$database_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
+&lt;span class="nv"&gt;$database_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactidb&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库名字&lt;/span&gt;
+&lt;span class="nv"&gt;$database_hostname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库主机&lt;/span&gt;
+&lt;span class="nv"&gt;$database_username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactiuser&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库用户&lt;/span&gt;
+&lt;span class="nv"&gt;$database_password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库密码&lt;/span&gt;
+&lt;span class="nv"&gt;$database_port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;3306&amp;quot;&lt;/span&gt;;             &lt;span class="c"&gt;# 数据库端口&lt;/span&gt;
+&lt;span class="nv"&gt;$database_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后修改nginx配置文件像下面:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;        location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root   html&lt;span class="p"&gt;;&lt;/span&gt;
-            index  index.php&lt;span class="p"&gt;;&lt;/span&gt;
+            root   html;
+            index  index.php;
         &lt;span class="o"&gt;}&lt;/span&gt;
 
         location ~ &lt;span class="se"&gt;\.&lt;/span&gt;php&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_index       index.php&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            include fastcgi_params&lt;span class="p"&gt;;&lt;/span&gt;
-            include fastcgi.conf&lt;span class="p"&gt;;&lt;/span&gt;
+            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
+            fastcgi_index       index.php;
+            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
+            include fastcgi_params;
+            include fastcgi.conf;
         &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -4442,7 +4489,7 @@ vi include/global_constants.php
 
 
 &lt;p&gt;在第二行添加&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -4950,7 +4997,7 @@ service iptables save
 
 &lt;p&gt;然后我们就可以使用ssh连接Linux虚拟机
 首先确保Linux启动了ssh,ssh占用TCP的22端口.执行命令查看22端口是否开放:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;netstat -antlp &lt;span class="p"&gt;|&lt;/span&gt; grep 22
+&lt;div class="codehilite"&gt;&lt;pre&gt;netstat -antlp | grep 22
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5061,7 +5108,7 @@ make install-init          &lt;span class="c"&gt;# 安装nagios启动脚本&lt;/
 tar -zxvf nagios-plugins-1.4.15.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nagios-plugins-1.4.15
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios
-make  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make  &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5070,11 +5117,11 @@ make  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp
 &lt;p&gt;这里web服务器使用当前主流的nginx:&lt;/p&gt;
 &lt;p&gt;安装nginx&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
-&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;yum&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;-y&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;install&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;zlib-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;pcre-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;openssl-devel &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;nbsp&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
+&amp;amp;amp;nbsp;yum&amp;amp;amp;nbsp;&amp;amp;amp;nbsp;-y&amp;amp;amp;nbsp;install&amp;amp;amp;nbsp;zlib-devel&amp;amp;amp;nbsp;pcre-devel&amp;amp;amp;nbsp;openssl-devel &amp;amp;amp;nbsp;# 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5083,19 +5130,19 @@ make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;
 tar -zxvf FCGI-0.67.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-0.67
 perl Makefile.PL
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 wget http://cpan.wenzk.com/authors/id/G/GB/GBJK/FCGI-ProcManager-0.19.tar.gz
 tar -zxvf FCGI-ProcManager-0.19.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-ProcManager-0.19
 perl Makefile.PL
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;span class="nb"&gt;cd&lt;/span&gt; ..
 wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/IO-All-0.39.tar.gz
 tar zxvf IO-All-0.39.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;IO-All-0.39
 perl Makefile.PL
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5119,54 +5166,54 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="
 &lt;h2&gt;配置&lt;/h2&gt;
 &lt;p&gt;首先配置nginx:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;    server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen  192.168.3.3:80&lt;span class="p"&gt;;&lt;/span&gt;
-        server_name 192.168.3.3&lt;span class="p"&gt;;&lt;/span&gt;
-        auth_basic &lt;span class="s2"&gt;&amp;quot;Nagios&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios&lt;span class="p"&gt;;&lt;/span&gt;
+        listen  192.168.3.3:80;
+        server_name 192.168.3.3;
+        auth_basic &lt;span class="s2"&gt;&amp;quot;Nagios&amp;quot;&lt;/span&gt;;
+        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios;
 
         &lt;span class="c"&gt;# 为了正常使用css和显示图片做一个url重写&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nv"&gt;$request_filename&lt;/span&gt; ~ &lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;gif¦png¦jpg¦jpeg¦ico&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;images/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;images/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
         &lt;span class="o"&gt;}&lt;/span&gt;   
 
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nv"&gt;$request_filename&lt;/span&gt; ~ &lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;css&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;stylesheets/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;stylesheets/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
         &lt;span class="o"&gt;}&lt;/span&gt;   
 
         &lt;span class="c"&gt;# 支持php的配置&lt;/span&gt;
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root /usr/local/nagios/share/&lt;span class="p"&gt;;&lt;/span&gt;
-            index index.php&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_pass unix:/var/run/php/php-fpm.sock&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_index index.php&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            include fastcgi_params&lt;span class="p"&gt;;&lt;/span&gt;
-            include fastcgi.conf&lt;span class="p"&gt;;&lt;/span&gt;
+            root /usr/local/nagios/share/;
+            index index.php;
+            fastcgi_pass unix:/var/run/php/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
+            include fastcgi_params;
+            include fastcgi.conf;
         &lt;span class="o"&gt;}&lt;/span&gt;
 
         &lt;span class="c"&gt;# 支持cgi的配置&lt;/span&gt;
         location ~ &lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
-            root /usr/local/nagios/sbin/&lt;span class="p"&gt;;&lt;/span&gt;
-            rewrite ^/nagios/cgi-bin/&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt;.cgi&lt;span class="nv"&gt;$2&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_index   index.cgi&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SCRIPT_FILENAME  &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param QUERY_STRING     &lt;span class="nv"&gt;$query_string&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param REQUEST_METHOD   &lt;span class="nv"&gt;$request_method&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param CONTENT_TYPE     &lt;span class="nv"&gt;$content_type&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param CONTENT_LENGTH   &lt;span class="nv"&gt;$content_length&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param GATEWAY_INTERFACE  CGI/1.1&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SERVER_SOFTWARE    nginx&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SCRIPT_NAME        &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param REQUEST_URI        &lt;span class="nv"&gt;$request_uri&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param DOCUMENT_URI       &lt;span class="nv"&gt;$document_uri&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param DOCUMENT_ROOT      &lt;span class="nv"&gt;$document_root&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SERVER_PROTOCOL    &lt;span class="nv"&gt;$server_protocol&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param REMOTE_ADDR        &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param REMOTE_PORT        &lt;span class="nv"&gt;$remote_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SERVER_ADDR        &lt;span class="nv"&gt;$server_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SERVER_PORT        &lt;span class="nv"&gt;$server_port&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            fastcgi_param SERVER_NAME        &lt;span class="nv"&gt;$server_name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            root /usr/local/nagios/sbin/;
+            rewrite ^/nagios/cgi-bin/&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt;.cgi&lt;span class="nv"&gt;$2&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
+            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock;
+            fastcgi_index   index.cgi;
+            fastcgi_param SCRIPT_FILENAME  &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
+            fastcgi_param QUERY_STRING     &lt;span class="nv"&gt;$query_string&lt;/span&gt;;
+            fastcgi_param REQUEST_METHOD   &lt;span class="nv"&gt;$request_method&lt;/span&gt;;
+            fastcgi_param CONTENT_TYPE     &lt;span class="nv"&gt;$content_type&lt;/span&gt;;
+            fastcgi_param CONTENT_LENGTH   &lt;span class="nv"&gt;$content_length&lt;/span&gt;;
+            fastcgi_param GATEWAY_INTERFACE  CGI/1.1;
+            fastcgi_param SERVER_SOFTWARE    nginx;
+            fastcgi_param SCRIPT_NAME        &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
+            fastcgi_param REQUEST_URI        &lt;span class="nv"&gt;$request_uri&lt;/span&gt;;
+            fastcgi_param DOCUMENT_URI       &lt;span class="nv"&gt;$document_uri&lt;/span&gt;;
+            fastcgi_param DOCUMENT_ROOT      &lt;span class="nv"&gt;$document_root&lt;/span&gt;;
+            fastcgi_param SERVER_PROTOCOL    &lt;span class="nv"&gt;$server_protocol&lt;/span&gt;;
+            fastcgi_param REMOTE_ADDR        &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
+            fastcgi_param REMOTE_PORT        &lt;span class="nv"&gt;$remote_port&lt;/span&gt;;
+            fastcgi_param SERVER_ADDR        &lt;span class="nv"&gt;$server_addr&lt;/span&gt;;
+            fastcgi_param SERVER_PORT        &lt;span class="nv"&gt;$server_port&lt;/span&gt;;
+            fastcgi_param SERVER_NAME        &lt;span class="nv"&gt;$server_name&lt;/span&gt;;
         &lt;span class="o"&gt;}&lt;/span&gt;
 
     &lt;span class="o"&gt;}&lt;/span&gt;
@@ -5247,7 +5294,7 @@ Starting nagios: &lt;span class="k"&gt;done&lt;/span&gt;.
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  &lt;span class="c"&gt;# 下载&lt;/span&gt;
 tar -zxvf rrdtool-1.4.7.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;rrdtool-1.4.7
-./configure &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5255,7 +5302,7 @@ tar -zxvf rrdtool-1.4.7.tar.gz
 &lt;div class="codehilite"&gt;&lt;pre&gt;wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
 tar -zxvf GeoIP-1.4.8.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;GeoIP-1.4.8
-./configure &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5271,7 +5318,7 @@ tar -zxvf GeoIP-1.4.8.tar.gz
 tar -zxvf ntop-4.1.0.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;ntop-4.1.0
 ./autogen.sh --with-tcpwrap --with-rrd-home&lt;span class="o"&gt;=&lt;/span&gt;/opt/rrdtool-1.4.7/
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5358,7 +5405,7 @@ sed -e &lt;span class="s1"&gt;&amp;#39;3s/^/hello&amp;#39;&lt;/span&gt; &lt;span
 
 
 &lt;p&gt;通过删除\r来实现转换:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;tr -d &lt;span class="s1"&gt;&amp;#39;\r&amp;#39;&lt;/span&gt; file.txt &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; file1.txt   &lt;span class="c"&gt;# 通过tr命令删除\r字符,并重定向追加到file1.txt&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;tr -d &lt;span class="s1"&gt;&amp;#39;\r&amp;#39;&lt;/span&gt; file.txt &amp;amp;gt;&amp;amp;gt; file1.txt   &lt;span class="c"&gt;# 通过tr命令删除\r字符,并重定向追加到file1.txt&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="命令"></category><category term="sz"></category><category term="ssh上传下载"></category><category term="shell"></category><category term="sed"></category><category term="rz"></category><category term="lrzsz"></category><category term="Linux"></category><category term="find"></category><category term="awk"></category></entry><entry><title>编写Linux shell脚本来实现nginx日志分割</title><link href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html" rel="alternate"></link><updated>2012-02-17T10:27:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-17:bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html</id><summary type="html">&lt;p&gt;nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.&lt;/p&gt;
 &lt;p&gt;好了,废话不多说,脚本内容如下:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
@@ -5367,11 +5414,11 @@ sed -e &lt;span class="s1"&gt;&amp;#39;3s/^/hello&amp;#39;&lt;/span&gt; &lt;span
 &lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
 &lt;span class="nv"&gt;LogPath&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/usr/local/nginx/logs/access.log&amp;#39;&lt;/span&gt;    &lt;span class="c"&gt;# 定义日志绝对路径&lt;/span&gt;
 
-&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$LogPath&lt;/span&gt;* &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $NF}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sort -nr&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$LogPath&lt;/span&gt;* | awk -F&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $NF}&amp;#39;&lt;/span&gt; | sort -nr&lt;span class="sb"&gt;`&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
-&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nv"&gt;LastNum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $NF}&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nv"&gt;LastNum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; | awk -F&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $NF}&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
 
-        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$LastNum&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -E &lt;span class="s2"&gt;&amp;quot;[0-9]+&amp;quot;&lt;/span&gt; 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;/dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$LastNum&lt;/span&gt; | grep -E &lt;span class="s2"&gt;&amp;quot;[0-9]+&amp;quot;&lt;/span&gt; 2&amp;amp;gt;/dev/null 1&amp;amp;gt;&amp;amp;amp;2
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
         &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;                &lt;/span&gt;&lt;span class="nv"&gt;OnNum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;expr &lt;span class="nv"&gt;$LastNum&lt;/span&gt; + 1&lt;span class="sb"&gt;`&lt;/span&gt;
@@ -5393,7 +5440,7 @@ sed -e &lt;span class="s1"&gt;&amp;#39;3s/^/hello&amp;#39;&lt;/span&gt; &lt;span
 &lt;div class="codehilite"&gt;&lt;pre&gt;crontab -e    &lt;span class="c"&gt;# 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径&lt;/span&gt;
 
 &lt;span class="c"&gt;# 添加如下内容:&lt;/span&gt;
-00 2 */3 * * /bin/sh /root/nglogcut.sh 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2 &lt;span class="c"&gt;# 每3天执行日志分割(可根据自己情况来定义执行周期)&lt;/span&gt;
+00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2 &lt;span class="c"&gt;# 每3天执行日志分割(可根据自己情况来定义执行周期)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="日志"></category><category term="分割"></category><category term="shell"></category><category term="nginx"></category><category term="log"></category><category term="Linux"></category><category term="cut"></category></entry><entry><title>heartbeat实现MySQL双机高可用</title><link href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html" rel="alternate"></link><updated>2012-02-12T17:01:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-12:heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html</id><summary type="html">&lt;p&gt;对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.&lt;/p&gt;
 &lt;p&gt;当我们的MySQL数据库故障或MySQL数据库服务器出现故障的时候我们希望有一个备用能自动代替主MySQL数据来完成当前的任务,当主MySQL服务器恢复故障的时候备用的能切换到备用等待下一次故障出现.这里我们就结合故障检测HA来实现.&lt;/p&gt;
 &lt;p&gt;HA会定时发送心跳包检测主备服务器的健康状态,当主服务器出现故障时会自动将vip切换到备用服务器,由备用服务器执行主服务器的任务,MySQL要实现这样的功能就必须保证主备服务器的数据一致.这就要用到MySQL主从双机.
@@ -5419,11 +5466,11 @@ tar -zxvf mysql-5.0.95.tar.gz
 --with-client-ldflags&lt;span class="o"&gt;=&lt;/span&gt;-all-static &lt;span class="se"&gt;\&lt;/span&gt;
 --with-unix-socket-path&lt;span class="o"&gt;=&lt;/span&gt;/tmp/mysql.sock &lt;span class="se"&gt;\&lt;/span&gt;
 --with-ssl
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 cp support-files/my-medium.cnf /etc/my.cnf          &lt;span class="c"&gt;# 创建配置文件&lt;/span&gt;
 cp support-files/mysql.server /etc/init.d/mysqld     &lt;span class="c"&gt;# 创建启动脚本&lt;/span&gt;
 chmod +x /etc/init.d/mysqld
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/usr/local/mysql/lib/mysql/&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ld.so.conf
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/usr/local/mysql/lib/mysql/&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ld.so.conf
 ldconfig
 /usr/local/mysql/bin/mysql_install_db --user&lt;span class="o"&gt;=&lt;/span&gt;mysql   &lt;span class="c"&gt;# 初始化数据库&lt;/span&gt;
 chown -R root.mysql /usr/local/mysql/
@@ -5446,13 +5493,13 @@ server-id &lt;span class="o"&gt;=&lt;/span&gt; 1921683101                      &
 
 
 &lt;p&gt;在主库上创建一个用户授权给从库,用户为backup密码为backup:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; grant replication slave on *.* to &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;192.168.3.102&amp;#39;&lt;/span&gt; identified by &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; grant replication slave on *.* to &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;192.168.3.102&amp;#39;&lt;/span&gt; identified by &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.16 sec&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看主库状态:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; show master status&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; show master status;
 +------------------+-----------+--------------+------------------+
 ¦ File             ¦ Position  ¦ Binlog_Do_DB ¦ Binlog_Ignore_DB ¦
 +------------------+-----------+--------------+------------------+
@@ -5479,7 +5526,7 @@ master-connect-retry&lt;span class="o"&gt;=&lt;/span&gt;60             &lt;span 
 
 
 &lt;p&gt;在从库上执行下操作,指定主库的二进制文件名和偏移量(刚才在主库show master status;查看的参数):&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; show slave status &lt;span class="se"&gt;\G&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; show slave status &lt;span class="se"&gt;\G&lt;/span&gt;;
 *************************** 1. row ***************************
              Slave_IO_State: Waiting &lt;span class="k"&gt;for &lt;/span&gt;master to send event
                 Master_Host: 192.168.3.101
@@ -5523,10 +5570,10 @@ No query specified
 
 &lt;p&gt;如果show slave status \G;&lt;span style="color: #ff0000;"&gt;Slave_SQL_Running: No&lt;/span&gt;&lt;span style="color: #000000;"&gt;,则执在从库上执行下面命令(两个参数值通过在主库执行show master status; 命令查看获得):
 &lt;/span&gt;&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; stop slave&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; stop slave;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.00 sec&lt;span class="o"&gt;)&lt;/span&gt;
 
-mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; change master to &lt;span class="nv"&gt;master_log_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mysql-bin.000003&amp;#39;&lt;/span&gt;,master_log_pos&lt;span class="o"&gt;=&lt;/span&gt;236&lt;span class="p"&gt;;&lt;/span&gt;
+mysql&amp;amp;gt; change master to &lt;span class="nv"&gt;master_log_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mysql-bin.000003&amp;#39;&lt;/span&gt;,master_log_pos&lt;span class="o"&gt;=&lt;/span&gt;236;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.01 sec&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5554,15 +5601,15 @@ wget http://www.ultramonkey.org/download/heartbeat/2.0.8/heartbeat-2.0.8.tar.gz
 tar -zxvf heartbeat-2.0.8.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;heartbeat-2.0.8
 ./configure --sysconfdir&lt;span class="o"&gt;=&lt;/span&gt;/etc
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;创建配置文件:
 安装后要配置三个文件（如没有可手动建立）：ha.cf、haresources、authkeys。这三个配置文件需要在/etc/ha.d目录下面，但是默认是没有这三个文件的，可以到官网上下这三个文件，也可以在源码包里找这三个文件，在源码目录下的DOC子目录里。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf &lt;span class="p"&gt;|&lt;/span&gt; egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ha.d/ha.cf
-cat /usr/local/share/doc/heartbeat-2.0.8/haresources  &lt;span class="p"&gt;|&lt;/span&gt; egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ha.d/haresources
-cat /usr/local/share/doc/heartbeat-2.0.8/authkeys &lt;span class="p"&gt;|&lt;/span&gt; egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; -v &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ha.d/authkeys
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/ha.cf
+cat /usr/local/share/doc/heartbeat-2.0.8/haresources  | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/haresources
+cat /usr/local/share/doc/heartbeat-2.0.8/authkeys | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; -v &amp;amp;gt; /etc/ha.d/authkeys
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5694,7 +5741,7 @@ Feb 19 13:50:23 slave harc&lt;span class="o"&gt;[&lt;/span&gt;29171&lt;span clas
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Comm_now_up&lt;span class="o"&gt;()&lt;/span&gt;: updating status to active
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Local status now &lt;span class="nb"&gt;set &lt;/span&gt;to: &lt;span class="s1"&gt;&amp;#39;active&amp;#39;&lt;/span&gt;
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Starting child client &lt;span class="s2"&gt;&amp;quot;/usr/local/lib/heartbeat/ipfail&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;501,501&lt;span class="o"&gt;)&lt;/span&gt;
-Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: WARN: G_CH_dispatch_int: Dispatch &lt;span class="k"&gt;function for &lt;/span&gt;&lt;span class="nb"&gt;read &lt;/span&gt;child took too long to execute: 140 ms &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; 50 ms&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;GSource: 0x9b98448&lt;span class="o"&gt;)&lt;/span&gt;
+Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: WARN: G_CH_dispatch_int: Dispatch &lt;span class="k"&gt;function for &lt;/span&gt;&lt;span class="nb"&gt;read &lt;/span&gt;child took too long to execute: 140 ms &lt;span class="o"&gt;(&lt;/span&gt;&amp;amp;gt; 50 ms&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;GSource: 0x9b98448&lt;span class="o"&gt;)&lt;/span&gt;
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29182&lt;span class="o"&gt;]&lt;/span&gt;: info: Starting &lt;span class="s2"&gt;&amp;quot;/usr/local/lib/heartbeat/ipfail&amp;quot;&lt;/span&gt; as uid 501  gid 501 &lt;span class="o"&gt;(&lt;/span&gt;pid 29182&lt;span class="o"&gt;)&lt;/span&gt;
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: remote resource transition completed.
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: remote resource transition completed.
@@ -5734,14 +5781,14 @@ Feb 19 13:50:46 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;sp
 &lt;p&gt;查看日志并无变化,所以得出结论heartbeat只检测心跳也就是只检测设备是否宕机,不会检测MySQL服务,所以我们同样要有一个脚本来检测MySQL服务,如果mysql服务宕掉,则尝试启动服务,若启动服务失败则kill掉heartbeat进程实现故障转移(和上一遍nginx+keepalived原理一致),脚本内容如下:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c"&gt;# filename:mysqlsc.sh&lt;/span&gt;
-ps aux ¦ grep mysqld ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2   &lt;span class="c"&gt;# 过滤mysql进程&lt;/span&gt;
+ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤mysql进程&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有mysql进程会返回0则认为mysql存活&lt;/span&gt;
 &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;    &lt;/span&gt;sleep 5                     &lt;span class="c"&gt;# 使脚本进入休眠&lt;/span&gt;
 &lt;span class="k"&gt;else&lt;/span&gt;
 &lt;span class="c"&gt;# 如果nginx没有存活尝试启动mysql,如果失败则杀死heartbeat的进程&lt;/span&gt;
     /etc/init.d/mysqld start
-    ps aux ¦ grep mysqld ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2
+    ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;pkill heartbeat
@@ -5752,7 +5799,7 @@ ps aux ¦ grep mysqld ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&
 
 &lt;p&gt;给这个脚本执行权限然后后台运行:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;chmod +x mysqlsc.sh
-nohup sh mysqlsc.sh &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# 后台运行&lt;/span&gt;
+nohup sh mysqlsc.sh &amp;amp;amp; &lt;span class="c"&gt;# 后台运行&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5814,7 +5861,7 @@ heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/sp
 tar -zxvf nginx-1.0.11.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -5823,8 +5870,8 @@ make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;
 &lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nginx/conf/nginx.conf
 
 http &lt;span class="o"&gt;{&lt;/span&gt;
-    include       mime.types&lt;span class="p"&gt;;&lt;/span&gt;
-    default_type  application/octet-stream&lt;span class="p"&gt;;&lt;/span&gt;
+    include       mime.types;
+    default_type  application/octet-stream;
 
     &lt;span class="c"&gt;#log_format  main  &amp;#39;$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; &amp;#39;&lt;/span&gt;
     &lt;span class="c"&gt;#                  &amp;#39;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt;
@@ -5832,11 +5879,11 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 
     &lt;span class="c"&gt;#access_log  logs/access.log  main;&lt;/span&gt;
 
-    sendfile        on&lt;span class="p"&gt;;&lt;/span&gt;
+    sendfile        on;
     &lt;span class="c"&gt;#tcp_nopush     on;&lt;/span&gt;
 
     &lt;span class="c"&gt;#keepalive_timeout  0;&lt;/span&gt;
-    keepalive_timeout  65&lt;span class="p"&gt;;&lt;/span&gt;
+    keepalive_timeout  65;
 
     &lt;span class="c"&gt;#gzip  on;&lt;/span&gt;
 
@@ -5852,17 +5899,17 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
       &lt;span class="c"&gt;# weight代表权,重默认为1,权重越高被分配的客户端越多&lt;/span&gt;
       &lt;span class="c"&gt;# max_fails 指定时间内对后端请求失败的次数&lt;/span&gt;
       &lt;span class="c"&gt;# fail_timeout 达到max_fails指定的失败次数后暂停的时间&lt;/span&gt;
-      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
+      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
       &lt;span class="c"&gt;# down参数用来标记为离线,不参与负载均衡.在ip_hash下使用&lt;/span&gt;
       &lt;span class="c"&gt;# 在此做演示,后面测试会去掉&lt;/span&gt;
-      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s down&lt;span class="p"&gt;;&lt;/span&gt;
+      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s down;
       &lt;span class="c"&gt;# backup仅仅在非backup服务器宕机或繁忙的时候使用&lt;/span&gt;
       &lt;span class="c"&gt;# (在此做演示,后面测试会去掉)&lt;/span&gt;
-      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s backup&lt;span class="p"&gt;;&lt;/span&gt;
+      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s backup;
     &lt;span class="o"&gt;}&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen       192.168.3.1:80&lt;span class="p"&gt;;&lt;/span&gt;
-        server_name  localhost&lt;span class="p"&gt;;&lt;/span&gt;
+        listen       192.168.3.1:80;
+        server_name  localhost;
 
         &lt;span class="c"&gt;#charset koi8-r;&lt;/span&gt;
 
@@ -5874,10 +5921,10 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="c"&gt;# 使用upstream设置的一组代理服务器&lt;/span&gt;
             &lt;span class="c"&gt;# 如果后端服务器出现502或504等执行错误时,&lt;/span&gt;
             &lt;span class="c"&gt;# 将自动将请求转发给负载均衡池中的另一台服务器.&lt;/span&gt;
-            proxy_next_upstream http_502 http_504 error timeout invalid_header&lt;span class="p"&gt;;&lt;/span&gt;
-            proxy_pass http://real_server_pool&lt;span class="p"&gt;;&lt;/span&gt;
-            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_next_upstream http_502 http_504 error timeout invalid_header;
+            proxy_pass http://real_server_pool;
+            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;;
+            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -5887,8 +5934,8 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;p&gt;(&lt;code&gt;注意:&lt;/code&gt;配置文件中注释ip_hash,以为ip_hash这个功能将保证这个客户端请求总是被转发到一台服务器上,所以如果启用了ip_hash指令,将不能再使用weight(权重参数),配置文件中加入为解释ip_hash指令)
 配置备用nginx,将监听ip改为备用调度器的ip&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
-    include       mime.types&lt;span class="p"&gt;;&lt;/span&gt;
-    default_type  application/octet-stream&lt;span class="p"&gt;;&lt;/span&gt;
+    include       mime.types;
+    default_type  application/octet-stream;
 
     &lt;span class="c"&gt;#log_format  main  &amp;#39;$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; &amp;#39;&lt;/span&gt;
     &lt;span class="c"&gt;#                  &amp;#39;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt;
@@ -5896,23 +5943,23 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 
     &lt;span class="c"&gt;#access_log  logs/access.log  main;&lt;/span&gt;
 
-    sendfile        on&lt;span class="p"&gt;;&lt;/span&gt;
+    sendfile        on;
     &lt;span class="c"&gt;#tcp_nopush     on;&lt;/span&gt;
 
     &lt;span class="c"&gt;#keepalive_timeout  0;&lt;/span&gt;
-    keepalive_timeout  65&lt;span class="p"&gt;;&lt;/span&gt;
+    keepalive_timeout  65;
 
     &lt;span class="c"&gt;#gzip  on;&lt;/span&gt;
 
     upstream real_server_pool &lt;span class="o"&gt;{&lt;/span&gt;
       &lt;span class="c"&gt;#ip_hash;&lt;/span&gt;
-      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
-      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
-      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s&lt;span class="p"&gt;;&lt;/span&gt;
+      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
     &lt;span class="o"&gt;}&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen       192.168.3.2:80&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c"&gt;# 监听ip改为本地ip&lt;/span&gt;
-        server_name  localhost&lt;span class="p"&gt;;&lt;/span&gt;
+        listen       192.168.3.2:80;             &lt;span class="c"&gt;# 监听ip改为本地ip&lt;/span&gt;
+        server_name  localhost;
 
         &lt;span class="c"&gt;#charset koi8-r;&lt;/span&gt;
 
@@ -5921,10 +5968,10 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
         location / &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="c"&gt;#root   html;&lt;/span&gt;
             &lt;span class="c"&gt;#index  index.html index.htm;&lt;/span&gt;
-            proxy_next_upstream http_502 http_504 error timeout invalid_header&lt;span class="p"&gt;;&lt;/span&gt;
-            proxy_pass http://real_server_pool&lt;span class="p"&gt;;&lt;/span&gt;
-            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            proxy_next_upstream http_502 http_504 error timeout invalid_header;
+            proxy_pass http://real_server_pool;
+            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;;
+            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
         &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5967,7 +6014,7 @@ tar -zxvf keepalived-1.1.19.tar.gz
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/ &lt;span class="se"&gt;\ &lt;/span&gt;           &lt;span class="c"&gt;# 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)&lt;/span&gt;
 --mandir&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/share/man/ &lt;span class="se"&gt;\&lt;/span&gt;
 --with-kernel-dir&lt;span class="o"&gt;=&lt;/span&gt;/usr/src/kernels/2.6.18-194.el5-i686/    &lt;span class="c"&gt;# 需要内核的头文件&lt;/span&gt;
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6101,32 +6148,32 @@ ifconfig eth0:3 192.168.3.6/24
 &lt;p&gt;安装nginx后编辑配置文件,在http块里添加:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen  192.168.3.4:80&lt;span class="p"&gt;;&lt;/span&gt;
-        server_name     192.168.3.4&lt;span class="p"&gt;;&lt;/span&gt;
+        listen  192.168.3.4:80;
+        server_name     192.168.3.4;
 
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-             root html/s1&lt;span class="p"&gt;;&lt;/span&gt;
-             index index.html index.htm&lt;span class="p"&gt;;&lt;/span&gt;
+             root html/s1;
+             index index.html index.htm;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen  192.168.3.5:80&lt;span class="p"&gt;;&lt;/span&gt;
-        server_name     192.168.3.5&lt;span class="p"&gt;;&lt;/span&gt;
+        listen  192.168.3.5:80;
+        server_name     192.168.3.5;
 
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root html/s2&lt;span class="p"&gt;;&lt;/span&gt;
-            index index.html index.htm&lt;span class="p"&gt;;&lt;/span&gt;
+            root html/s2;
+            index index.html index.htm;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 
     server &lt;span class="o"&gt;{&lt;/span&gt;
-        listen 192.168.3.6:80&lt;span class="p"&gt;;&lt;/span&gt;
-        server_name     192.168.3.5&lt;span class="p"&gt;;&lt;/span&gt;
+        listen 192.168.3.6:80;
+        server_name     192.168.3.5;
 
         location / &lt;span class="o"&gt;{&lt;/span&gt;
-            root html/s3&lt;span class="p"&gt;;&lt;/span&gt;
-            index index.html index.htm&lt;span class="p"&gt;;&lt;/span&gt;
+            root html/s3;
+            index index.html index.htm;
         &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -6136,9 +6183,9 @@ ifconfig eth0:3 192.168.3.6/24
 &lt;p&gt;创建虚拟主机根目录,并创建不通的首页文档:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/
 mkdir s1 s2 s3
-&lt;span class="nb"&gt;echo &lt;/span&gt;server1 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; s1/index.html
-&lt;span class="nb"&gt;echo &lt;/span&gt;server2 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; s2/index.html
-&lt;span class="nb"&gt;echo &lt;/span&gt;server3 &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; s3/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server1 &amp;amp;gt; s1/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server2 &amp;amp;gt; s2/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server3 &amp;amp;gt; s3/index.html
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6172,14 +6219,14 @@ Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;
 大家也看到了备机keepalived只有检测主机的keepalived停止的时候才会切换vip,而不是检测一台real server的某一服务(比如检测80端口的HTTP)切换vip,所以在nginx进程停止的时候,如果服务器没有宕机这时候就无法实现故障转移,所以我们编写一个检测nginx状态的脚本结合keepalived实现故障转移:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c"&gt;#filename:nsc.sh&lt;/span&gt;
-ps aux ¦ grep nginx ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2   &lt;span class="c"&gt;# 过滤nginx进程&lt;/span&gt;
+ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤nginx进程&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有nginx进程会返回0则认为nginx存活&lt;/span&gt;
 &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;    &lt;/span&gt;sleep 5                     &lt;span class="c"&gt;# 使脚本进入休眠&lt;/span&gt;
 &lt;span class="k"&gt;else&lt;/span&gt;
 &lt;span class="c"&gt;# 如果nginx没有存活尝试启动nginx,如果失败则杀死keepalived的进程&lt;/span&gt;
     /usr/local/nginx/sbin/nginx
-    ps aux ¦ grep nginx ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2
+    ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;pkill keepalived
@@ -6189,7 +6236,7 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&g
 
 
 &lt;p&gt;然后后台运行此脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;nohup sh nsc.sh &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;nohup sh nsc.sh &amp;amp;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6468,25 +6515,25 @@ cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
 &lt;span class="c"&gt;# 编辑配置文件&lt;/span&gt;
 vi /etc/dhcpd.conf
 &lt;span class="c"&gt;# 修改配置文件:&lt;/span&gt;
-ddns-update-style interim&lt;span class="p"&gt;;&lt;/span&gt;
-ignore client-updates&lt;span class="p"&gt;;&lt;/span&gt;
-next-server 192.168.3.1&lt;span class="p"&gt;;&lt;/span&gt;             &lt;span class="c"&gt;# 指定tftp服务器&lt;/span&gt;
-filename &lt;span class="s2"&gt;&amp;quot;/pxelinux.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;              &lt;span class="c"&gt;# 指定启动文件&lt;/span&gt;
+ddns-update-style interim;
+ignore client-updates;
+next-server 192.168.3.1;             &lt;span class="c"&gt;# 指定tftp服务器&lt;/span&gt;
+filename &lt;span class="s2"&gt;&amp;quot;/pxelinux.0&amp;quot;&lt;/span&gt;;              &lt;span class="c"&gt;# 指定启动文件&lt;/span&gt;
 
 subnet 192.168.3.0 netmask 255.255.255.0 &lt;span class="o"&gt;{&lt;/span&gt;
 
-        option routers                  192.168.3.1&lt;span class="p"&gt;;&lt;/span&gt;
-        option subnet-mask              255.255.255.0&lt;span class="p"&gt;;&lt;/span&gt;
+        option routers                  192.168.3.1;
+        option subnet-mask              255.255.255.0;
 
-        option nis-domain               &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        option domain-name              &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-        option domain-name-servers      192.168.1.1&lt;span class="p"&gt;;&lt;/span&gt;
+        option nis-domain               &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;;
+        option domain-name              &lt;span class="s2"&gt;&amp;quot;domain.org&amp;quot;&lt;/span&gt;;
+        option domain-name-servers      192.168.1.1;
 
-        option &lt;span class="nb"&gt;time&lt;/span&gt;-offset              -18000&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# Eastern Standard Time&lt;/span&gt;
+        option &lt;span class="nb"&gt;time&lt;/span&gt;-offset              -18000; &lt;span class="c"&gt;# Eastern Standard Time&lt;/span&gt;
 
-        range dynamic-bootp 192.168.3.128 192.168.3.254&lt;span class="p"&gt;;&lt;/span&gt;
-        default-lease-time 21600&lt;span class="p"&gt;;&lt;/span&gt;
-        max-lease-time 43200&lt;span class="p"&gt;;&lt;/span&gt;
+        range dynamic-bootp 192.168.3.128 192.168.3.254;
+        default-lease-time 21600;
+        max-lease-time 43200;
 
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="c"&gt;# 启动dhcp服务器&lt;/span&gt;
@@ -6505,7 +6552,7 @@ Starting dhcpd: &lt;span class="o"&gt;[&lt;/span&gt; OK &lt;span class="o"&gt;]&
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建目录&lt;/span&gt;
 mkdir -p /pxe/cold/
 &lt;span class="c"&gt;# 复制文件&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -xvf - &lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold &amp;amp;amp;&amp;amp;amp; tar -xvf - &lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6514,16 +6561,16 @@ mkdir -p /pxe/cold/
 vi /etc/httpd/conf/httpd.conf
 &lt;span class="c"&gt;# 更改apache根目录(将配置文件中的两处/var/www改成/pxe)&lt;/span&gt;
 DocumentRoot &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;Directory /&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&amp;amp;lt;Directory /&amp;amp;gt;
     Options FollowSymLinks
     AllowOverride None
-&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/Directory&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;Directory &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&amp;amp;lt;/Directory&amp;amp;gt;
+&amp;amp;lt;Directory &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;&amp;amp;gt;
     Options Indexes FollowSymLinks
     AllowOverride None
     Order allow,deny
     Allow from all
-&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/Directory&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&amp;amp;lt;/Directory&amp;amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6601,7 +6648,7 @@ krb5-devel
 flex
 openssl-devel 
 &lt;span class="c"&gt;# 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:&lt;/span&gt;
-&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat cfpkgs.list &lt;span class="sb"&gt;`&lt;/span&gt;:&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do &lt;/span&gt;&lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; ¦ sed &lt;span class="s1"&gt;&amp;#39;s/://g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; cp /mnt/CentOS/&lt;span class="nv"&gt;$file&lt;/span&gt;* /usr/cold/CentOS/&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat cfpkgs.list &lt;span class="sb"&gt;`&lt;/span&gt;:; &lt;span class="k"&gt;do &lt;/span&gt;&lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; ¦ sed &lt;span class="s1"&gt;&amp;#39;s/://g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;; cp /mnt/CentOS/&lt;span class="nv"&gt;$file&lt;/span&gt;* /usr/cold/CentOS/; &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6613,27 +6660,27 @@ vi repodata/comps.xml
 
 
 &lt;p&gt;向comps.xml添加这几个包group节点&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cfengine&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;keyutils-libs-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;zlib-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;e2fsprogs-devel &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;libsepol-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;libselinux-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;db4-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;pcre-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;krb5-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;flex&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;openssl-devel &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;group&amp;amp;gt;
+    &amp;amp;lt;id&amp;amp;gt;cfengine&amp;amp;lt;/id&amp;amp;gt;
+    &amp;amp;lt;name&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;description&amp;amp;gt;Cfengine &amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;default&amp;amp;gt;true&amp;amp;lt;/default&amp;amp;gt;
+    &amp;amp;lt;uservisible&amp;amp;gt;false&amp;amp;lt;/uservisible&amp;amp;gt;
+    &amp;amp;lt;packagelist&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;keyutils-libs-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;zlib-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;e2fsprogs-devel &amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libsepol-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libselinux-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;db4-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;pcre-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;krb5-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;flex&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;openssl-devel &amp;amp;lt;/packagereq&amp;amp;gt;
+    &amp;amp;lt;/packagelist&amp;amp;gt;
+  &amp;amp;lt;/group&amp;amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6654,11 +6701,11 @@ f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
 
 
 &lt;p&gt;将新的sha值更新到repomd.xml&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/checksum&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;1272586365&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/data&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
+    &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
+    &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&amp;amp;lt;/checksum&amp;amp;gt;
+    &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
+  &amp;amp;lt;/data&amp;amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6707,7 +6754,7 @@ cp -r /a/cfengine /mnt/sysimage/usr/local/
 
 &lt;p&gt;即可从cfhubip那里下载承诺文件执行承诺,根据cfhub进行本地配置
 还可以根据%post更加自由的定制自己的系统,比如最小化安装后会无法使用本地镜像来使用yum可以定义一个局域网yum,在%post --nochroot添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;__EOF__ &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat &amp;amp;lt;&amp;amp;lt;__EOF__ &amp;amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
 &lt;span class="c"&gt;# CentOS-Media.repo&lt;/span&gt;
 &lt;span class="c"&gt;#  yum --disablerepo=\* --enablerepo=cold [command]&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;cold&lt;span class="o"&gt;]&lt;/span&gt;
@@ -6738,7 +6785,7 @@ mount -o loop iso路径 /mnt
 &lt;span class="c"&gt;# 然后使用 tar命令把光盘的内容复制到/usr/cold&lt;/span&gt;
 &lt;span class="c"&gt;# 都说这个命令比cp快,在256内存的虚拟机测试也就快了几十秒,个人觉得最大的用处&lt;/span&gt;
 &lt;span class="c"&gt;# 就是解决了cp无法复制隐藏文件的问题&lt;/span&gt;
-&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; tar -xvfp - &lt;span class="o"&gt;)&lt;/span&gt;         &lt;span class="c"&gt;# tar -p选项是保留原有权限&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold &amp;amp;amp;&amp;amp;amp; tar -xvfp - &lt;span class="o"&gt;)&lt;/span&gt;         &lt;span class="c"&gt;# tar -p选项是保留原有权限&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6809,7 +6856,7 @@ drwxr-xr-x  2 root root   4096 Dec 14 01:42 repodata
 
 &lt;p&gt;现在根据install.log创建packages.list,用来安装所需要的rpm包:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 根据install.log,提取其中的rpm包名,&lt;/span&gt;
-cat install.log ¦ grep Installing ¦ awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; ¦ awk -F&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ if (NF==2){ print $2} else {print $1}}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; packages.list
+cat install.log ¦ grep Installing ¦ awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; ¦ awk -F&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ if (NF==2){ print $2} else {print $1}}&amp;#39;&lt;/span&gt; &amp;amp;gt; packages.list
 &lt;span class="c"&gt;# 如果仅仅最小化安装就失去了定制自己的发行版的意义&lt;/span&gt;
 &lt;span class="c"&gt;# 向packages.list添加几个常用的工具,需要先用yum安装一遍记住包的依赖关系&lt;/span&gt;
 &lt;span class="c"&gt;# 把依赖关系的包也放入packages.list&lt;/span&gt;
@@ -6831,7 +6878,7 @@ bzip2
 groff
 man
 &lt;span class="c"&gt;# 根据packages.list进行复制&lt;/span&gt;
-&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat packages.list &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;do  &lt;/span&gt;cp -p -f  /mnt/CentOS/&lt;span class="s2"&gt;&amp;quot;$i&amp;quot;&lt;/span&gt;* /usr/cold/CentOS/&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;cat packages.list &lt;span class="sb"&gt;`&lt;/span&gt;;&lt;span class="k"&gt;do  &lt;/span&gt;cp -p -f  /mnt/CentOS/&lt;span class="s2"&gt;&amp;quot;$i&amp;quot;&lt;/span&gt;* /usr/cold/CentOS/;done
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6844,47 +6891,47 @@ sed -ri &lt;span class="s1"&gt;&amp;#39;/xml:lang/ {/en_GB/!d}&amp;#39;&lt;/span
 
 
 &lt;p&gt;去除了各国语言的comps.xml大概包含2000多行,现在我们要进一步处理,删除除了id为core的group的其他节点,删除完后comps.xml大概只剩下73行.现在我们要把我们自己添加的包顶一个group节点,在紧跟id为core的group节点(也就是&amp;lt;/group&amp;gt;后面)添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/default&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/uservisible&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;setuptool&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;lszrz&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;wget&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;kernel-headers&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;libgomp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;cpp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;glibc-headers&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;glibc-devel&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;gcc&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;make&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;which&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;bzip2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;groff&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;man&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagereq&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/packagelist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/group&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;group&amp;amp;gt;
+    &amp;amp;lt;id&amp;amp;gt;useful&amp;amp;lt;/id&amp;amp;gt;
+    &amp;amp;lt;name&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;description&amp;amp;gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor &amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful tools &lt;span class="k"&gt;for &lt;/span&gt;administartor&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;default&amp;amp;gt;true&amp;amp;lt;/default&amp;amp;gt;
+    &amp;amp;lt;uservisible&amp;amp;gt;false&amp;amp;lt;/uservisible&amp;amp;gt;
+    &amp;amp;lt;packagelist&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;setuptool&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;lszrz&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;wget&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;kernel-headers&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;libgomp&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;cpp&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;glibc-headers&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;glibc-devel&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;gcc&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;make&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;which&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;bzip2&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;groff&amp;amp;lt;/packagereq&amp;amp;gt;
+      &amp;amp;lt;packagereq &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&amp;amp;gt;man&amp;amp;lt;/packagereq&amp;amp;gt;
+    &amp;amp;lt;/packagelist&amp;amp;gt;
+  &amp;amp;lt;/group&amp;amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;上面添加了一个id为useful的group节点,下面把这两个节点放到一个类别里:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;category&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;cold&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/id&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/name&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold Linux&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;Cold Linux&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/description&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;display_order&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;92&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/display_order&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;grouplist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;core&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-      &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;useful&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/groupid&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-     &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/grouplist&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/category&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;category&amp;amp;gt;
+    &amp;amp;lt;id&amp;amp;gt;cold&amp;amp;lt;/id&amp;amp;gt;
+    &amp;amp;lt;name&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
+    &amp;amp;lt;description&amp;amp;gt;Cold Linux&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;description xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold Linux&amp;amp;lt;/description&amp;amp;gt;
+    &amp;amp;lt;display_order&amp;amp;gt;92&amp;amp;lt;/display_order&amp;amp;gt;
+    &amp;amp;lt;grouplist&amp;amp;gt;
+      &amp;amp;lt;groupid&amp;amp;gt;core&amp;amp;lt;/groupid&amp;amp;gt;
+      &amp;amp;lt;groupid&amp;amp;gt;useful&amp;amp;lt;/groupid&amp;amp;gt;
+     &amp;amp;lt;/grouplist&amp;amp;gt;
+  &amp;amp;lt;/category&amp;amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -6910,11 +6957,11 @@ c1d304cae50f969370a72d95e3cd2f71087fc73a  repodata/comps.xml
 
 
 &lt;p&gt;然后更新到repomd.xml中编辑repodata/repomd.xml找到location href="repodata/comps.xml"/的一个data节点把sha值更新为刚刚计算的&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/checksum&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;1272586365&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/timestamp&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;lt&lt;span class="p"&gt;;&lt;/span&gt;/data&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
+    &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
+    &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&amp;amp;lt;/checksum&amp;amp;gt;
+    &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
+  &amp;amp;lt;/data&amp;amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -7015,7 +7062,7 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
 &lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf download&lt;span class="se"&gt;\?&lt;/span&gt;file&lt;span class="se"&gt;\=&lt;/span&gt;cfengine-3.2.3.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;cfengine-3.2.3/
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/cfengine
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -7050,14 +7097,14 @@ total 964
 &lt;span class="c"&gt;# &amp;amp;lt;它是什么&amp;amp;gt; &amp;amp;lt;它对什么起作用&amp;amp;gt; &amp;amp;lt;它叫什么&amp;amp;gt;&lt;/span&gt;
 body common control                                   &lt;span class="c"&gt;# 一个body 对common组启作用,名字是control(名字为control的common的组是最重要的一个组,cfengine以这个组为起点&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
-&lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                         &lt;span class="c"&gt;# 定义要执行的承诺束为test&lt;/span&gt;
+&lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                         &lt;span class="c"&gt;# 定义要执行的承诺束为test&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;                                     &lt;span class="c"&gt;# 一个承诺束,对cf-agent起作用,叫test&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
 reports:                                              &lt;span class="c"&gt;# 一个报告(仅仅显示消息,不对系统做改变)&lt;/span&gt;
   cfengine_3::                                        &lt;span class="c"&gt;# 一个类,对cfengine 版本3的策略执行点起作用(cfengine用这个来替代程序语言里的if-else)&lt;/span&gt;
-      &lt;span class="s2"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                                 &lt;span class="c"&gt;# 承诺内容,显示&amp;quot;hello world!&amp;quot;&lt;/span&gt;
+      &lt;span class="s2"&gt;&amp;quot;Hello world!&amp;quot;&lt;/span&gt;;                                 &lt;span class="c"&gt;# 承诺内容,显示&amp;quot;hello world!&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 /var/cfengine/bin/cf-promises -f /var/cfengine/inputs/test.cf        &lt;span class="c"&gt;# 检查承诺语法&lt;/span&gt;
@@ -7079,7 +7126,7 @@ bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
 reports:
   cfengine_3::
-    &lt;span class="s2"&gt;&amp;quot;I&amp;#39;am cfengine 3 client&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;I&amp;#39;am cfengine 3 client&amp;quot;&lt;/span&gt;;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -7088,14 +7135,14 @@ reports:
 &lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
 body common control
 &lt;span class="o"&gt;{&lt;/span&gt;
- &lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;                                &lt;span class="c"&gt;# 将test加入的承诺束队列&lt;/span&gt;
+ &lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                                &lt;span class="c"&gt;# 将test加入的承诺束队列&lt;/span&gt;
 
- &lt;span class="nv"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+ &lt;span class="nv"&gt;inputs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="s2"&gt;&amp;quot;cfengine_stdlib.cf&amp;quot;&lt;/span&gt;,
             &lt;span class="s2"&gt;&amp;quot;cftest1.cf&amp;quot;&lt;/span&gt;,                                             &lt;span class="c"&gt;# 将cftest1.cf引入进来&lt;/span&gt;
-           &lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+           &lt;span class="o"&gt;}&lt;/span&gt;;
 
- &lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Community Promises.cf 1.0.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+ &lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="s2"&gt;&amp;quot;Community Promises.cf 1.0.0&amp;quot;&lt;/span&gt;;
 &lt;span class="o"&gt;}&lt;/span&gt;
 .......
 &lt;/pre&gt;&lt;/div&gt;
@@ -7114,7 +7161,7 @@ body common control
 
 &lt;p&gt;然后执行策略:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
-R: --&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; CFE is running on cfhub
+R: --&amp;amp;gt; CFE is running on cfhub
 R: I&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;am cfengine 3 client
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -7126,7 +7173,7 @@ bundle common def
 &lt;span class="o"&gt;{&lt;/span&gt;
  vars:                                            &lt;span class="c"&gt;# 定义变量&lt;/span&gt;
    ... ...
-    &lt;span class="s2"&gt;&amp;quot;acl&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;slist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;acl&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;slist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt;
                 &lt;span class="s2"&gt;&amp;quot;$(sys.policy_hub)/16&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;192.168.1.&amp;quot;&lt;/span&gt;,          &lt;span class="c"&gt;# 这这个后面添加&lt;/span&gt;
   ... ...
 &lt;span class="o"&gt;}&lt;/span&gt;

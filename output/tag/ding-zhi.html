@@ -90,7 +90,7 @@ krb5-devel
 flex
 openssl-devel 
 <span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:<span class="p">;</span> <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span><span class="p">;</span> cp /mnt/CentOS/<span class="nv">$file</span>* /usr/cold/CentOS/<span class="p">;</span> <span class="k">done</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt/CentOS/<span class="nv">$file</span>* /usr/cold/CentOS/; <span class="k">done</span>
 </pre></div>
 
 
@@ -102,27 +102,27 @@ vi repodata/comps.xml
 
 
 <p>向comps.xml添加这几个包group节点</p>
-<div class="codehilite"><pre>  <span class="p">&amp;</span>lt<span class="p">;</span>group<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>id<span class="p">&amp;</span>gt<span class="p">;</span>cfengine<span class="p">&amp;</span>lt<span class="p">;</span>/id<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>name<span class="p">&amp;</span>gt<span class="p">;</span>Cfengine<span class="p">&amp;</span>lt<span class="p">;</span>/name<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>Cfengine<span class="p">&amp;</span>lt<span class="p">;</span>/name<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>description<span class="p">&amp;</span>gt<span class="p">;</span>Cfengine <span class="p">&amp;</span>lt<span class="p">;</span>/description<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>Cfengine<span class="p">&amp;</span>lt<span class="p">;</span>/description<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>default<span class="p">&amp;</span>gt<span class="p">;</span><span class="nb">true</span><span class="p">&amp;</span>lt<span class="p">;</span>/default<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>uservisible<span class="p">&amp;</span>gt<span class="p">;</span><span class="nb">false</span><span class="p">&amp;</span>lt<span class="p">;</span>/uservisible<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>packagelist<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>keyutils-libs-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>zlib-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>e2fsprogs-devel <span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>libsepol-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>libselinux-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>db4-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>pcre-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>krb5-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>flex<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>openssl-devel <span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>/packagelist<span class="p">&amp;</span>gt<span class="p">;</span>
-  <span class="p">&amp;</span>lt<span class="p">;</span>/group<span class="p">&amp;</span>gt<span class="p">;</span>
+<div class="codehilite"><pre>  &amp;lt;group&amp;gt;
+    &amp;lt;id&amp;gt;cfengine&amp;lt;/id&amp;gt;
+    &amp;lt;name&amp;gt;Cfengine&amp;lt;/name&amp;gt;
+    &amp;lt;name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Cfengine&amp;lt;/name&amp;gt;
+    &amp;lt;description&amp;gt;Cfengine &amp;lt;/description&amp;gt;
+    &amp;lt;description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Cfengine&amp;lt;/description&amp;gt;
+    &amp;lt;default&amp;gt;true&amp;lt;/default&amp;gt;
+    &amp;lt;uservisible&amp;gt;false&amp;lt;/uservisible&amp;gt;
+    &amp;lt;packagelist&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;keyutils-libs-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;zlib-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;e2fsprogs-devel &amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;libsepol-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;libselinux-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;db4-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;pcre-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;krb5-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;flex&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;openssl-devel &amp;lt;/packagereq&amp;gt;
+    &amp;lt;/packagelist&amp;gt;
+  &amp;lt;/group&amp;gt;
 </pre></div>
 
 
@@ -143,11 +143,11 @@ f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
 
 
 <p>将新的sha值更新到repomd.xml</p>
-<div class="codehilite"><pre>  <span class="p">&amp;</span>lt<span class="p">;</span>data <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>location <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;repodata/comps.xml&quot;</span>/<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>checksum <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;sha&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>f6f086a3c2b7eee2050580aa3e74c841dd406dfc<span class="p">&amp;</span>lt<span class="p">;</span>/checksum<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>timestamp<span class="p">&amp;</span>gt<span class="p">;</span>1272586365<span class="p">&amp;</span>lt<span class="p">;</span>/timestamp<span class="p">&amp;</span>gt<span class="p">;</span>
-  <span class="p">&amp;</span>lt<span class="p">;</span>/data<span class="p">&amp;</span>gt<span class="p">;</span>
+<div class="codehilite"><pre>  &amp;lt;data <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;group&quot;</span>&amp;gt;
+    &amp;lt;location <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;repodata/comps.xml&quot;</span>/&amp;gt;
+    &amp;lt;checksum <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;sha&quot;</span>&amp;gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&amp;lt;/checksum&amp;gt;
+    &amp;lt;timestamp&amp;gt;1272586365&amp;lt;/timestamp&amp;gt;
+  &amp;lt;/data&amp;gt;
 </pre></div>
 
 
@@ -196,7 +196,7 @@ cp -r /a/cfengine /mnt/sysimage/usr/local/
 
 <p>即可从cfhubip那里下载承诺文件执行承诺,根据cfhub进行本地配置
 还可以根据%post更加自由的定制自己的系统,比如最小化安装后会无法使用本地镜像来使用yum可以定义一个局域网yum,在%post --nochroot添加如下内容:</p>
-<div class="codehilite"><pre>cat <span class="p">&amp;</span>lt<span class="p">;&amp;</span>lt<span class="p">;</span>__EOF__ <span class="p">&amp;</span>gt<span class="p">;</span> /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
+<div class="codehilite"><pre>cat &amp;lt;&amp;lt;__EOF__ &amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
 <span class="c"># CentOS-Media.repo</span>
 <span class="c">#  yum --disablerepo=\* --enablerepo=cold [command]</span>
 <span class="o">[</span>cold<span class="o">]</span>
@@ -287,6 +287,7 @@ mount -o loop iso路径 /mnt
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

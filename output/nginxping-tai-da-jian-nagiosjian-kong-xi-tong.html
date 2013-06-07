@@ -121,7 +121,7 @@ make install-init          <span class="c"># 安装nagios启动脚本</span>
 tar -zxvf nagios-plugins-1.4.15.tar.gz
 <span class="nb">cd </span>nagios-plugins-1.4.15
 ./configure --prefix<span class="o">=</span>/usr/local/nagios
-make  <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> make install
+make  &amp;amp;&amp;amp; make install
 </pre></div>
 
 
@@ -130,11 +130,11 @@ make  <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class
 <p>这里web服务器使用当前主流的nginx:</p>
 <p>安装nginx</p>
 <div class="codehilite"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
-<span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span>yum<span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span>-y<span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span>install<span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span>zlib-devel<span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span>pcre-devel<span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span>openssl-devel <span class="p">&amp;</span>amp<span class="p">;</span>nbsp<span class="p">;</span><span class="c"># 安装依赖</span>
+&amp;amp;nbsp;yum&amp;amp;nbsp;&amp;amp;nbsp;-y&amp;amp;nbsp;install&amp;amp;nbsp;zlib-devel&amp;amp;nbsp;pcre-devel&amp;amp;nbsp;openssl-devel &amp;amp;nbsp;# 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
 <span class="nb">cd </span>nginx-1.0.11
 ./configure --prefix<span class="o">=</span>/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
-make <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> make install
+make &amp;amp;&amp;amp; make install
 </pre></div>
 
 
@@ -143,19 +143,19 @@ make <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class=
 tar -zxvf FCGI-0.67.tar.gz
 <span class="nb">cd </span>FCGI-0.67
 perl Makefile.PL
-make <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> make install
+make &amp;amp;&amp;amp; make install
 <span class="nb">cd</span> ..
 wget http://cpan.wenzk.com/authors/id/G/GB/GBJK/FCGI-ProcManager-0.19.tar.gz
 tar -zxvf FCGI-ProcManager-0.19.tar.gz
 <span class="nb">cd </span>FCGI-ProcManager-0.19
 perl Makefile.PL
-make <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> make install
+make &amp;amp;&amp;amp; make install
 <span class="nb">cd</span> ..
 wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/IO-All-0.39.tar.gz
 tar zxvf IO-All-0.39.tar.gz
 <span class="nb">cd </span>IO-All-0.39
 perl Makefile.PL
-make <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> make install
+make &amp;amp;&amp;amp; make install
 </pre></div>
 
 
@@ -179,54 +179,54 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   <span class="c">
 <h2>配置</h2>
 <p>首先配置nginx:</p>
 <div class="codehilite"><pre>    server <span class="o">{</span>
-        listen  192.168.3.3:80<span class="p">;</span>
-        server_name 192.168.3.3<span class="p">;</span>
-        auth_basic <span class="s2">&quot;Nagios&quot;</span><span class="p">;</span>
-        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios<span class="p">;</span>
+        listen  192.168.3.3:80;
+        server_name 192.168.3.3;
+        auth_basic <span class="s2">&quot;Nagios&quot;</span>;
+        auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios;
 
         <span class="c"># 为了正常使用css和显示图片做一个url重写</span>
         <span class="k">if</span> <span class="o">(</span> <span class="nv">$request_filename</span> ~ <span class="se">\.</span><span class="o">(</span>gif¦png¦jpg¦jpeg¦ico<span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
-            rewrite ^/nagios/<span class="o">(</span>images/.*<span class="o">)</span> /<span class="nv">$1</span> <span class="nb">break</span><span class="p">;</span>
+            rewrite ^/nagios/<span class="o">(</span>images/.*<span class="o">)</span> /<span class="nv">$1</span> <span class="nb">break</span>;
         <span class="o">}</span>   
 
         <span class="k">if</span> <span class="o">(</span> <span class="nv">$request_filename</span> ~ <span class="se">\.</span><span class="o">(</span>css<span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
-            rewrite ^/nagios/<span class="o">(</span>stylesheets/.*<span class="o">)</span> /<span class="nv">$1</span> <span class="nb">break</span><span class="p">;</span>
+            rewrite ^/nagios/<span class="o">(</span>stylesheets/.*<span class="o">)</span> /<span class="nv">$1</span> <span class="nb">break</span>;
         <span class="o">}</span>   
 
         <span class="c"># 支持php的配置</span>
         location / <span class="o">{</span>
-            root /usr/local/nagios/share/<span class="p">;</span>
-            index index.php<span class="p">;</span>
-            fastcgi_pass unix:/var/run/php/php-fpm.sock<span class="p">;</span>
-            fastcgi_index index.php<span class="p">;</span>
-            fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span><span class="p">;</span>
-            include fastcgi_params<span class="p">;</span>
-            include fastcgi.conf<span class="p">;</span>
+            root /usr/local/nagios/share/;
+            index index.php;
+            fastcgi_pass unix:/var/run/php/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span>;
+            include fastcgi_params;
+            include fastcgi.conf;
         <span class="o">}</span>
 
         <span class="c"># 支持cgi的配置</span>
         location ~ <span class="se">\.</span>cgi<span class="nv">$ </span><span class="o">{</span>
-            root /usr/local/nagios/sbin/<span class="p">;</span>
-            rewrite ^/nagios/cgi-bin/<span class="o">(</span>.*<span class="o">)</span><span class="se">\.</span>cgi<span class="o">(</span>.*<span class="o">)</span> /<span class="nv">$1</span>.cgi<span class="nv">$2</span> <span class="nb">break</span><span class="p">;</span>
-            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock<span class="p">;</span>
-            fastcgi_index   index.cgi<span class="p">;</span>
-            fastcgi_param SCRIPT_FILENAME  <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span><span class="p">;</span>
-            fastcgi_param QUERY_STRING     <span class="nv">$query_string</span><span class="p">;</span>
-            fastcgi_param REQUEST_METHOD   <span class="nv">$request_method</span><span class="p">;</span>
-            fastcgi_param CONTENT_TYPE     <span class="nv">$content_type</span><span class="p">;</span>
-            fastcgi_param CONTENT_LENGTH   <span class="nv">$content_length</span><span class="p">;</span>
-            fastcgi_param GATEWAY_INTERFACE  CGI/1.1<span class="p">;</span>
-            fastcgi_param SERVER_SOFTWARE    nginx<span class="p">;</span>
-            fastcgi_param SCRIPT_NAME        <span class="nv">$fastcgi_script_name</span><span class="p">;</span>
-            fastcgi_param REQUEST_URI        <span class="nv">$request_uri</span><span class="p">;</span>
-            fastcgi_param DOCUMENT_URI       <span class="nv">$document_uri</span><span class="p">;</span>
-            fastcgi_param DOCUMENT_ROOT      <span class="nv">$document_root</span><span class="p">;</span>
-            fastcgi_param SERVER_PROTOCOL    <span class="nv">$server_protocol</span><span class="p">;</span>
-            fastcgi_param REMOTE_ADDR        <span class="nv">$remote_addr</span><span class="p">;</span>
-            fastcgi_param REMOTE_PORT        <span class="nv">$remote_port</span><span class="p">;</span>
-            fastcgi_param SERVER_ADDR        <span class="nv">$server_addr</span><span class="p">;</span>
-            fastcgi_param SERVER_PORT        <span class="nv">$server_port</span><span class="p">;</span>
-            fastcgi_param SERVER_NAME        <span class="nv">$server_name</span><span class="p">;</span>
+            root /usr/local/nagios/sbin/;
+            rewrite ^/nagios/cgi-bin/<span class="o">(</span>.*<span class="o">)</span><span class="se">\.</span>cgi<span class="o">(</span>.*<span class="o">)</span> /<span class="nv">$1</span>.cgi<span class="nv">$2</span> <span class="nb">break</span>;
+            fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock;
+            fastcgi_index   index.cgi;
+            fastcgi_param SCRIPT_FILENAME  <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span>;
+            fastcgi_param QUERY_STRING     <span class="nv">$query_string</span>;
+            fastcgi_param REQUEST_METHOD   <span class="nv">$request_method</span>;
+            fastcgi_param CONTENT_TYPE     <span class="nv">$content_type</span>;
+            fastcgi_param CONTENT_LENGTH   <span class="nv">$content_length</span>;
+            fastcgi_param GATEWAY_INTERFACE  CGI/1.1;
+            fastcgi_param SERVER_SOFTWARE    nginx;
+            fastcgi_param SCRIPT_NAME        <span class="nv">$fastcgi_script_name</span>;
+            fastcgi_param REQUEST_URI        <span class="nv">$request_uri</span>;
+            fastcgi_param DOCUMENT_URI       <span class="nv">$document_uri</span>;
+            fastcgi_param DOCUMENT_ROOT      <span class="nv">$document_root</span>;
+            fastcgi_param SERVER_PROTOCOL    <span class="nv">$server_protocol</span>;
+            fastcgi_param REMOTE_ADDR        <span class="nv">$remote_addr</span>;
+            fastcgi_param REMOTE_PORT        <span class="nv">$remote_port</span>;
+            fastcgi_param SERVER_ADDR        <span class="nv">$server_addr</span>;
+            fastcgi_param SERVER_PORT        <span class="nv">$server_port</span>;
+            fastcgi_param SERVER_NAME        <span class="nv">$server_name</span>;
         <span class="o">}</span>
 
     <span class="o">}</span>
@@ -358,6 +358,7 @@ Starting nagios: <span class="k">done</span>.
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

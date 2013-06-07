@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/git.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-06-07T00:00:00+08:00</updated><entry><title>解决git提交敏感信息(回退git版本库到某一个commit)</title><link href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html" rel="alternate"></link><updated>2013-06-07T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-06-07:jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html</id><summary type="html">&lt;p&gt;git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.&lt;/p&gt;
+&lt;h2&gt;备份本地代码&lt;/h2&gt;
+&lt;p&gt;首先我们将本地代码的更改备份一下, 以防丢失更改&lt;/p&gt;
+&lt;h2&gt;回退本地代码的commit&lt;/h2&gt;
+&lt;p&gt;备份完数据, 我们就可以先回退本地的版本库&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git reset --hard HEAD~1        &lt;span class="c"&gt;# 回退到上一次的提交, 如果是上n次就将1改成对应的数字&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;回退远端版本库&lt;/h2&gt;
+&lt;p&gt;接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作&lt;/p&gt;
+&lt;h3&gt;新建一个分支, 并提交&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git checkout -b temp
+git push origin temp:temp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;重建主分支&lt;/h3&gt;
+&lt;p&gt;下面我们可以删除并重建主分支, 如果是&lt;code&gt;github&lt;/code&gt;的话需要将&lt;code&gt;Default Branch&lt;/code&gt;切换到别的分支(项目主页-&amp;gt;Settings即可看到)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git push origin --delete master   &lt;span class="c"&gt;# 删除远端主分支&lt;/span&gt;
+git branch -d master              &lt;span class="c"&gt;# 删除本地主分支&lt;/span&gt;
+git checkout -b master            &lt;span class="c"&gt;# 新建主分支并切换到主分支&lt;/span&gt;
+git push origin master            &lt;span class="c"&gt;# 提交主分支&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样我们就删除之前提交的敏感信息(如果是&lt;code&gt;github&lt;/code&gt;现在就可以把默认分支切换到 &lt;code&gt;master&lt;/code&gt;)&lt;/p&gt;
+&lt;h3&gt;删除临时分支&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;git branch -d temp
+git push origin --delete temp
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="git"></category><category term="敏感信息"></category><category term="回退"></category><category term="commit"></category><category term="版本库"></category></entry></feed>

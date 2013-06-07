@@ -59,6 +59,29 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
+        <div class= "well small"> 一 16 四月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
+
+ </div>
+        <div class="summary"><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
+<p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
+工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
+IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
+DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连接,将请求给后端real server,然后由real server处理请求直接相应给用户,Direct Routing与IP Tunneling相比，没有IP封装的开销，但由于采用物理层 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html"><h2>mongoengine使用笔记</h2></a>
         <div class= "well small"> 六 23 六月 2012
 
@@ -367,31 +390,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="bp">None ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
-        <div class= "well small"> 五 25 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
-</pre></div>
-
-
-<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev"><a href="http://www.linuxzen.com/author/cold3.html">&larr; Previous</a></li>
@@ -438,6 +436,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

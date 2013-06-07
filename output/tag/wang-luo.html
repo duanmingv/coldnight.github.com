@@ -201,6 +201,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">del</span> <span class="n">message_queue_map</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
 
+
 <span class="k">def</span> <span class="nf">handle_server</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
@@ -213,6 +214,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <span class="c"># 将连接和handle注册为读事件加入到 tornado ioloop</span>
         <span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">conn_fd</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
         <span class="n">message_queue_map</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>   <span class="c"># 创建对应的消息队列</span>
+
 
 <span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">handle_server</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
 
@@ -263,6 +265,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

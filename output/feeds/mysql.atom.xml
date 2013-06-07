@@ -24,11 +24,11 @@ tar -zxvf mysql-5.0.95.tar.gz
 --with-client-ldflags&lt;span class="o"&gt;=&lt;/span&gt;-all-static &lt;span class="se"&gt;\&lt;/span&gt;
 --with-unix-socket-path&lt;span class="o"&gt;=&lt;/span&gt;/tmp/mysql.sock &lt;span class="se"&gt;\&lt;/span&gt;
 --with-ssl
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 cp support-files/my-medium.cnf /etc/my.cnf          &lt;span class="c"&gt;# 创建配置文件&lt;/span&gt;
 cp support-files/mysql.server /etc/init.d/mysqld     &lt;span class="c"&gt;# 创建启动脚本&lt;/span&gt;
 chmod +x /etc/init.d/mysqld
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/usr/local/mysql/lib/mysql/&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ld.so.conf
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/usr/local/mysql/lib/mysql/&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ld.so.conf
 ldconfig
 /usr/local/mysql/bin/mysql_install_db --user&lt;span class="o"&gt;=&lt;/span&gt;mysql   &lt;span class="c"&gt;# 初始化数据库&lt;/span&gt;
 chown -R root.mysql /usr/local/mysql/
@@ -51,13 +51,13 @@ server-id &lt;span class="o"&gt;=&lt;/span&gt; 1921683101                      &
 
 
 &lt;p&gt;在主库上创建一个用户授权给从库,用户为backup密码为backup:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; grant replication slave on *.* to &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;192.168.3.102&amp;#39;&lt;/span&gt; identified by &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; grant replication slave on *.* to &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;192.168.3.102&amp;#39;&lt;/span&gt; identified by &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.16 sec&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看主库状态:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; show master status&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; show master status;
 +------------------+-----------+--------------+------------------+
 ¦ File             ¦ Position  ¦ Binlog_Do_DB ¦ Binlog_Ignore_DB ¦
 +------------------+-----------+--------------+------------------+
@@ -84,7 +84,7 @@ master-connect-retry&lt;span class="o"&gt;=&lt;/span&gt;60             &lt;span 
 
 
 &lt;p&gt;在从库上执行下操作,指定主库的二进制文件名和偏移量(刚才在主库show master status;查看的参数):&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; show slave status &lt;span class="se"&gt;\G&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; show slave status &lt;span class="se"&gt;\G&lt;/span&gt;;
 *************************** 1. row ***************************
              Slave_IO_State: Waiting &lt;span class="k"&gt;for &lt;/span&gt;master to send event
                 Master_Host: 192.168.3.101
@@ -128,10 +128,10 @@ No query specified
 
 &lt;p&gt;如果show slave status \G;&lt;span style="color: #ff0000;"&gt;Slave_SQL_Running: No&lt;/span&gt;&lt;span style="color: #000000;"&gt;,则执在从库上执行下面命令(两个参数值通过在主库执行show master status; 命令查看获得):
 &lt;/span&gt;&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; stop slave&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; stop slave;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.00 sec&lt;span class="o"&gt;)&lt;/span&gt;
 
-mysql&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; change master to &lt;span class="nv"&gt;master_log_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mysql-bin.000003&amp;#39;&lt;/span&gt;,master_log_pos&lt;span class="o"&gt;=&lt;/span&gt;236&lt;span class="p"&gt;;&lt;/span&gt;
+mysql&amp;amp;gt; change master to &lt;span class="nv"&gt;master_log_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mysql-bin.000003&amp;#39;&lt;/span&gt;,master_log_pos&lt;span class="o"&gt;=&lt;/span&gt;236;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.01 sec&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -159,15 +159,15 @@ wget http://www.ultramonkey.org/download/heartbeat/2.0.8/heartbeat-2.0.8.tar.gz
 tar -zxvf heartbeat-2.0.8.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;heartbeat-2.0.8
 ./configure --sysconfdir&lt;span class="o"&gt;=&lt;/span&gt;/etc
-make &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; make install
+make &amp;amp;amp;&amp;amp;amp; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;创建配置文件:
 安装后要配置三个文件（如没有可手动建立）：ha.cf、haresources、authkeys。这三个配置文件需要在/etc/ha.d目录下面，但是默认是没有这三个文件的，可以到官网上下这三个文件，也可以在源码包里找这三个文件，在源码目录下的DOC子目录里。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf &lt;span class="p"&gt;|&lt;/span&gt; egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ha.d/ha.cf
-cat /usr/local/share/doc/heartbeat-2.0.8/haresources  &lt;span class="p"&gt;|&lt;/span&gt; egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ha.d/haresources
-cat /usr/local/share/doc/heartbeat-2.0.8/authkeys &lt;span class="p"&gt;|&lt;/span&gt; egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; -v &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /etc/ha.d/authkeys
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/ha.cf
+cat /usr/local/share/doc/heartbeat-2.0.8/haresources  | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/haresources
+cat /usr/local/share/doc/heartbeat-2.0.8/authkeys | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; -v &amp;amp;gt; /etc/ha.d/authkeys
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -299,7 +299,7 @@ Feb 19 13:50:23 slave harc&lt;span class="o"&gt;[&lt;/span&gt;29171&lt;span clas
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Comm_now_up&lt;span class="o"&gt;()&lt;/span&gt;: updating status to active
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Local status now &lt;span class="nb"&gt;set &lt;/span&gt;to: &lt;span class="s1"&gt;&amp;#39;active&amp;#39;&lt;/span&gt;
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Starting child client &lt;span class="s2"&gt;&amp;quot;/usr/local/lib/heartbeat/ipfail&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;501,501&lt;span class="o"&gt;)&lt;/span&gt;
-Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: WARN: G_CH_dispatch_int: Dispatch &lt;span class="k"&gt;function for &lt;/span&gt;&lt;span class="nb"&gt;read &lt;/span&gt;child took too long to execute: 140 ms &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; 50 ms&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;GSource: 0x9b98448&lt;span class="o"&gt;)&lt;/span&gt;
+Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: WARN: G_CH_dispatch_int: Dispatch &lt;span class="k"&gt;function for &lt;/span&gt;&lt;span class="nb"&gt;read &lt;/span&gt;child took too long to execute: 140 ms &lt;span class="o"&gt;(&lt;/span&gt;&amp;amp;gt; 50 ms&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;GSource: 0x9b98448&lt;span class="o"&gt;)&lt;/span&gt;
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29182&lt;span class="o"&gt;]&lt;/span&gt;: info: Starting &lt;span class="s2"&gt;&amp;quot;/usr/local/lib/heartbeat/ipfail&amp;quot;&lt;/span&gt; as uid 501  gid 501 &lt;span class="o"&gt;(&lt;/span&gt;pid 29182&lt;span class="o"&gt;)&lt;/span&gt;
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: remote resource transition completed.
 Feb 19 13:50:24 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: remote resource transition completed.
@@ -339,14 +339,14 @@ Feb 19 13:50:46 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;sp
 &lt;p&gt;查看日志并无变化,所以得出结论heartbeat只检测心跳也就是只检测设备是否宕机,不会检测MySQL服务,所以我们同样要有一个脚本来检测MySQL服务,如果mysql服务宕掉,则尝试启动服务,若启动服务失败则kill掉heartbeat进程实现故障转移(和上一遍nginx+keepalived原理一致),脚本内容如下:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c"&gt;# filename:mysqlsc.sh&lt;/span&gt;
-ps aux ¦ grep mysqld ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2   &lt;span class="c"&gt;# 过滤mysql进程&lt;/span&gt;
+ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤mysql进程&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有mysql进程会返回0则认为mysql存活&lt;/span&gt;
 &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;    &lt;/span&gt;sleep 5                     &lt;span class="c"&gt;# 使脚本进入休眠&lt;/span&gt;
 &lt;span class="k"&gt;else&lt;/span&gt;
 &lt;span class="c"&gt;# 如果nginx没有存活尝试启动mysql,如果失败则杀死heartbeat的进程&lt;/span&gt;
     /etc/init.d/mysqld start
-    ps aux ¦ grep mysqld ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&lt;/span&gt; /dev/null 1&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;gt&lt;span class="p"&gt;;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt;2
+    ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
     &lt;span class="k"&gt;then&lt;/span&gt;
 &lt;span class="k"&gt;        &lt;/span&gt;pkill heartbeat
@@ -357,7 +357,7 @@ ps aux ¦ grep mysqld ¦ grep -v grep 2&lt;span class="p"&gt;&amp;amp;&lt;/span&
 
 &lt;p&gt;给这个脚本执行权限然后后台运行:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;chmod +x mysqlsc.sh
-nohup sh mysqlsc.sh &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;amp&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# 后台运行&lt;/span&gt;
+nohup sh mysqlsc.sh &amp;amp;amp; &lt;span class="c"&gt;# 后台运行&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

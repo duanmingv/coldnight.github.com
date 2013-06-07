@@ -86,7 +86,7 @@ mount -o loop iso路径 /mnt
 <span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
 <span class="c"># 都说这个命令比cp快,在256内存的虚拟机测试也就快了几十秒,个人觉得最大的用处</span>
 <span class="c"># 就是解决了cp无法复制隐藏文件的问题</span>
-<span class="o">(</span> <span class="nb">cd</span> /mnt/ <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /usr/cold <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> tar -xvfp - <span class="o">)</span>         <span class="c"># tar -p选项是保留原有权限</span>
+<span class="o">(</span> <span class="nb">cd</span> /mnt/ &amp;amp;&amp;amp; tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /usr/cold &amp;amp;&amp;amp; tar -xvfp - <span class="o">)</span>         <span class="c"># tar -p选项是保留原有权限</span>
 </pre></div>
 
 
@@ -157,7 +157,7 @@ drwxr-xr-x  2 root root   4096 Dec 14 01:42 repodata
 
 <p>现在根据install.log创建packages.list,用来安装所需要的rpm包:</p>
 <div class="codehilite"><pre><span class="c"># 根据install.log,提取其中的rpm包名,</span>
-cat install.log ¦ grep Installing ¦ awk <span class="s1">&#39;{print $2}&#39;</span> ¦ awk -F<span class="s1">&#39;:&#39;</span> <span class="s1">&#39;{ if (NF==2){ print $2} else {print $1}}&#39;</span> <span class="p">&amp;</span>gt<span class="p">;</span> packages.list
+cat install.log ¦ grep Installing ¦ awk <span class="s1">&#39;{print $2}&#39;</span> ¦ awk -F<span class="s1">&#39;:&#39;</span> <span class="s1">&#39;{ if (NF==2){ print $2} else {print $1}}&#39;</span> &amp;gt; packages.list
 <span class="c"># 如果仅仅最小化安装就失去了定制自己的发行版的意义</span>
 <span class="c"># 向packages.list添加几个常用的工具,需要先用yum安装一遍记住包的依赖关系</span>
 <span class="c"># 把依赖关系的包也放入packages.list</span>
@@ -179,7 +179,7 @@ bzip2
 groff
 man
 <span class="c"># 根据packages.list进行复制</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat packages.list <span class="sb">`</span><span class="p">;</span><span class="k">do  </span>cp -p -f  /mnt/CentOS/<span class="s2">&quot;$i&quot;</span>* /usr/cold/CentOS/<span class="p">;</span><span class="k">done</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat packages.list <span class="sb">`</span>;<span class="k">do  </span>cp -p -f  /mnt/CentOS/<span class="s2">&quot;$i&quot;</span>* /usr/cold/CentOS/;done
 </pre></div>
 
 
@@ -192,47 +192,47 @@ sed -ri <span class="s1">&#39;/xml:lang/ {/en_GB/!d}&#39;</span> comps.xml  <spa
 
 
 <p>去除了各国语言的comps.xml大概包含2000多行,现在我们要进一步处理,删除除了id为core的group的其他节点,删除完后comps.xml大概只剩下73行.现在我们要把我们自己添加的包顶一个group节点,在紧跟id为core的group节点(也就是&lt;/group&gt;后面)添加如下内容:</p>
-<div class="codehilite"><pre><span class="p">&amp;</span>lt<span class="p">;</span>group<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>id<span class="p">&amp;</span>gt<span class="p">;</span>useful<span class="p">&amp;</span>lt<span class="p">;</span>/id<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>name<span class="p">&amp;</span>gt<span class="p">;</span>Useful<span class="p">&amp;</span>lt<span class="p">;</span>/name<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>Useful<span class="p">&amp;</span>lt<span class="p">;</span>/name<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>description<span class="p">&amp;</span>gt<span class="p">;</span>Useful tools <span class="k">for </span>administartor <span class="p">&amp;</span>lt<span class="p">;</span>/description<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>Useful tools <span class="k">for </span>administartor<span class="p">&amp;</span>lt<span class="p">;</span>/description<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>default<span class="p">&amp;</span>gt<span class="p">;</span><span class="nb">true</span><span class="p">&amp;</span>lt<span class="p">;</span>/default<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>uservisible<span class="p">&amp;</span>gt<span class="p">;</span><span class="nb">false</span><span class="p">&amp;</span>lt<span class="p">;</span>/uservisible<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>packagelist<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>setuptool<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>lszrz<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>wget<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>kernel-headers<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>libgomp<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>cpp<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>glibc-headers<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>glibc-devel<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>gcc<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>make<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>which<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>bzip2<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>groff<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>man<span class="p">&amp;</span>lt<span class="p">;</span>/packagereq<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>/packagelist<span class="p">&amp;</span>gt<span class="p">;</span>
-  <span class="p">&amp;</span>lt<span class="p">;</span>/group<span class="p">&amp;</span>gt<span class="p">;</span>
+<div class="codehilite"><pre>&amp;lt;group&amp;gt;
+    &amp;lt;id&amp;gt;useful&amp;lt;/id&amp;gt;
+    &amp;lt;name&amp;gt;Useful&amp;lt;/name&amp;gt;
+    &amp;lt;name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Useful&amp;lt;/name&amp;gt;
+    &amp;lt;description&amp;gt;Useful tools <span class="k">for </span>administartor &amp;lt;/description&amp;gt;
+    &amp;lt;description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Useful tools <span class="k">for </span>administartor&amp;lt;/description&amp;gt;
+    &amp;lt;default&amp;gt;true&amp;lt;/default&amp;gt;
+    &amp;lt;uservisible&amp;gt;false&amp;lt;/uservisible&amp;gt;
+    &amp;lt;packagelist&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;setuptool&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;lszrz&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;wget&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;kernel-headers&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;libgomp&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;cpp&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;glibc-headers&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;glibc-devel&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;gcc&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;make&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;which&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;bzip2&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;groff&amp;lt;/packagereq&amp;gt;
+      &amp;lt;packagereq <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;default&quot;</span>&amp;gt;man&amp;lt;/packagereq&amp;gt;
+    &amp;lt;/packagelist&amp;gt;
+  &amp;lt;/group&amp;gt;
 </pre></div>
 
 
 <p>上面添加了一个id为useful的group节点,下面把这两个节点放到一个类别里:</p>
-<div class="codehilite"><pre>  <span class="p">&amp;</span>lt<span class="p">;</span>category<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>id<span class="p">&amp;</span>gt<span class="p">;</span>cold<span class="p">&amp;</span>lt<span class="p">;</span>/id<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>name<span class="p">&amp;</span>gt<span class="p">;</span>Cold<span class="p">&amp;</span>lt<span class="p">;</span>/name<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>Cold<span class="p">&amp;</span>lt<span class="p">;</span>/name<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>description<span class="p">&amp;</span>gt<span class="p">;</span>Cold Linux<span class="p">&amp;</span>lt<span class="p">;</span>/description<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>Cold Linux<span class="p">&amp;</span>lt<span class="p">;</span>/description<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>display_order<span class="p">&amp;</span>gt<span class="p">;</span>92<span class="p">&amp;</span>lt<span class="p">;</span>/display_order<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>grouplist<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>groupid<span class="p">&amp;</span>gt<span class="p">;</span>core<span class="p">&amp;</span>lt<span class="p">;</span>/groupid<span class="p">&amp;</span>gt<span class="p">;</span>
-      <span class="p">&amp;</span>lt<span class="p">;</span>groupid<span class="p">&amp;</span>gt<span class="p">;</span>useful<span class="p">&amp;</span>lt<span class="p">;</span>/groupid<span class="p">&amp;</span>gt<span class="p">;</span>
-     <span class="p">&amp;</span>lt<span class="p">;</span>/grouplist<span class="p">&amp;</span>gt<span class="p">;</span>
-  <span class="p">&amp;</span>lt<span class="p">;</span>/category<span class="p">&amp;</span>gt<span class="p">;</span>
+<div class="codehilite"><pre>  &amp;lt;category&amp;gt;
+    &amp;lt;id&amp;gt;cold&amp;lt;/id&amp;gt;
+    &amp;lt;name&amp;gt;Cold&amp;lt;/name&amp;gt;
+    &amp;lt;name xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Cold&amp;lt;/name&amp;gt;
+    &amp;lt;description&amp;gt;Cold Linux&amp;lt;/description&amp;gt;
+    &amp;lt;description xml:lang<span class="o">=</span><span class="s2">&quot;en_GB&quot;</span>&amp;gt;Cold Linux&amp;lt;/description&amp;gt;
+    &amp;lt;display_order&amp;gt;92&amp;lt;/display_order&amp;gt;
+    &amp;lt;grouplist&amp;gt;
+      &amp;lt;groupid&amp;gt;core&amp;lt;/groupid&amp;gt;
+      &amp;lt;groupid&amp;gt;useful&amp;lt;/groupid&amp;gt;
+     &amp;lt;/grouplist&amp;gt;
+  &amp;lt;/category&amp;gt;
 </pre></div>
 
 
@@ -258,11 +258,11 @@ c1d304cae50f969370a72d95e3cd2f71087fc73a  repodata/comps.xml
 
 
 <p>然后更新到repomd.xml中编辑repodata/repomd.xml找到location href="repodata/comps.xml"/的一个data节点把sha值更新为刚刚计算的</p>
-<div class="codehilite"><pre><span class="p">&amp;</span>lt<span class="p">;</span>data <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>location <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;repodata/comps.xml&quot;</span>/<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>checksum <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;sha&quot;</span><span class="p">&amp;</span>gt<span class="p">;</span>c1d304cae50f969370a72d95e3cd2f71087fc73a<span class="p">&amp;</span>lt<span class="p">;</span>/checksum<span class="p">&amp;</span>gt<span class="p">;</span>
-    <span class="p">&amp;</span>lt<span class="p">;</span>timestamp<span class="p">&amp;</span>gt<span class="p">;</span>1272586365<span class="p">&amp;</span>lt<span class="p">;</span>/timestamp<span class="p">&amp;</span>gt<span class="p">;</span>
-  <span class="p">&amp;</span>lt<span class="p">;</span>/data<span class="p">&amp;</span>gt<span class="p">;</span>
+<div class="codehilite"><pre>&amp;lt;data <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;group&quot;</span>&amp;gt;
+    &amp;lt;location <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;repodata/comps.xml&quot;</span>/&amp;gt;
+    &amp;lt;checksum <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;sha&quot;</span>&amp;gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&amp;lt;/checksum&amp;gt;
+    &amp;lt;timestamp&amp;gt;1272586365&amp;lt;/timestamp&amp;gt;
+  &amp;lt;/data&amp;gt;
 </pre></div>
 
 
@@ -379,6 +379,7 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

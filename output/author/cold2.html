@@ -270,7 +270,45 @@ krb5-devel
 flex
 openssl-devel 
 <span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:<span class="p">;</span> <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span><span class="p">;</span> cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html"><h2>解决git提交敏感信息(回退git版本库到某一个commit)</h2></a>
+        <div class= "well small"> 五 07 六月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/git.html">git</a>
+
+ </div>
+        <div class="summary"><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+<h2>备份本地代码</h2>
+<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
+<h2>回退本地代码的commit</h2>
+<p>备份完数据, 我们就可以先回退本地的版本库</p>
+<div class="codehilite"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
+</pre></div>
+
+
+<h2>回退远端版本库</h2>
+<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
+<h3>新建一个分支, 并提交</h3>
+<div class="codehilite"><pre>git checkout -b temp
+git push origin temp:temp
+</pre></div>
+
+
+<h3>重建主分支</h3>
+<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
+<div class="codehilite"><pre>git push origin --delete ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html">read more</a></div>
     </div>	
 				
     
@@ -337,54 +375,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html"><h2>Linux shell脚本调试技巧</h2></a>
-        <div class= "well small"> 二 17 一月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.</p>
-<p>在脚本的最顶部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> -x
-</pre></div>
-
-
-<p>开启调试
-在脚本的最底部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> +x
-</pre></div>
-
-
-<p>关闭调试
-如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令</p>
-<p>&nbsp;</p>
-<div class="codehilite"><pre>script
-</pre></div>
-
-
-<p>然后执行要捕捉内容的命令,完成后通过</p>
-<div class="codehilite"><pre><span class="nb">exit</span>
-</pre></div>
-
-
-<p>退出,当前目录下会生成typescript,通过</p>
-<div class="codehilite"><pre>more typescript
-</pre></div>
-
-
-<p>查看调试命令.</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev"><a href="http://www.linuxzen.com/author/cold.html">&larr; Previous</a></li>
@@ -431,6 +421,7 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

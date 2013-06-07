@@ -257,12 +257,12 @@ pelican-quickstart
 
 &lt;p&gt;在回答一系列问题过后你的博客就建成的, 主要生成下列文件:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;.
-&lt;span class="p"&gt;|&lt;/span&gt;-- content                &lt;span class="c"&gt;# 所有文章放于此目录&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- develop_server.sh      &lt;span class="c"&gt;# 用于开启测试服务器&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- Makefile               &lt;span class="c"&gt;# 方便管理博客的Makefile&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- output                 &lt;span class="c"&gt;# 静态生成文件&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- pelicanconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt;-- publishconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
+|-- content                &lt;span class="c"&gt;# 所有文章放于此目录&lt;/span&gt;
+|-- develop_server.sh      &lt;span class="c"&gt;# 用于开启测试服务器&lt;/span&gt;
+|-- Makefile               &lt;span class="c"&gt;# 方便管理博客的Makefile&lt;/span&gt;
+|-- output                 &lt;span class="c"&gt;# 静态生成文件&lt;/span&gt;
+|-- pelicanconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
+|-- publishconf.py         &lt;span class="c"&gt;# 配置文件&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -530,6 +530,7 @@ About me content
         &lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
         &lt;span class="k"&gt;del&lt;/span&gt; &lt;span class="n"&gt;message_queue_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 
+
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;handle_server&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fd_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;READ&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -542,6 +543,7 @@ About me content
         &lt;span class="c"&gt;# 将连接和handle注册为读事件加入到 tornado ioloop&lt;/span&gt;
         &lt;span class="n"&gt;ioloop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;conn_fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;handle&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;READ&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="n"&gt;message_queue_map&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Queue&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Queue&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;   &lt;span class="c"&gt;# 创建对应的消息队列&lt;/span&gt;
+
 
 &lt;span class="n"&gt;ioloop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;handle_server&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;READ&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
@@ -615,6 +617,7 @@ About me content
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cookiejar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;extract_cookies&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;req&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cookiejar&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resp&lt;/span&gt;
+
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;make_http_sock_data&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 根据urllib2.Request 构建socket和用于发送的HTTP源数据 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -704,7 +707,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 
 
 &lt;p&gt;添加如下内容&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blogsource/ &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull &lt;span class="p"&gt;&amp;amp;&lt;/span&gt;&amp;gt; /dev/null
+&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * &lt;span class="nb"&gt;cd&lt;/span&gt; /path/to/your/blogsource/ &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git pull &amp;amp;&amp;gt; /dev/null
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -767,6 +770,8 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyxmpp2.mainloop.base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MainLoopBase&lt;/span&gt;
 
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;plugin.util&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;get_logger&lt;/span&gt;
+
+
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;EpollMainLoop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MainLoopBase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; Main event loop based on the epoll() syscall on Linux system &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -978,6 +983,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
         &lt;span class="n"&gt;flattened&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\r\n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;flattened&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
+
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HttpHelper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;method&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;GET&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
@@ -1105,6 +1111,7 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__setattr__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Memcached&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
 
 &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BaseHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RequestHandler&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 继承tornado请求基类,重写 prepare和on_finish方法 &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
@@ -1393,7 +1400,7 @@ Requests: 128 susceed, 0 failed.
 
 
 &lt;h5&gt;结果&lt;/h5&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;#39;&lt;span class="nt"&gt;&amp;lt;table&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;highlighttable&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;linenos&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;linenodiv&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;pre&amp;gt;&lt;/span&gt;1&lt;span class="nt"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;code&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;div&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;highlight&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;pre&amp;gt;&amp;lt;span&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;k&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;print&lt;span class="nt"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;&amp;lt;span&lt;/span&gt; &lt;span class="na"&gt;class=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;s&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;&lt;span class="ni"&gt;&amp;amp;quot;&lt;/span&gt;hello, world&lt;span class="ni"&gt;&amp;amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;\n&lt;span class="nt"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;\n&lt;span class="nt"&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&lt;/span&gt;&amp;#39;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="s1"&gt;&amp;#39;&amp;lt;table class=&amp;quot;highlighttable&amp;quot;&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td class=&amp;quot;linenos&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;linenodiv&amp;quot;&amp;gt;&amp;lt;pre&amp;gt;1&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/td&amp;gt;&amp;lt;td class=&amp;quot;code&amp;quot;&amp;gt;&amp;lt;div class=&amp;quot;highlight&amp;quot;&amp;gt;&amp;lt;pre&amp;gt;&amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;print&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;s&amp;quot;&amp;gt;&amp;amp;quot;hello, world&amp;amp;quot;&amp;lt;/span&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/pre&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -2388,6 +2395,8 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;email.mime.multipart&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;MIMEMultipart&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
 
+
+
 &lt;span class="c"&gt;# 打印帮助信息&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;helpinfo&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
@@ -2403,6 +2412,7 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 &lt;span class="s"&gt;    Author:cold(wh_linux@126.com)&lt;/span&gt;
 &lt;span class="s"&gt;    Homepge:http://www.linuxzen.com&lt;/span&gt;
 &lt;span class="s"&gt;    &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+
 
 &lt;span class="c"&gt;# 所有选项&lt;/span&gt;
 &lt;span class="n"&gt;options&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-t&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-u&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;-s&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
@@ -2423,6 +2433,7 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
         &lt;span class="n"&gt;helpinfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;helpinfo&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
 
 &lt;span class="c"&gt;# 检测-n参数&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-n&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-a&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -2453,11 +2464,13 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
     &lt;span class="n"&gt;haveattr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
     &lt;span class="n"&gt;attrpath&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
 
+
 &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;mail_host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-h&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Waring: No specify smtp server use 127.0.0.1&amp;#39;&lt;/span&gt;
     &lt;span class="n"&gt;mail_host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
+
 
 &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;mail_useremail&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-u&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
@@ -2477,6 +2490,9 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
     &lt;span class="n"&gt;mail_pass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argv&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;-p&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ValueError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;mail_pass&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+
+
+
 
 &lt;span class="c"&gt;# 定义邮件发送函数&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;send_mail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;to_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sub&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;haveattr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attrpath&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;attrname&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -2500,6 +2516,7 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
     &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="c"&gt;# 无责创建一个文本的实例&lt;/span&gt;
         &lt;span class="n"&gt;msg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MIMEText&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
 
     &lt;span class="c"&gt;# 邮件头&lt;/span&gt;
     &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Subject&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sub&lt;/span&gt;
@@ -2555,9 +2572,9 @@ http://code.google.com/p/sharepythoncode/source/browse/water/&lt;/p&gt;</summary
 &lt;p&gt;执行后会要求输入邮件内容,写完用.结束
 也可以用管道下面给出几个实例:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#使用本地smtp服务发送&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; pymail -s &lt;span class="s2"&gt;&amp;quot;Linuxzen backup&amp;quot;&lt;/span&gt; -t 123456@qq.com -a /tmp/linuxzen.tar.gz
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; | pymail -s &lt;span class="s2"&gt;&amp;quot;Linuxzen backup&amp;quot;&lt;/span&gt; -t 123456@qq.com -a /tmp/linuxzen.tar.gz
 &lt;span class="c"&gt;# 使用126邮箱发送&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;Linuxzen backup &amp;quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz &lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;linuxzen.com backup&amp;#39;&lt;/span&gt; | pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;Linuxzen backup &amp;quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz &lt;/span&gt;
 
 &lt;span class="s1"&gt;# 不使用管道发送&lt;/span&gt;
 &lt;span class="s1"&gt;pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s &amp;#39;&lt;/span&gt;hello world&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; -t 123456@qq.com -a /tmp/linuxzen.tar.gz
@@ -2580,7 +2597,7 @@ this is a &lt;span class="nb"&gt;test &lt;/span&gt;mail
 mysqldump -u root blogdata &amp;gt; /tmp/blogdate.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
 &lt;span class="nb"&gt;cd&lt;/span&gt; /tmp
 tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
-uuencode blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz &lt;span class="p"&gt;|&lt;/span&gt; mail -s &lt;span class="s1"&gt;&amp;#39;MySQL Backup&amp;#39;&lt;/span&gt; 123456@qq.com
+uuencode blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz | mail -s &lt;span class="s1"&gt;&amp;#39;MySQL Backup&amp;#39;&lt;/span&gt; 123456@qq.com
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
@@ -2602,7 +2619,7 @@ uuencode blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.
 mysqldump -u root blogdata &amp;gt; /tmp/myblog.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
 &lt;span class="nb"&gt;cd&lt;/span&gt; /tmp
 tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz myblog.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; -a /tmp/blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz -t 123456@qq.com
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; | pymail -u linuzen@126.com -p linuxzen.com -h smtp.126.com -s &lt;span class="s1"&gt;&amp;#39;MySQL backup&amp;#39;&lt;/span&gt; -a /tmp/blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.sql.tar.gz -t 123456@qq.com
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
@@ -2623,7 +2640,7 @@ tar -zcf blogdata.&lt;span class="s2"&gt;&amp;quot;$DATE&amp;quot;&lt;/span&gt;.
 
 &lt;h3&gt;测试是否安装成功:&lt;/h3&gt;
 &lt;p&gt;在python shell中执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;import&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

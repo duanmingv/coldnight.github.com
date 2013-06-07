@@ -59,6 +59,31 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
+        <div class= "well small"> 五 25 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>最近写程序用到argparse总是会报错</p>
+<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
+</pre></div>
+
+
+<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
+执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h2>Python 字典和列表陷阱</h2></a>
         <div class= "well small"> 一 17 九月 2012
 
@@ -308,7 +333,7 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 checkisdir<span class="o">()</span>
         <span class="c"># Have one argument</span>
         <span class="c"># The argument is a directory</span>
-        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
+        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
         <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
     </div>	
 				
@@ -338,30 +363,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
 <div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
 make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
-        <div class= "well small"> 四 18 四月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
-<h2>介绍</h2>
-<p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
-<h2>安装</h2>
-<p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
-<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
@@ -410,6 +411,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

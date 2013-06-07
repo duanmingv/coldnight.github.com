@@ -88,7 +88,7 @@ server:</p>
 <div class="codehilite"><pre>wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
 yum -y install cairo-devel glib2-devel pango-devel intltool   <span class="c"># 安装rrdtool依赖</span>
 ./configure --prefix<span class="o">=</span>/usr/local
-make <span class="p">&amp;</span>amp<span class="p">;&amp;</span>amp<span class="p">;</span> make install
+make &amp;amp;&amp;amp; make install
 </pre></div>
 
 
@@ -103,8 +103,8 @@ chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
 
 
 <p>然后进入到数据库创建cacti数据和创建一个用户:</p>
-<div class="codehilite"><pre>create database cactidb default character <span class="nb">set </span>utf8<span class="p">;</span>   <span class="c">#创建数据库</span>
-grant all on cactidb.* to cactiuser@localhost identified by <span class="s1">&#39;123456&#39;</span><span class="p">;</span> <span class="c"># 创建一个mysql用户</span>
+<div class="codehilite"><pre>create database cactidb default character <span class="nb">set </span>utf8;   <span class="c">#创建数据库</span>
+grant all on cactidb.* to cactiuser@localhost identified by <span class="s1">&#39;123456&#39;</span>; <span class="c"># 创建一个mysql用户</span>
 use cactidb   <span class="c"># 使用刚才创建的数据库</span>
 <span class="nb">source</span> /usr/local/nginx/html/cacti/cacti.sql <span class="c"># 导入cacti数据</span>
 </pre></div>
@@ -117,28 +117,28 @@ vi include/config.php
 
 
 <p>编辑下面内容:</p>
-<div class="codehilite"><pre><span class="nv">$database_type</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span><span class="p">;</span>            <span class="c"># 数据库类型</span>
-<span class="nv">$database_default</span> <span class="o">=</span> <span class="s2">&quot;cactidb&quot;</span><span class="p">;</span>       <span class="c"># 数据库名字</span>
-<span class="nv">$database_hostname</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">;</span>    <span class="c"># 数据库主机</span>
-<span class="nv">$database_username</span> <span class="o">=</span> <span class="s2">&quot;cactiuser&quot;</span><span class="p">;</span>    <span class="c"># 数据库用户</span>
-<span class="nv">$database_password</span> <span class="o">=</span> <span class="s2">&quot;123456&quot;</span><span class="p">;</span>       <span class="c"># 数据库密码</span>
-<span class="nv">$database_port</span> <span class="o">=</span> <span class="s2">&quot;3306&quot;</span><span class="p">;</span>             <span class="c"># 数据库端口</span>
-<span class="nv">$database_ssl</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<div class="codehilite"><pre><span class="nv">$database_type</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span>;            <span class="c"># 数据库类型</span>
+<span class="nv">$database_default</span> <span class="o">=</span> <span class="s2">&quot;cactidb&quot;</span>;       <span class="c"># 数据库名字</span>
+<span class="nv">$database_hostname</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>;    <span class="c"># 数据库主机</span>
+<span class="nv">$database_username</span> <span class="o">=</span> <span class="s2">&quot;cactiuser&quot;</span>;    <span class="c"># 数据库用户</span>
+<span class="nv">$database_password</span> <span class="o">=</span> <span class="s2">&quot;123456&quot;</span>;       <span class="c"># 数据库密码</span>
+<span class="nv">$database_port</span> <span class="o">=</span> <span class="s2">&quot;3306&quot;</span>;             <span class="c"># 数据库端口</span>
+<span class="nv">$database_ssl</span> <span class="o">=</span> <span class="nb">false</span>;
 </pre></div>
 
 
 <p>然后修改nginx配置文件像下面:</p>
 <div class="codehilite"><pre>        location / <span class="o">{</span>
-            root   html<span class="p">;</span>
-            index  index.php<span class="p">;</span>
+            root   html;
+            index  index.php;
         <span class="o">}</span>
 
         location ~ <span class="se">\.</span>php<span class="nv">$ </span><span class="o">{</span>
-            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock<span class="p">;</span>
-            fastcgi_index       index.php<span class="p">;</span>
-            fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span><span class="p">;</span>
-            include fastcgi_params<span class="p">;</span>
-            include fastcgi.conf<span class="p">;</span>
+            fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
+            fastcgi_index       index.php;
+            fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span>;
+            include fastcgi_params;
+            include fastcgi.conf;
         <span class="o">}</span>
 </pre></div>
 
@@ -156,7 +156,7 @@ vi include/global_constants.php
 
 
 <p>在第二行添加</p>
-<div class="codehilite"><pre>date_default_timezone_set<span class="o">(</span><span class="s2">&quot;Asia/Chongqing&quot;</span><span class="o">)</span><span class="p">;</span>
+<div class="codehilite"><pre>date_default_timezone_set<span class="o">(</span><span class="s2">&quot;Asia/Chongqing&quot;</span><span class="o">)</span>;
 </pre></div>
 
 
@@ -322,6 +322,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

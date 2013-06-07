@@ -59,6 +59,42 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h2>nginx平台搭建nagios监控系统</h2></a>
+        <div class= "well small"> 日 26 二月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
+
+ </div>
+        <div class="summary"><p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
+<p>Nagios 功能:</p>
+<ul>
+<li>监视网络服务 (SMTP, POP3, HTTP, NNTP, PING等)</li>
+<li>监视主机资源 (进程, 磁盘等)</li>
+<li>简单的插件设计可以轻松扩展Nagios的监视功能</li>
+<li>服务等监视的并发处理</li>
+<li>错误通知功能 (通过email, pager, 或其他用户自定义方法)</li>
+<li>可指定自定义的事件处理控制器</li>
+<li>可选的基于浏览器的WEB界面以方便系统管理人员查看网络状态，各种系统问题，以及日志等等</li>
+<li>可以通过手机查看系统监控信息</li>
+</ul>
+<p>本文环境:</p>
+<ul>
+<li>系统:CentOS 5.5 32bit</li>
+<li>ip:192.168.3.3</li>
+<li>nagios core:nagios-3.3.1.tar.gz</li>
+<li>web:nginx(nginx-1 ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h2>搭建ntop监测局域网内流量</h2></a>
         <div class= "well small"> 一 20 二月 2012
 
@@ -309,7 +345,7 @@ krb5-devel
 flex
 openssl-devel 
 <span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:<span class="p">;</span> <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span><span class="p">;</span> cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
     </div>	
 				
     
@@ -343,39 +379,6 @@ mount -o loop iso路径 /mnt
 
 <span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
 <span class="c"># 都说这个命令比cp快 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h2>安装配置cfengine实现自动化配置Linux/Unix服务器</h2></a>
-        <div class= "well small"> 二 17 一月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
-<p>cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:</p>
-<ul>
-<li>一个版本控制器(subversion)用来创建策略</li>
-<li>多个策略分发器(cfenginehub)用来分发策略----server</li>
-<li>多个策略执行器(cfengine host)用来执行策略-----client,</li>
-</ul>
-<p>本文使用的环境为:</p>
-<ul>
-<li>cfhub: 172.16.1.1/24</li>
-<li>cfhost: 172.16.1.2/24</li>
-</ul>
-<p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
-<p>下载:</p>
-<div class="codehilite"><pre>wget https://cfengine.com/source-code/download ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
@@ -424,6 +427,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

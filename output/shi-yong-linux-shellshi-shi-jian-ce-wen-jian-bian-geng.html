@@ -74,7 +74,7 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 checkisdir<span class="o">()</span>
         <span class="c"># Have one argument</span>
         <span class="c"># The argument is a directory</span>
-        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
+        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
         <span class="k">do</span>
 <span class="k">                if</span> <span class="o">[</span> -d <span class="nv">$1</span>/<span class="nv">$i</span> <span class="o">]</span>
                 <span class="k">then</span>
@@ -98,11 +98,11 @@ checkisdir<span class="o">()</span>
                 <span class="k">do</span>
 <span class="k">                        if</span> <span class="o">[</span> -e /tmp/patch.tmp <span class="o">]</span>
                         <span class="k">then</span>
-<span class="k">                                </span>stat <span class="nv">$i</span> <span class="p">|</span> grep Change &gt; /tmp/nstat.tmp
+<span class="k">                                </span>stat <span class="nv">$i</span> | grep Change &gt; /tmp/nstat.tmp
                                 rm -f /tmp/patch.tmp
                                 <span class="k">continue</span>
 <span class="k">                        fi</span>
-<span class="k">                        </span>stat <span class="nv">$i</span> <span class="p">|</span> grep Change &gt;&gt; /tmp/nstat.tmp
+<span class="k">                        </span>stat <span class="nv">$i</span> | grep Change &gt;&gt; /tmp/nstat.tmp
                 <span class="k">done</span>
 <span class="k">                </span>diff /tmp/stat.tmp /tmp/nstat.tmp &gt; /tmp/patch.tmp
                 <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
@@ -115,7 +115,7 @@ checkisdir<span class="o">()</span>
 <span class="k">        else</span>
 <span class="k">                for </span>i in <span class="sb">`</span>checkisdir <span class="nv">$1</span><span class="sb">`</span>
                 <span class="k">do</span>
-<span class="k">                        </span>stat <span class="nv">$i</span> <span class="p">|</span> grep Change &gt;&gt; /tmp/stat.tmp
+<span class="k">                        </span>stat <span class="nv">$i</span> | grep Change &gt;&gt; /tmp/stat.tmp
                 <span class="k">done</span>
 <span class="k">                continue</span>
 <span class="k">        fi</span>
@@ -124,7 +124,7 @@ checkisdir<span class="o">()</span>
 
 
 <p>这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:</p>
-<div class="codehilite"><pre>sh checkchange.sh /code/python <span class="p">&amp;</span>
+<div class="codehilite"><pre>sh checkchange.sh /code/python &amp;
 </pre></div>
 
 
@@ -138,13 +138,13 @@ checkisdir<span class="o">()</span>
 <span class="k">while </span><span class="nb">true</span>
 <span class="k">do</span>
 <span class="k">        </span><span class="nb">cd</span> /code/python
-        svn up <span class="p">|</span> grep At &gt; /dev/null 2&gt;<span class="p">&amp;</span>1
+        svn up | grep At &gt; /dev/null 2&gt;&amp;1
         <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
         <span class="k">then</span>
 <span class="k">                </span>sleep 30
         <span class="k">fi</span>
 
-<span class="k">        </span>svn up <span class="p">|</span> grep Updated &gt; /dev/null 2&gt;<span class="p">&amp;</span>1
+<span class="k">        </span>svn up | grep Updated &gt; /dev/null 2&gt;&amp;1
         <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
         <span class="k">then</span>
                 /etc/init.d/uwsgi.py restart
@@ -217,6 +217,7 @@ checkisdir<span class="o">()</span>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>

@@ -74,11 +74,11 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
 <span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径</span>
 
-<span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$LogPath</span>* <span class="p">|</span> awk -F<span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span> <span class="p">|</span> sort -nr<span class="sb">`</span>
+<span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$LogPath</span>* | awk -F<span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span> | sort -nr<span class="sb">`</span>
 <span class="k">do</span>
-<span class="k">        </span><span class="nv">LastNum</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> <span class="p">|</span> awk -F<span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span><span class="sb">`</span>
+<span class="k">        </span><span class="nv">LastNum</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> | awk -F<span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span><span class="sb">`</span>
 
-        <span class="nb">echo</span> <span class="nv">$LastNum</span> <span class="p">|</span> grep -E <span class="s2">&quot;[0-9]+&quot;</span> 2<span class="p">&amp;</span>gt<span class="p">;</span>/dev/null 1<span class="p">&amp;</span>gt<span class="p">;&amp;</span>amp<span class="p">;</span>2
+        <span class="nb">echo</span> <span class="nv">$LastNum</span> | grep -E <span class="s2">&quot;[0-9]+&quot;</span> 2&amp;gt;/dev/null 1&amp;gt;&amp;amp;2
         <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>
         <span class="k">then</span>
 <span class="k">                </span><span class="nv">OnNum</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$LastNum</span> + 1<span class="sb">`</span>
@@ -100,7 +100,7 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 <div class="codehilite"><pre>crontab -e    <span class="c"># 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径</span>
 
 <span class="c"># 添加如下内容:</span>
-00 2 */3 * * /bin/sh /root/nglogcut.sh 2<span class="p">&amp;</span>gt<span class="p">;</span> /dev/null 1<span class="p">&amp;</span>gt<span class="p">;&amp;</span>amp<span class="p">;</span>2 <span class="c"># 每3天执行日志分割(可根据自己情况来定义执行周期)</span>
+00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2 <span class="c"># 每3天执行日志分割(可根据自己情况来定义执行周期)</span>
 </pre></div></div>
 
         	    <div class="footer">
@@ -164,6 +164,7 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
                                 <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
                                 <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
                                 <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
