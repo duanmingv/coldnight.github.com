@@ -29,6 +29,7 @@ STATIC_PATHS = [u"upload", ]
 # Blogroll
 LINKS =  (('eleven', 'http://eleveni386.7axu.com'),
           (u'小邪兽_deepin',"http://neteue.com"),
+          (u'Frantic1048', "http://frantic1048.com/"),
           )
 
 # Social widget
