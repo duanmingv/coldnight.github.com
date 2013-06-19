@@ -30,6 +30,7 @@ STATIC_PATHS = [u"upload", ]
 LINKS =  (('eleven', 'http://eleveni386.7axu.com'),
           (u'小邪兽_deepin',"http://neteue.com"),
           (u'Frantic1048', "http://frantic1048.com/"),
+          (u"晓风'Blog", "http://www.dongxf.com/"),
           )
 
 # Social widget
