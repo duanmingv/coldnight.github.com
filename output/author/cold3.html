@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
@@ -70,32 +70,27 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.</p>
 <p>在脚本的最顶部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> -x
-</pre></div>
-
+<pre><code class="bash">set -x
+</code></pre>
 
 <p>开启调试
 在脚本的最底部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> +x
-</pre></div>
-
+<pre><code class="bash">set +x
+</code></pre>
 
 <p>关闭调试
 如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令</p>
 <p>&nbsp;</p>
-<div class="codehilite"><pre>script
-</pre></div>
-
+<pre><code class="bash">script
+</code></pre>
 
 <p>然后执行要捕捉内容的命令,完成后通过</p>
-<div class="codehilite"><pre><span class="nb">exit</span>
-</pre></div>
-
+<pre><code class="bash">exit
+</code></pre>
 
 <p>退出,当前目录下会生成typescript,通过</p>
-<div class="codehilite"><pre>more typescript
-</pre></div>
-
+<pre><code class="bash">more typescript
+</code></pre>
 
 <p>查看调试命令.</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html">read more</a></div>
     </div>	
@@ -121,16 +116,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>实现</h2>
 <p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
 <h2>代码</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/21 09:54:39</span>
-<span class="c">#   Desc    :   贴代码和图片</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/21 09:54:39
+#   Desc    :   贴代码和图片
+#
+import urllib2, json
+import ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
     </div>	
 				
     
@@ -152,25 +147,22 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
-</pre></div>
-
+<pre><code class="bash">find / -ctime 1 # 找出根下最近24小时修改过inode信息的文件(更改权限)
+find / -mtime 1 # 找出根下最近24小时修改过的文件(内容)
+find / -atime 1 # 找出根下最近24小时访问过的文件
+</code></pre>
 
 <p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
-</pre></div>
-
+<pre><code class="bash">find / -name &quot;*.log&quot; # 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来
+</code></pre>
 
 <h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
-</pre></div>
-
+<pre><code class="bash">sed -e '2s/ext3/ext4/' /etc/fstab # 将第二行的ext3改成ext4
+</code></pre>
 
 <h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
+<pre><code class="bash">sed -n &quot;3p&quot; /etc/fstab         # 显示第3行
+sed -n &quot;3,5p&quot; /etc/gfstab  # 显示第3到5行 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
     
@@ -191,9 +183,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:</p>
 <p>Awesome是一款运行在Unix和类Unix(Linux/FreeBSD)等系统上的一款平铺式窗体管理器,有占用资源小,易于管理和操作等等有点,这里不罗嗦这些说说安装,Ubuntu安装很简单</p>
-<div class="codehilite"><pre>sudo apt-get install awesome
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install awesome
+</code></pre>
 
 <p>安装好后登出会话选择awesome登录,然后你是否茫然无知没办法工作了?先简单介绍下使用方法:</p>
 <p>按<code>Win键+1~9</code>可以切换桌面,</p>
@@ -221,23 +212,22 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  </div>
         <div class="summary"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
 <p>首先在/usr/bin/下创建compile脚本:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
-</pre></div>
-
+<pre><code>vi /usr/bin/compile
+</code></pre>
 
 <p>添加如下内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Filename : compile</span>
-<span class="c"># Describe : To compile c/c++</span>
-<span class="c"># Author   : cold night(www.linuxzen.com)</span>
-<span class="c"># Version  : 0.2</span>
-<span class="c"># Change   : 增加终端着色 </span>
+<pre><code class="bash">#!/bin/bash
+# Filename : compile
+# Describe : To compile c/c++
+# Author   : cold night(www.linuxzen.com)
+# Version  : 0.2
+# Change   : 增加终端着色 
 
 clear
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
-<span class="k">then</span>
-<span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
-    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
+if [ $# -eq 1 ]
+then
+    filename=$1
+    outname=${filename ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
     </div>	
 				
     
@@ -261,9 +251,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>比如你安装了pidgin插件只需输入联系人的名字即可打开与他/她的会话,安装了file这个插件输入文件/目录的名字即可打开目录或文件,</p>
 <p>当然还有一个不足就是不支持中文</p>
 <p>ubuntu用户可以按照下面安装:</p>
-<div class="codehilite"><pre>sudo apt-get install gnome-do
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install gnome-do
+</code></pre>
 
 <p>启动之后Gnome do不会停留任务栏或通知栏只需按<code>Win(ubuntu下称为super)+Space</code>即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html">read more</a></div>
     </div>	
@@ -317,19 +306,16 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
-<div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
-</pre></div>
-
+<pre><code class="bash">abc-0.1.3-el5.centos.rpm
+</code></pre>
 
 <p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
-<div class="codehilite"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
-</pre></div>
-
+<pre><code class="bash">rpm -ivh abc-0.1.3-el5.centos.rpm    # i是安装 v是显示详细信息,-h显示安装进度
+</code></pre>
 
 <p>卸载这个包使用:</p>
-<div class="codehilite"><pre>rpm -e abc
-</pre></div>
-
+<pre><code class="bash">rpm -e abc
+</code></pre>
 
 <p>卸载只要指定包名即可卸载.</p>
 <p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
@@ -356,8 +342,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+<pre><code class="bash">cd /usr/src                                           # 一般软件源码放在这个目录下
+wget http://nginx ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
     </div>	
 				
     

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> gtalk | cold's world </title>
@@ -119,12 +119,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><h2>引子</h2>
 <p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
 <h2>实现</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/06 10 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
     
@@ -152,9 +152,8 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面介绍一下安装:</p>
 <p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
 <p>下载源码:</p>
-<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
-</pre></div>
-
+<pre><code class="bash">git clone git://github.com/coldnight/clubot.git
+</code></pre>
 
 <p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
     </div>	

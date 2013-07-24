@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> lrzsz | cold's world </title>
@@ -73,70 +73,61 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         <div class="highlight"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
-</pre></div>
-
+<pre><code class="bash">find / -ctime 1 # 找出根下最近24小时修改过inode信息的文件(更改权限)
+find / -mtime 1 # 找出根下最近24小时修改过的文件(内容)
+find / -atime 1 # 找出根下最近24小时访问过的文件
+</code></pre>
 
 <p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
-</pre></div>
-
+<pre><code class="bash">find / -name &quot;*.log&quot; # 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来
+</code></pre>
 
 <h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
-</pre></div>
-
+<pre><code class="bash">sed -e '2s/ext3/ext4/' /etc/fstab # 将第二行的ext3改成ext4
+</code></pre>
 
 <h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行</span>
-sed -n <span class="s2">&quot;3p;5p&quot;</span> /etc/fstab    <span class="c"># 显示第3行和第5行</span>
-awk <span class="s1">&#39;NR==3&#39;</span> /etc/fstab     <span class="c"># 显示第3行</span>
-</pre></div>
-
+<pre><code class="bash">sed -n &quot;3p&quot; /etc/fstab         # 显示第3行
+sed -n &quot;3,5p&quot; /etc/gfstab  # 显示第3到5行
+sed -n &quot;3p;5p&quot; /etc/fstab    # 显示第3行和第5行
+awk 'NR==3' /etc/fstab     # 显示第3行
+</code></pre>
 
 <h2>在行首或行尾添加:</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;s/^/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的行首添加hello</span>
-sed -e <span class="s1">&#39;s/$/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的行尾添加hello</span>
-sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的第3行行首添加hello</span>
-</pre></div>
-
+<pre><code class="bash">sed -e 's/^/hello' test # 在test文件的行首添加hello
+sed -e 's/$/hello' test # 在test文件的行尾添加hello
+sed -e '3s/^/hello' test # 在test文件的第3行行首添加hello
+</code></pre>
 
 <h2>在vi里执行命令:</h2>
-<div class="codehilite"><pre>vi /etc/sysconfig/networ-scripts/ifcfg-eth0
-<span class="c"># 打开vi,在末行模式下(ESC-&amp;gt;:)</span>
+<pre><code class="bash">vi /etc/sysconfig/networ-scripts/ifcfg-eth0
+# 打开vi,在末行模式下(ESC-&amp;gt;:)
 
-:r!cat /mnt/ip.txt           <span class="c"># 在当前行的下面输入ip.txt的内容,r代表命令输出放到下一行,!后面是要执行的命令</span>
-:.!cat /mnt/ip.txt           <span class="c"># 在当前行输入ip.txt的内容,.代表将命令输出放到当前航</span>
-</pre></div>
-
+:r!cat /mnt/ip.txt           # 在当前行的下面输入ip.txt的内容,r代表命令输出放到下一行,!后面是要执行的命令
+:.!cat /mnt/ip.txt           # 在当前行输入ip.txt的内容,.代表将命令输出放到当前航
+</code></pre>
 
 <h2>执行上一条命令:</h2>
 <p>如果刚执行了一条server network restart,如果又做了一些操作,需要再次执行,按上键调处可以,还有更快捷的就是:</p>
-<div class="codehilite"><pre>!ser
-</pre></div>
-
+<pre><code class="bash">!ser
+</code></pre>
 
 <p>!会在命令历史找与!后面匹配的最近一条命令.</p>
 <h2>通过ssh连接服务器上传下载文件:</h2>
 <p>当你通过ssh连接你的Linux的时候你想下载一个文件到本地,或者像把本地文件上传到远端,你想到用ftp吗?out了,当你通过ssh连接的时候Linux提供了两个命令 rz/sz,命令依赖于包lrzsz.rz命令可以将本地文件通过ssh上传到Linux上,sz pkg 可以将远端的pkg下载到本地.</p>
-<div class="codehilite"><pre>yum -y install lrzsz           <span class="c"># 安装</span>
-</pre></div>
-
+<pre><code class="bash">yum -y install lrzsz           # 安装
+</code></pre>
 
 <p>然后就可以通过rz/sz来上传下载文件,省去了文件服务器,也可更方便更快捷的管理你的服务器</p>
 <h2>windows文件转换为Linux格式的文件</h2>
 <p>windows的文件格式比Linux格式的文件多了一个回车符\r,可以通过命令来实现转换:
 直接转换,dos2unix依赖于包dos2unix:</p>
-<div class="codehilite"><pre>dos2unix file.txt     <span class="c"># 需要安装dos2unix包</span>
-</pre></div>
-
+<pre><code class="bash">dos2unix file.txt     # 需要安装dos2unix包
+</code></pre>
 
 <p>通过删除\r来实现转换:</p>
-<div class="codehilite"><pre>tr -d <span class="s1">&#39;\r&#39;</span> file.txt &amp;gt;&amp;gt; file1.txt   <span class="c"># 通过tr命令删除\r字符,并重定向追加到file1.txt</span>
-</pre></div></div>
+<pre><code class="bash">tr -d '\r' file.txt &amp;gt;&amp;gt; file1.txt   # 通过tr命令删除\r字符,并重定向追加到file1.txt
+</code></pre></div>
         <hr />
     </div>
 		

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 缓存 | cold's world </title>
@@ -75,123 +75,120 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>实现</h2>
 <p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
 prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc    :   </span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">config</span>
-<span class="kn">import</span> <span class="nn">pylibmc</span>
-<span class="kn">from</span> <span class="nn">tornado.web</span> <span class="kn">import</span> <span class="n">RequestHandler</span>
-<span class="c">#### 省略Cache类定义 #####</span>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/14 09:57:31
+#   Desc    :   
+#
+import config
+import pylibmc
+from tornado.web import RequestHandler
+#### 省略Cache类定义 #####
 
-<span class="k">class</span> <span class="nc">Memcached</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="n">_mc</span> <span class="o">=</span> <span class="n">pylibmc</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">CACHE_HOST</span><span class="p">,</span> <span class="n">binary</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+class Memcached(object):
+    _mc = pylibmc.client.Client(config.CACHE_HOST, binary = True)
 
-    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">CACHED</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Memcached</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Cache</span><span class="p">()</span>
+    def __enter__(self):
+        if config.CACHED:
+            return Memcached
+        else:
+            return Cache()
 
-    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
-        <span class="k">pass</span>
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">get_cache</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span>
+    @classmethod
+    def get_cache(cls):
+        return cls._mc
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">r</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">default</span>
-        <span class="k">return</span> <span class="n">r</span>
+    @classmethod
+    def get(cls, key, default = None):
+        r = cls._mc.get(key)
+        if not r:
+            r = default
+        return r
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span> <span class="k">if</span> <span class="n">timeout</span> <span class="k">else</span> <span class="n">config</span><span class="o">.</span><span class="n">CACHE_TIMEOUT</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+    @classmethod
+    def set(cls, key, value, timeout = 0):
+        timeout = timeout if timeout else config.CACHE_TIMEOUT
+        return cls._mc.set(key, value, timeout)
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    @classmethod
+    def delete(cls, key):
+        return cls._mc.delete(key)
 
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_mc</span><span class="o">.</span><span class="n">flush_all</span><span class="p">()</span>
+    @classmethod
+    def flush(cls):
+        return cls._mc.flush_all()
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Memcached</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    def __getattr__(self, key):
+        return Memcached.get(key)
 
-    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Memcached</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    def __setattr__(self, key, value):
+        return Memcached.set(key, value)
 
 
-<span class="k">class</span> <span class="nc">BaseHandler</span><span class="p">(</span><span class="n">RequestHandler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; 继承tornado请求基类,重写 prepare和on_finish方法 &quot;&quot;&quot;</span>
-    <span class="n">cache</span> <span class="o">=</span> <span class="n">Memcached</span>
+class BaseHandler(RequestHandler):
+    &quot;&quot;&quot; 继承tornado请求基类,重写 prepare和on_finish方法 &quot;&quot;&quot;
+    cache = Memcached
 
-    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 渲染模板 &quot;&quot;&quot;</span>
-        <span class="c"># 省略渲染模板代码</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>     <span class="c"># 渲染模板后的内容</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span> <span class="ow">and</span> <span class="n">CACHED</span> <span class="ow">and</span> \
-           <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;/admin&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span> <span class="c"># 将渲染后的内容缓存起来</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    def render(self, template_path, *args, **kwargs):
+        &quot;&quot;&quot; 渲染模板 &quot;&quot;&quot;
+        # 省略渲染模板代码
+        content = ''     # 渲染模板后的内容
+        if self.request.method == &quot;GET&quot; and CACHED and \
+           not self.request.path.startswith(&quot;/admin&quot;):
+            self.cache.set(self.request.uri, content) # 将渲染后的内容缓存起来
+        self.write(content)
 
-    <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">BaseHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
-        <span class="c"># 如果请求是GET方法,而且不是请求后台</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span> <span class="ow">and</span> <span class="n">CACHED</span> <span class="ow">and</span> \
-           <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;/admin&quot;</span><span class="p">):</span>
+    def prepare(self):
+        super(BaseHandler, self).prepare()
+        # 如果请求是GET方法,而且不是请求后台
+        if self.request.method == &quot;GET&quot; and CACHED and \
+           not self.request.path.startswith(&quot;/admin&quot;):
 
-            <span class="c"># 尝试获取当前页面的缓存</span>
-            <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
-            <span class="c"># 获取缓存则输出页面,结束请求</span>
-            <span class="k">if</span> <span class="n">cache</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">finish</span><span class="p">(</span><span class="n">cache</span><span class="p">)</span>
+            # 尝试获取当前页面的缓存
+            cache = self.cache.get(self.request.uri)
+            # 获取缓存则输出页面,结束请求
+            if cache:
+                return self.finish(cache)
 
-    <span class="k">def</span> <span class="nf">on_finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 重写结束请求前的方法函数 &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">:</span>
-            <span class="c"># 如果遇到POST提交则清空缓存</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-</pre></div>
-
+    def on_finish(self):
+        &quot;&quot;&quot; 重写结束请求前的方法函数 &quot;&quot;&quot;
+        if self.request.method == &quot;POST&quot;:
+            # 如果遇到POST提交则清空缓存
+            self.cache.flush()
+</code></pre>
 
 <p>缓存系统在<code>redis</code>和<code>Memcached</code>选择了很久,因为只是单纯的缓存页面所以最后选择了<code>memcached</code>,使用<code>pylibmc</code> python库.</p>
 <h2>测试</h2>
 <p>使用webbench 网站压力测试对比了缓存前后的结果:
 使用缓存前</p>
-<div class="codehilite"><pre><span class="nv">$ </span>webbench -c 500 -t 30 http://www.linuxzen.com/
+<pre><code class="bash">$ webbench -c 500 -t 30 http://www.linuxzen.com/
 Webbench - Simple Web Benchmark 1.5
-Copyright <span class="o">(</span>c<span class="o">)</span> Radim Kolar 1997-2004, GPL Open Source Software.
+Copyright (c) Radim Kolar 1997-2004, GPL Open Source Software.
 
 Benchmarking: GET http://www.linuxzen.com/
 500 clients, running 30 sec.
 
-<span class="nv">Speed</span><span class="o">=</span>54 pages/min, 38160 bytes/sec.
+Speed=54 pages/min, 38160 bytes/sec.
 Requests: 27 susceed, 0 failed.
-</pre></div>
-
+</code></pre>
 
 <p>使用缓存后:</p>
-<div class="codehilite"><pre><span class="nv">$ </span>webbench -c 500 -t 30 http://www.linuxzen.com/
+<pre><code class="bash">$ webbench -c 500 -t 30 http://www.linuxzen.com/
 Webbench - Simple Web Benchmark 1.5
-Copyright <span class="o">(</span>c<span class="o">)</span> Radim Kolar 1997-2004, GPL Open Source Software.
+Copyright (c) Radim Kolar 1997-2004, GPL Open Source Software.
 
 Benchmarking: GET http://www.linuxzen.com/
 500 clients, running 30 sec.
 
-<span class="nv">Speed</span><span class="o">=</span>256 pages/min, 238544 bytes/sec.
+Speed=256 pages/min, 238544 bytes/sec.
 Requests: 128 susceed, 0 failed.
-</pre></div>
-
+</code></pre>
 
 <p>明显快了很多...</p></div>
         <hr />

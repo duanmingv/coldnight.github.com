@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 用Vim为Python源码自动添加#!行和编码行 | cold's world </title>
     <meta name="description" content=" &lt;p&gt;每次开始写Python打开文件第一件事就是写上&lt;code&gt;#!/usr/bin/env python和&lt;/code&gt;编码之类的东西,&lt;/p&gt;
 &lt;p&gt;太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到&lt;code&gt;~/.vimrc&lt;/code&gt;下即可每次打开如果没有上述行则会自动填充:&lt;/p&gt;
-&lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span ... " />
+&lt;pre&gt;&lt;code class=&#34;vim&#34;&gt;function ... " />
     <meta name="keywords" content=" 自动,编码信息,添加,vim,shbang line,python " />
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,23 +68,23 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 	
         <div class="highlight"><p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
 <p>太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到<code>~/.vimrc</code>下即可每次打开如果没有上述行则会自动填充:</p>
-<div class="codehilite"><pre><span class="k">function</span> InsertPythonHeader<span class="p">()</span>
-    <span class="k">let</span> l1 <span class="p">=</span> getline<span class="p">(</span><span class="m">1</span><span class="p">)</span>
-    <span class="k">let</span> l2 <span class="p">=</span> getline<span class="p">(</span><span class="m">2</span><span class="p">)</span>
-    <span class="k">if</span>  <span class="k">match</span><span class="p">(</span><span class="s1">&#39;\#!/&#39;</span><span class="p">,</span> l1<span class="p">)</span> <span class="p">==</span> <span class="m">0</span>
-        exec <span class="m">1</span>
+<pre><code class="vim">function InsertPythonHeader()
+    let l1 = getline(1)
+    let l2 = getline(2)
+    if  match('\#!/', l1) == 0
+        exec 1
         normal O
-        <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
-    <span class="k">endif</span>
-    <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
-        exec <span class="m">2</span>
+        call setline(1,'#!/usr/bin/env python')
+    endif
+    if match(&quot;\#&quot;, l2) == 0 &amp;&amp; (match(&quot;-&quot;, l2)  != 2 ¦¦ (match(&quot;code&quot;, l2) != 2))
+        exec 2
         normal O
-        <span class="k">call</span> setline<span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="s1">&#39;#-*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
-    <span class="k">endif</span>
-<span class="k">endfunction</span>
+        call setline(2,'#-*- coding:utf-8 -*-')
+    endif
+endfunction
 
-<span class="k">au</span> <span class="nb">FileType</span> python <span class="k">call</span> InsertPythonHeader<span class="p">()</span>
-</pre></div></div>
+au FileType python call InsertPythonHeader()
+</code></pre></div>
 
         	    <div class="footer">
             <ul class="tags">                <li>

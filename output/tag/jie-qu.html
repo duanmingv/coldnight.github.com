@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 截取 | cold's world </title>
@@ -71,19 +71,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         </div>
         
         <div class="highlight"><p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="s">&#39;abc&#39;</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; s = 'abce'
+&gt;&gt;&gt; s[0:3]
+'abc'
+</code></pre>
 
 <p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
-<div class="codehilite"><pre><span class="c">#-*- coding:utf8 -*-</span>
-<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
-<span class="c"># 结果u&#39;中文截取</span>
-</pre></div>
-
+<pre><code class="python">#-*- coding:utf8 -*-
+s = u'中文截取'
+s.decode('utf8')[0:3].encode('utf8')
+# 结果u'中文截取
+</code></pre>
 
 <p>就这么简单</p></div>
         <hr />

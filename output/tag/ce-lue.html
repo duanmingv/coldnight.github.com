@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 策略 | cold's world </title>
@@ -72,40 +72,34 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
         
         <div class="highlight"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
 <p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
-<div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
-<span class="n">whereis</span> <span class="n">restorecon</span>
-</pre></div>
-
+<pre><code>which restorecon
+whereis restorecon
+</code></pre>
 
 <p>没结果,继续手动查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
-</pre></div>
-
+<pre><code>ls -l /sbin/ ¦ grep restore
+lrwxrwxrwx 1 root root     14 Apr 19 09:58 iptables-restore -&gt; iptables-multi
+</code></pre>
 
 <p>有一条但是不是我们想要的,猜测大概是包没装
 先yum搜索一下吧:</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="n">search</span> <span class="n">restorecon</span>
-</pre></div>
-
+<pre><code>yum search restorecon
+</code></pre>
 
 <p>好吧依然没有结果.google一下说是缺少policycoreutils这个包.安装这个包:</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">policycoreutils</span>
-</pre></div>
-
+<pre><code>yum -y install policycoreutils
+</code></pre>
 
 <p>然后查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="o">-</span><span class="n">l</span> <span class="err">¦</span><span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>      <span class="mi">8</span> <span class="n">Apr</span> <span class="mi">30</span> <span class="mi">10</span><span class="o">:</span><span class="mi">31</span> <span class="n">restorecon</span> <span class="o">-&gt;</span> <span class="n">setfiles</span>
-</pre></div>
-
+<pre><code>ls /sbin/ -l ¦grep restore
+lrwxrwxrwx 1 root root     14 Apr 19 09:58 iptables-restore -&gt; iptables-multi
+lrwxrwxrwx 1 root root      8 Apr 30 10:31 restorecon -&gt; setfiles
+</code></pre>
 
 <p>然后运行命令保存iptables策略:</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">iptables</span> <span class="n">save</span>
-<span class="nl">iptables:</span> <span class="n">Saving</span> <span class="n">firewall</span> <span class="n">rules</span> <span class="n">to</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">iptables</span><span class="o">:</span> <span class="p">[</span>  <span class="n">OK</span>  <span class="p">]</span>
-</pre></div>
-
+<pre><code>service iptables save
+iptables: Saving firewall rules to /etc/sysconfig/iptables: [  OK  ]
+</code></pre>
 
 <p>只是一篇笔记,记录问题方便以后遇到问题后查找.有点乱.没多少内容.</p></div>
         <hr />

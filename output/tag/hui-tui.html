@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 回退 | cold's world </title>
@@ -75,32 +75,29 @@ in <a href="http://www.linuxzen.com/category/git.html">git</a>
 <p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
 <h2>回退本地代码的commit</h2>
 <p>备份完数据, 我们就可以先回退本地的版本库</p>
-<div class="codehilite"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
-</pre></div>
-
+<pre><code class="bash">git reset --hard HEAD~1        # 回退到上一次的提交, 如果是上n次就将1改成对应的数字
+</code></pre>
 
 <h2>回退远端版本库</h2>
 <p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
 <h3>新建一个分支, 并提交</h3>
-<div class="codehilite"><pre>git checkout -b temp
+<pre><code class="bash">git checkout -b temp
 git push origin temp:temp
-</pre></div>
-
+</code></pre>
 
 <h3>重建主分支</h3>
 <p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
-<div class="codehilite"><pre>git push origin --delete master   <span class="c"># 删除远端主分支</span>
-git branch -d master              <span class="c"># 删除本地主分支</span>
-git checkout -b master            <span class="c"># 新建主分支并切换到主分支</span>
-git push origin master            <span class="c"># 提交主分支</span>
-</pre></div>
-
+<pre><code class="bash">git push origin --delete master   # 删除远端主分支
+git branch -d master              # 删除本地主分支
+git checkout -b master            # 新建主分支并切换到主分支
+git push origin master            # 提交主分支
+</code></pre>
 
 <p>这样我们就删除之前提交的敏感信息(如果是<code>github</code>现在就可以把默认分支切换到 <code>master</code>)</p>
 <h3>删除临时分支</h3>
-<div class="codehilite"><pre>git branch -d temp
+<pre><code class="bash">git branch -d temp
 git push origin --delete temp
-</pre></div></div>
+</code></pre></div>
         <hr />
     </div>
 		

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 实时 | cold's world </title>
@@ -72,91 +72,89 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         
         <div class="highlight"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
 <p>下面放出脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Author      : cold</span>
-<span class="c"># Homepage    : http://www.linuxzen.com</span>
-<span class="c"># Filename    : checkchange.sh</span>
-<span class="c"># Useage      : sh checkchange.sh [dir]</span>
-checkisdir<span class="o">()</span>
-        <span class="c"># Have one argument</span>
-        <span class="c"># The argument is a directory</span>
-        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do</span>
-<span class="k">                if</span> <span class="o">[</span> -d <span class="nv">$1</span>/<span class="nv">$i</span> <span class="o">]</span>
-                <span class="k">then</span>
-<span class="k">                        if</span> <span class="o">[</span> <span class="nv">$i</span> <span class="o">==</span> <span class="s2">&quot;bin&quot;</span> -o <span class="nv">$i</span> <span class="o">==</span> <span class="s2">&quot;lib&quot;</span> -o <span class="nv">$i</span> <span class="o">==</span> <span class="s2">&quot;include&quot;</span> <span class="o">]</span>   <span class="c"># 不想检测的目录(这里是使用virtualenv生成的环境文件)</span>
-                        <span class="k">then</span>
-<span class="k">                                continue</span>
-<span class="k">                        fi</span>
-<span class="k">                        </span><span class="nv">dir</span><span class="o">=</span><span class="s2">&quot;$1/$i&quot;</span>
-                        checkisdir <span class="nv">$dir</span>
-                <span class="k">else</span>
-<span class="k">                        </span><span class="nv">files</span><span class="o">=</span><span class="nv">$files</span><span class="s1">&#39;\n&#39;</span><span class="nv">$1</span><span class="s1">&#39;/&#39;</span><span class="nv">$i</span>
-                <span class="k">fi</span>
-<span class="k">        done</span>
-<span class="k">        </span><span class="nb">echo</span> -e <span class="nv">$files</span>
-<span class="o">}</span>
-<span class="k">while </span><span class="nb">true</span>
-<span class="k">do</span>
-<span class="k">        if</span> <span class="o">[</span> -e /tmp/stat.tmp <span class="o">]</span>
-        <span class="k">then</span>
-<span class="k">                for </span>i in <span class="sb">`</span>checkisdir <span class="nv">$1</span><span class="sb">`</span>
-                <span class="k">do</span>
-<span class="k">                        if</span> <span class="o">[</span> -e /tmp/patch.tmp <span class="o">]</span>
-                        <span class="k">then</span>
-<span class="k">                                </span>stat <span class="nv">$i</span> | grep Change &gt; /tmp/nstat.tmp
+<pre><code class="bash">#!/bin/bash
+# Author      : cold
+# Homepage    : http://www.linuxzen.com
+# Filename    : checkchange.sh
+# Useage      : sh checkchange.sh [dir]
+checkisdir()
+        # Have one argument
+        # The argument is a directory
+        for i in `ls $1 | sed -e 's/ /\n/g'`
+        do
+                if [ -d $1/$i ]
+                then
+                        if [ $i == &quot;bin&quot; -o $i == &quot;lib&quot; -o $i == &quot;include&quot; ]   # 不想检测的目录(这里是使用virtualenv生成的环境文件)
+                        then
+                                continue
+                        fi
+                        dir=&quot;$1/$i&quot;
+                        checkisdir $dir
+                else
+                        files=$files'\n'$1'/'$i
+                fi
+        done
+        echo -e $files
+}
+while true
+do
+        if [ -e /tmp/stat.tmp ]
+        then
+                for i in `checkisdir $1`
+                do
+                        if [ -e /tmp/patch.tmp ]
+                        then
+                                stat $i | grep Change &gt; /tmp/nstat.tmp
                                 rm -f /tmp/patch.tmp
-                                <span class="k">continue</span>
-<span class="k">                        fi</span>
-<span class="k">                        </span>stat <span class="nv">$i</span> | grep Change &gt;&gt; /tmp/nstat.tmp
-                <span class="k">done</span>
-<span class="k">                </span>diff /tmp/stat.tmp /tmp/nstat.tmp &gt; /tmp/patch.tmp
-                <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
-                <span class="k">then</span>
-<span class="k">                        </span>sleep 10
-                <span class="k">else</span>
-                        /etc/init.d/uwsgi.py restart                    <span class="c"># 将此处更改为想要做的操作</span>
+                                continue
+                        fi
+                        stat $i | grep Change &gt;&gt; /tmp/nstat.tmp
+                done
+                diff /tmp/stat.tmp /tmp/nstat.tmp &gt; /tmp/patch.tmp
+                if [ $? -eq 0 ]
+                then
+                        sleep 10
+                else
+                        /etc/init.d/uwsgi.py restart                    # 将此处更改为想要做的操作
                         patch /tmp/stat.tmp /tmp/patch.tmp
-                <span class="k">fi</span>
-<span class="k">        else</span>
-<span class="k">                for </span>i in <span class="sb">`</span>checkisdir <span class="nv">$1</span><span class="sb">`</span>
-                <span class="k">do</span>
-<span class="k">                        </span>stat <span class="nv">$i</span> | grep Change &gt;&gt; /tmp/stat.tmp
-                <span class="k">done</span>
-<span class="k">                continue</span>
-<span class="k">        fi</span>
-<span class="k">done</span>
-</pre></div>
-
+                fi
+        else
+                for i in `checkisdir $1`
+                do
+                        stat $i | grep Change &gt;&gt; /tmp/stat.tmp
+                done
+                continue
+        fi
+done
+</code></pre>
 
 <p>这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:</p>
-<div class="codehilite"><pre>sh checkchange.sh /code/python &amp;
-</pre></div>
-
+<pre><code class="bash">sh checkchange.sh /code/python &amp;
+</code></pre>
 
 <p>如果使用svn可以参考下面代码:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Author        : cold</span>
-<span class="c"># Homepage      : http://www.linuxzen.com</span>
-<span class="c"># Filename      : checkupdate.sh</span>
-<span class="c"># Describle     : To Check update of svn</span>
+<pre><code class="bash">#!/bin/bash
+# Author        : cold
+# Homepage      : http://www.linuxzen.com
+# Filename      : checkupdate.sh
+# Describle     : To Check update of svn
 
-<span class="k">while </span><span class="nb">true</span>
-<span class="k">do</span>
-<span class="k">        </span><span class="nb">cd</span> /code/python
+while true
+do
+        cd /code/python
         svn up | grep At &gt; /dev/null 2&gt;&amp;1
-        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
-        <span class="k">then</span>
-<span class="k">                </span>sleep 30
-        <span class="k">fi</span>
+        if [ $? -eq 0 ]
+        then
+                sleep 30
+        fi
 
-<span class="k">        </span>svn up | grep Updated &gt; /dev/null 2&gt;&amp;1
-        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
-        <span class="k">then</span>
+        svn up | grep Updated &gt; /dev/null 2&gt;&amp;1
+        if [ $? -eq 0 ]
+        then
                 /etc/init.d/uwsgi.py restart
-        <span class="k">fi</span>
-<span class="k">done</span>
-</pre></div></div>
+        fi
+done
+</code></pre></div>
         <hr />
     </div>
 		

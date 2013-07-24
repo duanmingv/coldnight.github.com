@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
@@ -70,16 +70,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*-coding:utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: translate.py</span>
-<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*-coding:utf8 -*-
+'''
+#=============================================================================
+#     FileName: translate.py
+#         Desc: To translate with zh to en or en2zh
+#       Author: cold
+#        Email: wh_linux@126.com
+#     HomePage: http://www.linuxzen.com
+#      Version ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
     </div>	
 				
     
@@ -100,16 +100,16 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  </div>
         <div class="summary"><p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
 <p>太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到<code>~/.vimrc</code>下即可每次打开如果没有上述行则会自动填充:</p>
-<div class="codehilite"><pre><span class="k">function</span> InsertPythonHeader<span class="p">()</span>
-    <span class="k">let</span> l1 <span class="p">=</span> getline<span class="p">(</span><span class="m">1</span><span class="p">)</span>
-    <span class="k">let</span> l2 <span class="p">=</span> getline<span class="p">(</span><span class="m">2</span><span class="p">)</span>
-    <span class="k">if</span>  <span class="k">match</span><span class="p">(</span><span class="s1">&#39;\#!/&#39;</span><span class="p">,</span> l1<span class="p">)</span> <span class="p">==</span> <span class="m">0</span>
-        exec <span class="m">1</span>
+<pre><code class="vim">function InsertPythonHeader()
+    let l1 = getline(1)
+    let l2 = getline(2)
+    if  match('\#!/', l1) == 0
+        exec 1
         normal O
-        <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
-    <span class="k">endif</span>
-    <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
-        exec ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
+        call setline(1,'#!/usr/bin/env python')
+    endif
+    if match(&quot;\#&quot;, l2) == 0 &amp;&amp; (match(&quot;-&quot;, l2)  != 2 ¦¦ (match(&quot;code&quot;, l2) != 2))
+        exec ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

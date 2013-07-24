@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> keepalived | cold's world </title>
@@ -84,353 +84,335 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 <p>后端real server: 192.168.3.3/24 |192.168.3.102/24(我们这里使用备用lvs作为一个测试</p>
 <p>vip(virtual ip):192.168.3.100/24</p>
 <p>lvs在2.6的内核中是默认支持的,所以我们就不需要在来安装,但是我们需要安装用户配置工具ipvsadm</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">ipvsadm</span>           <span class="err">#</span> <span class="err">分别在主从</span><span class="n">lvs</span><span class="err">上执行安装</span><span class="n">ipvsadm</span>
-</pre></div>
-
+<pre><code>yum -y install ipvsadm           # 分别在主从lvs上执行安装ipvsadm
+</code></pre>
 
 <p>我们查看lvs是否支持:</p>
-<div class="codehilite"><pre><span class="n">lsmod</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">ip_vs</span>          <span class="err">#</span>
-<span class="n">ip_vs</span>                  <span class="mi">78081</span>  <span class="mi">1</span>
-<span class="n">modprobe</span> <span class="o">-</span><span class="n">l</span><span class="err">¦</span> <span class="n">grep</span> <span class="n">ip_vs</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_dh</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_ftp</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_lblc</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_lblcr</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_lc</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_nq</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_rr</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_sed</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_sh</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_wlc</span><span class="p">.</span><span class="n">ko</span>
-<span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">modules</span><span class="o">/</span><span class="mf">2.6.18</span><span class="o">-</span><span class="mf">194.</span><span class="n">el5</span><span class="o">/</span><span class="n">kernel</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">ipv4</span><span class="o">/</span><span class="n">ipvs</span><span class="o">/</span><span class="n">ip_vs_wrr</span><span class="p">.</span><span class="n">ko</span>
-</pre></div>
-
+<pre><code>lsmod ¦ grep ip_vs          #
+ip_vs                  78081  1
+modprobe -l¦ grep ip_vs
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_dh.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_ftp.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_lblc.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_lblcr.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_lc.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_nq.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_rr.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_sed.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_sh.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_wlc.ko
+/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_wrr.ko
+</code></pre>
 
 <p>本文介绍lvs的<code>DR</code>模式,首先部署keepalived.本博前面已经介绍如何来安装keepalived.这里就不在只简单的贴一下步骤:</p>
 <p>在主备服务器上部署keepalived(因为前面已经rpm包安装了ipvsadm,所以就不需要重复安装):</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysctl</span><span class="p">.</span><span class="n">conf</span>
-<span class="n">net</span><span class="p">.</span><span class="n">ipv4</span><span class="p">.</span><span class="n">ip_forward</span> <span class="o">=</span> <span class="mi">1</span> <span class="err">#</span> <span class="err">此参数改为</span><span class="mi">1</span>
-<span class="n">sysctl</span> <span class="o">-</span><span class="n">p</span> <span class="err">#</span> <span class="err">使修改生效</span>
-</pre></div>
-
+<pre><code>vi /etc/sysctl.conf
+net.ipv4.ip_forward = 1 # 此参数改为1
+sysctl -p # 使修改生效
+</code></pre>
 
 <p>安装依赖:</p>
-<div class="codehilite"><pre>yum  -y install openssl-devel
-<span class="c"># 下载并安装keepalived</span>
+<pre><code class="bash">yum  -y install openssl-devel
+# 下载并安装keepalived
 wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
 tar -zxvf keepalived-1.1.19.tar.gz
-<span class="nb">cd </span>keepalived-1.1.19
-./configure --prefix<span class="o">=</span>/ <span class="se">\ </span>           <span class="c"># 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)</span>
---mandir<span class="o">=</span>/usr/local/share/man/ <span class="se">\</span>
---with-kernel-dir<span class="o">=</span>/usr/src/kernels/2.6.18-194.el5-i686/    <span class="c"># 需要内核的头文件</span>
-make <span class="o">&amp;&amp;</span> make install
-</pre></div>
-
+cd keepalived-1.1.19
+./configure --prefix=/ \            # 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)
+--mandir=/usr/local/share/man/ \
+--with-kernel-dir=/usr/src/kernels/2.6.18-194.el5-i686/    # 需要内核的头文件
+make &amp;&amp; make install
+</code></pre>
 
 <p>在主备lvs上安装keepalived完毕后我们先来配置主lvs上的keepalived:
 编辑配置文件<code>/etc/keepalived/keepalived.conf</code>:</p>
-<div class="codehilite"><pre><span class="o">!</span> <span class="n">Configuration</span> <span class="n">File</span> <span class="k">for</span> <span class="n">keepalived</span>
+<pre><code>! Configuration File for keepalived
 
-<span class="n">global_defs</span> <span class="p">{</span>
-   <span class="n">notification_email</span> <span class="p">{</span>
-    <span class="n">coldnight</span><span class="err">@</span><span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span>                                   <span class="err">#</span> <span class="err">发生故障时发送的邮箱</span>
-   <span class="p">}</span>
-   <span class="n">notification_email_from</span> <span class="n">linuxzen</span><span class="err">@</span><span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span>             <span class="err">#</span> <span class="err">使用哪个邮箱发送</span>
-   <span class="n">smtp_server</span> <span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span>                                  <span class="err">#</span> <span class="err">发件服务器</span>
-   <span class="n">smtp_connect_timeout</span> <span class="mi">30</span>
-   <span class="n">router_id</span> <span class="n">LVS_DEVEL</span>
-<span class="p">}</span>
+global_defs {
+   notification_email {
+    coldnight@linuxzen.com                                   # 发生故障时发送的邮箱
+   }
+   notification_email_from linuxzen@linuxzen.com             # 使用哪个邮箱发送
+   smtp_server linuxzen.com                                  # 发件服务器
+   smtp_connect_timeout 30
+   router_id LVS_DEVEL
+}
 
-<span class="n">vrrp_instance</span> <span class="n">VI_1</span> <span class="p">{</span>
-    <span class="n">state</span> <span class="n">MASTER</span>             <span class="err">#</span> <span class="err">标示为主</span><span class="n">lvs</span>
-    <span class="n">interface</span> <span class="n">eth0</span>           <span class="err">#</span> <span class="n">HA</span><span class="err">检测端口</span>
-    <span class="n">virtual_router_id</span> <span class="mi">51</span>     <span class="err">#</span> <span class="err">主备的</span><span class="n">virtual_router_id</span> <span class="err">必须相同</span>
-    <span class="n">priority</span> <span class="mi">100</span>             <span class="err">#</span> <span class="err">优先级</span><span class="p">,</span><span class="err">备</span><span class="n">lvs</span><span class="err">要比主</span><span class="n">lvs</span><span class="err">稍小</span>
-    <span class="n">advert_int</span> <span class="mi">1</span>             <span class="err">#</span> <span class="n">VRRP</span> <span class="n">Multicast</span> <span class="err">广播周期秒数</span>
-    <span class="n">authentication</span> <span class="p">{</span>         <span class="err">#</span> <span class="err">定义认证</span>
-        <span class="n">auth_type</span> <span class="n">PASS</span>       <span class="err">#</span> <span class="err">认证方式为口令认证</span>
-        <span class="n">auth_pass</span> <span class="mi">1111</span>       <span class="err">#</span> <span class="err">定义口令</span>
-    <span class="p">}</span>
-    <span class="n">virtual_ipaddress</span> <span class="p">{</span>      <span class="err">#</span> <span class="err">定义</span><span class="n">vip</span>
-        <span class="mf">192.168.3.100</span>        <span class="err">#</span> <span class="err">多个</span><span class="n">vip</span><span class="err">可换行添加</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+vrrp_instance VI_1 {
+    state MASTER             # 标示为主lvs
+    interface eth0           # HA检测端口
+    virtual_router_id 51     # 主备的virtual_router_id 必须相同
+    priority 100             # 优先级,备lvs要比主lvs稍小
+    advert_int 1             # VRRP Multicast 广播周期秒数
+    authentication {         # 定义认证
+        auth_type PASS       # 认证方式为口令认证
+        auth_pass 1111       # 定义口令
+    }
+    virtual_ipaddress {      # 定义vip
+        192.168.3.100        # 多个vip可换行添加
+    }
+}
 
-<span class="n">virtual_server</span> <span class="mf">192.168.3.100</span> <span class="mi">80</span> <span class="p">{</span>
-    <span class="n">delay_loop</span> <span class="mi">6</span>       <span class="err">#</span> <span class="err">每隔</span><span class="mi">6</span><span class="err">秒查看</span><span class="n">realserver</span><span class="err">状态</span>
-    <span class="n">lb_algo</span> <span class="n">wlc</span>        <span class="err">#</span> <span class="err">调度算法为加权最小连接数</span>
-    <span class="n">lb_kind</span> <span class="n">DR</span>         <span class="err">#</span> <span class="n">lvs</span><span class="err">工作模式为</span><span class="n">DR</span><span class="p">(</span><span class="err">直接路由</span><span class="p">)</span><span class="err">模式</span>
-    <span class="n">nat_mask</span> <span class="mf">255.255.255.0</span>
-    <span class="n">persistence_timeout</span> <span class="mi">50</span>  <span class="err">#</span> <span class="err">同一</span><span class="n">IP</span> <span class="err">的连接</span><span class="mi">50</span><span class="err">秒内被分配到同一台</span><span class="n">realserver</span><span class="p">(</span><span class="err">测试时建议改为</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">protocol</span> <span class="n">TCP</span>            <span class="err">#</span> <span class="err">用</span><span class="n">TCP</span><span class="err">监测</span><span class="n">realserver</span><span class="err">的状态</span>
+virtual_server 192.168.3.100 80 {
+    delay_loop 6       # 每隔6秒查看realserver状态
+    lb_algo wlc        # 调度算法为加权最小连接数
+    lb_kind DR         # lvs工作模式为DR(直接路由)模式
+    nat_mask 255.255.255.0
+    persistence_timeout 50  # 同一IP 的连接50秒内被分配到同一台realserver(测试时建议改为0)
+    protocol TCP            # 用TCP监测realserver的状态
 
-    <span class="n">real_server</span> <span class="mf">192.168.3.3</span> <span class="mi">80</span> <span class="p">{</span>       <span class="err">#</span> <span class="err">定义</span><span class="n">realserver</span>
-        <span class="n">weight</span> <span class="mi">3</span>                       <span class="err">#</span> <span class="err">定义权重</span>
-        <span class="n">TCP_CHECK</span> <span class="p">{</span>  <span class="err">#</span> <span class="err">注意</span><span class="n">TCP_CHECK</span><span class="err">和</span><span class="p">{</span><span class="err">之间的空格</span><span class="p">,</span><span class="err">如果没有的话只会添加第一个</span><span class="n">realserver</span>
-            <span class="n">connect_timeout</span> <span class="mi">3</span>          <span class="err">#</span> <span class="err">三秒无响应超时</span>
-            <span class="n">nb_get_retry</span> <span class="mi">3</span>
-            <span class="n">delay_before_retry</span> <span class="mi">3</span>
-            <span class="n">connect_port</span> <span class="mi">80</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="n">real_server</span> <span class="mf">192.168.3.102</span> <span class="mi">80</span> <span class="p">{</span>
-        <span class="n">weight</span> <span class="mi">3</span>
-        <span class="n">TCP_CHECK</span> <span class="p">{</span>
-            <span class="n">connect_timeout</span> <span class="mi">3</span>
-            <span class="n">nb_get_retry</span> <span class="mi">3</span>
-            <span class="n">delay_before_retry</span> <span class="mi">3</span>
-            <span class="n">connect_port</span> <span class="mi">80</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
+    real_server 192.168.3.3 80 {       # 定义realserver
+        weight 3                       # 定义权重
+        TCP_CHECK {  # 注意TCP_CHECK和{之间的空格,如果没有的话只会添加第一个realserver
+            connect_timeout 3          # 三秒无响应超时
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port 80
+        }
+    }
+    real_server 192.168.3.102 80 {
+        weight 3
+        TCP_CHECK {
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port 80
+        }
+    }
+}
+</code></pre>
 
 <p>配置备用lvs的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:</p>
-<div class="codehilite"><pre><span class="o">!</span> <span class="n">Configuration</span> <span class="n">File</span> <span class="k">for</span> <span class="n">keepalived</span>
+<pre><code>! Configuration File for keepalived
 
-<span class="n">global_defs</span> <span class="p">{</span>
-   <span class="n">notification_email</span> <span class="p">{</span>
-    <span class="n">coldnight</span><span class="err">@</span><span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span>                               <span class="err">#</span> <span class="err">发生故障时发送的邮箱</span>
-   <span class="p">}</span>
-   <span class="n">notification_email_from</span> <span class="n">linuxzen</span><span class="err">@</span><span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span>         <span class="err">#</span> <span class="err">使用哪个邮箱发送</span>
-   <span class="n">smtp_server</span> <span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span>                              <span class="err">#</span> <span class="err">发件服务器</span>
-   <span class="n">smtp_connect_timeout</span> <span class="mi">30</span>
-   <span class="n">router_id</span> <span class="n">LVS_DEVEL</span>
-<span class="p">}</span>
+global_defs {
+   notification_email {
+    coldnight@linuxzen.com                               # 发生故障时发送的邮箱
+   }
+   notification_email_from linuxzen@linuxzen.com         # 使用哪个邮箱发送
+   smtp_server linuxzen.com                              # 发件服务器
+   smtp_connect_timeout 30
+   router_id LVS_DEVEL
+}
 
-<span class="n">vrrp_instance</span> <span class="n">VI_1</span> <span class="p">{</span>
-    <span class="n">state</span> <span class="n">BACKUP</span>              <span class="err">#</span> <span class="err">标示为备</span><span class="n">lvs</span>
-    <span class="n">interface</span> <span class="n">eth0</span>            <span class="err">#</span> <span class="n">HA</span><span class="err">检测端口</span>
-    <span class="n">virtual_router_id</span> <span class="mi">51</span>      <span class="err">#</span> <span class="err">主备的</span><span class="n">virtual_router_id</span> <span class="err">必须相同</span>
-    <span class="n">priority</span> <span class="mi">99</span>               <span class="err">#</span> <span class="err">优先级</span><span class="p">,</span><span class="err">备</span><span class="n">lvs</span><span class="err">要比主</span><span class="n">lvs</span><span class="err">稍小</span>
-    <span class="n">advert_int</span> <span class="mi">1</span>              <span class="err">#</span> <span class="n">VRRP</span> <span class="n">Multicast</span> <span class="err">广播周期秒数</span>
-    <span class="n">authentication</span> <span class="p">{</span>          <span class="err">#</span> <span class="err">定义认证</span>
-        <span class="n">auth_type</span> <span class="n">PASS</span>        <span class="err">#</span> <span class="err">认证方式为口令认证</span>
-        <span class="n">auth_pass</span> <span class="mi">1111</span>        <span class="err">#</span> <span class="err">定义口令</span>
-    <span class="p">}</span>
-    <span class="n">virtual_ipaddress</span> <span class="p">{</span>       <span class="err">#</span> <span class="err">定义</span><span class="n">vip</span>
-        <span class="mf">192.168.3.100</span>         <span class="err">#</span> <span class="err">多个</span><span class="n">vip</span><span class="err">可换行添加</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+vrrp_instance VI_1 {
+    state BACKUP              # 标示为备lvs
+    interface eth0            # HA检测端口
+    virtual_router_id 51      # 主备的virtual_router_id 必须相同
+    priority 99               # 优先级,备lvs要比主lvs稍小
+    advert_int 1              # VRRP Multicast 广播周期秒数
+    authentication {          # 定义认证
+        auth_type PASS        # 认证方式为口令认证
+        auth_pass 1111        # 定义口令
+    }
+    virtual_ipaddress {       # 定义vip
+        192.168.3.100         # 多个vip可换行添加
+    }
+}
 
-<span class="n">virtual_server</span> <span class="mf">192.168.3.100</span> <span class="mi">80</span> <span class="p">{</span>
-    <span class="n">delay_loop</span> <span class="mi">6</span>      <span class="err">#</span> <span class="err">每隔</span><span class="mi">6</span><span class="err">秒查看</span><span class="n">realserver</span><span class="err">状态</span>
-    <span class="n">lb_algo</span> <span class="n">wlc</span>       <span class="err">#</span> <span class="err">调度算法为加权最小连接数</span>
-    <span class="n">lb_kind</span> <span class="n">DR</span>        <span class="err">#</span> <span class="n">lvs</span><span class="err">工作模式为</span><span class="n">DR</span><span class="p">(</span><span class="err">直接路由</span><span class="p">)</span><span class="err">模式</span>
-    <span class="n">nat_mask</span> <span class="mf">255.255.255.0</span>
-    <span class="n">persistence_timeout</span> <span class="mi">50</span>  <span class="err">#</span> <span class="err">同一</span><span class="n">IP</span> <span class="err">的连接</span><span class="mi">50</span><span class="err">秒内被分配到同一台</span><span class="n">realserver</span>
-    <span class="n">protocol</span> <span class="n">TCP</span>            <span class="err">#</span> <span class="err">用</span><span class="n">TCP</span><span class="err">监测</span><span class="n">realserver</span><span class="err">的状态</span>
+virtual_server 192.168.3.100 80 {
+    delay_loop 6      # 每隔6秒查看realserver状态
+    lb_algo wlc       # 调度算法为加权最小连接数
+    lb_kind DR        # lvs工作模式为DR(直接路由)模式
+    nat_mask 255.255.255.0
+    persistence_timeout 50  # 同一IP 的连接50秒内被分配到同一台realserver
+    protocol TCP            # 用TCP监测realserver的状态
 
-    <span class="n">real_server</span> <span class="mf">192.168.3.3</span> <span class="mi">80</span> <span class="p">{</span>       <span class="err">#</span> <span class="err">定义</span><span class="n">realserver</span>
-        <span class="n">weight</span> <span class="mi">3</span>                       <span class="err">#</span> <span class="err">定义权重</span>
-        <span class="n">TCP_CHECK</span> <span class="p">{</span>    <span class="err">#</span> <span class="err">注意</span><span class="n">TCP_CHECK</span><span class="err">和</span><span class="p">{</span><span class="err">之间的空格</span><span class="p">,</span><span class="err">如果没有的话只会添加第一个</span><span class="n">realserver</span>
-            <span class="n">connect_timeout</span> <span class="mi">3</span>          <span class="err">#</span> <span class="err">三秒无响应超时</span>
-            <span class="n">nb_get_retry</span> <span class="mi">3</span>
-            <span class="n">delay_before_retry</span> <span class="mi">3</span>
-            <span class="n">connect_port</span> <span class="mi">80</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="n">real_server</span> <span class="mf">192.168.3.102</span> <span class="mi">80</span> <span class="p">{</span>
-        <span class="n">weight</span> <span class="mi">3</span>
-        <span class="n">TCP_CHECK</span> <span class="p">{</span>
-            <span class="n">connect_timeout</span> <span class="mi">3</span>
-            <span class="n">nb_get_retry</span> <span class="mi">3</span>
-            <span class="n">delay_before_retry</span> <span class="mi">3</span>
-            <span class="n">connect_port</span> <span class="mi">80</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
+    real_server 192.168.3.3 80 {       # 定义realserver
+        weight 3                       # 定义权重
+        TCP_CHECK {    # 注意TCP_CHECK和{之间的空格,如果没有的话只会添加第一个realserver
+            connect_timeout 3          # 三秒无响应超时
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port 80
+        }
+    }
+    real_server 192.168.3.102 80 {
+        weight 3
+        TCP_CHECK {
+            connect_timeout 3
+            nb_get_retry 3
+            delay_before_retry 3
+            connect_port 80
+        }
+    }
+}
+</code></pre>
 
 <p>由于使用keepalived就不需要使用脚本来配置lvs调度器,但是这里我们还是会给出一个脚本内容,但我们不会用到这个脚本:lvs已经内置于内核,配置命令是ipvsadm,所以lvs的一些操作是通过ipvsadm来控制.下面我们就编写脚本来实现lvs的DR模式:</p>
 <p>编写脚本lvsdr:</p>
 <p>我们把lvs<code>vi /etc/init.d/lvsdr</code>添加如下内容</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
-<span class="c"># 定义虚拟ip</span>
-<span class="nv">VIP</span><span class="o">=</span>192.168.3.100
-<span class="c"># 定义realserver,并已逗号分开</span>
-<span class="nv">RIPS</span><span class="o">=</span>192.168.3.3,192.168.3.102 <span class="c">#,192.168.3.5,192.168.3.6</span>
+<pre><code class="bash">#!/bin/sh
+# 定义虚拟ip
+VIP=192.168.3.100
+# 定义realserver,并已逗号分开
+RIPS=192.168.3.3,192.168.3.102 #,192.168.3.5,192.168.3.6
 
-<span class="c"># 定义提供服务的端口</span>
-<span class="nv">SERVICE</span><span class="o">=</span>80
+# 定义提供服务的端口
+SERVICE=80
 
-<span class="c"># 调用init.d脚本的标准库</span>
+# 调用init.d脚本的标准库
 . /etc/rc.d/init.d/functions
-<span class="k">case</span> <span class="nv">$1</span> in
-        start<span class="o">)</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Start LVS of DR Mode&quot;</span>
-        <span class="c"># lvs dr模式不需要路由转发,但是keepalived需要</span>
-        <span class="c">#echo &quot;0&quot; &gt; /proc/sys/net/ipv4/ip_forward</span>
-        <span class="c"># 开启icmp包重定向</span>
-        <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/send_redirects
-        <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/default/send_redirects
-        <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/eth0/send_redirects
-        <span class="c"># 绑定虚拟ip</span>
-        ifconfig eth0:0 <span class="nv">$VIP</span> broadcast <span class="nv">$VIP</span> netmask 255.255.255.255 up
-        route add -host <span class="nv">$VIP</span> dev eth0:0
-        <span class="c"># 清除lvs规则</span>
+case $1 in
+        start)
+        echo &quot;Start LVS of DR Mode&quot;
+        # lvs dr模式不需要路由转发,但是keepalived需要
+        #echo &quot;0&quot; &gt; /proc/sys/net/ipv4/ip_forward
+        # 开启icmp包重定向
+        echo &quot;1&quot; &gt; /proc/sys/net/ipv4/conf/all/send_redirects
+        echo &quot;1&quot; &gt; /proc/sys/net/ipv4/conf/default/send_redirects
+        echo &quot;1&quot; &gt; /proc/sys/net/ipv4/conf/eth0/send_redirects
+        # 绑定虚拟ip
+        ifconfig eth0:0 $VIP broadcast $VIP netmask 255.255.255.255 up
+        route add -host $VIP dev eth0:0
+        # 清除lvs规则
         ipvsadm -C
-        <span class="c"># 添加一条虚拟服务器记录</span>
-    <span class="c"># -p指定一定的时间内将相同的客户端分配到同一台后端服务器</span>
-    <span class="c"># 用于解决session的问题,测试时或有别的解决方案时建议去掉</span>
-        ipvsadm -A -t <span class="nv">$VIP</span>:<span class="nv">$SERVICE</span> -s wlc -p
+        # 添加一条虚拟服务器记录
+    # -p指定一定的时间内将相同的客户端分配到同一台后端服务器
+    # 用于解决session的问题,测试时或有别的解决方案时建议去掉
+        ipvsadm -A -t $VIP:$SERVICE -s wlc -p
 
-        <span class="c"># 添加真实服务器记录</span>
-        <span class="k">for </span>RIP in <span class="sb">`</span><span class="nb">echo</span> <span class="nv">$RIPS</span> ¦sed  -e <span class="s1">&#39;s/,/\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do</span>
-<span class="k">                </span>ipvsadm -a -t <span class="nv">$VIP</span>:<span class="nv">$SERVICE</span> -r <span class="nv">$RIP</span>:<span class="nv">$SERVICE</span> -g -w 1
-        <span class="k">done</span>
-        <span class="c"># 设置tcp tcpfin  udp的超时连接值</span>
+        # 添加真实服务器记录
+        for RIP in `echo $RIPS ¦sed  -e 's/,/\n/g'`
+        do
+                ipvsadm -a -t $VIP:$SERVICE -r $RIP:$SERVICE -g -w 1
+        done
+        # 设置tcp tcpfin  udp的超时连接值
         ipvsadm --set 30 120 300
         ipvsadm
         ;;
 
-        stop<span class="o">)</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Stop LVS DR&quot;</span>
+        stop)
+        echo &quot;Stop LVS DR&quot;
         ifconfig eth0:0 down
         ipvsadm -C
         ;;
-        *<span class="o">)</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Usage:$0 {start ¦ stop}&quot;</span>
-        <span class="nb">exit </span>1
-<span class="k">esac</span>
-</pre></div>
-
+        *)
+        echo &quot;Usage:$0 {start ¦ stop}&quot;
+        exit 1
+esac
+</code></pre>
 
 <p>编辑完毕保存退出,然后给这个脚本执行权限:</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">lvsdr</span>
-</pre></div>
-
+<pre><code>chmod +x /etc/init.d/lvsdr
+</code></pre>
 
 <p>然后就可以通过service命令来启动lvs dr模式</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">lvsdr</span> <span class="n">start</span>
-</pre></div>
-
+<pre><code>service lvsdr start
+</code></pre>
 
 <p>将这个脚本分别放到主备lvs的/etc/init.d/下,赋予执行权限.
 我们真正需要的是realserver的脚本,下面我们来编写realserver脚本,同样放在/etc/init.d/下,编辑rs脚本:</p>
-<div class="codehilite"><pre>vi /etc/init.d/lvsrs
-<span class="c">#!/bin/sh</span>
-<span class="nv">VIP</span><span class="o">=</span>192.168.3.100
+<pre><code class="bash">vi /etc/init.d/lvsrs
+#!/bin/sh
+VIP=192.168.3.100
 . /etc/rc.d/init.d/functions
-<span class="k">case</span> <span class="nv">$1</span> in
-        start<span class="o">)</span>
-        <span class="nb">echo</span> <span class="s2">&quot;lo:0 port starting&quot;</span>
-        <span class="c"># 为了相应lvs调度器转发过来的包,需在本地lo接口上绑定vip</span>
-        ifconfig lo:0 <span class="nv">$VIP</span> broadcast <span class="nv">$VIP</span> netmask 255.255.255.255 up
-        <span class="c"># 限制arp请求</span>
-        <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
-        <span class="nb">echo</span> <span class="s2">&quot;2&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_announce
-        <span class="nb">echo</span> <span class="s2">&quot;1&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_ignore
-        <span class="nb">echo</span> <span class="s2">&quot;2&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_announce
+case $1 in
+        start)
+        echo &quot;lo:0 port starting&quot;
+        # 为了相应lvs调度器转发过来的包,需在本地lo接口上绑定vip
+        ifconfig lo:0 $VIP broadcast $VIP netmask 255.255.255.255 up
+        # 限制arp请求
+        echo &quot;1&quot; &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
+        echo &quot;2&quot; &gt; /proc/sys/net/ipv4/conf/lo/arp_announce
+        echo &quot;1&quot; &gt; /proc/sys/net/ipv4/conf/all/arp_ignore
+        echo &quot;2&quot; &gt; /proc/sys/net/ipv4/conf/all/arp_announce
         ;;
-        stop<span class="o">)</span>
-        <span class="nb">echo</span> <span class="s2">&quot;lo:0 port closing&quot;</span>
+        stop)
+        echo &quot;lo:0 port closing&quot;
         ifconfig lo:0 down
-        <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
-    <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/lo/arp_announce
-    <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_ignore
-    <span class="nb">echo</span> <span class="s2">&quot;0&quot;</span> &gt; /proc/sys/net/ipv4/conf/all/arp_announce
+        echo &quot;0&quot; &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
+    echo &quot;0&quot; &gt; /proc/sys/net/ipv4/conf/lo/arp_announce
+    echo &quot;0&quot; &gt; /proc/sys/net/ipv4/conf/all/arp_ignore
+    echo &quot;0&quot; &gt; /proc/sys/net/ipv4/conf/all/arp_announce
         ;;
-        *<span class="o">)</span>
-        <span class="nb">echo</span> <span class="s2">&quot;Usage: $0 {start ¦ stop}&quot;</span>
-        <span class="nb">exit </span>1
-<span class="k">esac</span>
-</pre></div>
-
+        *)
+        echo &quot;Usage: $0 {start ¦ stop}&quot;
+        exit 1
+esac
+</code></pre>
 
 <p>给脚本赋予执行权限</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">lvsrs</span>
-</pre></div>
-
+<pre><code>chmod +x /etc/init.d/lvsrs
+</code></pre>
 
 <p>并将这个脚本放到所有的realserver的/etc/init.d/下.下面开始测试:</p>
 <p>先来确认下我们做的变动:主从lvs分别安装keepalived,并且在/etc/init.d/下添加了lvsdr脚本(不使用).</p>
 <p>后端realserver分别在/etc/init.d/下添加了lvsrs脚本.我们先测试keepalived:</p>
 <p>首先在主调度器上启动keepalived:</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">keepalived</span> <span class="n">start</span>
-</pre></div>
-
+<pre><code>service keepalived start
+</code></pre>
 
 <p>查看日志文件:</p>
-<div class="codehilite"><pre><span class="n">tail</span> <span class="o">-</span><span class="mi">50</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">message</span>
-<span class="n">Mar</span> <span class="mi">21</span> <span class="mi">22</span><span class="o">:</span><span class="mi">29</span><span class="o">:</span><span class="mi">10</span> <span class="n">master</span> <span class="n">kernel</span><span class="o">:</span> <span class="n">device</span> <span class="n">eth0</span> <span class="n">left</span> <span class="n">promiscuous</span> <span class="n">mode</span>
-<span class="n">Mar</span> <span class="mi">21</span> <span class="mi">22</span><span class="o">:</span><span class="mi">29</span><span class="o">:</span><span class="mi">10</span> <span class="n">master</span> <span class="n">kernel</span><span class="o">:</span> <span class="n">type</span><span class="o">=</span><span class="mi">1700</span> <span class="n">audit</span><span class="p">(</span><span class="mf">1332340150.598</span><span class="o">:</span><span class="mi">12</span><span class="p">)</span><span class="o">:</span> <span class="n">dev</span><span class="o">=</span><span class="n">eth0</span> <span class="n">prom</span><span class="o">=</span><span class="mi">0</span> <span class="n">old_prom</span><span class="o">=</span><span class="mi">256</span> <span class="n">auid</span><span class="o">=</span><span class="mi">4294967295</span> <span class="n">ses</span><span class="o">=</span><span class="mi">4294967295</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived</span><span class="o">:</span> <span class="n">Starting</span> <span class="n">Keepalived</span> <span class="n">v1</span><span class="mf">.1.19</span> <span class="p">(</span><span class="mo">04</span><span class="o">/</span><span class="mi">16</span><span class="p">,</span><span class="mi">2012</span><span class="p">)</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.101</span> <span class="n">added</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">Kernel</span> <span class="n">netlink</span> <span class="n">reflector</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">Kernel</span> <span class="n">netlink</span> <span class="n">command</span> <span class="n">channel</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Opening</span> <span class="n">file</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">keepalived</span><span class="o">/</span><span class="n">keepalived</span><span class="p">.</span><span class="n">conf</span><span class="err">&#39;</span><span class="p">.</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Configuration</span> <span class="n">is</span> <span class="n">using</span> <span class="o">:</span> <span class="mi">8897</span> <span class="n">Bytes</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Using</span> <span class="n">LinkWatch</span> <span class="n">kernel</span> <span class="n">netlink</span> <span class="n">reflector</span><span class="p">...</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived</span><span class="o">:</span> <span class="n">Starting</span> <span class="n">Healthcheck</span> <span class="n">child</span> <span class="n">process</span><span class="p">,</span> <span class="n">pid</span><span class="o">=</span><span class="mi">5369</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived</span><span class="o">:</span> <span class="n">Starting</span> <span class="n">VRRP</span> <span class="n">child</span> <span class="n">process</span><span class="p">,</span> <span class="n">pid</span><span class="o">=</span><span class="mi">5370</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.101</span> <span class="n">added</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">Kernel</span> <span class="n">netlink</span> <span class="n">reflector</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">Kernel</span> <span class="n">netlink</span> <span class="n">command</span> <span class="n">channel</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">gratutious</span> <span class="n">ARP</span> <span class="n">shared</span> <span class="n">channel</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Opening</span> <span class="n">file</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">keepalived</span><span class="o">/</span><span class="n">keepalived</span><span class="p">.</span><span class="n">conf</span><span class="err">&#39;</span><span class="p">.</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Configuration</span> <span class="n">is</span> <span class="n">using</span> <span class="o">:</span> <span class="mi">36512</span> <span class="n">Bytes</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Using</span> <span class="n">LinkWatch</span> <span class="n">kernel</span> <span class="n">netlink</span> <span class="n">reflector</span><span class="p">...</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">32</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP</span> <span class="n">sockpool</span><span class="o">:</span> <span class="p">[</span><span class="n">ifindex</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">proto</span><span class="p">(</span><span class="mi">112</span><span class="p">),</span> <span class="n">fd</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">)]</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">33</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Transition</span> <span class="n">to</span> <span class="n">MASTER</span> <span class="n">STATE</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">34</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Entering</span> <span class="n">MASTER</span> <span class="n">STATE</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">34</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">setting</span> <span class="n">protocol</span> <span class="n">VIPs</span><span class="p">.</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">34</span> <span class="n">master</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.100</span> <span class="n">added</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">34</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Sending</span> <span class="n">gratuitous</span> <span class="n">ARPs</span> <span class="n">on</span> <span class="n">eth0</span> <span class="k">for</span> <span class="mf">192.168.3.100</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">34</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.100</span> <span class="n">added</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">39</span> <span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Sending</span> <span class="n">gratuitous</span> <span class="n">ARPs</span> <span class="n">on</span> <span class="n">eth0</span> <span class="k">for</span> <span class="mf">192.168.3.100</span>
-</pre></div>
-
+<pre><code>tail -50 /var/log/message
+Mar 21 22:29:10 master kernel: device eth0 left promiscuous mode
+Mar 21 22:29:10 master kernel: type=1700 audit(1332340150.598:12): dev=eth0 prom=0 old_prom=256 auid=4294967295 ses=4294967295
+Apr 16 13:31:32 master Keepalived: Starting Keepalived v1.1.19 (04/16,2012)
+Apr 16 13:31:32 master Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.101 added
+Apr 16 13:31:32 master Keepalived_healthcheckers: Registering Kernel netlink reflector
+Apr 16 13:31:32 master Keepalived_healthcheckers: Registering Kernel netlink command channel
+Apr 16 13:31:32 master Keepalived_healthcheckers: Opening file '/etc/keepalived/keepalived.conf'.
+Apr 16 13:31:32 master Keepalived_healthcheckers: Configuration is using : 8897 Bytes
+Apr 16 13:31:32 master Keepalived_healthcheckers: Using LinkWatch kernel netlink reflector...
+Apr 16 13:31:32 master Keepalived: Starting Healthcheck child process, pid=5369
+Apr 16 13:31:32 master Keepalived: Starting VRRP child process, pid=5370
+Apr 16 13:31:32 master Keepalived_vrrp: Netlink reflector reports IP 192.168.3.101 added
+Apr 16 13:31:32 master Keepalived_vrrp: Registering Kernel netlink reflector
+Apr 16 13:31:32 master Keepalived_vrrp: Registering Kernel netlink command channel
+Apr 16 13:31:32 master Keepalived_vrrp: Registering gratutious ARP shared channel
+Apr 16 13:31:32 master Keepalived_vrrp: Opening file '/etc/keepalived/keepalived.conf'.
+Apr 16 13:31:32 master Keepalived_vrrp: Configuration is using : 36512 Bytes
+Apr 16 13:31:32 master Keepalived_vrrp: Using LinkWatch kernel netlink reflector...
+Apr 16 13:31:32 master Keepalived_vrrp: VRRP sockpool: [ifindex(2), proto(112), fd(10,11)]
+Apr 16 13:31:33 master Keepalived_vrrp: VRRP_Instance(VI_1) Transition to MASTER STATE
+Apr 16 13:31:34 master Keepalived_vrrp: VRRP_Instance(VI_1) Entering MASTER STATE
+Apr 16 13:31:34 master Keepalived_vrrp: VRRP_Instance(VI_1) setting protocol VIPs.
+Apr 16 13:31:34 master Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.100 added
+Apr 16 13:31:34 master Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.100
+Apr 16 13:31:34 master Keepalived_vrrp: Netlink reflector reports IP 192.168.3.100 added
+Apr 16 13:31:39 master Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.100
+</code></pre>
 
 <p>然后在备用调度器上启动keepalived然后查看日志:</p>
-<div class="codehilite"><pre><span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Entering</span> <span class="n">BACKUP</span> <span class="n">STATE</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP</span> <span class="n">sockpool</span><span class="o">:</span> <span class="p">[</span><span class="n">ifindex</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">proto</span><span class="p">(</span><span class="mi">112</span><span class="p">),</span> <span class="n">fd</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">)]</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.102</span> <span class="n">added</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">Kernel</span> <span class="n">netlink</span> <span class="n">reflector</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Registering</span> <span class="n">Kernel</span> <span class="n">netlink</span> <span class="n">command</span> <span class="n">channel</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Opening</span> <span class="n">file</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">keepalived</span><span class="o">/</span><span class="n">keepalived</span><span class="p">.</span><span class="n">conf</span><span class="err">&#39;</span><span class="p">.</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Configuration</span> <span class="n">is</span> <span class="n">using</span> <span class="o">:</span> <span class="mi">8895</span> <span class="n">Bytes</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">kernel</span><span class="o">:</span> <span class="n">IPVS</span><span class="o">:</span> <span class="p">[</span><span class="n">wlc</span><span class="p">]</span> <span class="n">scheduler</span> <span class="n">registered</span><span class="p">.</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">33</span><span class="o">:</span><span class="mi">35</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Using</span> <span class="n">LinkWatch</span> <span class="n">kernel</span> <span class="n">netlink</span> <span class="n">reflector</span><span class="p">...</span>
-</pre></div>
-
+<pre><code>Apr 16 13:33:35 slave Keepalived_vrrp: VRRP_Instance(VI_1) Entering BACKUP STATE
+Apr 16 13:33:35 slave Keepalived_vrrp: VRRP sockpool: [ifindex(2), proto(112), fd(11,12)]
+Apr 16 13:33:35 slave Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.102 added
+Apr 16 13:33:35 slave Keepalived_healthcheckers: Registering Kernel netlink reflector
+Apr 16 13:33:35 slave Keepalived_healthcheckers: Registering Kernel netlink command channel
+Apr 16 13:33:35 slave Keepalived_healthcheckers: Opening file '/etc/keepalived/keepalived.conf'.
+Apr 16 13:33:35 slave Keepalived_healthcheckers: Configuration is using : 8895 Bytes
+Apr 16 13:33:35 slave kernel: IPVS: [wlc] scheduler registered.
+Apr 16 13:33:35 slave Keepalived_healthcheckers: Using LinkWatch kernel netlink reflector...
+</code></pre>
 
 <p>在主调度器上执行</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">keepalived</span> <span class="n">stop</span>
-</pre></div>
-
+<pre><code>service keepalived stop
+</code></pre>
 
 <p>查看备用调度器日志:</p>
-<div class="codehilite"><pre><span class="n">tail</span> <span class="o">-</span><span class="mi">20</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">message</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">44</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Transition</span> <span class="n">to</span> <span class="n">MASTER</span> <span class="n">STATE</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">45</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Entering</span> <span class="n">MASTER</span> <span class="n">STATE</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">45</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">setting</span> <span class="n">protocol</span> <span class="n">VIPs</span><span class="p">.</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">45</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Sending</span> <span class="n">gratuitous</span> <span class="n">ARPs</span> <span class="n">on</span> <span class="n">eth0</span> <span class="k">for</span> <span class="mf">192.168.3.100</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">45</span> <span class="n">slave</span> <span class="n">Keepalived_vrrp</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.100</span> <span class="n">added</span>
-<span class="n">Apr</span> <span class="mi">16</span> <span class="mi">13</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span><span class="mi">45</span> <span class="n">slave</span> <span class="n">Keepalived_healthcheckers</span><span class="o">:</span> <span class="n">Netlink</span> <span class="n">reflector</span> <span class="n">reports</span> <span class="n">IP</span> <span class="mf">192.168.3.100</span> <span class="n">added</span>
-</pre></div>
-
+<pre><code>tail -20 /var/log/message
+Apr 16 13:39:44 slave Keepalived_vrrp: VRRP_Instance(VI_1) Transition to MASTER STATE
+Apr 16 13:39:45 slave Keepalived_vrrp: VRRP_Instance(VI_1) Entering MASTER STATE
+Apr 16 13:39:45 slave Keepalived_vrrp: VRRP_Instance(VI_1) setting protocol VIPs.
+Apr 16 13:39:45 slave Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.100
+Apr 16 13:39:45 slave Keepalived_vrrp: Netlink reflector reports IP 192.168.3.100 added
+Apr 16 13:39:45 slave Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.100 added
+</code></pre>
 
 <p>我们看到keepalived已经成功切换.</p>
 <p>然后我们使用ipvsadm命令查看(在此之前要确认后端realserver已经启动了web服务):</p>
-<div class="codehilite"><pre><span class="n">ipvsadm</span>
-<span class="n">IP</span> <span class="n">Virtual</span> <span class="n">Server</span> <span class="n">version</span> <span class="mf">1.2.1</span> <span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
-<span class="n">Prot</span> <span class="n">LocalAddress</span><span class="o">:</span><span class="n">Port</span> <span class="n">Scheduler</span> <span class="n">Flags</span>
-  <span class="o">-&gt;</span> <span class="n">RemoteAddress</span><span class="o">:</span><span class="n">Port</span>           <span class="n">Forward</span> <span class="n">Weight</span> <span class="n">ActiveConn</span> <span class="n">InActConn</span>
-<span class="n">TCP</span>  <span class="mf">192.168.3.100</span><span class="o">:</span><span class="n">http</span> <span class="n">wlc</span>
-  <span class="o">-&gt;</span> <span class="mf">192.168.3.3</span><span class="o">:</span><span class="n">http</span>             <span class="n">Route</span>   <span class="mi">3</span>      <span class="mi">0</span>          <span class="mi">0</span>
-  <span class="o">-&gt;</span> <span class="mf">192.168.3.102</span><span class="o">:</span><span class="n">http</span>           <span class="n">Route</span>   <span class="mi">3</span>      <span class="mi">0</span>          <span class="mi">0</span>
-</pre></div>
-
+<pre><code>ipvsadm
+IP Virtual Server version 1.2.1 (size=4096)
+Prot LocalAddress:Port Scheduler Flags
+  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn
+TCP  192.168.3.100:http wlc
+  -&gt; 192.168.3.3:http             Route   3      0          0
+  -&gt; 192.168.3.102:http           Route   3      0          0
+</code></pre>
 
 <p>然后分别启动后端realserver的lvsrs服务:</p>
-<div class="codehilite"><pre><span class="n">servie</span> <span class="n">lvsrs</span> <span class="n">start</span>
-</pre></div>
-
+<pre><code>servie lvsrs start
+</code></pre>
 
 <p>然后浏览器访问192.168.3.100,如果keepalived的persistence_timeout参数值为0,而且两个后端realserver是不同的内容,刷新就可以看到两个不同的页面交替.</p></div>
         <hr />

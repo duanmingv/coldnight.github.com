@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 上网 | cold's world </title>
@@ -88,52 +88,45 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <img alt="www.linuxzen.com" src="/upload/QQ截图20120310102222.jpg" /></p>
 <p>设置好后然后点击OK保存退出.</p>
 <p>一切已经就绪,下面我们就开始我们的Linux之旅.首先进入系统,在login:界面输入root用户,然后输入安装时输入的root密码.进入系统.首先我们来配置网卡.CentOS的网卡路径在"/etc/sysconifg/network-scripts/"下面,第一个网卡一般命名为eth0,网卡配置文件则是ifcfg-eth0,第二个是eth1,配置文件ifcfg-eth1,后面的以此类推.下面我们来配置网卡:</p>
-<div class="codehilite"><pre>vi /etc/sysconfig/network-scripts/ifcfg-eth0
-</pre></div>
-
+<pre><code class="bash">vi /etc/sysconfig/network-scripts/ifcfg-eth0
+</code></pre>
 
 <p>(在这里说一下,Linux有一个很方便的功能当路径太长不方便记忆时,可打出一部分敲Tab键如果这个是唯一的就会自动补全,如果不是就敲两下Tab,就会列出所有可选内容,文件和命令一样)
 按i进入输入模式,将配置文件改成如下内容:</p>
-<div class="codehilite"><pre><span class="nv">DEVICE</span><span class="o">=</span>eth0                   <span class="c"># 设备名</span>
-<span class="nv">HWADDR</span><span class="o">=</span>00:00:00:00:01         <span class="c"># MAC地址</span>
-<span class="nv">BOOTPROTO</span><span class="o">=</span>static              <span class="c"># IP获取方式为static,如果是dhcp则是使用DHCP获取</span>
-<span class="nv">ONBOOT</span><span class="o">=</span>yes                    <span class="c"># 是否启用网卡(也就是是否在重启设备或重启网卡时启动这个网卡)</span>
-<span class="nv">IPADDR</span><span class="o">=</span>192.168.3.120          <span class="c"># IP地址</span>
-<span class="nv">NETMASK</span><span class="o">=</span>255.255.255.0         <span class="c"># 掩码</span>
-<span class="nv">GATEWAY</span><span class="o">=</span>192.168.3.254         <span class="c"># 网关(也就是刚才虚拟网卡编辑器里NAT Setting里设置的网关)</span>
-</pre></div>
-
+<pre><code class="bash">DEVICE=eth0                   # 设备名
+HWADDR=00:00:00:00:01         # MAC地址
+BOOTPROTO=static              # IP获取方式为static,如果是dhcp则是使用DHCP获取
+ONBOOT=yes                    # 是否启用网卡(也就是是否在重启设备或重启网卡时启动这个网卡)
+IPADDR=192.168.3.120          # IP地址
+NETMASK=255.255.255.0         # 掩码
+GATEWAY=192.168.3.254         # 网关(也就是刚才虚拟网卡编辑器里NAT Setting里设置的网关)
+</code></pre>
 
 <p>编辑完成后按Esc进入末行模式然后输入:wq保存退出
 然后重启网卡,如果都是[OK]的就没有问题</p>
-<div class="codehilite"><pre>service network restart
-</pre></div>
-
+<pre><code class="bash">service network restart
+</code></pre>
 
 <p>查看网络配置的命令是</p>
-<div class="codehilite"><pre>ifconfig
-</pre></div>
-
+<pre><code class="bash">ifconfig
+</code></pre>
 
 <p><img alt="www.linuxzen.com" src="/upload/QQ截图20120310104548.jpg" /></p>
 <p>ping命令用来检测网络连通性,配置好后我们ping网关测试:</p>
-<div class="codehilite"><pre>ping 192.168.3.254
-</pre></div>
-
+<pre><code class="bash">ping 192.168.3.254
+</code></pre>
 
 <p>如果显示如下则表示是通的,如果不是则表示不通
 <img alt="www.linuxzen.com" src="/upload/QQ截图20120310104753.jpg" />
 如果能正常访问网络我们还需要配置一个DNS服务器,指定一个DNS服务器的配置文件为:/etc/resolv.conf.Linux可以配置3个DNS.</p>
-<div class="codehilite"><pre>vi /etc/resolv.conf
-</pre></div>
-
+<pre><code class="bash">vi /etc/resolv.conf
+</code></pre>
 
 <p>同样按i或a进入输入模式添加如下内容:</p>
-<div class="codehilite"><pre>nameserver    192.168.3.254    <span class="c"># 本地DNS</span>
-nameserver    202.106.0.20     <span class="c"># 北京地区网通DNS</span>
-nameserver    8.8.8.8          <span class="c"># google的根DNS</span>
-</pre></div>
-
+<pre><code class="bash">nameserver    192.168.3.254    # 本地DNS
+nameserver    202.106.0.20     # 北京地区网通DNS
+nameserver    8.8.8.8          # google的根DNS
+</code></pre>
 
 <p>然后按Esc,输入:wq保存退出,然后ping <a href="http://www.linuxzen.com">www.linuxzen.com</a>看能否解析:
 <img alt="www.linuxzen.com" src="/upload/未命名.jpg" />
@@ -141,50 +134,45 @@ nameserver    8.8.8.8          <span class="c"># google的根DNS</span>
 <p>好了到这一步Linux已经可以访问internet了.下面我们就配置ssh连接虚拟机.连接ssh的软件有几款都是比较不错的,个人觉得最好的还是Secure CRT,这个是收费的但较低版本还是可以在百度/谷歌上找到特别码(你懂得),还有一款是putty,这一个款开源软件而且只有几百KB,很轻量级.</p>
 <p>我们首先要关闭selinux(一款美国国家安全局贡献出来的软件,如果会配置可以开启,如果不会就关闭)
 编辑/etc/selinux/config:</p>
-<div class="codehilite"><pre>vi /etc/selinux/config
-</pre></div>
-
+<pre><code class="bash">vi /etc/selinux/config
+</code></pre>
 
 <p>然后按i进入输入模式,修改SELINUX参数为disabled:</p>
-<div class="codehilite"><pre><span class="c"># This file controls the state of SELinux on the system.</span>
-<span class="c"># SELINUX= can take one of these three values:</span>
-<span class="c">#       enforcing - SELinux security policy is enforced.</span>
-<span class="c">#       permissive - SELinux prints warnings instead of enforcing.</span>
-<span class="c">#       disabled - SELinux is fully disabled.</span>
-<span class="nv">SELINUX</span><span class="o">=</span>disabled   <span class="c"># 修改此行</span>
-<span class="c"># SELINUXTYPE= type of policy in use. Possible values are:</span>
-<span class="c">#       targeted - Only targeted network daemons are protected.</span>
-<span class="c">#       strict - Full SELinux protection.</span>
-<span class="nv">SELINUXTYPE</span><span class="o">=</span>disabled
-</pre></div>
+<pre><code class="bash"># This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#       enforcing - SELinux security policy is enforced.
+#       permissive - SELinux prints warnings instead of enforcing.
+#       disabled - SELinux is fully disabled.
+SELINUX=disabled   # 修改此行
+# SELINUXTYPE= type of policy in use. Possible values are:
+#       targeted - Only targeted network daemons are protected.
+#       strict - Full SELinux protection.
+SELINUXTYPE=disabled
 
+</code></pre>
 
 <p>然后重启系统</p>
-<div class="codehilite"><pre>reboot
-</pre></div>
-
+<pre><code class="bash">reboot
+</code></pre>
 
 <p>然后清空系统自带防火墙</p>
-<div class="codehilite"><pre>iptables -Z
+<pre><code class="bash">iptables -Z
 iptables -F
 iptables -X
 service iptables save
-</pre></div>
-
+</code></pre>
 
 <p>然后我们就可以使用ssh连接Linux虚拟机
 首先确保Linux启动了ssh,ssh占用TCP的22端口.执行命令查看22端口是否开放:</p>
-<div class="codehilite"><pre>netstat -antlp | grep 22
-</pre></div>
-
+<pre><code class="bash">netstat -antlp | grep 22
+</code></pre>
 
 <p>如果出现如下内容则表示ssh已经启动:
 <img alt="www.linuxzen.com" src="/upload/QQ截图20120310111326.jpg" />
 如果没有启动尝试运行下面命令:</p>
-<div class="codehilite"><pre>service sshd start        <span class="c"># 启动ssh服务</span>
-chkconfig --add sshd      <span class="c"># 加入开机启动</span>
-</pre></div>
-
+<pre><code class="bash">service sshd start        # 启动ssh服务
+chkconfig --add sshd      # 加入开机启动
+</code></pre>
 
 <p>如果没报错则sshd启动成功</p>
 <p>ssh也配置成功了,下面就需要本地连接ssh了,首先我们要配置本地能访问虚拟机,不知道大家注意到们装完虚拟机我们多出两个链接分别是VMware Network Adapter VMnet1和VMware Network Adapter VMnet8,VMnet1是host only,VMnet8是NAT,我们使用的是NAT,所以配置VMware Network Adapter VMnet8就可以了,把VMware Network Adapter VMnet8配置成192.168.3.x的ip,这里使用192.168.3.111,配置过程这里不做解释了.在windows的cmd下ping 192.168.3.120,能ping通就打开你的ssh客户端软件.这里使用SecureCRT.打开SecureCRT点击快速连接:

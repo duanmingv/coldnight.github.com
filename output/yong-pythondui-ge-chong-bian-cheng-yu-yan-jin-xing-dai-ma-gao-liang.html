@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 用Python对各种编程语言进行代码高亮 | cold's world </title>
     <meta name="description" content=" &lt;p&gt;做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮&lt;/p&gt;
 &lt;p&gt;下面来介绍一下它:&lt;/p&gt;
 &lt;p&gt;首先安装很简单,使用easy_install来进行安装:&lt;/p&gt;
-&lt;div ... " />
+&lt;pre&gt;&lt;code ... " />
     <meta name="keywords" content=" 高亮,代码,python,pygments " />
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -70,31 +70,27 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="highlight"><p>做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮</p>
 <p>下面来介绍一下它:</p>
 <p>首先安装很简单,使用easy_install来进行安装:</p>
-<div class="codehilite"><pre>easy_install pygments
-</pre></div>
-
+<pre><code class="bash">easy_install pygments
+</code></pre>
 
 <p>安装完后我们来使用,Python的简单不会让大家失望:</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
-<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
-<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
+<pre><code class="python">from pygments.lexers import PythonLexver
+from pygments.formatters import HtmlFormatter
+from pygments import highlight
 
-<span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="n">linenos</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-<span class="n">code</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="s">&#39;print &quot;hello, world&quot;&#39;</span><span class="p">,</span> <span class="n">PythonLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+formatter = HtmlFormatter(encoding='utf-8', style = 'emacs', linenos = True)
+code = highlight('print &quot;hello, world&quot;', PythonLexer(), formatter)
 
-<span class="k">print</span> <span class="n">code</span>
-</pre></div>
-
+print code
+</code></pre>
 
 <h5>结果</h5>
-<div class="codehilite"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable&quot;&gt;&lt;tr&gt;&lt;td class=&quot;linenos&quot;&gt;&lt;div class=&quot;linenodiv&quot;&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello, world&amp;quot;&lt;/span&gt;</span><span class="se">\n</span><span class="s1">&lt;/pre&gt;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#39;</span>
-</pre></div>
-
+<pre><code>'&lt;table class=&quot;highlighttable&quot;&gt;&lt;tr&gt;&lt;td class=&quot;linenos&quot;&gt;&lt;div class=&quot;linenodiv&quot;&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello, world&amp;quot;&lt;/span&gt;\n&lt;/pre&gt;&lt;/div&gt;\n&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;'
+</code></pre>
 
 <p>这样就简单的对代码进行了高亮,当然如果你做了上面操作,然后把内容输入到一个文件里查看,肯定大呼坑爹,因为根本没高亮,因为默认是不会输出css的 我们还要获取css加入到html中去:</p>
-<div class="codehilite"><pre><span class="n">css</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
-</pre></div>
-
+<pre><code class="python">css = formatter.get_style_defs()
+</code></pre>
 
 <p>然后把css内容和上面的html一起写入到html文件就可以看到高亮的代码了(千万不要告诉我你不知道css应该放在什么位置)</p>
 <p>欢迎大家加入到我们的gtalk群来讨论Python/vim/Linux 或者蛋疼的时候聊聊人生,有很多好玩的功能等着大家.

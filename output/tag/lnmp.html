@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> lnmp | cold's world </title>
@@ -80,133 +80,114 @@ server:</p>
 <p>ip:192.168.3.120</p>
 <p>cacti:cacti-0.8.7i.tar.gz</p>
 <p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install lm_sensors net-snmp net-snmp-utils
-</pre></div>
-
+<pre><code class="bash">yum -y install lm_sensors net-snmp net-snmp-utils
+</code></pre>
 
 <p>同时cacti又依赖于rrdtool生成图表所以首先安装rrdtool:</p>
-<div class="codehilite"><pre>wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
-yum -y install cairo-devel glib2-devel pango-devel intltool   <span class="c"># 安装rrdtool依赖</span>
-./configure --prefix<span class="o">=</span>/usr/local
+<pre><code class="bash">wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
+yum -y install cairo-devel glib2-devel pango-devel intltool   # 安装rrdtool依赖
+./configure --prefix=/usr/local
 make &amp;amp;&amp;amp; make install
-</pre></div>
-
+</code></pre>
 
 <p>下面就来下载cacti安装:</p>
-<div class="codehilite"><pre>wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
+<pre><code class="bash">wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
 tar -zxvf cacti-0.8.7i.tar.gz
-cp -r cacti-0.8.7i /usr/local/nginx/html/cacti  <span class="c"># 复制到html目录</span>
-useradd cactiuser -M -s /sbin/nologin          <span class="c"># 创建cacti用户</span>
-chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/rra/ <span class="c"># 改变属主和属组</span>
+cp -r cacti-0.8.7i /usr/local/nginx/html/cacti  # 复制到html目录
+useradd cactiuser -M -s /sbin/nologin          # 创建cacti用户
+chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/rra/ # 改变属主和属组
 chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
-</pre></div>
-
+</code></pre>
 
 <p>然后进入到数据库创建cacti数据和创建一个用户:</p>
-<div class="codehilite"><pre>create database cactidb default character <span class="nb">set </span>utf8;   <span class="c">#创建数据库</span>
-grant all on cactidb.* to cactiuser@localhost identified by <span class="s1">&#39;123456&#39;</span>; <span class="c"># 创建一个mysql用户</span>
-use cactidb   <span class="c"># 使用刚才创建的数据库</span>
-<span class="nb">source</span> /usr/local/nginx/html/cacti/cacti.sql <span class="c"># 导入cacti数据</span>
-</pre></div>
-
+<pre><code class="bash">create database cactidb default character set utf8;   #创建数据库
+grant all on cactidb.* to cactiuser@localhost identified by '123456'; # 创建一个mysql用户
+use cactidb   # 使用刚才创建的数据库
+source /usr/local/nginx/html/cacti/cacti.sql # 导入cacti数据
+</code></pre>
 
 <p>接下来我们编辑cacti配置文件/usr/local/nginx/html/cacti/include/config.php</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/local/nginx/html/cacti/
+<pre><code class="bash">cd /usr/local/nginx/html/cacti/
 vi include/config.php
-</pre></div>
-
+</code></pre>
 
 <p>编辑下面内容:</p>
-<div class="codehilite"><pre><span class="nv">$database_type</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span>;            <span class="c"># 数据库类型</span>
-<span class="nv">$database_default</span> <span class="o">=</span> <span class="s2">&quot;cactidb&quot;</span>;       <span class="c"># 数据库名字</span>
-<span class="nv">$database_hostname</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>;    <span class="c"># 数据库主机</span>
-<span class="nv">$database_username</span> <span class="o">=</span> <span class="s2">&quot;cactiuser&quot;</span>;    <span class="c"># 数据库用户</span>
-<span class="nv">$database_password</span> <span class="o">=</span> <span class="s2">&quot;123456&quot;</span>;       <span class="c"># 数据库密码</span>
-<span class="nv">$database_port</span> <span class="o">=</span> <span class="s2">&quot;3306&quot;</span>;             <span class="c"># 数据库端口</span>
-<span class="nv">$database_ssl</span> <span class="o">=</span> <span class="nb">false</span>;
-</pre></div>
-
+<pre><code class="bash">$database_type = &quot;mysql&quot;;            # 数据库类型
+$database_default = &quot;cactidb&quot;;       # 数据库名字
+$database_hostname = &quot;localhost&quot;;    # 数据库主机
+$database_username = &quot;cactiuser&quot;;    # 数据库用户
+$database_password = &quot;123456&quot;;       # 数据库密码
+$database_port = &quot;3306&quot;;             # 数据库端口
+$database_ssl = false;
+</code></pre>
 
 <p>然后修改nginx配置文件像下面:</p>
-<div class="codehilite"><pre>        location / <span class="o">{</span>
+<pre><code class="bash">        location / {
             root   html;
             index  index.php;
-        <span class="o">}</span>
+        }
 
-        location ~ <span class="se">\.</span>php<span class="nv">$ </span><span class="o">{</span>
+        location ~ \.php$ {
             fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
             fastcgi_index       index.php;
-            fastcgi_param SCRIPT_FILENAME <span class="nv">$document_root</span>/<span class="nv">$fastcgi_script_name</span>;
+            fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
             include fastcgi_params;
             include fastcgi.conf;
-        <span class="o">}</span>
-</pre></div>
-
+        }
+</code></pre>
 
 <p>重启nginx</p>
-<div class="codehilite"><pre>pkill -9 nginx
+<pre><code class="bash">pkill -9 nginx
 /usr/local/nginx/sbin/nginx
-</pre></div>
-
+</code></pre>
 
 <p>然后设置php时区,</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/local/nginx/html/cacti/
+<pre><code class="bash">cd /usr/local/nginx/html/cacti/
 vi include/global_constants.php
-</pre></div>
-
+</code></pre>
 
 <p>在第二行添加</p>
-<div class="codehilite"><pre>date_default_timezone_set<span class="o">(</span><span class="s2">&quot;Asia/Chongqing&quot;</span><span class="o">)</span>;
-</pre></div>
-
+<pre><code class="bash">date_default_timezone_set(&quot;Asia/Chongqing&quot;);
+</code></pre>
 
 <p>接下来配置snmp,编辑/etc/snmp/snmpd.conf</p>
-<div class="codehilite"><pre>vi /etc/snmp/snmpd.conf
-</pre></div>
-
+<pre><code class="bash">vi /etc/snmp/snmpd.conf
+</code></pre>
 
 <p>然后找到41行将public改成一个较为复杂的名字:</p>
-<div class="codehilite"><pre>com2sec notConfigUser  default       public
-</pre></div>
-
+<pre><code class="bash">com2sec notConfigUser  default       public
+</code></pre>
 
 <p>然后找到62行</p>
-<div class="codehilite"><pre>access  notConfigGroup <span class="s2">&quot;&quot;</span>      any       noauth    exact  systemview none none
-</pre></div>
-
+<pre><code class="bash">access  notConfigGroup &quot;&quot;      any       noauth    exact  systemview none none
+</code></pre>
 
 <p>将systemview改成all:</p>
-<div class="codehilite"><pre>access  notConfigGroup <span class="s2">&quot;&quot;</span>      any       noauth    exact  all none none
-</pre></div>
-
+<pre><code class="bash">access  notConfigGroup &quot;&quot;      any       noauth    exact  all none none
+</code></pre>
 
 <p>然后去掉85行的注释:</p>
-<div class="codehilite"><pre>view all    included  .1                               80
-</pre></div>
-
+<pre><code class="bash">view all    included  .1                               80
+</code></pre>
 
 <p>保存配置文件后启动snmp</p>
-<div class="codehilite"><pre>service snmpd start
-</pre></div>
-
+<pre><code class="bash">service snmpd start
+</code></pre>
 
 <p>然后在浏览器里输入:http://192.168.3.120/cacti/
 然后根据提示一步步安装,安装好后使用admin密码admin登录.如果点击graphs不能显示图像的话执行:</p>
-<div class="codehilite"><pre>php /usr/local/nginx/html/cacti/poller.php   <span class="c"># nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟</span>
-</pre></div>
-
+<pre><code class="bash">php /usr/local/nginx/html/cacti/poller.php   # nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟
+</code></pre>
 
 <p>为了方便把这句加入到cron,执行:</p>
-<div class="codehilite"><pre>yum -y install vixie-cron  <span class="c">#安装</span>
+<pre><code class="bash">yum -y install vixie-cron  #安装
 service crond start
 crontab -e
-</pre></div>
-
+</code></pre>
 
 <p>添加如下内容:</p>
-<div class="codehilite"><pre>*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
-</pre></div>
-
+<pre><code class="bash">*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
+</code></pre>
 
 <p>好了这时候我们就可以打开查看生成的图像了.
 注意如果报如下错误:
@@ -234,19 +215,16 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
-<div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
-</pre></div>
-
+<pre><code class="bash">abc-0.1.3-el5.centos.rpm
+</code></pre>
 
 <p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
-<div class="codehilite"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
-</pre></div>
-
+<pre><code class="bash">rpm -ivh abc-0.1.3-el5.centos.rpm    # i是安装 v是显示详细信息,-h显示安装进度
+</code></pre>
 
 <p>卸载这个包使用:</p>
-<div class="codehilite"><pre>rpm -e abc
-</pre></div>
-
+<pre><code class="bash">rpm -e abc
+</code></pre>
 
 <p>卸载只要指定包名即可卸载.</p>
 <p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>

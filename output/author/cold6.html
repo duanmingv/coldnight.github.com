@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
@@ -95,12 +95,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
 <p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
 <h3>安装easy_install</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
-</pre></div>
-
+<pre><code>sudo apt-get install python-pip
+</code></pre>
 
 <h3>使用easy_install安装web.py</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
+<pre><code>sudo easy_install web.py ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
     </div>	
 				
     
@@ -126,9 +125,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>当然我们可以不仅仅把<code>Tornado</code>看作是一个web框架和web服务器, 我们可以利用<code>Tornado</code>提供的接口进行高效的网络异步编程,</p>
 <p><code>tornado.ioloop.IOLoop</code> 提供了三个接口可以用于网络编程:</p>
 <h3>add_handler</h3>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">read more</a></div>
+<pre><code class="python">def add_handler(self, fd, handler, events):
+    self._handlers[fd] = stack_context.wrap(handler)
+    self._impl.register(fd, events | self.ERROR ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">read more</a></div>
     </div>	
 				
     
@@ -154,13 +153,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <a href="https://github.com/coldnight/qxbot/tree/threading_version">thread_version</a></p>
 <h2>优化</h2>
 <p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   Wood.D</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/03/04 09:58:26</span>
-<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   Wood.D
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/03/04 09:58:26
+#   Desc    :   Http Socket 实现 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
     </div>	
 				
     
@@ -181,29 +180,26 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
 <p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="python">import time
 
-<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">return</span> <span class="n">r</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</pre></div>
-
+def run_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        r = func(*args, **kwargs)
+        print time.time() - start
+        return r
+    return wrapper
+</code></pre>
 
 <p>我们用这个装饰器装饰一个<code>test</code>函数</p>
-<div class="codehilite"><pre><span class="nd">@run_time</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
-</pre></div>
-
+<pre><code class="python">@run_time
+def test():
+    print &quot;just a test&quot;
+</code></pre>
 
 <p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
-<div class="codehilite"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</pre></div>
-
+<pre><code class="python">test = run_time(test)
+</code></pre>
 
 <p>装饰器将在解释器运行一开始就被加载 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">read more</a></div>
     </div>	
@@ -225,18 +221,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
-<div class="codehilite"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
-</pre></div>
-
+<pre><code class="python">engine = create_engine(&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;)
+</code></pre>
 
 <p>但是这并不行, 然后查看表信息:</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
-<span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
-  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">read more</a></div>
+<pre><code class="mysql">&gt; show create table clubot_members;
+clubot_members | CREATE TABLE `clubot_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) DEFAULT NULL,
+  `nick` varchar(50) DEFAULT NULL,
+  `last_say` timestamp NULL DEFAULT NULL,
+  `last_change` timestamp NULL DEFAULT ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">read more</a></div>
     </div>	
 				
     
@@ -292,9 +287,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
 后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
 <h2>1 安装Terminator</h2>
-<div class="codehilite"><pre>sudo apt-get install terminator
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install terminator
+</code></pre>
 
 <h2>2 使用</h2>
 <p>打开Termintor按<code>Ctrl-E</code>(注意是大E要按住Shift)可以垂直分割终端
@@ -304,8 +298,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <h3>2.1 配置</h3>
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
-<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
-<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
+<pre><code class="conf">font = Monaco 10  #设置体字
+background_color = &quot;#204070&quot; # 背景颜色 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
     </div>	
 				
     
@@ -325,17 +319,17 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
-<div class="codehilite"><pre><span class="c">&quot;   Author  :   cold</span>
-<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
-<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
-<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
-<span class="c">&quot;   Useage  :</span>
-<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
-<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
-<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
+<pre><code class="vim">&quot;   Author  :   cold
+&quot;   E-mail  :   wh_linux@126.com
+&quot;   Date    :   2012/12/20 16:23
+&quot;   Desc    :   英汉/汉英翻译插件
+&quot;   Useage  :
+&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行
+&quot;                  &lt;Leader&gt; lt 翻译当前行
+&quot;                  &lt;Leader&gt; vt 翻译选中的内容
 
-<span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
+function GetCursorWord()
+    let column = get(getpos('.'), 2, 0 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
     </div>	
 				
     
@@ -355,18 +349,18 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
-<div class="codehilite"><pre><span class="c">&quot;Python 注释</span>
-<span class="k">function</span> InsertPythonComment<span class="p">()</span>
-    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
-    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
-        <span class="k">return</span>
-    <span class="k">endif</span>
+<pre><code class="vim">&quot;Python 注释
+function InsertPythonComment()
+    exe 'normal'.1.'G'
+    let line = getline('.')
+    if line =~ '^#!.*$' || line =~ '^#.*coding:.*$'
+        return
+    endif
     normal O
-    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
-    normal <span class="k">o</span>
-    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
-    normal <span class="k">o ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html">read more</a></div>
+    call setline('.', '#!/usr/bin/env python')
+    normal o
+    call setline('.', '# -*- coding:utf-8 -*-')
+    normal o ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

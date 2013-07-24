@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 列表 | cold's world </title>
@@ -79,66 +79,63 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面我们来介绍这些特性</p>
 <p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
 如下面代码:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span> <span class="o">=</span> <span class="n">names</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cold night&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span>
-<span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen&#39;</span><span class="p">,</span> <span class="s">&#39;cold night&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span>
-<span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen&#39;</span><span class="p">,</span> <span class="s">&#39;cold night&#39;</span><span class="p">]</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; info = dict(name='cold', blog='www.linuxzen.com') # 创建字典{'name':'cold', 'blog':'www.linuxzen.com'}
+&gt;&gt;&gt; info2 = info     # 赋值给info2
+&gt;&gt;&gt; info2['name'] = 'cold night'
+&gt;&gt;&gt; info
+&gt;&gt;&gt; info2
+{'blog': 'www.linuxzen.com', 'name': 'cold night'}
+&gt;&gt;&gt; info
+{'blog': 'www.linuxzen.com', 'name': 'cold night'}
+&gt;&gt;&gt; names = ['cold', 'night', 'linuxzen']
+&gt;&gt;&gt; names2 = names
+&gt;&gt;&gt; names2.append('cold night')
+&gt;&gt;&gt; names
+['cold', 'night', 'linuxzen', 'cold night']
+&gt;&gt;&gt; names2
+['cold', 'night', 'linuxzen', 'cold night']
+</code></pre>
 
 <p>大家看到如果将列表或者字典重新赋值给另外一个变量并没有达到预想的效果,
 我们更改一个的同时另外一个也在同时更改,如果我们想保留一个快照,很明显我们
 没有达到我们想要的效果,另外还有一种常见的使用,因为我们知道普通变量传递给
 函数,函数在内部更改是不会影响到外部变量的,那么列表和字典呢?
 我们来看如下代码,我们创建一个函数,是字典就添加一个键和值,是列表就在尾部添加一个元素</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">add_something</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-<span class="o">...</span>     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="o">...</span>             <span class="n">info</span><span class="p">[</span><span class="s">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Hello,&#39;</span><span class="o">+</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
-<span class="o">...</span>     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
-<span class="o">...</span>             <span class="n">info</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;add to the list&#39;</span><span class="p">)</span>
-<span class="o">...</span> 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;blog&#39;</span><span class="p">:</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">add_something</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;msg&#39;</span><span class="p">:</span> <span class="s">&#39;Hello,cold&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">add_something</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span>
-<span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;add to the list&#39;</span><span class="p">]</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; def add_something(info):
+...     if type(info) == dict:
+...             info['msg'] = 'Hello,'+ info['name']
+...     elif type(info) == list:
+...             info.append('add to the list')
+... 
+&gt;&gt;&gt; info = {'name':'cold', 'blog':'www.linuxzen.com'}
+&gt;&gt;&gt; add_something(info)
+&gt;&gt;&gt; info
+{'blog': 'www.linuxzen.com', 'msg': 'Hello,cold', 'name': 'cold'}
+&gt;&gt;&gt; names = ['cold', 'night', 'linuxzen.com']
+&gt;&gt;&gt; add_something(names)
+&gt;&gt;&gt; names
+['cold', 'night', 'linuxzen.com', 'add to the list']
+</code></pre>
 
 <p>如上代码明显不是我们想要的结果,如果这个列表/字典仅仅用在一个地方可能不会发生什么
 如果我们其他地方需要同样的列表进行处理,如果你不知道这个特性就会产生很难寻找的bug
 当上面并不是我们想要的我们该如何避免上面呢,我们可以对列表/字典做一个拷贝,而不是
 简单的引用</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span> <span class="o">=</span> <span class="n">names</span><span class="p">[:]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cold night&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names</span>
-<span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span>
-<span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;cold night&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;cold night&#39;</span><span class="p">,</span> <span class="s">&#39;blog&#39;</span><span class="p">:</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold&#39;</span><span class="p">}</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; names = ['cold', 'night', 'linuxzen.com']
+&gt;&gt;&gt; names2 = names[:]
+&gt;&gt;&gt; names2.append('cold night')
+&gt;&gt;&gt; names
+['cold', 'night', 'linuxzen.com']
+&gt;&gt;&gt; names2
+['cold', 'night', 'linuxzen.com', 'cold night']
+&gt;&gt;&gt; info = {'name':'cold night', 'blog':'www.linuxzen.com'}
+&gt;&gt;&gt; info2 = info.copy()
+&gt;&gt;&gt; info2['name'] = 'cold'
+&gt;&gt;&gt; info
+{'blog': 'www.linuxzen.com', 'name': 'cold night'}
+&gt;&gt;&gt; info2
+{'blog': 'www.linuxzen.com', 'name': 'cold'}
+</code></pre>
 
 <p>上面代码列表使用[:]可以创建一个列表的副本而不是引用
 字典的copy方法同样可以创建一个字典的副本而不是引用
@@ -167,11 +164,10 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h3>lambda</h3>
 <p>Python用于支持将函数赋值给变量的一个操作符
 默认是返回的,所以不用再加return关键字,不然会报错</p>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
-<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
-<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
-</pre></div>
-
+<pre><code class="python">result = lambda x:  x * x
+result(2) # return 4
+map()/filter()/reduce()
+</code></pre>
 
 <p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
 <h3>map()</h3>
@@ -181,9 +177,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h3>reduce()</h3>
 <p>将序列中的元素通过一个二元函数处理返回一个结果</p>
 <h2>将上面三个函数和lambda结合使用</h2>
-<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="c"># 序列中的每个元素加1</span>
-<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
+<pre><code class="python">li = [1, 2, 3, 4, 5]
+# 序列中的每个元素加1
+map(lambda x: x+1, li) # [2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
     </div>	
 				
     
@@ -205,17 +201,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>这里介绍几个常用的列表操作</p>
 <h3>添加元素</h3>
 <p>添加元素使用列表的内置方法append</p>
-<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
-</pre></div>
-
+<pre><code class="python">number = [1, 2, 3, 4]
+number.append(5) # number = [1, 2, 3, 4, 5]
+number.append([6,7]) # number = [1, 2, 3, 4, 5, [6, 7]]
+number.append({'a':'b'}) # number = [1, 2, 3, 4, [6, 7], {'a', :'b'}
+</code></pre>
 
 <p>可以看到强大的python列表可以嵌套任意类型</p>
 <h3>列表相加</h3>
 <p>要想连接两个列表,可以使用+号连接</p>
-<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
+<pre><code class="python">a = [1, 2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

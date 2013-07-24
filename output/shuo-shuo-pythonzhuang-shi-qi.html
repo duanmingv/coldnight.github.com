@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 说说Python装饰器 | cold's world </title>
     <meta name="description" content=" &lt;p&gt;装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解&lt;/p&gt;
 &lt;p&gt;所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器&lt;/p&gt;
-&lt;div ... " />
+&lt;pre&gt;&lt;code ... " />
     <meta name="keywords" content=" Python,装饰器 " />
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,48 +68,44 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 	
         <div class="highlight"><p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
 <p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="python">import time
 
-<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">return</span> <span class="n">r</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</pre></div>
-
+def run_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        r = func(*args, **kwargs)
+        print time.time() - start
+        return r
+    return wrapper
+</code></pre>
 
 <p>我们用这个装饰器装饰一个<code>test</code>函数</p>
-<div class="codehilite"><pre><span class="nd">@run_time</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
-</pre></div>
-
+<pre><code class="python">@run_time
+def test():
+    print &quot;just a test&quot;
+</code></pre>
 
 <p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
-<div class="codehilite"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</pre></div>
-
+<pre><code class="python">test = run_time(test)
+</code></pre>
 
 <p>装饰器将在解释器运行一开始就被加载, 从而将被装饰的函数将被展开成如上方式, 因为 <code>run_time</code>装饰器返回<code>wrapper</code>函数, 所以当调用<code>test</code>函数时其实就是对<code>wrapper</code>的调用</p>
 <p>如果你在Python shell下执行以上语句就会发现定义完<code>test</code>函数然后查看<code>test</code>时, shell所展示的是wrapper函数:
 <a href="http://www.linuxzen.com"><img alt="说说Python装饰器" src="/static/upload/pyshell.png" /></a></p>
 <hr />
 <p>接下来说说如何编写带参数的装饰器, 大家如果细心的话就可以发现其实带参数的装饰器是经过调用"装饰器"函数返回的一个装饰器, 之所以装饰器上打引号是说明其实这个所谓的"装饰器"只不过是一个普通的函数, 但这个普通的函数返回一个装饰器, 可以参看下面例子:</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">time</span>
+<pre><code class="python">import time
 
-<span class="k">def</span> <span class="nf">route</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="n">func</span><span class="o">.</span><span class="n">__url__</span> <span class="o">=</span> <span class="n">url</span>
-        <span class="k">return</span> <span class="n">func</span>
-    <span class="k">return</span> <span class="n">decorator</span>
+def route(url):
+    def decorator(func):
+        func.__url__ = url
+        return func
+    return decorator
 
-<span class="nd">@route</span><span class="p">(</span><span class="s">r&quot;/&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="k">return</span> <span class="s">&quot;Hi&quot;</span>
-</pre></div>
-
+@route(r&quot;/&quot;)
+def index():
+    return &quot;Hi&quot;
+</code></pre>
 
 <p>大家可以发现在使用<code>route</code>装饰器时我们其实是调用了<code>route</code>函数, <code>route</code>函数返回一个<code>decorator</code>装饰器, 因为我们不需要在装饰器内运行函数, 所以不需要一个<code>wrapper</code>函数来收集参数.</p>
 <hr />

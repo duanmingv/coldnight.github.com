@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> Vim配置系列(一) ---- 插件管理 | cold's world </title>
@@ -66,70 +66,65 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 	
         <div class="highlight"><p>最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
 首先在你的~/.vim下或者$VIM/vimfiles($VIM是vim的安装路径)创建bundle目录</p>
-<div class="codehilite"><pre>mkdir ~/.vim/bundle
-</pre></div>
-
+<pre><code class="bash">mkdir ~/.vim/bundle
+</code></pre>
 
 <p>然后使用git克隆Vundle项目:</p>
-<div class="codehilite"><pre>git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-</pre></div>
-
+<pre><code class="bash">git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+</code></pre>
 
 <p>然后在你的.vimrc里添加下面内容:</p>
-<div class="codehilite"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
-<span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型</span>
-<span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle/vundle             <span class="c">&quot; 将vundle路径添加到插件vim路径</span>
-<span class="k">call</span> vundle#rc<span class="p">()</span>                          <span class="c">&quot; 执行Vundle初始化</span>
-Bundle <span class="s1">&#39;gmarik/vundle&#39;</span>                    <span class="c">&quot; 将Vundle加入到bundle</span>
+<pre><code class="vim">set nocompatible
+filetype off                              &quot; 先关闭文件类型
+set rtp+=~/.vim/bundle/vundle             &quot; 将vundle路径添加到插件vim路径
+call vundle#rc()                          &quot; 执行Vundle初始化
+Bundle 'gmarik/vundle'                    &quot; 将Vundle加入到bundle
 
-<span class="k">filetype</span> indent plugin <span class="k">on</span>                 <span class="c">&quot; 安装完后打开文件类型</span>
-</pre></div>
-
+filetype indent plugin on                 &quot; 安装完后打开文件类型
+</code></pre>
 
 <p>如需加上插件则在Bundle 'gmarik/vundle'后加上相应的Bundle,如果是github则可以只输入后面的相对路径,如果是其他git则需输入全部url,下面给出一个完整的例子:</p>
-<div class="codehilite"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
-<span class="k">filetype</span> off
-<span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle/vundle
-<span class="k">call</span> vundle#rc<span class="p">()</span>
-Bundle <span class="s1">&#39;gmarik/vundle&#39;</span>
-<span class="c">&quot;Bundle &quot;MarcWeber/vim-addon-mw-utils&quot;</span>
-<span class="c">&quot;Bundle &quot;tomtom/tlib_vim&quot;</span>
-<span class="c">&quot;Bundle &quot;honza/snipmate-snippets&quot;</span>
-<span class="c">&quot;Bundle &quot;garbas/vim-snipmate&quot;</span>
-Bundle <span class="s2">&quot;Shougo/neocomplcache&quot;</span>
-Bundle <span class="s2">&quot;Lokaltog/vim-powerline&quot;</span>
-Bundle <span class="s2">&quot;drakeguan/vim-vcscommand&quot;</span>
-Bundle <span class="s2">&quot;scrooloose/nerdtree&quot;</span>
-Bundle <span class="s2">&quot;pix/vim-taglist&quot;</span>
-Bundle <span class="s2">&quot;nathanaelkane/vim-indent-guides&quot;</span>
-Bundle <span class="s2">&quot;clones/vim-cecutil&quot;</span>
-Bundle <span class="s2">&quot;tpope/vim-fugitive&quot;</span>
-<span class="c">&quot;Bundle &quot;c9s/bufexplorer&quot;</span>
-Bundle <span class="s2">&quot;jnwhiteh/vim-golang&quot;</span>
-Bundle <span class="s2">&quot;kevinw/pyflakes-vim&quot;</span>
-Bundle <span class="s2">&quot;mbriggs/mark.vim&quot;</span>
-<span class="c">&quot;Bundle &quot;vim-scripts/TabBar&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/DrawIt&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/calendar.vim--Matsumoto&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/Python-mode-klen&quot;</span>
-<span class="c">&quot;Bundle &quot;vim-scripts/pydoc.vim&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/VOoM&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/qiushibaike&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/AuthorInfo&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/javacomplete&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/javaDoc.vim&quot;</span>
-Bundle <span class="s2">&quot;drmingdrmer/xptemplate.git&quot;</span>
-Bundle <span class="s2">&quot;vim-scripts/Java-Syntax-and-Folding&quot;</span>
+<pre><code class="vim">set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+Bundle 'gmarik/vundle'
+&quot;Bundle &quot;MarcWeber/vim-addon-mw-utils&quot;
+&quot;Bundle &quot;tomtom/tlib_vim&quot;
+&quot;Bundle &quot;honza/snipmate-snippets&quot;
+&quot;Bundle &quot;garbas/vim-snipmate&quot;
+Bundle &quot;Shougo/neocomplcache&quot;
+Bundle &quot;Lokaltog/vim-powerline&quot;
+Bundle &quot;drakeguan/vim-vcscommand&quot;
+Bundle &quot;scrooloose/nerdtree&quot;
+Bundle &quot;pix/vim-taglist&quot;
+Bundle &quot;nathanaelkane/vim-indent-guides&quot;
+Bundle &quot;clones/vim-cecutil&quot;
+Bundle &quot;tpope/vim-fugitive&quot;
+&quot;Bundle &quot;c9s/bufexplorer&quot;
+Bundle &quot;jnwhiteh/vim-golang&quot;
+Bundle &quot;kevinw/pyflakes-vim&quot;
+Bundle &quot;mbriggs/mark.vim&quot;
+&quot;Bundle &quot;vim-scripts/TabBar&quot;
+Bundle &quot;vim-scripts/DrawIt&quot;
+Bundle &quot;vim-scripts/calendar.vim--Matsumoto&quot;
+Bundle &quot;vim-scripts/Python-mode-klen&quot;
+&quot;Bundle &quot;vim-scripts/pydoc.vim&quot;
+Bundle &quot;vim-scripts/VOoM&quot;
+Bundle &quot;vim-scripts/qiushibaike&quot;
+Bundle &quot;vim-scripts/AuthorInfo&quot;
+Bundle &quot;vim-scripts/javacomplete&quot;
+Bundle &quot;vim-scripts/javaDoc.vim&quot;
+Bundle &quot;drmingdrmer/xptemplate.git&quot;
+Bundle &quot;vim-scripts/Java-Syntax-and-Folding&quot;
 
-<span class="k">filetype</span> indent plugin <span class="k">on</span>
-</pre></div>
-
+filetype indent plugin on
+</code></pre>
 
 <p>以上是我的Vundle配置,再后面的文章会对其中一些做出介绍:</p>
 <p>配置完后保存使用Vim打开任意文档执行</p>
-<div class="codehilite"><pre><span class="p">:</span>BundleInstall
-</pre></div>
-
+<pre><code class="vim">:BundleInstall
+</code></pre>
 
 <p>如果网络通畅Bundle会逐个安装每个插件.</p>
 <p>同时还有:BundleSearch用于搜索插件,非常方便.</p></div>

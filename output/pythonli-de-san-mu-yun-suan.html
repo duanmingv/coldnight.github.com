@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> python里的三目运算 | cold's world </title>
@@ -78,23 +78,22 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>如果or任意一个值为真,则立刻返回这个值
 如果所有值都为假,则or返回最后一个假值</p>
 <h3>例子</h3>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
-<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
+<pre><code class="python">result = 'test' and True # result = True
+result = 'test' and 'ortest' # result = ortest
+result = False and 'ortest' # result = False
+result = '' and None  # result = ''
 
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or</span> <span class="s">&quot;Hall&quot;</span> <span class="c"># result = Hall</span>
-<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">or</span> <span class="bp">None</span> <span class="c"># result = None</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">or</span> <span class="s">&#39;nottest&#39;</span> <span class="c"># result = test</span>
-</pre></div>
-
+result = '' or &quot;Hall&quot; # result = Hall
+result = False or None # result = None
+result = 'test' or 'nottest' # result = test
+</code></pre>
 
 <h2>使用单行if else 模拟三目运算</h2>
 <p>result if True / False else fresult
 if为真时候结果为result,为假的时候结果为fresult</p>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="k">if</span> <span class="bp">True</span> <span class="k">else</span> <span class="s">&#39;not test&#39;</span> <span class="c"># result = &#39;test&#39;</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="k">if</span> <span class="bp">False</span> <span class="k">else</span> <span class="s">&#39;not test&#39;</span> <span class="c"># result = &#39;not test&#39;</span>
-</pre></div></div>
+<pre><code class="python">result = 'test' if True else 'not test' # result = 'test'
+result = 'test' if False else 'not test' # result = 'not test'
+</code></pre></div>
 
         	    <div class="footer">
             <ul class="tags">                <li>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> Gentoo | cold's world </title>
@@ -76,213 +76,193 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 ip:192.168.3.1</p>
 <p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
 首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
-</pre></div>
-
+<pre><code class="python">emerge vim
+</code></pre>
 
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang/python/
+<pre><code class="bash">cd /usr/portage/dev-lang/python/
 emerge python-2.7.2-r3.ebuild
-</pre></div>
-
+</code></pre>
 
 <p>等待安装完成后使系统默认使用python2.7,先查看默认项</p>
-<div class="codehilite"><pre><span class="n">eselect</span> <span class="n">python</span> <span class="n">list</span>
-<span class="n">Available</span> <span class="n">Python</span> <span class="n">interpreters</span><span class="o">:</span>
-  <span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="n">python2</span><span class="mf">.7</span> 
-  <span class="p">[</span><span class="mi">2</span><span class="p">]</span>   <span class="n">python3</span><span class="mf">.2</span> <span class="o">*</span>
-</pre></div>
-
+<pre><code>eselect python list
+Available Python interpreters:
+  [1]   python2.7 
+  [2]   python3.2 *
+</code></pre>
 
 <p>默认使用3.2,选择python2.7</p>
-<div class="codehilite"><pre>eselect python <span class="nb">set </span>1
-</pre></div>
-
+<pre><code class="bash">eselect python set 1
+</code></pre>
 
 <p>选择过后别忘记执行:</p>
-<div class="codehilite"><pre>python-updater
-</pre></div>
-
+<pre><code class="bash">python-updater
+</code></pre>
 
 <p>好了我已经将python换成了常用的python2.7,下面来安装easy_install:</p>
-<div class="codehilite"><pre>emerge setuptools
-</pre></div>
-
+<pre><code class="bash">emerge setuptools
+</code></pre>
 
 <p>安装完后使用easy_install安装bottle框架和mongodb驱动:</p>
-<div class="codehilite"><pre>easy_install bottle
+<pre><code class="bash">easy_install bottle
 easy_install pymogon
-</pre></div>
-
+</code></pre>
 
 <p>安装uwsgi/nginx/virtualenv:</p>
-<div class="codehilite"><pre>emerge nginx
+<pre><code class="bash">emerge nginx
 emerge uwsgi
 emerge virtualenv
-</pre></div>
-
+</code></pre>
 
 <h3>使用virtualenv创建应用</h3>
 <p>我们使用virtualenv创建一个应用:</p>
-<div class="codehilite"><pre>mkdir /code/python
+<pre><code class="bash">mkdir /code/python
 virtualenv /code/python
-<span class="nb">source </span>bin/activate
-</pre></div>
-
+source bin/activate
+</code></pre>
 
 <p>然后查看应用目录下会多出几个目录.</p>
 <h3>配置uWSGI</h3>
 <p>首先创建一个uwsgi配置文件,并编辑它:</p>
-<div class="codehilite"><pre>cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
+<pre><code class="bash">cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
 vi /etc/conf.d/uwsgi.py
-</pre></div>
-
+</code></pre>
 
 <p>改成内如如下:</p>
-<div class="codehilite"><pre><span class="cp"># Distributed under the terms of the GNU General Public License v2</span>
-<span class="cp"># $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $</span>
+<pre><code class="conf"># Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $
 
-<span class="cp"># DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!</span>
+# DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!
 
-<span class="cp"># Path (or name) of UNIX/TCP socket to bind to</span>
-<span class="cp">#</span>
-<span class="n">UWSGI_SOCKET</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">bottle</span><span class="p">.</span><span class="n">sock</span>            <span class="err">#</span> <span class="err">使用</span><span class="n">unix</span> <span class="n">socket</span>
+# Path (or name) of UNIX/TCP socket to bind to
+#
+UWSGI_SOCKET=/var/tmp/bottle.sock            # 使用unix socket
 
-<span class="cp"># Enable threads?</span>
-<span class="cp">#</span>
-<span class="n">UWSGI_THREADS</span><span class="o">=</span><span class="mi">1</span>
+# Enable threads?
+#
+UWSGI_THREADS=1
 
-<span class="cp"># The path to your uWSGI application.</span>
-<span class="cp">#</span>
-<span class="cp">#UWSGI_PROGRAM=</span>
+# The path to your uWSGI application.
+#
+#UWSGI_PROGRAM=
 
-<span class="cp"># The path to your uWSGI xml config file.</span>
-<span class="cp">#</span>
-<span class="n">UWSGI_XML_CONFIG</span><span class="o">=/</span><span class="n">code</span><span class="o">/</span><span class="n">bottle</span><span class="p">.</span><span class="n">xml</span>               <span class="err">#</span> <span class="err">使用</span><span class="n">xml</span><span class="err">配置文件</span>
+# The path to your uWSGI xml config file.
+#
+UWSGI_XML_CONFIG=/code/bottle.xml               # 使用xml配置文件
 
-<span class="cp"># The number of child processes to spawn. The default is 1.</span>
-<span class="cp">#</span>
-<span class="n">UWSGI_CHILDREN</span><span class="o">=</span><span class="mi">1</span>
+# The number of child processes to spawn. The default is 1.
+#
+UWSGI_CHILDREN=1
 
-<span class="cp"># The log file path. If empty logging is disabled</span>
-<span class="cp">#</span>
-<span class="n">UWSGI_LOG_FILE</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">uwsgi</span><span class="p">.</span><span class="n">log</span>                    <span class="err">#</span> <span class="err">定义日志</span>
+# The log file path. If empty logging is disabled
+#
+UWSGI_LOG_FILE=/var/log/uwsgi.log                    # 定义日志
 
-<span class="cp"># If you want to run your application inside a chroot then specify the</span>
-<span class="cp"># directory here. Leave this blank otherwise.</span>
-<span class="cp">#</span>
-<span class="cp">#UWSGI_CHROOT=/code/python</span>
+# If you want to run your application inside a chroot then specify the
+# directory here. Leave this blank otherwise.
+#
+#UWSGI_CHROOT=/code/python
 
-<span class="cp"># If you want to run your application from a specific directiory specify</span>
-<span class="cp"># it here. Leave this blank otherwise.</span>
-<span class="cp">#</span>
-<span class="cp"># UWSGI_DIR=</span>
+# If you want to run your application from a specific directiory specify
+# it here. Leave this blank otherwise.
+#
+# UWSGI_DIR=
 
-<span class="cp"># The user and group to run your application as. If you do not specify these,</span>
-<span class="cp"># the application will be run as root:root.</span>
-<span class="cp">#</span>
-<span class="n">UWSGI_USER</span><span class="o">=</span>
+# The user and group to run your application as. If you do not specify these,
+# the application will be run as root:root.
+#
+UWSGI_USER=
 
-<span class="cp"># Additional options you might want to pass to uWSGI</span>
-<span class="cp">#</span>
-<span class="cp">#UWSGI_EXTRA_OPTIONS=</span>
-</pre></div>
-
+# Additional options you might want to pass to uWSGI
+#
+#UWSGI_EXTRA_OPTIONS=
+</code></pre>
 
 <p>然后创建bottle.xml配置文件:</p>
-<div class="codehilite"><pre>vi /code/bottle.xml
-</pre></div>
-
+<pre><code class="bash">vi /code/bottle.xml
+</code></pre>
 
 <p>内容如下:</p>
-<div class="codehilite"><pre><span class="nt">&lt;uwsgi&gt;</span>
-        <span class="nt">&lt;socket&gt;</span>/var/tmp/bottle.sock<span class="nt">&lt;/socket&gt;</span>
-        <span class="nt">&lt;home&gt;</span>/code/python<span class="nt">&lt;/home&gt;</span>
-        <span class="nt">&lt;chdir&gt;</span>/code/python<span class="nt">&lt;/chdir&gt;</span>
-        <span class="nt">&lt;python-path&gt;</span>/code/python<span class="nt">&lt;/python-path&gt;</span>
-        <span class="nt">&lt;module&gt;</span>index<span class="nt">&lt;/module&gt;</span>
-        <span class="nt">&lt;master/&gt;</span>
-        <span class="nt">&lt;memory/&gt;</span>
-        <span class="nt">&lt;logto&gt;</span>/var/log/bottle.log<span class="nt">&lt;/logto&gt;</span>
-        <span class="nt">&lt;daemonize&gt;</span>/var/log/uwsgi.log<span class="nt">&lt;/daemonize&gt;</span>
-<span class="nt">&lt;/uwsgi&gt;</span>
-</pre></div>
-
+<pre><code class="xml">&lt;uwsgi&gt;
+        &lt;socket&gt;/var/tmp/bottle.sock&lt;/socket&gt;
+        &lt;home&gt;/code/python&lt;/home&gt;
+        &lt;chdir&gt;/code/python&lt;/chdir&gt;
+        &lt;python-path&gt;/code/python&lt;/python-path&gt;
+        &lt;module&gt;index&lt;/module&gt;
+        &lt;master/&gt;
+        &lt;memory/&gt;
+        &lt;logto&gt;/var/log/bottle.log&lt;/logto&gt;
+        &lt;daemonize&gt;/var/log/uwsgi.log&lt;/daemonize&gt;
+&lt;/uwsgi&gt;
+</code></pre>
 
 <p>其中<module></module>定义的就是你的web程序,也就是/code/python下要有一个index.py.</p>
 <p>配置完毕后创建启动脚本:</p>
-<div class="codehilite"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span>
-</pre></div>
-
+<pre><code>ln -sf /etc/init.d/uwsgi /etc/init.d/uwsgi.py
+</code></pre>
 
 <p>并加入开机启动:</p>
-<div class="codehilite"><pre><span class="n">rc</span><span class="o">-</span><span class="n">update</span> <span class="n">add</span> <span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span> <span class="k">default</span>
-</pre></div>
-
+<pre><code>rc-update add uwsgi.py default
+</code></pre>
 
 <h3>配置nginx</h3>
 <p>编辑配置文件:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">conf</span>
-</pre></div>
-
+<pre><code>vi /etc/nginx/nginx.conf
+</code></pre>
 
 <p>修改内容如下:</p>
-<div class="codehilite"><pre>    <span class="n">server</span> <span class="p">{</span>
-        <span class="n">listen</span> <span class="mf">192.168.3.1</span><span class="o">:</span><span class="mi">80</span><span class="p">;</span>
-        <span class="n">server_name</span> <span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span><span class="p">;</span>
+<pre><code>    server {
+        listen 192.168.3.1:80;
+        server_name linuxzen.com;
 
-        <span class="n">access_log</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">localhost</span><span class="p">.</span><span class="n">access_log</span> <span class="n">main</span><span class="p">;</span>
-        <span class="n">error_log</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">localhost</span><span class="p">.</span><span class="n">error_log</span> <span class="n">info</span><span class="p">;</span>
+        access_log /var/log/nginx/localhost.access_log main;
+        error_log /var/log/nginx/localhost.error_log info;
 
-        <span class="n">root</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="p">;</span>
+        root /code/python;
 
-        <span class="n">location</span> <span class="o">/</span> <span class="p">{</span> 
-            <span class="n">include</span> <span class="n">uwsgi_params</span><span class="p">;</span>
-            <span class="n">uwsgi_param</span> <span class="n">UWSGI_PYTHOME</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="p">;</span>
-            <span class="n">uwsgi_param</span> <span class="n">UWSGI_CHDIR</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="p">;</span>                               
-            <span class="n">uwsgi_param</span> <span class="n">UWSGI_SCRIPT</span>    <span class="n">index</span><span class="p">;</span>
-            <span class="n">uwsgi_pass</span>  <span class="n">unix</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">bottle</span><span class="p">.</span><span class="n">sock</span><span class="p">;</span>
-        <span class="p">}</span>   
-    <span class="p">}</span>
-</pre></div>
-
+        location / { 
+            include uwsgi_params;
+            uwsgi_param UWSGI_PYTHOME /code/python;
+            uwsgi_param UWSGI_CHDIR /code/python;                               
+            uwsgi_param UWSGI_SCRIPT    index;
+            uwsgi_pass  unix:/var/tmp/bottle.sock;
+        }   
+    }
+</code></pre>
 
 <p>同样将nginx作为开机启动:</p>
-<div class="codehilite"><pre><span class="n">rc</span><span class="o">-</span><span class="n">update</span> <span class="n">add</span> <span class="n">nginx</span> <span class="k">default</span>
-</pre></div>
-
+<pre><code>rc-update add nginx default
+</code></pre>
 
 <h2>测试</h2>
 <p>首先创建一个bottle程序供测试:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
-<span class="err">参考内容如下</span><span class="o">:</span>
-<span class="cp">#!/usr/bin/env python</span>
-<span class="cp">#-*- coding: utf8 -*-</span>
+<pre><code>vi /code/python/index.py
+参考内容如下:
+#!/usr/bin/env python
+#-*- coding: utf8 -*-
 
-<span class="err">&#39;&#39;&#39;</span>
-<span class="cp"># Author    : cold night</span>
-<span class="cp"># Filename  : index.py                                                          </span>
-<span class="err">&#39;&#39;&#39;</span>
-<span class="n">from</span> <span class="n">bottle</span> <span class="n">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span>
+'''
+# Author    : cold night
+# Filename  : index.py                                                          
+'''
+from bottle import run, route, default_app
 
-<span class="err">@</span><span class="n">route</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">)</span>
-<span class="n">def</span> <span class="n">index</span><span class="p">()</span><span class="o">:</span>
-        <span class="k">return</span> <span class="s">&quot;Hello world!&quot;</span>
+@route('/')
+def index():
+        return &quot;Hello world!&quot;
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="o">:</span>
-    <span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8888</span><span class="p">)</span>
-<span class="nl">else:</span>
-    <span class="n">application</span> <span class="o">=</span> <span class="n">default_app</span><span class="p">()</span>
-</pre></div>
-
+if __name__ == &quot;__main__&quot;:
+    run(host=&quot;localhost&quot;, port=8888)
+else:
+    application = default_app()
+</code></pre>
 
 <p>然后启动nginx和uwsgi:</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">start</span>
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span> <span class="n">start</span>
-</pre></div>
-
+<pre><code>/etc/init.d/nginx start
+/etc/init.d/uwsgi.py start
+</code></pre>
 
 <p>然后通过浏览器访问即可看到<code>Hello world!</code></p></div>
         <hr />

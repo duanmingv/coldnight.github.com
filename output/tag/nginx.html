@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> nginx | cold's world </title>
@@ -72,30 +72,27 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
         
         <div class="highlight"><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
 <p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
+<pre><code class="nginx">server {
+    listen 80;
+    server_name www.linuxzen.com;
 
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
+    location / {
+        proxy_pass_header Server;
+        proxy_redirect off;
+        proxy_set_header X-Real_IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_pass http://127.0.0.1:8888;
+    }
+}
+</code></pre>
 
 <p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
-</pre></div>
-
+<pre><code class="bash">iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+</code></pre>
 
 <p>但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
-</pre></div>
-
+<pre><code class="bash">iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+</code></pre>
 
 <p>至此,通过nginx才能正常访问tornado</p></div>
         <hr />
@@ -123,14 +120,13 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 ip:192.168.3.1</p>
 <p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
 首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
-</pre></div>
-
+<pre><code class="python">emerge vim
+</code></pre>
 
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
+<pre><code class="bash">cd /usr/portage/dev-lang ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
     </div>	
 				
     
@@ -157,11 +153,11 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
-<span class="n">mkdir</span> <span class="n">python</span>
-<span class="n">cd</span> <span class="n">python</span>
-<span class="cp">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+<pre><code>cd /usr/src/
+mkdir python
+cd python
+#下载python2.7.2
+wget http://www ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
     </div>	
 				
     
@@ -185,8 +181,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+<pre><code class="bash">cd /usr/src                                           # 一般软件源码放在这个目录下
+wget http://nginx ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
     </div>	
 				
     
@@ -207,19 +203,16 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
-<div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
-</pre></div>
-
+<pre><code class="bash">abc-0.1.3-el5.centos.rpm
+</code></pre>
 
 <p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
-<div class="codehilite"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
-</pre></div>
-
+<pre><code class="bash">rpm -ivh abc-0.1.3-el5.centos.rpm    # i是安装 v是显示详细信息,-h显示安装进度
+</code></pre>
 
 <p>卸载这个包使用:</p>
-<div class="codehilite"><pre>rpm -e abc
-</pre></div>
-
+<pre><code class="bash">rpm -e abc
+</code></pre>
 
 <p>卸载只要指定包名即可卸载.</p>
 <p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
@@ -279,11 +272,11 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
-<span class="c"># Author   : cold night</span>
-<span class="c"># Filename : nglogcut.sh</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+<pre><code class="bash">#!/bin/sh
+# Author   : cold night
+# Filename : nglogcut.sh
+export PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+LogPath='/usr/local/nginx/logs/access.log'    # 定义日志绝对路径 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
     </div>	
 				
     

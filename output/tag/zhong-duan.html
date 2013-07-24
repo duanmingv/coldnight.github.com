@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 终端 | cold's world </title>
@@ -75,9 +75,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
 后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
 <h2>1 安装Terminator</h2>
-<div class="codehilite"><pre>sudo apt-get install terminator
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install terminator
+</code></pre>
 
 <h2>2 使用</h2>
 <p>打开Termintor按<code>Ctrl-E</code>(注意是大E要按住Shift)可以垂直分割终端
@@ -87,39 +86,36 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <h3>2.1 配置</h3>
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
-<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
-<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色</span>
-<span class="n">foreground_color</span> <span class="o">=</span> <span class="s">&quot;#F0F0F0&quot;</span> <span class="err">#</span> <span class="err">字体颜色</span>
-<span class="n">cursor_blink</span> <span class="o">=</span> <span class="n">True</span>          <span class="err">#</span> <span class="err">设置光标</span>
-<span class="n">scrollbar_position</span> <span class="o">=</span> <span class="n">disabled</span> <span class="err">#</span> <span class="err">禁用滚动条</span>
-<span class="n">titlebars</span> <span class="o">=</span> <span class="n">no</span> <span class="err">#</span> <span class="err">禁用标题栏</span>
-<span class="n">background_darkness</span> <span class="o">=</span> <span class="mf">0.4</span>
-<span class="n">background_type</span> <span class="o">=</span> <span class="n">transparent</span> <span class="err">#</span> <span class="err">背景类型可以设置为图片</span>
-</pre></div>
-
+<pre><code class="conf">font = Monaco 10  #设置体字
+background_color = &quot;#204070&quot; # 背景颜色
+foreground_color = &quot;#F0F0F0&quot; # 字体颜色
+cursor_blink = True          # 设置光标
+scrollbar_position = disabled # 禁用滚动条
+titlebars = no # 禁用标题栏
+background_darkness = 0.4
+background_type = transparent # 背景类型可以设置为图片
+</code></pre>
 
 <p>更多配置可以参见配置文件:</p>
-<div class="codehilite"><pre>man terminator_config
-</pre></div>
-
+<pre><code class="bash">man terminator_config
+</code></pre>
 
 <h2>3 Guake</h2>
 <p><code>Guake</code>是一个下拉式的gnome桌面环境下的终端程序，因此你只需要按一个键F12就可以调用他，然后再按一次以便隐藏他。Guake支持<code>快捷键</code>、<code>标签</code>、<code>背景透明</code>等特性。</p>
 <h3>3.1 安装 Guake</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">guake</span>
-</pre></div>
-
+<pre><code class="basg">sudo apt-get install guake
+</code></pre>
 
 <h3>3.2 使用Guake</h3>
 <p>启用guake后即可按<code>F12</code>调出来,很酷
 快捷键和gnome terminal相同</p>
-<div class="codehilite"><pre><span class="n">Ctrl</span><span class="o">-</span><span class="n">T</span> <span class="err">新建标签</span>
-<span class="n">F2</span> <span class="err">重命名标签</span>
-<span class="n">Ctrl</span><span class="o">-</span><span class="n">PageUp</span> <span class="err">上一个标签</span>
-<span class="n">Ctrl</span><span class="o">-</span><span class="n">PageDwon</span> <span class="err">下一个标签</span>
-<span class="n">F11</span> <span class="err">全屏</span>
-<span class="n">F12</span> <span class="err">隐藏</span><span class="o">/</span><span class="err">显示</span>
-</pre></div></div>
+<pre><code>Ctrl-T 新建标签
+F2 重命名标签
+Ctrl-PageUp 上一个标签
+Ctrl-PageDwon 下一个标签
+F11 全屏
+F12 隐藏/显示
+</code></pre></div>
         <hr />
     </div>
 		
@@ -141,16 +137,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*-coding:utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: translate.py</span>
-<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*-coding:utf8 -*-
+'''
+#=============================================================================
+#     FileName: translate.py
+#         Desc: To translate with zh to en or en2zh
+#       Author: cold
+#        Email: wh_linux@126.com
+#     HomePage: http://www.linuxzen.com
+#      Version ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

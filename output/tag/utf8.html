@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> utf8 | cold's world </title>
@@ -71,76 +71,71 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         </div>
         
         <div class="highlight"><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
-<div class="codehilite"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
-</pre></div>
-
+<pre><code class="python">engine = create_engine(&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;)
+</code></pre>
 
 <p>但是这并不行, 然后查看表信息:</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
-<span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
-  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
-  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`isonline`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`join_date`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="ss">`id`</span><span class="p">),</span>
-  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="ss">`email`</span> <span class="p">(</span><span class="ss">`email`</span><span class="p">),</span>
-  <span class="k">UNIQUE</span> <span class="k">KEY</span> <span class="ss">`nick`</span> <span class="p">(</span><span class="ss">`nick`</span><span class="p">)</span>
-<span class="p">)</span> <span class="kp">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="kp">AUTO_INCREMENT</span><span class="o">=</span><span class="mi">20</span> <span class="k">DEFAULT</span> <span class="kp">CHARSET</span><span class="o">=</span><span class="n">latin1</span><span class="p">;</span>
-</pre></div>
-
+<pre><code class="mysql">&gt; show create table clubot_members;
+clubot_members | CREATE TABLE `clubot_members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) DEFAULT NULL,
+  `nick` varchar(50) DEFAULT NULL,
+  `last_say` timestamp NULL DEFAULT NULL,
+  `last_change` timestamp NULL DEFAULT NULL,
+  `isonline` int(11) DEFAULT NULL,
+  `join_date` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `nick` (`nick`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+</code></pre>
 
 <p>发现原来创建表的时候用的<code>latin1</code>编码, 而老的表是用<code>utf-8</code>编码创建的, <code>SQLAlchemy</code>中并没有发现有创建表时指定指定编码的方法. 所以只能在<code>MySQL</code>本身来找:</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="n">VARIABLES</span> <span class="k">like</span> <span class="s2">&quot;character%%&quot;</span><span class="p">;</span>
-<span class="o">+--------------------------+-----------------------------+</span>
-<span class="o">|</span> <span class="n">Variable_name</span>            <span class="o">|</span> <span class="n">Value</span>                       <span class="o">|</span>
-<span class="o">+--------------------------+-----------------------------+</span>
-<span class="o">|</span> <span class="n">character_set_client</span>     <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_set_connection</span> <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_set_database</span>   <span class="o">|</span> <span class="n">latin1</span>                      <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_set_filesystem</span> <span class="o">|</span> <span class="k">binary</span>                      <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_set_results</span>    <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_set_server</span>     <span class="o">|</span> <span class="n">latin1</span>                      <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_set_system</span>     <span class="o">|</span> <span class="n">utf8</span>                        <span class="o">|</span>
-<span class="o">|</span> <span class="n">character_sets_dir</span>       <span class="o">|</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">charsets</span><span class="o">/</span> <span class="o">|</span>
-<span class="o">+--------------------------+-----------------------------+</span>
-<span class="mi">8</span> <span class="n">rows</span> <span class="k">in</span> <span class="kt">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+<pre><code class="mysql">&gt; show VARIABLES like &quot;character%%&quot;;
++--------------------------+-----------------------------+
+| Variable_name            | Value                       |
++--------------------------+-----------------------------+
+| character_set_client     | utf8                        |
+| character_set_connection | utf8                        |
+| character_set_database   | latin1                      |
+| character_set_filesystem | binary                      |
+| character_set_results    | utf8                        |
+| character_set_server     | latin1                      |
+| character_set_system     | utf8                        |
+| character_sets_dir       | /data/share/mysql/charsets/ |
++--------------------------+-----------------------------+
+8 rows in set (0.00 sec)
 
-<span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">database</span> <span class="n">clubot</span><span class="p">;</span>
-<span class="o">+----------+-------------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="k">Database</span> <span class="o">|</span> <span class="k">Create</span> <span class="k">Database</span>                                                   <span class="o">|</span>
-<span class="o">+----------+-------------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="n">clubot</span>   <span class="o">|</span> <span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="ss">`clubot`</span> <span class="cm">/*!40100 DEFAULT CHARACTER SET latin1 */</span> <span class="o">|</span>
-<span class="o">+----------+-------------------------------------------------------------------+</span>
-<span class="mi">1</span> <span class="n">row</span> <span class="k">in</span> <span class="kt">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
-</pre></div>
+&gt; show create database clubot;
++----------+-------------------------------------------------------------------+
+| Database | Create Database                                                   |
++----------+-------------------------------------------------------------------+
+| clubot   | CREATE DATABASE `clubot` /*!40100 DEFAULT CHARACTER SET latin1 */ |
++----------+-------------------------------------------------------------------+
+1 row in set (0.00 sec)
 
+</code></pre>
 
 <p>发现 <code>MySQL</code>默认的和数据库都是<code>latin1</code>的编码, 所以更改数据库配置</p>
-<div class="codehilite"><pre>vi /etc/mysql/my.cnf      <span class="c"># MySQL配置文件在Ubuntu上的位置, 其他系统可能有差异</span>
-</pre></div>
-
+<pre><code class="bash">vi /etc/mysql/my.cnf      # MySQL配置文件在Ubuntu上的位置, 其他系统可能有差异
+</code></pre>
 
 <p>分别在<code>[client]</code> <code>[mysqld]</code>下添加</p>
-<div class="codehilite"><pre><span class="k">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="n">set</span> <span class="o">=</span> <span class="n">utf8</span>
-</pre></div>
-
+<pre><code class="conf">default-character-set = utf8
+</code></pre>
 
 <p>这时重启MySQL居然起不来, 说<code>default-character-set</code>是无效的变量, 查看<code>MySQL</code>版本发现是5.5, 找资料说5.5的服务端编码设置变量是<code>character-set-server</code>, 所以将<code>[mysqld]</code>上的<code>default-character-set = utf8</code>改为 <code>character-set-server = utf8</code>, 并重启<code>MySQL</code></p>
 <p>然后更改数据库编码:</p>
-<div class="codehilite"><pre><span class="k">alter</span> <span class="k">database</span> <span class="n">clubot</span> <span class="k">character</span> <span class="kt">set</span> <span class="n">utf8</span><span class="p">;</span>
-</pre></div>
-
+<pre><code class="mysql">alter database clubot character set utf8;
+</code></pre>
 
 <p>删除新建的表, 并重新导入数据中文就正常了</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">use</span> <span class="n">clubot</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_status</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_infos</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_history</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
-</pre></div></div>
+<pre><code class="mysql">&gt; use clubot;
+&gt; drop table clubot_status;
+&gt; drop table clubot_infos;
+&gt; drop table clubot_history;
+&gt; drop table clubot_members;
+</code></pre></div>
         <hr />
     </div>
 		
@@ -161,19 +156,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="s">&#39;abc&#39;</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; s = 'abce'
+&gt;&gt;&gt; s[0:3]
+'abc'
+</code></pre>
 
 <p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
-<div class="codehilite"><pre><span class="c">#-*- coding:utf8 -*-</span>
-<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
-<span class="c"># 结果u&#39;中文截取</span>
-</pre></div>
-
+<pre><code class="python">#-*- coding:utf8 -*-
+s = u'中文截取'
+s.decode('utf8')[0:3].encode('utf8')
+# 结果u'中文截取
+</code></pre>
 
 <p>就这么简单</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">read more</a></div>
     </div>	

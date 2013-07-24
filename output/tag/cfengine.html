@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> cfengine | cold's world </title>
@@ -79,180 +79,165 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp</p>
 <p>安装tftp-server</p>
-<div class="codehilite"><pre>yum -y install tftp-server
-</pre></div>
-
+<pre><code class="bash">yum -y install tftp-server
+</code></pre>
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<div class="codehilite"><pre>vi /etc/xinetd.d/tftp
-</pre></div>
-
+<pre><code class="bash">vi /etc/xinetd.d/tftp
+</code></pre>
 
 <p>修改配置文件</p>
 <p>&nbsp;</p>
-<div class="codehilite"><pre>service tftp
-<span class="o">{</span>
-        <span class="nv">socket_type</span>             <span class="o">=</span> dgram
-        <span class="nv">protocol</span>                <span class="o">=</span> udp
-        <span class="nb">wait</span>                    <span class="o">=</span> yes
-        <span class="nv">user</span>                    <span class="o">=</span> root
-        <span class="nv">server</span>                  <span class="o">=</span> /usr/sbin/in.tftpd
-        <span class="nv">server_args</span>             <span class="o">=</span> -s /tftpboot      <span class="c"># 根目录</span>
-        <span class="nv">disable</span>                 <span class="o">=</span> no                <span class="c"># 把yes改为no启动tftp</span>
-        <span class="nv">per_source</span>              <span class="o">=</span> 11
-        <span class="nv">cps</span>                     <span class="o">=</span> 100 2
-        <span class="nv">flags</span>                   <span class="o">=</span> IPv4
-<span class="o">}</span>
-</pre></div>
-
+<pre><code class="bash">service tftp
+{
+        socket_type             = dgram
+        protocol                = udp
+        wait                    = yes
+        user                    = root
+        server                  = /usr/sbin/in.tftpd
+        server_args             = -s /tftpboot      # 根目录
+        disable                 = no                # 把yes改为no启动tftp
+        per_source              = 11
+        cps                     = 100 2
+        flags                   = IPv4
+}
+</code></pre>
 
 <p>启动tftp</p>
-<div class="codehilite"><pre>service xinetd restart
-Stopping xinetd: <span class="o">[</span>  OK  <span class="o">]</span>
-Starting xinetd: <span class="o">[</span>  OK  <span class="o">]</span>
-</pre></div>
-
+<pre><code class="bash">service xinetd restart
+Stopping xinetd: [  OK  ]
+Starting xinetd: [  OK  ]
+</code></pre>
 
 <p>2.在tftp根目录下创建启动文件供客户端下载:</p>
-<div class="codehilite"><pre><span class="c"># 复制网卡启动文件</span>
+<pre><code class="bash"># 复制网卡启动文件
 cp /usr/lib/syslinux/pxelinux.0 /tftpboot
-</pre></div>
-
+</code></pre>
 
 <p>将安装光盘上/image/pxeboot/initrd.img和vmlinux复制到/tftpboot/中</p>
-<div class="codehilite"><pre><span class="c"># 挂载光盘</span>
+<pre><code class="bash"># 挂载光盘
 mount /dev/hdc /mnt
-<span class="c"># 复制文件</span>
+# 复制文件
 cp /mnt/isolinux/vmlinuz /tftpboot/
 cp /mnt/isolinux/initrd.img /tftpboot/
-</pre></div>
-
+</code></pre>
 
 <p>创建pxe启动菜单:</p>
-<div class="codehilite"><pre><span class="c"># 创建存放启动菜单的目录</span>
-<span class="nb">cd</span> /tftpboot
+<pre><code class="bash"># 创建存放启动菜单的目录
+cd /tftpboot
 mkdir pxelinux.cfg
-<span class="c"># 从安装光盘内复制启动菜单命名为default</span>
+# 从安装光盘内复制启动菜单命名为default
 cp /mnt/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
-</pre></div>
-
+</code></pre>
 
 <p>编辑启动菜单:</p>
-<div class="codehilite"><pre>vi /tftpboot/pxelinux.cfg/default
+<pre><code class="bash">vi /tftpboot/pxelinux.cfg/default
 default ColdOS
 prompt 1
 timeout 600
 label ColdOS
   kernel vmlinuz
-  append <span class="nv">ks</span><span class="o">=</span>http://192.168.3.1/cold/isolinux/ks.cfg <span class="nv">initrd</span><span class="o">=</span>initrd.img text <span class="c"># 指定ks文件位置</span>
-</pre></div>
-
+  append ks=http://192.168.3.1/cold/isolinux/ks.cfg initrd=initrd.img text # 指定ks文件位置
+</code></pre>
 
 <p>3.安装配置dhcp服务器
 安装</p>
-<div class="codehilite"><pre>yum -y install dhcp
-</pre></div>
-
+<pre><code class="bash">yum -y install dhcp
+</code></pre>
 
 <p>配置</p>
-<div class="codehilite"><pre><span class="c"># 创建配置文件</span>
+<pre><code class="bash"># 创建配置文件
 cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
-<span class="c"># 编辑配置文件</span>
+# 编辑配置文件
 vi /etc/dhcpd.conf
-<span class="c"># 修改配置文件:</span>
+# 修改配置文件:
 ddns-update-style interim;
 ignore client-updates;
-next-server 192.168.3.1;             <span class="c"># 指定tftp服务器</span>
-filename <span class="s2">&quot;/pxelinux.0&quot;</span>;              <span class="c"># 指定启动文件</span>
+next-server 192.168.3.1;             # 指定tftp服务器
+filename &quot;/pxelinux.0&quot;;              # 指定启动文件
 
-subnet 192.168.3.0 netmask 255.255.255.0 <span class="o">{</span>
+subnet 192.168.3.0 netmask 255.255.255.0 {
 
         option routers                  192.168.3.1;
         option subnet-mask              255.255.255.0;
 
-        option nis-domain               <span class="s2">&quot;domain.org&quot;</span>;
-        option domain-name              <span class="s2">&quot;domain.org&quot;</span>;
+        option nis-domain               &quot;domain.org&quot;;
+        option domain-name              &quot;domain.org&quot;;
         option domain-name-servers      192.168.1.1;
 
-        option <span class="nb">time</span>-offset              -18000; <span class="c"># Eastern Standard Time</span>
+        option time-offset              -18000; # Eastern Standard Time
 
         range dynamic-bootp 192.168.3.128 192.168.3.254;
         default-lease-time 21600;
         max-lease-time 43200;
 
-<span class="o">}</span>
-<span class="c"># 启动dhcp服务器</span>
+}
+# 启动dhcp服务器
 service dhcpd start
-Starting dhcpd: <span class="o">[</span> OK <span class="o">]</span>
-</pre></div>
-
+Starting dhcpd: [ OK ]
+</code></pre>
 
 <p>4.安装配置http服务器
 安装:</p>
-<div class="codehilite"><pre>yum -y install httpd
-</pre></div>
-
+<pre><code class="bash">yum -y install httpd
+</code></pre>
 
 <p>首先把安装光盘里的内容拷到本地服务器上:</p>
-<div class="codehilite"><pre><span class="c"># 创建目录</span>
+<pre><code class="bash"># 创建目录
 mkdir -p /pxe/cold/
-<span class="c"># 复制文件</span>
-<span class="o">(</span> <span class="nb">cd</span> /mnt/ &amp;amp;&amp;amp; tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /pxe/cold &amp;amp;&amp;amp; tar -xvf - <span class="o">)</span>
-</pre></div>
-
+# 复制文件
+( cd /mnt/ &amp;amp;&amp;amp; tar -cf - . ) ¦ (cd /pxe/cold &amp;amp;&amp;amp; tar -xvf - )
+</code></pre>
 
 <p>配置apache</p>
-<div class="codehilite"><pre><span class="c"># 编辑配置文件:</span>
+<pre><code class="bash"># 编辑配置文件:
 vi /etc/httpd/conf/httpd.conf
-<span class="c"># 更改apache根目录(将配置文件中的两处/var/www改成/pxe)</span>
-DocumentRoot <span class="s2">&quot;/pxe&quot;</span>
+# 更改apache根目录(将配置文件中的两处/var/www改成/pxe)
+DocumentRoot &quot;/pxe&quot;
 &amp;lt;Directory /&amp;gt;
     Options FollowSymLinks
     AllowOverride None
 &amp;lt;/Directory&amp;gt;
-&amp;lt;Directory <span class="s2">&quot;/pxe&quot;</span>&amp;gt;
+&amp;lt;Directory &quot;/pxe&quot;&amp;gt;
     Options Indexes FollowSymLinks
     AllowOverride None
     Order allow,deny
     Allow from all
 &amp;lt;/Directory&amp;gt;
-</pre></div>
-
+</code></pre>
 
 <p>配置完成后启动apache</p>
-<div class="codehilite"><pre>service httpd start
-</pre></div>
-
+<pre><code class="bash">service httpd start
+</code></pre>
 
 <p>5.更改ks文件(ks文件可在CentOS图形界面下用kickstart程序直接生成,这里不做介绍)</p>
 <p>因为网络安装,又需要部署cfengine的话,就需要更改cfengine的获取方式,首先要将文件夹打包:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /pxe/cold
+<pre><code class="bash">cd /pxe/cold
 tar -cvf cfengine.tar cfengine/
-</pre></div>
-
+</code></pre>
 
 <p>然后编辑ks文件</p>
-<div class="codehilite"><pre><span class="c"># 编辑ks文件</span>
+<pre><code class="bash"># 编辑ks文件
 vi /pxe/cold/isolinux/ks.cfg
 install
 cdrom
 lang en_US.UTF-8
 keyboard us
-rootpw --iscrypted <span class="nv">$1$OKNHES6P$tPdz9HxIp6</span>.QUvulqxNwa.
+rootpw --iscrypted $1$OKNHES6P$tPdz9HxIp6.QUvulqxNwa.
 firewall --disable
 authconfig --enableshadow --enablemd5
 selinux --disabled
 timezone --utc Asia/Chongqing
-bootloader --location<span class="o">=</span>mbr --driveorder<span class="o">=</span>sda
-url --url http://192.168.3.1/cold/              <span class="c"># 添加指定安装文件的语句</span>
-<span class="c"># The following is the partition information you requested</span>
-<span class="c"># Note that any partitions you deleted are not expressed</span>
-<span class="c"># here so unless you clear all partitions first, this is</span>
-<span class="c"># not guaranteed to work</span>
-clearpart --linux --drives<span class="o">=</span>sda
-part / --fstype ext3 --size<span class="o">=</span>1 --grow --maxsize<span class="o">=</span>4096
-part /usr --fstype ext3 --size<span class="o">=</span>1 --grow
-part swap --size<span class="o">=</span>1 --grow --maxsize<span class="o">=</span>512
+bootloader --location=mbr --driveorder=sda
+url --url http://192.168.3.1/cold/              # 添加指定安装文件的语句
+# The following is the partition information you requested
+# Note that any partitions you deleted are not expressed
+# here so unless you clear all partitions first, this is
+# not guaranteed to work
+clearpart --linux --drives=sda
+part / --fstype ext3 --size=1 --grow --maxsize=4096
+part /usr --fstype ext3 --size=1 --grow
+part swap --size=1 --grow --maxsize=512
 
 %packages
 @core
@@ -265,12 +250,11 @@ mkdir -p /mnt/sysimage/var/cfengine/inputs
 mkdir -p /mnt/sysimage/var/cfengine/outputs
 mkdir -p /mnt/sysimage/var/cfengine/bin
 
-wget  http://192.168.3.1/cold/cfengine.tar    <span class="c"># 更改cfengine获取方式</span>
+wget  http://192.168.3.1/cold/cfengine.tar    # 更改cfengine获取方式
 tar -xvf cfengine.tar
 cp /cfengine/sbin/cf-* /mnt/sysimage/var/cfengine/bin/
 cp -r /cfengine /mnt/sysimage/usr/local/
-</pre></div>
-
+</code></pre>
 
 <p>6.测试
 开启另一台设备测试,机器启动时一般按F12即可进入网卡启动.</p></div>
@@ -299,9 +283,9 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <!--more-->
 
 <p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
-<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+<pre><code class="bash"># 把依赖包添加到cfpkgs.list
 vi cfpkgs.list
-<span class="c"># 添加如下内容</span>
+# 添加如下内容
 keyutils-libs-devel
 zlib-devel
 e2fsprogs-devel 
@@ -312,8 +296,8 @@ pcre-devel
 krb5-devel
 flex
 openssl-devel 
-<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
+# 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:
+for i in `cat cfpkgs.list `:; do file=`echo $i ¦ sed 's/://g'`; cp /mnt ...</code></pre></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
     </div>	
 				
     
@@ -346,7 +330,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 </ul>
 <p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
 <p>下载:</p>
-<div class="codehilite"><pre>wget https://cfengine.com/source-code/download ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
+<pre><code class="bash">wget https://cfengine.com/source-code/download ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

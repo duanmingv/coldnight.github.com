@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> Python | cold's world </title>
@@ -102,12 +102,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>如果or任意一个值为真,则立刻返回这个值
 如果所有值都为假,则or返回最后一个假值</p>
 <h3>例子</h3>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
-<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
+<pre><code class="python">result = 'test' and True # result = True
+result = 'test' and 'ortest' # result = ortest
+result = False and 'ortest' # result = False
+result = '' and None  # result = ''
 
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
+result = '' or ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
     </div>	
 				
     
@@ -132,11 +132,10 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>在需要插入断点的地方插入如下代码可以插入一个断点
 import pdb; pdb.set_trace()
 当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
-<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
- <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
-</pre></div>
-
+<pre><code>&gt; # 这里会出现当前运行程序的信息,源文件和当前函数
+-&gt; # 这里是将要运行的语句
+ (Pdb)
+</code></pre>
 
 <h3>pdb指令</h3>
 <p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
@@ -171,11 +170,10 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h3>lambda</h3>
 <p>Python用于支持将函数赋值给变量的一个操作符
 默认是返回的,所以不用再加return关键字,不然会报错</p>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
-<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
-<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
-</pre></div>
-
+<pre><code class="python">result = lambda x:  x * x
+result(2) # return 4
+map()/filter()/reduce()
+</code></pre>
 
 <p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
 <h3>map()</h3>
@@ -185,9 +183,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h3>reduce()</h3>
 <p>将序列中的元素通过一个二元函数处理返回一个结果</p>
 <h2>将上面三个函数和lambda结合使用</h2>
-<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="c"># 序列中的每个元素加1</span>
-<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
+<pre><code class="python">li = [1, 2, 3, 4, 5]
+# 序列中的每个元素加1
+map(lambda x: x+1, li) # [2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
     </div>	
 				
     
@@ -209,17 +207,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>这里介绍几个常用的列表操作</p>
 <h3>添加元素</h3>
 <p>添加元素使用列表的内置方法append</p>
-<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
-</pre></div>
-
+<pre><code class="python">number = [1, 2, 3, 4]
+number.append(5) # number = [1, 2, 3, 4, 5]
+number.append([6,7]) # number = [1, 2, 3, 4, 5, [6, 7]]
+number.append({'a':'b'}) # number = [1, 2, 3, 4, [6, 7], {'a', :'b'}
+</code></pre>
 
 <p>可以看到强大的python列表可以嵌套任意类型</p>
 <h3>列表相加</h3>
 <p>要想连接两个列表,可以使用+号连接</p>
-<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
+<pre><code class="python">a = [1, 2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
     </div>	
 				
     
@@ -239,19 +236,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="s">&#39;abc&#39;</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; s = 'abce'
+&gt;&gt;&gt; s[0:3]
+'abc'
+</code></pre>
 
 <p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
-<div class="codehilite"><pre><span class="c">#-*- coding:utf8 -*-</span>
-<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
-<span class="c"># 结果u&#39;中文截取</span>
-</pre></div>
-
+<pre><code class="python">#-*- coding:utf8 -*-
+s = u'中文截取'
+s.decode('utf8')[0:3].encode('utf8')
+# 结果u'中文截取
+</code></pre>
 
 <p>就这么简单</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">read more</a></div>
     </div>	
@@ -274,23 +269,22 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>最近重新拾起Django,但是Django并不支持mongodb,但是有一个模块mongoengine可以实现Django Model类似的封装.但是mongoengine的中文文档几乎没有,有的也是简短的几句介绍和使用.下面我就分享一下我在使用过程中所记录下的一些笔记,可能有点乱.大家可以参考一下.</p>
 <h2>安装mongoengine</h2>
-<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
-<span class="n">easy_install</span> <span class="n">mongoengine</span>
-</pre></div>
-
+<pre><code class="python">easy_install pymongo # 依赖库
+easy_install mongoengine
+</code></pre>
 
 <h2>基本使用</h2>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="c"># 连接数据库</span>
-<span class="n">connect</span><span class="p">(</span><span class="s">&#39;blog&#39;</span><span class="p">)</span>   <span class="c"># 连接本地blog数据库</span>
-<span class="c"># 如需验证和指定主机名</span>
-<span class="c"># connect(&#39;blog&#39;, host=&#39;192.168.3.1&#39;, username=&#39;root&#39;, password=&#39;1234&#39;)</span>
+<pre><code class="python">from mongoengine import *
+from datetime import datetime
+# 连接数据库
+connect('blog')   # 连接本地blog数据库
+# 如需验证和指定主机名
+# connect('blog', host='192.168.3.1', username='root', password='1234')
 
-<span class="c"># 定义分类文档</span>
-<span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-    <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html">read more</a></div>
+# 定义分类文档
+class Categories(Document):
+    ' 继承Document类,为普通文档 '
+    name = StringField(max_length=30, required ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html">read more</a></div>
     </div>	
 				
     
@@ -312,25 +306,24 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>上篇文章发布了一个自己写的用bottle写的web程序,其中收获最大就是Python装饰器的使用.前几天也是比较忙,所以没能分享出来,今天就给大家分享一下.</p>
 <p>首先来分析下需求,web程序后台需要认证,后台页面包含多个页面,最普通的方法就是为每个url添加认证,但是这样就需要每个每个绑定url的后台函数都需要添加类似或者相同的代码,但是这样做代码就过度冗余,而且不利于扩展.</p>
 <p>接下来我们先不谈及装饰器,我们都知道Python是个很强大的语言,她可以将函数当做参数传递给函数,最简单的:</p>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">p</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&#39;Hello,world&#39;</span>
+<pre><code class="python">def p():
+    print 'Hello,world'
 
-<span class="k">def</span> <span class="nf">funcfactor</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s">&#39;calling function named&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
-    <span class="n">func</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&#39;end&#39;</span>
+def funcfactor(func):
+    print 'calling function named', func.__name__
+    func()
+    print 'end'
 
-<span class="n">funcfactor</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="c"># 输出为:</span>
-<span class="c"># calling function named p</span>
-<span class="c"># Hello,world</span>
-<span class="c"># end</span>
-</pre></div>
-
+funcfactor(p)
+# 输出为:
+# calling function named p
+# Hello,world
+# end
+</code></pre>
 
 <p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
 <p>我们还可以这么做:</p>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
+<pre><code class="python">def p ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
     </div>	
 				
     
@@ -391,19 +384,19 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
-<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
-      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
-           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
-      <span class="k">else</span> <span class="p">:</span>
-           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
+<pre><code class="python">@route(’/login’)
+def login ():
+      username = request .forms .get(’username ’)
+      password = request .forms .get(’password ’)
+      if check_user_credentials(username, password):
+           response .set_cookie(&quot;account&quot;, username, secret= ’some-secret-key’)
+           return &quot;Welcome %s!You are now logged in.&quot; % username
+      else :
+           return &quot;Login failed.&quot; 
 
-<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
+@route(’/restricted’)
+def restricted_area ():
+      username = request .get_cookie(&quot;account&quot;, secret ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

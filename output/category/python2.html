@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> Python | cold's world </title>
@@ -71,12 +71,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><h2>引子</h2>
 <p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
 <h2>实现</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/06 10 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
     
@@ -96,12 +96,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
-</pre></div>
-
+<pre><code>/usr/lib/python2.7/dist-packages/pygments/plugin.py:39: UserWarning: Module argparse was already imported from /usr/lib/python2.7/argparse.pyc, but /usr/local/lib/python2.7/dist-packages is being added to sys.path
+</code></pre>
 
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+执行<code>ls /usr/local/lib/python2 ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
     </div>	
 				
     
@@ -125,16 +124,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>实现</h2>
 <p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
 <h2>代码</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/21 09:54:39</span>
-<span class="c">#   Desc    :   贴代码和图片</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/21 09:54:39
+#   Desc    :   贴代码和图片
+#
+import urllib2, json
+import ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
     </div>	
 				
     
@@ -158,13 +157,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>实现</h2>
 <p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
 prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/14 09:57:31
+#   Desc ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">read more</a></div>
     </div>	
 				
     
@@ -192,9 +191,8 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面介绍一下安装:</p>
 <p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
 <p>下载源码:</p>
-<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
-</pre></div>
-
+<pre><code class="bash">git clone git://github.com/coldnight/clubot.git
+</code></pre>
 
 <p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
     </div>	
@@ -216,27 +214,26 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
-<span class="err">音</span>    <span class="n">yin1</span>
-</pre></div>
-
+<pre><code>拼    pin1
+音    yin1
+</code></pre>
 
 <p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># Author : cold night</span>
-<span class="c"># E-mail : wh_linux@126.com</span>
-<span class="c"># Date   : 12-10-24 下午3:13</span>
-<span class="c">#</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="kn">import</span> <span class="nn">locale</span>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+# Author : cold night
+# E-mail : wh_linux@126.com
+# Date   : 12-10-24 下午3:13
+#
+from os import path
+import locale
 
-<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
-    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
+class SortedByPy:
+    __PYDICT__ = dict()
+    PYDATA_PATH = path.join(path.dirname(__file__), 'pinyindata')
+    def __init__(self):
+        if ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
     </div>	
 				
     
@@ -257,20 +254,20 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
 <p>脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#</span>
-<span class="c"># author  : cold night</span>
-<span class="c"># email   : wh_linux@126.com</span>
-<span class="c">#</span>
+<pre><code class="python">#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+#
+#
+# author  : cold night
+# email   : wh_linux@126.com
+#
 
-<span class="kn">import</span> <span class="nn">pymongo</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+import pymongo
+import re
+from StringIO import StringIO
 
-<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">read more</a></div>
+conn = pymongo.Connection()
+db = conn ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">read more</a></div>
     </div>	
 				
     
@@ -292,24 +289,22 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮</p>
 <p>下面来介绍一下它:</p>
 <p>首先安装很简单,使用easy_install来进行安装:</p>
-<div class="codehilite"><pre>easy_install pygments
-</pre></div>
-
+<pre><code class="bash">easy_install pygments
+</code></pre>
 
 <p>安装完后我们来使用,Python的简单不会让大家失望:</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
-<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
-<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
+<pre><code class="python">from pygments.lexers import PythonLexver
+from pygments.formatters import HtmlFormatter
+from pygments import highlight
 
-<span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="n">linenos</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
-<span class="n">code</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="s">&#39;print &quot;hello, world&quot;&#39;</span><span class="p">,</span> <span class="n">PythonLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+formatter = HtmlFormatter(encoding='utf-8', style = 'emacs', linenos = True)
+code = highlight('print &quot;hello, world&quot;', PythonLexer(), formatter)
 
-<span class="k">print</span> <span class="n">code</span>
-</pre></div>
-
+print code
+</code></pre>
 
 <h5>结果</h5>
-<div class="codehilite"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
+<pre><code>'&lt;table class=&quot;highlighttable ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
     </div>	
 				
     
@@ -332,30 +327,27 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>1.1 创建字典</h2>
 <p>Python有两种方法可以创建字典,第一种是使用花括号,另一种是使用内建
 函数dict</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; info = {}
+&gt;&gt;&gt; info = dict()
+</code></pre>
 
 <h2>1.2 初始化字典</h2>
 <p>Python可以在创建字典的时候初始化字典</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span> <span class="p">:</span> <span class="s">&#39;cold&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span>       <span class="c"># 更优雅</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; info = {&quot;name&quot; : 'cold'}
+&gt;&gt;&gt; info = dict(name = 'cold')       # 更优雅
+</code></pre>
 
 <p>很明显第二种方法更加的优雅和减少一些特殊字符的输入,但是有种情况第二种不能胜任</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">key</span> <span class="o">=</span> <span class="s">&#39;name&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span> <span class="n">key</span> <span class="p">:</span><span class="s">&#39;cold&#39;</span><span class="p">}</span>  <span class="c"># {&#39;name&#39;:&#39;cold&#39;}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span> <span class="c"># {&#39;key&#39;: &#39;cold&#39;}</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; key = 'name'
+&gt;&gt;&gt; info = { key :'cold'}  # {'name':'cold'}
+&gt;&gt;&gt; info = dict(key = 'cold') # {'key': 'cold'}
+</code></pre>
 
 <p>明显第二种方法就会引发一个不容易找到的bug</p>
 <p>Python字典还有一种初始化方式,就是使用字典的fromkeys方法可以从列表中获取元素作为键并用None或fromkeys方法的第二个参数初始化</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;blog&#39;</span><span class="p">])</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="bp">None ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html">read more</a></div>
+<pre><code class="python">&gt;&gt;&gt; info = {}.fromkeys(['name', 'blog'])
+&gt;&gt;&gt; info
+{'blog': None ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html">read more</a></div>
     </div>	
 				
     
@@ -383,13 +375,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面我们来介绍这些特性</p>
 <p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
 如下面代码:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
+<pre><code class="python">&gt;&gt;&gt; info = dict(name='cold', blog='www.linuxzen.com') # 创建字典{'name':'cold', 'blog':'www.linuxzen.com'}
+&gt;&gt;&gt; info2 = info     # 赋值给info2
+&gt;&gt;&gt; info2['name'] = 'cold night'
+&gt;&gt;&gt; info
+&gt;&gt;&gt; info2
+{'blog': 'www.linuxzen.com', 'name': 'cold night'}
+&gt;&gt;&gt; info ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

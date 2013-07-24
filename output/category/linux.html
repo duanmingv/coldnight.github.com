@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> Linux | cold's world </title>
@@ -72,9 +72,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
         
         <div class="highlight"><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
 <p>好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个<code>Logics</code>类并且上面差不多30行, 往下差不多300行的样子, 我删除<code>logics.py</code>所在的分区是<code>/dev/sda7</code>, 所以我运行了下面命令:</p>
-<div class="codehilite"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 &gt; tmp
-</pre></div>
-
+<pre><code class="bash">grep -a -B 50 -A 400 &quot;class Logics(object):&quot; /dev/sda7 &gt; tmp
+</code></pre>
 
 <p>经过漫长的等待, 这个命令还没结束, 我忍不住看了下 tmp的内容, 我发现我找到了这段代码</p>
 <p>当然损失并不是没有, 损失就是中文注释全部乱码, 但我满足了, 我只要重写注释就可以了.</p></div>
@@ -105,16 +104,14 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.</p>
 <h3>安装</h3>
 <p>Awesome Ubuntu下安装十分简单:</p>
-<div class="codehilite"><pre>sudo apt-get install awesome
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install awesome
+</code></pre>
 
 <h3>配置</h3>
 <h4>拷贝配置文件</h4>
 <p>Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:</p>
-<div class="codehilite"><pre>cp /etc/xdg/awesome/rc.lua ~/.config/awesome <span class="c">#  ~/.confg下如没有awesome则手动创建</span>
-</pre></div>
-
+<pre><code class="bash">cp /etc/xdg/awesome/rc.lua ~/.config/awesome #  ~/.confg下如没有awesome则手动创建
+</code></pre>
 
 <h4>配置自动启程序 ...</h4> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html">read more</a></div>
     </div>	
@@ -138,24 +135,21 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
         <div class="summary"><p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
 evince
 却提示:</p>
-<div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
-<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
-</pre></div>
-
+<pre><code>No protocol specified
+Cannot parse arguments: 无法打开显示：
+</code></pre>
 
 <p>google说是$XAUTHORITY权限的问题,于是查看:</p>
-<div class="codehilite"><pre>ls -l <span class="nv">$XAUTHORITY</span>
+<pre><code class="bash">ls -l $XAUTHORITY
 -rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
-</pre></div>
-
+</code></pre>
 
 <p>更改为如下:</p>
-<div class="codehilite"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
-</pre></div>
-
+<pre><code class="bash">chmod +rw $XAUTHORITY
+</code></pre>
 
 <p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
+<pre><code class="log">Nov 15 15:48:53 Vostro kernel: [13010.203241] type=1400 audit ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
     </div>	
 				
     
@@ -176,9 +170,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:</p>
 <p>Awesome是一款运行在Unix和类Unix(Linux/FreeBSD)等系统上的一款平铺式窗体管理器,有占用资源小,易于管理和操作等等有点,这里不罗嗦这些说说安装,Ubuntu安装很简单</p>
-<div class="codehilite"><pre>sudo apt-get install awesome
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install awesome
+</code></pre>
 
 <p>安装好后登出会话选择awesome登录,然后你是否茫然无知没办法工作了?先简单介绍下使用方法:</p>
 <p>按<code>Win键+1~9</code>可以切换桌面,</p>
@@ -206,25 +199,23 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
 <p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
+<pre><code class="nginx">server {
+    listen 80;
+    server_name www.linuxzen.com;
 
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-
+    location / {
+        proxy_pass_header Server;
+        proxy_redirect off;
+        proxy_set_header X-Real_IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_pass http://127.0.0.1:8888;
+    }
+}
+</code></pre>
 
 <p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
-</pre></div>
-
+<pre><code class="bash">iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+</code></pre>
 
 <p>但是访问nginx总是返回502 Bad ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">read more</a></div>
     </div>	
@@ -250,9 +241,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>比如你安装了pidgin插件只需输入联系人的名字即可打开与他/她的会话,安装了file这个插件输入文件/目录的名字即可打开目录或文件,</p>
 <p>当然还有一个不足就是不支持中文</p>
 <p>ubuntu用户可以按照下面安装:</p>
-<div class="codehilite"><pre>sudo apt-get install gnome-do
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install gnome-do
+</code></pre>
 
 <p>启动之后Gnome do不会停留任务栏或通知栏只需按<code>Win(ubuntu下称为super)+Space</code>即可启动,输入你想启动的应用程序名字即可打开/关闭等操作.是不是很酷提高不少的工作效率</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html">read more</a></div>
     </div>	
@@ -278,9 +268,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
 后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
 <h2>1 安装Terminator</h2>
-<div class="codehilite"><pre>sudo apt-get install terminator
-</pre></div>
-
+<pre><code class="bash">sudo apt-get install terminator
+</code></pre>
 
 <h2>2 使用</h2>
 <p>打开Termintor按<code>Ctrl-E</code>(注意是大E要按住Shift)可以垂直分割终端
@@ -290,8 +279,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <h3>2.1 配置</h3>
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
-<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
-<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
+<pre><code class="conf">font = Monaco 10  #设置体字
+background_color = &quot;#204070&quot; # 背景颜色 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
     </div>	
 				
     
@@ -348,14 +337,13 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 ip:192.168.3.1</p>
 <p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
 首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
-</pre></div>
-
+<pre><code class="python">emerge vim
+</code></pre>
 
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
+<pre><code class="bash">cd /usr/portage/dev-lang ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
     </div>	
 				
     
@@ -376,14 +364,13 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
 <p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
-<div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
-<span class="n">whereis</span> <span class="n">restorecon</span>
-</pre></div>
-
+<pre><code>which restorecon
+whereis restorecon
+</code></pre>
 
 <p>没结果,继续手动查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
+<pre><code>ls -l /sbin/ ¦ grep restore
+lrwxrwxrwx 1 root root     14 Apr 19 09:58 iptables-restore -&gt; iptables-multi ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> session | cold's world </title>
@@ -72,42 +72,39 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         
         <div class="highlight"><p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
 <p>bottle小巧支持cookie但是不支持session.为了安全起见我们有时候希望使用的session.我们可以使用中间件beaker来扩展bottle,使我们的bottle应用支持session.废话不多说.首先beaker不是内置模块,我们首先来安装它.当然你可以网上下包手动安装,我们使用最简单的:</p>
-<div class="codehilite"><pre>easy_install beaker
-</pre></div>
-
+<pre><code class="bash">easy_install beaker
+</code></pre>
 
 <p>没有easy_install这个命令?google吧,装了之后还是没有,如过时win的话检查环境变量,将Python安装目录下的Scripts目录添加到环境变量.</p>
 <p>安装好后我们如何使用它,下面一段带面是使用的:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">beaker.middleware</span> <span class="kn">import</span> <span class="n">SessionMiddleware</span>
+<pre><code class="python">#!/usr/bin/env python
+from bottle import route, default_app, run, request
+from beaker.middleware import SessionMiddleware
 
-<span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&#39;session.type&#39;</span><span class="p">:</span><span class="s">&#39;file&#39;</span><span class="p">,</span>
-                <span class="s">&#39;session.cookei_expires&#39;</span><span class="p">:</span><span class="mi">300</span><span class="p">,</span>
-                <span class="s">&#39;session.data_dir&#39;</span><span class="p">:</span><span class="s">&#39;./sessions&#39;</span><span class="p">,</span>
-                <span class="s">&#39;sessioni.auto&#39;</span><span class="p">:</span><span class="bp">True</span>
-                <span class="p">}</span>
+session_opts = {
+                'session.type':'file',
+                'session.cookei_expires':300,
+                'session.data_dir':'./sessions',
+                'sessioni.auto':True
+                }
 
-<span class="nd">@route</span><span class="p">(</span><span class="s">&#39;/test&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;beaker.session&#39;</span><span class="p">)</span>
-    <span class="n">s</span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-    <span class="k">return</span> <span class="s">&#39;Test conter: </span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">s</span><span class="p">[</span><span class="s">&#39;test&#39;</span><span class="p">]</span>
+@route('/test')
+def test():
+    s = request.environ.get('beaker.session')
+    s['test'] = s.get('test', 0) + 1
+    s.save()
+    return 'Test conter: %d' % s['test']
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">default_app</span><span class="p">()</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">SessionMiddleware</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">session_opts</span><span class="p">)</span>
-<span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">)</span>
-</pre></div>
-
+app = default_app()
+app = SessionMiddleware(app, session_opts)
+run(app=app)
+</code></pre>
 
 <p>运行这段代码,会提示:</p>
-<div class="codehilite"><pre><span class="n">Bottle</span> <span class="n">server</span> <span class="n">starting</span> <span class="n">up</span> <span class="p">(</span><span class="n">using</span> <span class="n">WSGIRefServer</span><span class="p">())...</span>
-<span class="n">Listening</span> <span class="n">on</span> <span class="n">http</span><span class="o">:</span><span class="c1">//127.0.0.1:8080/</span>
-<span class="n">Hit</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">quit</span><span class="p">.</span>
-</pre></div>
-
+<pre><code>Bottle server starting up (using WSGIRefServer())...
+Listening on http://127.0.0.1:8080/
+Hit Ctrl-C to quit.
+</code></pre>
 
 <p>现在打开浏览器访问<code>http://127.0.0.1:8080/test</code></p>
 <p>不断刷新就会发现数值不断在增大.说明我们的session已经正常工作了</p></div>

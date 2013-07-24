@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
@@ -69,12 +69,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
-</pre></div>
-
+<pre><code>/usr/lib/python2.7/dist-packages/pygments/plugin.py:39: UserWarning: Module argparse was already imported from /usr/lib/python2.7/argparse.pyc, but /usr/local/lib/python2.7/dist-packages is being added to sys.path
+</code></pre>
 
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+执行<code>ls /usr/local/lib/python2 ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
     </div>	
 				
     
@@ -102,13 +101,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面我们来介绍这些特性</p>
 <p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
 如下面代码:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
+<pre><code class="python">&gt;&gt;&gt; info = dict(name='cold', blog='www.linuxzen.com') # 创建字典{'name':'cold', 'blog':'www.linuxzen.com'}
+&gt;&gt;&gt; info2 = info     # 赋值给info2
+&gt;&gt;&gt; info2['name'] = 'cold night'
+&gt;&gt;&gt; info
+&gt;&gt;&gt; info2
+{'blog': 'www.linuxzen.com', 'name': 'cold night'}
+&gt;&gt;&gt; info ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
     </div>	
 				
     
@@ -128,19 +127,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="s">&#39;abc&#39;</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; s = 'abce'
+&gt;&gt;&gt; s[0:3]
+'abc'
+</code></pre>
 
 <p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
-<div class="codehilite"><pre><span class="c">#-*- coding:utf8 -*-</span>
-<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
-<span class="c"># 结果u&#39;中文截取</span>
-</pre></div>
-
+<pre><code class="python">#-*- coding:utf8 -*-
+s = u'中文截取'
+s.decode('utf8')[0:3].encode('utf8')
+# 结果u'中文截取
+</code></pre>
 
 <p>就这么简单</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">read more</a></div>
     </div>	
@@ -162,27 +159,26 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
-<span class="err">音</span>    <span class="n">yin1</span>
-</pre></div>
-
+<pre><code>拼    pin1
+音    yin1
+</code></pre>
 
 <p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># Author : cold night</span>
-<span class="c"># E-mail : wh_linux@126.com</span>
-<span class="c"># Date   : 12-10-24 下午3:13</span>
-<span class="c">#</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
-<span class="kn">import</span> <span class="nn">locale</span>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+# Author : cold night
+# E-mail : wh_linux@126.com
+# Date   : 12-10-24 下午3:13
+#
+from os import path
+import locale
 
-<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
-    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
+class SortedByPy:
+    __PYDICT__ = dict()
+    PYDATA_PATH = path.join(path.dirname(__file__), 'pinyindata')
+    def __init__(self):
+        if ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">read more</a></div>
     </div>	
 				
     
@@ -211,12 +207,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>如果or任意一个值为真,则立刻返回这个值
 如果所有值都为假,则or返回最后一个假值</p>
 <h3>例子</h3>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
-<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
+<pre><code class="python">result = 'test' and True # result = True
+result = 'test' and 'ortest' # result = ortest
+result = False and 'ortest' # result = False
+result = '' and None  # result = ''
 
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
+result = '' or ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
     </div>	
 				
     
@@ -237,18 +233,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
 <p>bottle小巧支持cookie但是不支持session.为了安全起见我们有时候希望使用的session.我们可以使用中间件beaker来扩展bottle,使我们的bottle应用支持session.废话不多说.首先beaker不是内置模块,我们首先来安装它.当然你可以网上下包手动安装,我们使用最简单的:</p>
-<div class="codehilite"><pre>easy_install beaker
-</pre></div>
-
+<pre><code class="bash">easy_install beaker
+</code></pre>
 
 <p>没有easy_install这个命令?google吧,装了之后还是没有,如过时win的话检查环境变量,将Python安装目录下的Scripts目录添加到环境变量.</p>
 <p>安装好后我们如何使用它,下面一段带面是使用的:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">beaker.middleware</span> <span class="kn">import</span> <span class="n">SessionMiddleware</span>
+<pre><code class="python">#!/usr/bin/env python
+from bottle import route, default_app, run, request
+from beaker.middleware import SessionMiddleware
 
-<span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
+session_opts = {
+                'session.type ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
     </div>	
 				
     
@@ -277,7 +272,7 @@ server:</p>
 <p>ip:192.168.3.120</p>
 <p>cacti:cacti-0.8.7i.tar.gz</p>
 <p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
+<pre><code class="bash">yum -y install ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
     </div>	
 				
     
@@ -299,12 +294,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><h2>引子</h2>
 <p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
 <h2>实现</h2>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+<pre><code class="python">#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+#
+#   Author  :   cold
+#   E-mail  :   wh_linux@126.com
+#   Date    :   13/01/06 10 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
     
@@ -325,16 +320,16 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
 <p>下面放出脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Author      : cold</span>
-<span class="c"># Homepage    : http://www.linuxzen.com</span>
-<span class="c"># Filename    : checkchange.sh</span>
-<span class="c"># Useage      : sh checkchange.sh [dir]</span>
-checkisdir<span class="o">()</span>
-        <span class="c"># Have one argument</span>
-        <span class="c"># The argument is a directory</span>
-        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
+<pre><code class="bash">#!/bin/bash
+# Author      : cold
+# Homepage    : http://www.linuxzen.com
+# Filename    : checkchange.sh
+# Useage      : sh checkchange.sh [dir]
+checkisdir()
+        # Have one argument
+        # The argument is a directory
+        for i in `ls $1 | sed -e 's/ /\n/g'`
+        do ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
     </div>	
 				
     
@@ -361,8 +356,8 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
 <h1>使用</h1>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
-<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">read more</a></div>
+<pre><code class="bash">make html   # 生成html
+make clean ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 重复 | cold's world </title>
@@ -71,9 +71,8 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         </div>
         
         <div class="highlight"><p>最近写程序用到argparse总是会报错</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
-</pre></div>
-
+<pre><code>/usr/lib/python2.7/dist-packages/pygments/plugin.py:39: UserWarning: Module argparse was already imported from /usr/lib/python2.7/argparse.pyc, but /usr/local/lib/python2.7/dist-packages is being added to sys.path
+</code></pre>
 
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
 执行<code>ls /usr/local/lib/python2.7/dist-packages/</code>查看果然有一个argparse.</p>
@@ -100,17 +99,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>这里介绍几个常用的列表操作</p>
 <h3>添加元素</h3>
 <p>添加元素使用列表的内置方法append</p>
-<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
-</pre></div>
-
+<pre><code class="python">number = [1, 2, 3, 4]
+number.append(5) # number = [1, 2, 3, 4, 5]
+number.append([6,7]) # number = [1, 2, 3, 4, 5, [6, 7]]
+number.append({'a':'b'}) # number = [1, 2, 3, 4, [6, 7], {'a', :'b'}
+</code></pre>
 
 <p>可以看到强大的python列表可以嵌套任意类型</p>
 <h3>列表相加</h3>
 <p>要想连接两个列表,可以使用+号连接</p>
-<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
+<pre><code class="python">a = [1, 2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

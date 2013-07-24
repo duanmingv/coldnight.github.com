@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> Linux | cold's world </title>
@@ -76,11 +76,11 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
-<span class="n">mkdir</span> <span class="n">python</span>
-<span class="n">cd</span> <span class="n">python</span>
-<span class="cp">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+<pre><code>cd /usr/src/
+mkdir python
+cd python
+#下载python2.7.2
+wget http://www ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
     </div>	
 				
     
@@ -104,8 +104,8 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+<pre><code class="bash">cd /usr/src                                           # 一般软件源码放在这个目录下
+wget http://nginx ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
     </div>	
 				
     
@@ -126,19 +126,16 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
-<div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
-</pre></div>
-
+<pre><code class="bash">abc-0.1.3-el5.centos.rpm
+</code></pre>
 
 <p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
-<div class="codehilite"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
-</pre></div>
-
+<pre><code class="bash">rpm -ivh abc-0.1.3-el5.centos.rpm    # i是安装 v是显示详细信息,-h显示安装进度
+</code></pre>
 
 <p>卸载这个包使用:</p>
-<div class="codehilite"><pre>rpm -e abc
-</pre></div>
-
+<pre><code class="bash">rpm -e abc
+</code></pre>
 
 <p>卸载只要指定包名即可卸载.</p>
 <p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
@@ -224,12 +221,11 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp</p>
 <p>安装tftp-server</p>
-<div class="codehilite"><pre>yum -y install tftp-server
-</pre></div>
-
+<pre><code class="bash">yum -y install tftp-server
+</code></pre>
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<div class="codehilite"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
+<pre><code class="bash">vi ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
     </div>	
 				
     
@@ -254,9 +250,9 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <!--more-->
 
 <p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
-<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+<pre><code class="bash"># 把依赖包添加到cfpkgs.list
 vi cfpkgs.list
-<span class="c"># 添加如下内容</span>
+# 添加如下内容
 keyutils-libs-devel
 zlib-devel
 e2fsprogs-devel 
@@ -267,8 +263,8 @@ pcre-devel
 krb5-devel
 flex
 openssl-devel 
-<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
+# 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:
+for i in `cat cfpkgs.list `:; do file=`echo $i ¦ sed 's/://g'`; cp /mnt ...</code></pre></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
     </div>	
 				
     
@@ -293,15 +289,15 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
 install.log            : 记录安装过程中所安装的包
 我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:<!--more--></p>
-<div class="codehilite"><pre>mkdir /usr/cold                 <span class="c"># 创建发行版目录</span>
-mount /dev/hdc /mnt             <span class="c"># 挂载IDE光驱</span>
-<span class="c"># 或</span>
+<pre><code class="bash">mkdir /usr/cold                 # 创建发行版目录
+mount /dev/hdc /mnt             # 挂载IDE光驱
+# 或
 mount /dev/cdrom /mnt
-<span class="c"># 如挂载本地ISO镜像使用下面命令</span>
+# 如挂载本地ISO镜像使用下面命令
 mount -o loop iso路径 /mnt
 
-<span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
-<span class="c"># 都说这个命令比cp快 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">read more</a></div>
+# 然后使用 tar命令把光盘的内容复制到/usr/cold
+# 都说这个命令比cp快 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">read more</a></div>
     </div>	
 				
     
@@ -334,7 +330,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 </ul>
 <p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
 <p>下载:</p>
-<div class="codehilite"><pre>wget https://cfengine.com/source-code/download ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
+<pre><code class="bash">wget https://cfengine.com/source-code/download ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

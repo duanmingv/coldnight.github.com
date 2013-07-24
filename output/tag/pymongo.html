@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> pymongo | cold's world </title>
@@ -72,186 +72,172 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         
         <div class="highlight"><p>最近重新拾起Django,但是Django并不支持mongodb,但是有一个模块mongoengine可以实现Django Model类似的封装.但是mongoengine的中文文档几乎没有,有的也是简短的几句介绍和使用.下面我就分享一下我在使用过程中所记录下的一些笔记,可能有点乱.大家可以参考一下.</p>
 <h2>安装mongoengine</h2>
-<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
-<span class="n">easy_install</span> <span class="n">mongoengine</span>
-</pre></div>
-
+<pre><code class="python">easy_install pymongo # 依赖库
+easy_install mongoengine
+</code></pre>
 
 <h2>基本使用</h2>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="c"># 连接数据库</span>
-<span class="n">connect</span><span class="p">(</span><span class="s">&#39;blog&#39;</span><span class="p">)</span>   <span class="c"># 连接本地blog数据库</span>
-<span class="c"># 如需验证和指定主机名</span>
-<span class="c"># connect(&#39;blog&#39;, host=&#39;192.168.3.1&#39;, username=&#39;root&#39;, password=&#39;1234&#39;)</span>
+<pre><code class="python">from mongoengine import *
+from datetime import datetime
+# 连接数据库
+connect('blog')   # 连接本地blog数据库
+# 如需验证和指定主机名
+# connect('blog', host='192.168.3.1', username='root', password='1234')
 
-<span class="c"># 定义分类文档</span>
-<span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-    <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">artnum</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-</pre></div>
-
+# 定义分类文档
+class Categories(Document):
+    ' 继承Document类,为普通文档 '
+    name = StringField(max_length=30, required=True)
+    artnum = IntField(default=0, required=True)
+    date = DateTimeField(default=datetime.now(), required=True)
+</code></pre>
 
 <p>和Django的model使用很类似,所以也不解释什么.</p>
 <h3>插入</h3>
-<div class="codehilite"><pre><span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span>   <span class="c"># 如果required为True则必须赋予初始值,如果有default,赋予初始值则使用默认值</span>
-<span class="n">cate</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c"># 保存到数据库</span>
-</pre></div>
-
+<pre><code class="python">cate = Categories(name=&quot;Linux&quot;)   # 如果required为True则必须赋予初始值,如果有default,赋予初始值则使用默认值
+cate.save() # 保存到数据库
+</code></pre>
 
 <h3>查询和更新</h3>
 <p>文档类有一个 objects 属性.我们使用它来查询数据库.</p>
-<div class="codehilite"><pre><span class="c"># 返回集合里的所有文档对象的列表</span>
-<span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<pre><code class="python"># 返回集合里的所有文档对象的列表
+cate = Categories.objects.all()
 
-<span class="c"># 返回所有符合查询条件的结果的文档对象列表</span>
-<span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Python&quot;</span><span class="p">)</span>
-<span class="c"># 更新查询到的文档:</span>
-<span class="n">cate</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;LinuxZen&quot;</span>
-<span class="n">cate</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
-<span class="err">查询数组</span> <span class="err">默认查询数组</span><span class="s">&quot;=&quot;</span><span class="err">代表的意思是</span><span class="ow">in</span><span class="p">:</span>
-<span class="k">class</span> <span class="nc">Posts</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-    <span class="n">artid</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">author</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
-    <span class="n">tags</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">categories</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">Categories</span><span class="p">),</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">comments</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+# 返回所有符合查询条件的结果的文档对象列表
+cate = Categories.objects(name=&quot;Python&quot;)
+# 更新查询到的文档:
+cate.name = &quot;LinuxZen&quot;
+cate.update()
+查询数组 默认查询数组&quot;=&quot;代表的意思是in:
+class Posts(Document):
+    artid = IntField(required=True)
+    title = StringField(max_length=100, required=True)
+    content = StringField(required=True)
+    author = ReferenceField(User)
+    tags = ListField(StringField(max_length=20, required=True), required=True)
+    categories = ReferenceField(Categories), required=True)
+    comments = IntField(default=0, required=True)
 
-<span class="c"># 将会返回所有tags包含coding的文档</span>
-<span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">tags</span><span class="o">=</span><span class="s">&#39;coding&#39;</span><span class="p">)</span>
-</pre></div>
-
+# 将会返回所有tags包含coding的文档
+Posts.objects(tags='coding')
+</code></pre>
 
 <h3>ReferenceField 引用字段:</h3>
 <p>通过引用字段可以通过文档直接获取引用字段引用的那个文档:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">artnum</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<pre><code class="python">class Categories(Document):
+    name = StringField(max_length=30, required=True)
+    artnum = IntField(default=0, required=True)
+    date = DateTimeField(default=datetime.now(), required=True)
 
-<span class="k">class</span> <span class="nc">Posts</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+class Posts(Document):
 
-    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">tags</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">categories</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">Categories</span><span class="p">)</span>
-</pre></div>
-
+    title = StringField(max_length=100, required=True)
+    content = StringField(required=True)
+    tags = ListField(StringField(max_length=20, required=True), required=True)
+    categories = ReferenceField(Categories)
+</code></pre>
 
 <h4>插入引用字段</h4>
-<div class="codehilite"><pre><span class="n">cate</span> <span class="o">=</span><span class="n">Categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span>
-<span class="n">cate</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="n">post</span> <span class="o">=</span> <span class="n">Posts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Linux&quot;</span><span class="p">,</span><span class="s">&quot;web&quot;</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
-<span class="n">post</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-</pre></div>
-
+<pre><code class="python">cate =Categories(name=&quot;Linux&quot;)
+cate.save()
+post = Posts(title=&quot;Linuxzen.com&quot;, content=&quot;Linuxzen.com&quot;,tags=[&quot;Linux&quot;,&quot;web&quot;], categories=cate)
+post.save()
+</code></pre>
 
 <h4>通过引用字段直接获取引用文档对象</h4>
 <p>一般文档查询会返回一个列表(尽管只有一个结果),我们想要获得一个文档对象可以使用索引获取第一个文档对象,但是mongoengine建议使用first()来获取第一个:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">categories</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span>
+<pre><code class="python">&gt;&gt;&gt; cate = Posts.objects.all().first().categories
+&gt;&gt;&gt; cate
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span><span class="o">.</span><span class="n">name</span>
-<span class="s">u&#39;Linux&#39;</span>
-</pre></div>
-
+&gt;&gt;&gt; cate.name
+u'Linux'
+</code></pre>
 
 <p>查询包含Linux分类的文章</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
-</pre></div>
-
+<pre><code class="python">&gt;&gt;&gt; cate = Categories.objects(name=&quot;Linux&quot;).first()
+&gt;&gt;&gt; Posts.objects(categories=cate)
+</code></pre>
 
 <h3>EmbeddedDocument 嵌入文档</h3>
 <p>继承EmbeddedDocument的文档类就是嵌入文档,嵌入文档用于嵌入其他文档的EmbeddedDocumentField 字段,比如上面例子的tags字段如果改成嵌入文档的话可以将Posts文档类改成如下方式:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Posts</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+<pre><code class="python">class Posts(Document):
 
-    <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">content</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">tags</span> <span class="o">=</span> <span class="n">ListField</span><span class="p">(</span><span class="n">EmbeddedDocumentField</span><span class="p">(</span><span class="s">&#39;Tags&#39;</span><span class="p">)</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">categories</span> <span class="o">=</span> <span class="n">ReferenceField</span><span class="p">(</span><span class="n">Categories</span><span class="p">)</span>
-</pre></div>
-
+    title = StringField(max_length=100, required=True)
+    content = StringField(required=True)
+    tags = ListField(EmbeddedDocumentField('Tags')required=True)
+    categories = ReferenceField(Categories)
+</code></pre>
 
 <p>还需要添加一个Tags嵌入文档类:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Tags</span><span class="p">(</span><span class="n">EmbeddedDocument</span><span class="p">):</span>
-<span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
-<span class="n">date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
-</pre></div>
-
+<pre><code class="python">class Tags(EmbeddedDocument):
+name = StringField()
+date = DateTimeField(default=datetime.now())
+</code></pre>
 
 <p>我们像如下方式插入Posts文档中的Tags</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linuxzen&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Posts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;mysite&quot;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">post</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">tags</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">tags</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-<span class="k">print</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span>
+<pre><code class="python">&gt;&gt;&gt; tag = Tags(name=&quot;Linuxzen&quot;)
+&gt;&gt;&gt; post = Posts(title=&quot;Linuxzen.com&quot;, content=&quot;Linuxzen.com&quot;, tags=[tag], categories=cate)
+&gt;&gt;&gt; tag = Tags(name=&quot;mysite&quot;)
+&gt;&gt;&gt; post.tags.append(tag)
+&gt;&gt;&gt; post.save()
+&gt;&gt;&gt; tags = post.tags
+&gt;&gt;&gt; for tag in tags:
+print tag.name
 
-<span class="n">Linuxzen</span>
-<span class="n">mysite</span>
-</pre></div>
-
+Linuxzen
+mysite
+</code></pre>
 
 <h3>时间段查询</h3>
-<div class="codehilite"><pre>    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">:</span>
-        <span class="n">emonth</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">eyear</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">emonth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">eyear</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">eyear</span><span class="p">,</span> <span class="n">emonth</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">articles</span> <span class="o">=</span> <span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">date__gte</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">date__lt</span><span class="o">=</span><span class="n">end</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&#39;-date&#39;</span><span class="p">)</span>
-</pre></div>
-
+<pre><code class="python">    start = datetime(int(year), int(month), 1)
+    if int(month) + 1 &gt; 12:
+        emonth = 1
+        eyear = int(year) + 1
+    else:
+        emonth = int(month) + 1
+        eyear = int(year)
+    end = datetime(eyear, emonth, 1)
+    articles = Posts.objects(date__gte=start, date__lt=end).order_by('-date')
+</code></pre>
 
 <h3>分片</h3>
 <p>slice用于分片</p>
-<div class="codehilite"><pre><span class="c"># comments - skip 5, limit 10</span>
-<span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">slice__comments</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<pre><code class="python"># comments - skip 5, limit 10
+Page.objects.fields(slice__comments=[5, 10])
 
-<span class="c"># 也可以使用索引值分片</span>
+# 也可以使用索引值分片
 
-<span class="c"># limit 5</span>
-<span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+# limit 5
+users = User.objects[:5]
 
-<span class="c"># skip 5</span>
-<span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+# skip 5
+users = User.objects[5:]
 
-<span class="c"># skip 10, limit 15</span>
-<span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">15</span><span class="p">]</span>
-</pre></div>
-
+# skip 10, limit 15
+users = User.objects[10:15]
+</code></pre>
 
 <h3>使用原始语句查询</h3>
-<p>如果想使用原始的pymongo查询方式可以使用__raw__操作符 Page.objects(<strong>raw</strong>={'tags':'coding'})
+<p>如果想使用原始的pymongo查询方式可以使用<strong>raw</strong>操作符 Page.objects(<strong>raw</strong>={'tags':'coding'})
 使用$inc和$set操作符</p>
-<div class="codehilite"><pre><span class="c"># 更新嵌入文档comments字段by的值为joe的文档字段votes增加1</span>
-<span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">comments_by</span><span class="o">=</span><span class="s">&quot;joe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">inc__votes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<pre><code class="python"># 更新嵌入文档comments字段by的值为joe的文档字段votes增加1
+Page.objects(comments_by=&quot;joe&quot;).update(inc__votes=1)
 
-<span class="c"># 更新嵌入文档comments字段by的值为joe的文档字段votes设置为1</span>
-<span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">comments_by</span><span class="o">=</span><span class="s">&quot;joe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">set__votes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-
+# 更新嵌入文档comments字段by的值为joe的文档字段votes设置为1
+Page.objects(comments_by=&quot;joe&quot;).update(set__votes=1)
+</code></pre>
 
 <h3>其他技巧</h3>
-<div class="codehilite"><pre><span class="c">#查询结果转换成字典</span>
-<span class="n">users_dict</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">to_mongo</span><span class="p">()</span>
+<pre><code class="python">#查询结果转换成字典
+users_dict = User.objects().to_mongo()
 
-<span class="c"># 排序,按日期排列</span>
-<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&quot;date&quot;</span><span class="p">)</span>
+# 排序,按日期排列
+user = User.objects.order_by(&quot;date&quot;)
 
-<span class="c"># 按日期倒序</span>
+# 按日期倒序
 
-<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s">&quot;-date&quot;</span><span class="p">)</span>
-</pre></div></div>
+user = User.objects.order_by(&quot;-date&quot;)
+</code></pre></div>
         <hr />
     </div>
 		

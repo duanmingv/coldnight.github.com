@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="utf-8">
     <title> 一键 | cold's world </title>
@@ -72,91 +72,86 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
         
         <div class="highlight"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
 <p>首先在/usr/bin/下创建compile脚本:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
-</pre></div>
-
+<pre><code>vi /usr/bin/compile
+</code></pre>
 
 <p>添加如下内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Filename : compile</span>
-<span class="c"># Describe : To compile c/c++</span>
-<span class="c"># Author   : cold night(www.linuxzen.com)</span>
-<span class="c"># Version  : 0.2</span>
-<span class="c"># Change   : 增加终端着色 </span>
+<pre><code class="bash">#!/bin/bash
+# Filename : compile
+# Describe : To compile c/c++
+# Author   : cold night(www.linuxzen.com)
+# Version  : 0.2
+# Change   : 增加终端着色 
 
 clear
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
-<span class="k">then</span>
-<span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
-    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename</span><span class="p">%\.*</span><span class="k">}</span>
-    <span class="nv">typename</span><span class="o">=</span><span class="k">${</span><span class="nv">filename</span><span class="p">#*\.</span><span class="k">}</span>
-    <span class="k">if</span> <span class="o">(</span> <span class="nb">test</span> <span class="s2">&quot;$typename&quot;</span> <span class="o">=</span> <span class="s2">&quot;cpp&quot;</span> <span class="o">||</span> <span class="s2">&quot;$typename&quot;</span> <span class="o">=</span> <span class="s2">&quot;cc&quot;</span> <span class="o">)</span>
-    <span class="k">then</span>
-<span class="k">        </span><span class="nb">echo</span> -n <span class="s2">&quot;Compiling...&quot;</span>
-        g++ -o <span class="s2">&quot;$outname&quot;</span> <span class="s2">&quot;$filename&quot;</span> 2&gt; /tmp/errinfo &gt;&amp;2
-        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
-        <span class="k">then</span>
-<span class="k">            </span><span class="nb">echo</span> -e <span class="s2">&quot;       \033[32;1mSuccess!!!\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-            <span class="nb">echo</span> -e <span class="s2">&quot;\033[1;44mRunning...\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-            ./<span class="s2">&quot;$outname&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-        <span class="k">else</span>
-<span class="k">            </span><span class="nb">echo</span> -e <span class="s2">&quot;       \033[1;31mError!!!\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-            <span class="nb">echo</span> -e <span class="s2">&quot;\033[1;44mError Info:\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
+if [ $# -eq 1 ]
+then
+    filename=$1
+    outname=${filename%\.*}
+    typename=${filename#*\.}
+    if ( test &quot;$typename&quot; = &quot;cpp&quot; || &quot;$typename&quot; = &quot;cc&quot; )
+    then
+        echo -n &quot;Compiling...&quot;
+        g++ -o &quot;$outname&quot; &quot;$filename&quot; 2&gt; /tmp/errinfo &gt;&amp;2
+        if [ $? -eq 0 ]
+        then
+            echo -e &quot;       \033[32;1mSuccess!!!\033[0m&quot;
+            echo &quot;------------------------&quot;
+            echo -e &quot;\033[1;44mRunning...\033[0m&quot;
+            echo &quot;------------------------&quot;
+            ./&quot;$outname&quot;
+            echo &quot;------------------------&quot;
+        else
+            echo -e &quot;       \033[1;31mError!!!\033[0m&quot;
+            echo &quot;------------------------&quot;
+            echo -e &quot;\033[1;44mError Info:\033[0m&quot;
+            echo &quot;------------------------&quot;
             cat /tmp/errinfo
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-        <span class="k">fi</span>
+            echo &quot;------------------------&quot;
+        fi
 
-<span class="k">    elif</span> <span class="o">[</span> <span class="s2">&quot;$typename&quot;</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span> <span class="o">]</span>
-    <span class="k">then</span>
-<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;Compiling...&quot;</span>
-        <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-        gcc -o <span class="s2">&quot;$outname&quot;</span> <span class="s2">&quot;$filename&quot;</span> 2&gt;/tmp/errinfo &gt;&amp;2
-        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
-        <span class="k">then</span>
-<span class="k">            </span><span class="nb">echo</span> -e <span class="s2">&quot;       \033[32;1mSuccess!!!\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-            <span class="nb">echo</span> -e <span class="s2">&quot;\033[1;44mRunning...\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-            ./<span class="s2">&quot;$outname&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-        <span class="k">else</span>
-<span class="k">            </span><span class="nb">echo</span> -e <span class="s2">&quot;       \033[1;31mError!!!\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-            <span class="nb">echo</span> -e <span class="s2">&quot;\033[1;44mError Info:\033[0m&quot;</span>
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
+    elif [ &quot;$typename&quot; = &quot;c&quot; ]
+    then
+        echo &quot;Compiling...&quot;
+        echo &quot;------------------------&quot;
+        gcc -o &quot;$outname&quot; &quot;$filename&quot; 2&gt;/tmp/errinfo &gt;&amp;2
+        if [ $? -eq 0 ]
+        then
+            echo -e &quot;       \033[32;1mSuccess!!!\033[0m&quot;
+            echo &quot;------------------------&quot;
+            echo -e &quot;\033[1;44mRunning...\033[0m&quot;
+            echo &quot;------------------------&quot;
+            ./&quot;$outname&quot;
+            echo &quot;------------------------&quot;
+        else
+            echo -e &quot;       \033[1;31mError!!!\033[0m&quot;
+            echo &quot;------------------------&quot;
+            echo -e &quot;\033[1;44mError Info:\033[0m&quot;
+            echo &quot;------------------------&quot;
             cat /tmp/errinfo
-            <span class="nb">echo</span> <span class="s2">&quot;------------------------&quot;</span>
-        <span class="k">fi</span>
+            echo &quot;------------------------&quot;
+        fi
 
-<span class="k">    fi</span>
-<span class="k">else</span>
-<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;Error: No intput filename&#39;</span>
-<span class="k">fi</span>
-</pre></div>
-
+    fi
+else
+    echo 'Error: No intput filename'
+fi
+</code></pre>
 
 <p>然后给脚本赋予执行权限</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
-</pre></div>
-
+<pre><code>chmod +x /usr/bin/compile
+</code></pre>
 
 <p>然后编辑vim配置文件:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">~/</span><span class="p">.</span><span class="n">vimrc</span>
-</pre></div>
-
+<pre><code>vi ~/.vimrc
+</code></pre>
 
 <p>然后添加下面内容:</p>
-<div class="codehilite"><pre><span class="c">&quot; C++ complier</span>
-autocmd <span class="nb">FileType</span> cpp map <span class="p">&lt;</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Esc<span class="p">&gt;</span>:<span class="k">w</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>:<span class="p">!</span><span class="k">compile</span> %<span class="p">&lt;</span>CR<span class="p">&gt;</span>
-autocmd <span class="nb">FileType</span> <span class="k">cc</span> map <span class="p">&lt;</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Esc<span class="p">&gt;</span>:<span class="k">w</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>:<span class="p">!</span><span class="k">compile</span> %<span class="p">&lt;</span>CR<span class="p">&gt;</span>
-autocmd <span class="nb">FileType</span> <span class="k">c</span> map <span class="p">&lt;</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Esc<span class="p">&gt;</span>:<span class="k">w</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>:<span class="p">!</span><span class="k">compile</span> %<span class="p">&lt;</span>CR<span class="p">&gt;</span>
-</pre></div>
-
+<pre><code class="vim">&quot; C++ complier
+autocmd FileType cpp map &lt;F8&gt; &lt;Esc&gt;:w!&lt;CR&gt;:!compile %&lt;CR&gt;
+autocmd FileType cc map &lt;F8&gt; &lt;Esc&gt;:w!&lt;CR&gt;:!compile %&lt;CR&gt;
+autocmd FileType c map &lt;F8&gt; &lt;Esc&gt;:w!&lt;CR&gt;:!compile %&lt;CR&gt;
+</code></pre>
 
 <p>配置完毕我们就可以用vim编辑C/C++源文件的时候按F8就可以进行一键编译执行.</p></div>
         <hr />
