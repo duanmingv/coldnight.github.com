@@ -72,38 +72,40 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         
         <div class="highlight"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<pre><code class="bash">#!/bin/sh
-# Author   : cold night
-# Filename : nglogcut.sh
-export PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-LogPath='/usr/local/nginx/logs/access.log'    # 定义日志绝对路径
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Author   : cold night</span>
+<span class="c"># Filename : nglogcut.sh</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径</span>
 
-for i in `ls $LogPath* | awk -F'/' '{print $NF}' | sort -nr`
-do
-        LastNum=`echo $i | awk -F'.' '{print $NF}'`
+<span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$LogPath</span>* | awk -F<span class="s1">&#39;/&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span> | sort -nr<span class="sb">`</span>
+<span class="k">do</span>
+<span class="k">        </span><span class="nv">LastNum</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> | awk -F<span class="s1">&#39;.&#39;</span> <span class="s1">&#39;{print $NF}&#39;</span><span class="sb">`</span>
 
-        echo $LastNum | grep -E &quot;[0-9]+&quot; 2&amp;gt;/dev/null 1&amp;gt;&amp;amp;2
-        if [[ $? -eq 0 ]]
-        then
-                OnNum=`expr $LastNum + 1`
-                mv $LogPath.$LastNum $LogPath.$OnNum
-        else
-                mv $LogPath $LogPath.1
-                kill -HUP `cat /usr/local/nginx/logs/nginx.pid`
-        fi
-done
-</code></pre>
+        <span class="nb">echo</span> <span class="nv">$LastNum</span> | grep -E <span class="s2">&quot;[0-9]+&quot;</span> 2&amp;gt;/dev/null 1&amp;gt;&amp;amp;2
+        <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>
+        <span class="k">then</span>
+<span class="k">                </span><span class="nv">OnNum</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$LastNum</span> + 1<span class="sb">`</span>
+                mv <span class="nv">$LogPath</span>.<span class="nv">$LastNum</span> <span class="nv">$LogPath</span>.<span class="nv">$OnNum</span>
+        <span class="k">else</span>
+<span class="k">                </span>mv <span class="nv">$LogPath</span> <span class="nv">$LogPath</span>.1
+                <span class="nb">kill</span> -HUP <span class="sb">`</span>cat /usr/local/nginx/logs/nginx.pid<span class="sb">`</span>
+        <span class="k">fi</span>
+<span class="k">done</span>
+</pre></div>
+
 
 <p>然后保存为nglogcut.sh存放在/root/下,下面给脚本赋予执行权限</p>
-<pre><code class="bash">chmod +x /root/nglogcut.sh
-</code></pre>
+<div class="codehilite"><pre>chmod +x /root/nglogcut.sh
+</pre></div>
+
 
 <p>配置crond自动执行:</p>
-<pre><code class="bash">crontab -e    # 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径
+<div class="codehilite"><pre>crontab -e    <span class="c"># 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径</span>
 
-# 添加如下内容:
-00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2 # 每3天执行日志分割(可根据自己情况来定义执行周期)
-</code></pre></div>
+<span class="c"># 添加如下内容:</span>
+00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2 <span class="c"># 每3天执行日志分割(可根据自己情况来定义执行周期)</span>
+</pre></div></div>
         <hr />
     </div>
 		

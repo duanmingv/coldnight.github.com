@@ -73,32 +73,38 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
         <div class="highlight"><p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
 evince
 却提示:</p>
-<pre><code>No protocol specified
-Cannot parse arguments: 无法打开显示：
-</code></pre>
+<div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
+<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
+</pre></div>
+
 
 <p>google说是$XAUTHORITY权限的问题,于是查看:</p>
-<pre><code class="bash">ls -l $XAUTHORITY
+<div class="codehilite"><pre>ls -l <span class="nv">$XAUTHORITY</span>
 -rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
-</code></pre>
+</pre></div>
+
 
 <p>更改为如下:</p>
-<pre><code class="bash">chmod +rw $XAUTHORITY
-</code></pre>
+<div class="codehilite"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
+</pre></div>
+
 
 <p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<pre><code class="log">Nov 15 15:48:53 Vostro kernel: [13010.203241] type=1400 audit(1352965733.221:74): apparmor=&quot;DENIED&quot; operation=&quot;open&quot; parent=1 profile=&quot;/usr/bin/evince&quot; name=&quot;/data/home/vim/.Xauthority&quot; pid=7088 comm=&quot;evince&quot; requested_mask=&quot;r&quot; denied_mask=&quot;r&quot; fsuid=1000 ouid=1000
-</code></pre>
+<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit</span><span class="p">(</span><span class="mf">1352965733.221</span><span class="o">:</span><span class="mi">74</span><span class="p">)</span><span class="o">:</span> <span class="n">apparmor</span><span class="o">=</span><span class="s">&quot;DENIED&quot;</span> <span class="n">operation</span><span class="o">=</span><span class="s">&quot;open&quot;</span> <span class="n">parent</span><span class="o">=</span><span class="mi">1</span> <span class="n">profile</span><span class="o">=</span><span class="s">&quot;/usr/bin/evince&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;/data/home/vim/.Xauthority&quot;</span> <span class="n">pid</span><span class="o">=</span><span class="mi">7088</span> <span class="n">comm</span><span class="o">=</span><span class="s">&quot;evince&quot;</span> <span class="n">requested_mask</span><span class="o">=</span><span class="s">&quot;r&quot;</span> <span class="n">denied_mask</span><span class="o">=</span><span class="s">&quot;r&quot;</span> <span class="n">fsuid</span><span class="o">=</span><span class="mi">1000</span> <span class="n">ouid</span><span class="o">=</span><span class="mi">1000</span>
+</pre></div>
+
 
 <p>好吧,问题是一个叫做AppArmor的内核模块引起的,它阻止了evince读取.Xauthority,找到配置文件,添加:</p>
-<pre><code class="bash">sudo vim /etc/apparmor.d/usr.bin.evince 
-@{HOME}/.Xauthority rw,
+<div class="codehilite"><pre>sudo vim /etc/apparmor.d/usr.bin.evince 
+@<span class="o">{</span>HOME<span class="o">}</span>/.Xauthority rw,
 sudo /etc/init.d/apparmor restart
-</code></pre>
+</pre></div>
+
 
 <p>做完这些还是刷同样的日志,无奈只有禁用它了:</p>
-<pre><code class="bash">sudo ln -sf /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/
-</code></pre>
+<div class="codehilite"><pre>sudo ln -sf /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/
+</pre></div>
+
 
 <p>重启apparmor就能打开Evince了,都不知道这玩意是怎么加上的,之前都没问题.</p>
 <p>此次解决看来Linux问题解决之路是从日志开始的,长时间Linux桌面工作差点都给忘掉日志的重要性.</p></div>

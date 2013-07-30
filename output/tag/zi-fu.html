@@ -80,26 +80,29 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 当前字符的ASCII和16进制码
 右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
 fugitive 可以在git获得:</p>
-<pre><code>git clone http://github.com/tpope/vim-fugitive.git
-</code></pre>
+<div class="codehilite"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">http</span><span class="o">:</span><span class="c1">//github.com/tpope/vim-fugitive.git</span>
+</pre></div>
+
 
 <p>将plugin目录下的fugitive.vim复制到~/.vim/plugin下
 在~/.vimrc添加如下内容</p>
-<pre><code class="vim">if has('statusline')
-    set laststatus=2
-    set statusline=%&lt;%f\   &quot; 文件名
-    set statusline+=%w%h%m%r &quot; 选项
-    set statusline+=%{fugitive#statusline()} &quot;Git
-    set statusline+=\ [%{&amp;ff}/%Y]            &quot; filetype
-    set statusline+=\ [%{getcwd()}]          &quot; current dir
-    set statusline+=\ [A=\%03.3b/H=\%02.2B] &quot; ASCII / Hexadecimal value of char
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%\ %L  &quot; Right aligned file nav info
-endif
-</code></pre>
+<div class="codehilite"><pre><span class="k">if</span> has<span class="p">(</span><span class="s1">&#39;statusline&#39;</span><span class="p">)</span>
+    <span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>%<span class="p">&lt;</span>%<span class="k">f</span>\   <span class="c">&quot; 文件名</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="k">w</span>%<span class="k">h</span>%<span class="k">m</span>%<span class="k">r</span> <span class="c">&quot; 选项</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%{fugitive#<span class="nb">statusline</span><span class="p">()</span>} <span class="c">&quot;Git</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>\ [%{&amp;<span class="nb">ff</span>}/%Y]            <span class="c">&quot; filetype</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>\ [%{getcwd<span class="p">()</span>}]          <span class="c">&quot; current dir</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>\ [A<span class="p">=</span>\%<span class="m">03</span>.<span class="m">3</span>b<span class="sr">/H=\%02.2B] &quot; ASCII /</span> Hexadecimal value of char
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="p">=</span>%<span class="m">-14</span>.<span class="p">(</span>%<span class="k">l</span><span class="p">,</span>%<span class="k">c</span>%V%<span class="p">)</span>\ %<span class="k">p</span>%%\ %L  <span class="c">&quot; Right aligned file nav info</span>
+<span class="k">endif</span>
+</pre></div>
+
 
 <p>要想在编辑时将空白可见可以在.vimrc中添加如下内容:</p>
-<pre><code class="vim">set listchars=tab:&gt;-,trail:-,extends:#,nbsp:-
-</code></pre>
+<div class="codehilite"><pre><span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;-,</span>trail:<span class="p">-,</span>extends:#<span class="p">,</span>nbsp:<span class="p">-</span>
+</pre></div>
+
 
 <p>即可tab显示为&gt;---,空格显示-,行尾的空白显示-,</p>
 <p>设置完后非常的cool,上图一张:

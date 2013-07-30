@@ -13,335 +13,353 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 &lt;p&gt;后端real server: 192.168.3.3/24 |192.168.3.102/24(我们这里使用备用lvs作为一个测试&lt;/p&gt;
 &lt;p&gt;vip(virtual ip):192.168.3.100/24&lt;/p&gt;
 &lt;p&gt;lvs在2.6的内核中是默认支持的,所以我们就不需要在来安装,但是我们需要安装用户配置工具ipvsadm&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yum -y install ipvsadm           # 分别在主从lvs上执行安装ipvsadm
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;ipvsadm&lt;/span&gt;           &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;分别在主从&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;上执行安装&lt;/span&gt;&lt;span class="n"&gt;ipvsadm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;我们查看lvs是否支持:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;lsmod ¦ grep ip_vs          #
-ip_vs                  78081  1
-modprobe -l¦ grep ip_vs
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_dh.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_ftp.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_lblc.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_lblcr.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_lc.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_nq.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_rr.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_sed.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_sh.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_wlc.ko
-/lib/modules/2.6.18-194.el5/kernel/net/ipv4/ipvs/ip_vs_wrr.ko
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsmod&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;ip_vs&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt;
+&lt;span class="n"&gt;ip_vs&lt;/span&gt;                  &lt;span class="mi"&gt;78081&lt;/span&gt;  &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;modprobe&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;ip_vs&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_dh&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_ftp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_lblc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_lblcr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_lc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_nq&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_rr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_sed&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_sh&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_wlc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs_wrr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;本文介绍lvs的&lt;code&gt;DR&lt;/code&gt;模式,首先部署keepalived.本博前面已经介绍如何来安装keepalived.这里就不在只简单的贴一下步骤:&lt;/p&gt;
 &lt;p&gt;在主备服务器上部署keepalived(因为前面已经rpm包安装了ipvsadm,所以就不需要重复安装):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vi /etc/sysctl.conf
-net.ipv4.ip_forward = 1 # 此参数改为1
-sysctl -p # 使修改生效
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sysctl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ip_forward&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;此参数改为&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;sysctl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使修改生效&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum  -y install openssl-devel
-# 下载并安装keepalived
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum  -y install openssl-devel
+&lt;span class="c"&gt;# 下载并安装keepalived&lt;/span&gt;
 wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
 tar -zxvf keepalived-1.1.19.tar.gz
-cd keepalived-1.1.19
-./configure --prefix=/ \            # 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)
---mandir=/usr/local/share/man/ \
---with-kernel-dir=/usr/src/kernels/2.6.18-194.el5-i686/    # 需要内核的头文件
-make &amp;amp;&amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;span class="nb"&gt;cd &lt;/span&gt;keepalived-1.1.19
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/ &lt;span class="se"&gt;\ &lt;/span&gt;           &lt;span class="c"&gt;# 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)&lt;/span&gt;
+--mandir&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/share/man/ &lt;span class="se"&gt;\&lt;/span&gt;
+--with-kernel-dir&lt;span class="o"&gt;=&lt;/span&gt;/usr/src/kernels/2.6.18-194.el5-i686/    &lt;span class="c"&gt;# 需要内核的头文件&lt;/span&gt;
+make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;在主备lvs上安装keepalived完毕后我们先来配置主lvs上的keepalived:
 编辑配置文件&lt;code&gt;/etc/keepalived/keepalived.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;! Configuration File for keepalived
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt;
 
-global_defs {
-   notification_email {
-    coldnight@linuxzen.com                                   # 发生故障时发送的邮箱
-   }
-   notification_email_from linuxzen@linuxzen.com             # 使用哪个邮箱发送
-   smtp_server linuxzen.com                                  # 发件服务器
-   smtp_connect_timeout 30
-   router_id LVS_DEVEL
-}
+&lt;span class="n"&gt;global_defs&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;notification_email&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;coldnight&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;                                   &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;发生故障时发送的邮箱&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+   &lt;span class="n"&gt;notification_email_from&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;             &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用哪个邮箱发送&lt;/span&gt;
+   &lt;span class="n"&gt;smtp_server&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;                                  &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;发件服务器&lt;/span&gt;
+   &lt;span class="n"&gt;smtp_connect_timeout&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
+   &lt;span class="n"&gt;router_id&lt;/span&gt; &lt;span class="n"&gt;LVS_DEVEL&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 
-vrrp_instance VI_1 {
-    state MASTER             # 标示为主lvs
-    interface eth0           # HA检测端口
-    virtual_router_id 51     # 主备的virtual_router_id 必须相同
-    priority 100             # 优先级,备lvs要比主lvs稍小
-    advert_int 1             # VRRP Multicast 广播周期秒数
-    authentication {         # 定义认证
-        auth_type PASS       # 认证方式为口令认证
-        auth_pass 1111       # 定义口令
-    }
-    virtual_ipaddress {      # 定义vip
-        192.168.3.100        # 多个vip可换行添加
-    }
-}
+&lt;span class="n"&gt;vrrp_instance&lt;/span&gt; &lt;span class="n"&gt;VI_1&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt;             &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;标示为主&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;
+    &lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt;           &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;HA&lt;/span&gt;&lt;span class="err"&gt;检测端口&lt;/span&gt;
+    &lt;span class="n"&gt;virtual_router_id&lt;/span&gt; &lt;span class="mi"&gt;51&lt;/span&gt;     &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;主备的&lt;/span&gt;&lt;span class="n"&gt;virtual_router_id&lt;/span&gt; &lt;span class="err"&gt;必须相同&lt;/span&gt;
+    &lt;span class="n"&gt;priority&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;             &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;优先级&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;备&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;要比主&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;稍小&lt;/span&gt;
+    &lt;span class="n"&gt;advert_int&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;             &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;VRRP&lt;/span&gt; &lt;span class="n"&gt;Multicast&lt;/span&gt; &lt;span class="err"&gt;广播周期秒数&lt;/span&gt;
+    &lt;span class="n"&gt;authentication&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义认证&lt;/span&gt;
+        &lt;span class="n"&gt;auth_type&lt;/span&gt; &lt;span class="n"&gt;PASS&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;认证方式为口令认证&lt;/span&gt;
+        &lt;span class="n"&gt;auth_pass&lt;/span&gt; &lt;span class="mi"&gt;1111&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义口令&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;virtual_ipaddress&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;      &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义&lt;/span&gt;&lt;span class="n"&gt;vip&lt;/span&gt;
+        &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt;        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;多个&lt;/span&gt;&lt;span class="n"&gt;vip&lt;/span&gt;&lt;span class="err"&gt;可换行添加&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 
-virtual_server 192.168.3.100 80 {
-    delay_loop 6       # 每隔6秒查看realserver状态
-    lb_algo wlc        # 调度算法为加权最小连接数
-    lb_kind DR         # lvs工作模式为DR(直接路由)模式
-    nat_mask 255.255.255.0
-    persistence_timeout 50  # 同一IP 的连接50秒内被分配到同一台realserver(测试时建议改为0)
-    protocol TCP            # 用TCP监测realserver的状态
+&lt;span class="n"&gt;virtual_server&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;delay_loop&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;每隔&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="err"&gt;秒查看&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;&lt;span class="err"&gt;状态&lt;/span&gt;
+    &lt;span class="n"&gt;lb_algo&lt;/span&gt; &lt;span class="n"&gt;wlc&lt;/span&gt;        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;调度算法为加权最小连接数&lt;/span&gt;
+    &lt;span class="n"&gt;lb_kind&lt;/span&gt; &lt;span class="n"&gt;DR&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;工作模式为&lt;/span&gt;&lt;span class="n"&gt;DR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;直接路由&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;模式&lt;/span&gt;
+    &lt;span class="n"&gt;nat_mask&lt;/span&gt; &lt;span class="mf"&gt;255.255.255.0&lt;/span&gt;
+    &lt;span class="n"&gt;persistence_timeout&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;  &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;同一&lt;/span&gt;&lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="err"&gt;的连接&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="err"&gt;秒内被分配到同一台&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;测试时建议改为&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;TCP&lt;/span&gt;            &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;用&lt;/span&gt;&lt;span class="n"&gt;TCP&lt;/span&gt;&lt;span class="err"&gt;监测&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;&lt;span class="err"&gt;的状态&lt;/span&gt;
 
-    real_server 192.168.3.3 80 {       # 定义realserver
-        weight 3                       # 定义权重
-        TCP_CHECK {  # 注意TCP_CHECK和{之间的空格,如果没有的话只会添加第一个realserver
-            connect_timeout 3          # 三秒无响应超时
-            nb_get_retry 3
-            delay_before_retry 3
-            connect_port 80
-        }
-    }
-    real_server 192.168.3.102 80 {
-        weight 3
-        TCP_CHECK {
-            connect_timeout 3
-            nb_get_retry 3
-            delay_before_retry 3
-            connect_port 80
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
+    &lt;span class="n"&gt;real_server&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.3&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;
+        &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;                       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义权重&lt;/span&gt;
+        &lt;span class="n"&gt;TCP_CHECK&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;  &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;注意&lt;/span&gt;&lt;span class="n"&gt;TCP_CHECK&lt;/span&gt;&lt;span class="err"&gt;和&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;之间的空格&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;如果没有的话只会添加第一个&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;
+            &lt;span class="n"&gt;connect_timeout&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;三秒无响应超时&lt;/span&gt;
+            &lt;span class="n"&gt;nb_get_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;delay_before_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;connect_port&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;real_server&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.102&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+        &lt;span class="n"&gt;TCP_CHECK&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;connect_timeout&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;nb_get_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;delay_before_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;connect_port&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;配置备用lvs的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;! Configuration File for keepalived
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt;
 
-global_defs {
-   notification_email {
-    coldnight@linuxzen.com                               # 发生故障时发送的邮箱
-   }
-   notification_email_from linuxzen@linuxzen.com         # 使用哪个邮箱发送
-   smtp_server linuxzen.com                              # 发件服务器
-   smtp_connect_timeout 30
-   router_id LVS_DEVEL
-}
+&lt;span class="n"&gt;global_defs&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;notification_email&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;coldnight&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;                               &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;发生故障时发送的邮箱&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+   &lt;span class="n"&gt;notification_email_from&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用哪个邮箱发送&lt;/span&gt;
+   &lt;span class="n"&gt;smtp_server&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;                              &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;发件服务器&lt;/span&gt;
+   &lt;span class="n"&gt;smtp_connect_timeout&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
+   &lt;span class="n"&gt;router_id&lt;/span&gt; &lt;span class="n"&gt;LVS_DEVEL&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 
-vrrp_instance VI_1 {
-    state BACKUP              # 标示为备lvs
-    interface eth0            # HA检测端口
-    virtual_router_id 51      # 主备的virtual_router_id 必须相同
-    priority 99               # 优先级,备lvs要比主lvs稍小
-    advert_int 1              # VRRP Multicast 广播周期秒数
-    authentication {          # 定义认证
-        auth_type PASS        # 认证方式为口令认证
-        auth_pass 1111        # 定义口令
-    }
-    virtual_ipaddress {       # 定义vip
-        192.168.3.100         # 多个vip可换行添加
-    }
-}
+&lt;span class="n"&gt;vrrp_instance&lt;/span&gt; &lt;span class="n"&gt;VI_1&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;state&lt;/span&gt; &lt;span class="n"&gt;BACKUP&lt;/span&gt;              &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;标示为备&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;
+    &lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt;            &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;HA&lt;/span&gt;&lt;span class="err"&gt;检测端口&lt;/span&gt;
+    &lt;span class="n"&gt;virtual_router_id&lt;/span&gt; &lt;span class="mi"&gt;51&lt;/span&gt;      &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;主备的&lt;/span&gt;&lt;span class="n"&gt;virtual_router_id&lt;/span&gt; &lt;span class="err"&gt;必须相同&lt;/span&gt;
+    &lt;span class="n"&gt;priority&lt;/span&gt; &lt;span class="mi"&gt;99&lt;/span&gt;               &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;优先级&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;备&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;要比主&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;稍小&lt;/span&gt;
+    &lt;span class="n"&gt;advert_int&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;              &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;VRRP&lt;/span&gt; &lt;span class="n"&gt;Multicast&lt;/span&gt; &lt;span class="err"&gt;广播周期秒数&lt;/span&gt;
+    &lt;span class="n"&gt;authentication&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义认证&lt;/span&gt;
+        &lt;span class="n"&gt;auth_type&lt;/span&gt; &lt;span class="n"&gt;PASS&lt;/span&gt;        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;认证方式为口令认证&lt;/span&gt;
+        &lt;span class="n"&gt;auth_pass&lt;/span&gt; &lt;span class="mi"&gt;1111&lt;/span&gt;        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义口令&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;virtual_ipaddress&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义&lt;/span&gt;&lt;span class="n"&gt;vip&lt;/span&gt;
+        &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt;         &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;多个&lt;/span&gt;&lt;span class="n"&gt;vip&lt;/span&gt;&lt;span class="err"&gt;可换行添加&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
 
-virtual_server 192.168.3.100 80 {
-    delay_loop 6      # 每隔6秒查看realserver状态
-    lb_algo wlc       # 调度算法为加权最小连接数
-    lb_kind DR        # lvs工作模式为DR(直接路由)模式
-    nat_mask 255.255.255.0
-    persistence_timeout 50  # 同一IP 的连接50秒内被分配到同一台realserver
-    protocol TCP            # 用TCP监测realserver的状态
+&lt;span class="n"&gt;virtual_server&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;delay_loop&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;      &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;每隔&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="err"&gt;秒查看&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;&lt;span class="err"&gt;状态&lt;/span&gt;
+    &lt;span class="n"&gt;lb_algo&lt;/span&gt; &lt;span class="n"&gt;wlc&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;调度算法为加权最小连接数&lt;/span&gt;
+    &lt;span class="n"&gt;lb_kind&lt;/span&gt; &lt;span class="n"&gt;DR&lt;/span&gt;        &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;工作模式为&lt;/span&gt;&lt;span class="n"&gt;DR&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;直接路由&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="err"&gt;模式&lt;/span&gt;
+    &lt;span class="n"&gt;nat_mask&lt;/span&gt; &lt;span class="mf"&gt;255.255.255.0&lt;/span&gt;
+    &lt;span class="n"&gt;persistence_timeout&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;  &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;同一&lt;/span&gt;&lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="err"&gt;的连接&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="err"&gt;秒内被分配到同一台&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;
+    &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;TCP&lt;/span&gt;            &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;用&lt;/span&gt;&lt;span class="n"&gt;TCP&lt;/span&gt;&lt;span class="err"&gt;监测&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;&lt;span class="err"&gt;的状态&lt;/span&gt;
 
-    real_server 192.168.3.3 80 {       # 定义realserver
-        weight 3                       # 定义权重
-        TCP_CHECK {    # 注意TCP_CHECK和{之间的空格,如果没有的话只会添加第一个realserver
-            connect_timeout 3          # 三秒无响应超时
-            nb_get_retry 3
-            delay_before_retry 3
-            connect_port 80
-        }
-    }
-    real_server 192.168.3.102 80 {
-        weight 3
-        TCP_CHECK {
-            connect_timeout 3
-            nb_get_retry 3
-            delay_before_retry 3
-            connect_port 80
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
+    &lt;span class="n"&gt;real_server&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.3&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;
+        &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;                       &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;定义权重&lt;/span&gt;
+        &lt;span class="n"&gt;TCP_CHECK&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;    &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;注意&lt;/span&gt;&lt;span class="n"&gt;TCP_CHECK&lt;/span&gt;&lt;span class="err"&gt;和&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="err"&gt;之间的空格&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;如果没有的话只会添加第一个&lt;/span&gt;&lt;span class="n"&gt;realserver&lt;/span&gt;
+            &lt;span class="n"&gt;connect_timeout&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;三秒无响应超时&lt;/span&gt;
+            &lt;span class="n"&gt;nb_get_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;delay_before_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;connect_port&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;real_server&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.102&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;weight&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+        &lt;span class="n"&gt;TCP_CHECK&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;connect_timeout&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;nb_get_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;delay_before_retry&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+            &lt;span class="n"&gt;connect_port&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;由于使用keepalived就不需要使用脚本来配置lvs调度器,但是这里我们还是会给出一个脚本内容,但我们不会用到这个脚本:lvs已经内置于内核,配置命令是ipvsadm,所以lvs的一些操作是通过ipvsadm来控制.下面我们就编写脚本来实现lvs的DR模式:&lt;/p&gt;
 &lt;p&gt;编写脚本lvsdr:&lt;/p&gt;
 &lt;p&gt;我们把lvs&lt;code&gt;vi /etc/init.d/lvsdr&lt;/code&gt;添加如下内容&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;#!/bin/sh
-# 定义虚拟ip
-VIP=192.168.3.100
-# 定义realserver,并已逗号分开
-RIPS=192.168.3.3,192.168.3.102 #,192.168.3.5,192.168.3.6
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class="c"&gt;# 定义虚拟ip&lt;/span&gt;
+&lt;span class="nv"&gt;VIP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.100
+&lt;span class="c"&gt;# 定义realserver,并已逗号分开&lt;/span&gt;
+&lt;span class="nv"&gt;RIPS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.3,192.168.3.102 &lt;span class="c"&gt;#,192.168.3.5,192.168.3.6&lt;/span&gt;
 
-# 定义提供服务的端口
-SERVICE=80
+&lt;span class="c"&gt;# 定义提供服务的端口&lt;/span&gt;
+&lt;span class="nv"&gt;SERVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;80
 
-# 调用init.d脚本的标准库
+&lt;span class="c"&gt;# 调用init.d脚本的标准库&lt;/span&gt;
 . /etc/rc.d/init.d/functions
-case $1 in
-        start)
-        echo &amp;quot;Start LVS of DR Mode&amp;quot;
-        # lvs dr模式不需要路由转发,但是keepalived需要
-        #echo &amp;quot;0&amp;quot; &amp;gt; /proc/sys/net/ipv4/ip_forward
-        # 开启icmp包重定向
-        echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/all/send_redirects
-        echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/default/send_redirects
-        echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/eth0/send_redirects
-        # 绑定虚拟ip
-        ifconfig eth0:0 $VIP broadcast $VIP netmask 255.255.255.255 up
-        route add -host $VIP dev eth0:0
-        # 清除lvs规则
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt; in
+        start&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Start LVS of DR Mode&amp;quot;&lt;/span&gt;
+        &lt;span class="c"&gt;# lvs dr模式不需要路由转发,但是keepalived需要&lt;/span&gt;
+        &lt;span class="c"&gt;#echo &amp;quot;0&amp;quot; &amp;gt; /proc/sys/net/ipv4/ip_forward&lt;/span&gt;
+        &lt;span class="c"&gt;# 开启icmp包重定向&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/send_redirects
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/default/send_redirects
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/eth0/send_redirects
+        &lt;span class="c"&gt;# 绑定虚拟ip&lt;/span&gt;
+        ifconfig eth0:0 &lt;span class="nv"&gt;$VIP&lt;/span&gt; broadcast &lt;span class="nv"&gt;$VIP&lt;/span&gt; netmask 255.255.255.255 up
+        route add -host &lt;span class="nv"&gt;$VIP&lt;/span&gt; dev eth0:0
+        &lt;span class="c"&gt;# 清除lvs规则&lt;/span&gt;
         ipvsadm -C
-        # 添加一条虚拟服务器记录
-    # -p指定一定的时间内将相同的客户端分配到同一台后端服务器
-    # 用于解决session的问题,测试时或有别的解决方案时建议去掉
-        ipvsadm -A -t $VIP:$SERVICE -s wlc -p
+        &lt;span class="c"&gt;# 添加一条虚拟服务器记录&lt;/span&gt;
+    &lt;span class="c"&gt;# -p指定一定的时间内将相同的客户端分配到同一台后端服务器&lt;/span&gt;
+    &lt;span class="c"&gt;# 用于解决session的问题,测试时或有别的解决方案时建议去掉&lt;/span&gt;
+        ipvsadm -A -t &lt;span class="nv"&gt;$VIP&lt;/span&gt;:&lt;span class="nv"&gt;$SERVICE&lt;/span&gt; -s wlc -p
 
-        # 添加真实服务器记录
-        for RIP in `echo $RIPS ¦sed  -e 's/,/\n/g'`
-        do
-                ipvsadm -a -t $VIP:$SERVICE -r $RIP:$SERVICE -g -w 1
-        done
-        # 设置tcp tcpfin  udp的超时连接值
+        &lt;span class="c"&gt;# 添加真实服务器记录&lt;/span&gt;
+        &lt;span class="k"&gt;for &lt;/span&gt;RIP in &lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$RIPS&lt;/span&gt; ¦sed  -e &lt;span class="s1"&gt;&amp;#39;s/,/\n/g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;                &lt;/span&gt;ipvsadm -a -t &lt;span class="nv"&gt;$VIP&lt;/span&gt;:&lt;span class="nv"&gt;$SERVICE&lt;/span&gt; -r &lt;span class="nv"&gt;$RIP&lt;/span&gt;:&lt;span class="nv"&gt;$SERVICE&lt;/span&gt; -g -w 1
+        &lt;span class="k"&gt;done&lt;/span&gt;
+        &lt;span class="c"&gt;# 设置tcp tcpfin  udp的超时连接值&lt;/span&gt;
         ipvsadm --set 30 120 300
         ipvsadm
         ;;
 
-        stop)
-        echo &amp;quot;Stop LVS DR&amp;quot;
+        stop&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Stop LVS DR&amp;quot;&lt;/span&gt;
         ifconfig eth0:0 down
         ipvsadm -C
         ;;
-        *)
-        echo &amp;quot;Usage:$0 {start ¦ stop}&amp;quot;
-        exit 1
-esac
-&lt;/code&gt;&lt;/pre&gt;
+        *&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage:$0 {start ¦ stop}&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;exit &lt;/span&gt;1
+&lt;span class="k"&gt;esac&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;编辑完毕保存退出,然后给这个脚本执行权限:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;chmod +x /etc/init.d/lvsdr
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lvsdr&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后就可以通过service命令来启动lvs dr模式&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;service lvsdr start
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;lvsdr&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;将这个脚本分别放到主备lvs的/etc/init.d/下,赋予执行权限.
 我们真正需要的是realserver的脚本,下面我们来编写realserver脚本,同样放在/etc/init.d/下,编辑rs脚本:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /etc/init.d/lvsrs
-#!/bin/sh
-VIP=192.168.3.100
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/init.d/lvsrs
+&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class="nv"&gt;VIP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.100
 . /etc/rc.d/init.d/functions
-case $1 in
-        start)
-        echo &amp;quot;lo:0 port starting&amp;quot;
-        # 为了相应lvs调度器转发过来的包,需在本地lo接口上绑定vip
-        ifconfig lo:0 $VIP broadcast $VIP netmask 255.255.255.255 up
-        # 限制arp请求
-        echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
-        echo &amp;quot;2&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
-        echo &amp;quot;1&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
-        echo &amp;quot;2&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="nv"&gt;$1&lt;/span&gt; in
+        start&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;lo:0 port starting&amp;quot;&lt;/span&gt;
+        &lt;span class="c"&gt;# 为了相应lvs调度器转发过来的包,需在本地lo接口上绑定vip&lt;/span&gt;
+        ifconfig lo:0 &lt;span class="nv"&gt;$VIP&lt;/span&gt; broadcast &lt;span class="nv"&gt;$VIP&lt;/span&gt; netmask 255.255.255.255 up
+        &lt;span class="c"&gt;# 限制arp请求&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
         ;;
-        stop)
-        echo &amp;quot;lo:0 port closing&amp;quot;
+        stop&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;lo:0 port closing&amp;quot;&lt;/span&gt;
         ifconfig lo:0 down
-        echo &amp;quot;0&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
-    echo &amp;quot;0&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
-    echo &amp;quot;0&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
-    echo &amp;quot;0&amp;quot; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_ignore
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/lo/arp_announce
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_ignore
+    &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt; &amp;gt; /proc/sys/net/ipv4/conf/all/arp_announce
         ;;
-        *)
-        echo &amp;quot;Usage: $0 {start ¦ stop}&amp;quot;
-        exit 1
-esac
-&lt;/code&gt;&lt;/pre&gt;
+        *&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage: $0 {start ¦ stop}&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;exit &lt;/span&gt;1
+&lt;span class="k"&gt;esac&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;给脚本赋予执行权限&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;chmod +x /etc/init.d/lvsrs
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lvsrs&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;并将这个脚本放到所有的realserver的/etc/init.d/下.下面开始测试:&lt;/p&gt;
 &lt;p&gt;先来确认下我们做的变动:主从lvs分别安装keepalived,并且在/etc/init.d/下添加了lvsdr脚本(不使用).&lt;/p&gt;
 &lt;p&gt;后端realserver分别在/etc/init.d/下添加了lvsrs脚本.我们先测试keepalived:&lt;/p&gt;
 &lt;p&gt;首先在主调度器上启动keepalived:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;service keepalived start
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;查看日志文件:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;tail -50 /var/log/message
-Mar 21 22:29:10 master kernel: device eth0 left promiscuous mode
-Mar 21 22:29:10 master kernel: type=1700 audit(1332340150.598:12): dev=eth0 prom=0 old_prom=256 auid=4294967295 ses=4294967295
-Apr 16 13:31:32 master Keepalived: Starting Keepalived v1.1.19 (04/16,2012)
-Apr 16 13:31:32 master Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.101 added
-Apr 16 13:31:32 master Keepalived_healthcheckers: Registering Kernel netlink reflector
-Apr 16 13:31:32 master Keepalived_healthcheckers: Registering Kernel netlink command channel
-Apr 16 13:31:32 master Keepalived_healthcheckers: Opening file '/etc/keepalived/keepalived.conf'.
-Apr 16 13:31:32 master Keepalived_healthcheckers: Configuration is using : 8897 Bytes
-Apr 16 13:31:32 master Keepalived_healthcheckers: Using LinkWatch kernel netlink reflector...
-Apr 16 13:31:32 master Keepalived: Starting Healthcheck child process, pid=5369
-Apr 16 13:31:32 master Keepalived: Starting VRRP child process, pid=5370
-Apr 16 13:31:32 master Keepalived_vrrp: Netlink reflector reports IP 192.168.3.101 added
-Apr 16 13:31:32 master Keepalived_vrrp: Registering Kernel netlink reflector
-Apr 16 13:31:32 master Keepalived_vrrp: Registering Kernel netlink command channel
-Apr 16 13:31:32 master Keepalived_vrrp: Registering gratutious ARP shared channel
-Apr 16 13:31:32 master Keepalived_vrrp: Opening file '/etc/keepalived/keepalived.conf'.
-Apr 16 13:31:32 master Keepalived_vrrp: Configuration is using : 36512 Bytes
-Apr 16 13:31:32 master Keepalived_vrrp: Using LinkWatch kernel netlink reflector...
-Apr 16 13:31:32 master Keepalived_vrrp: VRRP sockpool: [ifindex(2), proto(112), fd(10,11)]
-Apr 16 13:31:33 master Keepalived_vrrp: VRRP_Instance(VI_1) Transition to MASTER STATE
-Apr 16 13:31:34 master Keepalived_vrrp: VRRP_Instance(VI_1) Entering MASTER STATE
-Apr 16 13:31:34 master Keepalived_vrrp: VRRP_Instance(VI_1) setting protocol VIPs.
-Apr 16 13:31:34 master Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.100 added
-Apr 16 13:31:34 master Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.100
-Apr 16 13:31:34 master Keepalived_vrrp: Netlink reflector reports IP 192.168.3.100 added
-Apr 16 13:31:39 master Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.100
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;
+&lt;span class="n"&gt;Mar&lt;/span&gt; &lt;span class="mi"&gt;21&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;29&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="n"&gt;left&lt;/span&gt; &lt;span class="n"&gt;promiscuous&lt;/span&gt; &lt;span class="n"&gt;mode&lt;/span&gt;
+&lt;span class="n"&gt;Mar&lt;/span&gt; &lt;span class="mi"&gt;21&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;29&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1700&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1332340150.598&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="n"&gt;prom&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;old_prom&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt; &lt;span class="n"&gt;auid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4294967295&lt;/span&gt; &lt;span class="n"&gt;ses&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4294967295&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Starting&lt;/span&gt; &lt;span class="n"&gt;Keepalived&lt;/span&gt; &lt;span class="n"&gt;v1&lt;/span&gt;&lt;span class="mf"&gt;.1.19&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2012&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.101&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Opening&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;keepalived&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;keepalived&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;8897&lt;/span&gt; &lt;span class="n"&gt;Bytes&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Using&lt;/span&gt; &lt;span class="n"&gt;LinkWatch&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Starting&lt;/span&gt; &lt;span class="n"&gt;Healthcheck&lt;/span&gt; &lt;span class="n"&gt;child&lt;/span&gt; &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5369&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Starting&lt;/span&gt; &lt;span class="n"&gt;VRRP&lt;/span&gt; &lt;span class="n"&gt;child&lt;/span&gt; &lt;span class="n"&gt;process&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5370&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.101&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;gratutious&lt;/span&gt; &lt;span class="n"&gt;ARP&lt;/span&gt; &lt;span class="n"&gt;shared&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Opening&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;keepalived&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;keepalived&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;36512&lt;/span&gt; &lt;span class="n"&gt;Bytes&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Using&lt;/span&gt; &lt;span class="n"&gt;LinkWatch&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP&lt;/span&gt; &lt;span class="n"&gt;sockpool&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ifindex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;proto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;112&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Transition&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Entering&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;VIPs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Sending&lt;/span&gt; &lt;span class="n"&gt;gratuitous&lt;/span&gt; &lt;span class="n"&gt;ARPs&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;34&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Sending&lt;/span&gt; &lt;span class="n"&gt;gratuitous&lt;/span&gt; &lt;span class="n"&gt;ARPs&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后在备用调度器上启动keepalived然后查看日志:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Apr 16 13:33:35 slave Keepalived_vrrp: VRRP_Instance(VI_1) Entering BACKUP STATE
-Apr 16 13:33:35 slave Keepalived_vrrp: VRRP sockpool: [ifindex(2), proto(112), fd(11,12)]
-Apr 16 13:33:35 slave Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.102 added
-Apr 16 13:33:35 slave Keepalived_healthcheckers: Registering Kernel netlink reflector
-Apr 16 13:33:35 slave Keepalived_healthcheckers: Registering Kernel netlink command channel
-Apr 16 13:33:35 slave Keepalived_healthcheckers: Opening file '/etc/keepalived/keepalived.conf'.
-Apr 16 13:33:35 slave Keepalived_healthcheckers: Configuration is using : 8895 Bytes
-Apr 16 13:33:35 slave kernel: IPVS: [wlc] scheduler registered.
-Apr 16 13:33:35 slave Keepalived_healthcheckers: Using LinkWatch kernel netlink reflector...
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Entering&lt;/span&gt; &lt;span class="n"&gt;BACKUP&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP&lt;/span&gt; &lt;span class="n"&gt;sockpool&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ifindex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;proto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;112&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.102&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="n"&gt;channel&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Opening&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;keepalived&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;keepalived&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;using&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;8895&lt;/span&gt; &lt;span class="n"&gt;Bytes&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;IPVS&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;wlc&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;scheduler&lt;/span&gt; &lt;span class="n"&gt;registered&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Using&lt;/span&gt; &lt;span class="n"&gt;LinkWatch&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;&lt;span class="p"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;在主调度器上执行&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;service keepalived stop
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;查看备用调度器日志:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;tail -20 /var/log/message
-Apr 16 13:39:44 slave Keepalived_vrrp: VRRP_Instance(VI_1) Transition to MASTER STATE
-Apr 16 13:39:45 slave Keepalived_vrrp: VRRP_Instance(VI_1) Entering MASTER STATE
-Apr 16 13:39:45 slave Keepalived_vrrp: VRRP_Instance(VI_1) setting protocol VIPs.
-Apr 16 13:39:45 slave Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.100
-Apr 16 13:39:45 slave Keepalived_vrrp: Netlink reflector reports IP 192.168.3.100 added
-Apr 16 13:39:45 slave Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.100 added
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;44&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Transition&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Entering&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;VIPs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Sending&lt;/span&gt; &lt;span class="n"&gt;gratuitous&lt;/span&gt; &lt;span class="n"&gt;ARPs&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;我们看到keepalived已经成功切换.&lt;/p&gt;
 &lt;p&gt;然后我们使用ipvsadm命令查看(在此之前要确认后端realserver已经启动了web服务):&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ipvsadm
-IP Virtual Server version 1.2.1 (size=4096)
-Prot LocalAddress:Port Scheduler Flags
-  -&amp;gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn
-TCP  192.168.3.100:http wlc
-  -&amp;gt; 192.168.3.3:http             Route   3      0          0
-  -&amp;gt; 192.168.3.102:http           Route   3      0          0
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ipvsadm&lt;/span&gt;
+&lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="n"&gt;Virtual&lt;/span&gt; &lt;span class="n"&gt;Server&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="mf"&gt;1.2.1&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;Prot&lt;/span&gt; &lt;span class="n"&gt;LocalAddress&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Port&lt;/span&gt; &lt;span class="n"&gt;Scheduler&lt;/span&gt; &lt;span class="n"&gt;Flags&lt;/span&gt;
+  &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;RemoteAddress&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Port&lt;/span&gt;           &lt;span class="n"&gt;Forward&lt;/span&gt; &lt;span class="n"&gt;Weight&lt;/span&gt; &lt;span class="n"&gt;ActiveConn&lt;/span&gt; &lt;span class="n"&gt;InActConn&lt;/span&gt;
+&lt;span class="n"&gt;TCP&lt;/span&gt;  &lt;span class="mf"&gt;192.168.3.100&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt; &lt;span class="n"&gt;wlc&lt;/span&gt;
+  &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.3&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;             &lt;span class="n"&gt;Route&lt;/span&gt;   &lt;span class="mi"&gt;3&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt;          &lt;span class="mi"&gt;0&lt;/span&gt;
+  &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.102&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;           &lt;span class="n"&gt;Route&lt;/span&gt;   &lt;span class="mi"&gt;3&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt;          &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后分别启动后端realserver的lvsrs服务:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;servie lvsrs start
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;servie&lt;/span&gt; &lt;span class="n"&gt;lvsrs&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后浏览器访问192.168.3.100,如果keepalived的persistence_timeout参数值为0,而且两个后端realserver是不同的内容,刷新就可以看到两个不同的页面交替.&lt;/p&gt;</summary><category term="高可用"></category><category term="详解"></category><category term="群集"></category><category term="lvs"></category><category term="Linux"></category><category term="keepalived"></category><category term=""></category></entry><entry><title>nginx+keepalived配置高可用HTTP群集</title><link href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html" rel="alternate"></link><updated>2012-02-09T17:35:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-09:nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html</id><summary type="html">&lt;p&gt;Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
 一般集群主要架构为:&lt;/p&gt;
@@ -362,246 +380,256 @@ TCP  192.168.3.100:http wlc
 &lt;p&gt;本文采用第一种方式来进行vip为:192.168.3.253&lt;/p&gt;
 &lt;h2&gt;一、在主备服务器上部署nginx&lt;/h2&gt;
 &lt;h3&gt;1.下载&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;2.安装&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="bash"&gt; yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
+&lt;div class="codehilite"&gt;&lt;pre&gt; yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
-cd nginx-1.0.11
-./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
+&lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
 make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;3.配置&lt;/p&gt;
 &lt;p&gt;配置主调度器的nginx,编辑nginx.conf&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /usr/local/nginx/conf/nginx.conf
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nginx/conf/nginx.conf
 
-http {
+http &lt;span class="o"&gt;{&lt;/span&gt;
     include       mime.types;
     default_type  application/octet-stream;
 
-    #log_format  main  '$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; '
-    #                  '$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; '
-    #                  '&amp;quot;$http_user_agent&amp;quot; &amp;quot;$http_x_forwarded_for&amp;quot;';
+    &lt;span class="c"&gt;#log_format  main  &amp;#39;$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; &amp;#39;&lt;/span&gt;
+    &lt;span class="c"&gt;#                  &amp;#39;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt;
+    &lt;span class="c"&gt;#                  &amp;#39;&amp;quot;$http_user_agent&amp;quot; &amp;quot;$http_x_forwarded_for&amp;quot;&amp;#39;;&lt;/span&gt;
 
-    #access_log  logs/access.log  main;
+    &lt;span class="c"&gt;#access_log  logs/access.log  main;&lt;/span&gt;
 
     sendfile        on;
-    #tcp_nopush     on;
+    &lt;span class="c"&gt;#tcp_nopush     on;&lt;/span&gt;
 
-    #keepalive_timeout  0;
+    &lt;span class="c"&gt;#keepalive_timeout  0;&lt;/span&gt;
     keepalive_timeout  65;
 
-    #gzip  on;
+    &lt;span class="c"&gt;#gzip  on;&lt;/span&gt;
 
-    # 添加一组真实的服务器地址池
-    # 供proxy_pass和fastcgi_pass指令中使用的代理服务器
-    upstream real_server_pool {
-      # 后台如果有动态应用的时候,ip_hash指令可以通过hash算法
-      # 将客户端请求定位到同一台后端服务器上,解决session共享,
-      # 但建议用动态应用做session共享
-      # ip_hash;
+    &lt;span class="c"&gt;# 添加一组真实的服务器地址池&lt;/span&gt;
+    &lt;span class="c"&gt;# 供proxy_pass和fastcgi_pass指令中使用的代理服务器&lt;/span&gt;
+    upstream real_server_pool &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="c"&gt;# 后台如果有动态应用的时候,ip_hash指令可以通过hash算法&lt;/span&gt;
+      &lt;span class="c"&gt;# 将客户端请求定位到同一台后端服务器上,解决session共享,&lt;/span&gt;
+      &lt;span class="c"&gt;# 但建议用动态应用做session共享&lt;/span&gt;
+      &lt;span class="c"&gt;# ip_hash;&lt;/span&gt;
 
-      # server用于指定一个后端服务器的名称和参数
-      # weight代表权,重默认为1,权重越高被分配的客户端越多
-      # max_fails 指定时间内对后端请求失败的次数
-      # fail_timeout 达到max_fails指定的失败次数后暂停的时间
-      server  192.168.3.4:80 weight=1 max_fails=2 fail_timeout=30s;
-      # down参数用来标记为离线,不参与负载均衡.在ip_hash下使用
-      # 在此做演示,后面测试会去掉
-      server  192.168.3.5:80 weight=1 max_fails=2 fail_timeout=30s down;
-      # backup仅仅在非backup服务器宕机或繁忙的时候使用
-      # (在此做演示,后面测试会去掉)
-      server  192.168.3.6:80 weight=1 max_fails=2 fail_timeout=30s backup;
-    }
-    server {
+      &lt;span class="c"&gt;# server用于指定一个后端服务器的名称和参数&lt;/span&gt;
+      &lt;span class="c"&gt;# weight代表权,重默认为1,权重越高被分配的客户端越多&lt;/span&gt;
+      &lt;span class="c"&gt;# max_fails 指定时间内对后端请求失败的次数&lt;/span&gt;
+      &lt;span class="c"&gt;# fail_timeout 达到max_fails指定的失败次数后暂停的时间&lt;/span&gt;
+      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      &lt;span class="c"&gt;# down参数用来标记为离线,不参与负载均衡.在ip_hash下使用&lt;/span&gt;
+      &lt;span class="c"&gt;# 在此做演示,后面测试会去掉&lt;/span&gt;
+      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s down;
+      &lt;span class="c"&gt;# backup仅仅在非backup服务器宕机或繁忙的时候使用&lt;/span&gt;
+      &lt;span class="c"&gt;# (在此做演示,后面测试会去掉)&lt;/span&gt;
+      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s backup;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    server &lt;span class="o"&gt;{&lt;/span&gt;
         listen       192.168.3.1:80;
         server_name  localhost;
 
-        #charset koi8-r;
+        &lt;span class="c"&gt;#charset koi8-r;&lt;/span&gt;
 
-        #access_log  logs/host.access.log  main;
+        &lt;span class="c"&gt;#access_log  logs/host.access.log  main;&lt;/span&gt;
 
-        location / {
-            #root   html;
-            #index  index.html index.htm;
-            # 使用upstream设置的一组代理服务器
-            # 如果后端服务器出现502或504等执行错误时,
-            # 将自动将请求转发给负载均衡池中的另一台服务器.
+        location / &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="c"&gt;#root   html;&lt;/span&gt;
+            &lt;span class="c"&gt;#index  index.html index.htm;&lt;/span&gt;
+            &lt;span class="c"&gt;# 使用upstream设置的一组代理服务器&lt;/span&gt;
+            &lt;span class="c"&gt;# 如果后端服务器出现502或504等执行错误时,&lt;/span&gt;
+            &lt;span class="c"&gt;# 将自动将请求转发给负载均衡池中的另一台服务器.&lt;/span&gt;
             proxy_next_upstream http_502 http_504 error timeout invalid_header;
             proxy_pass http://real_server_pool;
-            proxy_set_header Host $host;
-            proxy_set_header X-Forwarded-For $remote_addr;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
+            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;;
+            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;(&lt;code&gt;注意:&lt;/code&gt;配置文件中注释ip_hash,以为ip_hash这个功能将保证这个客户端请求总是被转发到一台服务器上,所以如果启用了ip_hash指令,将不能再使用weight(权重参数),配置文件中加入为解释ip_hash指令)
 配置备用nginx,将监听ip改为备用调度器的ip&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;http {
+&lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
     include       mime.types;
     default_type  application/octet-stream;
 
-    #log_format  main  '$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; '
-    #                  '$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; '
-    #                  '&amp;quot;$http_user_agent&amp;quot; &amp;quot;$http_x_forwarded_for&amp;quot;';
+    &lt;span class="c"&gt;#log_format  main  &amp;#39;$remote_addr - $remote_user [$time_local] &amp;quot;$request&amp;quot; &amp;#39;&lt;/span&gt;
+    &lt;span class="c"&gt;#                  &amp;#39;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;#39;&lt;/span&gt;
+    &lt;span class="c"&gt;#                  &amp;#39;&amp;quot;$http_user_agent&amp;quot; &amp;quot;$http_x_forwarded_for&amp;quot;&amp;#39;;&lt;/span&gt;
 
-    #access_log  logs/access.log  main;
+    &lt;span class="c"&gt;#access_log  logs/access.log  main;&lt;/span&gt;
 
     sendfile        on;
-    #tcp_nopush     on;
+    &lt;span class="c"&gt;#tcp_nopush     on;&lt;/span&gt;
 
-    #keepalive_timeout  0;
+    &lt;span class="c"&gt;#keepalive_timeout  0;&lt;/span&gt;
     keepalive_timeout  65;
 
-    #gzip  on;
+    &lt;span class="c"&gt;#gzip  on;&lt;/span&gt;
 
-    upstream real_server_pool {
-      #ip_hash;
-      server  192.168.3.4:80 weight=1 max_fails=2 fail_timeout=30s;
-      server  192.168.3.5:80 weight=1 max_fails=2 fail_timeout=30s;
-      server  192.168.3.6:80 weight=1 max_fails=2 fail_timeout=30s;
-    }
-    server {
-        listen       192.168.3.2:80;             # 监听ip改为本地ip
+    upstream real_server_pool &lt;span class="o"&gt;{&lt;/span&gt;
+      &lt;span class="c"&gt;#ip_hash;&lt;/span&gt;
+      server  192.168.3.4:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      server  192.168.3.5:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+      server  192.168.3.6:80 &lt;span class="nv"&gt;weight&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1 &lt;span class="nv"&gt;max_fails&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;2 &lt;span class="nv"&gt;fail_timeout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;30s;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    server &lt;span class="o"&gt;{&lt;/span&gt;
+        listen       192.168.3.2:80;             &lt;span class="c"&gt;# 监听ip改为本地ip&lt;/span&gt;
         server_name  localhost;
 
-        #charset koi8-r;
+        &lt;span class="c"&gt;#charset koi8-r;&lt;/span&gt;
 
-        #access_log  logs/host.access.log  main;
+        &lt;span class="c"&gt;#access_log  logs/host.access.log  main;&lt;/span&gt;
 
-        location / {
-            #root   html;
-            #index  index.html index.htm;
+        location / &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="c"&gt;#root   html;&lt;/span&gt;
+            &lt;span class="c"&gt;#index  index.html index.htm;&lt;/span&gt;
             proxy_next_upstream http_502 http_504 error timeout invalid_header;
             proxy_pass http://real_server_pool;
-            proxy_set_header Host $host;
-            proxy_set_header X-Forwarded-For $remote_addr;
-        }
-&lt;/code&gt;&lt;/pre&gt;
+            proxy_set_header Host &lt;span class="nv"&gt;$host&lt;/span&gt;;
+            proxy_set_header X-Forwarded-For &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后启动主备nginx:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;/usr/local/nginx/sbin/nginx
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/usr/local/nginx/sbin/nginx
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;二、在主备服务器上部署keepalived&lt;/h2&gt;
 &lt;p&gt;安装
 安装依赖:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install kernel-devel              # 安装依赖
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install kernel-devel              &lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;开启路由转发:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /etc/sysctl.conf
-net.ipv4.ip_forward = 1 # 此参数改为1
-sysctl -p # 使修改生效
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/sysctl.conf
+net.ipv4.ip_forward &lt;span class="o"&gt;=&lt;/span&gt; 1 &lt;span class="c"&gt;# 此参数改为1&lt;/span&gt;
+sysctl -p &lt;span class="c"&gt;# 使修改生效&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;首先安装ipvs:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  # ipvs需要内核文件,做一个软连接
-# 下载
+&lt;div class="codehilite"&gt;&lt;pre&gt;ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  &lt;span class="c"&gt;# ipvs需要内核文件,做一个软连接&lt;/span&gt;
+&lt;span class="c"&gt;# 下载&lt;/span&gt;
 wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
 tar -zxvf ipvsadm-1.24.tar.gz
-cd ipvsadm-1.24
+&lt;span class="nb"&gt;cd &lt;/span&gt;ipvsadm-1.24
 make
 make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后安装keepalived&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;# 下载
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 下载&lt;/span&gt;
 wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
 tar -zxvf keepalived-1.1.19.tar.gz
-cd keepalived-1.1.19
-./configure --prefix=/ \            # 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)
---mandir=/usr/local/share/man/ \
---with-kernel-dir=/usr/src/kernels/2.6.18-194.el5-i686/    # 需要内核的头文件
+&lt;span class="nb"&gt;cd &lt;/span&gt;keepalived-1.1.19
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/ &lt;span class="se"&gt;\ &lt;/span&gt;           &lt;span class="c"&gt;# 安装在默认位置(配置文件,二进制文件,启动脚本放到默认位置)&lt;/span&gt;
+--mandir&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/share/man/ &lt;span class="se"&gt;\&lt;/span&gt;
+--with-kernel-dir&lt;span class="o"&gt;=&lt;/span&gt;/usr/src/kernels/2.6.18-194.el5-i686/    &lt;span class="c"&gt;# 需要内核的头文件&lt;/span&gt;
 make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;配置keepalived&lt;/h3&gt;
 &lt;p&gt;编辑主调度器配置文件/etc/keepalived/keepalived.conf ###&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;global_defs {
-   notification_email {
-        cold_night@linuxzen.com             # 定义通知邮箱,有多个可以换行添加
-}
+&lt;div class="codehilite"&gt;&lt;pre&gt;global_defs &lt;span class="o"&gt;{&lt;/span&gt;
+   notification_email &lt;span class="o"&gt;{&lt;/span&gt;
+        cold_night@linuxzen.com             &lt;span class="c"&gt;# 定义通知邮箱,有多个可以换行添加&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
    notification_email_from root@linuxzen.com# 定义发送邮件的邮箱
-   smtp_server www.linuxzen.com             # 定义发件服务器
-   smtp_connect_timeout 30                  # 定义连接smtp服务器超时时间
+   smtp_server www.linuxzen.com             &lt;span class="c"&gt;# 定义发件服务器&lt;/span&gt;
+   smtp_connect_timeout 30                  &lt;span class="c"&gt;# 定义连接smtp服务器超时时间&lt;/span&gt;
    router_id LVS_DEVEL
-}
+&lt;span class="o"&gt;}&lt;/span&gt;
 
-vrrp_instance VI_1 {
-    state MASTER                   # 标示主备,备机上改为BACKUP
-    interface eth0                 # HA监测的端口
-    virtual_router_id 51           # 主备的virtual_router_id的值必须相同
-    priority 100                   # 优先级,通常主要比备稍大
-    advert_int 1                   # VRRP Multicast 广播周期秒数
-    authentication {               # 定义认证
-        auth_type PASS             # 认证方式
-        auth_pass 1111             # 认证口令字
-    }
-    virtual_ipaddress {            # 定义vip
-        192.168.3.253              # 多个可换行添加,一行一个
-    }
-}
+vrrp_instance VI_1 &lt;span class="o"&gt;{&lt;/span&gt;
+    state MASTER                   &lt;span class="c"&gt;# 标示主备,备机上改为BACKUP&lt;/span&gt;
+    interface eth0                 &lt;span class="c"&gt;# HA监测的端口&lt;/span&gt;
+    virtual_router_id 51           &lt;span class="c"&gt;# 主备的virtual_router_id的值必须相同&lt;/span&gt;
+    priority 100                   &lt;span class="c"&gt;# 优先级,通常主要比备稍大&lt;/span&gt;
+    advert_int 1                   &lt;span class="c"&gt;# VRRP Multicast 广播周期秒数&lt;/span&gt;
+    authentication &lt;span class="o"&gt;{&lt;/span&gt;               &lt;span class="c"&gt;# 定义认证&lt;/span&gt;
+        auth_type PASS             &lt;span class="c"&gt;# 认证方式&lt;/span&gt;
+        auth_pass 1111             &lt;span class="c"&gt;# 认证口令字&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    virtual_ipaddress &lt;span class="o"&gt;{&lt;/span&gt;            &lt;span class="c"&gt;# 定义vip&lt;/span&gt;
+        192.168.3.253              &lt;span class="c"&gt;# 多个可换行添加,一行一个&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
 
-virtual_server 192.168.3.253 80 {
-    delay_loop 6             # 每隔 6 秒查询 realserver 状态
+virtual_server 192.168.3.253 80 &lt;span class="o"&gt;{&lt;/span&gt;
+    delay_loop 6             &lt;span class="c"&gt;# 每隔 6 秒查询 realserver 状态&lt;/span&gt;
     lb_algo rr
     lb_kind NAT
     nat_mask 255.255.255.0
-    persistence_timeout 50   # 同一IP 的连接50秒内被分配到同一台realserver
-    protocol TCP             # 用TCP监测realserver的状态
+    persistence_timeout 50   &lt;span class="c"&gt;# 同一IP 的连接50秒内被分配到同一台realserver&lt;/span&gt;
+    protocol TCP             &lt;span class="c"&gt;# 用TCP监测realserver的状态&lt;/span&gt;
 
-    real_server 192.168.3.1 80 {
-        weight 3                # 权重
-        TCP_CHECK {
-            connect_timeout 10  # 10秒无响应超时
+    real_server 192.168.3.1 80 &lt;span class="o"&gt;{&lt;/span&gt;
+        weight 3                &lt;span class="c"&gt;# 权重&lt;/span&gt;
+        TCP_CHECK &lt;span class="o"&gt;{&lt;/span&gt;
+            connect_timeout 10  &lt;span class="c"&gt;# 10秒无响应超时&lt;/span&gt;
             nb_get_retry 3
             delay_before_retry 3
             connect_port 80
-        }
-    }
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
 
-    real_server 192.168.3.2 80 {
+    real_server 192.168.3.2 80 &lt;span class="o"&gt;{&lt;/span&gt;
         weight 3
-        TCP_CHECK {
+        TCP_CHECK &lt;span class="o"&gt;{&lt;/span&gt;
             connect_timeout 3
             delay_before_retry 3
             connect_port 80
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;配置备用调度器的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;global_defs {
-   notification_email {
+&lt;div class="codehilite"&gt;&lt;pre&gt;global_defs &lt;span class="o"&gt;{&lt;/span&gt;
+   notification_email &lt;span class="o"&gt;{&lt;/span&gt;
         cold_night@linuxzen.com
-}
+&lt;span class="o"&gt;}&lt;/span&gt;
    notification_email_from root@linuxzen.com
    smtp_server www.linuxzen.com
    smtp_connect_timeout 30
    router_id LVS_DEVEL
-}
+&lt;span class="o"&gt;}&lt;/span&gt;
 
-vrrp_instance VI_1 {
-    state BACKUP                   # 备机上改为BACKUP
+vrrp_instance VI_1 &lt;span class="o"&gt;{&lt;/span&gt;
+    state BACKUP                   &lt;span class="c"&gt;# 备机上改为BACKUP&lt;/span&gt;
     interface eth0
-    virtual_router_id 51           # 主备的virtual_router_id的值必须相同
-    priority 99                    # 备用优先级小于主调度器
+    virtual_router_id 51           &lt;span class="c"&gt;# 主备的virtual_router_id的值必须相同&lt;/span&gt;
+    priority 99                    &lt;span class="c"&gt;# 备用优先级小于主调度器&lt;/span&gt;
     advert_int 1
-    authentication {
+    authentication &lt;span class="o"&gt;{&lt;/span&gt;
         auth_type PASS
         auth_pass 1111
-    }
-    virtual_ipaddress {
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    virtual_ipaddress &lt;span class="o"&gt;{&lt;/span&gt;
         192.168.3.253
-    }
-}
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
 
-virtual_server 192.168.3.253 80 {
+virtual_server 192.168.3.253 80 &lt;span class="o"&gt;{&lt;/span&gt;
     delay_loop 6
    lb_algo rr
     lb_kind NAT
@@ -609,125 +637,135 @@ virtual_server 192.168.3.253 80 {
     persistence_timeout 50
     protocol TCP        
 
-    real_server 192.168.3.1 80 {
+    real_server 192.168.3.1 80 &lt;span class="o"&gt;{&lt;/span&gt;
         weight 3
-        TCP_CHECK {
+        TCP_CHECK &lt;span class="o"&gt;{&lt;/span&gt;
             connect_timeout 10
             nb_get_retry 3
             delay_before_retry 3
             connect_port 80
-        }
-    }
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
 
-    real_server 192.168.3.2 80 {
+    real_server 192.168.3.2 80 &lt;span class="o"&gt;{&lt;/span&gt;
         weight 3
-        TCP_CHECK {
+        TCP_CHECK &lt;span class="o"&gt;{&lt;/span&gt;
             connect_timeout 3
             delay_before_retry 3
             connect_port 80
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;主备上启动keepalived:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;service keepalived start
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service keepalived start
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;三、测试-----部署后端服务器&lt;/h2&gt;
 &lt;p&gt;在后端服务器安装nginx,这里仅部署一台然后创建3个基于ip的虚拟主机供测试:
 绑定ip:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;ifconfig eth0:1 192.168.3.4/24
+&lt;div class="codehilite"&gt;&lt;pre&gt;ifconfig eth0:1 192.168.3.4/24
 ifconfig eth0:2 192.168.3.5/24
 ifconfig eth0:3 192.168.3.6/24
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;安装nginx后编辑配置文件,在http块里添加:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;http {
-    server {
+&lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
+    server &lt;span class="o"&gt;{&lt;/span&gt;
         listen  192.168.3.4:80;
         server_name     192.168.3.4;
 
-        location / {
+        location / &lt;span class="o"&gt;{&lt;/span&gt;
              root html/s1;
              index index.html index.htm;
-        }
-    }
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
 
-    server {
+    server &lt;span class="o"&gt;{&lt;/span&gt;
         listen  192.168.3.5:80;
         server_name     192.168.3.5;
 
-        location / {
+        location / &lt;span class="o"&gt;{&lt;/span&gt;
             root html/s2;
             index index.html index.htm;
-        }
-    }
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
 
-    server {
+    server &lt;span class="o"&gt;{&lt;/span&gt;
         listen 192.168.3.6:80;
         server_name     192.168.3.5;
 
-        location / {
+        location / &lt;span class="o"&gt;{&lt;/span&gt;
             root html/s3;
             index index.html index.htm;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;创建虚拟主机根目录,并创建不通的首页文档:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;cd /usr/local/nginx/html/
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/
 mkdir s1 s2 s3
-echo server1 &amp;amp;gt; s1/index.html
-echo server2 &amp;amp;gt; s2/index.html
-echo server3 &amp;amp;gt; s3/index.html
-&lt;/code&gt;&lt;/pre&gt;
+&lt;span class="nb"&gt;echo &lt;/span&gt;server1 &amp;amp;gt; s1/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server2 &amp;amp;gt; s2/index.html
+&lt;span class="nb"&gt;echo &lt;/span&gt;server3 &amp;amp;gt; s3/index.html
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;启动nginx:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;/usr/local/nginx/sbin/nginx
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/usr/local/nginx/sbin/nginx
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;打开浏览器访问&lt;code&gt;http://192.168.3.253&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;刷新会看到显示不同的内容:server1,server2,server3(生产中的服务器应该是一样的)
 [gallery link="file" order="DESC"]
 现在停掉主调度器的keepalived&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;pkill keepalived
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;pkill keepalived
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;查看备调度器的日志:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;cat /var/log/messages
-Feb 10 16:36:27 cfhost Keepalived_vrrp: VRRP_Instance(VI_1) Transition to MASTER STATE
-Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance(VI_1) Entering MASTER STATE
-Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance(VI_1) setting protocol VIPs.
-Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.253
+&lt;div class="codehilite"&gt;&lt;pre&gt;cat /var/log/messages
+Feb 10 16:36:27 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; Transition to MASTER STATE
+Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; Entering MASTER STATE
+Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; setting protocol VIPs.
+Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; Sending gratuitous ARPs on eth0 &lt;span class="k"&gt;for &lt;/span&gt;192.168.3.253
 Feb 10 16:36:28 cfhost Keepalived_vrrp: Netlink reflector reports IP 192.168.3.253 added
 Feb 10 16:36:28 cfhost Keepalived_healthcheckers: Netlink reflector reports IP 192.168.3.253 added
-Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance(VI_1) Sending gratuitous ARPs on eth0 for 192.168.3.253
-&lt;/code&gt;&lt;/pre&gt;
+Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; Sending gratuitous ARPs on eth0 &lt;span class="k"&gt;for &lt;/span&gt;192.168.3.253
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;现在访问&lt;code&gt;http://192.168.3.253&lt;/code&gt;依然可以访问.
 大家也看到了备机keepalived只有检测主机的keepalived停止的时候才会切换vip,而不是检测一台real server的某一服务(比如检测80端口的HTTP)切换vip,所以在nginx进程停止的时候,如果服务器没有宕机这时候就无法实现故障转移,所以我们编写一个检测nginx状态的脚本结合keepalived实现故障转移:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;#!/bin/bash
-#filename:nsc.sh
-ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   # 过滤nginx进程
-if [[ $? -eq 0 ]]               # 如果过滤有nginx进程会返回0则认为nginx存活
-then
-    sleep 5                     # 使脚本进入休眠
-else
-# 如果nginx没有存活尝试启动nginx,如果失败则杀死keepalived的进程
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;#filename:nsc.sh&lt;/span&gt;
+ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤nginx进程&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有nginx进程会返回0则认为nginx存活&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;    &lt;/span&gt;sleep 5                     &lt;span class="c"&gt;# 使脚本进入休眠&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="c"&gt;# 如果nginx没有存活尝试启动nginx,如果失败则杀死keepalived的进程&lt;/span&gt;
     /usr/local/nginx/sbin/nginx
     ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2
-    if [[ $? -eq 0 ]]
-    then
-        pkill keepalived
-    fi
-fi
-&lt;/code&gt;&lt;/pre&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
+    &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;pkill keepalived
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后后台运行此脚本:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;nohup sh nsc.sh &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;nohup sh nsc.sh &amp;amp;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;这样就实现了群集的高可靠和高可用.&lt;/p&gt;</summary><category term="高可用"></category><category term="负载均衡"></category><category term="群集"></category><category term="反向代理"></category><category term="双机"></category><category term="nginx"></category><category term="keepalived"></category></entry></feed>

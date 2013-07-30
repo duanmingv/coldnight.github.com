@@ -84,132 +84,146 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 </ul>
 <p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
 <p>下载:</p>
-<pre><code class="bash">wget https://cfengine.com/source-code/download?file=cfengine-3.2.3.tar.gz
-</code></pre>
+<div class="codehilite"><pre>wget https://cfengine.com/source-code/download?file<span class="o">=</span>cfengine-3.2.3.tar.gz
+</pre></div>
+
 
 <p>安装依赖:</p>
-<pre><code class="bash">yum -y install db4-devel pcre-devel openssl-devel flex
-</code></pre>
+<div class="codehilite"><pre>yum -y install db4-devel pcre-devel openssl-devel flex
+</pre></div>
+
 
 <p>编译安装:</p>
-<pre><code class="bash">tar -zxvf download\?file\=cfengine-3.2.3.tar.gz
-cd cfengine-3.2.3/
-./configure --prefix=/usr/local/cfengine
+<div class="codehilite"><pre>tar -zxvf download<span class="se">\?</span>file<span class="se">\=</span>cfengine-3.2.3.tar.gz
+<span class="nb">cd </span>cfengine-3.2.3/
+./configure --prefix<span class="o">=</span>/usr/local/cfengine
 make &amp;amp;&amp;amp; make install
-</code></pre>
+</pre></div>
+
 
 <p>为了保证cfengine正常工作创建cfengine工作目录:</p>
-<pre><code class="bash">mkdir -p /var/cfengine/masterfiles  # 存放要分发的承诺
-mkdir /var/cfengine/inputs          # 存放要执行的承诺
-mkdir /var/cfengine/outputs         # 存放执行承诺的输出
-mkdir /var/cfengine/bin             # 存放二进制文件
-</code></pre>
+<div class="codehilite"><pre>mkdir -p /var/cfengine/masterfiles  <span class="c"># 存放要分发的承诺</span>
+mkdir /var/cfengine/inputs          <span class="c"># 存放要执行的承诺</span>
+mkdir /var/cfengine/outputs         <span class="c"># 存放执行承诺的输出</span>
+mkdir /var/cfengine/bin             <span class="c"># 存放二进制文件</span>
+</pre></div>
+
 
 <p>复制二进制文件:</p>
-<pre><code class="bash">cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
+<div class="codehilite"><pre>cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
 ls -l /var/cfengine/bin/
 total 964
--rwxr-xr-x 1 root root 235958 Jan 13  2012 cf-agent           # 执行承诺
--rwxr-xr-x 1 root root  63095 Jan 13  2012 cf-execd           # 用于替代cron的程序,定时执行cf-agent
--rwxr-xr-x 1 root root  39076 Jan 13  2012 cf-key             # 生成用于认证的证书
--rwxr-xr-x 1 root root  78711 Jan 13  2012 cf-know            # 从大量承诺（知识建模代理）生成一个 ISO 标准的 Topic Map 的命令
--rwxr-xr-x 1 root root 150846 Jan 13  2012 cf-monitord        # 负责收集有关系统状态信息的守护进程
--rwxr-xr-x 1 root root  16078 Jan 13  2012 cf-promises        # 检查承诺语法的程序
--rwxr-xr-x 1 root root 107349 Jan 13  2012 cf-report          # 生成报告
--rwxr-xr-x 1 root root  44160 Jan 13  2012 cf-runagent        # 用来执行远程的cf-agent
--rwxr-xr-x 1 root root 172251 Jan 13  2012 cf-serverd         # 分发承诺的守护进程
-</code></pre>
+-rwxr-xr-x 1 root root 235958 Jan 13  2012 cf-agent           <span class="c"># 执行承诺</span>
+-rwxr-xr-x 1 root root  63095 Jan 13  2012 cf-execd           <span class="c"># 用于替代cron的程序,定时执行cf-agent</span>
+-rwxr-xr-x 1 root root  39076 Jan 13  2012 cf-key             <span class="c"># 生成用于认证的证书</span>
+-rwxr-xr-x 1 root root  78711 Jan 13  2012 cf-know            <span class="c"># 从大量承诺（知识建模代理）生成一个 ISO 标准的 Topic Map 的命令</span>
+-rwxr-xr-x 1 root root 150846 Jan 13  2012 cf-monitord        <span class="c"># 负责收集有关系统状态信息的守护进程</span>
+-rwxr-xr-x 1 root root  16078 Jan 13  2012 cf-promises        <span class="c"># 检查承诺语法的程序</span>
+-rwxr-xr-x 1 root root 107349 Jan 13  2012 cf-report          <span class="c"># 生成报告</span>
+-rwxr-xr-x 1 root root  44160 Jan 13  2012 cf-runagent        <span class="c"># 用来执行远程的cf-agent</span>
+-rwxr-xr-x 1 root root 172251 Jan 13  2012 cf-serverd         <span class="c"># 分发承诺的守护进程</span>
+</pre></div>
+
 
 <p>一个cfengine的hello, world:</p>
-<pre><code class="bash">vi /var/cfengine/inputs/test.cf                                               # 新建一个承诺文件,添加下面内容
-###################
-# 这里顺便解释一下cfengine的语法,cfengine的语法大都如下
-# &amp;lt;它是什么&amp;gt; &amp;lt;它对什么起作用&amp;gt; &amp;lt;它叫什么&amp;gt;
-body common control                                   # 一个body 对common组启作用,名字是control(名字为control的common的组是最重要的一个组,cfengine以这个组为起点
-{
-bundlesequence =&amp;gt; { &quot;test&quot; };                         # 定义要执行的承诺束为test
-}
+<div class="codehilite"><pre>vi /var/cfengine/inputs/test.cf                                               <span class="c"># 新建一个承诺文件,添加下面内容</span>
+<span class="c">###################</span>
+<span class="c"># 这里顺便解释一下cfengine的语法,cfengine的语法大都如下</span>
+<span class="c"># &amp;lt;它是什么&amp;gt; &amp;lt;它对什么起作用&amp;gt; &amp;lt;它叫什么&amp;gt;</span>
+body common control                                   <span class="c"># 一个body 对common组启作用,名字是control(名字为control的common的组是最重要的一个组,cfengine以这个组为起点</span>
+<span class="o">{</span>
+<span class="nv">bundlesequence</span> <span class="o">=</span>&amp;gt; <span class="o">{</span> <span class="s2">&quot;test&quot;</span> <span class="o">}</span>;                         <span class="c"># 定义要执行的承诺束为test</span>
+<span class="o">}</span>
 
-bundle agent test                                     # 一个承诺束,对cf-agent起作用,叫test
-{
-reports:                                              # 一个报告(仅仅显示消息,不对系统做改变)
-  cfengine_3::                                        # 一个类,对cfengine 版本3的策略执行点起作用(cfengine用这个来替代程序语言里的if-else)
-      &quot;Hello world!&quot;;                                 # 承诺内容,显示&quot;hello world!&quot;
-}
+bundle agent <span class="nb">test</span>                                     <span class="c"># 一个承诺束,对cf-agent起作用,叫test</span>
+<span class="o">{</span>
+reports:                                              <span class="c"># 一个报告(仅仅显示消息,不对系统做改变)</span>
+  cfengine_3::                                        <span class="c"># 一个类,对cfengine 版本3的策略执行点起作用(cfengine用这个来替代程序语言里的if-else)</span>
+      <span class="s2">&quot;Hello world!&quot;</span>;                                 <span class="c"># 承诺内容,显示&quot;hello world!&quot;</span>
+<span class="o">}</span>
 
-/var/cfengine/bin/cf-promises -f /var/cfengine/inputs/test.cf        # 检查承诺语法
-/var/cfengine/bin/cf-agent -f /var/cfengine/inputs/test.cf           # 执行承诺
-R: Hello world!                                                      # R:代表一个report.
-</code></pre>
+/var/cfengine/bin/cf-promises -f /var/cfengine/inputs/test.cf        <span class="c"># 检查承诺语法</span>
+/var/cfengine/bin/cf-agent -f /var/cfengine/inputs/test.cf           <span class="c"># 执行承诺</span>
+R: Hello world!                                                      <span class="c"># R:代表一个report.</span>
+</pre></div>
+
 
 <p>为策略分发点创建配置文件:</p>
-<pre><code class="bash">cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
-</code></pre>
+<div class="codehilite"><pre>cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
+</pre></div>
+
 
 <p>编辑策略文件:
 新建一个cftest1.cf承诺文件</p>
-<pre><code class="bash">vi /var/cfengine/masterfiles/cftest1.cf                  # 新建一个cftest1.cf
-# 添加如下内容:
-bundle agent test
-{
+<div class="codehilite"><pre>vi /var/cfengine/masterfiles/cftest1.cf                  <span class="c"># 新建一个cftest1.cf</span>
+<span class="c"># 添加如下内容:</span>
+bundle agent <span class="nb">test</span>
+<span class="o">{</span>
 reports:
   cfengine_3::
-    &quot;I'am cfengine 3 client&quot;;
-}
-</code></pre>
+    <span class="s2">&quot;I&#39;am cfengine 3 client&quot;</span>;
+<span class="o">}</span>
+</pre></div>
+
 
 <p>然后编辑promises.cf文件加入执行这个承诺束的支持:</p>
-<pre><code class="bash">vi /var/cfengine/masterfiles/promises.cf
+<div class="codehilite"><pre>vi /var/cfengine/masterfiles/promises.cf
 body common control
-{
- bundlesequence =&amp;gt; { &quot;main&quot;, &quot;test&quot; };                                # 将test加入的承诺束队列
+<span class="o">{</span>
+ <span class="nv">bundlesequence</span> <span class="o">=</span>&amp;gt; <span class="o">{</span> <span class="s2">&quot;main&quot;</span>, <span class="s2">&quot;test&quot;</span> <span class="o">}</span>;                                <span class="c"># 将test加入的承诺束队列</span>
 
- inputs =&amp;gt; {
-            &quot;cfengine_stdlib.cf&quot;,
-            &quot;cftest1.cf&quot;,                                             # 将cftest1.cf引入进来
-           };
+ <span class="nv">inputs</span> <span class="o">=</span>&amp;gt; <span class="o">{</span>
+            <span class="s2">&quot;cfengine_stdlib.cf&quot;</span>,
+            <span class="s2">&quot;cftest1.cf&quot;</span>,                                             <span class="c"># 将cftest1.cf引入进来</span>
+           <span class="o">}</span>;
 
- version =&amp;gt; &quot;Community Promises.cf 1.0.0&quot;;
-}
+ <span class="nv">version</span> <span class="o">=</span>&amp;gt; <span class="s2">&quot;Community Promises.cf 1.0.0&quot;</span>;
+<span class="o">}</span>
 .......
-</code></pre>
+</pre></div>
+
 
 <p>&nbsp;</p>
 <p>做好之后先本地同步,然后启动server:
 <pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1</p>
-<pre><code>到如下提示表示成功:
-```bash 
--&amp;gt; Bootstrap to 172.16.1.1 completed successfully
-netstat -antlp | grep cf
-tcp        0      0 :::5308                     :::*                        LISTEN      20173/cf-serverd
-</code></pre>
+<div class="codehilite"><pre><span class="err">到如下提示表示成功</span><span class="o">:</span>
+<span class="err">```</span><span class="n">bash</span> 
+<span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bootstrap</span> <span class="n">to</span> <span class="mf">172.16.1.1</span> <span class="n">completed</span> <span class="n">successfully</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">cf</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="o">:::</span><span class="mi">5308</span>                     <span class="o">:::*</span>                        <span class="n">LISTEN</span>      <span class="mi">20173</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">serverd</span>
+</pre></div>
+
 
 <p>然后执行策略:</p>
-<pre><code class="bash">/var/cfengine/bin/cf-agent
+<div class="codehilite"><pre>/var/cfengine/bin/cf-agent
 R: --&amp;gt; CFE is running on cfhub
-R: I'am cfengine 3 client
-</code></pre>
+R: I<span class="err">&#39;</span>am cfengine 3 client
+</pre></div>
+
 
 <p>&nbsp;</p>
 <p>cfengine默认是让本机地址的16位网络连接同步的,如果新加入一个另一网段的设备允许同步,比如允许192.168.1.网段同步,编辑/var/cfengine/masterfiles/promises.cf,找到bundle common def</p>
-<pre><code class="bash">vi /var/cfengine/masterfiles/promises.cf
+<div class="codehilite"><pre>vi /var/cfengine/masterfiles/promises.cf
 bundle common def
-{
- vars:                                            # 定义变量
+<span class="o">{</span>
+ vars:                                            <span class="c"># 定义变量</span>
    ... ...
-    &quot;acl&quot; slist =&amp;gt; {
-                &quot;$(sys.policy_hub)/16&quot;, &quot;192.168.1.&quot;,          # 这这个后面添加
+    <span class="s2">&quot;acl&quot;</span> <span class="nv">slist</span> <span class="o">=</span>&amp;gt; <span class="o">{</span>
+                <span class="s2">&quot;$(sys.policy_hub)/16&quot;</span>, <span class="s2">&quot;192.168.1.&quot;</span>,          <span class="c"># 这这个后面添加</span>
   ... ...
-}
-</code></pre>
+<span class="o">}</span>
+</pre></div>
+
 
 <p>服务端基本配置完成,客户端(cfengine host),按照本文前面安装的部分进行安装,创建工作目录,复制二进制文件,不用创建配置文件和承诺,然后执行:</p>
-<pre><code class="bash">/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
-</code></pre>
+<div class="codehilite"><pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
+</pre></div>
+
 
 <p>会出现和服务器执行一样的提示,就表示成功,如果提示连接不成功,尝试关闭防火墙.同步后执行本地策略:</p>
-<pre><code class="bash">/var/cfengine/bin/cf-agent
-</code></pre>
+<div class="codehilite"><pre>/var/cfengine/bin/cf-agent
+</pre></div>
+
 
 <p>cfengine官方还是建议在生产环境加一个版本控制器用来创建承诺文件,然后给策略分发点用来分发给策略执行点.更多cfengine的语法请参见手册.</p></div>
         <hr />
@@ -234,21 +248,24 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
         <div class="summary"><p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
 evince
 却提示:</p>
-<pre><code>No protocol specified
-Cannot parse arguments: 无法打开显示：
-</code></pre>
+<div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
+<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
+</pre></div>
+
 
 <p>google说是$XAUTHORITY权限的问题,于是查看:</p>
-<pre><code class="bash">ls -l $XAUTHORITY
+<div class="codehilite"><pre>ls -l <span class="nv">$XAUTHORITY</span>
 -rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
-</code></pre>
+</pre></div>
+
 
 <p>更改为如下:</p>
-<pre><code class="bash">chmod +rw $XAUTHORITY
-</code></pre>
+<div class="codehilite"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
+</pre></div>
+
 
 <p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<pre><code class="log">Nov 15 15:48:53 Vostro kernel: [13010.203241] type=1400 audit ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
     </div>	
 				
     
@@ -275,14 +292,16 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.</p>
 <h3>安装</h3>
 <p>Awesome Ubuntu下安装十分简单:</p>
-<pre><code class="bash">sudo apt-get install awesome
-</code></pre>
+<div class="codehilite"><pre>sudo apt-get install awesome
+</pre></div>
+
 
 <h3>配置</h3>
 <h4>拷贝配置文件</h4>
 <p>Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:</p>
-<pre><code class="bash">cp /etc/xdg/awesome/rc.lua ~/.config/awesome #  ~/.confg下如没有awesome则手动创建
-</code></pre>
+<div class="codehilite"><pre>cp /etc/xdg/awesome/rc.lua ~/.config/awesome <span class="c">#  ~/.confg下如没有awesome则手动创建</span>
+</pre></div>
+
 
 <h4>配置自动启程序 ...</h4> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html">read more</a></div>
     </div>	
@@ -305,11 +324,11 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<pre><code class="bash">#!/bin/sh
-# Author   : cold night
-# Filename : nglogcut.sh
-export PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-LogPath='/usr/local/nginx/logs/access.log'    # 定义日志绝对路径 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Author   : cold night</span>
+<span class="c"># Filename : nglogcut.sh</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
     </div>	
 				
     
@@ -329,19 +348,19 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
-<pre><code class="python">@route(’/login’)
-def login ():
-      username = request .forms .get(’username ’)
-      password = request .forms .get(’password ’)
-      if check_user_credentials(username, password):
-           response .set_cookie(&quot;account&quot;, username, secret= ’some-secret-key’)
-           return &quot;Welcome %s!You are now logged in.&quot; % username
-      else :
-           return &quot;Login failed.&quot; 
+<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
+      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
+           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
+      <span class="k">else</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
 
-@route(’/restricted’)
-def restricted_area ():
-      username = request .get_cookie(&quot;account&quot;, secret ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
+<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
     </div>	
 				
     
@@ -363,24 +382,25 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>上篇文章发布了一个自己写的用bottle写的web程序,其中收获最大就是Python装饰器的使用.前几天也是比较忙,所以没能分享出来,今天就给大家分享一下.</p>
 <p>首先来分析下需求,web程序后台需要认证,后台页面包含多个页面,最普通的方法就是为每个url添加认证,但是这样就需要每个每个绑定url的后台函数都需要添加类似或者相同的代码,但是这样做代码就过度冗余,而且不利于扩展.</p>
 <p>接下来我们先不谈及装饰器,我们都知道Python是个很强大的语言,她可以将函数当做参数传递给函数,最简单的:</p>
-<pre><code class="python">def p():
-    print 'Hello,world'
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">p</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Hello,world&#39;</span>
 
-def funcfactor(func):
-    print 'calling function named', func.__name__
-    func()
-    print 'end'
+<span class="k">def</span> <span class="nf">funcfactor</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&#39;calling function named&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="n">func</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;end&#39;</span>
 
-funcfactor(p)
-# 输出为:
-# calling function named p
-# Hello,world
-# end
-</code></pre>
+<span class="n">funcfactor</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="c"># 输出为:</span>
+<span class="c"># calling function named p</span>
+<span class="c"># Hello,world</span>
+<span class="c"># end</span>
+</pre></div>
+
 
 <p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
 <p>我们还可以这么做:</p>
-<pre><code class="python">def p ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
     </div>	
 				
     
@@ -401,23 +421,25 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  </div>
         <div class="summary"><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
 <p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<pre><code class="nginx">server {
-    listen 80;
-    server_name www.linuxzen.com;
+<div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
 
-    location / {
-        proxy_pass_header Server;
-        proxy_redirect off;
-        proxy_set_header X-Real_IP $remote_addr;
-        proxy_set_header X-Scheme $scheme;
-        proxy_pass http://127.0.0.1:8888;
-    }
-}
-</code></pre>
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
+        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
 
 <p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<pre><code class="bash">iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
-</code></pre>
+<div class="codehilite"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+</pre></div>
+
 
 <p>但是访问nginx总是返回502 Bad ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">read more</a></div>
     </div>	
@@ -446,11 +468,11 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<pre><code>cd /usr/src/
-mkdir python
-cd python
-#下载python2.7.2
-wget http://www ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="n">python</span>
+<span class="n">cd</span> <span class="n">python</span>
+<span class="cp">#下载python2.7.2</span>
+<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
     </div>	
 				
     
@@ -513,8 +535,8 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 </ul>
 <h2>一.安装依赖:</h2>
 <h3>安装rrdtool</h3>
-<pre><code class="bash">yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
+<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
+wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -114,8 +114,8 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 </ul>
 <h2>一.安装依赖:</h2>
 <h3>安装rrdtool</h3>
-<pre><code class="bash">yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
+<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
+wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
     </div>	
 				
     
@@ -137,22 +137,25 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
-<pre><code class="bash">find / -ctime 1 # 找出根下最近24小时修改过inode信息的文件(更改权限)
-find / -mtime 1 # 找出根下最近24小时修改过的文件(内容)
-find / -atime 1 # 找出根下最近24小时访问过的文件
-</code></pre>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
 
 <p>使用通配符查找文件</p>
-<pre><code class="bash">find / -name &quot;*.log&quot; # 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来
-</code></pre>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
 
 <h2>文本替换</h2>
-<pre><code class="bash">sed -e '2s/ext3/ext4/' /etc/fstab # 将第二行的ext3改成ext4
-</code></pre>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
 
 <h2>显示指定行</h2>
-<pre><code class="bash">sed -n &quot;3p&quot; /etc/fstab         # 显示第3行
-sed -n &quot;3,5p&quot; /etc/gfstab  # 显示第3到5行 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
     
@@ -173,11 +176,11 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<pre><code class="bash">#!/bin/sh
-# Author   : cold night
-# Filename : nglogcut.sh
-export PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-LogPath='/usr/local/nginx/logs/access.log'    # 定义日志绝对路径 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Author   : cold night</span>
+<span class="c"># Filename : nglogcut.sh</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
     </div>	
 				
     
@@ -258,17 +261,19 @@ in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
  </div>
         <div class="summary"><p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
 MySQL预编译参数:</p>
-<pre><code class="bash"> ./configure  --prefix=/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
-</code></pre>
+<div class="codehilite"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
+</pre></div>
+
 
 <p>top</p>
-<pre><code class="bash">32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
-</code></pre>
+<div class="codehilite"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
+</pre></div>
+
 
 <p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
-<pre><code class="bash">MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
+<div class="codehilite"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
 
-__ Key _________________________________________________________________ ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">read more</a></div>
+__ Key _________________________________________________________________ ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">read more</a></div>
     </div>	
 				
     
@@ -296,11 +301,12 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp</p>
 <p>安装tftp-server</p>
-<pre><code class="bash">yum -y install tftp-server
-</code></pre>
+<div class="codehilite"><pre>yum -y install tftp-server
+</pre></div>
+
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<pre><code class="bash">vi ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
+<div class="codehilite"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
     </div>	
 				
     
@@ -325,9 +331,9 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <!--more-->
 
 <p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
-<pre><code class="bash"># 把依赖包添加到cfpkgs.list
+<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
 vi cfpkgs.list
-# 添加如下内容
+<span class="c"># 添加如下内容</span>
 keyutils-libs-devel
 zlib-devel
 e2fsprogs-devel 
@@ -338,8 +344,8 @@ pcre-devel
 krb5-devel
 flex
 openssl-devel 
-# 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:
-for i in `cat cfpkgs.list `:; do file=`echo $i ¦ sed 's/://g'`; cp /mnt ...</code></pre></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
+<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
     </div>	
 				
     
@@ -364,15 +370,15 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
 install.log            : 记录安装过程中所安装的包
 我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:<!--more--></p>
-<pre><code class="bash">mkdir /usr/cold                 # 创建发行版目录
-mount /dev/hdc /mnt             # 挂载IDE光驱
-# 或
+<div class="codehilite"><pre>mkdir /usr/cold                 <span class="c"># 创建发行版目录</span>
+mount /dev/hdc /mnt             <span class="c"># 挂载IDE光驱</span>
+<span class="c"># 或</span>
 mount /dev/cdrom /mnt
-# 如挂载本地ISO镜像使用下面命令
+<span class="c"># 如挂载本地ISO镜像使用下面命令</span>
 mount -o loop iso路径 /mnt
 
-# 然后使用 tar命令把光盘的内容复制到/usr/cold
-# 都说这个命令比cp快 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">read more</a></div>
+<span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
+<span class="c"># 都说这个命令比cp快 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

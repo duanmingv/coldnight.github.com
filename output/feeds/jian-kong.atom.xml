@@ -9,114 +9,133 @@ server:&lt;/p&gt;
 &lt;p&gt;ip:192.168.3.120&lt;/p&gt;
 &lt;p&gt;cacti:cacti-0.8.7i.tar.gz&lt;/p&gt;
 &lt;p&gt;cacti使用SNMP采集数据,首先安装snmp数据采集工具:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install lm_sensors net-snmp net-snmp-utils
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install lm_sensors net-snmp net-snmp-utils
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;同时cacti又依赖于rrdtool生成图表所以首先安装rrdtool:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
-yum -y install cairo-devel glib2-devel pango-devel intltool   # 安装rrdtool依赖
-./configure --prefix=/usr/local
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
+yum -y install cairo-devel glib2-devel pango-devel intltool   &lt;span class="c"&gt;# 安装rrdtool依赖&lt;/span&gt;
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
 make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;下面就来下载cacti安装:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
 tar -zxvf cacti-0.8.7i.tar.gz
-cp -r cacti-0.8.7i /usr/local/nginx/html/cacti  # 复制到html目录
-useradd cactiuser -M -s /sbin/nologin          # 创建cacti用户
-chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/rra/ # 改变属主和属组
+cp -r cacti-0.8.7i /usr/local/nginx/html/cacti  &lt;span class="c"&gt;# 复制到html目录&lt;/span&gt;
+useradd cactiuser -M -s /sbin/nologin          &lt;span class="c"&gt;# 创建cacti用户&lt;/span&gt;
+chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/rra/ &lt;span class="c"&gt;# 改变属主和属组&lt;/span&gt;
 chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后进入到数据库创建cacti数据和创建一个用户:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;create database cactidb default character set utf8;   #创建数据库
-grant all on cactidb.* to cactiuser@localhost identified by '123456'; # 创建一个mysql用户
-use cactidb   # 使用刚才创建的数据库
-source /usr/local/nginx/html/cacti/cacti.sql # 导入cacti数据
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
+grant all on cactidb.* to cactiuser@localhost identified by &lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;; &lt;span class="c"&gt;# 创建一个mysql用户&lt;/span&gt;
+use cactidb   &lt;span class="c"&gt;# 使用刚才创建的数据库&lt;/span&gt;
+&lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/nginx/html/cacti/cacti.sql &lt;span class="c"&gt;# 导入cacti数据&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;接下来我们编辑cacti配置文件/usr/local/nginx/html/cacti/include/config.php&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;cd /usr/local/nginx/html/cacti/
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/cacti/
 vi include/config.php
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;编辑下面内容:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;$database_type = &amp;quot;mysql&amp;quot;;            # 数据库类型
-$database_default = &amp;quot;cactidb&amp;quot;;       # 数据库名字
-$database_hostname = &amp;quot;localhost&amp;quot;;    # 数据库主机
-$database_username = &amp;quot;cactiuser&amp;quot;;    # 数据库用户
-$database_password = &amp;quot;123456&amp;quot;;       # 数据库密码
-$database_port = &amp;quot;3306&amp;quot;;             # 数据库端口
-$database_ssl = false;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
+&lt;span class="nv"&gt;$database_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactidb&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库名字&lt;/span&gt;
+&lt;span class="nv"&gt;$database_hostname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库主机&lt;/span&gt;
+&lt;span class="nv"&gt;$database_username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactiuser&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库用户&lt;/span&gt;
+&lt;span class="nv"&gt;$database_password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;123456&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库密码&lt;/span&gt;
+&lt;span class="nv"&gt;$database_port&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;3306&amp;quot;&lt;/span&gt;;             &lt;span class="c"&gt;# 数据库端口&lt;/span&gt;
+&lt;span class="nv"&gt;$database_ssl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后修改nginx配置文件像下面:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;        location / {
+&lt;div class="codehilite"&gt;&lt;pre&gt;        location / &lt;span class="o"&gt;{&lt;/span&gt;
             root   html;
             index  index.php;
-        }
+        &lt;span class="o"&gt;}&lt;/span&gt;
 
-        location ~ \.php$ {
+        location ~ &lt;span class="se"&gt;\.&lt;/span&gt;php&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
             fastcgi_pass        unix:/var/run/php-fpm/php-fpm.sock;
             fastcgi_index       index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
             include fastcgi_params;
             include fastcgi.conf;
-        }
-&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;重启nginx&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;pkill -9 nginx
+&lt;div class="codehilite"&gt;&lt;pre&gt;pkill -9 nginx
 /usr/local/nginx/sbin/nginx
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后设置php时区,&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;cd /usr/local/nginx/html/cacti/
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/cacti/
 vi include/global_constants.php
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;在第二行添加&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;date_default_timezone_set(&amp;quot;Asia/Chongqing&amp;quot;);
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;接下来配置snmp,编辑/etc/snmp/snmpd.conf&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /etc/snmp/snmpd.conf
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/snmp/snmpd.conf
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后找到41行将public改成一个较为复杂的名字:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;com2sec notConfigUser  default       public
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;com2sec notConfigUser  default       public
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后找到62行&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;access  notConfigGroup &amp;quot;&amp;quot;      any       noauth    exact  systemview none none
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;access  notConfigGroup &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;      any       noauth    exact  systemview none none
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;将systemview改成all:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;access  notConfigGroup &amp;quot;&amp;quot;      any       noauth    exact  all none none
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;access  notConfigGroup &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;      any       noauth    exact  all none none
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后去掉85行的注释:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;view all    included  .1                               80
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;view all    included  .1                               80
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;保存配置文件后启动snmp&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;service snmpd start
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service snmpd start
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后在浏览器里输入:http://192.168.3.120/cacti/
 然后根据提示一步步安装,安装好后使用admin密码admin登录.如果点击graphs不能显示图像的话执行:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;php /usr/local/nginx/html/cacti/poller.php   # nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;php /usr/local/nginx/html/cacti/poller.php   &lt;span class="c"&gt;# nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;为了方便把这句加入到cron,执行:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install vixie-cron  #安装
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install vixie-cron  &lt;span class="c"&gt;#安装&lt;/span&gt;
 service crond start
 crontab -e
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;添加如下内容:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;好了这时候我们就可以打开查看生成的图像了.
 注意如果报如下错误:
@@ -144,192 +163,208 @@ $_SESSION['username']='';&lt;/p&gt;</summary><category term="监控"></category>
 &lt;h2&gt;安装:&lt;/h2&gt;
 &lt;h3&gt;安装准备&lt;/h3&gt;
 &lt;p&gt;创建nagios系统用户:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;useradd  nagios
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;useradd  nagios
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install gd-devel libpng-devel libtool-ltdl-devel
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install gd-devel libpng-devel libtool-ltdl-devel
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;下载nagios内核:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;安装nagios内核:&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;tar -zxvf nagios-3.3.1.tar.gz
-cd nagios
-./configure --prefix=/usr/local/nagios
+&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf nagios-3.3.1.tar.gz
+&lt;span class="nb"&gt;cd &lt;/span&gt;nagios
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios
 make all
-make install               # 安装主要程序,CGI和HTML
-make install-commandmode   # 使外部命令有访问nagios配置文件的权限
-make install-config        # 安装配置文件
-make install-init          # 安装nagios启动脚本
-&lt;/code&gt;&lt;/pre&gt;
+make install               &lt;span class="c"&gt;# 安装主要程序,CGI和HTML&lt;/span&gt;
+make install-commandmode   &lt;span class="c"&gt;# 使外部命令有访问nagios配置文件的权限&lt;/span&gt;
+make install-config        &lt;span class="c"&gt;# 安装配置文件&lt;/span&gt;
+make install-init          &lt;span class="c"&gt;# 安装nagios启动脚本&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;安装插件:&lt;/h3&gt;
 &lt;p&gt;nagios没有什么都做不了的,插件极大的扩展了nagios功能,除了安装官方常用插件外,也可以根据自己需求编写插件.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
 tar -zxvf nagios-plugins-1.4.15.tar.gz
-cd nagios-plugins-1.4.15
-./configure --prefix=/usr/local/nagios
+&lt;span class="nb"&gt;cd &lt;/span&gt;nagios-plugins-1.4.15
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios
 make  &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;安装WEB服务器&lt;/h3&gt;
 &lt;p&gt;web服务器不是nagios所必须的,但是如果你无法忍受通过日志文件来监控各个主机状态,那么web服务器就至关重要,所以我们还是花上一点时间为之后的节省更多的时间.&lt;/p&gt;
 &lt;p&gt;这里web服务器使用当前主流的nginx:&lt;/p&gt;
 &lt;p&gt;安装nginx&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
 &amp;amp;amp;nbsp;yum&amp;amp;amp;nbsp;&amp;amp;amp;nbsp;-y&amp;amp;amp;nbsp;install&amp;amp;amp;nbsp;zlib-devel&amp;amp;amp;nbsp;pcre-devel&amp;amp;amp;nbsp;openssl-devel &amp;amp;amp;nbsp;# 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
-cd nginx-1.0.11
-./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
+&lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
+./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
 make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;配置nginx支持cgi:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
 tar -zxvf FCGI-0.67.tar.gz
-cd FCGI-0.67
+&lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-0.67
 perl Makefile.PL
 make &amp;amp;amp;&amp;amp;amp; make install
-cd ..
+&lt;span class="nb"&gt;cd&lt;/span&gt; ..
 wget http://cpan.wenzk.com/authors/id/G/GB/GBJK/FCGI-ProcManager-0.19.tar.gz
 tar -zxvf FCGI-ProcManager-0.19.tar.gz
-cd FCGI-ProcManager-0.19
+&lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-ProcManager-0.19
 perl Makefile.PL
 make &amp;amp;amp;&amp;amp;amp; make install
-cd ..
+&lt;span class="nb"&gt;cd&lt;/span&gt; ..
 wget http://search.cpan.org/CPAN/authors/id/I/IN/INGY/IO-All-0.39.tar.gz
 tar zxvf IO-All-0.39.tar.gz
-cd IO-All-0.39
+&lt;span class="nb"&gt;cd &lt;/span&gt;IO-All-0.39
 perl Makefile.PL
 make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;创建cgiwarp-fcgi.pl(内容参照&lt;a href="http://wiki.nginx.org/NginxSimpleCGI"&gt;这里&lt;/a&gt;),将cgiwarp-fcgi.pl放到/usr/local/bin下给执行权限,并执行:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;chmod +x /usr/local/bin/cgiwarp-fcgi.pl
+&lt;div class="codehilite"&gt;&lt;pre&gt;chmod +x /usr/local/bin/cgiwarp-fcgi.pl
 mkdir -p /var/run/nginx/
 perl /usr/local/bin/cgiwarp-fcgi.pl
-chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  # 改变属主为nobody,是nginx正常使用
-&lt;/code&gt;&lt;/pre&gt;
+chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  &lt;span class="c"&gt;# 改变属主为nobody,是nginx正常使用&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;配置nginx支持身份验证&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install httpd
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install httpd
 chkconfig --del httpd
 mkdir /usr/local/nginx/conf/htpasswd
-htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   # 添加nagiosadmin用户
-&lt;/code&gt;&lt;/pre&gt;
+htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="c"&gt;# 添加nagiosadmin用户&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;还需要配置nginx支持php,这里使用php-fpm的方式,这里就不介绍.&lt;/p&gt;
 &lt;h2&gt;配置&lt;/h2&gt;
 &lt;p&gt;首先配置nginx:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;    server {
+&lt;div class="codehilite"&gt;&lt;pre&gt;    server &lt;span class="o"&gt;{&lt;/span&gt;
         listen  192.168.3.3:80;
         server_name 192.168.3.3;
-        auth_basic &amp;quot;Nagios&amp;quot;;
+        auth_basic &lt;span class="s2"&gt;&amp;quot;Nagios&amp;quot;&lt;/span&gt;;
         auth_basic_user_file /usr/local/nginx/conf/htpasswd/nagios;
 
-        # 为了正常使用css和显示图片做一个url重写
-        if ( $request_filename ~ \.(gif¦png¦jpg¦jpeg¦ico) ) {
-            rewrite ^/nagios/(images/.*) /$1 break;
-        }   
+        &lt;span class="c"&gt;# 为了正常使用css和显示图片做一个url重写&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nv"&gt;$request_filename&lt;/span&gt; ~ &lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;gif¦png¦jpg¦jpeg¦ico&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;images/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
+        &lt;span class="o"&gt;}&lt;/span&gt;   
 
-        if ( $request_filename ~ \.(css) ) {
-            rewrite ^/nagios/(stylesheets/.*) /$1 break;
-        }   
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nv"&gt;$request_filename&lt;/span&gt; ~ &lt;span class="se"&gt;\.&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;css&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            rewrite ^/nagios/&lt;span class="o"&gt;(&lt;/span&gt;stylesheets/.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
+        &lt;span class="o"&gt;}&lt;/span&gt;   
 
-        # 支持php的配置
-        location / {
+        &lt;span class="c"&gt;# 支持php的配置&lt;/span&gt;
+        location / &lt;span class="o"&gt;{&lt;/span&gt;
             root /usr/local/nagios/share/;
             index index.php;
             fastcgi_pass unix:/var/run/php/php-fpm.sock;
             fastcgi_index index.php;
-            fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+            fastcgi_param SCRIPT_FILENAME &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
             include fastcgi_params;
             include fastcgi.conf;
-        }
+        &lt;span class="o"&gt;}&lt;/span&gt;
 
-        # 支持cgi的配置
-        location ~ \.cgi$ {
+        &lt;span class="c"&gt;# 支持cgi的配置&lt;/span&gt;
+        location ~ &lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
             root /usr/local/nagios/sbin/;
-            rewrite ^/nagios/cgi-bin/(.*)\.cgi(.*) /$1.cgi$2 break;
+            rewrite ^/nagios/cgi-bin/&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="se"&gt;\.&lt;/span&gt;cgi&lt;span class="o"&gt;(&lt;/span&gt;.*&lt;span class="o"&gt;)&lt;/span&gt; /&lt;span class="nv"&gt;$1&lt;/span&gt;.cgi&lt;span class="nv"&gt;$2&lt;/span&gt; &lt;span class="nb"&gt;break&lt;/span&gt;;
             fastcgi_pass unix:/var/run/nginx/cgiwrap-dispatch.sock;
             fastcgi_index   index.cgi;
-            fastcgi_param SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
-            fastcgi_param QUERY_STRING     $query_string;
-            fastcgi_param REQUEST_METHOD   $request_method;
-            fastcgi_param CONTENT_TYPE     $content_type;
-            fastcgi_param CONTENT_LENGTH   $content_length;
+            fastcgi_param SCRIPT_FILENAME  &lt;span class="nv"&gt;$document_root&lt;/span&gt;/&lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
+            fastcgi_param QUERY_STRING     &lt;span class="nv"&gt;$query_string&lt;/span&gt;;
+            fastcgi_param REQUEST_METHOD   &lt;span class="nv"&gt;$request_method&lt;/span&gt;;
+            fastcgi_param CONTENT_TYPE     &lt;span class="nv"&gt;$content_type&lt;/span&gt;;
+            fastcgi_param CONTENT_LENGTH   &lt;span class="nv"&gt;$content_length&lt;/span&gt;;
             fastcgi_param GATEWAY_INTERFACE  CGI/1.1;
             fastcgi_param SERVER_SOFTWARE    nginx;
-            fastcgi_param SCRIPT_NAME        $fastcgi_script_name;
-            fastcgi_param REQUEST_URI        $request_uri;
-            fastcgi_param DOCUMENT_URI       $document_uri;
-            fastcgi_param DOCUMENT_ROOT      $document_root;
-            fastcgi_param SERVER_PROTOCOL    $server_protocol;
-            fastcgi_param REMOTE_ADDR        $remote_addr;
-            fastcgi_param REMOTE_PORT        $remote_port;
-            fastcgi_param SERVER_ADDR        $server_addr;
-            fastcgi_param SERVER_PORT        $server_port;
-            fastcgi_param SERVER_NAME        $server_name;
-        }
+            fastcgi_param SCRIPT_NAME        &lt;span class="nv"&gt;$fastcgi_script_name&lt;/span&gt;;
+            fastcgi_param REQUEST_URI        &lt;span class="nv"&gt;$request_uri&lt;/span&gt;;
+            fastcgi_param DOCUMENT_URI       &lt;span class="nv"&gt;$document_uri&lt;/span&gt;;
+            fastcgi_param DOCUMENT_ROOT      &lt;span class="nv"&gt;$document_root&lt;/span&gt;;
+            fastcgi_param SERVER_PROTOCOL    &lt;span class="nv"&gt;$server_protocol&lt;/span&gt;;
+            fastcgi_param REMOTE_ADDR        &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;;
+            fastcgi_param REMOTE_PORT        &lt;span class="nv"&gt;$remote_port&lt;/span&gt;;
+            fastcgi_param SERVER_ADDR        &lt;span class="nv"&gt;$server_addr&lt;/span&gt;;
+            fastcgi_param SERVER_PORT        &lt;span class="nv"&gt;$server_port&lt;/span&gt;;
+            fastcgi_param SERVER_NAME        &lt;span class="nv"&gt;$server_name&lt;/span&gt;;
+        &lt;span class="o"&gt;}&lt;/span&gt;
 
-    }
-&lt;/code&gt;&lt;/pre&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;修改nagios主配文件,修改nagios运行账户:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /usr/local/nagios/etc/nagios.cfg
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/nagios.cfg
 
-# 编辑下面选项:
-nagios_user=nobody
-&lt;/code&gt;&lt;/pre&gt;
+&lt;span class="c"&gt;# 编辑下面选项:&lt;/span&gt;
+&lt;span class="nv"&gt;nagios_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nobody
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;修改cgi.cfg配置文件
 修改默认认证cgi用户的为刚才用htpasswd创建的nagiosadmin,或用htpasswd新建一个用户用来认证cgi文件(不然nagios报错:&lt;code&gt;It appears as though you do not have permission to view information for any of the hosts you requested...&lt;/code&gt;)&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /usr/local/nagios/etc/cgi.cfg
-default_user_name=nagiosadmin
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/cgi.cfg
+&lt;span class="nv"&gt;default_user_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nagiosadmin
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;修改localhost.cfg添加一个新的监控主机:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /usr/local/nagios/etc/objects/localhost.cfg
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/objects/localhost.cfg
 
-#  通过定义host添加一个主机
-#  添加一个ip为192.168.3.102的监控主机
-define host{
+&lt;span class="c"&gt;#  通过定义host添加一个主机&lt;/span&gt;
+&lt;span class="c"&gt;#  添加一个ip为192.168.3.102的监控主机&lt;/span&gt;
+define host&lt;span class="o"&gt;{&lt;/span&gt;
         use                     linux-server
         host_name               slave.org
-        alias                   102
+        &lt;span class="nb"&gt;alias                   &lt;/span&gt;102
         address                 192.168.3.102
-        }
+        &lt;span class="o"&gt;}&lt;/span&gt;
 ....
-# 通过定义service定义监控的服务:
-# 通过ping来监控主机是否存活
-define service{
-        use                             local-service
+&lt;span class="c"&gt;# 通过定义service定义监控的服务:&lt;/span&gt;
+&lt;span class="c"&gt;# 通过ping来监控主机是否存活&lt;/span&gt;
+define service&lt;span class="o"&gt;{&lt;/span&gt;
+        use                             &lt;span class="nb"&gt;local&lt;/span&gt;-service
         host_name                       slave.org
         service_description             PING
         check_command                   check_ping!100.0,20%!500.0,%60
-        }
-&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;修改nagios安装目录权限:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;chown -R nobody.nagios /usr/local/nagios
+&lt;div class="codehilite"&gt;&lt;pre&gt;chown -R nobody.nagios /usr/local/nagios
 chmod -R 775 /usr/local/nagios/
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;检查nagios配置文件:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;在最后看到如下则表示成功:&lt;/p&gt;
 &lt;p&gt;Total Warnings: 0
 Total Errors:   0
 Things look okay - No serious problems were detected during the pre-flight check&lt;/p&gt;
 &lt;p&gt;启动nagios:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;service nagios start
-Starting nagios: done.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;service nagios start
+Starting nagios: &lt;span class="k"&gt;done&lt;/span&gt;.
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;这时候在浏览器里输入&lt;code&gt;http://ip/&lt;/code&gt;查看状态,现在能看到所有监控主机的的状态了.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/blog001.jpg" /&gt;&lt;/p&gt;</summary><category term="配置"></category><category term="监控"></category><category term="rewrite"></category><category term="nginx认证"></category><category term="nginx支持cgi"></category><category term="nginx"></category><category term="nagios"></category><category term="Linux"></category></entry><entry><title>搭建ntop监测局域网内流量</title><link href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html" rel="alternate"></link><updated>2012-02-20T17:37:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-20:da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html</id><summary type="html">&lt;p&gt;ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。&lt;/p&gt;
@@ -342,46 +377,53 @@ Starting nagios: done.
 &lt;/ul&gt;
 &lt;h2&gt;一.安装依赖:&lt;/h2&gt;
 &lt;h3&gt;安装rrdtool&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  # 下载
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install libxml2 glib-devel pango-devel
+wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  &lt;span class="c"&gt;# 下载&lt;/span&gt;
 tar -zxvf rrdtool-1.4.7.tar.gz
-cd rrdtool-1.4.7
+&lt;span class="nb"&gt;cd &lt;/span&gt;rrdtool-1.4.7
 ./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;安装geoip:&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
 tar -zxvf GeoIP-1.4.8.tar.gz
-cd GeoIP-1.4.8
+&lt;span class="nb"&gt;cd &lt;/span&gt;GeoIP-1.4.8
 ./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h3&gt;安装其余依赖:&lt;/h3&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
  intltool
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;h2&gt;二.下载安装:&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
+&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
 tar -zxvf ntop-4.1.0.tar.gz
-cd ntop-4.1.0
-./autogen.sh --with-tcpwrap --with-rrd-home=/opt/rrdtool-1.4.7/
+&lt;span class="nb"&gt;cd &lt;/span&gt;ntop-4.1.0
+./autogen.sh --with-tcpwrap --with-rrd-home&lt;span class="o"&gt;=&lt;/span&gt;/opt/rrdtool-1.4.7/
 make &amp;amp;amp;&amp;amp;amp; make install
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;三.配置启动&lt;/h2&gt;
 &lt;p&gt;更改检测数据保存目录的权限:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;chown -R nobody /usr/local/var/ntop/
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;chown -R nobody /usr/local/var/ntop/
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;创建admin管理密码:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;ntop -A
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ntop -A
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;在eth0上启动ntop:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;ntop -d -i eth0 -M
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;ntop -d -i eth0 -M
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;客户端浏览监测结果:
 在浏览器上输入:http://192.168.3.101:3000访问即可查看监测结果,Admin可以配置ntop.到此这个监控局域网流量的ntop就搭建完成,这样就可以很方便的查看局域网流量,可以发现是否有人在执行arp攻击等等常见攻击.剩余的功能大家就自己发现吧,这里不错介绍.&lt;/p&gt;

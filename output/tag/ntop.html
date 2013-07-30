@@ -80,46 +80,53 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 </ul>
 <h2>一.安装依赖:</h2>
 <h3>安装rrdtool</h3>
-<pre><code class="bash">yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  # 下载
+<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
+wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  <span class="c"># 下载</span>
 tar -zxvf rrdtool-1.4.7.tar.gz
-cd rrdtool-1.4.7
+<span class="nb">cd </span>rrdtool-1.4.7
 ./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; make install
-</code></pre>
+</pre></div>
+
 
 <h3>安装geoip:</h3>
-<pre><code class="bash">wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
+<div class="codehilite"><pre>wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
 tar -zxvf GeoIP-1.4.8.tar.gz
-cd GeoIP-1.4.8
+<span class="nb">cd </span>GeoIP-1.4.8
 ./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; make install
-</code></pre>
+</pre></div>
+
 
 <h3>安装其余依赖:</h3>
-<pre><code class="bash">yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
+<div class="codehilite"><pre>yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
  intltool
-</code></pre>
+</pre></div>
+
 
 <p>&nbsp;</p>
 <h2>二.下载安装:</h2>
-<pre><code class="bash">wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
+<div class="codehilite"><pre>wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
 tar -zxvf ntop-4.1.0.tar.gz
-cd ntop-4.1.0
-./autogen.sh --with-tcpwrap --with-rrd-home=/opt/rrdtool-1.4.7/
+<span class="nb">cd </span>ntop-4.1.0
+./autogen.sh --with-tcpwrap --with-rrd-home<span class="o">=</span>/opt/rrdtool-1.4.7/
 make &amp;amp;&amp;amp; make install
-</code></pre>
+</pre></div>
+
 
 <h2>三.配置启动</h2>
 <p>更改检测数据保存目录的权限:</p>
-<pre><code class="bash">chown -R nobody /usr/local/var/ntop/
-</code></pre>
+<div class="codehilite"><pre>chown -R nobody /usr/local/var/ntop/
+</pre></div>
+
 
 <p>创建admin管理密码:</p>
-<pre><code class="bash">ntop -A
-</code></pre>
+<div class="codehilite"><pre>ntop -A
+</pre></div>
+
 
 <p>在eth0上启动ntop:</p>
-<pre><code class="bash">ntop -d -i eth0 -M
-</code></pre>
+<div class="codehilite"><pre>ntop -d -i eth0 -M
+</pre></div>
+
 
 <p>客户端浏览监测结果:
 在浏览器上输入:http://192.168.3.101:3000访问即可查看监测结果,Admin可以配置ntop.到此这个监控局域网流量的ntop就搭建完成,这样就可以很方便的查看局域网流量,可以发现是否有人在执行arp攻击等等常见攻击.剩余的功能大家就自己发现吧,这里不错介绍.</p>

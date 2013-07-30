@@ -1,200 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/shell.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2012-05-18T11:16:00+08:00</updated><entry><title>使用Linux shell实时检测文件变更</title><link href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html" rel="alternate"></link><updated>2012-05-18T11:16:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-05-18:shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html</id><summary type="html">&lt;p&gt;使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.&lt;/p&gt;
 &lt;p&gt;下面放出脚本内容:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;#!/bin/bash
-# Author      : cold
-# Homepage    : http://www.linuxzen.com
-# Filename    : checkchange.sh
-# Useage      : sh checkchange.sh [dir]
-checkisdir()
-        # Have one argument
-        # The argument is a directory
-        for i in `ls $1 | sed -e 's/ /\n/g'`
-        do
-                if [ -d $1/$i ]
-                then
-                        if [ $i == &amp;quot;bin&amp;quot; -o $i == &amp;quot;lib&amp;quot; -o $i == &amp;quot;include&amp;quot; ]   # 不想检测的目录(这里是使用virtualenv生成的环境文件)
-                        then
-                                continue
-                        fi
-                        dir=&amp;quot;$1/$i&amp;quot;
-                        checkisdir $dir
-                else
-                        files=$files'\n'$1'/'$i
-                fi
-        done
-        echo -e $files
-}
-while true
-do
-        if [ -e /tmp/stat.tmp ]
-        then
-                for i in `checkisdir $1`
-                do
-                        if [ -e /tmp/patch.tmp ]
-                        then
-                                stat $i | grep Change &amp;gt; /tmp/nstat.tmp
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;# Author      : cold&lt;/span&gt;
+&lt;span class="c"&gt;# Homepage    : http://www.linuxzen.com&lt;/span&gt;
+&lt;span class="c"&gt;# Filename    : checkchange.sh&lt;/span&gt;
+&lt;span class="c"&gt;# Useage      : sh checkchange.sh [dir]&lt;/span&gt;
+checkisdir&lt;span class="o"&gt;()&lt;/span&gt;
+        &lt;span class="c"&gt;# Have one argument&lt;/span&gt;
+        &lt;span class="c"&gt;# The argument is a directory&lt;/span&gt;
+        &lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$1&lt;/span&gt; | sed -e &lt;span class="s1"&gt;&amp;#39;s/ /\n/g&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;                if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -d &lt;span class="nv"&gt;$1&lt;/span&gt;/&lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+                &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                        if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;bin&amp;quot;&lt;/span&gt; -o &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;lib&amp;quot;&lt;/span&gt; -o &lt;span class="nv"&gt;$i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;include&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;   &lt;span class="c"&gt;# 不想检测的目录(这里是使用virtualenv生成的环境文件)&lt;/span&gt;
+                        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                                continue&lt;/span&gt;
+&lt;span class="k"&gt;                        fi&lt;/span&gt;
+&lt;span class="k"&gt;                        &lt;/span&gt;&lt;span class="nv"&gt;dir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$1/$i&amp;quot;&lt;/span&gt;
+                        checkisdir &lt;span class="nv"&gt;$dir&lt;/span&gt;
+                &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="k"&gt;                        &lt;/span&gt;&lt;span class="nv"&gt;files&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$files&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="nv"&gt;$i&lt;/span&gt;
+                &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;        done&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="nv"&gt;$files&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="k"&gt;while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;        if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e /tmp/stat.tmp &lt;span class="o"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;checkisdir &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+                &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;                        if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e /tmp/patch.tmp &lt;span class="o"&gt;]&lt;/span&gt;
+                        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                                &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; | grep Change &amp;gt; /tmp/nstat.tmp
                                 rm -f /tmp/patch.tmp
-                                continue
-                        fi
-                        stat $i | grep Change &amp;gt;&amp;gt; /tmp/nstat.tmp
-                done
-                diff /tmp/stat.tmp /tmp/nstat.tmp &amp;gt; /tmp/patch.tmp
-                if [ $? -eq 0 ]
-                then
-                        sleep 10
-                else
-                        /etc/init.d/uwsgi.py restart                    # 将此处更改为想要做的操作
+                                &lt;span class="k"&gt;continue&lt;/span&gt;
+&lt;span class="k"&gt;                        fi&lt;/span&gt;
+&lt;span class="k"&gt;                        &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; | grep Change &amp;gt;&amp;gt; /tmp/nstat.tmp
+                &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;span class="k"&gt;                &lt;/span&gt;diff /tmp/stat.tmp /tmp/nstat.tmp &amp;gt; /tmp/patch.tmp
+                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
+                &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                        &lt;/span&gt;sleep 10
+                &lt;span class="k"&gt;else&lt;/span&gt;
+                        /etc/init.d/uwsgi.py restart                    &lt;span class="c"&gt;# 将此处更改为想要做的操作&lt;/span&gt;
                         patch /tmp/stat.tmp /tmp/patch.tmp
-                fi
-        else
-                for i in `checkisdir $1`
-                do
-                        stat $i | grep Change &amp;gt;&amp;gt; /tmp/stat.tmp
-                done
-                continue
-        fi
-done
-&lt;/code&gt;&lt;/pre&gt;
+                &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;        else&lt;/span&gt;
+&lt;span class="k"&gt;                for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;checkisdir &lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+                &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;                        &lt;/span&gt;stat &lt;span class="nv"&gt;$i&lt;/span&gt; | grep Change &amp;gt;&amp;gt; /tmp/stat.tmp
+                &lt;span class="k"&gt;done&lt;/span&gt;
+&lt;span class="k"&gt;                continue&lt;/span&gt;
+&lt;span class="k"&gt;        fi&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;sh checkchange.sh /code/python &amp;amp;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sh checkchange.sh /code/python &amp;amp;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;如果使用svn可以参考下面代码:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;#!/bin/bash
-# Author        : cold
-# Homepage      : http://www.linuxzen.com
-# Filename      : checkupdate.sh
-# Describle     : To Check update of svn
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;# Author        : cold&lt;/span&gt;
+&lt;span class="c"&gt;# Homepage      : http://www.linuxzen.com&lt;/span&gt;
+&lt;span class="c"&gt;# Filename      : checkupdate.sh&lt;/span&gt;
+&lt;span class="c"&gt;# Describle     : To Check update of svn&lt;/span&gt;
 
-while true
-do
-        cd /code/python
+&lt;span class="k"&gt;while &lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /code/python
         svn up | grep At &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
-        if [ $? -eq 0 ]
-        then
-                sleep 30
-        fi
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                &lt;/span&gt;sleep 30
+        &lt;span class="k"&gt;fi&lt;/span&gt;
 
-        svn up | grep Updated &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
-        if [ $? -eq 0 ]
-        then
+&lt;span class="k"&gt;        &lt;/span&gt;svn up | grep Updated &amp;gt; /dev/null 2&amp;gt;&amp;amp;1
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt;
                 /etc/init.d/uwsgi.py restart
-        fi
-done
-&lt;/code&gt;&lt;/pre&gt;</summary><category term="检测"></category><category term="文件"></category><category term="实时"></category><category term="变更"></category><category term="uwsgi"></category><category term="shell"></category><category term="python"></category><category term="Linux"></category><category term="bottle"></category></entry><entry><title>Linux一些比较实用的小技巧</title><link href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="alternate"></link><updated>2012-02-20T11:30:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-20:linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html</id><summary type="html">&lt;p&gt;在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧&lt;/p&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="检测"></category><category term="文件"></category><category term="实时"></category><category term="变更"></category><category term="uwsgi"></category><category term="shell"></category><category term="python"></category><category term="Linux"></category><category term="bottle"></category></entry><entry><title>Linux一些比较实用的小技巧</title><link href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="alternate"></link><updated>2012-02-20T11:30:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-20:linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html</id><summary type="html">&lt;p&gt;在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧&lt;/p&gt;
 &lt;h2&gt;文件查找&lt;/h2&gt;
 &lt;p&gt;找出最近修改的文件:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;find / -ctime 1 # 找出根下最近24小时修改过inode信息的文件(更改权限)
-find / -mtime 1 # 找出根下最近24小时修改过的文件(内容)
-find / -atime 1 # 找出根下最近24小时访问过的文件
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;find / -ctime 1 &lt;span class="c"&gt;# 找出根下最近24小时修改过inode信息的文件(更改权限)&lt;/span&gt;
+find / -mtime 1 &lt;span class="c"&gt;# 找出根下最近24小时修改过的文件(内容)&lt;/span&gt;
+find / -atime 1 &lt;span class="c"&gt;# 找出根下最近24小时访问过的文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;使用通配符查找文件&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;find / -name &amp;quot;*.log&amp;quot; # 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;find / -name &lt;span class="s2"&gt;&amp;quot;*.log&amp;quot;&lt;/span&gt; &lt;span class="c"&gt;# 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;文本替换&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;sed -e '2s/ext3/ext4/' /etc/fstab # 将第二行的ext3改成ext4
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sed -e &lt;span class="s1"&gt;&amp;#39;2s/ext3/ext4/&amp;#39;&lt;/span&gt; /etc/fstab &lt;span class="c"&gt;# 将第二行的ext3改成ext4&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;显示指定行&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;sed -n &amp;quot;3p&amp;quot; /etc/fstab         # 显示第3行
-sed -n &amp;quot;3,5p&amp;quot; /etc/gfstab  # 显示第3到5行
-sed -n &amp;quot;3p;5p&amp;quot; /etc/fstab    # 显示第3行和第5行
-awk 'NR==3' /etc/fstab     # 显示第3行
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sed -n &lt;span class="s2"&gt;&amp;quot;3p&amp;quot;&lt;/span&gt; /etc/fstab         &lt;span class="c"&gt;# 显示第3行&lt;/span&gt;
+sed -n &lt;span class="s2"&gt;&amp;quot;3,5p&amp;quot;&lt;/span&gt; /etc/gfstab  &lt;span class="c"&gt;# 显示第3到5行&lt;/span&gt;
+sed -n &lt;span class="s2"&gt;&amp;quot;3p;5p&amp;quot;&lt;/span&gt; /etc/fstab    &lt;span class="c"&gt;# 显示第3行和第5行&lt;/span&gt;
+awk &lt;span class="s1"&gt;&amp;#39;NR==3&amp;#39;&lt;/span&gt; /etc/fstab     &lt;span class="c"&gt;# 显示第3行&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;在行首或行尾添加:&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;sed -e 's/^/hello' test # 在test文件的行首添加hello
-sed -e 's/$/hello' test # 在test文件的行尾添加hello
-sed -e '3s/^/hello' test # 在test文件的第3行行首添加hello
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sed -e &lt;span class="s1"&gt;&amp;#39;s/^/hello&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="c"&gt;# 在test文件的行首添加hello&lt;/span&gt;
+sed -e &lt;span class="s1"&gt;&amp;#39;s/$/hello&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="c"&gt;# 在test文件的行尾添加hello&lt;/span&gt;
+sed -e &lt;span class="s1"&gt;&amp;#39;3s/^/hello&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="c"&gt;# 在test文件的第3行行首添加hello&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;在vi里执行命令:&lt;/h2&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;vi /etc/sysconfig/networ-scripts/ifcfg-eth0
-# 打开vi,在末行模式下(ESC-&amp;amp;gt;:)
+&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/sysconfig/networ-scripts/ifcfg-eth0
+&lt;span class="c"&gt;# 打开vi,在末行模式下(ESC-&amp;amp;gt;:)&lt;/span&gt;
 
-:r!cat /mnt/ip.txt           # 在当前行的下面输入ip.txt的内容,r代表命令输出放到下一行,!后面是要执行的命令
-:.!cat /mnt/ip.txt           # 在当前行输入ip.txt的内容,.代表将命令输出放到当前航
-&lt;/code&gt;&lt;/pre&gt;
+:r!cat /mnt/ip.txt           &lt;span class="c"&gt;# 在当前行的下面输入ip.txt的内容,r代表命令输出放到下一行,!后面是要执行的命令&lt;/span&gt;
+:.!cat /mnt/ip.txt           &lt;span class="c"&gt;# 在当前行输入ip.txt的内容,.代表将命令输出放到当前航&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;h2&gt;执行上一条命令:&lt;/h2&gt;
 &lt;p&gt;如果刚执行了一条server network restart,如果又做了一些操作,需要再次执行,按上键调处可以,还有更快捷的就是:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;!ser
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;!ser
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;!会在命令历史找与!后面匹配的最近一条命令.&lt;/p&gt;
 &lt;h2&gt;通过ssh连接服务器上传下载文件:&lt;/h2&gt;
 &lt;p&gt;当你通过ssh连接你的Linux的时候你想下载一个文件到本地,或者像把本地文件上传到远端,你想到用ftp吗?out了,当你通过ssh连接的时候Linux提供了两个命令 rz/sz,命令依赖于包lrzsz.rz命令可以将本地文件通过ssh上传到Linux上,sz pkg 可以将远端的pkg下载到本地.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;yum -y install lrzsz           # 安装
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install lrzsz           &lt;span class="c"&gt;# 安装&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后就可以通过rz/sz来上传下载文件,省去了文件服务器,也可更方便更快捷的管理你的服务器&lt;/p&gt;
 &lt;h2&gt;windows文件转换为Linux格式的文件&lt;/h2&gt;
 &lt;p&gt;windows的文件格式比Linux格式的文件多了一个回车符\r,可以通过命令来实现转换:
 直接转换,dos2unix依赖于包dos2unix:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;dos2unix file.txt     # 需要安装dos2unix包
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;dos2unix file.txt     &lt;span class="c"&gt;# 需要安装dos2unix包&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;通过删除\r来实现转换:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;tr -d '\r' file.txt &amp;amp;gt;&amp;amp;gt; file1.txt   # 通过tr命令删除\r字符,并重定向追加到file1.txt
-&lt;/code&gt;&lt;/pre&gt;</summary><category term="命令"></category><category term="sz"></category><category term="ssh上传下载"></category><category term="shell"></category><category term="sed"></category><category term="rz"></category><category term="lrzsz"></category><category term="Linux"></category><category term="find"></category><category term="awk"></category></entry><entry><title>编写Linux shell脚本来实现nginx日志分割</title><link href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html" rel="alternate"></link><updated>2012-02-17T10:27:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-17:bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html</id><summary type="html">&lt;p&gt;nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;tr -d &lt;span class="s1"&gt;&amp;#39;\r&amp;#39;&lt;/span&gt; file.txt &amp;amp;gt;&amp;amp;gt; file1.txt   &lt;span class="c"&gt;# 通过tr命令删除\r字符,并重定向追加到file1.txt&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="命令"></category><category term="sz"></category><category term="ssh上传下载"></category><category term="shell"></category><category term="sed"></category><category term="rz"></category><category term="lrzsz"></category><category term="Linux"></category><category term="find"></category><category term="awk"></category></entry><entry><title>编写Linux shell脚本来实现nginx日志分割</title><link href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html" rel="alternate"></link><updated>2012-02-17T10:27:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-17:bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html</id><summary type="html">&lt;p&gt;nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.&lt;/p&gt;
 &lt;p&gt;好了,废话不多说,脚本内容如下:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;#!/bin/sh
-# Author   : cold night
-# Filename : nglogcut.sh
-export PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-LogPath='/usr/local/nginx/logs/access.log'    # 定义日志绝对路径
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class="c"&gt;# Author   : cold night&lt;/span&gt;
+&lt;span class="c"&gt;# Filename : nglogcut.sh&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+&lt;span class="nv"&gt;LogPath&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/usr/local/nginx/logs/access.log&amp;#39;&lt;/span&gt;    &lt;span class="c"&gt;# 定义日志绝对路径&lt;/span&gt;
 
-for i in `ls $LogPath* | awk -F'/' '{print $NF}' | sort -nr`
-do
-        LastNum=`echo $i | awk -F'.' '{print $NF}'`
+&lt;span class="k"&gt;for &lt;/span&gt;i in &lt;span class="sb"&gt;`&lt;/span&gt;ls &lt;span class="nv"&gt;$LogPath&lt;/span&gt;* | awk -F&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $NF}&amp;#39;&lt;/span&gt; | sort -nr&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;span class="k"&gt;do&lt;/span&gt;
+&lt;span class="k"&gt;        &lt;/span&gt;&lt;span class="nv"&gt;LastNum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$i&lt;/span&gt; | awk -F&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $NF}&amp;#39;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
 
-        echo $LastNum | grep -E &amp;quot;[0-9]+&amp;quot; 2&amp;amp;gt;/dev/null 1&amp;amp;gt;&amp;amp;amp;2
-        if [[ $? -eq 0 ]]
-        then
-                OnNum=`expr $LastNum + 1`
-                mv $LogPath.$LastNum $LogPath.$OnNum
-        else
-                mv $LogPath $LogPath.1
-                kill -HUP `cat /usr/local/nginx/logs/nginx.pid`
-        fi
-done
-&lt;/code&gt;&lt;/pre&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$LastNum&lt;/span&gt; | grep -E &lt;span class="s2"&gt;&amp;quot;[0-9]+&amp;quot;&lt;/span&gt; 2&amp;amp;gt;/dev/null 1&amp;amp;gt;&amp;amp;amp;2
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;
+        &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;                &lt;/span&gt;&lt;span class="nv"&gt;OnNum&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;expr &lt;span class="nv"&gt;$LastNum&lt;/span&gt; + 1&lt;span class="sb"&gt;`&lt;/span&gt;
+                mv &lt;span class="nv"&gt;$LogPath&lt;/span&gt;.&lt;span class="nv"&gt;$LastNum&lt;/span&gt; &lt;span class="nv"&gt;$LogPath&lt;/span&gt;.&lt;span class="nv"&gt;$OnNum&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="k"&gt;                &lt;/span&gt;mv &lt;span class="nv"&gt;$LogPath&lt;/span&gt; &lt;span class="nv"&gt;$LogPath&lt;/span&gt;.1
+                &lt;span class="nb"&gt;kill&lt;/span&gt; -HUP &lt;span class="sb"&gt;`&lt;/span&gt;cat /usr/local/nginx/logs/nginx.pid&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="k"&gt;done&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后保存为nglogcut.sh存放在/root/下,下面给脚本赋予执行权限&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;chmod +x /root/nglogcut.sh
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;chmod +x /root/nglogcut.sh
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;配置crond自动执行:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;crontab -e    # 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径
+&lt;div class="codehilite"&gt;&lt;pre&gt;crontab -e    &lt;span class="c"&gt;# 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径&lt;/span&gt;
 
-# 添加如下内容:
-00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2 # 每3天执行日志分割(可根据自己情况来定义执行周期)
-&lt;/code&gt;&lt;/pre&gt;</summary><category term="日志"></category><category term="分割"></category><category term="shell"></category><category term="nginx"></category><category term="log"></category><category term="Linux"></category><category term="cut"></category></entry><entry><title>Linux shell脚本调试技巧</title><link href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html" rel="alternate"></link><updated>2012-01-17T17:04:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-01-17:linux-shelljiao-ben-diao-shi-ji-qiao.html</id><summary type="html">&lt;p&gt;有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.&lt;/p&gt;
+&lt;span class="c"&gt;# 添加如下内容:&lt;/span&gt;
+00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2 &lt;span class="c"&gt;# 每3天执行日志分割(可根据自己情况来定义执行周期)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="日志"></category><category term="分割"></category><category term="shell"></category><category term="nginx"></category><category term="log"></category><category term="Linux"></category><category term="cut"></category></entry><entry><title>Linux shell脚本调试技巧</title><link href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html" rel="alternate"></link><updated>2012-01-17T17:04:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-01-17:linux-shelljiao-ben-diao-shi-ji-qiao.html</id><summary type="html">&lt;p&gt;有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.&lt;/p&gt;
 &lt;p&gt;在脚本的最顶部加上&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;set -x
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -x
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;开启调试
 在脚本的最底部加上&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;set +x
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;set&lt;/span&gt; +x
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;关闭调试
 如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令&lt;/p&gt;
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;script
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;script
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;然后执行要捕捉内容的命令,完成后通过&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;exit
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;退出,当前目录下会生成typescript,通过&lt;/p&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;more typescript
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;more typescript
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;查看调试命令.&lt;/p&gt;</summary><category term="调试"></category><category term="技巧"></category><category term="shell"></category><category term="Linux"></category></entry></feed>

@@ -123,13 +123,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <a href="https://github.com/coldnight/qxbot/tree/threading_version">thread_version</a></p>
 <h2>优化</h2>
 <p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
-<pre><code class="python">#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-#
-#   Author  :   Wood.D
-#   E-mail  :   wh_linux@126.com
-#   Date    :   13/03/04 09:58:26
-#   Desc    :   Http Socket 实现 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   Wood.D</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/03/04 09:58:26</span>
+<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
     </div>	
 				
     
@@ -157,8 +157,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面介绍一下安装:</p>
 <p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
 <p>下载源码:</p>
-<pre><code class="bash">git clone git://github.com/coldnight/clubot.git
-</code></pre>
+<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
+</pre></div>
+
 
 <p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
     </div>	

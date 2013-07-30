@@ -66,125 +66,128 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 	
         <div class="highlight"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
-<pre><code class="python">#!/usr/bin/env python
-# -*-coding:utf8 -*-
-'''
-#=============================================================================
-#     FileName: translate.py
-#         Desc: To translate with zh to en or en2zh
-#       Author: cold
-#        Email: wh_linux@126.com
-#     HomePage: http://www.linuxzen.com
-#      Version: 0.0.1
-#   LastChange: 2012-04-23 23:04:08
-#      History:
-#=============================================================================
-'''
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*-coding:utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: translate.py</span>
+<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version: 0.0.1</span>
+<span class="sd">#   LastChange: 2012-04-23 23:04:08</span>
+<span class="sd">#      History:</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">&#39;&#39;&#39;</span>
 
-import urllib
-import urllib2
-from sys import argv,exit
-import re
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">argv</span><span class="p">,</span><span class="nb">exit</span>
+<span class="kn">import</span> <span class="nn">re</span>
 
-# 显示帮助信息
-def helpinfo():
-print '''
-Usage: pytran {zh2en¦en2zh} content
-'''
-# 格式化输出
-def formatresult(result,srclang):
-resu = result.split('[[')
-if (srclang=='en2zh' or srclang == 'zh2en'):
-firstre = resu[1].replace('[','').replace(']','').split('&quot;')
-print '源词:',firstre[3]
-print '结果:',firstre[1]
-if (srclang=='zh2en'):
-piny = firstre[7]
-else:
-piny = firstre[5]
-print '拼音:',piny
-if(srclang=='zh2en'):
-secresu=resu[2].replace('&quot;','').split('[')
-else:
-secresu = resu[2].replace('&quot;', '').split('[')
-print '词性:',secresu[0].replace(',','')
-print '其他释义:'
-for i in ''.join(secresu[1].split(']')).split(','):
-print i
+<span class="c"># 显示帮助信息</span>
+<span class="k">def</span> <span class="nf">helpinfo</span><span class="p">():</span>
+<span class="k">print</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">Usage: pytran {zh2en¦en2zh} content</span>
+<span class="s">&#39;&#39;&#39;</span>
+<span class="c"># 格式化输出</span>
+<span class="k">def</span> <span class="nf">formatresult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="n">srclang</span><span class="p">):</span>
+<span class="n">resu</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;[[&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">srclang</span><span class="o">==</span><span class="s">&#39;en2zh&#39;</span> <span class="ow">or</span> <span class="n">srclang</span> <span class="o">==</span> <span class="s">&#39;zh2en&#39;</span><span class="p">):</span>
+<span class="n">firstre</span> <span class="o">=</span> <span class="n">resu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;源词:&#39;</span><span class="p">,</span><span class="n">firstre</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;结果:&#39;</span><span class="p">,</span><span class="n">firstre</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">srclang</span><span class="o">==</span><span class="s">&#39;zh2en&#39;</span><span class="p">):</span>
+<span class="n">piny</span> <span class="o">=</span> <span class="n">firstre</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="n">piny</span> <span class="o">=</span> <span class="n">firstre</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">&#39;拼音:&#39;</span><span class="p">,</span><span class="n">piny</span>
+<span class="k">if</span><span class="p">(</span><span class="n">srclang</span><span class="o">==</span><span class="s">&#39;zh2en&#39;</span><span class="p">):</span>
+<span class="n">secresu</span><span class="o">=</span><span class="n">resu</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="n">secresu</span> <span class="o">=</span> <span class="n">resu</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;词性:&#39;</span><span class="p">,</span><span class="n">secresu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;其他释义:&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">secresu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">):</span>
+<span class="k">print</span> <span class="n">i</span>
 
-# 获取命令行参数
-try:
-srclang = argv[1]
-except:
-helpinfo()
-exit(1)
-try:
-cont = argv[2]
-except:
-helpinfo()
-exit(2)
+<span class="c"># 获取命令行参数</span>
+<span class="k">try</span><span class="p">:</span>
+<span class="n">srclang</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">except</span><span class="p">:</span>
+<span class="n">helpinfo</span><span class="p">()</span>
+<span class="nb">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+<span class="n">cont</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">except</span><span class="p">:</span>
+<span class="n">helpinfo</span><span class="p">()</span>
+<span class="nb">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-# 判断翻译目标语言用来确定传送参数
-if(srclang == 'zh2en'):
-data=urllib.urlencode({'client':'t', 'text':cont,
-'hl':'zh-CN','tl':'en',
-'multires':'1','prev':'btn',
-'ssel':'0','sc':'1'})
-elif(srclang == 'en2zh'):
-data=urllib.urlencode({'client':'t', 'text':cont,
-'hl':'zh-CN', 'sl':'en','tl':'zh-CN',
-'multires':'1', 'prev':'btn',
-'ssel':'0','sc':'1'})
-else:
-helpinfo()
+<span class="c"># 判断翻译目标语言用来确定传送参数</span>
+<span class="k">if</span><span class="p">(</span><span class="n">srclang</span> <span class="o">==</span> <span class="s">&#39;zh2en&#39;</span><span class="p">):</span>
+<span class="n">data</span><span class="o">=</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;client&#39;</span><span class="p">:</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span><span class="n">cont</span><span class="p">,</span>
+<span class="s">&#39;hl&#39;</span><span class="p">:</span><span class="s">&#39;zh-CN&#39;</span><span class="p">,</span><span class="s">&#39;tl&#39;</span><span class="p">:</span><span class="s">&#39;en&#39;</span><span class="p">,</span>
+<span class="s">&#39;multires&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span><span class="s">&#39;prev&#39;</span><span class="p">:</span><span class="s">&#39;btn&#39;</span><span class="p">,</span>
+<span class="s">&#39;ssel&#39;</span><span class="p">:</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="s">&#39;sc&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">})</span>
+<span class="k">elif</span><span class="p">(</span><span class="n">srclang</span> <span class="o">==</span> <span class="s">&#39;en2zh&#39;</span><span class="p">):</span>
+<span class="n">data</span><span class="o">=</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;client&#39;</span><span class="p">:</span><span class="s">&#39;t&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span><span class="n">cont</span><span class="p">,</span>
+<span class="s">&#39;hl&#39;</span><span class="p">:</span><span class="s">&#39;zh-CN&#39;</span><span class="p">,</span> <span class="s">&#39;sl&#39;</span><span class="p">:</span><span class="s">&#39;en&#39;</span><span class="p">,</span><span class="s">&#39;tl&#39;</span><span class="p">:</span><span class="s">&#39;zh-CN&#39;</span><span class="p">,</span>
+<span class="s">&#39;multires&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;prev&#39;</span><span class="p">:</span><span class="s">&#39;btn&#39;</span><span class="p">,</span>
+<span class="s">&#39;ssel&#39;</span><span class="p">:</span><span class="s">&#39;0&#39;</span><span class="p">,</span><span class="s">&#39;sc&#39;</span><span class="p">:</span><span class="s">&#39;1&#39;</span><span class="p">})</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="n">helpinfo</span><span class="p">()</span>
 
-# 打开google翻译内容
-url = 'http://translate.google.cn/translate_a/t'
-req =urllib2.Request(url,data)
-req.add_header(&quot;User-Agent&quot;, &quot;Mozilla/5.0+(compatible;+Googlebot/2.1;++http://www.google.com/bot.html)&quot;)
-fd = urllib2.urlopen(req)
-result =  fd.read()
+<span class="c"># 打开google翻译内容</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://translate.google.cn/translate_a/t&#39;</span>
+<span class="n">req</span> <span class="o">=</span><span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+<span class="n">req</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&quot;User-Agent&quot;</span><span class="p">,</span> <span class="s">&quot;Mozilla/5.0+(compatible;+Googlebot/2.1;++http://www.google.com/bot.html)&quot;</span><span class="p">)</span>
+<span class="n">fd</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span>  <span class="n">fd</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-# 格式化输出
-formatresult(result, srclang)
-fd.close()
-</code></pre>
+<span class="c"># 格式化输出</span>
+<span class="n">formatresult</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">srclang</span><span class="p">)</span>
+<span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
 
 <p>为了更方便的使用我们把这个脚本命名位pytranslate,放到/usr/bin下,并赋予执行权限:</p>
-<pre><code>chmod +x /usr/bin/pytranslate
-</code></pre>
+<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pytranslate</span>
+</pre></div>
+
 
 <p>然后我们就可以使用它进行翻译了:
 翻译英文到中文:</p>
-<pre><code>pytranslate en2zh extent
-源词: extent
-结果: 程度
-拼音: Chéngdù
-词性: 名词
-其他释义:
-程度
-范围
-幅度
-规模
-度
-地步
-广度
-长度
-面
-长短
-份儿
-界
-en
-翻译中文到英文
-pytranslate zh2en 中国
-源词: 中国
-结果: China
-拼音: Zhōngguó
-词性: 名词
-其他释义:
-China
-zh-CN
-</code></pre>
+<div class="codehilite"><pre><span class="n">pytranslate</span> <span class="n">en2zh</span> <span class="n">extent</span>
+<span class="err">源词</span><span class="o">:</span> <span class="n">extent</span>
+<span class="err">结果</span><span class="o">:</span> <span class="err">程度</span>
+<span class="err">拼音</span><span class="o">:</span> <span class="n">Ch</span><span class="err">é</span><span class="n">ngd</span><span class="err">ù</span>
+<span class="err">词性</span><span class="o">:</span> <span class="err">名词</span>
+<span class="err">其他释义</span><span class="o">:</span>
+<span class="err">程度</span>
+<span class="err">范围</span>
+<span class="err">幅度</span>
+<span class="err">规模</span>
+<span class="err">度</span>
+<span class="err">地步</span>
+<span class="err">广度</span>
+<span class="err">长度</span>
+<span class="err">面</span>
+<span class="err">长短</span>
+<span class="err">份儿</span>
+<span class="err">界</span>
+<span class="n">en</span>
+<span class="err">翻译中文到英文</span>
+<span class="n">pytranslate</span> <span class="n">zh2en</span> <span class="err">中国</span>
+<span class="err">源词</span><span class="o">:</span> <span class="err">中国</span>
+<span class="err">结果</span><span class="o">:</span> <span class="n">China</span>
+<span class="err">拼音</span><span class="o">:</span> <span class="n">Zh</span><span class="err">ō</span><span class="n">nggu</span><span class="err">ó</span>
+<span class="err">词性</span><span class="o">:</span> <span class="err">名词</span>
+<span class="err">其他释义</span><span class="o">:</span>
+<span class="n">China</span>
+<span class="n">zh</span><span class="o">-</span><span class="n">CN</span>
+</pre></div>
+
 
 <p>好吧相信聪明的你肯定发现如何使用了这里就不罗嗦了.</p></div>
 

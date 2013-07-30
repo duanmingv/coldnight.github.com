@@ -76,10 +76,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>在需要插入断点的地方插入如下代码可以插入一个断点
 import pdb; pdb.set_trace()
 当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<pre><code>&gt; # 这里会出现当前运行程序的信息,源文件和当前函数
--&gt; # 这里是将要运行的语句
- (Pdb)
-</code></pre>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
+<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
+ <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</pre></div>
+
 
 <h3>pdb指令</h3>
 <p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>

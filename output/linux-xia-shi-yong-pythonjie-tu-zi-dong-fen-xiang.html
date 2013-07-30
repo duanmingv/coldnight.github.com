@@ -70,137 +70,138 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>实现</h2>
 <p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
 <h2>代码</h2>
-<pre><code class="python">#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-#
-#   Author  :   cold
-#   E-mail  :   wh_linux@126.com
-#   Date    :   13/01/21 09:54:39
-#   Desc    :   贴代码和图片
-#
-import urllib2, json
-import mimetools
-import mimetypes
-import itertools
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/21 09:54:39</span>
+<span class="c">#   Desc    :   贴代码和图片</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">mimetools</span>
+<span class="kn">import</span> <span class="nn">mimetypes</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
 
-__host__ = &quot;http://eleveni386.7axu.com&quot;
+<span class="n">__host__</span> <span class="o">=</span> <span class="s">&quot;http://eleveni386.7axu.com&quot;</span>
 
-class Form(object):
-    def __init__(self):
-        self.form_fields = []
-        self.files = []
-        self.boundary = mimetools.choose_boundary()
-        self.content_type = &quot;application/x-www-form-urlencoded&quot;
-        return
+<span class="k">class</span> <span class="nc">Form</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form_fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">boundary</span> <span class="o">=</span> <span class="n">mimetools</span><span class="o">.</span><span class="n">choose_boundary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s">&quot;application/x-www-form-urlencoded&quot;</span>
+        <span class="k">return</span>
 
-    def get_content_type(self):
-        return self.content_type
+    <span class="k">def</span> <span class="nf">get_content_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span>
 
-    def add_field(self, name, value):
-        self.form_fields.append((name, value))
-        return
+    <span class="k">def</span> <span class="nf">add_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form_fields</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span>
 
-    def add_file(self, fieldname, filename, fileHandle, mimetype=None):
-        body = fileHandle.read()
-        if mimetype is None:
-            mimetype = ( mimetypes.guess_type(filename)[0]
-                         or
-                         'applicatioin/octet-stream')
-        self.files.append((fieldname, filename, mimetype, body))
-        self.content_type = 'multipart/form-data; boundary=%s' % self.boundary
+    <span class="k">def</span> <span class="nf">add_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fieldname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">fileHandle</span><span class="p">,</span> <span class="n">mimetype</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">fileHandle</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">mimetype</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">mimetype</span> <span class="o">=</span> <span class="p">(</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_type</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                         <span class="ow">or</span>
+                         <span class="s">&#39;applicatioin/octet-stream&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">fieldname</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">mimetype</span><span class="p">,</span> <span class="n">body</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s">&#39;multipart/form-data; boundary=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundary</span>
 
-        return
+        <span class="k">return</span>
 
-    def __str__(self):
-        parts = []
-        part_boundary = '--' + self.boundary
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">part_boundary</span> <span class="o">=</span> <span class="s">&#39;--&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundary</span>
 
-        parts.extend(
-            [ part_boundary,
-             'Content-Disposition: form-data; name=&quot;%s&quot;' % name,
-             '',
-             value,
-             ]
-            for name, value in self.form_fields)
-        if self.files:
-            parts.extend([
-                part_boundary,
-                'Content-Disposition: form-data; name=&quot;%s&quot;; filename=&quot;%s&quot;' %\
-                (field_name, filename),
-                'Content-Type: %s' % content_type,
-                '',
-                body,
-            ] for field_name, filename, content_type, body in self.files)
+        <span class="n">parts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="p">[</span> <span class="n">part_boundary</span><span class="p">,</span>
+             <span class="s">&#39;Content-Disposition: form-data; name=&quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">,</span>
+             <span class="s">&#39;&#39;</span><span class="p">,</span>
+             <span class="n">value</span><span class="p">,</span>
+             <span class="p">]</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">form_fields</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+            <span class="n">parts</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+                <span class="n">part_boundary</span><span class="p">,</span>
+                <span class="s">&#39;Content-Disposition: form-data; name=&quot;</span><span class="si">%s</span><span class="s">&quot;; filename=&quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span>\
+                <span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+                <span class="s">&#39;Content-Type: </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">content_type</span><span class="p">,</span>
+                <span class="s">&#39;&#39;</span><span class="p">,</span>
+                <span class="n">body</span><span class="p">,</span>
+            <span class="p">]</span> <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">content_type</span><span class="p">,</span> <span class="n">body</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
 
-        flattened = list(itertools.chain(*parts))
-        flattened.append('--' + self.boundary + '--')
-        flattened.append('')
-        return '\r\n'.join(flattened)
+        <span class="n">flattened</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">parts</span><span class="p">))</span>
+        <span class="n">flattened</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;--&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">boundary</span> <span class="o">+</span> <span class="s">&#39;--&#39;</span><span class="p">)</span>
+        <span class="n">flattened</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">flattened</span><span class="p">)</span>
 
 
-class HttpHelper(object):
-    def __init__(self, url = None, form = None, method = 'GET'):
-        self._url = url
-        self._form = form
-        self._body = str(form)
-        self._method = method
-        self._dst_url = None
-        if url:
-            self.make_request()
+<span class="k">class</span> <span class="nc">HttpHelper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">form</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&#39;GET&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_form</span> <span class="o">=</span> <span class="n">form</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_body</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dst_url</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">()</span>
 
-    def make_request(self):
-        url = self._url
-        if not self._url.startswith('http://'):
-            url = 'http://' + self._url
-        self.request = urllib2.Request(url)
-        if self._form:
-            self.add_header(&quot;Content-Type&quot;, self._form.get_content_type())
-            self.add_header(&quot;Content-Length&quot;, len(self._body))
-            self.request.add_data(self._body)
+    <span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;http://&#39;</span><span class="p">):</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_form</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_form</span><span class="o">.</span><span class="n">get_content_type</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_body</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_body</span><span class="p">)</span>
 
-    def add_header(self, key, val):
-        self.request.add_header(key, val)
+    <span class="k">def</span> <span class="nf">add_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
 
-    def change(self, url, params = {}, method = 'GET'):
-        self._url = url
-        self._params = params
-        self._method = method
-        self.make_request()
+    <span class="k">def</span> <span class="nf">change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&#39;GET&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">()</span>
 
-    def open(self):
-        response = urllib2.urlopen(self.request)
-        content = response.read()
-        self._dst_url = response.geturl()
-        try:
-            return json.loads(content)
-        except:
-            return content
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dst_url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">geturl</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">content</span>
 
-if __name__ == &quot;__main__&quot;:
-    import argparse
-    import os
-    parser = argparse.ArgumentParser()
-    parser.add_argument(dest=&quot;path&quot;, nargs=&quot;?&quot;)
-    args = parser.parse_args()
-    if args.path:
-        path = args.path
-    else:
-        path = r&quot;/tmp/tmpscrot.png&quot;
-        os.system(&quot;scrot -s {0}&quot;.format(path))
-    form = Form()
-    filename = os.path.split(path)[-1]
-    form.add_file(fieldname='mypic', filename=filename,
-                  fileHandle=open(path))
-    http = HttpHelper( __host__ + '/Image/', form)
-    url = http.open()
-    try:
-        from PyQt4.QtGui import QApplication
-        app = QApplication([])
-        cb = QApplication.clipboard()
-        cb.setText(url)
-    except:
-        print url
-</code></pre>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s">&quot;path&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;?&quot;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">path</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">r&quot;/tmp/tmpscrot.png&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;scrot -s {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">Form</span><span class="p">()</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">form</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="n">fieldname</span><span class="o">=</span><span class="s">&#39;mypic&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+                  <span class="n">fileHandle</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="n">http</span> <span class="o">=</span> <span class="n">HttpHelper</span><span class="p">(</span> <span class="n">__host__</span> <span class="o">+</span> <span class="s">&#39;/Image/&#39;</span><span class="p">,</span> <span class="n">form</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
+        <span class="n">cb</span> <span class="o">=</span> <span class="n">QApplication</span><span class="o">.</span><span class="n">clipboard</span><span class="p">()</span>
+        <span class="n">cb</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">url</span>
+</pre></div>
+
 
 <h2>安装</h2>
 <p>将上面代码保存一个文件,放在<code>PATH</code>路径里,赋予<code>执行权限</code>即可</p>

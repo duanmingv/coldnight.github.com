@@ -71,45 +71,47 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
         </div>
         
         <div class="highlight"><p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
-<pre><code class="vim">&quot;Python 注释
-function InsertPythonComment()
-    exe 'normal'.1.'G'
-    let line = getline('.')
-    if line =~ '^#!.*$' || line =~ '^#.*coding:.*$'
-        return
-    endif
+<div class="codehilite"><pre><span class="c">&quot;Python 注释</span>
+<span class="k">function</span> InsertPythonComment<span class="p">()</span>
+    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
+    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
+        <span class="k">return</span>
+    <span class="k">endif</span>
     normal O
-    call setline('.', '#!/usr/bin/env python')
-    normal o
-    call setline('.', '# -*- coding:utf-8 -*-')
-    normal o
-    call setline('.', '#')
-    normal o
-    call setline('.', '#   Author  :   '.g:python_author)
-    normal o
-    call setline('.', '#   E-mail  :   '.g:python_email)
-    normal o
-    call setline('.', '#   Date    :   '.strftime(&quot;%y/%m/%d %H:%M:%S&quot;))
-    normal o
-    call setline('.', '#   Desc    :   ')
-    normal o
-    call setline('.', '#')
-    normal o
-    call cursor(7, 17)
-endfunction
-function InsertCommentWhenOpen()
-    if a:lastline == 1 &amp;&amp; !getline('.')
-        call InsertPythonComment()
-    end
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   Author  :   &#39;</span>.<span class="k">g</span>:python_author<span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   E-mail  :   &#39;</span>.<span class="k">g</span>:python_email<span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   Date    :   &#39;</span>.strftime<span class="p">(</span><span class="s2">&quot;%y/%m/%d %H:%M:%S&quot;</span><span class="p">))</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#   Desc    :   &#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> cursor<span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="m">17</span><span class="p">)</span>
+<span class="k">endfunction</span>
+<span class="k">function</span> InsertCommentWhenOpen<span class="p">()</span>
+    <span class="k">if</span> <span class="k">a</span>:lastline <span class="p">==</span> <span class="m">1</span> &amp;&amp; <span class="p">!</span>getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="k">call</span> InsertPythonComment<span class="p">()</span>
+    <span class="k">end</span>
 endfunc
-au FileType python :%call InsertCommentWhenOpen()
-au FileType python map &lt;F4&gt; :call InsertPythonComment()&lt;cr&gt;
-</code></pre>
+<span class="k">au</span> <span class="nb">FileType</span> python :%<span class="k">call</span> InsertCommentWhenOpen<span class="p">()</span>
+<span class="k">au</span> <span class="nb">FileType</span> python map <span class="p">&lt;</span>F4<span class="p">&gt;</span> :<span class="k">call</span> InsertPythonComment<span class="p">()&lt;</span><span class="k">cr</span><span class="p">&gt;</span>
+</pre></div>
+
 
 <p>将上面的代码放到你的vimrc中,同时在vimrc添加:</p>
-<pre><code class="vim">let g:python_author = 'cold'               # 姓名
-let g:python_email  = 'wh_linux@126.com'   # 邮箱
-</code></pre>
+<div class="codehilite"><pre><span class="k">let</span> <span class="k">g</span>:python_author <span class="p">=</span> <span class="s1">&#39;cold&#39;</span>               # 姓名
+<span class="k">let</span> <span class="k">g</span>:python_email  <span class="p">=</span> <span class="s1">&#39;wh_linux@126.com&#39;</span>   # 邮箱
+</pre></div>
+
 
 <p>这样在每次打开空的python源文件时就会添加这些注释信息,并可以在非空没有这些注释的情况下按F4添加,配置玩后,打开空的python源文件效果如下:
 <img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p></div>
@@ -134,16 +136,16 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  </div>
         <div class="summary"><p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
 <p>太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到<code>~/.vimrc</code>下即可每次打开如果没有上述行则会自动填充:</p>
-<pre><code class="vim">function InsertPythonHeader()
-    let l1 = getline(1)
-    let l2 = getline(2)
-    if  match('\#!/', l1) == 0
-        exec 1
+<div class="codehilite"><pre><span class="k">function</span> InsertPythonHeader<span class="p">()</span>
+    <span class="k">let</span> l1 <span class="p">=</span> getline<span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    <span class="k">let</span> l2 <span class="p">=</span> getline<span class="p">(</span><span class="m">2</span><span class="p">)</span>
+    <span class="k">if</span>  <span class="k">match</span><span class="p">(</span><span class="s1">&#39;\#!/&#39;</span><span class="p">,</span> l1<span class="p">)</span> <span class="p">==</span> <span class="m">0</span>
+        exec <span class="m">1</span>
         normal O
-        call setline(1,'#!/usr/bin/env python')
-    endif
-    if match(&quot;\#&quot;, l2) == 0 &amp;&amp; (match(&quot;-&quot;, l2)  != 2 ¦¦ (match(&quot;code&quot;, l2) != 2))
-        exec ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
+        <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    <span class="k">endif</span>
+    <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
+        exec ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
     </div>	
 				
     
@@ -165,16 +167,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>这里介绍几个常用的列表操作</p>
 <h3>添加元素</h3>
 <p>添加元素使用列表的内置方法append</p>
-<pre><code class="python">number = [1, 2, 3, 4]
-number.append(5) # number = [1, 2, 3, 4, 5]
-number.append([6,7]) # number = [1, 2, 3, 4, 5, [6, 7]]
-number.append({'a':'b'}) # number = [1, 2, 3, 4, [6, 7], {'a', :'b'}
-</code></pre>
+<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
+</pre></div>
+
 
 <p>可以看到强大的python列表可以嵌套任意类型</p>
 <h3>列表相加</h3>
 <p>要想连接两个列表,可以使用+号连接</p>
-<pre><code class="python">a = [1, 2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

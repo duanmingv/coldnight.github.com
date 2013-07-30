@@ -78,246 +78,260 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.</p>
 <h3>安装</h3>
 <p>Awesome Ubuntu下安装十分简单:</p>
-<pre><code class="bash">sudo apt-get install awesome
-</code></pre>
+<div class="codehilite"><pre>sudo apt-get install awesome
+</pre></div>
+
 
 <h3>配置</h3>
 <h4>拷贝配置文件</h4>
 <p>Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:</p>
-<pre><code class="bash">cp /etc/xdg/awesome/rc.lua ~/.config/awesome #  ~/.confg下如没有awesome则手动创建
-</code></pre>
+<div class="codehilite"><pre>cp /etc/xdg/awesome/rc.lua ~/.config/awesome <span class="c">#  ~/.confg下如没有awesome则手动创建</span>
+</pre></div>
+
 
 <h4>配置自动启程序</h4>
 <p>使用awesome之后之前设置的自动启动就会失效,因为Awesome启动是通过配置文件控制的,在配置文件(~/.config/awesome/rc.lua)加上如下内容可以配置自启动程序:</p>
-<pre><code class="lua">autorun = true
-autorunApps = 
-{ 
-    &quot;pidgin&quot;,
-    &quot;fcitx&quot;,
-    &quot;dbus-launch gnome-do&quot;,
-    &quot;guake&quot;,
-    &quot;/opt/qq2012/wineapp/qq/qq.sh&quot;,
-}
+<div class="codehilite"><pre><span class="n">autorun</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="n">autorunApps</span> <span class="o">=</span> 
+<span class="p">{</span> 
+    <span class="s2">&quot;</span><span class="s">pidgin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">fcitx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">dbus-launch gnome-do&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">guake&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;</span><span class="s">/opt/qq2012/wineapp/qq/qq.sh&quot;</span><span class="p">,</span>
+<span class="p">}</span>
 
-if autorun then
-    for app = 1, #autorunApps do
-        awful.util.spawn_with_shell(autorunApps[app])
-    end
-end
-</code></pre>
+<span class="k">if</span> <span class="n">autorun</span> <span class="k">then</span>
+    <span class="k">for</span> <span class="n">app</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="o">#</span><span class="n">autorunApps</span> <span class="k">do</span>
+        <span class="n">awful</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">spawn_with_shell</span><span class="p">(</span><span class="n">autorunApps</span><span class="p">[</span><span class="n">app</span><span class="p">])</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
 
 <p>在autorunApps中添加要自动启动程序的命令即可在登录时启动相应的程序</p>
 <h4>使用gnome桌面元素</h4>
 <p>awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
 在宿主目录创建.xinitrc,添加如下内容:</p>
-<pre><code class="bash">#!/bin/sh
-gnome-settings-daemon &amp;     # 使用gnome桌面元素
-nm-applet --sm-disable &amp;    # 托盘栏添加网卡图标
-exec awesome
-</code></pre>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+gnome-settings-daemon &amp;     <span class="c"># 使用gnome桌面元素</span>
+nm-applet --sm-disable &amp;    <span class="c"># 托盘栏添加网卡图标</span>
+<span class="nb">exec </span>awesome
+</pre></div>
+
 
 <p>如果不生效,则执行下面命令:</p>
-<pre><code class="bash">ln -sf ~/.xinitrc ~/.xprofile
-</code></pre>
+<div class="codehilite"><pre>ln -sf ~/.xinitrc ~/.xprofile
+</pre></div>
+
 
 <h3>美化</h3>
 <p>可以自己编写lua脚本对Awesome进行美化,当然还有很多已经写好的配置,我们叫他为主题
 awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下载.
 我们可以使用git将主题整体克隆下来</p>
-<pre><code class="bash">git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
-</code></pre>
+<div class="codehilite"><pre>git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
+</pre></div>
+
 
 <p>然后修改~/.config/awesome/rc.lua的beautiful.init()的参数改为主题的路径:</p>
-<pre><code class="lua">beautiful.init(&quot;/your/home/path/.config/awesome/themes/bamboo/theme.lua&quot;)
-</code></pre>
+<div class="codehilite"><pre><span class="n">beautiful</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">/your/home/path/.config/awesome/themes/bamboo/theme.lua&quot;</span><span class="p">)</span>
+</pre></div>
+
 
 <p>如果背景图片无法显示,安装feh:</p>
-<pre><code class="bash">sudo apt-get install feh
-</code></pre>
+<div class="codehilite"><pre>sudo apt-get install feh
+</pre></div>
+
 
 <h3>使用</h3>
 <p>配置完成后注销使用Awesome会话登录,Awesome使用Win键作为主键,几个常用的为:</p>
-<pre><code>Win+num 可以在多个桌面切换
-Win+Ctrl+r 可以重启Awesome,
-Win+k/j可以切换窗口(类Vim操作),
-Win+m/n可以最大/小化窗口,
-Win+Shift+num 可以将当前窗口发送到其他桌面.
-Win+Shift+C可以关闭当前窗口,
-Win+Space可以切换布局,Awesome有多种布局,这里不作介绍,大家可以自己稍作尝试.
-</code></pre>
+<div class="codehilite"><pre><span class="n">Win</span><span class="o">+</span><span class="n">num</span> <span class="err">可以在多个桌面切换</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">r</span> <span class="err">可以重启</span><span class="n">Awesome</span><span class="p">,</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">k</span><span class="o">/</span><span class="n">j</span><span class="err">可以切换窗口</span><span class="p">(</span><span class="err">类</span><span class="n">Vim</span><span class="err">操作</span><span class="p">),</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">m</span><span class="o">/</span><span class="n">n</span><span class="err">可以最大</span><span class="o">/</span><span class="err">小化窗口</span><span class="p">,</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Shift</span><span class="o">+</span><span class="n">num</span> <span class="err">可以将当前窗口发送到其他桌面</span><span class="p">.</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Shift</span><span class="o">+</span><span class="n">C</span><span class="err">可以关闭当前窗口</span><span class="p">,</span>
+<span class="n">Win</span><span class="o">+</span><span class="n">Space</span><span class="err">可以切换布局</span><span class="p">,</span><span class="n">Awesome</span><span class="err">有多种布局</span><span class="p">,</span><span class="err">这里不作介绍</span><span class="p">,</span><span class="err">大家可以自己稍作尝试</span><span class="p">.</span>
+</pre></div>
+
 
 <p>下面给出完整的快捷键:</p>
-<pre><code>Mod4 + Enter           打开终端                                               
-Mod4 + r               执行程序或命令
-Mod4 + w               打开Awesome主菜单（鼠标右键关闭）                                                   
-Mod4 + Shift + c       关闭当前窗口或应用                                     
-Mod4 + Control + r     重启Awesome                                            
-Mod4 + Shift + q       退出Awesome
+<div class="codehilite"><pre><span class="n">Mod4</span> <span class="o">+</span> <span class="n">Enter</span>           <span class="err">打开终端</span>                                               
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">r</span>               <span class="err">执行程序或命令</span>
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">w</span>               <span class="err">打开</span><span class="n">Awesome</span><span class="err">主菜单（鼠标右键关闭）</span>                                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">c</span>       <span class="err">关闭当前窗口或应用</span>                                     
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">r</span>     <span class="err">重启</span><span class="n">Awesome</span>                                            
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">q</span>       <span class="err">退出</span><span class="n">Awesome</span>
 
-Mod4 + j               切换到下一个窗口                                       
-Mod4 + k               切换到前一个窗口                                       
-Mod4 + Left            查看前一个tag                                          
-Mod4 + Right           查看后一个tag                                          
-Mod4 + 1-9             切换到tag 1-9                                          
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">j</span>               <span class="err">切换到下一个窗口</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">k</span>               <span class="err">切换到前一个窗口</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Left</span>            <span class="err">查看前一个</span><span class="n">tag</span>                                          
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Right</span>           <span class="err">查看后一个</span><span class="n">tag</span>                                          
+<span class="n">Mod4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">-</span><span class="mi">9</span>             <span class="err">切换到</span><span class="n">tag</span> <span class="mi">1</span><span class="o">-</span><span class="mi">9</span>                                          
 
-Mod4 + Control + j     切换到下一个屏幕                                       
-Mod4 + Control + k     切换到上一个屏幕                                       
-Mod4 + Shift + j       当前窗口和前一个窗口互换位置                           
-Mod4 + Shift + k       当前窗口和后一个窗口互换位置                           
-Mod4 + h               把主区域的宽度增大5%                                   
-Mod4 + l               把主区域的宽度减少5%
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">j</span>     <span class="err">切换到下一个屏幕</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">k</span>     <span class="err">切换到上一个屏幕</span>                                       
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">j</span>       <span class="err">当前窗口和前一个窗口互换位置</span>                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">k</span>       <span class="err">当前窗口和后一个窗口互换位置</span>                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">h</span>               <span class="err">把主区域的宽度增大</span><span class="mi">5</span><span class="o">%</span>                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">l</span>               <span class="err">把主区域的宽度减少</span><span class="mi">5</span><span class="o">%</span>
 
-Mod4 + m               最大化窗口
-Mod4 + n               最小化窗口
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">m</span>               <span class="err">最大化窗口</span>
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">n</span>               <span class="err">最小化窗口</span>
 
-Mod4 + Shift + h       增加主区域窗口的数量                                   
-Mod4 + Shift + l       减少主区域窗口的数量                                   
-Mod4 + Space           切换窗口布局                                           
-Mod4 + Shift + space   把当前tag更换为前一种布局                              
-Mod4 + Control + space 切换当前窗口是否为浮动                                 
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">h</span>       <span class="err">增加主区域窗口的数量</span>                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">l</span>       <span class="err">减少主区域窗口的数量</span>                                   
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Space</span>           <span class="err">切换窗口布局</span>                                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">space</span>   <span class="err">把当前</span><span class="n">tag</span><span class="err">更换为前一种布局</span>                              
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Control</span> <span class="o">+</span> <span class="n">space</span> <span class="err">切换当前窗口是否为浮动</span>                                 
 
-Mod4 + Shift + i       显示当前窗口的Class和instance，这在写脚本的时候尤其有用
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">i</span>       <span class="err">显示当前窗口的</span><span class="n">Class</span><span class="err">和</span><span class="n">instance</span><span class="err">，这在写脚本的时候尤其有用</span>
 
-Mod4 + Shift + r       重绘当前窗口                                           
-Mod4 + t               标记窗口（可标记多个）                                 
-Mod4 + Shift + F1~F9   把标记的窗口移动到第1~9个标记上                        
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">r</span>       <span class="err">重绘当前窗口</span>                                           
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">t</span>               <span class="err">标记窗口（可标记多个）</span>                                 
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">F1</span><span class="o">~</span><span class="n">F9</span>   <span class="err">把标记的窗口移动到第</span><span class="mi">1</span><span class="o">~</span><span class="mi">9</span><span class="err">个标记上</span>                        
 
-Ctrl + Mod4 + 1~9      把当前桌面和1~9桌面是显示                              
-Mod4 + 1~9             恢复                                                   
+<span class="n">Ctrl</span> <span class="o">+</span> <span class="n">Mod4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">~</span><span class="mi">9</span>      <span class="err">把当前桌面和</span><span class="mi">1</span><span class="o">~</span><span class="mi">9</span><span class="err">桌面是显示</span>                              
+<span class="n">Mod4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">~</span><span class="mi">9</span>             <span class="err">恢复</span>                                                   
 
-Mod4 + Esc             快速切换到上一个桌面
-</code></pre>
+<span class="n">Mod4</span> <span class="o">+</span> <span class="n">Esc</span>             <span class="err">快速切换到上一个桌面</span>
+</pre></div>
+
 
 <p>更加详尽的介绍和配置请参见http://josephpan.net/blog/?p=992</p>
 <h2>Tmux</h2>
 <p>tmux是一款替代screen的产品,除了拥有screen的基本功能外,还有窗口分隔,多人共享等功能.尤其是窗口分隔功能异常突出.同时tmux简化了很多快捷键.还支持vi/emacs风格的快捷键绑定</p>
 <h3>安装</h3>
-<pre><code class="bash">sudo apt-get install tmux
-</code></pre>
+<div class="codehilite"><pre>sudo apt-get install tmux
+</pre></div>
+
 
 <h3>配置</h3>
 <p>tmux 使用~/.tmux.conf作为配置文件,所以我们可以将配置添加到这个文件中,网上很多资料都将前缀键绑定到Ctrl+a,但我喜欢使用Ctrl+a跳到行首,所以我还是使用默认的前缀键Ctrl+b.下面是我的配置文件:</p>
-<pre><code class="conf">set -g default-terminal &quot;screen-256color&quot; 
-set -g display-time 3000                   
-set -g escape-time 0
-set -g history-limit 65535                 
-set -g base-index 1                        
-setw -g utf8 on                           
+<div class="codehilite"><pre>set <span class="o">-</span>g default<span class="o">-</span>terminal <span class="s">&quot;screen-256color&quot;</span> 
+set <span class="o">-</span>g display<span class="o">-</span>time <span class="m">3000</span>                   
+set <span class="o">-</span>g escape<span class="o">-</span>time <span class="m">0</span>
+set <span class="o">-</span>g history<span class="o">-</span>limit <span class="m">65535</span>                 
+set <span class="o">-</span>g base<span class="o">-</span>index <span class="m">1</span>                        
+setw <span class="o">-</span>g utf8 on                           
 
-# split window
-unbind '&quot;'
-bind - splitw -v # vertical split (prefix -)
-unbind %
-bind | splitw -h # horizontal split (prefix |)
+<span class="c1"># split window</span>
+unbind <span class="s">&#39;&quot;&#39;</span>
+bind <span class="o">-</span> splitw <span class="o">-</span>v <span class="c1"># vertical split (prefix -)</span>
+unbind <span class="o">%</span>
+<span class="o">bind | splitw -h # horizontal split (prefix |)</span>
 
-# select pane
-bind k selectp -U # above (prefix k)
-bind j selectp -D # below (prefix j)
-bind h selectp -L # left (prefix h)
-bind l selectp -R # right (prefix l)
+<span class="o"># select pane</span>
+<span class="o">bind k selectp -U # above (prefix k)</span>
+<span class="o">bind j selectp -D # below (prefix j)</span>
+<span class="o">bind h selectp -L # left (prefix h)</span>
+<span class="o">bind l selectp -R # right (prefix l)</span>
 
-# resize pane
-bind -r ^k resizep -U 5 # upward (prefix Ctrl+k)
-bind -r ^j resizep -D 5 # downward (prefix Ctrl+j)
-bind -r ^h resizep -L 5 # to the left (prefix Ctrl+h)
-bind -r ^l resizep -R 5 # to the right (prefix Ctrl+l)
+<span class="o"># resize pane</span>
+<span class="o">bind -r ^k resizep -U 5 # upward (prefix Ctrl+k)</span>
+<span class="o">bind -r ^j resizep -D 5 # downward (prefix Ctrl+j)</span>
+<span class="o">bind -r ^h resizep -L 5 # to the left (prefix Ctrl+h)</span>
+<span class="o">bind -r ^l resizep -R 5 # to the right (prefix Ctrl+l)</span>
 
-# swap pane
-bind ^u swapp -U # swap with the previous pane (prefix Ctrl+u)
-bind ^d swapp -D # swap with the next pane (prefix Ctrl+d)
+<span class="o"># swap pane</span>
+<span class="o">bind ^u swapp -U # swap with the previous pane (prefix Ctrl+u)</span>
+<span class="o">bind ^d swapp -D # swap with the next pane (prefix Ctrl+d)</span>
 
-# misc
-bind e lastp  # select the last pane (prefix e)
-bind ^e last  # select the last window (prefix Ctrl+e)
-bind q killp  # kill pane (prefix q)
-bind ^q killw # kill window (prefix Ctrl+q)
+<span class="o"># misc</span>
+<span class="o">bind e lastp  # select the last pane (prefix e)</span>
+<span class="o">bind ^e last  # select the last window (prefix Ctrl+e)</span>
+<span class="o">bind q killp  # kill pane (prefix q)</span>
+<span class="o">bind ^q killw # kill window (prefix Ctrl+q)</span>
 
-# copy mode
-bind Escape copy-mode             # enter copy mode (prefix Escape)
-bind ^p pasteb                    # paste buffer (prefix Ctrl+p)
-bind -t vi-copy v begin-selection # select (v)
-bind -t vi-copy y copy-selection  # copy (y)
+<span class="o"># copy mode</span>
+<span class="o">bind Escape copy-mode             # enter copy mode (prefix Escape)</span>
+<span class="o">bind ^p pasteb                    # paste buffer (prefix Ctrl+p)</span>
+<span class="o">bind -t vi-copy v begin-selection # select (v)</span>
+<span class="o">bind -t vi-copy y copy-selection  # copy (y)</span>
 
-# zoom pane &lt;-&gt; window 
-# see also: http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh
-bind ^z run &quot;tmux-zoom&quot;
+<span class="o"># zoom pane &lt;-&gt; window </span>
+<span class="o"># see also: http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh</span>
+<span class="o">bind ^z run &quot;tmux-zoom&quot;</span>
 
-# app
-bind ! splitw htop                                     # htop (prefix !)
-bind m command-prompt &quot;splitw 'exec man %%'&quot;           # man (prefix m)
-bind @ command-prompt &quot;splitw 'exec perldoc -t -f %%'&quot; # perl func (prefix @)
-bind * command-prompt &quot;splitw 'exec perldoc -t -v %%'&quot; # perl var (prefix *)
-bind % command-prompt &quot;splitw 'exec perldoc -t %%'&quot;    # perl doc (prefix %)
-bind / command-prompt &quot;splitw 'exec ri %%'&quot;            # ruby doc (prefix /)
+<span class="o"># app</span>
+<span class="o">bind ! splitw htop                                     # htop (prefix !)</span>
+<span class="o">bind m command-prompt &quot;splitw &#39;exec man %%&#39;&quot;           # man (prefix m)</span>
+<span class="o">bind @ command-prompt &quot;splitw &#39;exec perldoc -t -f %%&#39;&quot; # perl func (prefix @)</span>
+<span class="o">bind * command-prompt &quot;splitw &#39;exec perldoc -t -v %%&#39;&quot; # perl var (prefix *)</span>
+<span class="o">bind %</span> command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec perldoc -t %%&#39;&quot;</span>    <span class="c1"># perl doc (prefix %)</span>
+bind <span class="o">/</span> command<span class="o">-</span>prompt <span class="s">&quot;splitw &#39;exec ri %%&#39;&quot;</span>            <span class="c1"># ruby doc (prefix /)</span>
 
-# reload config (prefix r)
-bind r source ~/.tmux.conf \; display &quot;Configuration reloaded!&quot;
+<span class="c1"># reload config (prefix r)</span>
+bind r source <span class="o">~/</span>.tmux.conf \<span class="p">;</span> display <span class="s">&quot;Configuration reloaded!&quot;</span>
 
-setw -g mode-keys vi
-setw -g automatic-rename off
+setw <span class="o">-</span>g mode<span class="o">-</span>keys vi
+setw <span class="o">-</span>g automatic<span class="o">-</span>rename off
 
-#-- colorscheme --#
-# see also: https://github.com/daethorian/conf-tmux/blob/master/colors/zenburn.conf
+<span class="c1">#-- colorscheme --#</span>
+<span class="c1"># see also: https://github.com/daethorian/conf-tmux/blob/master/colors/zenburn.conf</span>
 
-# modes
-setw -g clock-mode-colour colour223
-setw -g mode-attr bold
-setw -g mode-fg colour223
-setw -g mode-bg colour235
+<span class="c1"># modes</span>
+setw <span class="o">-</span>g clock<span class="o">-</span>mode<span class="o">-</span>colour colour223
+setw <span class="o">-</span>g mode<span class="o">-</span>attr bold
+setw <span class="o">-</span>g mode<span class="o">-</span>fg colour223
+setw <span class="o">-</span>g mode<span class="o">-</span>bg colour235
 
-# panes
-set -g pane-border-bg default
-set -g pane-border-fg colour234
-set -g pane-active-border-bg default 
-set -g pane-active-border-fg green
+<span class="c1"># panes</span>
+set <span class="o">-</span>g pane<span class="o">-</span>border<span class="o">-</span>bg default
+set <span class="o">-</span>g pane<span class="o">-</span>border<span class="o">-</span>fg colour234
+set <span class="o">-</span>g pane<span class="o">-</span>active<span class="o">-</span>border<span class="o">-</span>bg default 
+set <span class="o">-</span>g pane<span class="o">-</span>active<span class="o">-</span>border<span class="o">-</span>fg green
 
-# messages
-set -g message-attr bold
-set -g message-fg colour223
-set -g message-bg default
+<span class="c1"># messages</span>
+set <span class="o">-</span>g message<span class="o">-</span>attr bold
+set <span class="o">-</span>g message<span class="o">-</span>fg colour223
+set <span class="o">-</span>g message<span class="o">-</span>bg default
 
-#-- statusbar --#
-set -g status-utf8 on
-set -g status-interval 1
-set -g status-keys vi
-set -g status-justify left
-set -g display-time 3000
-set -g status-bg default
-set -g status-fg white
-set-window-option -g window-status-current-attr default
-set-window-option -g window-status-current-fg red
-set-window-option -g window-status-current-bg default
-set -g status-left-length 15
-set -g status-right-length 55
-#set -g status-left &quot;#[fg=white,bg=blue] &gt; #I #W &lt; #[default] |&quot; # 0:bash
-set -g status-left &quot;#[fg=white,bg=default] &gt; #S &lt; #[default] |&quot; # session-name
-set -g status-right &quot;#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \&quot; \&quot; -f 1,2,3))#[default]&quot;
-</code></pre>
+<span class="c1">#-- statusbar --#</span>
+set <span class="o">-</span>g status<span class="o">-</span>utf8 on
+set <span class="o">-</span>g status<span class="o">-</span>interval <span class="m">1</span>
+set <span class="o">-</span>g status<span class="o">-</span>keys vi
+set <span class="o">-</span>g status<span class="o">-</span>justify left
+set <span class="o">-</span>g display<span class="o">-</span>time <span class="m">3000</span>
+set <span class="o">-</span>g status<span class="o">-</span>bg default
+set <span class="o">-</span>g status<span class="o">-</span>fg white
+set<span class="o">-</span>window<span class="o">-</span>option <span class="o">-</span>g window<span class="o">-</span>status<span class="o">-</span>current<span class="o">-</span>attr default
+set<span class="o">-</span>window<span class="o">-</span>option <span class="o">-</span>g window<span class="o">-</span>status<span class="o">-</span>current<span class="o">-</span>fg red
+set<span class="o">-</span>window<span class="o">-</span>option <span class="o">-</span>g window<span class="o">-</span>status<span class="o">-</span>current<span class="o">-</span>bg default
+set <span class="o">-</span>g status<span class="o">-</span>left<span class="o">-</span>length <span class="m">15</span>
+set <span class="o">-</span>g status<span class="o">-</span>right<span class="o">-</span>length <span class="m">55</span>
+<span class="c1">#set -g status-left &quot;#[fg=white,bg=blue] &gt; #I #W &lt; #[default] |&quot; # 0:bash</span>
+set <span class="o">-</span>g status<span class="o">-</span>left <span class="s">&quot;#[fg=white,bg=default] &gt; #S &lt; #[default] |&quot;</span> <span class="c1"># session-name</span>
+set <span class="o">-</span>g status<span class="o">-</span>right <span class="s">&quot;#[fg=red,bright][ #[fg=cyan]#H #[fg=red]]#[default] #[fg=yellow,bright]- %Y.%m.%d #[fg=green]%H:%M #[default]#[fg=magenta,bright](load: #(cat /proc/loadavg | cut -d \&quot; \&quot; -f 1,2,3))#[default]&quot;</span>
+</pre></div>
+
 
 <h3>使用</h3>
 <p>我使用terminator配合tmux使用,更改terminator的配置(~/.config/terminator/conf)</p>
-<pre><code class="conf">[profiles]
-  [[default]]
-    login_shell = True
-    use_custom_command = True   # 允许自定义命令
-    custom_command = tmux -2     # 打开终端时执行tmux(-2 是强制终端使用256颜色)   
-    background_type = transparent
-    scrollbar_position = hidden
-    foreground_color = &quot;#ffffff&quot;
-    show_titlebar = False
-    background_darkness = 0.2
-</code></pre>
+<div class="codehilite"><pre><span class="k">[profiles]</span>
+  <span class="k">[[default]]</span>
+    <span class="na">login_shell</span> <span class="o">=</span> <span class="s">True</span>
+<span class="s">    use_custom_command = True   # 允许自定义命令</span>
+<span class="s">    custom_command = tmux -2     # 打开终端时执行tmux(-2 是强制终端使用256颜色)   </span>
+<span class="s">    background_type = transparent</span>
+<span class="s">    scrollbar_position = hidden</span>
+<span class="s">    foreground_color = &quot;#ffffff&quot;</span>
+<span class="s">    show_titlebar = False</span>
+<span class="s">    background_darkness = 0.2</span>
+</pre></div>
+
 
 <h3>常用快捷键:</h3>
-<pre><code>Ctrl+b - 创建一个水平分隔 
-Ctrl+b | 创建一个垂直分隔
-Ctrl+b j/k/h/l 上下左右切换分割窗
-Ctrl+b Ctrl+j/k/h/l 向上下左右扩展分割窗大小
-Ctrl+b c 创建一个窗口
-Ctrl+b , 重命名窗口
-Ctrl+b n 切换到下一个窗口
-Ctrl+b p 切换到前一个窗口
-</code></pre>
+<div class="codehilite"><pre><span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">-</span> <span class="err">创建一个水平分隔</span> 
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">|</span> <span class="err">创建一个垂直分隔</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">j</span><span class="o">/</span><span class="n">k</span><span class="o">/</span><span class="n">h</span><span class="o">/</span><span class="n">l</span> <span class="err">上下左右切换分割窗</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">j</span><span class="o">/</span><span class="n">k</span><span class="o">/</span><span class="n">h</span><span class="o">/</span><span class="n">l</span> <span class="err">向上下左右扩展分割窗大小</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">c</span> <span class="err">创建一个窗口</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="p">,</span> <span class="err">重命名窗口</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">n</span> <span class="err">切换到下一个窗口</span>
+<span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">p</span> <span class="err">切换到前一个窗口</span>
+</pre></div>
+
 
 <h2>Gnome-Do</h2>
 <p>Gnome Do 之前博客里有介绍请看<a href="/2012/9/1/Linux桌面高效工作----使用Gnome-DO/">这里</a>,由于Gonme Do使用Win+Space快捷键已经被Awesome占用,所以为了正常使用Gnome Do 我将Gnome Do的快捷键绑定到<code>Win+G</code>.</p></div>

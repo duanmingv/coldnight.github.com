@@ -39,7 +39,7 @@ LINKS =  (('eleven', 'http://eleveni386.7axu.com'),
 
 DEFAULT_PAGINATION = 10
 
-MD_EXTENSIONS =  (['fenced_code', 'tables', 'sane_lists'])
+MD_EXTENSIONS =  (['codehilite', 'extra', 'fenced_code', 'tables', 'sane_lists'])
 
 FILES_TO_COPY = (
     ("extra/404.html", "404.html"),

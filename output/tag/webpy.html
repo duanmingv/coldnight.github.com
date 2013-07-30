@@ -78,128 +78,145 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<pre><code>cd /usr/src/
-mkdir python
-cd python
-#下载python2.7.2
-wget http://www.python.org/ftp/python/2.7.2/Python-2.7.2.tar.bz2
-tar -jvxf Python-2.7.2.tar.bz2
-cd Python-2.7.2
-./configure --prefix=/usr/local/python27 --enable-unicode=ucs4
-</code></pre>
+<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="n">python</span>
+<span class="n">cd</span> <span class="n">python</span>
+<span class="cp">#下载python2.7.2</span>
+<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.python.org/ftp/python/2.7.2/Python-2.7.2.tar.bz2</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">jvxf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">2.7.2</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">bz2</span>
+<span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">2.7.2</span>
+<span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">python27</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">unicode</span><span class="o">=</span><span class="n">ucs4</span>
+</pre></div>
+
 
 <p>先别急着安装,为什么后面的步骤能顺利进行我们需要我们的python支持zlib模块,</p>
-<pre><code class="bash">vi Modules/Setup
-#在454行左右找到:#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
-# 去掉注释
-zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz
+<div class="codehilite"><pre>vi Modules/Setup
+<span class="c">#在454行左右找到:#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz</span>
+<span class="c"># 去掉注释</span>
+zlib zlibmodule.c -I<span class="k">$(</span>prefix<span class="k">)</span>/include -L<span class="k">$(</span>exec_prefix<span class="k">)</span>/lib -lz
 然后接着编译
-make &amp;&amp; make install
-</code></pre>
+make <span class="o">&amp;&amp;</span> make install
+</pre></div>
+
 
 <p>安装完成后我们想更方面的使用我们新安装的Python我们做如下更改.</p>
-<pre><code class="bash">mv /usr/bin/python /usr/bin/python24
+<div class="codehilite"><pre>mv /usr/bin/python /usr/bin/python24
 ln -s /usr/local/python27/bin/python /usr/bin/python
 ln -s /usr/local/python27/bin/python2.7 /usr/bin/python2.7
-</code></pre>
+</pre></div>
+
 
 <p>这样改完我们的yum就无法工作了,我们要修改yum来使yum工作:</p>
-<pre><code class="bash">vi /usr/bin/yum
-</code></pre>
+<div class="codehilite"><pre>vi /usr/bin/yum
+</pre></div>
+
 
 <p>将/#!/usr/bin/python改为#!/usr/bin/python2.4即可正常工作(版本可能不一样需查看自己系统自带的版本是什么)</p>
 <p>现在我们执行python -V查看应该就是我们刚刚安装的2.7.2版本:</p>
-<pre><code class="bash">python -V
+<div class="codehilite"><pre>python -V
 Python 2.7.2
-</code></pre>
+</pre></div>
+
 
 <p>我们安装了python下面我们就来武装我们的新python,</p>
 <p>我们先为新的Python安装python的setuptools,配备easy_install.easy_install用于安装Python第三方扩展包而且只要一个命令即可完成:</p>
 <p>下载:</p>
-<pre><code class="bash">wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5=fe1f997bc722265116870bc7919059ea
-</code></pre>
+<div class="codehilite"><pre>wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5<span class="o">=</span>fe1f997bc722265116870bc7919059ea
+</pre></div>
+
 
 <p>然后直接执行安装:</p>
-<pre><code>sh setuptools-0.6c11-py2.7.egg
-</code></pre>
+<div class="codehilite"><pre><span class="n">sh</span> <span class="n">setuptools</span><span class="o">-</span><span class="mf">0.6</span><span class="n">c11</span><span class="o">-</span><span class="n">py2</span><span class="mf">.7</span><span class="p">.</span><span class="n">egg</span>
+</pre></div>
+
 
 <p>安装好之后我们做一个软链接方便我们使用:</p>
-<pre><code>ln -s /usr/local/python27/bin/easy_install* /usr/bin/
-</code></pre>
+<div class="codehilite"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">python27</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">easy_install</span><span class="o">*</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
+</pre></div>
+
 
 <p>然后我们来使用easy_install来安装Python第三方扩展</p>
 <p>安装本文所需要的web.py</p>
-<pre><code>easy_install web.py
-</code></pre>
+<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">web</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+
 
 <p>然后我们打开Python shell输入</p>
-<pre><code class="python">import web
-</code></pre>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">web</span>
+</pre></div>
+
 
 <p>如果没有报错则说明我们安装成功
 安装flup:</p>
-<pre><code>easy_install flup
-</code></pre>
+<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">flup</span>
+</pre></div>
+
 
 <p>安装Spawn-fcgi :</p>
-<pre><code>wegt http://www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz
-tar -zxvf spawn-fcgi-1.6.3.tar.gz
-cd spawn-fcgi-1.6.3
-./configure --prefix=/usr/local/spawn-fcgi
-make &amp;&amp; make install
-ln -s /usr/local/spawn-fcgi/bin/spawn-fcgi /usr/bin/
-</code></pre>
+<div class="codehilite"><pre><span class="n">wegt</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span><span class="o">-</span><span class="mf">1.6.3</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span><span class="o">-</span><span class="mf">1.6.3</span>
+<span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span>
+<span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
+</pre></div>
+
 
 <p>到这里我们就完成了Python的所有包安装,下面我们来部署nginx(本博有大量文章来介绍安装nginx,这里还是再来一遍吧..)</p>
-<pre><code class="bash">yum -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
-wget http://nginx.org/download/nginx-1.0.13.tar.gz # 下载
+<div class="codehilite"><pre>yum -y install zlib-devel pcre-devel openssl-devel  <span class="c"># 安装依赖</span>
+wget http://nginx.org/download/nginx-1.0.13.tar.gz <span class="c"># 下载</span>
 tar -zxvf nginx-1.0.13.tar.gz
-cd nginx-1.0.13
- ./configure --prefix=/usr/local/nginx\   # 指定安装目录为/usr/local/nginx
---with-openssl=/usr/include/openssl\  # 启用ssl
---with-pcre\                          # 启用正规表达式
---with-http_stub_status_module        # 安装可以查看nginx状态的程序
-make  &amp;&amp; make install
-</code></pre>
+<span class="nb">cd </span>nginx-1.0.13
+ ./configure --prefix<span class="o">=</span>/usr/local/nginx<span class="se">\ </span>  <span class="c"># 指定安装目录为/usr/local/nginx</span>
+--with-openssl<span class="o">=</span>/usr/include/openssl<span class="se">\ </span> <span class="c"># 启用ssl</span>
+--with-pcre<span class="se">\ </span>                         <span class="c"># 启用正规表达式</span>
+--with-http_stub_status_module        <span class="c"># 安装可以查看nginx状态的程序</span>
+make  <span class="o">&amp;&amp;</span> make install
+</pre></div>
+
 
 <p>我们修改nginx的配置文件:</p>
-<pre><code>        location / {
-#           root   html;
-#          index  index.html index.htm;
-            include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
-            fastcgi_param PATH_INFO $fastcgi_script_name;
-            fastcgi_pass unix:/tmp/pyweb.sock;
-            fastcgi_param SERVER_ADDR $server_addr;
-            fastcgi_param SERVER_PORT $server_port;
-            fastcgi_param SERVER_NAME $server_name;
-        }
-</code></pre>
+<div class="codehilite"><pre>        <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+<span class="cp">#           root   html;</span>
+<span class="cp">#          index  index.html index.htm;</span>
+            <span class="n">include</span> <span class="n">fastcgi_params</span><span class="p">;</span>
+            <span class="n">fastcgi_param</span> <span class="n">SCRIPT_FILENAME</span> <span class="err">$</span><span class="n">fastcgi_script_name</span><span class="p">;</span>
+            <span class="n">fastcgi_param</span> <span class="n">PATH_INFO</span> <span class="err">$</span><span class="n">fastcgi_script_name</span><span class="p">;</span>
+            <span class="n">fastcgi_pass</span> <span class="n">unix</span><span class="o">:/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pyweb</span><span class="p">.</span><span class="n">sock</span><span class="p">;</span>
+            <span class="n">fastcgi_param</span> <span class="n">SERVER_ADDR</span> <span class="err">$</span><span class="n">server_addr</span><span class="p">;</span>
+            <span class="n">fastcgi_param</span> <span class="n">SERVER_PORT</span> <span class="err">$</span><span class="n">server_port</span><span class="p">;</span>
+            <span class="n">fastcgi_param</span> <span class="n">SERVER_NAME</span> <span class="err">$</span><span class="n">server_name</span><span class="p">;</span>
+        <span class="p">}</span>
+</pre></div>
+
 
 <p>然后创建一个web.py程序:</p>
-<pre><code class="python">#!/usr/bin/env python
-#-*-coding:utf8-*-
-import web
-urls = (&quot;/.*&quot;, &quot;hello&quot;)
-app = web.application(urls, globals())
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*-coding:utf8-*-</span>
+<span class="kn">import</span> <span class="nn">web</span>
+<span class="n">urls</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;/.*&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">application</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
 
-class hello:
-        def GET(self):
-                return 'Hello, world!'
+<span class="k">class</span> <span class="nc">hello</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="s">&#39;Hello, world!&#39;</span>
 
-if __name__ == &quot;__main__&quot;:
-        web.wsgi.runwsgi = lambda func, addr = None: web.wsgi.runfcgi(func, addr)
-        app.run()
-</code></pre>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+        <span class="n">web</span><span class="o">.</span><span class="n">wsgi</span><span class="o">.</span><span class="n">runwsgi</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">func</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="bp">None</span><span class="p">:</span> <span class="n">web</span><span class="o">.</span><span class="n">wsgi</span><span class="o">.</span><span class="n">runfcgi</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">addr</span><span class="p">)</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
 
 <p>将内容保存到/usr/local/nginx/html/下命名为index.py(或任意你喜欢的名字)
 然后赋予其执行权限:</p>
-<pre><code>chmod +x /usr/local/nginx/html/index.py
-</code></pre>
+<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+
 
 <p>通过命令创建spawn-fcgi进程:</p>
-<pre><code>spawn-fcgi -d /usr/local/nginx/html/ -f /usr/local/nginx/html/index.py  -s /tmp/pyweb.sock -u nobody -g nobody
-</code></pre>
+<div class="codehilite"><pre><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>  <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pyweb</span><span class="p">.</span><span class="n">sock</span> <span class="o">-</span><span class="n">u</span> <span class="n">nobody</span> <span class="o">-</span><span class="n">g</span> <span class="n">nobody</span>
+</pre></div>
+
 
 <p>我们使用unix socket,并用nginx的用户来创建.现在我们访问http://192.168.3.3/就可以看到:<code>Hello, world!</code></p></div>
         <hr />
@@ -224,11 +241,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
 <p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
 <h3>安装easy_install</h3>
-<pre><code>sudo apt-get install python-pip
-</code></pre>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+
 
 <h3>使用easy_install安装web.py</h3>
-<pre><code>sudo easy_install web.py ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

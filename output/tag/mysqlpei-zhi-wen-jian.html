@@ -72,15 +72,17 @@ in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
         
         <div class="highlight"><p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
 MySQL预编译参数:</p>
-<pre><code class="bash"> ./configure  --prefix=/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
-</code></pre>
+<div class="codehilite"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
+</pre></div>
+
 
 <p>top</p>
-<pre><code class="bash">32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
-</code></pre>
+<div class="codehilite"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
+</pre></div>
+
 
 <p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
-<pre><code class="bash">MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
+<div class="codehilite"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
 
 __ Key _________________________________________________________________
 Buffer used    62.00k of  16.00M  %Used:   0.38
@@ -191,22 +193,24 @@ Rows
   Inserted          0       0/s
   Read              0       0/s
   Updated           0       0/s
-</code></pre>
+</pre></div>
+
 
 <p>首先在预编译参数上进行优化</p>
-<pre><code class="bash">./configure --prefix=/usr/local/mysql \
---without-debug \                                 # 取消调试模式提高性能
---with-extra-charsets=utf8,gbk \                  # 仅仅指定需要的默认字符集提高性能
---enable-assembler \                              # 使用汇编模式提高性能
---with-mysqld-ldflags=-all-static \               # 以静态方式编译提高性能
---with-client-ldflags=-all-static \
---with-unix-socket-path=/tmp/mysql.sock \         # 使用unix socket提高性能
+<div class="codehilite"><pre>./configure --prefix<span class="o">=</span>/usr/local/mysql <span class="se">\</span>
+--without-debug <span class="se">\ </span>                                <span class="c"># 取消调试模式提高性能</span>
+--with-extra-charsets<span class="o">=</span>utf8,gbk <span class="se">\ </span>                 <span class="c"># 仅仅指定需要的默认字符集提高性能</span>
+--enable-assembler <span class="se">\ </span>                             <span class="c"># 使用汇编模式提高性能</span>
+--with-mysqld-ldflags<span class="o">=</span>-all-static <span class="se">\ </span>              <span class="c"># 以静态方式编译提高性能</span>
+--with-client-ldflags<span class="o">=</span>-all-static <span class="se">\</span>
+--with-unix-socket-path<span class="o">=</span>/tmp/mysql.sock <span class="se">\ </span>        <span class="c"># 使用unix socket提高性能</span>
 --with-ssl
-</code></pre>
+</pre></div>
+
 
 <p>安装完成后进一步优化my.cnf:
 因为MySQL 只会 Cache 索引(*.MYI)，因此您只要将数据库中所有的 MYI 档案加总起来就是key buffer 的值,计算MYI档案的总大小:</p>
-<pre><code class="bash">du -hc `find /usr/local/mysql/var/ -name *.MYI`
+<div class="codehilite"><pre>du -hc <span class="sb">`</span>find /usr/local/mysql/var/ -name *.MYI<span class="sb">`</span>
 4.0K    /usr/local/mysql/var/myblog/wp_term_taxonomy.MYI
 8.0K    /usr/local/mysql/var/myblog/wp_posts.MYI
 8.0K    /usr/local/mysql/var/myblog/wp_usermeta.MYI
@@ -236,17 +240,20 @@ Rows
 4.0K    /usr/local/mysql/var/mysql/db.MYI
 4.0K    /usr/local/mysql/var/mysql/time_zone_transition.MYI
 192K    total
-</code></pre>
+</pre></div>
+
 
 <p>修改my.cnf参数大小:</p>
-<pre><code class="bash">vi /etc/my.cnf
-# 降低key_buffer的值
-key_buffer = 4M
-</code></pre>
+<div class="codehilite"><pre>vi /etc/my.cnf
+<span class="c"># 降低key_buffer的值</span>
+<span class="nv">key_buffer</span> <span class="o">=</span> 4M
+</pre></div>
+
 
 <p>重启MySQL执行top命令:</p>
-<pre><code class="bash">18125 mysql     20   0  109m  11m 2152 S  0.0  1.1   0:00.08 mysqld
-</code></pre>
+<div class="codehilite"><pre>18125 mysql     20   0  109m  11m 2152 S  0.0  1.1   0:00.08 mysqld
+</pre></div>
+
 
 <p>看到MySQL的内存利用率降低到1.1,这时候还不适宜执行mysqlreport查看等待启动一天后查看.由于现在访问量较低,所以参数适量调低,需要实时监控MySQL运行状况适当运行参数.</p></div>
         <hr />

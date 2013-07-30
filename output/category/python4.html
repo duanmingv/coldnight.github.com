@@ -70,17 +70,18 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
 <p>bottle小巧支持cookie但是不支持session.为了安全起见我们有时候希望使用的session.我们可以使用中间件beaker来扩展bottle,使我们的bottle应用支持session.废话不多说.首先beaker不是内置模块,我们首先来安装它.当然你可以网上下包手动安装,我们使用最简单的:</p>
-<pre><code class="bash">easy_install beaker
-</code></pre>
+<div class="codehilite"><pre>easy_install beaker
+</pre></div>
+
 
 <p>没有easy_install这个命令?google吧,装了之后还是没有,如过时win的话检查环境变量,将Python安装目录下的Scripts目录添加到环境变量.</p>
 <p>安装好后我们如何使用它,下面一段带面是使用的:</p>
-<pre><code class="python">#!/usr/bin/env python
-from bottle import route, default_app, run, request
-from beaker.middleware import SessionMiddleware
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">bottle</span> <span class="kn">import</span> <span class="n">route</span><span class="p">,</span> <span class="n">default_app</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">beaker.middleware</span> <span class="kn">import</span> <span class="n">SessionMiddleware</span>
 
-session_opts = {
-                'session.type ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
+<span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
     </div>	
 				
     
@@ -101,16 +102,16 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
-<pre><code class="python">#!/usr/bin/env python
-# -*-coding:utf8 -*-
-'''
-#=============================================================================
-#     FileName: translate.py
-#         Desc: To translate with zh to en or en2zh
-#       Author: cold
-#        Email: wh_linux@126.com
-#     HomePage: http://www.linuxzen.com
-#      Version ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*-coding:utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: translate.py</span>
+<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
     </div>	
 				
     
@@ -131,17 +132,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
 <p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
-<pre><code class="python">#!/usr/bin/env python
-#-*- coding: utf8 -*-
-'''
-#=============================================================================
-#     FileName: mail.py
-#         Desc: To send email
-#       Author: cold
-#        Email: wh_linux@126.com
-#     HomePage: http://www.linuxzen.com
-#      Version: 0.0.1
-#   LastChange: 2012-04-21 16:37 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">read more</a></div>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding: utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: mail.py</span>
+<span class="sd">#         Desc: To send email</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version: 0.0.1</span>
+<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">read more</a></div>
     </div>	
 				
     
@@ -163,11 +164,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
 <p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
 <h3>安装easy_install</h3>
-<pre><code>sudo apt-get install python-pip
-</code></pre>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+
 
 <h3>使用easy_install安装web.py</h3>
-<pre><code>sudo easy_install web.py ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

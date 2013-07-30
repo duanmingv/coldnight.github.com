@@ -70,20 +70,20 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  </div>
         <div class="summary"><p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
 <p>脚本内容如下:</p>
-<pre><code class="python">#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-#
-#
-# author  : cold night
-# email   : wh_linux@126.com
-#
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c"># author  : cold night</span>
+<span class="c"># email   : wh_linux@126.com</span>
+<span class="c">#</span>
 
-import pymongo
-import re
-from StringIO import StringIO
+<span class="kn">import</span> <span class="nn">pymongo</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
 
-conn = pymongo.Connection()
-db = conn ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">read more</a></div>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">read more</a></div>
     </div>	
 				
     
@@ -105,22 +105,24 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮</p>
 <p>下面来介绍一下它:</p>
 <p>首先安装很简单,使用easy_install来进行安装:</p>
-<pre><code class="bash">easy_install pygments
-</code></pre>
+<div class="codehilite"><pre>easy_install pygments
+</pre></div>
+
 
 <p>安装完后我们来使用,Python的简单不会让大家失望:</p>
-<pre><code class="python">from pygments.lexers import PythonLexver
-from pygments.formatters import HtmlFormatter
-from pygments import highlight
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
+<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
 
-formatter = HtmlFormatter(encoding='utf-8', style = 'emacs', linenos = True)
-code = highlight('print &quot;hello, world&quot;', PythonLexer(), formatter)
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="n">linenos</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="s">&#39;print &quot;hello, world&quot;&#39;</span><span class="p">,</span> <span class="n">PythonLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
 
-print code
-</code></pre>
+<span class="k">print</span> <span class="n">code</span>
+</pre></div>
+
 
 <h5>结果</h5>
-<pre><code>'&lt;table class=&quot;highlighttable ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
+<div class="codehilite"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
     </div>	
 				
     
@@ -143,27 +145,30 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h2>1.1 创建字典</h2>
 <p>Python有两种方法可以创建字典,第一种是使用花括号,另一种是使用内建
 函数dict</p>
-<pre><code class="python">&gt;&gt;&gt; info = {}
-&gt;&gt;&gt; info = dict()
-</code></pre>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</pre></div>
+
 
 <h2>1.2 初始化字典</h2>
 <p>Python可以在创建字典的时候初始化字典</p>
-<pre><code class="python">&gt;&gt;&gt; info = {&quot;name&quot; : 'cold'}
-&gt;&gt;&gt; info = dict(name = 'cold')       # 更优雅
-</code></pre>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span> <span class="p">:</span> <span class="s">&#39;cold&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span>       <span class="c"># 更优雅</span>
+</pre></div>
+
 
 <p>很明显第二种方法更加的优雅和减少一些特殊字符的输入,但是有种情况第二种不能胜任</p>
-<pre><code class="python">&gt;&gt;&gt; key = 'name'
-&gt;&gt;&gt; info = { key :'cold'}  # {'name':'cold'}
-&gt;&gt;&gt; info = dict(key = 'cold') # {'key': 'cold'}
-</code></pre>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">key</span> <span class="o">=</span> <span class="s">&#39;name&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span> <span class="n">key</span> <span class="p">:</span><span class="s">&#39;cold&#39;</span><span class="p">}</span>  <span class="c"># {&#39;name&#39;:&#39;cold&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span> <span class="c"># {&#39;key&#39;: &#39;cold&#39;}</span>
+</pre></div>
+
 
 <p>明显第二种方法就会引发一个不容易找到的bug</p>
 <p>Python字典还有一种初始化方式,就是使用字典的fromkeys方法可以从列表中获取元素作为键并用None或fromkeys方法的第二个参数初始化</p>
-<pre><code class="python">&gt;&gt;&gt; info = {}.fromkeys(['name', 'blog'])
-&gt;&gt;&gt; info
-{'blog': None ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html">read more</a></div>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;blog&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="bp">None ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html">read more</a></div>
     </div>	
 				
     
@@ -191,13 +196,13 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>下面我们来介绍这些特性</p>
 <p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
 如下面代码:</p>
-<pre><code class="python">&gt;&gt;&gt; info = dict(name='cold', blog='www.linuxzen.com') # 创建字典{'name':'cold', 'blog':'www.linuxzen.com'}
-&gt;&gt;&gt; info2 = info     # 赋值给info2
-&gt;&gt;&gt; info2['name'] = 'cold night'
-&gt;&gt;&gt; info
-&gt;&gt;&gt; info2
-{'blog': 'www.linuxzen.com', 'name': 'cold night'}
-&gt;&gt;&gt; info ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">read more</a></div>
     </div>	
 				
     
@@ -250,12 +255,12 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>如果or任意一个值为真,则立刻返回这个值
 如果所有值都为假,则or返回最后一个假值</p>
 <h3>例子</h3>
-<pre><code class="python">result = 'test' and True # result = True
-result = 'test' and 'ortest' # result = ortest
-result = False and 'ortest' # result = False
-result = '' and None  # result = ''
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
+<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
 
-result = '' or ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
+<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">read more</a></div>
     </div>	
 				
     
@@ -280,10 +285,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>在需要插入断点的地方插入如下代码可以插入一个断点
 import pdb; pdb.set_trace()
 当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<pre><code>&gt; # 这里会出现当前运行程序的信息,源文件和当前函数
--&gt; # 这里是将要运行的语句
- (Pdb)
-</code></pre>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
+<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
+ <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</pre></div>
+
 
 <h3>pdb指令</h3>
 <p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
@@ -318,10 +324,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <h3>lambda</h3>
 <p>Python用于支持将函数赋值给变量的一个操作符
 默认是返回的,所以不用再加return关键字,不然会报错</p>
-<pre><code class="python">result = lambda x:  x * x
-result(2) # return 4
-map()/filter()/reduce()
-</code></pre>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
+<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
+</pre></div>
+
 
 <p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
 <h3>map()</h3>
@@ -331,9 +338,9 @@ map()/filter()/reduce()
 <h3>reduce()</h3>
 <p>将序列中的元素通过一个二元函数处理返回一个结果</p>
 <h2>将上面三个函数和lambda结合使用</h2>
-<pre><code class="python">li = [1, 2, 3, 4, 5]
-# 序列中的每个元素加1
-map(lambda x: x+1, li) # [2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c"># 序列中的每个元素加1</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
     </div>	
 				
     
@@ -355,16 +362,17 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
         <div class="summary"><p>这里介绍几个常用的列表操作</p>
 <h3>添加元素</h3>
 <p>添加元素使用列表的内置方法append</p>
-<pre><code class="python">number = [1, 2, 3, 4]
-number.append(5) # number = [1, 2, 3, 4, 5]
-number.append([6,7]) # number = [1, 2, 3, 4, 5, [6, 7]]
-number.append({'a':'b'}) # number = [1, 2, 3, 4, [6, 7], {'a', :'b'}
-</code></pre>
+<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
+</pre></div>
+
 
 <p>可以看到强大的python列表可以嵌套任意类型</p>
 <h3>列表相加</h3>
 <p>要想连接两个列表,可以使用+号连接</p>
-<pre><code class="python">a = [1, 2 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
     </div>	
 				
     
@@ -384,17 +392,19 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
-<pre><code class="python">&gt;&gt;&gt; s = 'abce'
-&gt;&gt;&gt; s[0:3]
-'abc'
-</code></pre>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="s">&#39;abc&#39;</span>
+</pre></div>
+
 
 <p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
-<pre><code class="python">#-*- coding:utf8 -*-
-s = u'中文截取'
-s.decode('utf8')[0:3].encode('utf8')
-# 结果u'中文截取
-</code></pre>
+<div class="codehilite"><pre><span class="c">#-*- coding:utf8 -*-</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
+<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
+<span class="c"># 结果u&#39;中文截取</span>
+</pre></div>
+
 
 <p>就这么简单</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">read more</a></div>
     </div>	

@@ -72,89 +72,91 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         
         <div class="highlight"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
 <p>下面放出脚本内容:</p>
-<pre><code class="bash">#!/bin/bash
-# Author      : cold
-# Homepage    : http://www.linuxzen.com
-# Filename    : checkchange.sh
-# Useage      : sh checkchange.sh [dir]
-checkisdir()
-        # Have one argument
-        # The argument is a directory
-        for i in `ls $1 | sed -e 's/ /\n/g'`
-        do
-                if [ -d $1/$i ]
-                then
-                        if [ $i == &quot;bin&quot; -o $i == &quot;lib&quot; -o $i == &quot;include&quot; ]   # 不想检测的目录(这里是使用virtualenv生成的环境文件)
-                        then
-                                continue
-                        fi
-                        dir=&quot;$1/$i&quot;
-                        checkisdir $dir
-                else
-                        files=$files'\n'$1'/'$i
-                fi
-        done
-        echo -e $files
-}
-while true
-do
-        if [ -e /tmp/stat.tmp ]
-        then
-                for i in `checkisdir $1`
-                do
-                        if [ -e /tmp/patch.tmp ]
-                        then
-                                stat $i | grep Change &gt; /tmp/nstat.tmp
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Author      : cold</span>
+<span class="c"># Homepage    : http://www.linuxzen.com</span>
+<span class="c"># Filename    : checkchange.sh</span>
+<span class="c"># Useage      : sh checkchange.sh [dir]</span>
+checkisdir<span class="o">()</span>
+        <span class="c"># Have one argument</span>
+        <span class="c"># The argument is a directory</span>
+        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
+        <span class="k">do</span>
+<span class="k">                if</span> <span class="o">[</span> -d <span class="nv">$1</span>/<span class="nv">$i</span> <span class="o">]</span>
+                <span class="k">then</span>
+<span class="k">                        if</span> <span class="o">[</span> <span class="nv">$i</span> <span class="o">==</span> <span class="s2">&quot;bin&quot;</span> -o <span class="nv">$i</span> <span class="o">==</span> <span class="s2">&quot;lib&quot;</span> -o <span class="nv">$i</span> <span class="o">==</span> <span class="s2">&quot;include&quot;</span> <span class="o">]</span>   <span class="c"># 不想检测的目录(这里是使用virtualenv生成的环境文件)</span>
+                        <span class="k">then</span>
+<span class="k">                                continue</span>
+<span class="k">                        fi</span>
+<span class="k">                        </span><span class="nv">dir</span><span class="o">=</span><span class="s2">&quot;$1/$i&quot;</span>
+                        checkisdir <span class="nv">$dir</span>
+                <span class="k">else</span>
+<span class="k">                        </span><span class="nv">files</span><span class="o">=</span><span class="nv">$files</span><span class="s1">&#39;\n&#39;</span><span class="nv">$1</span><span class="s1">&#39;/&#39;</span><span class="nv">$i</span>
+                <span class="k">fi</span>
+<span class="k">        done</span>
+<span class="k">        </span><span class="nb">echo</span> -e <span class="nv">$files</span>
+<span class="o">}</span>
+<span class="k">while </span><span class="nb">true</span>
+<span class="k">do</span>
+<span class="k">        if</span> <span class="o">[</span> -e /tmp/stat.tmp <span class="o">]</span>
+        <span class="k">then</span>
+<span class="k">                for </span>i in <span class="sb">`</span>checkisdir <span class="nv">$1</span><span class="sb">`</span>
+                <span class="k">do</span>
+<span class="k">                        if</span> <span class="o">[</span> -e /tmp/patch.tmp <span class="o">]</span>
+                        <span class="k">then</span>
+<span class="k">                                </span>stat <span class="nv">$i</span> | grep Change &gt; /tmp/nstat.tmp
                                 rm -f /tmp/patch.tmp
-                                continue
-                        fi
-                        stat $i | grep Change &gt;&gt; /tmp/nstat.tmp
-                done
-                diff /tmp/stat.tmp /tmp/nstat.tmp &gt; /tmp/patch.tmp
-                if [ $? -eq 0 ]
-                then
-                        sleep 10
-                else
-                        /etc/init.d/uwsgi.py restart                    # 将此处更改为想要做的操作
+                                <span class="k">continue</span>
+<span class="k">                        fi</span>
+<span class="k">                        </span>stat <span class="nv">$i</span> | grep Change &gt;&gt; /tmp/nstat.tmp
+                <span class="k">done</span>
+<span class="k">                </span>diff /tmp/stat.tmp /tmp/nstat.tmp &gt; /tmp/patch.tmp
+                <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
+                <span class="k">then</span>
+<span class="k">                        </span>sleep 10
+                <span class="k">else</span>
+                        /etc/init.d/uwsgi.py restart                    <span class="c"># 将此处更改为想要做的操作</span>
                         patch /tmp/stat.tmp /tmp/patch.tmp
-                fi
-        else
-                for i in `checkisdir $1`
-                do
-                        stat $i | grep Change &gt;&gt; /tmp/stat.tmp
-                done
-                continue
-        fi
-done
-</code></pre>
+                <span class="k">fi</span>
+<span class="k">        else</span>
+<span class="k">                for </span>i in <span class="sb">`</span>checkisdir <span class="nv">$1</span><span class="sb">`</span>
+                <span class="k">do</span>
+<span class="k">                        </span>stat <span class="nv">$i</span> | grep Change &gt;&gt; /tmp/stat.tmp
+                <span class="k">done</span>
+<span class="k">                continue</span>
+<span class="k">        fi</span>
+<span class="k">done</span>
+</pre></div>
+
 
 <p>这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:</p>
-<pre><code class="bash">sh checkchange.sh /code/python &amp;
-</code></pre>
+<div class="codehilite"><pre>sh checkchange.sh /code/python &amp;
+</pre></div>
+
 
 <p>如果使用svn可以参考下面代码:</p>
-<pre><code class="bash">#!/bin/bash
-# Author        : cold
-# Homepage      : http://www.linuxzen.com
-# Filename      : checkupdate.sh
-# Describle     : To Check update of svn
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Author        : cold</span>
+<span class="c"># Homepage      : http://www.linuxzen.com</span>
+<span class="c"># Filename      : checkupdate.sh</span>
+<span class="c"># Describle     : To Check update of svn</span>
 
-while true
-do
-        cd /code/python
+<span class="k">while </span><span class="nb">true</span>
+<span class="k">do</span>
+<span class="k">        </span><span class="nb">cd</span> /code/python
         svn up | grep At &gt; /dev/null 2&gt;&amp;1
-        if [ $? -eq 0 ]
-        then
-                sleep 30
-        fi
+        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
+        <span class="k">then</span>
+<span class="k">                </span>sleep 30
+        <span class="k">fi</span>
 
-        svn up | grep Updated &gt; /dev/null 2&gt;&amp;1
-        if [ $? -eq 0 ]
-        then
+<span class="k">        </span>svn up | grep Updated &gt; /dev/null 2&gt;&amp;1
+        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq 0 <span class="o">]</span>
+        <span class="k">then</span>
                 /etc/init.d/uwsgi.py restart
-        fi
-done
-</code></pre></div>
+        <span class="k">fi</span>
+<span class="k">done</span>
+</pre></div></div>
         <hr />
     </div>
 		
@@ -177,22 +179,25 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
         <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
-<pre><code class="bash">find / -ctime 1 # 找出根下最近24小时修改过inode信息的文件(更改权限)
-find / -mtime 1 # 找出根下最近24小时修改过的文件(内容)
-find / -atime 1 # 找出根下最近24小时访问过的文件
-</code></pre>
+<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+</pre></div>
+
 
 <p>使用通配符查找文件</p>
-<pre><code class="bash">find / -name &quot;*.log&quot; # 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来
-</code></pre>
+<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+</pre></div>
+
 
 <h2>文本替换</h2>
-<pre><code class="bash">sed -e '2s/ext3/ext4/' /etc/fstab # 将第二行的ext3改成ext4
-</code></pre>
+<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+</pre></div>
+
 
 <h2>显示指定行</h2>
-<pre><code class="bash">sed -n &quot;3p&quot; /etc/fstab         # 显示第3行
-sed -n &quot;3,5p&quot; /etc/gfstab  # 显示第3到5行 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
+<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
     
@@ -213,11 +218,11 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<pre><code class="bash">#!/bin/sh
-# Author   : cold night
-# Filename : nglogcut.sh
-export PATH=/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-LogPath='/usr/local/nginx/logs/access.log'    # 定义日志绝对路径 ...</code></pre> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># Author   : cold night</span>
+<span class="c"># Filename : nglogcut.sh</span>
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
     </div>	
 				
     
@@ -238,27 +243,32 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  </div>
         <div class="summary"><p>有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.</p>
 <p>在脚本的最顶部加上</p>
-<pre><code class="bash">set -x
-</code></pre>
+<div class="codehilite"><pre><span class="nb">set</span> -x
+</pre></div>
+
 
 <p>开启调试
 在脚本的最底部加上</p>
-<pre><code class="bash">set +x
-</code></pre>
+<div class="codehilite"><pre><span class="nb">set</span> +x
+</pre></div>
+
 
 <p>关闭调试
 如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令</p>
 <p>&nbsp;</p>
-<pre><code class="bash">script
-</code></pre>
+<div class="codehilite"><pre>script
+</pre></div>
+
 
 <p>然后执行要捕捉内容的命令,完成后通过</p>
-<pre><code class="bash">exit
-</code></pre>
+<div class="codehilite"><pre><span class="nb">exit</span>
+</pre></div>
+
 
 <p>退出,当前目录下会生成typescript,通过</p>
-<pre><code class="bash">more typescript
-</code></pre>
+<div class="codehilite"><pre>more typescript
+</pre></div>
+
 
 <p>查看调试命令.</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html">read more</a></div>
     </div>	

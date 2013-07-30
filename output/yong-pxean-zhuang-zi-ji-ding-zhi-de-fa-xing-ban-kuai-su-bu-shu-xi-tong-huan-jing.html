@@ -73,165 +73,180 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp</p>
 <p>安装tftp-server</p>
-<pre><code class="bash">yum -y install tftp-server
-</code></pre>
+<div class="codehilite"><pre>yum -y install tftp-server
+</pre></div>
+
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<pre><code class="bash">vi /etc/xinetd.d/tftp
-</code></pre>
+<div class="codehilite"><pre>vi /etc/xinetd.d/tftp
+</pre></div>
+
 
 <p>修改配置文件</p>
 <p>&nbsp;</p>
-<pre><code class="bash">service tftp
-{
-        socket_type             = dgram
-        protocol                = udp
-        wait                    = yes
-        user                    = root
-        server                  = /usr/sbin/in.tftpd
-        server_args             = -s /tftpboot      # 根目录
-        disable                 = no                # 把yes改为no启动tftp
-        per_source              = 11
-        cps                     = 100 2
-        flags                   = IPv4
-}
-</code></pre>
+<div class="codehilite"><pre>service tftp
+<span class="o">{</span>
+        <span class="nv">socket_type</span>             <span class="o">=</span> dgram
+        <span class="nv">protocol</span>                <span class="o">=</span> udp
+        <span class="nb">wait</span>                    <span class="o">=</span> yes
+        <span class="nv">user</span>                    <span class="o">=</span> root
+        <span class="nv">server</span>                  <span class="o">=</span> /usr/sbin/in.tftpd
+        <span class="nv">server_args</span>             <span class="o">=</span> -s /tftpboot      <span class="c"># 根目录</span>
+        <span class="nv">disable</span>                 <span class="o">=</span> no                <span class="c"># 把yes改为no启动tftp</span>
+        <span class="nv">per_source</span>              <span class="o">=</span> 11
+        <span class="nv">cps</span>                     <span class="o">=</span> 100 2
+        <span class="nv">flags</span>                   <span class="o">=</span> IPv4
+<span class="o">}</span>
+</pre></div>
+
 
 <p>启动tftp</p>
-<pre><code class="bash">service xinetd restart
-Stopping xinetd: [  OK  ]
-Starting xinetd: [  OK  ]
-</code></pre>
+<div class="codehilite"><pre>service xinetd restart
+Stopping xinetd: <span class="o">[</span>  OK  <span class="o">]</span>
+Starting xinetd: <span class="o">[</span>  OK  <span class="o">]</span>
+</pre></div>
+
 
 <p>2.在tftp根目录下创建启动文件供客户端下载:</p>
-<pre><code class="bash"># 复制网卡启动文件
+<div class="codehilite"><pre><span class="c"># 复制网卡启动文件</span>
 cp /usr/lib/syslinux/pxelinux.0 /tftpboot
-</code></pre>
+</pre></div>
+
 
 <p>将安装光盘上/image/pxeboot/initrd.img和vmlinux复制到/tftpboot/中</p>
-<pre><code class="bash"># 挂载光盘
+<div class="codehilite"><pre><span class="c"># 挂载光盘</span>
 mount /dev/hdc /mnt
-# 复制文件
+<span class="c"># 复制文件</span>
 cp /mnt/isolinux/vmlinuz /tftpboot/
 cp /mnt/isolinux/initrd.img /tftpboot/
-</code></pre>
+</pre></div>
+
 
 <p>创建pxe启动菜单:</p>
-<pre><code class="bash"># 创建存放启动菜单的目录
-cd /tftpboot
+<div class="codehilite"><pre><span class="c"># 创建存放启动菜单的目录</span>
+<span class="nb">cd</span> /tftpboot
 mkdir pxelinux.cfg
-# 从安装光盘内复制启动菜单命名为default
+<span class="c"># 从安装光盘内复制启动菜单命名为default</span>
 cp /mnt/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
-</code></pre>
+</pre></div>
+
 
 <p>编辑启动菜单:</p>
-<pre><code class="bash">vi /tftpboot/pxelinux.cfg/default
+<div class="codehilite"><pre>vi /tftpboot/pxelinux.cfg/default
 default ColdOS
 prompt 1
 timeout 600
 label ColdOS
   kernel vmlinuz
-  append ks=http://192.168.3.1/cold/isolinux/ks.cfg initrd=initrd.img text # 指定ks文件位置
-</code></pre>
+  append <span class="nv">ks</span><span class="o">=</span>http://192.168.3.1/cold/isolinux/ks.cfg <span class="nv">initrd</span><span class="o">=</span>initrd.img text <span class="c"># 指定ks文件位置</span>
+</pre></div>
+
 
 <p>3.安装配置dhcp服务器
 安装</p>
-<pre><code class="bash">yum -y install dhcp
-</code></pre>
+<div class="codehilite"><pre>yum -y install dhcp
+</pre></div>
+
 
 <p>配置</p>
-<pre><code class="bash"># 创建配置文件
+<div class="codehilite"><pre><span class="c"># 创建配置文件</span>
 cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
-# 编辑配置文件
+<span class="c"># 编辑配置文件</span>
 vi /etc/dhcpd.conf
-# 修改配置文件:
+<span class="c"># 修改配置文件:</span>
 ddns-update-style interim;
 ignore client-updates;
-next-server 192.168.3.1;             # 指定tftp服务器
-filename &quot;/pxelinux.0&quot;;              # 指定启动文件
+next-server 192.168.3.1;             <span class="c"># 指定tftp服务器</span>
+filename <span class="s2">&quot;/pxelinux.0&quot;</span>;              <span class="c"># 指定启动文件</span>
 
-subnet 192.168.3.0 netmask 255.255.255.0 {
+subnet 192.168.3.0 netmask 255.255.255.0 <span class="o">{</span>
 
         option routers                  192.168.3.1;
         option subnet-mask              255.255.255.0;
 
-        option nis-domain               &quot;domain.org&quot;;
-        option domain-name              &quot;domain.org&quot;;
+        option nis-domain               <span class="s2">&quot;domain.org&quot;</span>;
+        option domain-name              <span class="s2">&quot;domain.org&quot;</span>;
         option domain-name-servers      192.168.1.1;
 
-        option time-offset              -18000; # Eastern Standard Time
+        option <span class="nb">time</span>-offset              -18000; <span class="c"># Eastern Standard Time</span>
 
         range dynamic-bootp 192.168.3.128 192.168.3.254;
         default-lease-time 21600;
         max-lease-time 43200;
 
-}
-# 启动dhcp服务器
+<span class="o">}</span>
+<span class="c"># 启动dhcp服务器</span>
 service dhcpd start
-Starting dhcpd: [ OK ]
-</code></pre>
+Starting dhcpd: <span class="o">[</span> OK <span class="o">]</span>
+</pre></div>
+
 
 <p>4.安装配置http服务器
 安装:</p>
-<pre><code class="bash">yum -y install httpd
-</code></pre>
+<div class="codehilite"><pre>yum -y install httpd
+</pre></div>
+
 
 <p>首先把安装光盘里的内容拷到本地服务器上:</p>
-<pre><code class="bash"># 创建目录
+<div class="codehilite"><pre><span class="c"># 创建目录</span>
 mkdir -p /pxe/cold/
-# 复制文件
-( cd /mnt/ &amp;amp;&amp;amp; tar -cf - . ) ¦ (cd /pxe/cold &amp;amp;&amp;amp; tar -xvf - )
-</code></pre>
+<span class="c"># 复制文件</span>
+<span class="o">(</span> <span class="nb">cd</span> /mnt/ &amp;amp;&amp;amp; tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /pxe/cold &amp;amp;&amp;amp; tar -xvf - <span class="o">)</span>
+</pre></div>
+
 
 <p>配置apache</p>
-<pre><code class="bash"># 编辑配置文件:
+<div class="codehilite"><pre><span class="c"># 编辑配置文件:</span>
 vi /etc/httpd/conf/httpd.conf
-# 更改apache根目录(将配置文件中的两处/var/www改成/pxe)
-DocumentRoot &quot;/pxe&quot;
+<span class="c"># 更改apache根目录(将配置文件中的两处/var/www改成/pxe)</span>
+DocumentRoot <span class="s2">&quot;/pxe&quot;</span>
 &amp;lt;Directory /&amp;gt;
     Options FollowSymLinks
     AllowOverride None
 &amp;lt;/Directory&amp;gt;
-&amp;lt;Directory &quot;/pxe&quot;&amp;gt;
+&amp;lt;Directory <span class="s2">&quot;/pxe&quot;</span>&amp;gt;
     Options Indexes FollowSymLinks
     AllowOverride None
     Order allow,deny
     Allow from all
 &amp;lt;/Directory&amp;gt;
-</code></pre>
+</pre></div>
+
 
 <p>配置完成后启动apache</p>
-<pre><code class="bash">service httpd start
-</code></pre>
+<div class="codehilite"><pre>service httpd start
+</pre></div>
+
 
 <p>5.更改ks文件(ks文件可在CentOS图形界面下用kickstart程序直接生成,这里不做介绍)</p>
 <p>因为网络安装,又需要部署cfengine的话,就需要更改cfengine的获取方式,首先要将文件夹打包:</p>
-<pre><code class="bash">cd /pxe/cold
+<div class="codehilite"><pre><span class="nb">cd</span> /pxe/cold
 tar -cvf cfengine.tar cfengine/
-</code></pre>
+</pre></div>
+
 
 <p>然后编辑ks文件</p>
-<pre><code class="bash"># 编辑ks文件
+<div class="codehilite"><pre><span class="c"># 编辑ks文件</span>
 vi /pxe/cold/isolinux/ks.cfg
 install
 cdrom
 lang en_US.UTF-8
 keyboard us
-rootpw --iscrypted $1$OKNHES6P$tPdz9HxIp6.QUvulqxNwa.
+rootpw --iscrypted <span class="nv">$1$OKNHES6P$tPdz9HxIp6</span>.QUvulqxNwa.
 firewall --disable
 authconfig --enableshadow --enablemd5
 selinux --disabled
 timezone --utc Asia/Chongqing
-bootloader --location=mbr --driveorder=sda
-url --url http://192.168.3.1/cold/              # 添加指定安装文件的语句
-# The following is the partition information you requested
-# Note that any partitions you deleted are not expressed
-# here so unless you clear all partitions first, this is
-# not guaranteed to work
-clearpart --linux --drives=sda
-part / --fstype ext3 --size=1 --grow --maxsize=4096
-part /usr --fstype ext3 --size=1 --grow
-part swap --size=1 --grow --maxsize=512
+bootloader --location<span class="o">=</span>mbr --driveorder<span class="o">=</span>sda
+url --url http://192.168.3.1/cold/              <span class="c"># 添加指定安装文件的语句</span>
+<span class="c"># The following is the partition information you requested</span>
+<span class="c"># Note that any partitions you deleted are not expressed</span>
+<span class="c"># here so unless you clear all partitions first, this is</span>
+<span class="c"># not guaranteed to work</span>
+clearpart --linux --drives<span class="o">=</span>sda
+part / --fstype ext3 --size<span class="o">=</span>1 --grow --maxsize<span class="o">=</span>4096
+part /usr --fstype ext3 --size<span class="o">=</span>1 --grow
+part swap --size<span class="o">=</span>1 --grow --maxsize<span class="o">=</span>512
 
 %packages
 @core
@@ -244,11 +259,12 @@ mkdir -p /mnt/sysimage/var/cfengine/inputs
 mkdir -p /mnt/sysimage/var/cfengine/outputs
 mkdir -p /mnt/sysimage/var/cfengine/bin
 
-wget  http://192.168.3.1/cold/cfengine.tar    # 更改cfengine获取方式
+wget  http://192.168.3.1/cold/cfengine.tar    <span class="c"># 更改cfengine获取方式</span>
 tar -xvf cfengine.tar
 cp /cfengine/sbin/cf-* /mnt/sysimage/var/cfengine/bin/
 cp -r /cfengine /mnt/sysimage/usr/local/
-</code></pre>
+</pre></div>
+
 
 <p>6.测试
 开启另一台设备测试,机器启动时一般按F12即可进入网卡启动.</p></div>
