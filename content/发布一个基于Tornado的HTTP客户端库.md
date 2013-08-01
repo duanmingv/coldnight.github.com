@@ -1,6 +1,6 @@
 Title: 发布一个基于Tornado的高效异步的HTTP客户端库
 Category: Python
-Tags: Linux, grep, rm, -f, 恢复
+Tags: tornado, http, client, module, Python, 高效
 Date: 2013-08-01 10:46
 
 前面的博文提到过[使用tornado进行网络异步编程](/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html), 也[使用tornado实现了一个高效的WebQQ机器人](/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html), 由于tornado内置的`AsyncHTTPClient`功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 `tornadohttpclient`

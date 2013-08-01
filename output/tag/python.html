@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h1>Pual 更新支持SimSimi可以进行互动</h1></a>
-            四 30 五月 2013
+            <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h1>发布一个基于Tornado的高效异步的HTTP客户端库</h1></a>
+            四 01 八月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,7 +70,143 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
+        <div class="highlight"><p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
+<p>TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在<code>Python2.7</code>平台上测试过, 不支持<code>Python3</code></p>
+<h2>安装</h2>
+<p>首先从git clone 下代码</p>
+<div class="codehilite"><pre>git clone https://github.com/coldnight/tornadohttpclient.git
+</pre></div>
+
+
+<p>然后安装它</p>
+<div class="codehilite"><pre><span class="nb">cd </span>tornadohttpclient
+python setup.py install
+</pre></div>
+
+
+<h2>教程</h2>
+<h3>GET</h3>
+<p>TornadoHTTPClient的get方法可以发起一个get请求</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="c"># 实例化</span>
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="c"># 发出get请求</span>
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">)</span>
+
+<span class="c"># 开始主事件循环</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>POST</h3>
+<p>TornadoHTTPClient的post方法可以发起一个post请求</p>
+<h3>读取响应</h3>
+<p>上面仅仅发出了请求, 但是我们无法读取GET请求回来的数据, 我们可以使用一个回调来读取响应</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>通过<code>callback</code>关键字参数我们可以传进一个回调函数, 当请求成功时会调用此函数, 并给此函数传递一个与<code>urllib2.urlopen</code>返回一样的reponse实例</p>
+<h3>给请求传递参数</h3>
+<p>TornadoHTTPClient 的 <code>get</code>/<code>post</code>方法的第二个参数<code>params</code>可以定义请求时传递的参数<code>params</code>的类型为字典或者<code>((key, value), )</code>类型的元组或列表,例如使用百度搜索<code>TornadoHTTPClient</code></p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com/s&quot;</span><span class="p">,</span> <span class="p">((</span><span class="s">&quot;wd&quot;</span><span class="p">,</span> <span class="s">&quot;tornado&quot;</span><span class="p">),),</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>以上也使用与POST方法, 比如登录网站</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&quot;http://ip.or.domain/login&quot;</span><span class="p">,</span> <span class="p">((</span><span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;cold&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;pwd&quot;</span><span class="p">)),</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>指定HTTP头</h3>
+<p>TornadoHTTPClient 的<code>get</code>/<code>post</code>方法的 <code>headers</code>关键字参数可以自定额外的HTTP头信息, 参数类型为一个字典</p>
+<p>指定User-Agent头</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(((</span><span class="s">&quot;User-Agent&quot;</span><span class="p">,</span>
+                <span class="s">&quot;Mozilla/5.0 (X11; Linux x86_64)&quot;</span>\
+                <span class="s">&quot; AppleWebKit/537.11 (KHTML, like Gecko)&quot;</span>\
+                <span class="s">&quot; Chrome/23.0.1271.97 Safari/537.11&quot;</span><span class="p">),</span> <span class="p">))</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>使用代理</h3>
+<p>TornadoHTTPClient 的<code>set_proxy</code>方法可以设置代理, 其接受两个参数, 分别是代理的 主机名/ip 代理的端口, <code>unset_proxy</code>可以取消代理</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">unset_proxy</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">set_proxy</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8087</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://shell.appspot.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>Cookie</h3>
+<p>TornadoHTTPClient会自动记录和装载Cookie, 可以通过 TornadoHTTPClient实例属性 cookie 获取Cookie</p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h2>Pual 更新支持SimSimi可以进行互动</h2></a>
+        <div class= "well small"> 四 30 五月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
 <ul>
 <li>英汉互译</li>
 <li>为每个用户分配一个session的含有上下文的Python shell</li>
@@ -79,10 +215,9 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <hr />
 <p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
 <p><a href="https://github.com/coldnight/pual_bot">项目地址</a></p>
-<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p></div>
-        <hr />
-    </div>
-		
+<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">read more</a></div>
+    </div>	
+				
     
  
         

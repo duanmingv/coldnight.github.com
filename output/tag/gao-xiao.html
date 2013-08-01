@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h1>借用Tornado实现高效的WebQQ机器人</h1></a>
-            二 23 四月 2013
+            <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h1>发布一个基于Tornado的高效异步的HTTP客户端库</h1></a>
+            四 01 八月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,86 +70,150 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
         </div>
         
-        <div class="highlight"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+        <div class="highlight"><p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
+<p>TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在<code>Python2.7</code>平台上测试过, 不支持<code>Python3</code></p>
+<h2>安装</h2>
+<p>首先从git clone 下代码</p>
+<div class="codehilite"><pre>git clone https://github.com/coldnight/tornadohttpclient.git
+</pre></div>
+
+
+<p>然后安装它</p>
+<div class="codehilite"><pre><span class="nb">cd </span>tornadohttpclient
+python setup.py install
+</pre></div>
+
+
+<h2>教程</h2>
+<h3>GET</h3>
+<p>TornadoHTTPClient的get方法可以发起一个get请求</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="c"># 实例化</span>
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="c"># 发出get请求</span>
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">)</span>
+
+<span class="c"># 开始主事件循环</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>POST</h3>
+<p>TornadoHTTPClient的post方法可以发起一个post请求</p>
+<h3>读取响应</h3>
+<p>上面仅仅发出了请求, 但是我们无法读取GET请求回来的数据, 我们可以使用一个回调来读取响应</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>通过<code>callback</code>关键字参数我们可以传进一个回调函数, 当请求成功时会调用此函数, 并给此函数传递一个与<code>urllib2.urlopen</code>返回一样的reponse实例</p>
+<h3>给请求传递参数</h3>
+<p>TornadoHTTPClient 的 <code>get</code>/<code>post</code>方法的第二个参数<code>params</code>可以定义请求时传递的参数<code>params</code>的类型为字典或者<code>((key, value), )</code>类型的元组或列表,例如使用百度搜索<code>TornadoHTTPClient</code></p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com/s&quot;</span><span class="p">,</span> <span class="p">((</span><span class="s">&quot;wd&quot;</span><span class="p">,</span> <span class="s">&quot;tornado&quot;</span><span class="p">),),</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>以上也使用与POST方法, 比如登录网站</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&quot;http://ip.or.domain/login&quot;</span><span class="p">,</span> <span class="p">((</span><span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;cold&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;pwd&quot;</span><span class="p">)),</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>指定HTTP头</h3>
+<p>TornadoHTTPClient 的<code>get</code>/<code>post</code>方法的 <code>headers</code>关键字参数可以自定额外的HTTP头信息, 参数类型为一个字典</p>
+<p>指定User-Agent头</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(((</span><span class="s">&quot;User-Agent&quot;</span><span class="p">,</span>
+                <span class="s">&quot;Mozilla/5.0 (X11; Linux x86_64)&quot;</span>\
+                <span class="s">&quot; AppleWebKit/537.11 (KHTML, like Gecko)&quot;</span>\
+                <span class="s">&quot; Chrome/23.0.1271.97 Safari/537.11&quot;</span><span class="p">),</span> <span class="p">))</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>使用代理</h3>
+<p>TornadoHTTPClient 的<code>set_proxy</code>方法可以设置代理, 其接受两个参数, 分别是代理的 主机名/ip 代理的端口, <code>unset_proxy</code>可以取消代理</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">unset_proxy</span><span class="p">()</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">set_proxy</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8087</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://shell.appspot.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>Cookie</h3>
+<p>TornadoHTTPClient会自动记录和装载Cookie, 可以通过 TornadoHTTPClient实例属性 cookie 获取Cookie</p></div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h2>借用Tornado实现高效的WebQQ机器人</h2></a>
+        <div class= "well small"> 二 23 四月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
 <p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
 <h2>引子</h2>
 <p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
 <h2>原理</h2>
-<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request</code> 是一个 <code>urllib2.Request</code>的实例, 和一个可选参数:<code>readback</code>是一个接受一个<code>urllib2.urlopen(request)</code>返回的<code>Response</code>参数的读取函数, 代码如下:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="c"># 省略若干代码</span>
-    <span class="k">def</span> <span class="nf">add_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">readback</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&quot;Not a invaid requset&quot;</span>
-
-        <span class="c"># 此处易触发timeout异常, 省略处理异常代码</span>
-        <span class="n">sock</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_http_sock_data</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-
-        <span class="n">fd</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">sock</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fd_request_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span>
-        <span class="n">callback</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_events</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">)</span>
-</pre></div>
-
-
-<p><code>HTTPStream.add_request</code>将<code>urllib2.Request</code>的实例解析出一个<code>socket</code>和一个用于<code>socket</code>发送的数据.前面文章介绍过了, <code>tornado.ioloop.IOLoop.add_handler</code>用于将注册socket, 其需要三个参数: socket的文件描述符, 接受文件描述符和事件参数的回调, 和注册的事件.</p>
-<p>我们用到的回调是<code>HTTPStream._handle_events</code>:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">HTTPStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="c"># 省略若干代码</span>
-    <span class="k">def</span> <span class="nf">_handle_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">readback</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; 用于处理Tornado事件</span>
-<span class="sd">        Arguments:</span>
-<span class="sd">            `request`   -   urllib.Request</span>
-<span class="sd">            `data`      -   socket要写入的数据</span>
-<span class="sd">            `readback`  -   读取函数</span>
-<span class="sd">            以上参数应当使用partial封装然后将此方法作为IOLoop.add_handler的callback</span>
-<span class="sd">            `fd`        -   IOLoop传递 文件描述符</span>
-<span class="sd">            `event`     -   IOLoop传递 tornado</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fd_map</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">:</span>
-            <span class="c"># 省略错误处理</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http_sock</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="n">readback</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
-            <span class="n">s</span><span class="o">.</span><span class="n">setblocking</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_delay_request</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">)</span>
-                <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
-                <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_request</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">WRITE</span><span class="p">:</span>
-            <span class="n">s</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">readback</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">update_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">remove_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">event</span> <span class="o">&amp;</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
-            <span class="k">pass</span>
-</pre></div>
-
-
-<p>它接受的参数上面注释写的很清楚, 不做解释, 所以将此方法通过<code>functools.partial</code>封装做为<code>callback</code>传递给<code>tornado.ioloop.IOLoop.add_handler</code>, 并注册为<code>写</code>事件, 以便发送<code>HTTP</code>请求.</p>
-<p><code>HTTPStream._handle_events</code>用于处理事件, 当事件为写时就发送<code>HTTP</code>请求(根据<code>urllib2.Request</code>生成的用于发送的数据), 并判断是否有读取函数, 有则注册<code>读</code>事件, 当事件为读时就从socket中构建一个<code>Response</code>并传递给读取函数, 读取函数会返回3个值, 分别为: 下一个请求, 请求的读取函数(可为None, 为None则只请求不读取), 下一个请求的延迟(多长事件后添加此请求, 可选, 单位为秒)</p>
-<p>依据读取函数返回的三个值来确定下一个请求, 并完成一系列的请求. 更加完整的代码请参见文章开头给出的项目代码</p>
-<p><code>HTTPStream.http_sock.make_response</code>执行时会将<code>socket</code>设为阻塞, 因为不设置阻塞会出现<code>httplib.BadStatusLine</code>异常.读取函数执行完毕,重新将<code>socket</code>设置为非阻塞, 并移除此<code>socket</code>(虽然做了这样的处理但是QQ连接时间稍长还是会触发<code>httplib.BadStatusLine</code>异常)</p>
-<h2>2013-04-26 更新</h2>
-<ul>
-<li>解决 在线时间稍长, 当经过多次请求后会触发<code>socket.gaierror(-2, 'Name or service not known')</code> 异常</li>
-</ul>
-<h2>存在问题</h2>
-<ol>
-<li>没有重试机制</li>
-</ol></div>
-        <hr />
-    </div>
-		
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">read more</a></div>
+    </div>	
+				
     
  
         
