@@ -118,6 +118,46 @@ python setup.py install
 
 
 <p>通过<code>callback</code>关键字参数我们可以传进一个回调函数, 当请求成功时会调用此函数, 并给此函数传递一个与<code>urllib2.urlopen</code>返回一样的reponse实例</p>
+<h3>给callback传递参数</h3>
+<p>有时候callback可能需要访问局部变量, 可以通过 <code>args</code>和<code>kwargs</code>关键字参数, 将<code>callback</code>的参数传递给<code>get</code>/<code>post</code>方法, <code>args</code>参数将会在<code>response</code>参数之后被传递,
+<code>args</code>参数类型应当是一个元组, <code>kwargs</code>参数类型应当是一个字典</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">times</span>
+
+    <span class="k">if</span> <span class="n">times</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">))</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>发送延迟请求</h3>
+<p>有时我们需要延迟几秒也发送请求或每隔几秒就发送一个请求, <code>get</code>/<code>post</code>方法的<code>delay</code>关键字参数可以解决, <code>delay</code>参数接受一个单位为秒的数字, 并延迟<code>delay</code>秒后发起请求</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">times</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="c"># 延迟10秒发送此请求</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">times</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">),</span> <span class="n">delay</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
+<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
 <h3>给请求传递参数</h3>
 <p>TornadoHTTPClient 的 <code>get</code>/<code>post</code>方法的第二个参数<code>params</code>可以定义请求时传递的参数<code>params</code>的类型为字典或者<code>((key, value), )</code>类型的元组或列表,例如使用百度搜索<code>TornadoHTTPClient</code></p>
 <div class="codehilite"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
