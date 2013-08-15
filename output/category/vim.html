@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/vim-bu-quan-he-dai-ma-jian-cha-youcompleteme-syntastic.html"><h1>Vim 补全和代码检查: YouCompleteMe & syntastic</h1></a>
-            三 14 八月 2013
+            <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h1>Vim配置系列(二) —- 好看的statusline</h1></a>
+            六 05 一月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,101 +70,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
         </div>
         
-        <div class="highlight"><p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
-<h2>升级Vim</h2>
-<p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
-升级Vim需要先卸载原有的Vim</p>
-<div class="codehilite"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
-</pre></div>
-
-
-<p>并安装以下依赖</p>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
-    <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
-    <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxpm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxt</span><span class="o">-</span><span class="n">dev</span> \
-    <span class="n">python</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">dev</span> <span class="n">mercurial</span> <span class="n">checkinstall</span>
-</pre></div>
-
-
-<p>下载最新的Vim源码, 这里从代码仓库获取(需要<code>hg</code>没有自行安装)</p>
-<div class="codehilite"><pre>hg clone https://vim.googlecode.com/hg/ vim
-</pre></div>
-
-
-<p>然后进入目录编译安装Vim</p>
-<div class="codehilite"><pre><span class="nb">cd </span>vim
-./configure --with-features<span class="o">=</span>huge <span class="se">\</span>
-            --enable-rubyinterp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-pythoninterp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-python3interp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-perlinterp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-luainterp <span class="o">=</span> yes <span class="se">\</span>
-            --enable-gui<span class="o">=</span>gtk2 --enable-cscope --prefix<span class="o">=</span>/usr
-make <span class="nv">VIMRUNTIMEDIR</span><span class="o">=</span>/usr/share/vim/vim74
-sudo checkinstall
-</pre></div>
-
-
-<h2>安装llvm</h2>
-<p>如果想是想C系语言的补全, 需要libclang 3.2以上的版本, Ubuntu 12.10 自带的是3.0, 所以先安装LLVM, 可以下载二进制文件/编译安装</p>
-<h4>下载二进制</h4>
-<p>到<a href="http://llvm.org/releases/download.html#3.3">llvm.org</a>上下载相应的版本解压到~/ycm_temp</p>
-<h4>编译</h4>
-<p>下载(clang)[http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz]和<a href="http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz">llvm</a>, 解压llvm</p>
-<div class="codehilite"><pre>mkdir ~/ycm_temp
-<span class="nb">cd</span> ~/ycm_temp
-tar -zxvf llvm-3.3.src.tar.gz -C llvm.src
-</pre></div>
-
-
-<p>解压 clang到llvm.src/tools</p>
-<div class="codehilite"><pre>tar -zxvf cfe-3.3.src.tar.gz -C ~/ycm_temp/llvm.src/tools/
-mv ~/ycm_temp/llvm.src/tools/cfe-3.3.src ~/ycm_temp/llvm/tools/clang
-</pre></div>
-
-
-<p>编译llvm会自动编译clang</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/ycm_temp
-mkdir llvm_build
-<span class="nb">cd </span>llvm_build
-cmake ../llvm.src/CMakeList.txt ../llvm.src
-make
-</pre></div>
-
-
-<h2>安装YouCompleteMe</h2>
-<p>使用Vundle安装YouComplete(猛击<a href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>了解Vundle)</p>
-<h3>编译ycm_core</h3>
-<div class="codehilite"><pre>mkdir ~/ycm_build
-<span class="nb">cd</span> ~/ycm_build
-cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm.src/lib/libclang.so 
-make ycm_core
-</pre></div>
-
-
-<p>下载llvm二进制的可以参考</p>
-<div class="codehilite"><pre>cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm_root_path/lib/libclang.so
-</pre></div></div>
-        <hr />
-    </div>
-		
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
-        <div class= "well small"> 六 05 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
- </div>
-        <div class="summary"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
+        <div class="highlight"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
 <div class="codehilite"><pre>Bundle <span class="s2">&quot;Lokaltog/vim-powerline&quot;</span>
 </pre></div>
 
@@ -182,9 +88,10 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
 <p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
 <p>然后重新打开vim你就会发现一个漂亮的statusline</p>
-<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">read more</a></div>
-    </div>	
-				
+<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p></div>
+        <hr />
+    </div>
+		
     
  
         
