@@ -134,6 +134,36 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html"><h2>Vim 代码补全和检查: YouCompleteMe & syntastic</h2></a>
+        <div class= "well small"> 三 14 八月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+ </div>
+        <div class="summary"><p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
+<h2>升级Vim</h2>
+<p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
+升级Vim需要先卸载原有的Vim</p>
+<div class="codehilite"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
+</pre></div>
+
+
+<p>并安装以下依赖</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h2>发布一个基于Tornado的高效异步的HTTP客户端库</h2></a>
         <div class= "well small"> 四 01 八月 2013
 
@@ -383,30 +413,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
 <h2>原理</h2>
 <p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
-        <div class= "well small"> 四 18 四月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
-<h2>介绍</h2>
-<p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
-<h2>安装</h2>
-<p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
-<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

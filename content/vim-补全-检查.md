@@ -1,7 +1,7 @@
-Title: Vim 补全和代码检查: YouCompleteMe & syntastic
+Title: Vim 代码补全和检查: YouCompleteMe & syntastic
 Date: 2013-08-14
 Category: Vim
-Tags: Vim, 补全, 7.4, 升级, 代码检查, YouCompleteMe, syntastic
+Tags: Vim, 补全, 7.4, 升级, 检查, C语言, YouCompleteMe, syntastic
 
 
 Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程
@@ -80,4 +80,33 @@ make ycm_core
 下载llvm二进制的可以参考
 ```bash
 cmake -G "Unix Makefiles"  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH=~/ycm_temp/llvm_root_path/lib/libclang.so
+```
+
+### 配置
+YouCompleteMe 需要一个配置文件来补全, 可以参考[官方配置文件](https://github.com/Valloric/YouCompleteMe/blob/master/cpp/ycm/.ycm_extra_conf.py), 可以将配置文件至于项目根目录或者上级目录, YouCompleteMe 会自动检测加载, 也可以通过指定`g:ycm_global_ycm_extra_conf`指定一个全局的配置文件
+
+YouCompleteMe 每次加载配置文件会有一个提示, 很烦人, 可以通过将`g:ycm_confirm_extra_conf`置为0关闭提示
+
+
+### 补全Python
+YouCompleteMe 通过 `jedi`插件来补全Python, 可以通过`Vundle`安装此插件,在.vimrc中添加
+```
+Bundle "davidhalter/jedi"
+```
+
+## 代码检查
+`syntastic`是一个代码检查的插件, 通过`Vundle`安装它, 在.vimrc中添加
+```
+Bundle "scrooloose/syntastic"
+```
+
+重新打开Vim, 执行
+```
+:BundleInstall
+```
+
+### 配置
+因为Python已经有`pylint`来检查, 而且`syntastic`检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查
+```
+let g:syntastic_ignore_files=[".*\.py$"]
 ```

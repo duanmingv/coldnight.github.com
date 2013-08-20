@@ -59,6 +59,38 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html"><h2>ssh证书登录错误</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+ </div>
+        <div class="summary"><h2>错误描述</h2>
+
+<p>使用证书ssh链接的时候提示下面错误信息
+<h2><code>Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).</code>
+可能原因</h2>
+authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkeys 改成600
+<h2>解决</h2>
+查看日志:
+<code>cat /var/log/secure</code>
+发现
+<code>Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys</code>
+查看.ssh权限为775
+.ssh 手动创建的时候是775权限,改成755权限后正常
+<code># chmod ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h2>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -368,38 +400,6 @@ checkisdir<span class="o">()</span>
         <span class="c"># The argument is a directory</span>
         <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
         <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h2>Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h2></a>
-        <div class= "well small"> 三 16 五月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
-<h2>环境:</h2>
-<p>系统:Gentoo
-ip:192.168.3.1</p>
-<p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
-首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
-</pre></div>
-
-
-<h3>安装配置Python</h3>
-<p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
-Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

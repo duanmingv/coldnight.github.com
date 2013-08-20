@@ -1,5 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/vim.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-01-05T15:01:00+08:00</updated><entry><title>Vim配置系列(二) —- 好看的statusline</title><link href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html" rel="alternate"></link><updated>2013-01-05T15:01:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-01-05:vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html</id><summary type="html">&lt;p&gt;Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/vim.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-08-14T00:00:00+08:00</updated><entry><title>Vim 代码补全和检查: YouCompleteMe &amp; syntastic</title><link href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html" rel="alternate"></link><updated>2013-08-14T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-14:vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html</id><summary type="html">&lt;p&gt;Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程&lt;/p&gt;
+&lt;h2&gt;升级Vim&lt;/h2&gt;
+&lt;p&gt;YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过&lt;code&gt;:version&lt;/code&gt;查看
+升级Vim需要先卸载原有的Vim&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;并安装以下依赖&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libncurses5&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libgnome2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libgnomeui&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; \
+    &lt;span class="n"&gt;libgtk2&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libatk1&lt;/span&gt;&lt;span class="mf"&gt;.0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libbonoboui2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; \
+    &lt;span class="n"&gt;libcairo2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libx11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libxpm&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;libxt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; \
+    &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt; &lt;span class="n"&gt;mercurial&lt;/span&gt; &lt;span class="n"&gt;checkinstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;下载最新的Vim源码, 这里从代码仓库获取(需要&lt;code&gt;hg&lt;/code&gt;没有自行安装)&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;hg clone https://vim.googlecode.com/hg/ vim
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后进入目录编译安装Vim&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;vim
+./configure --with-features&lt;span class="o"&gt;=&lt;/span&gt;huge &lt;span class="se"&gt;\&lt;/span&gt;
+            --enable-rubyinterp&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+            --enable-pythoninterp&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+            --enable-python3interp&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+            --enable-perlinterp&lt;span class="o"&gt;=&lt;/span&gt;yes &lt;span class="se"&gt;\&lt;/span&gt;
+            --enable-luainterp &lt;span class="o"&gt;=&lt;/span&gt; yes &lt;span class="se"&gt;\&lt;/span&gt;
+            --enable-gui&lt;span class="o"&gt;=&lt;/span&gt;gtk2 --enable-cscope --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr
+make &lt;span class="nv"&gt;VIMRUNTIMEDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/share/vim/vim74
+sudo checkinstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装llvm&lt;/h2&gt;
+&lt;p&gt;如果想是想C系语言的补全, 需要libclang 3.2以上的版本, Ubuntu 12.10 自带的是3.0, 所以先安装LLVM, 可以下载二进制文件/编译安装&lt;/p&gt;
+&lt;h4&gt;下载二进制&lt;/h4&gt;
+&lt;p&gt;到&lt;a href="http://llvm.org/releases/download.html#3.3"&gt;llvm.org&lt;/a&gt;上下载相应的版本解压到~/ycm_temp&lt;/p&gt;
+&lt;h4&gt;编译&lt;/h4&gt;
+&lt;p&gt;下载(clang)[http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz]和&lt;a href="http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz"&gt;llvm&lt;/a&gt;, 解压llvm&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir ~/ycm_temp
+&lt;span class="nb"&gt;cd&lt;/span&gt; ~/ycm_temp
+tar -zxvf llvm-3.3.src.tar.gz -C llvm.src
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;解压 clang到llvm.src/tools&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf cfe-3.3.src.tar.gz -C ~/ycm_temp/llvm.src/tools/
+mv ~/ycm_temp/llvm.src/tools/cfe-3.3.src ~/ycm_temp/llvm/tools/clang
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编译llvm会自动编译clang&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/ycm_temp
+mkdir llvm_build
+&lt;span class="nb"&gt;cd &lt;/span&gt;llvm_build
+cmake ../llvm.src/CMakeList.txt ../llvm.src
+make
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装YouCompleteMe&lt;/h2&gt;
+&lt;p&gt;使用Vundle安装YouComplete(猛击&lt;a href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html"&gt;这里&lt;/a&gt;了解Vundle)&lt;/p&gt;
+&lt;h3&gt;编译ycm_core&lt;/h3&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir ~/ycm_build
+&lt;span class="nb"&gt;cd&lt;/span&gt; ~/ycm_build
+cmake -G &lt;span class="s2"&gt;&amp;quot;Unix Makefiles&amp;quot;&lt;/span&gt;  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH&lt;span class="o"&gt;=&lt;/span&gt;~/ycm_temp/llvm.src/lib/libclang.so 
+make ycm_core
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;下载llvm二进制的可以参考&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;cmake -G &lt;span class="s2"&gt;&amp;quot;Unix Makefiles&amp;quot;&lt;/span&gt;  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH&lt;span class="o"&gt;=&lt;/span&gt;~/ycm_temp/llvm_root_path/lib/libclang.so
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置&lt;/h3&gt;
+&lt;p&gt;YouCompleteMe 需要一个配置文件来补全, 可以参考&lt;a href="https://github.com/Valloric/YouCompleteMe/blob/master/cpp/ycm/.ycm_extra_conf.py"&gt;官方配置文件&lt;/a&gt;, 可以将配置文件至于项目根目录或者上级目录, YouCompleteMe 会自动检测加载, 也可以通过指定&lt;code&gt;g:ycm_global_ycm_extra_conf&lt;/code&gt;指定一个全局的配置文件&lt;/p&gt;
+&lt;p&gt;YouCompleteMe 每次加载配置文件会有一个提示, 很烦人, 可以通过将&lt;code&gt;g:ycm_confirm_extra_conf&lt;/code&gt;置为0关闭提示&lt;/p&gt;
+&lt;h3&gt;补全Python&lt;/h3&gt;
+&lt;p&gt;YouCompleteMe 通过 &lt;code&gt;jedi&lt;/code&gt;插件来补全Python, 可以通过&lt;code&gt;Vundle&lt;/code&gt;安装此插件,在.vimrc中添加&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;davidhalter/jedi&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;代码检查&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;syntastic&lt;/code&gt;是一个代码检查的插件, 通过&lt;code&gt;Vundle&lt;/code&gt;安装它, 在.vimrc中添加&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Bundle&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;scrooloose/syntastic&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重新打开Vim, 执行&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;BundleInstall&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置&lt;/h3&gt;
+&lt;p&gt;因为Python已经有&lt;code&gt;pylint&lt;/code&gt;来检查, 而且&lt;code&gt;syntastic&lt;/code&gt;检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;syntastic_ignore_files&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.*\.py$&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Vim"></category><category term="补全"></category><category term="7.4"></category><category term="升级"></category><category term="检查"></category><category term="C语言"></category><category term="YouCompleteMe"></category><category term="syntastic"></category></entry><entry><title>Vim配置系列(二) —- 好看的statusline</title><link href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html" rel="alternate"></link><updated>2013-01-05T15:01:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-01-05:vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html</id><summary type="html">&lt;p&gt;Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;Bundle &lt;span class="s2"&gt;&amp;quot;Lokaltog/vim-powerline&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
