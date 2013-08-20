@@ -59,6 +59,52 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html"><h2>Python 优雅的操作字典</h2></a>
+        <div class= "well small"> 一 17 九月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>Python 中的字典是Python中一个键值映射的数据结构,下面介绍一下如何优雅的操作字典.</p>
+<h2>1.1 创建字典</h2>
+<p>Python有两种方法可以创建字典,第一种是使用花括号,另一种是使用内建
+函数dict</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>1.2 初始化字典</h2>
+<p>Python可以在创建字典的时候初始化字典</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name&quot;</span> <span class="p">:</span> <span class="s">&#39;cold&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span>       <span class="c"># 更优雅</span>
+</pre></div>
+
+
+<p>很明显第二种方法更加的优雅和减少一些特殊字符的输入,但是有种情况第二种不能胜任</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">key</span> <span class="o">=</span> <span class="s">&#39;name&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{</span> <span class="n">key</span> <span class="p">:</span><span class="s">&#39;cold&#39;</span><span class="p">}</span>  <span class="c"># {&#39;name&#39;:&#39;cold&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">key</span> <span class="o">=</span> <span class="s">&#39;cold&#39;</span><span class="p">)</span> <span class="c"># {&#39;key&#39;: &#39;cold&#39;}</span>
+</pre></div>
+
+
+<p>明显第二种方法就会引发一个不容易找到的bug</p>
+<p>Python字典还有一种初始化方式,就是使用字典的fromkeys方法可以从列表中获取元素作为键并用None或fromkeys方法的第二个参数初始化</p>
+<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">([</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;blog&#39;</span><span class="p">])</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="bp">None ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h2>Python 字典和列表陷阱</h2></a>
         <div class= "well small"> 一 17 九月 2012
 
@@ -365,47 +411,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
 <p>我们还可以这么做:</p>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html"><h2>用bottle+mongodb写的一个blog程序</h2></a>
-        <div class= "well small"> 六 16 六月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
-<p>前台显示文章:
-按分类显示
-按标签显示
-按月份归档显示
-最新文章
-评论
-后台管理:
-管理文章
-管理分类
-管理评论
-发表文章
-用户验证</p>
-<p>目录结构</p>
-<p>water</p>
-<p>+-app           程序目录</p>
-<p>|----admin.py  后台管理</p>
-<p>|----blog.py   前台显示</p>
-<p>|----dbconn.py 数据库连接</p>
-<p>|----encrypt.py包含加密函数</p>
-<p>+-static       静态文件目录:包括js css image</p>
-<p>+-views        模版目录</p>
-<p>+-index.py     用于启动整个程序 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

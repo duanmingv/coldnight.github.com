@@ -59,6 +59,38 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h2>python 使用pyxmpp2编写gtalk群</h2></a>
+        <div class= "well small"> 一 29 十月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
+<p>其实主要原理就是机器人接收到消息后再将消息广播出去,从而达到群的效果.</p>
+<p>python有两个模块可以用来支持xmpp,分别是pyxmpp和pyxmpp2,之前也用pyxmpp写了一个,功能和兼容性不是很好,经常出现问题,所以又使用pyxmpp2重写了一遍,今天修复了一些bug,所以公布出来,大家可以下载测试,也可以加入我们使用gtalk进行群交流,</p>
+<p>我们的gtalk机器人是:<code>clubot@vim-cn.com</code></p>
+<p>喜欢gtalk,同时喜欢Linux/Python/Vim等爱好者的同学可以加进来交流</p>
+<p>如果对我们的代码比较感兴趣,可以访问github,我们将代码放在了github上:https://github.com/coldnight/clubot</p>
+<p>下面介绍一下安装:</p>
+<p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
+<p>下载源码:</p>
+<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
+</pre></div>
+
+
+<p>安装依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html"><h2>Python 优雅的操作字典</h2></a>
         <div class= "well small"> 一 17 九月 2012
 
@@ -351,36 +383,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
-        <div class= "well small"> 五 18 五月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
-<p>下面放出脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Author      : cold</span>
-<span class="c"># Homepage    : http://www.linuxzen.com</span>
-<span class="c"># Filename    : checkchange.sh</span>
-<span class="c"># Useage      : sh checkchange.sh [dir]</span>
-checkisdir<span class="o">()</span>
-        <span class="c"># Have one argument</span>
-        <span class="c"># The argument is a directory</span>
-        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

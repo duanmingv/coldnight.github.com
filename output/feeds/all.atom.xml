@@ -1,5 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-08-01T10:46:00+08:00</updated><entry><title>发布一个基于Tornado的高效异步的HTTP客户端库</title><link href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html" rel="alternate"></link><updated>2013-08-01T10:46:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-01:fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html</id><summary type="html">&lt;p&gt;前面的博文提到过&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;使用tornado进行网络异步编程&lt;/a&gt;, 也&lt;a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;使用tornado实现了一个高效的WebQQ机器人&lt;/a&gt;, 由于tornado内置的&lt;code&gt;AsyncHTTPClient&lt;/code&gt;功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 &lt;code&gt;tornadohttpclient&lt;/code&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-08-20T09:54:00+08:00</updated><entry><title>Linux 下 Python 实现按任意键退出</title><link href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html" rel="alternate"></link><updated>2013-08-20T09:54:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-20:linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html</id><summary type="html">&lt;p&gt;初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过&lt;code&gt;termios.h&lt;/code&gt;库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;termios&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;press_any_key_exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# 获取标准输入的描述符&lt;/span&gt;
+    &lt;span class="n"&gt;fd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fileno&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="c"&gt;# 获取标准输入(终端)的设置&lt;/span&gt;
+    &lt;span class="n"&gt;old_ttyinfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tcgetattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c"&gt;# 配置终端&lt;/span&gt;
+    &lt;span class="n"&gt;new_ttyinfo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;old_ttyinfo&lt;/span&gt;&lt;span class="p"&gt;[:]&lt;/span&gt;
+
+    &lt;span class="c"&gt;# 使用非规范模式(索引3是c_lflag 也就是本地模式)&lt;/span&gt;
+    &lt;span class="n"&gt;new_ttyinfo&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;=&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ICANON&lt;/span&gt;
+    &lt;span class="c"&gt;# 关闭回显(输入不会被显示)&lt;/span&gt;
+    &lt;span class="n"&gt;new_ttyinfo&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;=&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ECHO&lt;/span&gt;
+
+    &lt;span class="c"&gt;# 输出信息&lt;/span&gt;
+    &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="c"&gt;# 使设置生效&lt;/span&gt;
+    &lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tcsetattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TCSANOW&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;new_ttyinfo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c"&gt;# 从终端读取&lt;/span&gt;
+    &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c"&gt;# 还原终端设置&lt;/span&gt;
+    &lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tcsetattr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;termios&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TCSANOW&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;old_ttyinfo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;press_any_key_exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;按任意键继续...&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;press_any_key_exit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;按任意键退出...&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其他关于&lt;code&gt;termios&lt;/code&gt;的信息可以参考Linux手册:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;man 3 termios
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;另补充一下*nix终端的三种模式(摘自&lt;Unix\-Linux编程实践教程&gt;)&lt;/p&gt;
+&lt;h3&gt;规范模式&lt;/h3&gt;
+&lt;p&gt;规范模式, 也被成为cooked模式, 是用户常见的模式.驱动程序输入的字符保存在缓冲区, 并且仅在接收到回车键时才将这些缓冲的字符发送到程序.缓冲数据使驱动程序可以实现最基本的编辑功能, 被指派这些功能的特定键在驱动程序里设置, 可以通过命令stty或系统调用tcsetattr来修改&lt;/p&gt;
+&lt;h3&gt;非规范模式&lt;/h3&gt;
+&lt;p&gt;当缓冲和编辑功能被关闭时, 连接被成为非规范模式.终端处理器仍旧进行特定的字符处理, 例如处理Ctrl-C及换行符之间的转换, 但是编辑键将没有意义, 因此相应的输入被视为常规的数据输入
+程序需要自己实现编辑功能&lt;/p&gt;
+&lt;h3&gt;raw模式&lt;/h3&gt;
+&lt;p&gt;当所有处理都被关闭后, 驱动程序将输入直接传递给程序, 连接被成为raw模式.&lt;/p&gt;</summary><category term="Python"></category><category term="Linux"></category><category term="任意键"></category><category term="退出"></category><category term="按"></category></entry><entry><title>发布一个基于Tornado的高效异步的HTTP客户端库</title><link href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html" rel="alternate"></link><updated>2013-08-01T10:46:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-01:fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html</id><summary type="html">&lt;p&gt;前面的博文提到过&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;使用tornado进行网络异步编程&lt;/a&gt;, 也&lt;a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;使用tornado实现了一个高效的WebQQ机器人&lt;/a&gt;, 由于tornado内置的&lt;code&gt;AsyncHTTPClient&lt;/code&gt;功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 &lt;code&gt;tornadohttpclient&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;s&gt;TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在&lt;code&gt;Python2.7&lt;/code&gt;平台上测试过, 不支持&lt;code&gt;Python3&lt;/code&gt;&lt;/s&gt;&lt;/p&gt;
 &lt;p&gt;听取了仙子君的意见, 直接对&lt;code&gt;tornado.curl_httpclient.CurlAsyncHTTPClient&lt;/code&gt;进行封装&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;

@@ -59,6 +59,36 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h2>用Python写的终端下的翻译工具</h2></a>
+        <div class= "well small"> 一 23 四月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
+<p>好了不费话了,下面放代码:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*-coding:utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: translate.py</span>
+<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h2>lvs+keepalived实现高可用群集配置详解</h2></a>
         <div class= "well small"> 一 16 四月 2012
 
@@ -317,46 +347,6 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 <h3>安装rrdtool</h3>
 <div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
 wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
-        <div class= "well small"> 一 20 二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
-<h2>文件查找</h2>
-<p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
-</pre></div>
-
-
-<p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
-</pre></div>
-
-
-<h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
-</pre></div>
-
-
-<h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

@@ -59,6 +59,46 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h2>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
+<h2>介绍</h2>
+<h3>lambda</h3>
+<p>Python用于支持将函数赋值给变量的一个操作符
+默认是返回的,所以不用再加return关键字,不然会报错</p>
+<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
+<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
+</pre></div>
+
+
+<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
+<h3>map()</h3>
+<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
+<h3>filter()</h3>
+<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
+<h3>reduce()</h3>
+<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
+<h2>将上面三个函数和lambda结合使用</h2>
+<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c"># 序列中的每个元素加1</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h2>Python 常用的列表操作</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -360,34 +400,6 @@ ip:192.168.3.1</p>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
 <div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h2>iptables:restorecon: command not found无法保存策略解决</h2></a>
-        <div class= "well small"> 一 30 四月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
-<p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
-<div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
-<span class="n">whereis</span> <span class="n">restorecon</span>
-</pre></div>
-
-
-<p>没结果,继续手动查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

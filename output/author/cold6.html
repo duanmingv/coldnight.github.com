@@ -59,6 +59,36 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
+        <div class= "well small"> 五 18 五月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+
+ </div>
+        <div class="summary"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
+<p>下面放出脚本内容:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Author      : cold</span>
+<span class="c"># Homepage    : http://www.linuxzen.com</span>
+<span class="c"># Filename    : checkchange.sh</span>
+<span class="c"># Useage      : sh checkchange.sh [dir]</span>
+checkisdir<span class="o">()</span>
+        <span class="c"># Have one argument</span>
+        <span class="c"># The argument is a directory</span>
+        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
+        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h2>使用Pelican博客静态生成系统</h2></a>
         <div class= "well small"> 四 14 三月 2013
 
@@ -334,36 +364,6 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
 <div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
 <span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h2>Vim 结合Python编写的翻译插件</h2></a>
-        <div class= "well small"> 五 04 一月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
- </div>
-        <div class="summary"><p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
-<div class="codehilite"><pre><span class="c">&quot;   Author  :   cold</span>
-<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
-<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
-<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
-<span class="c">&quot;   Useage  :</span>
-<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
-<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
-<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
-
-<span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
