@@ -46,7 +46,7 @@ sudo checkinstall
 到[llvm.org](http://llvm.org/releases/download.html#3.3)上下载相应的版本解压到~/ycm_temp
 
 #### 编译
-下载(clang)[http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz]和[llvm](http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz), 解压llvm
+下载[clang](http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz)和[llvm](http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz), 解压llvm
 ```bash
 mkdir ~/ycm_temp
 cd ~/ycm_temp

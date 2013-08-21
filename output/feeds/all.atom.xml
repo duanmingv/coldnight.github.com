@@ -92,7 +92,7 @@ sudo checkinstall
 &lt;h4&gt;下载二进制&lt;/h4&gt;
 &lt;p&gt;到&lt;a href="http://llvm.org/releases/download.html#3.3"&gt;llvm.org&lt;/a&gt;上下载相应的版本解压到~/ycm_temp&lt;/p&gt;
 &lt;h4&gt;编译&lt;/h4&gt;
-&lt;p&gt;下载(clang)[http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz]和&lt;a href="http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz"&gt;llvm&lt;/a&gt;, 解压llvm&lt;/p&gt;
+&lt;p&gt;下载&lt;a href="http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz"&gt;clang&lt;/a&gt;和&lt;a href="http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz"&gt;llvm&lt;/a&gt;, 解压llvm&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;mkdir ~/ycm_temp
 &lt;span class="nb"&gt;cd&lt;/span&gt; ~/ycm_temp
 tar -zxvf llvm-3.3.src.tar.gz -C llvm.src
