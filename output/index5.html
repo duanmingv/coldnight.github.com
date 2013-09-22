@@ -59,6 +59,46 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h2>Python 断点调试</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><h2>pdb模块</h2>
+<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
+<h3>插入断点</h3>
+<p>在需要插入断点的地方插入如下代码可以插入一个断点
+import pdb; pdb.set_trace()
+当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
+<div class="codehilite"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
+<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
+ <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>pdb指令</h3>
+<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
+<ul>
+<li>l 查看代码上下文</li>
+<li>p var 监视变量var</li>
+<li>n 单步执行</li>
+<li>b line  在line行插入断点</li>
+<li>c 继续到下一个断点,没有则执行程序</li>
+<li>r 执行到函数返回前</li>
+</ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html"><h2>ssh证书登录错误</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -372,36 +412,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
                 <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
-        <div class= "well small"> 五 18 五月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
-<p>下面放出脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Author      : cold</span>
-<span class="c"># Homepage    : http://www.linuxzen.com</span>
-<span class="c"># Filename    : checkchange.sh</span>
-<span class="c"># Useage      : sh checkchange.sh [dir]</span>
-checkisdir<span class="o">()</span>
-        <span class="c"># Have one argument</span>
-        <span class="c"># The argument is a directory</span>
-        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev"><a href="http://www.linuxzen.com/index4.html">&larr; Previous</a></li>
@@ -446,6 +456,7 @@ checkisdir<span class="o">()</span>
                 
                                 <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
                                 <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>

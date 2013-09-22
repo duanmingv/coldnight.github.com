@@ -59,6 +59,43 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
+        <div class= "well small"> 六 05 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+ </div>
+        <div class="summary"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
+<div class="codehilite"><pre>Bundle <span class="s2">&quot;Lokaltog/vim-powerline&quot;</span>
+</pre></div>
+
+
+<p>然后重新打开vim执行</p>
+<div class="codehilite"><pre><span class="p">:</span>BundleInstall
+</pre></div>
+
+
+<p>如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加</p>
+<div class="codehilite"><pre><span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
+<span class="k">let</span> <span class="k">g</span>:Powerline_symbols<span class="p">=</span><span class="s1">&#39;unicode&#39;</span>
+</pre></div>
+
+
+<p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
+<p>然后重新打开vim你就会发现一个漂亮的statusline</p>
+<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h2>Vim 结合Python编写的翻译插件</h2></a>
         <div class= "well small"> 五 04 一月 2013
 
@@ -365,36 +402,6 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>但是访问nginx总是返回502 Bad ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h2>用Vim为Python源码自动添加#!行和编码行</h2></a>
-        <div class= "well small"> 六 29 九月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
- </div>
-        <div class="summary"><p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
-<p>太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到<code>~/.vimrc</code>下即可每次打开如果没有上述行则会自动填充:</p>
-<div class="codehilite"><pre><span class="k">function</span> InsertPythonHeader<span class="p">()</span>
-    <span class="k">let</span> l1 <span class="p">=</span> getline<span class="p">(</span><span class="m">1</span><span class="p">)</span>
-    <span class="k">let</span> l2 <span class="p">=</span> getline<span class="p">(</span><span class="m">2</span><span class="p">)</span>
-    <span class="k">if</span>  <span class="k">match</span><span class="p">(</span><span class="s1">&#39;\#!/&#39;</span><span class="p">,</span> l1<span class="p">)</span> <span class="p">==</span> <span class="m">0</span>
-        exec <span class="m">1</span>
-        normal O
-        <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
-    <span class="k">endif</span>
-    <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
-        exec ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
-    </div>	
-				
             <div class="pagination">
 <ul>
     <li class="prev"><a href="http://www.linuxzen.com/index2.html">&larr; Previous</a></li>
@@ -439,6 +446,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
                 
                                 <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
                                 <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
                                 <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
                                 <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
                                 <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
