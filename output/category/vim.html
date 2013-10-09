@@ -10,15 +10,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
+    <script src="http://localhost:8000/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/local.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -34,12 +34,12 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
+        <a class="brand" href="http://localhost:8000">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
                     
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+                            <li><a href="http://localhost:8000/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -59,118 +59,30 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html"><h1>Vim 代码补全和检查: YouCompleteMe & syntastic</h1></a>
-            三 14 八月 2013
+            <a href="http://localhost:8000/vim-xiang-dui-xing-hao.html"><h1>Vim  相对行号</h1></a>
+            三 09 十月 2013
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  
         </div>
         
-        <div class="highlight"><p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
-<h2>升级Vim</h2>
-<p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
-升级Vim需要先卸载原有的Vim</p>
-<div class="codehilite"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
+        <div class="highlight"><p>在使用用Vim时时常会遇到像复制多行或者想快速向下/向上移动多行时而不知道行数的情况, 今天发现一个Vim对此有帮助的特性: <strong>相对行号</strong>.
+相对行号将会在每行前显示相对于光标所在行的行号, 相对行号你给出某些垂直移动命令时需要的计数值</p>
+<p>在 <tt class="docutils literal">Vim 7.4</tt> 之前的版本, 启用相对行号当前行号将变为0, 无法显示正常的行号, 在 <tt class="docutils literal">Vim 7.4</tt> 中则可以正常的显示当前行号的同时来显示相对行号, 下面有两张图可以对比</p>
+<p>Vim 7.3</p>
+<img alt="/static/upload/vim_rn_pre_74.png" src="/static/upload/vim_rn_pre_74.png" />
+<p>Vim 7.4</p>
+<img alt="/static/upload/vim_rn_74.png" src="/static/upload/vim_rn_74.png" />
+<p>从上面的图片看来, 启用相对行号后可以很直观的看到当前行距离上面/下面某行的行数</p>
+<p>可以使用以下指令启用这个特性</p>
+<div class="highlight"><pre>set relativenumber
 </pre></div>
-
-
-<p>并安装以下依赖</p>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
-    <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
-    <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxpm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxt</span><span class="o">-</span><span class="n">dev</span> \
-    <span class="n">python</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">dev</span> <span class="n">mercurial</span> <span class="n">checkinstall</span>
-</pre></div>
-
-
-<p>下载最新的Vim源码, 这里从代码仓库获取(需要<code>hg</code>没有自行安装)</p>
-<div class="codehilite"><pre>hg clone https://vim.googlecode.com/hg/ vim
-</pre></div>
-
-
-<p>然后进入目录编译安装Vim</p>
-<div class="codehilite"><pre><span class="nb">cd </span>vim
-./configure --with-features<span class="o">=</span>huge <span class="se">\</span>
-            --enable-rubyinterp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-pythoninterp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-python3interp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-perlinterp<span class="o">=</span>yes <span class="se">\</span>
-            --enable-luainterp <span class="o">=</span> yes <span class="se">\</span>
-            --enable-gui<span class="o">=</span>gtk2 --enable-cscope --prefix<span class="o">=</span>/usr
-make <span class="nv">VIMRUNTIMEDIR</span><span class="o">=</span>/usr/share/vim/vim74
-sudo checkinstall
-</pre></div>
-
-
-<h2>安装llvm</h2>
-<p>如果想是想C系语言的补全, 需要libclang 3.2以上的版本, Ubuntu 12.10 自带的是3.0, 所以先安装LLVM, 可以下载二进制文件/编译安装</p>
-<h4>下载二进制</h4>
-<p>到<a href="http://llvm.org/releases/download.html#3.3">llvm.org</a>上下载相应的版本解压到~/ycm_temp</p>
-<h4>编译</h4>
-<p>下载<a href="http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz">clang</a>和<a href="http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz">llvm</a>, 解压llvm</p>
-<div class="codehilite"><pre>mkdir ~/ycm_temp
-<span class="nb">cd</span> ~/ycm_temp
-tar -zxvf llvm-3.3.src.tar.gz -C llvm.src
-</pre></div>
-
-
-<p>解压 clang到llvm.src/tools</p>
-<div class="codehilite"><pre>tar -zxvf cfe-3.3.src.tar.gz -C ~/ycm_temp/llvm.src/tools/
-mv ~/ycm_temp/llvm.src/tools/cfe-3.3.src ~/ycm_temp/llvm/tools/clang
-</pre></div>
-
-
-<p>编译llvm会自动编译clang</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/ycm_temp
-mkdir llvm_build
-<span class="nb">cd </span>llvm_build
-cmake ../llvm.src/CMakeList.txt ../llvm.src
-make
-</pre></div>
-
-
-<h2>安装YouCompleteMe</h2>
-<p>使用Vundle安装YouComplete(猛击<a href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>了解Vundle)</p>
-<h3>编译ycm_core</h3>
-<div class="codehilite"><pre>mkdir ~/ycm_build
-<span class="nb">cd</span> ~/ycm_build
-cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm.src/lib/libclang.so 
-make ycm_core
-</pre></div>
-
-
-<p>下载llvm二进制的可以参考</p>
-<div class="codehilite"><pre>cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm_root_path/lib/libclang.so
-</pre></div>
-
-
-<h3>配置</h3>
-<p>YouCompleteMe 需要一个配置文件来补全, 可以参考<a href="https://github.com/Valloric/YouCompleteMe/blob/master/cpp/ycm/.ycm_extra_conf.py">官方配置文件</a>, 可以将配置文件至于项目根目录或者上级目录, YouCompleteMe 会自动检测加载, 也可以通过指定<code>g:ycm_global_ycm_extra_conf</code>指定一个全局的配置文件</p>
-<p>YouCompleteMe 每次加载配置文件会有一个提示, 很烦人, 可以通过将<code>g:ycm_confirm_extra_conf</code>置为0关闭提示</p>
-<h3>补全Python</h3>
-<p>YouCompleteMe 通过 <code>jedi</code>插件来补全Python, 可以通过<code>Vundle</code>安装此插件,在.vimrc中添加</p>
-<div class="codehilite"><pre><span class="n">Bundle</span> <span class="s">&quot;davidhalter/jedi&quot;</span>
-</pre></div>
-
-
-<h2>代码检查</h2>
-<p><code>syntastic</code>是一个代码检查的插件, 通过<code>Vundle</code>安装它, 在.vimrc中添加</p>
-<div class="codehilite"><pre><span class="n">Bundle</span> <span class="s">&quot;scrooloose/syntastic&quot;</span>
-</pre></div>
-
-
-<p>重新打开Vim, 执行</p>
-<div class="codehilite"><pre><span class="o">:</span><span class="n">BundleInstall</span>
-</pre></div>
-
-
-<h3>配置</h3>
-<p>因为Python已经有<code>pylint</code>来检查, 而且<code>syntastic</code>检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查</p>
-<div class="codehilite"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">syntastic_ignore_files</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;.*\.py$&quot;</span><span class="p">]</span>
-</pre></div></div>
+<p>启用相对行号后再也不用为了复制多行费力气的去数了, so easy!</p>
+</div>
         <hr />
     </div>
 		
@@ -181,13 +93,43 @@ make ycm_core
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
-        <div class= "well small"> 六 05 一月 2013
+        <a href="http://localhost:8000/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html"><h2>Vim 代码补全和检查: YouCompleteMe & syntastic</h2></a>
+        <div class= "well small"> 三 14 八月 2013
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
+
+ </div>
+        <div class="summary"><p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
+<h2>升级Vim</h2>
+<p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
+升级Vim需要先卸载原有的Vim</p>
+<div class="codehilite"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
+</pre></div>
+
+
+<p>并安装以下依赖</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://localhost:8000/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
+        <div class= "well small"> 六 05 一月 2013
+
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+ 
+
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
@@ -208,7 +150,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
 <p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
 <p>然后重新打开vim你就会发现一个漂亮的statusline</p>
-<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">read more</a></div>
+<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p> <a class="btn btn-info xsmall" href="http://localhost:8000/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">read more</a></div>
     </div>	
 				
     
@@ -218,13 +160,13 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h2>Vim 结合Python编写的翻译插件</h2></a>
+        <a href="http://localhost:8000/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h2>Vim 结合Python编写的翻译插件</h2></a>
         <div class= "well small"> 五 04 一月 2013
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
@@ -238,7 +180,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 <span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
 
 <span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
+    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">read more</a></div>
     </div>	
 				
     
@@ -248,13 +190,13 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html"><h2>Vim配置系列(一) ---- 插件管理</h2></a>
+        <a href="http://localhost:8000/vimpei-zhi-xi-lie-cha-jian-guan-li.html"><h2>Vim配置系列(一) ---- 插件管理</h2></a>
         <div class= "well small"> 五 14 十二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
@@ -270,7 +212,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
 <p>然后在你的.vimrc里添加下面内容:</p>
 <div class="codehilite"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
-<span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html">read more</a></div>
+<span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/vimpei-zhi-xi-lie-cha-jian-guan-li.html">read more</a></div>
     </div>	
 				
     
@@ -280,13 +222,13 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html"><h2>Vim打开Python源码自动添加#!行和编码行 升级版</h2></a>
+        <a href="http://localhost:8000/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html"><h2>Vim打开Python源码自动添加#!行和编码行 升级版</h2></a>
         <div class= "well small"> 四 13 十二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
@@ -301,7 +243,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
     <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
     normal <span class="k">o</span>
     <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
-    normal <span class="k">o ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html">read more</a></div>
+    normal <span class="k">o ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html">read more</a></div>
     </div>	
 				
     
@@ -311,13 +253,13 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h2>用Vim为Python源码自动添加#!行和编码行</h2></a>
+        <a href="http://localhost:8000/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h2>用Vim为Python源码自动添加#!行和编码行</h2></a>
         <div class= "well small"> 六 29 九月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
@@ -331,7 +273,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
         <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
     <span class="k">endif</span>
     <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
-        exec ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
+        exec ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">read more</a></div>
     </div>	
 				
     
@@ -341,13 +283,13 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html"><h2>分享Vim两种好用的功能:状态行和空白字符可见</h2></a>
+        <a href="http://localhost:8000/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html"><h2>分享Vim两种好用的功能:状态行和空白字符可见</h2></a>
         <div class= "well small"> 六 29 九月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>马上要放假了,没事折腾了一下Vim发现了两个非常棒的功能,一个是给Vim添加一个状态栏,一个是可以在编辑的时候显示空白,</p>
@@ -370,7 +312,7 @@ fugitive 可以在git获得:</p>
     <span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
     <span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>%<span class="p">&lt;</span>%<span class="k">f</span>\   <span class="c">&quot; 文件名</span>
     <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="k">w</span>%<span class="k">h</span>%<span class="k">m</span>%<span class="k">r</span> <span class="c">&quot; 选项</span>
-    <span class="k">set ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html">read more</a></div>
+    <span class="k">set ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html">read more</a></div>
     </div>	
 				
     
@@ -380,13 +322,13 @@ fugitive 可以在git获得:</p>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h2>Linux下配置vim一键编译C/C++并执行</h2></a>
+        <a href="http://localhost:8000/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h2>Linux下配置vim一键编译C/C++并执行</h2></a>
         <div class= "well small"> 四 05 四月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+in <a href="http://localhost:8000/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
@@ -407,14 +349,14 @@ clear
 <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
 <span class="k">then</span>
 <span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
-    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
+    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
-    <li class="active"><a href="http://www.linuxzen.com/category/vim.html">1</a></li>
+    <li class="active"><a href="http://localhost:8000/category/vim.html">1</a></li>
 
     <li class="next disabled"><a href="#">&rarr; Next</a></li>
 
@@ -432,8 +374,8 @@ clear
                 Site
                 </li>
             
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+                <li><a href="http://localhost:8000/archives.html">Archives</a>
+                <li><a href="http://localhost:8000/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -445,15 +387,15 @@ clear
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://localhost:8000/category/linux.html">Linux</a></li>
+                                <li><a href="http://localhost:8000/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://localhost:8000/category/pyqt.html">PyQt</a></li>
+                                <li><a href="http://localhost:8000/category/python.html">Python</a></li>
+                                <li><a href="http://localhost:8000/category/vim.html">Vim</a></li>
+                                <li><a href="http://localhost:8000/category/git.html">git</a></li>
+                                <li><a href="http://localhost:8000/category/shell.html">shell</a></li>
+                                <li><a href="http://localhost:8000/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://localhost:8000/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -478,7 +420,7 @@ clear
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
+<p><a href="http://localhost:8000">cold's world</a> &copy; cold 2013
 <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
 </p>
 </footer>

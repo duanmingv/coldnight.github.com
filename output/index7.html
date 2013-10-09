@@ -10,15 +10,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
+    <script src="http://localhost:8000/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/local.css" rel="stylesheet">
+    <link href="http://localhost:8000/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -34,12 +34,12 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
+        <a class="brand" href="http://localhost:8000">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
                     
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+                            <li><a href="http://localhost:8000/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -59,22 +59,26 @@
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h2>lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h2></a>
-        <div class= "well small"> 二 13 三月 2012
+        <a href="http://localhost:8000/shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h2>使用cacti构建监控系统</h2></a>
+        <div class= "well small"> 三 14 三月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+in <a href="http://localhost:8000/category/jian-kong.html">监控</a>
 
  </div>
-        <div class="summary"><p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
-<p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
-<p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
-<p>nginx当前最新稳定版是nginx-1.0.13
-首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+        <div class="summary"><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
+<p>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。</p>
+<p>cacti依赖于PHP+MYSQL环境,前面的几篇文章已经详细讲解了如何在Linux部署LNMP环境,这篇文章我们就是用前面几章所搭建的环境,所以这里不再讲解如何搭建环境,如果您不会可以先看看前几篇文章.</p>
+<p>下面就介绍如何来部署cacti.</p>
+<p>首先介绍本文所使用的环境:
+server:</p>
+<p>系统为CentOS 5.5 32bit</p>
+<p>ip:192.168.3.120</p>
+<p>cacti:cacti-0.8.7i.tar.gz</p>
+<p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
+<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
     </div>	
 				
     
@@ -84,13 +88,38 @@ wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://ww
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h2>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h2></a>
+        <a href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h2>lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h2></a>
         <div class= "well small"> 二 13 三月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+in <a href="http://localhost:8000/category/linux.html">Linux</a>
+
+ </div>
+        <div class="summary"><p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
+<p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
+<p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
+<p>nginx当前最新稳定版是nginx-1.0.13
+首先我们下载nginx,在Linux下执行下面命令:</p>
+<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
+wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h2>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h2></a>
+        <div class= "well small"> 二 13 三月 2012
+
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+ 
+
+in <a href="http://localhost:8000/category/linux.html">Linux</a>
 
  </div>
         <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
@@ -110,7 +139,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
 
 <p>卸载只要指定包名即可卸载.</p>
-<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
+<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
     </div>	
 				
     
@@ -120,13 +149,13 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html"><h2>lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</h2></a>
+        <a href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html"><h2>lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</h2></a>
         <div class= "well small"> 六 10 三月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+in <a href="http://localhost:8000/category/linux.html">Linux</a>
 
  </div>
         <div class="summary"><p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
@@ -141,7 +170,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>做完这步之后我们还要编辑一下虚拟机的虚拟卡设置,以达到我们使用静态ip上网的需求:</p>
 <p>点击虚拟机的Edit(编辑)-&gt;Virtual Network Editor(虚拟网卡编辑器):
 <img alt="www.linuxzen.com" src="/upload/QQ截图20120310101559.jpg" />
-在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html">read more</a></div>
+在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP ...</p> <a class="btn btn-info xsmall" href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html">read more</a></div>
     </div>	
 				
     
@@ -151,13 +180,13 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h2>lnmp环境搭建完全手册(一)------系统安装</h2></a>
+        <a href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h2>lnmp环境搭建完全手册(一)------系统安装</h2></a>
         <div class= "well small"> 四 08 三月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+in <a href="http://localhost:8000/category/linux.html">Linux</a>
 
  </div>
         <div class="summary"><p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
@@ -165,7 +194,7 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 <p>安装VMware这里就不介绍了,给出VMware Workstation 8.0的<a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;vmware=downloadBinary&amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;pot=1&amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;tranId=70310191&amp;amp;downloadURL&quot;">下载地址</a></p>
 <p>VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
 我们还要准备CentOS5.5 的iso镜像用来安装系统.<a href="&quot;http://download.chinaunix.net/down.php?id=31679&amp;amp;ResourceID=12271&amp;amp;site=6">下载地址</a></p>
-<p>下面我们就来新建一个虚拟机安装CentOS ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">read more</a></div>
+<p>下面我们就来新建一个虚拟机安装CentOS ...</p> <a class="btn btn-info xsmall" href="http://localhost:8000/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">read more</a></div>
     </div>	
 				
     
@@ -175,13 +204,13 @@ in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h2>nginx平台搭建nagios监控系统</h2></a>
+        <a href="http://localhost:8000/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h2>nginx平台搭建nagios监控系统</h2></a>
         <div class= "well small"> 日 26 二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
+in <a href="http://localhost:8000/category/jian-kong.html">监控</a>
 
  </div>
         <div class="summary"><p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
@@ -201,7 +230,7 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 <li>系统:CentOS 5.5 32bit</li>
 <li>ip:192.168.3.3</li>
 <li>nagios core:nagios-3.3.1.tar.gz</li>
-<li>web:nginx(nginx-1 ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">read more</a></div>
+<li>web:nginx(nginx-1 ...</li></ul> <a class="btn btn-info xsmall" href="http://localhost:8000/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">read more</a></div>
     </div>	
 				
     
@@ -211,13 +240,13 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h2>搭建ntop监测局域网内流量</h2></a>
+        <a href="http://localhost:8000/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h2>搭建ntop监测局域网内流量</h2></a>
         <div class= "well small"> 一 20 二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
+in <a href="http://localhost:8000/category/jian-kong.html">监控</a>
 
  </div>
         <div class="summary"><p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
@@ -231,7 +260,7 @@ in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 <h2>一.安装依赖:</h2>
 <h3>安装rrdtool</h3>
 <div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
+wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
     </div>	
 				
     
@@ -241,13 +270,13 @@ wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
+        <a href="http://localhost:8000/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
         <div class= "well small"> 一 20 二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+in <a href="http://localhost:8000/category/shell.html">shell</a>
 
  </div>
         <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
@@ -271,7 +300,7 @@ find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</
 
 <h2>显示指定行</h2>
 <div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
     
@@ -281,13 +310,13 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
+        <a href="http://localhost:8000/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
         <div class= "well small"> 五 17 二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+in <a href="http://localhost:8000/category/shell.html">shell</a>
 
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
@@ -296,7 +325,7 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
     </div>	
 				
     
@@ -306,13 +335,13 @@ in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h2>heartbeat实现MySQL双机高可用</h2></a>
+        <a href="http://localhost:8000/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h2>heartbeat实现MySQL双机高可用</h2></a>
         <div class= "well small"> 日 12 二月 2012
 
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
+in <a href="http://localhost:8000/category/mysql.html">MySQL</a>
 
  </div>
         <div class="summary"><p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
@@ -325,54 +354,23 @@ in <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
 备用MySQL:192.168.3.102/24   主机名:slave.org
 vip:192.168.3.103/24
 MySQL:mysql-5.0.95.tar.gz
-heartbeat ...</!--more--></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h2>nginx+keepalived配置高可用HTTP群集</h2></a>
-        <div class= "well small"> 四 09 二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
-
- </div>
-        <div class="summary"><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
-一般集群主要架构为:</p>
-<p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
-第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
-第二种方式主备同时绑定一个vip,把域名通过DNS轮询的方式解析到这两个服务器上,主机出现故障,备机就将主机绑定vip绑定到备机上,同时arping网关刷新MAC地址.实现故障转移.</p>
-<p>中间为WEB服务器作为real server,处理请求.
-后端为数据库和分布式文件系统.数据库一般为主从两台.分布式文件系统有效解决WEB服务器之间的数据同步.有的还会将图片服务器单独分离出来放在后端.</p>
-<p>本文使用环境:</p>
-<ul>
-<li>CentOS 5.5 32位</li>
-<li>nginx:nginx-1.0.11</li>
-<li>keepalived：keepalived-1.1.19.tar.gz</li>
-<li>主调度器 ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">read more</a></div>
+heartbeat ...</!--more--></p> <a class="btn btn-info xsmall" href="http://localhost:8000/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
 <ul>
-    <li class="prev"><a href="http://www.linuxzen.com/index6.html">&larr; Previous</a></li>
+    <li class="prev"><a href="http://localhost:8000/index6.html">&larr; Previous</a></li>
 
-    <li class=""><a href="http://www.linuxzen.com/index.html">1</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index2.html">2</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index3.html">3</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index4.html">4</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index5.html">5</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index6.html">6</a></li>
-    <li class="active"><a href="http://www.linuxzen.com/index7.html">7</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index8.html">8</a></li>
+    <li class=""><a href="http://localhost:8000/index.html">1</a></li>
+    <li class=""><a href="http://localhost:8000/index2.html">2</a></li>
+    <li class=""><a href="http://localhost:8000/index3.html">3</a></li>
+    <li class=""><a href="http://localhost:8000/index4.html">4</a></li>
+    <li class=""><a href="http://localhost:8000/index5.html">5</a></li>
+    <li class=""><a href="http://localhost:8000/index6.html">6</a></li>
+    <li class="active"><a href="http://localhost:8000/index7.html">7</a></li>
+    <li class=""><a href="http://localhost:8000/index8.html">8</a></li>
 
-    <li class="next"><a href="http://www.linuxzen.com/index8.html">Next &rarr;</a></li>
+    <li class="next"><a href="http://localhost:8000/index8.html">Next &rarr;</a></li>
 
 </ul>
 </div>    
@@ -388,8 +386,8 @@ in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡<
                 Site
                 </li>
             
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+                <li><a href="http://localhost:8000/archives.html">Archives</a>
+                <li><a href="http://localhost:8000/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -401,15 +399,15 @@ in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡<
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://localhost:8000/category/linux.html">Linux</a></li>
+                                <li><a href="http://localhost:8000/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://localhost:8000/category/pyqt.html">PyQt</a></li>
+                                <li><a href="http://localhost:8000/category/python.html">Python</a></li>
+                                <li><a href="http://localhost:8000/category/vim.html">Vim</a></li>
+                                <li><a href="http://localhost:8000/category/git.html">git</a></li>
+                                <li><a href="http://localhost:8000/category/shell.html">shell</a></li>
+                                <li><a href="http://localhost:8000/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://localhost:8000/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -434,7 +432,7 @@ in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡<
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
+<p><a href="http://localhost:8000">cold's world</a> &copy; cold 2013
 <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
 </p>
 </footer>
