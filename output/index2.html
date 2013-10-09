@@ -10,15 +10,15 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-    <script src="http://localhost:8000/theme/html5.js"></script>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
         <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
         
     <!-- Le styles -->
-    <link href="http://localhost:8000/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://localhost:8000/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://localhost:8000/theme/local.css" rel="stylesheet">
-    <link href="http://localhost:8000/theme/pygments.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
 
@@ -34,12 +34,12 @@
              <span class="icon-bar"></span>
          </a>
 
-        <a class="brand" href="http://localhost:8000">cold's world</a>
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
 
         <div class="nav-collapse">
         <ul class="nav">
                     
-                            <li><a href="http://localhost:8000/pages/about.html">About</a></li>
+                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
                         </ul>
         </div>
         
@@ -59,18 +59,18 @@
  
 
     <div class='article'>
-        <a href="http://localhost:8000/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h2>grep挽救了我一个下午: 恢复rm -f删除的代码</h2></a>
+        <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h2>grep挽救了我一个下午: 恢复rm -f删除的代码</h2></a>
         <div class= "well small"> 四 25 四月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/linux.html">Linux</a>
+in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
  </div>
         <div class="summary"><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
 <p>好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个<code>Logics</code>类并且上面差不多30行, 往下差不多300行的样子, 我删除<code>logics.py</code>所在的分区是<code>/dev/sda7</code>, 所以我运行了下面命令:</p>
-<div class="codehilite"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html">read more</a></div>
+<div class="codehilite"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html">read more</a></div>
     </div>	
 				
     
@@ -80,13 +80,13 @@ in <a href="http://localhost:8000/category/linux.html">Linux</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h2>借用Tornado实现高效的WebQQ机器人</h2></a>
+        <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h2>借用Tornado实现高效的WebQQ机器人</h2></a>
         <div class= "well small"> 二 23 四月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
@@ -94,7 +94,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <h2>引子</h2>
 <p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
 <h2>原理</h2>
-<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p> <a class="btn btn-info xsmall" href="http://localhost:8000/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">read more</a></div>
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">read more</a></div>
     </div>	
 				
     
@@ -104,13 +104,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
+        <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
         <div class= "well small"> 四 18 四月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
@@ -118,7 +118,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
 <h2>安装</h2>
 <p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
-<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://localhost:8000/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
+<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
     </div>	
 				
     
@@ -128,13 +128,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h2>使用Tornado进行网络异步编程</h2></a>
+        <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h2>使用Tornado进行网络异步编程</h2></a>
         <div class= "well small"> 一 15 四月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><h2>Tornado</h2>
@@ -146,7 +146,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <h3>add_handler</h3>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">read more</a></div>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">read more</a></div>
     </div>	
 				
     
@@ -156,13 +156,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h2>使用WebQQ协议桥接XMPP和QQ群</h2></a>
+        <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h2>使用WebQQ协议桥接XMPP和QQ群</h2></a>
         <div class= "well small"> 四 14 三月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><h2>介绍</h2>
@@ -178,7 +178,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <span class="c">#   Author  :   Wood.D</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/03/04 09:58:26</span>
-<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
     </div>	
 				
     
@@ -188,13 +188,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h2>使用Pelican博客静态生成系统</h2></a>
+        <a href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h2>使用Pelican博客静态生成系统</h2></a>
         <div class= "well small"> 四 14 三月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><h1>介绍</h1>
@@ -206,7 +206,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <h1>使用</h1>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
 <div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">read more</a></div>
+make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">read more</a></div>
     </div>	
 				
     
@@ -216,13 +216,13 @@ make clean ...</pre></div> <a class="btn btn-info xsmall" href="http://localhost
  
 
     <div class='article'>
-        <a href="http://localhost:8000/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h2>vLog 一个使用Python编写的轻量级博客系统</h2></a>
+        <a href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h2>vLog 一个使用Python编写的轻量级博客系统</h2></a>
         <div class= "well small"> 二 05 二月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><h2>介绍</h2>
@@ -237,7 +237,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <ul>
 <li>Linux</li>
 <li>python2.7</li>
-<li>MySQL ...</li></ul> <a class="btn btn-info xsmall" href="http://localhost:8000/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">read more</a></div>
+<li>MySQL ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">read more</a></div>
     </div>	
 				
     
@@ -247,13 +247,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
+        <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
         <div class= "well small"> 二 05 二月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><h2>引子</h2>
@@ -264,7 +264,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <span class="c">#</span>
 <span class="c">#   Author  :   cold</span>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
+<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
     
@@ -274,13 +274,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
+        <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h2>Python 重复安装包报错</h2></a>
         <div class= "well small"> 五 25 一月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>最近写程序用到argparse总是会报错</p>
@@ -289,7 +289,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 
 
 <p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://localhost:8000/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
+执行<code>ls /usr/local ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">read more</a></div>
     </div>	
 				
     
@@ -299,13 +299,13 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
  
 
     <div class='article'>
-        <a href="http://localhost:8000/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
+        <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h2>Linux 下使用Python截图自动分享</h2></a>
         <div class= "well small"> 二 22 一月 2013
 
-by <a class="url fn" href="http://localhost:8000/author/cold.html">cold</a>
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://localhost:8000/category/python.html">Python</a>
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><h2>引子</h2>
@@ -322,23 +322,23 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
 <span class="c">#   Desc    :   贴代码和图片</span>
 <span class="c">#</span>
 <span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://localhost:8000/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
+<span class="kn">import ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">read more</a></div>
     </div>	
 				
             <div class="pagination">
 <ul>
-    <li class="prev"><a href="http://localhost:8000/index.html">&larr; Previous</a></li>
+    <li class="prev"><a href="http://www.linuxzen.com/index.html">&larr; Previous</a></li>
 
-    <li class=""><a href="http://localhost:8000/index.html">1</a></li>
-    <li class="active"><a href="http://localhost:8000/index2.html">2</a></li>
-    <li class=""><a href="http://localhost:8000/index3.html">3</a></li>
-    <li class=""><a href="http://localhost:8000/index4.html">4</a></li>
-    <li class=""><a href="http://localhost:8000/index5.html">5</a></li>
-    <li class=""><a href="http://localhost:8000/index6.html">6</a></li>
-    <li class=""><a href="http://localhost:8000/index7.html">7</a></li>
-    <li class=""><a href="http://localhost:8000/index8.html">8</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index.html">1</a></li>
+    <li class="active"><a href="http://www.linuxzen.com/index2.html">2</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index3.html">3</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index4.html">4</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index5.html">5</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index6.html">6</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index7.html">7</a></li>
+    <li class=""><a href="http://www.linuxzen.com/index8.html">8</a></li>
 
-    <li class="next"><a href="http://localhost:8000/index3.html">Next &rarr;</a></li>
+    <li class="next"><a href="http://www.linuxzen.com/index3.html">Next &rarr;</a></li>
 
 </ul>
 </div>    
@@ -354,8 +354,8 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
                 Site
                 </li>
             
-                <li><a href="http://localhost:8000/archives.html">Archives</a>
-                <li><a href="http://localhost:8000/tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
                             </ul>
             </div>
@@ -367,15 +367,15 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
                 Categories
                 </li>
                 
-                                <li><a href="http://localhost:8000/category/linux.html">Linux</a></li>
-                                <li><a href="http://localhost:8000/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://localhost:8000/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://localhost:8000/category/python.html">Python</a></li>
-                                <li><a href="http://localhost:8000/category/vim.html">Vim</a></li>
-                                <li><a href="http://localhost:8000/category/git.html">git</a></li>
-                                <li><a href="http://localhost:8000/category/shell.html">shell</a></li>
-                                <li><a href="http://localhost:8000/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://localhost:8000/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
                                    
             </ul>
             </div>
@@ -400,7 +400,7 @@ in <a href="http://localhost:8000/category/python.html">Python</a>
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://localhost:8000">cold's world</a> &copy; cold 2013
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
 <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
 </p>
 </footer>
