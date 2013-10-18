@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h1>Vim配置系列(二) —- 好看的statusline</h1></a>
-            六 05 一月 2013
+            <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h1>推荐几款最近发现非常酷的Vim插件</h1></a>
+            五 18 十月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -70,7 +70,116 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
  
         </div>
         
-        <div class="highlight"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
+        <div class="highlight"><p>最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:</p>
+<ul class="simple">
+<li>delimitMate
+用于补全括号和引号</li>
+<li>vim-surround
+用于快速切换括号/引号或者标签</li>
+<li>GitGutter
+实时显示git更改</li>
+<li>Gitv
+查看Git详细提交日志(类似gitk)</li>
+<li>vim-commentary
+Vim批量注释工具, 可以注释多行和去除多行注释</li>
+<li>indentLine
+更加美观的显示缩进对齐线</li>
+</ul>
+<p>先放上录屏:</p>
+<div style="width:800; height: 500">
+    <script type="text/javascript" src="http://asciinema.org/a/5981.js" id="asciicast-5981" async></script>
+</div><div class="section" id="id1">
+<h2>安装</h2>
+<p>上面插件可以通过 Vundle 来安装 (了解Vundle猛击 <a class="reference external" href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>), 下面是 <tt class="docutils literal">.vimrc</tt> 的配置</p>
+<div class="highlight"><pre>Bundle <span class="s2">&quot;Yggdroot/indentLine&quot;</span>
+Bundle <span class="s2">&quot;airblade/vim-gitgutter&quot;</span>
+Bundle <span class="s2">&quot;tpope/vim-commentary&quot;</span>
+Bundle <span class="s2">&quot;tpope/vim-surround&quot;</span>
+Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
+</pre></div>
+<p>然后重新打开 Vim, 执行 <tt class="docutils literal">:BundleIntall</tt> 等待安装完成</p>
+</div>
+<div class="section" id="id3">
+<h2>配置使用</h2>
+<p>delimitMate和GitGutter安装完成不用任何配置即可使用, 下面我们先介绍 <tt class="docutils literal"><span class="pre">vim-surround</span></tt> 插件的使用</p>
+<div class="section" id="vim-surround">
+<h3>vim-surround</h3>
+<p>这个插件可以快速的为字符串包围/改变或去除引号/括号或者HTML标签</p>
+<div class="section" id="id4">
+<h4>为单个单词包围</h4>
+<p>在命令模式下, 使用 <tt class="docutils literal">ysiw</tt> + <tt class="docutils literal"><span class="pre">'/&quot;/(/[/{</span></tt> 就可以为光标下的一个单词包围上 <tt class="docutils literal"><span class="pre">'/&quot;/(/[/{</span></tt></p>
+<p>比如 <tt class="docutils literal">ysiw'</tt> 为光标下的单词包围上单引号, <tt class="docutils literal">ysiw&quot;</tt> 为光标下单词包围上双引号, 依此类推.</p>
+<p>vim-surround 同时还支持包围html标签, 将光标放到某单词试试下面指令</p>
+<div class="highlight"><pre>ysiw<span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>
+ysiw<span class="p">&lt;</span><span class="k">p</span> class<span class="p">=</span><span class="s2">&quot;meta&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="id5">
+<h4>包围一行</h4>
+<p><tt class="docutils literal">yssb</tt> 可以快速为一行包围圆括号,  <tt class="docutils literal">yss</tt> + <tt class="docutils literal"><span class="pre">'/&quot;/(/[/{</span></tt> 可以为正行快速包围相应的引号/括号</p>
+<p>比如 <tt class="docutils literal">yss&quot;</tt>  为一行包围双引号</p>
+</div>
+<div class="section" id="id6">
+<h4>更改包围</h4>
+<p><tt class="docutils literal">cs</tt> 指令可以更改包围, 比如 <tt class="docutils literal">cs'&quot;</tt> 是将单引号变成双引号, <tt class="docutils literal">cs&quot;(</tt> 是将双引号变成圆括号</p>
+<p>vim-surround支持将括号或者引号变更为html标签, 试试下面命令</p>
+<div class="highlight"><pre><span class="k">cs</span>&#39;<span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>
+</pre></div>
+<p>上面命令将单引号换成 <tt class="docutils literal">&lt;p&gt;</tt> 标签</p>
+</div>
+<div class="section" id="id7">
+<h4>去除包围</h4>
+<p><tt class="docutils literal">ds</tt> 指令可以取出包围, 后面需跟包围的内容, <tt class="docutils literal">ds&quot;</tt> 是去除双引号包围, ``</p>
+</div>
+</div>
+<div class="section" id="indentline">
+<h3>indentLine</h3>
+<p>这个插件安装成功后就会显示缩进对齐线, 我们仅仅在 <tt class="docutils literal">.vimrc</tt> 里加一行来切换是否显示</p>
+<div class="highlight"><pre>map <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">il</span> :IndentLinesToggle<span class="p">&lt;</span>CR<span class="p">&gt;</span>
+</pre></div>
+<p>这样我们就可以通过 <tt class="docutils literal">&lt;leader&gt; il</tt> (我的leader映射的,)来切换是否显示对齐线</p>
+</div>
+<div class="section" id="gitv">
+<h3>Gitv</h3>
+<p>Gitv 实现了可以用Vim来查看Git的详细提交信息, 只需要打开Vim 执行 <tt class="docutils literal">:Gitv</tt></p>
+</div>
+<div class="section" id="vim-commentary">
+<h3>vim-commentary</h3>
+<p>这个插件可以快速注释与反注释多行内容, 但是它的注释符使用的是 <tt class="docutils literal">commentstring</tt>, 默认是 <tt class="docutils literal">/* %s */</tt>, 但这个值满足不了Python 和 Shell这样的语言,
+在 <tt class="docutils literal">.vimrc</tt> 添加如下内容</p>
+<div class="highlight"><pre>autocmd <span class="nb">FileType</span> python<span class="p">,</span><span class="k">shell</span> <span class="k">set</span> <span class="nb">commentstring</span><span class="p">=</span>#\ %<span class="k">s</span>                 <span class="c">&quot; 设置Python注释字符</span>
+autocmd <span class="nb">FileType</span> mako <span class="k">set</span> <span class="nb">cms</span><span class="p">=</span>##\ %<span class="k">s</span>
+</pre></div>
+<p><tt class="docutils literal">Visual</tt> 模式下 <tt class="docutils literal">gc</tt> 命令可以注释选中的行</p>
+<p>普通模式下  <tt class="docutils literal">gcc</tt> 指令可以快速注释一行</p>
+<p><tt class="docutils literal">gcu</tt> 可以撤销注释</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>最后</h2>
+<p>有什么没介绍到的大家可以看看帮助, 大家也可以围观这个强大Vim配置: <a class="reference external" href="https://github.com/liangxianzhe/dotvim">https://github.com/liangxianzhe/dotvim</a></p>
+</div>
+</div>
+        <hr />
+    </div>
+		
+    
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h2>Vim配置系列(二) —- 好看的statusline</h2></a>
+        <div class= "well small"> 六 05 一月 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+ </div>
+        <div class="summary"><p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
 <div class="codehilite"><pre>Bundle <span class="s2">&quot;Lokaltog/vim-powerline&quot;</span>
 </pre></div>
 
@@ -88,10 +197,9 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
 <p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
 <p>然后重新打开vim你就会发现一个漂亮的statusline</p>
-<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p></div>
-        <hr />
-    </div>
-		
+<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">read more</a></div>
+    </div>	
+				
     
  
         

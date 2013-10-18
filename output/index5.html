@@ -59,6 +59,30 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h2>用bottle+mongodb写的blog程序支持mysql啦</h2></a>
+        <div class= "well small"> 二 14 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
+<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
+<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
+<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
+<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
+<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html"><h2>python里的三目运算</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -380,38 +404,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>+-static       静态文件目录:包括js css image</p>
 <p>+-views        模版目录</p>
 <p>+-index.py     用于启动整个程序 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html"><h2>bottle的cookie操作小记(获取不是在当前页面创建的cookie)</h2></a>
-        <div class= "well small"> 六 02 六月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
-<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
-      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
-           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
-      <span class="k">else</span> <span class="p">:</span>
-           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
-
-<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

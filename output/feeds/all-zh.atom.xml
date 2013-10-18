@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-10-09T14:50:00+08:00</updated><entry><title>Vim 相对行号</title><link href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html" rel="alternate"></link><updated>2013-10-09T14:50:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-10-09:vim-xiang-dui-xing-hao.html</id><summary type="html">&lt;p&gt;在使用用Vim时时常会遇到像复制多行或者想快速向下/向上移动多行时而不知道行数的情况, 今天发现一个Vim对此有帮助的特性: &lt;strong&gt;相对行号&lt;/strong&gt;.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-10-18T13:14:00+08:00</updated><entry><title>推荐几款最近发现非常酷的Vim插件</title><link href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html" rel="alternate"></link><updated>2013-10-18T13:14:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-10-18:tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html</id><summary type="html">&lt;p&gt;最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;delimitMate
+用于补全括号和引号&lt;/li&gt;
+&lt;li&gt;vim-surround
+用于快速切换括号/引号或者标签&lt;/li&gt;
+&lt;li&gt;GitGutter
+实时显示git更改&lt;/li&gt;
+&lt;li&gt;Gitv
+查看Git详细提交日志(类似gitk)&lt;/li&gt;
+&lt;li&gt;vim-commentary
+Vim批量注释工具, 可以注释多行和去除多行注释&lt;/li&gt;
+&lt;li&gt;indentLine
+更加美观的显示缩进对齐线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;先放上录屏:&lt;/p&gt;
+&lt;div style="width:800; height: 500"&gt;
+    &lt;script type="text/javascript" src="http://asciinema.org/a/5981.js" id="asciicast-5981" async&gt;&lt;/script&gt;
+&lt;/div&gt;&lt;div class="section" id="id1"&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;上面插件可以通过 Vundle 来安装 (了解Vundle猛击 &lt;a class="reference external" href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html"&gt;这里&lt;/a&gt;), 下面是 &lt;tt class="docutils literal"&gt;.vimrc&lt;/tt&gt; 的配置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Bundle &lt;span class="s2"&gt;&amp;quot;Yggdroot/indentLine&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;airblade/vim-gitgutter&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;tpope/vim-commentary&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;tpope/vim-surround&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;Raimondi/delimitMate&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后重新打开 Vim, 执行 &lt;tt class="docutils literal"&gt;:BundleIntall&lt;/tt&gt; 等待安装完成&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id3"&gt;
+&lt;h2&gt;配置使用&lt;/h2&gt;
+&lt;p&gt;delimitMate和GitGutter安装完成不用任何配置即可使用, 下面我们先介绍 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;vim-surround&lt;/span&gt;&lt;/tt&gt; 插件的使用&lt;/p&gt;
+&lt;div class="section" id="vim-surround"&gt;
+&lt;h3&gt;vim-surround&lt;/h3&gt;
+&lt;p&gt;这个插件可以快速的为字符串包围/改变或去除引号/括号或者HTML标签&lt;/p&gt;
+&lt;div class="section" id="id4"&gt;
+&lt;h4&gt;为单个单词包围&lt;/h4&gt;
+&lt;p&gt;在命令模式下, 使用 &lt;tt class="docutils literal"&gt;ysiw&lt;/tt&gt; + &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;'/&amp;quot;/(/[/{&lt;/span&gt;&lt;/tt&gt; 就可以为光标下的一个单词包围上 &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;'/&amp;quot;/(/[/{&lt;/span&gt;&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;比如 &lt;tt class="docutils literal"&gt;ysiw'&lt;/tt&gt; 为光标下的单词包围上单引号, &lt;tt class="docutils literal"&gt;ysiw&amp;quot;&lt;/tt&gt; 为光标下单词包围上双引号, 依此类推.&lt;/p&gt;
+&lt;p&gt;vim-surround 同时还支持包围html标签, 将光标放到某单词试试下面指令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ysiw&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+ysiw&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;p&lt;/span&gt; class&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;meta&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h4&gt;包围一行&lt;/h4&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;yssb&lt;/tt&gt; 可以快速为一行包围圆括号,  &lt;tt class="docutils literal"&gt;yss&lt;/tt&gt; + &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;'/&amp;quot;/(/[/{&lt;/span&gt;&lt;/tt&gt; 可以为正行快速包围相应的引号/括号&lt;/p&gt;
+&lt;p&gt;比如 &lt;tt class="docutils literal"&gt;yss&amp;quot;&lt;/tt&gt;  为一行包围双引号&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id6"&gt;
+&lt;h4&gt;更改包围&lt;/h4&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;cs&lt;/tt&gt; 指令可以更改包围, 比如 &lt;tt class="docutils literal"&gt;cs'&amp;quot;&lt;/tt&gt; 是将单引号变成双引号, &lt;tt class="docutils literal"&gt;cs&amp;quot;(&lt;/tt&gt; 是将双引号变成圆括号&lt;/p&gt;
+&lt;p&gt;vim-surround支持将括号或者引号变更为html标签, 试试下面命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;cs&lt;/span&gt;&amp;#39;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面命令将单引号换成 &lt;tt class="docutils literal"&gt;&amp;lt;p&amp;gt;&lt;/tt&gt; 标签&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id7"&gt;
+&lt;h4&gt;去除包围&lt;/h4&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;ds&lt;/tt&gt; 指令可以取出包围, 后面需跟包围的内容, &lt;tt class="docutils literal"&gt;ds&amp;quot;&lt;/tt&gt; 是去除双引号包围, ``&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="indentline"&gt;
+&lt;h3&gt;indentLine&lt;/h3&gt;
+&lt;p&gt;这个插件安装成功后就会显示缩进对齐线, 我们仅仅在 &lt;tt class="docutils literal"&gt;.vimrc&lt;/tt&gt; 里加一行来切换是否显示&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;il&lt;/span&gt; :IndentLinesToggle&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;CR&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这样我们就可以通过 &lt;tt class="docutils literal"&gt;&amp;lt;leader&amp;gt; il&lt;/tt&gt; (我的leader映射的,)来切换是否显示对齐线&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="gitv"&gt;
+&lt;h3&gt;Gitv&lt;/h3&gt;
+&lt;p&gt;Gitv 实现了可以用Vim来查看Git的详细提交信息, 只需要打开Vim 执行 &lt;tt class="docutils literal"&gt;:Gitv&lt;/tt&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="vim-commentary"&gt;
+&lt;h3&gt;vim-commentary&lt;/h3&gt;
+&lt;p&gt;这个插件可以快速注释与反注释多行内容, 但是它的注释符使用的是 &lt;tt class="docutils literal"&gt;commentstring&lt;/tt&gt;, 默认是 &lt;tt class="docutils literal"&gt;/* %s */&lt;/tt&gt;, 但这个值满足不了Python 和 Shell这样的语言,
+在 &lt;tt class="docutils literal"&gt;.vimrc&lt;/tt&gt; 添加如下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;autocmd &lt;span class="nb"&gt;FileType&lt;/span&gt; python&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="k"&gt;shell&lt;/span&gt; &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;commentstring&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;#\ %&lt;span class="k"&gt;s&lt;/span&gt;                 &lt;span class="c"&gt;&amp;quot; 设置Python注释字符&lt;/span&gt;
+autocmd &lt;span class="nb"&gt;FileType&lt;/span&gt; mako &lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="nb"&gt;cms&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;##\ %&lt;span class="k"&gt;s&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;Visual&lt;/tt&gt; 模式下 &lt;tt class="docutils literal"&gt;gc&lt;/tt&gt; 命令可以注释选中的行&lt;/p&gt;
+&lt;p&gt;普通模式下  &lt;tt class="docutils literal"&gt;gcc&lt;/tt&gt; 指令可以快速注释一行&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;gcu&lt;/tt&gt; 可以撤销注释&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id8"&gt;
+&lt;h2&gt;最后&lt;/h2&gt;
+&lt;p&gt;有什么没介绍到的大家可以看看帮助, 大家也可以围观这个强大Vim配置: &lt;a class="reference external" href="https://github.com/liangxianzhe/dotvim"&gt;https://github.com/liangxianzhe/dotvim&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="Vim"></category><category term="插件"></category><category term="酷"></category><category term="缩进对齐线"></category><category term="Git"></category><category term="surround"></category><category term="delimitMate"></category></entry><entry><title>Vim 相对行号</title><link href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html" rel="alternate"></link><updated>2013-10-09T14:50:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-10-09:vim-xiang-dui-xing-hao.html</id><summary type="html">&lt;p&gt;在使用用Vim时时常会遇到像复制多行或者想快速向下/向上移动多行时而不知道行数的情况, 今天发现一个Vim对此有帮助的特性: &lt;strong&gt;相对行号&lt;/strong&gt;.
 相对行号将会在每行前显示相对于光标所在行的行号, 相对行号你给出某些垂直移动命令时需要的计数值&lt;/p&gt;
 &lt;p&gt;在 &lt;tt class="docutils literal"&gt;Vim 7.4&lt;/tt&gt; 之前的版本, 启用相对行号当前行号将变为0, 无法显示正常的行号, 在 &lt;tt class="docutils literal"&gt;Vim 7.4&lt;/tt&gt; 中则可以正常的显示当前行号的同时来显示相对行号, 下面有两张图可以对比&lt;/p&gt;
 &lt;p&gt;Vim 7.3&lt;/p&gt;
