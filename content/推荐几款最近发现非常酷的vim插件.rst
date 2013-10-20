@@ -43,6 +43,7 @@
 
     Bundle "Yggdroot/indentLine"
     Bundle "airblade/vim-gitgutter"
+    Bundle "gregsexton/gitv"
     Bundle "tpope/vim-commentary"
     Bundle "tpope/vim-surround"
     Bundle "Raimondi/delimitMate"

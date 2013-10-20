@@ -22,6 +22,7 @@ Vim批量注释工具, 可以注释多行和去除多行注释&lt;/li&gt;
 &lt;p&gt;上面插件可以通过 Vundle 来安装 (了解Vundle猛击 &lt;a class="reference external" href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html"&gt;这里&lt;/a&gt;), 下面是 &lt;tt class="docutils literal"&gt;.vimrc&lt;/tt&gt; 的配置&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;Bundle &lt;span class="s2"&gt;&amp;quot;Yggdroot/indentLine&amp;quot;&lt;/span&gt;
 Bundle &lt;span class="s2"&gt;&amp;quot;airblade/vim-gitgutter&amp;quot;&lt;/span&gt;
+Bundle &lt;span class="s2"&gt;&amp;quot;gregsexton/gitv&amp;quot;&lt;/span&gt;
 Bundle &lt;span class="s2"&gt;&amp;quot;tpope/vim-commentary&amp;quot;&lt;/span&gt;
 Bundle &lt;span class="s2"&gt;&amp;quot;tpope/vim-surround&amp;quot;&lt;/span&gt;
 Bundle &lt;span class="s2"&gt;&amp;quot;Raimondi/delimitMate&amp;quot;&lt;/span&gt;
