@@ -1,5 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/pyqt.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-09-22T10:10:00+08:00</updated><entry><title>PyQt4 信号和槽详解</title><link href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html" rel="alternate"></link><updated>2013-09-22T10:10:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-09-22:pyqt4-xin-hao-he-cao-xiang-jie.html</id><summary type="html">&lt;p&gt;Python 可以开发GUI有很多库可以选择, 之前使用过 &lt;tt class="docutils literal"&gt;wxPython&lt;/tt&gt;, 已经很长时间没用过, 基本都忘光了, 由于单位也使用 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; , 之前熟悉项目时看过一段时间, 但是由于没有实际项目经验, 所以 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; 很生疏, 最近正好给家里写个小的财务软件练练手. 在用的过程中对 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; 熟悉不少, 之前觉得 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; 最难掌握的就是 &lt;tt class="docutils literal"&gt;信号&lt;/tt&gt; 和 &lt;tt class="docutils literal"&gt;槽&lt;/tt&gt; , 所以现在先来讨论这个&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/pyqt.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-11-06T15:25:00+08:00</updated><entry><title>PyQt + QML 快速开发GUI总结</title><link href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html" rel="alternate"></link><updated>2013-11-06T15:25:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-11-06:pyqt-qml-kuai-su-kai-fa-guizong-jie.html</id><summary type="html">&lt;p&gt;最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
+而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
+这篇文章会总结这些问题, 避免以后碰到无从下手.&lt;/p&gt;
+&lt;p&gt;PS:QML的一些基础问题不会在这里讨论, 本篇文章仅讨论一些经验性的问题, 本篇文章使用PyQt4&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;请留意文章中间的&amp;quot;注意&amp;quot;&lt;/em&gt;&lt;/p&gt;
+&lt;div class="section" id="pyqt"&gt;
+&lt;h2&gt;如何和PyQt交互&lt;/h2&gt;
+&lt;p&gt;QML和PyQt交互主要有三种方法: PyQt渲染数据, 信号传递, QML提供接口&lt;/p&gt;
+&lt;div class="section" id="pyqtqml"&gt;
+&lt;h3&gt;使用PyQt显示QML&lt;/h3&gt;
+&lt;p&gt;要想在Python里使用PyQt来调用QML显示, 需要用到 &lt;tt class="docutils literal"&gt;PyQt4.QtDeclarative.QDeclarativeView&lt;/tt&gt; 实例的 &lt;tt class="docutils literal"&gt;setSource&lt;/tt&gt; 将一个 &lt;tt class="docutils literal"&gt;PyQt4.QtCore.QUrl&lt;/tt&gt; 对象传递进去, 然后调用 &lt;tt class="docutils literal"&gt;PyQt4.QtDeclarative.QDeclarativeView&lt;/tt&gt; 对象的 &lt;tt class="docutils literal"&gt;show&lt;/tt&gt; 方法, 下面是一个例子:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtDeclarative&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtGui&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtCore&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QUrl&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt;
+
+&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/path/to/demo.qml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h3&gt;通过PyQt渲染数据到QML&lt;/h3&gt;
+&lt;p&gt;渲染QML变量有两种方法, 一种是QML中没有定义的变量, 一种是在QML中已经定义好的变量,
+第一种是预定义变量, 第二种是设置变量&lt;/p&gt;
+&lt;div class="section" id="id2"&gt;
+&lt;h4&gt;预定义变量&lt;/h4&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;PyQt4.QtDeclarative.QDeclarativeView&lt;/tt&gt; 的 &lt;tt class="docutils literal"&gt;rootContext&lt;/tt&gt; 方法会返回一个QML上下文, 通过这个对象可以对QML进行一些变量的预定义&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注意&lt;/em&gt;, 预定义变量必须在 &lt;tt class="docutils literal"&gt;setSource&lt;/tt&gt; 调用之前进行, 还有如果是字符串类型如要使用 &lt;tt class="docutils literal"&gt;PyQt4.QtCore.QString&lt;/tt&gt; 进行转换,
+数字可以不用转换, 如果是列表或字典需要使用 &lt;tt class="docutils literal"&gt;PyQt4.QtCore.QVariant&lt;/tt&gt; 进行转换, 下面是一个例子:&lt;/p&gt;
+&lt;p&gt;test.qml:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;
+    &lt;span class="k"&gt;width:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;height:&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;anchors.fill:&lt;/span&gt;&lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="nx"&gt;textData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;test.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtDeclarative&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtGui&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtCore&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QString&lt;/span&gt;
+
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt;
+
+&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;rootContext&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rootContext&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;rootContext&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setContextProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;textData&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;test.qml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;如果将 &lt;tt class="docutils literal"&gt;rootContext&lt;/tt&gt; 两行移到 &lt;tt class="docutils literal"&gt;view.setSource&lt;/tt&gt; 下面, QML里将找不到对 &lt;tt class="docutils literal"&gt;textData&lt;/tt&gt; 的引用&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id3"&gt;
+&lt;h4&gt;设置变量&lt;/h4&gt;
+&lt;p&gt;如果QML里已经定义好了变量, 而我们就可以在PyQt里对它进行更改, 对QML里的变量更改需要使用 &lt;tt class="docutils literal"&gt;PyQt4.QtDeclarative.QDeclarativeView&lt;/tt&gt; 对象的 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 方法返回的 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 对象, 调用 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 对象的 &lt;tt class="docutils literal"&gt;setProperty&lt;/tt&gt; 方法即可对QML里变量做出更改&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注意&lt;/em&gt;, 使用 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 对QML的更改必须在 &lt;tt class="docutils literal"&gt;setSource&lt;/tt&gt; 之后, 否则 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 方法将返回 &lt;em&gt;None&lt;/em&gt;, 下面是一个例子&lt;/p&gt;
+&lt;p&gt;test.qml:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;
+    &lt;span class="nx"&gt;property&lt;/span&gt; &lt;span class="nx"&gt;string&lt;/span&gt; &lt;span class="nx"&gt;textData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;width:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;height:&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;anchors.fill:&lt;/span&gt;&lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="nx"&gt;textData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;test.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtDeclarative&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtGui&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtCore&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QString&lt;/span&gt;
+
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt;
+
+&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;test.qml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;rootObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setProperty&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;textData&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面例子我们在QML定义了 &lt;tt class="docutils literal"&gt;textData&lt;/tt&gt; 变量, 并在 &lt;tt class="docutils literal"&gt;setSource&lt;/tt&gt; 之后使用 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 的 &lt;tt class="docutils literal"&gt;setProperty&lt;/tt&gt; 对 &lt;tt class="docutils literal"&gt;textData&lt;/tt&gt; 变量进行了更改&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="qml"&gt;
+&lt;h3&gt;QML信号的传递&lt;/h3&gt;
+&lt;p&gt;QML有信号机制, 可以在QML之间使用JavaScript进行触发和接收, 当然也可以将信号传递给后端的PyQt,
+我们在此不讨论QML内部的信号, 我们仅讨论QML信号传递到PyQt这部分, QML使用signal创建信号, 信号可以携带参数,
+使用调用函数的方法可以触发信号, 下面是一个例子:&lt;/p&gt;
+&lt;p&gt;test.qml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;signal&lt;/span&gt; &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c1"&gt;// 定义信号&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;anchors.fill:&lt;/span&gt;&lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Click Me&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;MouseArea&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;onClicked:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;  &lt;span class="c1"&gt;// 触发信号&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面我们定义了一个 &lt;tt class="docutils literal"&gt;mclicked&lt;/tt&gt; 的信号, 并且在点击时会触发这个信号, PyQt 可以通过 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 获取这个信号, 并为这个信号绑定槽:&lt;/p&gt;
+&lt;p&gt;test.py&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtDeclarative&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtGui&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtCore&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QString&lt;/span&gt;
+
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt;
+
+&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;test.qml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;on_click&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hi&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;rootObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mclicked&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;on_click&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面为QML的 &lt;tt class="docutils literal"&gt;mclicked&lt;/tt&gt; 信号绑定了一个函数, 当点击QML窗体时, 控制台就会输出 hi&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id4"&gt;
+&lt;h3&gt;QML提供接口&lt;/h3&gt;
+&lt;p&gt;上面我们定义了信号, 如果响应信号仅仅在控制台输出没有意义, 我们可以通过QML在顶级元素定义JavaScript函数
+向PyQt提供接口, 下面是例子:&lt;/p&gt;
+&lt;p&gt;test.qml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;signal&lt;/span&gt; &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c1"&gt;// 定义信号&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;id: testText&lt;/span&gt;
+        &lt;span class="k"&gt;anchors.fill:&lt;/span&gt;&lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Click Me&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;MouseArea&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;onClicked:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;  &lt;span class="c1"&gt;// 触发信号&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;set_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
+        &lt;span class="nx"&gt;testText&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;text&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面我们在QML顶级元素定义了一个 &lt;tt class="docutils literal"&gt;set_text&lt;/tt&gt; 函数, 接下来我们就可以通过 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 进行调用&lt;/p&gt;
+&lt;p&gt;test.py&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtDeclarative&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtGui&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PyQt4.QtCore&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QString&lt;/span&gt;
+
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QApplication&lt;/span&gt;&lt;span class="p"&gt;([])&lt;/span&gt;
+
+&lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;QDeclarativeView&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setSource&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;QUrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;test.qml&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;on_click&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Clicked&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;rootObject&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;rootObject&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mclicked&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;on_click&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;view&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面我们用响应信号的槽, 通过 &lt;tt class="docutils literal"&gt;rootObject&lt;/tt&gt; 调用QML提供的函数接口, 当点击窗体时, 显示文字会从 &lt;tt class="docutils literal"&gt;Click Me&lt;/tt&gt; 变成 &lt;tt class="docutils literal"&gt;Clicked&lt;/tt&gt;,
+当然这仅仅是个例子, 这种响应可以在QML里直接完成&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;signal&lt;/span&gt; &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;   &lt;span class="c1"&gt;// 定义信号&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;id: testText&lt;/span&gt;
+        &lt;span class="k"&gt;anchors.fill:&lt;/span&gt;&lt;span class="nx"&gt;parent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Click Me&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;MouseArea&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;onClicked:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;  &lt;span class="c1"&gt;// 触发信号&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;set_text&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+        &lt;span class="nx"&gt;testText&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Clicked&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;Component.onCompleted :&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="nx"&gt;mclicked&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;set_text&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  &lt;span class="c1"&gt;// 在加载完成后为mclicked信号绑定槽&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id5"&gt;
+&lt;h2&gt;一些坑&lt;/h2&gt;
+&lt;div class="section" id="id6"&gt;
+&lt;h3&gt;QML全部变量内部状态更改&lt;/h3&gt;
+&lt;p&gt;QML定义使用 &lt;tt class="docutils literal"&gt;property&lt;/tt&gt; 定义的变量是全局的, 这些变量是无法对其内部状态进行更改的,
+当然数字和字符串没有这方面问题, 但是数组和对象的更改就不行, 比如下面的更改是无效的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;property&lt;/span&gt; &lt;span class="nx"&gt;variant&lt;/span&gt; &lt;span class="k"&gt;testData:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;b&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Repeater&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;model:&lt;/span&gt;&lt;span class="nx"&gt;testData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="nx"&gt;modelData&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;MouseArea&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;id: testArea&lt;/span&gt;
+        &lt;span class="nx"&gt;anchors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fill&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;onClicked:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nx"&gt;testData&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt;
+            &lt;span class="nx"&gt;testData&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面是无法更改testData的内部状态的, 解决办法是先将全局变量赋值给局部变量, 更改完毕后覆盖全局变量&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: test&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;property&lt;/span&gt; &lt;span class="nx"&gt;variant&lt;/span&gt; &lt;span class="k"&gt;testData:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;a&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;b&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Repeater&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;model:&lt;/span&gt;&lt;span class="nx"&gt;testData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="nx"&gt;Text&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="nx"&gt;modelData&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nx"&gt;MouseArea&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;id: testArea&lt;/span&gt;
+        &lt;span class="nx"&gt;anchors&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;fill&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;onClicked:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;testData&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;  &lt;span class="c1"&gt;// 赋值给局部变量&lt;/span&gt;
+            &lt;span class="nx"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0&amp;quot;&lt;/span&gt;
+            &lt;span class="nx"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;1&amp;quot;&lt;/span&gt;
+            &lt;span class="nx"&gt;testData&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上面即可成功更改 &lt;tt class="docutils literal"&gt;testData&lt;/tt&gt; 的内部状态&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id7"&gt;
+&lt;h3&gt;空列表引发的段错误&lt;/h3&gt;
+&lt;p&gt;从PyQt向QML中渲染数据, 难免会渲染空列表, 但是这在某些平台(Windows)会引发段错误, 搞得人莫名其妙,
+解决办法就是将空列表转换为 &lt;em&gt;None&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id8"&gt;
+&lt;h2&gt;一些技巧&lt;/h2&gt;
+&lt;div class="section" id="js"&gt;
+&lt;h3&gt;结合js&lt;/h3&gt;
+&lt;p&gt;给元素的属性赋值是可以使用js语句的, 当然复杂的语句可以写成函数,指定这个函数, 使用函数的返回值,
+下面是一个隔行变色的例子:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;width:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;height:&lt;/span&gt; &lt;span class="mi"&gt;400&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="nx"&gt;Repeater&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;model:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;width:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;height:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="k"&gt;color:&lt;/span&gt; &lt;span class="nx"&gt;index&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;blue&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;black&amp;quot;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id9"&gt;
+&lt;h3&gt;自定义元素&lt;/h3&gt;
+&lt;p&gt;多处都使用的内容, 可以提取出来放在一个以大写开头的文件名的文件里, 然后同目录使用文件名就可以引用这个元素,
+其他目录可以使用 &lt;tt class="docutils literal"&gt;import&lt;/tt&gt; 导入这个目录(相对路径导入), 就可以使用目录里的元素了,&lt;/p&gt;
+&lt;p&gt;比如我在 &lt;tt class="docutils literal"&gt;Demo.qml&lt;/tt&gt;  定义了一些内容,  同目录或导入这个目录的其他QML文件我就可以直接使用 &lt;tt class="docutils literal"&gt;Demo&lt;/tt&gt; 元素了&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id10"&gt;
+&lt;h3&gt;自定义元素属性&lt;/h3&gt;
+&lt;p&gt;为了更好的可重用, 定义一些属性是必须的 可以用通过  &lt;tt class="docutils literal"&gt;property alias source:target&lt;/tt&gt; 定义属性别名, 当别人引用
+这个元素, 并在元素内定义 &lt;tt class="docutils literal"&gt;source&lt;/tt&gt; 属性, 就会自动映射到 &lt;tt class="docutils literal"&gt;target&lt;/tt&gt; 上, 下面是一个例子&lt;/p&gt;
+&lt;p&gt;Demo.qml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: demo&lt;/span&gt;
+    &lt;span class="k"&gt;width:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;height:&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;property&lt;/span&gt; &lt;span class="nx"&gt;alias&lt;/span&gt; &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="nx"&gt;demoText&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;text&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;id: demoText&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Demo&amp;quot;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;test.qml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Demo&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Nice Demo&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;使用qmlviwer 查看 test.qml, 会显示 &amp;quot;Nice Demo&amp;quot; 文字&lt;/p&gt;
+&lt;p&gt;当然也可以直接在自定义元素使用 &lt;tt class="docutils literal"&gt;property&lt;/tt&gt; 定义变量, 在使用该元素时定义该属性:&lt;/p&gt;
+&lt;p&gt;Demo.qml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Rectangle&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;id: demo&lt;/span&gt;
+    &lt;span class="k"&gt;width:&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;height:&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;property&lt;/span&gt; &lt;span class="nx"&gt;string&lt;/span&gt; &lt;span class="k"&gt;textData:&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Demo&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="nx"&gt;Text&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;id: demoText&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;text:&lt;/span&gt; &lt;span class="nx"&gt;textData&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;test.qml&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nx"&gt;Qt&lt;/span&gt; &lt;span class="mf"&gt;4.7&lt;/span&gt;
+
+&lt;span class="nx"&gt;Demo&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;textData:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Nice Demo&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="QML"></category><category term="PyQt"></category><category term="Gui"></category><category term="Python"></category><category term="Qt"></category></entry><entry><title>PyQt4 信号和槽详解</title><link href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html" rel="alternate"></link><updated>2013-09-22T10:10:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-09-22:pyqt4-xin-hao-he-cao-xiang-jie.html</id><summary type="html">&lt;p&gt;Python 可以开发GUI有很多库可以选择, 之前使用过 &lt;tt class="docutils literal"&gt;wxPython&lt;/tt&gt;, 已经很长时间没用过, 基本都忘光了, 由于单位也使用 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; , 之前熟悉项目时看过一段时间, 但是由于没有实际项目经验, 所以 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; 很生疏, 最近正好给家里写个小的财务软件练练手. 在用的过程中对 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; 熟悉不少, 之前觉得 &lt;tt class="docutils literal"&gt;PyQt&lt;/tt&gt; 最难掌握的就是 &lt;tt class="docutils literal"&gt;信号&lt;/tt&gt; 和 &lt;tt class="docutils literal"&gt;槽&lt;/tt&gt; , 所以现在先来讨论这个&lt;/p&gt;
 &lt;div class="section" id="id1"&gt;
 &lt;h2&gt;概览&lt;/h2&gt;
 &lt;p&gt;信号和槽可以说是 &lt;tt class="docutils literal"&gt;Qt&lt;/tt&gt; 的精髓所在, 有些类似 Javascript 的事件响应机制, 所以咱先以 &lt;tt class="docutils literal"&gt;JQuery&lt;/tt&gt; 来做个示例, 在 &lt;tt class="docutils literal"&gt;JQuery&lt;/tt&gt; 中我们获取一个元素, 并且绑定一个事件, 传递一个匿名函数来响应该事件&lt;/p&gt;

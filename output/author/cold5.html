@@ -59,6 +59,38 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h2>Python 常用的列表操作</h2></a>
+        <div class= "well small"> 五 10 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+ </div>
+        <div class="summary"><p>这里介绍几个常用的列表操作</p>
+<h3>添加元素</h3>
+<p>添加元素使用列表的内置方法append</p>
+<div class="codehilite"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
+<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
+</pre></div>
+
+
+<p>可以看到强大的python列表可以嵌套任意类型</p>
+<h3>列表相加</h3>
+<p>要想连接两个列表,可以使用+号连接</p>
+<div class="codehilite"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h2>Python 断点调试</h2></a>
         <div class= "well small"> 五 10 八月 2012
 
@@ -367,35 +399,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
 <span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h2>使用cacti构建监控系统</h2></a>
-        <div class= "well small"> 三 14 三月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
-
- </div>
-        <div class="summary"><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
-<p>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。</p>
-<p>cacti依赖于PHP+MYSQL环境,前面的几篇文章已经详细讲解了如何在Linux部署LNMP环境,这篇文章我们就是用前面几章所搭建的环境,所以这里不再讲解如何搭建环境,如果您不会可以先看看前几篇文章.</p>
-<p>下面就介绍如何来部署cacti.</p>
-<p>首先介绍本文所使用的环境:
-server:</p>
-<p>系统为CentOS 5.5 32bit</p>
-<p>ip:192.168.3.120</p>
-<p>cacti:cacti-0.8.7i.tar.gz</p>
-<p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

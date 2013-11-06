@@ -49,7 +49,7 @@ FILES_TO_COPY = (
 )
 
 PLUGIN_PATH = u"pelican-plugins"
-PLUGINS = ['sitemap', 'gzip_cache']
+PLUGINS = ['sitemap']#, 'gzip_cache']
 
 SITEMAP = {
     "format": "xml",

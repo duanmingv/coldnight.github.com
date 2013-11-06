@@ -59,6 +59,43 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html"><h2>推荐两款不错的终端软件</h2></a>
+        <div class= "well small"> 三 29 八月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+ </div>
+        <div class="summary"><p>一直在Linux下做开发,一个好用的终端软件能帮你节省很多时间和精力</p>
+<p>作为一个经常喜欢敲命令的人,可能要同时做很多操作,Linux各个桌面的窗口切换有多那啥,这里就不吐槽了,
+我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
+后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
+<h2>1 安装Terminator</h2>
+<div class="codehilite"><pre>sudo apt-get install terminator
+</pre></div>
+
+
+<h2>2 使用</h2>
+<p>打开Termintor按<code>Ctrl-E</code>(注意是大E要按住Shift)可以垂直分割终端
+<code>Ctrl-O</code> 可水平分割终端
+按住Alt然后按上下左右可以在不同的分割窗中切换
+<code>Ctrl-D</code> 可以关闭分割窗</p>
+<h3>2.1 配置</h3>
+<p>terminator配置文件在<code>~/.config/terminator/config</code>
+可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
+<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
+<span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h2>用bottle+mongodb写的blog程序支持mysql啦</h2></a>
         <div class= "well small"> 二 14 八月 2012
 
@@ -363,47 +400,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
 <p>我们还可以这么做:</p>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html"><h2>用bottle+mongodb写的一个blog程序</h2></a>
-        <div class= "well small"> 六 16 六月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
-<p>前台显示文章:
-按分类显示
-按标签显示
-按月份归档显示
-最新文章
-评论
-后台管理:
-管理文章
-管理分类
-管理评论
-发表文章
-用户验证</p>
-<p>目录结构</p>
-<p>water</p>
-<p>+-app           程序目录</p>
-<p>|----admin.py  后台管理</p>
-<p>|----blog.py   前台显示</p>
-<p>|----dbconn.py 数据库连接</p>
-<p>|----encrypt.py包含加密函数</p>
-<p>+-static       静态文件目录:包括js css image</p>
-<p>+-views        模版目录</p>
-<p>+-index.py     用于启动整个程序 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

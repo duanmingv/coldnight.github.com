@@ -59,6 +59,35 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h2>使用cacti构建监控系统</h2></a>
+        <div class= "well small"> 三 14 三月 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
+
+ </div>
+        <div class="summary"><p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
+<p>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。</p>
+<p>cacti依赖于PHP+MYSQL环境,前面的几篇文章已经详细讲解了如何在Linux部署LNMP环境,这篇文章我们就是用前面几章所搭建的环境,所以这里不再讲解如何搭建环境,如果您不会可以先看看前几篇文章.</p>
+<p>下面就介绍如何来部署cacti.</p>
+<p>首先介绍本文所使用的环境:
+server:</p>
+<p>系统为CentOS 5.5 32bit</p>
+<p>ip:192.168.3.120</p>
+<p>cacti:cacti-0.8.7i.tar.gz</p>
+<p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
+<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
+    </div>	
+				
+    
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
         <div class= "well small"> 二 05 二月 2013
 
@@ -322,38 +351,6 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
   <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html"><h2>ssh证书登录错误</h2></a>
-        <div class= "well small"> 五 10 八月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><h2>错误描述</h2>
-
-<p>使用证书ssh链接的时候提示下面错误信息
-<h2><code>Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).</code>
-可能原因</h2>
-authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkeys 改成600
-<h2>解决</h2>
-查看日志:
-<code>cat /var/log/secure</code>
-发现
-<code>Aug 8 17:15:13 CentOS62 sshd[5624]: Authentication refused: bad ownership or modes for file /home/abc/.ssh/authorized_keys</code>
-查看.ssh权限为775
-.ssh 手动创建的时候是775权限,改成755权限后正常
-<code># chmod ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sshzheng-shu-deng-lu-cuo-wu.html">read more</a></div>
     </div>	
 				
             <div class="pagination">

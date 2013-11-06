@@ -2,9 +2,13 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title> Qt | cold's world </title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim." />
-    <meta name="keywords" content="Python, Linux, vim, 开源" />
+    <title> PyQt + QML 快速开发GUI总结 | cold's world </title>
+    <meta name="description" content=" &lt;p&gt;最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
+而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
+这篇文章会总结这些问题, 避免以后碰到无从下手.&lt;/p&gt;
+&lt;p&gt;PS:QML的一些基础问题不会在这里讨论, 本篇文章仅讨论一些经验性的问题, ... " />
+    <meta name="keywords" content=" QML,PyQt,Gui,Python,Qt " />
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -52,14 +56,9 @@
     <div class="row">
 
         <div class="span9">
-                
-
-        
-
-
-    <div class='article'>
+            <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h1>PyQt + QML 快速开发GUI总结</h1></a>
+            <h1>PyQt + QML 快速开发GUI总结</h1>
             三 06 十一月 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
@@ -67,9 +66,8 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 
- 
         </div>
-        
+	
         <div class="highlight"><p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
 结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
 而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
@@ -441,41 +439,37 @@ in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 </div>
 </div>
 </div>
-        <hr />
-    </div>
-		
-    
- 
+
+        	    <div class="footer">
+            <ul class="tags">                <li>
+                    <a href="http://www.linuxzen.com/tag/qml.html">QML</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/pyqt.html">PyQt</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/gui.html">Gui</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/python.html">Python</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/qt.html">Qt</a>
+                </li>            </ul>
+        </div>
         
+        <hr>
+    	   
+        <h2>Comments</h2>
+		<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'linuxzen'; 
+    var disqus_title = 'PyQt + QML 快速开发GUI总结';
 
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html"><h2>PyQt4 信号和槽详解</h2></a>
-        <div class= "well small"> 日 22 九月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
-
- </div>
-        <div class="summary"><p class="first last">最近在开发一个基于 <tt class="docutils literal docutils literal">PyQt4</tt> 的的 GUI程序, 使用过程中一些对信号和槽的理解分享给大家</p>
- <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html">read more</a></div>
-    </div>	
-				
-            <div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-
-    <li class="active"><a href="http://www.linuxzen.com/tag/qt.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>    
- 
-  
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
         </div>
         
         <div class="span3">
