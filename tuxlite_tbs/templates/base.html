@@ -132,7 +132,11 @@
 
 <footer>
 <br />
-<p><a href="{{ SITEURL }}">{{ SITENAME }}</a> &copy; {{ AUTHOR }} 2012</p>
+<p><a href="{{ SITEURL }}">{{ SITENAME }}</a> &copy; {{ AUTHOR }} 2013
+{% if FLOW_CONTENT %}
+    {{ FLOW_CONTENT}}
+{% endif %}
+</p>
 </footer>
 
 </div> <!-- /container -->
