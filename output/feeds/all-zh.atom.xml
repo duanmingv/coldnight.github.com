@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-11-06T15:25:00+08:00</updated><entry><title>PyQt + QML 快速开发GUI总结</title><link href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html" rel="alternate"></link><updated>2013-11-06T15:25:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-11-06:pyqt-qml-kuai-su-kai-fa-guizong-jie.html</id><summary type="html">&lt;p&gt;最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all-zh.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-12-24T00:00:00+08:00</updated><entry><title>将Pelican版本更新到3.3</title><link href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html" rel="alternate"></link><updated>2013-12-24T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-24:jiang-pelicanban-ben-geng-xin-dao-33.html</id><summary type="html">&lt;p&gt;用Pelican有一段时间了, 由于重装了系统, 所以安装&lt;code&gt;Pelican&lt;/code&gt;的最新版本,最新版本为 &lt;code&gt;3.3&lt;/code&gt;, 顺便也升级模板和插件.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Pelican&lt;/code&gt;特别喜欢更改配置文件,  而且错误提示非常烂, 完全不知道在说什么, 而且没有安装markdown包的话根本不提示, 仅仅就错误退出, 下面就这次升级越到的问题做个记录.&lt;/p&gt;
+&lt;h2&gt;Makefile&lt;/h2&gt;
+&lt;p&gt;Pelican升级后会有很多莫名奇妙的问题, 首先之前的&lt;code&gt;Makefile&lt;/code&gt;不能使用, 所以需要重新生成一份:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;quickstart&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当然上面操作会更改配置文件, 我用git管理, 所以很方便的&lt;code&gt;checkout&lt;/code&gt;, 如果你的不是, 先备份下配置文件吧.&lt;/p&gt;
+&lt;h2&gt;ATOM Feed&lt;/h2&gt;
+&lt;p&gt;然后&lt;code&gt;make html&lt;/code&gt;的时候失败提示&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;feeds&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;atom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;overwritten&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;看了 &lt;a href="https://github.com/getpelican/pelican"&gt;pelican&lt;/a&gt;上的&lt;code&gt;issue&lt;/code&gt; 原来是更改了&lt;code&gt;FEED_ATOM&lt;/code&gt;的配置项, 使用了 &lt;code&gt;FEED_ALL_ATOM&lt;/code&gt;配置项, 将&lt;code&gt;FEED_ATOM&lt;/code&gt;配置项改为&lt;code&gt;FEED_ALL_ATOM&lt;/code&gt;配置即可&lt;/p&gt;
+&lt;p&gt;但是改完之后页面的ATOM FEED链接没有指向正确的地址, 查看模板文件, 发现模板还在引用&lt;code&gt;FEED_ATOM&lt;/code&gt;, 改成&lt;code&gt;FEED_ALL_ATOM&lt;/code&gt;即可.&lt;/p&gt;
+&lt;h2&gt;Markdown&lt;/h2&gt;
+&lt;p&gt;如果莫名奇妙的错误, 没有错误信息, 也没有输出HTML, 那么可能就是&lt;code&gt;markdown&lt;/code&gt;包没装, &lt;code&gt;Pelican&lt;/code&gt;的错误提示真心无语.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;U&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;静态文件&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Pelican&lt;/code&gt;去掉了&lt;code&gt;FILE_TO_COPY&lt;/code&gt;项, 所以之前拷贝&lt;code&gt;robots.txt&lt;/code&gt;之类的文件, 就会失效, 使用&lt;code&gt;STATIC_PATHS&lt;/code&gt;即可&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;upload&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;extra/robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s"&gt;&amp;quot;extra/404.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果想指定静态文件位置, 可以使用&lt;code&gt;STATIC_SAVE_AS&lt;/code&gt;, 会将静态文件存到另外一个目录,
+而且对所有&lt;code&gt;STATIC_PATHS&lt;/code&gt;项生效&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;static/&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也可以使用 &lt;code&gt;EXTRA_PATH_METADATA&lt;/code&gt;来为每一项指定路径&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;EXTRA_PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;extra/robots.txt&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;extra/404.html&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;404.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;至此, &lt;code&gt;Pelican&lt;/code&gt;升级完毕&lt;/p&gt;</summary><category term="pelican3.3"></category><category term="升级"></category></entry><entry><title>PyQt + QML 快速开发GUI总结</title><link href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html" rel="alternate"></link><updated>2013-11-06T15:25:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-11-06:pyqt-qml-kuai-su-kai-fa-guizong-jie.html</id><summary type="html">&lt;p&gt;最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
 结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
 而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
 这篇文章会总结这些问题, 避免以后碰到无从下手.&lt;/p&gt;
@@ -389,7 +434,7 @@ Vim批量注释工具, 可以注释多行和去除多行注释&lt;/li&gt;
     &lt;script type="text/javascript" src="http://asciinema.org/a/5981.js" id="asciicast-5981" async&gt;&lt;/script&gt;
 &lt;/div&gt;&lt;div class="section" id="id1"&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
-&lt;p&gt;上面插件可以通过 Vundle 来安装 (了解Vundle猛击 &lt;a class="reference external" href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html"&gt;这里&lt;/a&gt;), 下面是 &lt;tt class="docutils literal"&gt;.vimrc&lt;/tt&gt; 的配置&lt;/p&gt;
+&lt;p&gt;上面插件可以通过 Vundle 来安装 (了解Vundle猛击 &lt;a class="reference external" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html"&gt;这里&lt;/a&gt;), 下面是 &lt;tt class="docutils literal"&gt;.vimrc&lt;/tt&gt; 的配置&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;Bundle &lt;span class="s2"&gt;&amp;quot;Yggdroot/indentLine&amp;quot;&lt;/span&gt;
 Bundle &lt;span class="s2"&gt;&amp;quot;airblade/vim-gitgutter&amp;quot;&lt;/span&gt;
 Bundle &lt;span class="s2"&gt;&amp;quot;gregsexton/gitv&amp;quot;&lt;/span&gt;
@@ -463,9 +508,9 @@ autocmd &lt;span class="nb"&gt;FileType&lt;/span&gt; mako &lt;span class="k"&gt;
 相对行号将会在每行前显示相对于光标所在行的行号, 相对行号你给出某些垂直移动命令时需要的计数值&lt;/p&gt;
 &lt;p&gt;在 &lt;tt class="docutils literal"&gt;Vim 7.4&lt;/tt&gt; 之前的版本, 启用相对行号当前行号将变为0, 无法显示正常的行号, 在 &lt;tt class="docutils literal"&gt;Vim 7.4&lt;/tt&gt; 中则可以正常的显示当前行号的同时来显示相对行号, 下面有两张图可以对比&lt;/p&gt;
 &lt;p&gt;Vim 7.3&lt;/p&gt;
-&lt;img alt="/static/upload/vim_rn_pre_74.png" src="/static/upload/vim_rn_pre_74.png" /&gt;
+&lt;img alt="" src="/static/upload/vim_rn_pre_74.png" /&gt;
 &lt;p&gt;Vim 7.4&lt;/p&gt;
-&lt;img alt="/static/upload/vim_rn_74.png" src="/static/upload/vim_rn_74.png" /&gt;
+&lt;img alt="" src="/static/upload/vim_rn_74.png" /&gt;
 &lt;p&gt;从上面的图片看来, 启用相对行号后可以很直观的看到当前行距离上面/下面某行的行数&lt;/p&gt;
 &lt;p&gt;可以使用以下指令启用这个特性&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;set relativenumber
@@ -5303,7 +5348,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;然后浏览器访问192.168.3.100,如果keepalived的persistence_timeout参数值为0,而且两个后端realserver是不同的内容,刷新就可以看到两个不同的页面交替.&lt;/p&gt;</summary><category term="高可用"></category><category term="详解"></category><category term="群集"></category><category term="lvs"></category><category term="Linux"></category><category term="keepalived"></category><category term=""></category></entry><entry><title>使用Python进行web开发</title><link href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html" rel="alternate"></link><updated>2012-04-13T16:39:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-04-13:shi-yong-pythonjin-xing-webkai-fa.html</id><summary type="html">&lt;p&gt;最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas&lt;/p&gt;
+&lt;p&gt;然后浏览器访问192.168.3.100,如果keepalived的persistence_timeout参数值为0,而且两个后端realserver是不同的内容,刷新就可以看到两个不同的页面交替.&lt;/p&gt;</summary><category term="高可用"></category><category term="详解"></category><category term="群集"></category><category term="lvs"></category><category term="Linux"></category><category term="keepalived"></category></entry><entry><title>使用Python进行web开发</title><link href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html" rel="alternate"></link><updated>2012-04-13T16:39:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-04-13:shi-yong-pythonjin-xing-webkai-fa.html</id><summary type="html">&lt;p&gt;最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas&lt;/p&gt;
 &lt;p&gt;最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py&lt;/p&gt;
 &lt;h3&gt;安装easy_install&lt;/h3&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;

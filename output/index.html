@@ -3,21 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim." />
-    <meta name="keywords" content="Python, Linux, vim, 开源" />
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -38,9 +37,9 @@
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -52,25 +51,88 @@
     <div class="row">
 
         <div class="span9">
-                
+        
 
         
 
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h1>PyQt + QML 快速开发GUI总结</h1></a>
-            三 06 十一月 2013
+            <a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html"><h1>将Pelican版本更新到3.3</h1></a>
+Tue 24 December 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 
  
         </div>
         
-        <div class="highlight"><p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+        <div><p>用Pelican有一段时间了, 由于重装了系统, 所以安装<code>Pelican</code>的最新版本,最新版本为 <code>3.3</code>, 顺便也升级模板和插件.</p>
+<p><code>Pelican</code>特别喜欢更改配置文件,  而且错误提示非常烂, 完全不知道在说什么, 而且没有安装markdown包的话根本不提示, 仅仅就错误退出, 下面就这次升级越到的问题做个记录.</p>
+<h2>Makefile</h2>
+<p>Pelican升级后会有很多莫名奇妙的问题, 首先之前的<code>Makefile</code>不能使用, 所以需要重新生成一份:</p>
+<div class="codehilite"><pre><span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span> <span class="p">.</span>
+</pre></div>
+
+
+<p>当然上面操作会更改配置文件, 我用git管理, 所以很方便的<code>checkout</code>, 如果你的不是, 先备份下配置文件吧.</p>
+<h2>ATOM Feed</h2>
+<p>然后<code>make html</code>的时候失败提示</p>
+<div class="codehilite"><pre><span class="n">File</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">feeds</span><span class="o">/</span><span class="n">all</span><span class="p">.</span><span class="n">atom</span><span class="p">.</span><span class="n">xml</span> <span class="n">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">overwritten</span><span class="o">!</span>
+</pre></div>
+
+
+<p>看了 <a href="https://github.com/getpelican/pelican">pelican</a>上的<code>issue</code> 原来是更改了<code>FEED_ATOM</code>的配置项, 使用了 <code>FEED_ALL_ATOM</code>配置项, 将<code>FEED_ATOM</code>配置项改为<code>FEED_ALL_ATOM</code>配置即可</p>
+<p>但是改完之后页面的ATOM FEED链接没有指向正确的地址, 查看模板文件, 发现模板还在引用<code>FEED_ATOM</code>, 改成<code>FEED_ALL_ATOM</code>即可.</p>
+<h2>Markdown</h2>
+<p>如果莫名奇妙的错误, 没有错误信息, 也没有输出HTML, 那么可能就是<code>markdown</code>包没装, <code>Pelican</code>的错误提示真心无语.</p>
+<div class="codehilite"><pre><span class="n">easy_install</span> <span class="o">-</span><span class="n">U</span> <span class="n">markdown</span>
+</pre></div>
+
+
+<h2>静态文件</h2>
+<p><code>Pelican</code>去掉了<code>FILE_TO_COPY</code>项, 所以之前拷贝<code>robots.txt</code>之类的文件, 就会失效, 使用<code>STATIC_PATHS</code>即可</p>
+<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;upload&quot;</span><span class="p">,</span> <span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span>
+                <span class="s">&quot;extra/404.html&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+</pre></div>
+
+
+<p>如果想指定静态文件位置, 可以使用<code>STATIC_SAVE_AS</code>, 会将静态文件存到另外一个目录,
+而且对所有<code>STATIC_PATHS</code>项生效</p>
+<div class="codehilite"><pre><span class="n">STATIC_SAVE_AS</span> <span class="o">=</span> <span class="s">&quot;static/&quot;</span>
+</pre></div>
+
+
+<p>也可以使用 <code>EXTRA_PATH_METADATA</code>来为每一项指定路径</p>
+<div class="codehilite"><pre><span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;extra/robots.txt&quot;</span><span class="o">:</span><span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;robots.txt&quot;</span><span class="p">},</span>
+    <span class="s">&quot;extra/404.html&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;404.html&quot;</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>至此, <code>Pelican</code>升级完毕</p></div>
+        <hr />
+    </div>
+		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h2>PyQt + QML 快速开发GUI总结</h2></a>
+        <div class= "well small"> Wed 06 November 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
 结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
 而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
 这篇文章会总结这些问题, 避免以后碰到无从下手.</p>
@@ -83,368 +145,10 @@ in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 <h3>使用PyQt显示QML</h3>
 <p>要想在Python里使用PyQt来调用QML显示, 需要用到 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 实例的 <tt class="docutils literal">setSource</tt> 将一个 <tt class="docutils literal">PyQt4.QtCore.QUrl</tt> 对象传递进去, 然后调用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">show</tt> 方法, 下面是一个例子:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span>
+<span class="kn">from</span> <span class="nn">PyQt4.QtGui ...</span></pre></div></div></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html">read more</a></div>
+    </div>	
+				
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;/path/to/demo.qml&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="section" id="id1">
-<h3>通过PyQt渲染数据到QML</h3>
-<p>渲染QML变量有两种方法, 一种是QML中没有定义的变量, 一种是在QML中已经定义好的变量,
-第一种是预定义变量, 第二种是设置变量</p>
-<div class="section" id="id2">
-<h4>预定义变量</h4>
-<p><tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 的 <tt class="docutils literal">rootContext</tt> 方法会返回一个QML上下文, 通过这个对象可以对QML进行一些变量的预定义</p>
-<p><em>注意</em>, 预定义变量必须在 <tt class="docutils literal">setSource</tt> 调用之前进行, 还有如果是字符串类型如要使用 <tt class="docutils literal">PyQt4.QtCore.QString</tt> 进行转换,
-数字可以不用转换, 如果是列表或字典需要使用 <tt class="docutils literal">PyQt4.QtCore.QVariant</tt> 进行转换, 下面是一个例子:</p>
-<p>test.qml:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">30</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.py:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">rootContext</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootContext</span><span class="p">()</span>
-<span class="n">rootContext</span><span class="o">.</span><span class="n">setContextProperty</span><span class="p">(</span><span class="s">&quot;textData&quot;</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>如果将 <tt class="docutils literal">rootContext</tt> 两行移到 <tt class="docutils literal">view.setSource</tt> 下面, QML里将找不到对 <tt class="docutils literal">textData</tt> 的引用</p>
-</div>
-<div class="section" id="id3">
-<h4>设置变量</h4>
-<p>如果QML里已经定义好了变量, 而我们就可以在PyQt里对它进行更改, 对QML里的变量更改需要使用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">rootObject</tt> 方法返回的 <tt class="docutils literal">rootObject</tt> 对象, 调用 <tt class="docutils literal">rootObject</tt> 对象的 <tt class="docutils literal">setProperty</tt> 方法即可对QML里变量做出更改</p>
-<p><em>注意</em>, 使用 <tt class="docutils literal">rootObject</tt> 对QML的更改必须在 <tt class="docutils literal">setSource</tt> 之后, 否则 <tt class="docutils literal">rootObject</tt> 方法将返回 <em>None</em>, 下面是一个例子</p>
-<p>test.qml:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span>
-    <span class="nx">property</span> <span class="nx">string</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">30</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.py:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;textData&quot;</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面例子我们在QML定义了 <tt class="docutils literal">textData</tt> 变量, 并在 <tt class="docutils literal">setSource</tt> 之后使用 <tt class="docutils literal">rootObject</tt> 的 <tt class="docutils literal">setProperty</tt> 对 <tt class="docutils literal">textData</tt> 变量进行了更改</p>
-</div>
-</div>
-<div class="section" id="qml">
-<h3>QML信号的传递</h3>
-<p>QML有信号机制, 可以在QML之间使用JavaScript进行触发和接收, 当然也可以将信号传递给后端的PyQt,
-我们在此不讨论QML内部的信号, 我们仅讨论QML信号传递到PyQt这部分, QML使用signal创建信号, 信号可以携带参数,
-使用调用函数的方法可以触发信号, 下面是一个例子:</p>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面我们定义了一个 <tt class="docutils literal">mclicked</tt> 的信号, 并且在点击时会触发这个信号, PyQt 可以通过 <tt class="docutils literal">rootObject</tt> 获取这个信号, 并为这个信号绑定槽:</p>
-<p>test.py</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">on_click</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;hi&quot;</span>
-
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">mclicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面为QML的 <tt class="docutils literal">mclicked</tt> 信号绑定了一个函数, 当点击QML窗体时, 控制台就会输出 hi</p>
-</div>
-<div class="section" id="id4">
-<h3>QML提供接口</h3>
-<p>上面我们定义了信号, 如果响应信号仅仅在控制台输出没有意义, 我们可以通过QML在顶级元素定义JavaScript函数
-向PyQt提供接口, 下面是例子:</p>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="kd">id: testText</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nx">set_text</span><span class="p">(</span><span class="nx">text</span><span class="p">){</span>
-        <span class="nx">testText</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面我们在QML顶级元素定义了一个 <tt class="docutils literal">set_text</tt> 函数, 接下来我们就可以通过 <tt class="docutils literal">rootObject</tt> 进行调用</p>
-<p>test.py</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">on_click</span><span class="p">():</span>
-    <span class="n">rootObject</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Clicked&quot;</span><span class="p">)</span>
-
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">mclicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面我们用响应信号的槽, 通过 <tt class="docutils literal">rootObject</tt> 调用QML提供的函数接口, 当点击窗体时, 显示文字会从 <tt class="docutils literal">Click Me</tt> 变成 <tt class="docutils literal">Clicked</tt>,
-当然这仅仅是个例子, 这种响应可以在QML里直接完成</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="kd">id: testText</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nx">set_text</span><span class="p">(){</span>
-        <span class="nx">testText</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;Clicked&quot;</span>
-    <span class="p">}</span>
-
-    <span class="k">Component.onCompleted :</span> <span class="p">{</span>
-        <span class="nx">mclicked</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">set_text</span><span class="p">);</span>  <span class="c1">// 在加载完成后为mclicked信号绑定槽</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>一些坑</h2>
-<div class="section" id="id6">
-<h3>QML全部变量内部状态更改</h3>
-<p>QML定义使用 <tt class="docutils literal">property</tt> 定义的变量是全局的, 这些变量是无法对其内部状态进行更改的,
-当然数字和字符串没有这方面问题, 但是数组和对象的更改就不行, 比如下面的更改是无效的</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-    <span class="nx">property</span> <span class="nx">variant</span> <span class="k">testData:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-
-    <span class="nx">Repeater</span> <span class="p">{</span>
-        <span class="k">model:</span><span class="nx">testData</span><span class="p">;</span>
-
-        <span class="nx">Text</span> <span class="p">{</span>
-            <span class="k">text:</span> <span class="nx">modelData</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="kd">id: testArea</span>
-        <span class="nx">anchors</span><span class="p">.</span><span class="nx">fill</span><span class="p">;</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">testData</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="nx">testData</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面是无法更改testData的内部状态的, 解决办法是先将全局变量赋值给局部变量, 更改完毕后覆盖全局变量</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-    <span class="nx">property</span> <span class="nx">variant</span> <span class="k">testData:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-
-    <span class="nx">Repeater</span> <span class="p">{</span>
-        <span class="k">model:</span><span class="nx">testData</span><span class="p">;</span>
-
-        <span class="nx">Text</span> <span class="p">{</span>
-            <span class="k">text:</span> <span class="nx">modelData</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="kd">id: testArea</span>
-        <span class="nx">anchors</span><span class="p">.</span><span class="nx">fill</span><span class="p">;</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">testData</span><span class="p">;</span>  <span class="c1">// 赋值给局部变量</span>
-            <span class="nx">tmp</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="nx">tmp</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-            <span class="nx">testData</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面即可成功更改 <tt class="docutils literal">testData</tt> 的内部状态</p>
-</div>
-<div class="section" id="id7">
-<h3>空列表引发的段错误</h3>
-<p>从PyQt向QML中渲染数据, 难免会渲染空列表, 但是这在某些平台(Windows)会引发段错误, 搞得人莫名其妙,
-解决办法就是将空列表转换为 <em>None</em></p>
-</div>
-</div>
-<div class="section" id="id8">
-<h2>一些技巧</h2>
-<div class="section" id="js">
-<h3>结合js</h3>
-<p>给元素的属性赋值是可以使用js语句的, 当然复杂的语句可以写成函数,指定这个函数, 使用函数的返回值,
-下面是一个隔行变色的例子:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">400</span><span class="p">;</span>
-    <span class="nx">Repeater</span><span class="p">{</span>
-        <span class="k">model:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="nx">Rectangle</span> <span class="p">{</span>
-            <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">100</span><span class="p">;</span>
-            <span class="k">color:</span> <span class="nx">index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&quot;blue&quot;</span> <span class="o">:</span> <span class="s2">&quot;black&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="section" id="id9">
-<h3>自定义元素</h3>
-<p>多处都使用的内容, 可以提取出来放在一个以大写开头的文件名的文件里, 然后同目录使用文件名就可以引用这个元素,
-其他目录可以使用 <tt class="docutils literal">import</tt> 导入这个目录(相对路径导入), 就可以使用目录里的元素了,</p>
-<p>比如我在 <tt class="docutils literal">Demo.qml</tt>  定义了一些内容,  同目录或导入这个目录的其他QML文件我就可以直接使用 <tt class="docutils literal">Demo</tt> 元素了</p>
-</div>
-<div class="section" id="id10">
-<h3>自定义元素属性</h3>
-<p>为了更好的可重用, 定义一些属性是必须的 可以用通过  <tt class="docutils literal">property alias source:target</tt> 定义属性别名, 当别人引用
-这个元素, 并在元素内定义 <tt class="docutils literal">source</tt> 属性, 就会自动映射到 <tt class="docutils literal">target</tt> 上, 下面是一个例子</p>
-<p>Demo.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: demo</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">50</span><span class="p">;</span>
-
-    <span class="nx">property</span> <span class="nx">alias</span> <span class="k">text:</span> <span class="nx">demoText</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
-
-    <span class="nx">Text</span><span class="p">{</span>
-        <span class="kd">id: demoText</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Demo&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Demo</span> <span class="p">{</span>
-    <span class="k">text:</span> <span class="s2">&quot;Nice Demo&quot;</span>
-<span class="p">}</span>
-</pre></div>
-<p>使用qmlviwer 查看 test.qml, 会显示 &quot;Nice Demo&quot; 文字</p>
-<p>当然也可以直接在自定义元素使用 <tt class="docutils literal">property</tt> 定义变量, 在使用该元素时定义该属性:</p>
-<p>Demo.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: demo</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">50</span><span class="p">;</span>
-
-    <span class="nx">property</span> <span class="nx">string</span> <span class="k">textData:</span><span class="s2">&quot;Demo&quot;</span><span class="p">;</span>
-
-    <span class="nx">Text</span><span class="p">{</span>
-        <span class="kd">id: demoText</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Demo</span> <span class="p">{</span>
-    <span class="k">textData:</span> <span class="s2">&quot;Nice Demo&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-        <hr />
-    </div>
-		
-    
  
         
 
@@ -452,12 +156,11 @@ in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 
     <div class='article'>
         <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h2>推荐几款最近发现非常酷的Vim插件</h2></a>
-        <div class= "well small"> 五 18 十月 2013
+        <div class= "well small"> Fri 18 October 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:</p>
@@ -480,7 +183,7 @@ Vim批量注释工具, 可以注释多行和去除多行注释</li>
     <script type="text/javascript" src="http://asciinema.org/a/5981.js" id="asciicast-5981" async></script>
 </div><div class="section" id="id1">
 <h2>安装</h2>
-<p>上面插件可以通过 Vundle 来安装 (了解Vundle猛击 <a class="reference external" href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>), 下面是 <tt class="docutils literal">.vimrc</tt> 的配置</p>
+<p>上面插件可以通过 Vundle 来安装 (了解Vundle猛击 <a class="reference external" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>), 下面是 <tt class="docutils literal">.vimrc</tt> 的配置</p>
 <div class="highlight"><pre>Bundle <span class="s2">&quot;Yggdroot/indentLine&quot;</span>
 Bundle <span class="s2">&quot;airblade/vim-gitgutter&quot;</span>
 Bundle <span class="s2">&quot;gregsexton/gitv&quot;</span>
@@ -491,7 +194,7 @@ Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
 <p>然后重新打开 Vim, 执行 <tt class="docutils literal">:BundleIntall</tt> 等待安装完成 ...</p></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -499,19 +202,18 @@ Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
 
     <div class='article'>
         <a href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html"><h2>Vim  相对行号</h2></a>
-        <div class= "well small"> 三 09 十月 2013
+        <div class= "well small"> Wed 09 October 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p class="first last">大家在用Vim时是否会遇到想复制多行或者想快速向下/向上移动多行时而不知道行数的情况, 相对行号将帮助你轻易的完成类似的任务</p>
  <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -519,19 +221,18 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
     <div class='article'>
         <a href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html"><h2>PyQt4 信号和槽详解</h2></a>
-        <div class= "well small"> 日 22 九月 2013
+        <div class= "well small"> Sun 22 September 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 
  </div>
-        <div class="summary"><p class="first last">最近在开发一个基于 <tt class="docutils literal docutils literal">PyQt4</tt> 的的 GUI程序, 使用过程中一些对信号和槽的理解分享给大家</p>
+        <div class="summary"><p class="first last">最近在开发一个基于 <tt class="docutils literal">PyQt4</tt> 的的 GUI程序, 使用过程中一些对信号和槽的理解分享给大家</p>
  <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -539,12 +240,11 @@ in <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 
     <div class='article'>
         <a href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html"><h2>Linux 下 Python 实现按任意键退出</h2></a>
-        <div class= "well small"> 二 20 八月 2013
+        <div class= "well small"> Tue 20 August 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过<code>termios.h</code>库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:</p>
@@ -569,7 +269,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <span class="n">new_ttyinfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">termios</span><span class="o">.</span><span class="n">ICANON ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -577,12 +277,11 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     <div class='article'>
         <a href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html"><h2>Vim 代码补全和检查: YouCompleteMe & syntastic</h2></a>
-        <div class= "well small"> 三 14 八月 2013
+        <div class= "well small"> Wed 14 August 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
  </div>
         <div class="summary"><p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
@@ -599,7 +298,7 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
     <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -607,12 +306,11 @@ in <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
     <div class='article'>
         <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h2>发布一个基于Tornado的高效异步的HTTP客户端库</h2></a>
-        <div class= "well small"> 四 01 八月 2013
+        <div class= "well small"> Thu 01 August 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
@@ -636,7 +334,7 @@ python setup.py install
 <div class="codehilite"><pre><span class="kn">from ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -644,12 +342,11 @@ python setup.py install
 
     <div class='article'>
         <a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html"><h2>解决git提交敏感信息(回退git版本库到某一个commit)</h2></a>
-        <div class= "well small"> 五 07 六月 2013
+        <div class= "well small"> Fri 07 June 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/git.html">git</a>
 
  </div>
         <div class="summary"><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
@@ -674,7 +371,7 @@ git push origin temp:temp
 <div class="codehilite"><pre>git push origin --delete ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
@@ -682,12 +379,11 @@ git push origin temp:temp
 
     <div class='article'>
         <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h2>Pual 更新支持SimSimi可以进行互动</h2></a>
-        <div class= "well small"> 四 30 五月 2013
+        <div class= "well small"> Thu 30 May 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
         <div class="summary"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
@@ -702,52 +398,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 <p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">read more</a></div>
     </div>	
 				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h2>说说Python装饰器</h2></a>
-        <div class= "well small"> 一 20 五月 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
-<p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">return</span> <span class="n">r</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</pre></div>
-
-
-<p>我们用这个装饰器装饰一个<code>test</code>函数</p>
-<div class="codehilite"><pre><span class="nd">@run_time</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
-</pre></div>
-
-
-<p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
-<div class="codehilite"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</pre></div>
-
-
-<p>装饰器将在解释器运行一开始就被加载 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">read more</a></div>
-    </div>	
-				
-            <div class="pagination">
+<div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
@@ -763,7 +414,7 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
     <li class="next"><a href="http://www.linuxzen.com/index2.html">Next &rarr;</a></li>
 
 </ul>
-</div>    
+</div>
  
   
         </div>
@@ -779,52 +430,50 @@ in <a href="http://www.linuxzen.com/category/python.html">Python</a>
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

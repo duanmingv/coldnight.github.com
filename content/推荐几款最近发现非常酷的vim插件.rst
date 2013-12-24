@@ -37,7 +37,7 @@
 
 安装
 ====
-上面插件可以通过 Vundle 来安装 (了解Vundle猛击 `这里 </vimpei-zhi-xi-lie-cha-jian-guan-li.html>`_), 下面是 ``.vimrc`` 的配置
+上面插件可以通过 Vundle 来安装 (了解Vundle猛击 `这里 <http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html>`_), 下面是 ``.vimrc`` 的配置
 
 .. code-block:: vim
 

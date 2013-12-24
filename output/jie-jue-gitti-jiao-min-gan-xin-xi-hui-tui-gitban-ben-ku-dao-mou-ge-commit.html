@@ -2,24 +2,21 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title> 解决git提交敏感信息(回退git版本库到某一个commit) | cold's world </title>
-    <meta name="description" content=" &lt;p&gt;git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.&lt;/p&gt;
-&lt;h2&gt;备份本地代码&lt;/h2&gt;
-&lt;p&gt;首先我们将本地代码的更改备份一下, ... " />
-    <meta name="keywords" content=" git,敏感信息,回退,commit,版本库 " />
+    <title>cold's world</title>
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -40,9 +37,9 @@
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -54,19 +51,18 @@
     <div class="row">
 
         <div class="span9">
-            <div class='article'>
+    <div class='article'>
         <div class="content-title">
             <h1>解决git提交敏感信息(回退git版本库到某一个commit)</h1>
-            五 07 六月 2013
+Fri 07 June 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/git.html">git</a>
 
         </div>
 	
-        <div class="highlight"><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+        <div><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
 <h2>备份本地代码</h2>
 <p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
 <h2>回退本地代码的commit</h2>
@@ -97,8 +93,7 @@ git push origin master            <span class="c"># 提交主分支</span>
 <div class="codehilite"><pre>git branch -d temp
 git push origin --delete temp
 </pre></div></div>
-
-        	    <div class="footer">
+         <div class="footer">
             <ul class="tags">                <li>
                     <a href="http://www.linuxzen.com/tag/git.html">git</a>
                 </li>                <li>
@@ -111,11 +106,10 @@ git push origin --delete temp
                     <a href="http://www.linuxzen.com/tag/ban-ben-ku.html">版本库</a>
                 </li>            </ul>
         </div>
-        
         <hr>
-    	   
+       
         <h2>Comments</h2>
-		<div id="disqus_thread"></div>
+<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'linuxzen'; 
     var disqus_title = '解决git提交敏感信息(回退git版本库到某一个commit)';
@@ -141,52 +135,50 @@ git push origin --delete temp
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

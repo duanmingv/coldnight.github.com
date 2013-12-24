@@ -3,21 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim." />
-    <meta name="keywords" content="Python, Linux, vim, 开源" />
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -38,9 +37,9 @@
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -52,494 +51,354 @@
     <div class="row">
 
         <div class="span9">
-                
+        
 
         
 
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h1>安装配置cfengine实现自动化配置Linux/Unix服务器</h1></a>
-            二 17 一月 2012
+            <a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html"><h1>将Pelican版本更新到3.3</h1></a>
+Tue 24 December 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
  
         </div>
         
-        <div class="highlight"><p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
-<p>cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:</p>
-<ul>
-<li>一个版本控制器(subversion)用来创建策略</li>
-<li>多个策略分发器(cfenginehub)用来分发策略----server</li>
-<li>多个策略执行器(cfengine host)用来执行策略-----client,</li>
-</ul>
-<p>本文使用的环境为:</p>
-<ul>
-<li>cfhub: 172.16.1.1/24</li>
-<li>cfhost: 172.16.1.2/24</li>
-</ul>
-<p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
-<p>下载:</p>
-<div class="codehilite"><pre>wget https://cfengine.com/source-code/download?file<span class="o">=</span>cfengine-3.2.3.tar.gz
+        <div><p>用Pelican有一段时间了, 由于重装了系统, 所以安装<code>Pelican</code>的最新版本,最新版本为 <code>3.3</code>, 顺便也升级模板和插件.</p>
+<p><code>Pelican</code>特别喜欢更改配置文件,  而且错误提示非常烂, 完全不知道在说什么, 而且没有安装markdown包的话根本不提示, 仅仅就错误退出, 下面就这次升级越到的问题做个记录.</p>
+<h2>Makefile</h2>
+<p>Pelican升级后会有很多莫名奇妙的问题, 首先之前的<code>Makefile</code>不能使用, 所以需要重新生成一份:</p>
+<div class="codehilite"><pre><span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span> <span class="p">.</span>
 </pre></div>
 
 
-<p>安装依赖:</p>
-<div class="codehilite"><pre>yum -y install db4-devel pcre-devel openssl-devel flex
+<p>当然上面操作会更改配置文件, 我用git管理, 所以很方便的<code>checkout</code>, 如果你的不是, 先备份下配置文件吧.</p>
+<h2>ATOM Feed</h2>
+<p>然后<code>make html</code>的时候失败提示</p>
+<div class="codehilite"><pre><span class="n">File</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">feeds</span><span class="o">/</span><span class="n">all</span><span class="p">.</span><span class="n">atom</span><span class="p">.</span><span class="n">xml</span> <span class="n">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">overwritten</span><span class="o">!</span>
 </pre></div>
 
 
-<p>编译安装:</p>
-<div class="codehilite"><pre>tar -zxvf download<span class="se">\?</span>file<span class="se">\=</span>cfengine-3.2.3.tar.gz
-<span class="nb">cd </span>cfengine-3.2.3/
-./configure --prefix<span class="o">=</span>/usr/local/cfengine
-make &amp;amp;&amp;amp; make install
+<p>看了 <a href="https://github.com/getpelican/pelican">pelican</a>上的<code>issue</code> 原来是更改了<code>FEED_ATOM</code>的配置项, 使用了 <code>FEED_ALL_ATOM</code>配置项, 将<code>FEED_ATOM</code>配置项改为<code>FEED_ALL_ATOM</code>配置即可</p>
+<p>但是改完之后页面的ATOM FEED链接没有指向正确的地址, 查看模板文件, 发现模板还在引用<code>FEED_ATOM</code>, 改成<code>FEED_ALL_ATOM</code>即可.</p>
+<h2>Markdown</h2>
+<p>如果莫名奇妙的错误, 没有错误信息, 也没有输出HTML, 那么可能就是<code>markdown</code>包没装, <code>Pelican</code>的错误提示真心无语.</p>
+<div class="codehilite"><pre><span class="n">easy_install</span> <span class="o">-</span><span class="n">U</span> <span class="n">markdown</span>
 </pre></div>
 
 
-<p>为了保证cfengine正常工作创建cfengine工作目录:</p>
-<div class="codehilite"><pre>mkdir -p /var/cfengine/masterfiles  <span class="c"># 存放要分发的承诺</span>
-mkdir /var/cfengine/inputs          <span class="c"># 存放要执行的承诺</span>
-mkdir /var/cfengine/outputs         <span class="c"># 存放执行承诺的输出</span>
-mkdir /var/cfengine/bin             <span class="c"># 存放二进制文件</span>
+<h2>静态文件</h2>
+<p><code>Pelican</code>去掉了<code>FILE_TO_COPY</code>项, 所以之前拷贝<code>robots.txt</code>之类的文件, 就会失效, 使用<code>STATIC_PATHS</code>即可</p>
+<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;upload&quot;</span><span class="p">,</span> <span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span>
+                <span class="s">&quot;extra/404.html&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
 </pre></div>
 
 
-<p>复制二进制文件:</p>
-<div class="codehilite"><pre>cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
-ls -l /var/cfengine/bin/
-total 964
--rwxr-xr-x 1 root root 235958 Jan 13  2012 cf-agent           <span class="c"># 执行承诺</span>
--rwxr-xr-x 1 root root  63095 Jan 13  2012 cf-execd           <span class="c"># 用于替代cron的程序,定时执行cf-agent</span>
--rwxr-xr-x 1 root root  39076 Jan 13  2012 cf-key             <span class="c"># 生成用于认证的证书</span>
--rwxr-xr-x 1 root root  78711 Jan 13  2012 cf-know            <span class="c"># 从大量承诺（知识建模代理）生成一个 ISO 标准的 Topic Map 的命令</span>
--rwxr-xr-x 1 root root 150846 Jan 13  2012 cf-monitord        <span class="c"># 负责收集有关系统状态信息的守护进程</span>
--rwxr-xr-x 1 root root  16078 Jan 13  2012 cf-promises        <span class="c"># 检查承诺语法的程序</span>
--rwxr-xr-x 1 root root 107349 Jan 13  2012 cf-report          <span class="c"># 生成报告</span>
--rwxr-xr-x 1 root root  44160 Jan 13  2012 cf-runagent        <span class="c"># 用来执行远程的cf-agent</span>
--rwxr-xr-x 1 root root 172251 Jan 13  2012 cf-serverd         <span class="c"># 分发承诺的守护进程</span>
+<p>如果想指定静态文件位置, 可以使用<code>STATIC_SAVE_AS</code>, 会将静态文件存到另外一个目录,
+而且对所有<code>STATIC_PATHS</code>项生效</p>
+<div class="codehilite"><pre><span class="n">STATIC_SAVE_AS</span> <span class="o">=</span> <span class="s">&quot;static/&quot;</span>
 </pre></div>
 
 
-<p>一个cfengine的hello, world:</p>
-<div class="codehilite"><pre>vi /var/cfengine/inputs/test.cf                                               <span class="c"># 新建一个承诺文件,添加下面内容</span>
-<span class="c">###################</span>
-<span class="c"># 这里顺便解释一下cfengine的语法,cfengine的语法大都如下</span>
-<span class="c"># &amp;lt;它是什么&amp;gt; &amp;lt;它对什么起作用&amp;gt; &amp;lt;它叫什么&amp;gt;</span>
-body common control                                   <span class="c"># 一个body 对common组启作用,名字是control(名字为control的common的组是最重要的一个组,cfengine以这个组为起点</span>
-<span class="o">{</span>
-<span class="nv">bundlesequence</span> <span class="o">=</span>&amp;gt; <span class="o">{</span> <span class="s2">&quot;test&quot;</span> <span class="o">}</span>;                         <span class="c"># 定义要执行的承诺束为test</span>
-<span class="o">}</span>
-
-bundle agent <span class="nb">test</span>                                     <span class="c"># 一个承诺束,对cf-agent起作用,叫test</span>
-<span class="o">{</span>
-reports:                                              <span class="c"># 一个报告(仅仅显示消息,不对系统做改变)</span>
-  cfengine_3::                                        <span class="c"># 一个类,对cfengine 版本3的策略执行点起作用(cfengine用这个来替代程序语言里的if-else)</span>
-      <span class="s2">&quot;Hello world!&quot;</span>;                                 <span class="c"># 承诺内容,显示&quot;hello world!&quot;</span>
-<span class="o">}</span>
-
-/var/cfengine/bin/cf-promises -f /var/cfengine/inputs/test.cf        <span class="c"># 检查承诺语法</span>
-/var/cfengine/bin/cf-agent -f /var/cfengine/inputs/test.cf           <span class="c"># 执行承诺</span>
-R: Hello world!                                                      <span class="c"># R:代表一个report.</span>
-</pre></div>
-
-
-<p>为策略分发点创建配置文件:</p>
-<div class="codehilite"><pre>cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
-</pre></div>
-
-
-<p>编辑策略文件:
-新建一个cftest1.cf承诺文件</p>
-<div class="codehilite"><pre>vi /var/cfengine/masterfiles/cftest1.cf                  <span class="c"># 新建一个cftest1.cf</span>
-<span class="c"># 添加如下内容:</span>
-bundle agent <span class="nb">test</span>
-<span class="o">{</span>
-reports:
-  cfengine_3::
-    <span class="s2">&quot;I&#39;am cfengine 3 client&quot;</span>;
-<span class="o">}</span>
-</pre></div>
-
-
-<p>然后编辑promises.cf文件加入执行这个承诺束的支持:</p>
-<div class="codehilite"><pre>vi /var/cfengine/masterfiles/promises.cf
-body common control
-<span class="o">{</span>
- <span class="nv">bundlesequence</span> <span class="o">=</span>&amp;gt; <span class="o">{</span> <span class="s2">&quot;main&quot;</span>, <span class="s2">&quot;test&quot;</span> <span class="o">}</span>;                                <span class="c"># 将test加入的承诺束队列</span>
-
- <span class="nv">inputs</span> <span class="o">=</span>&amp;gt; <span class="o">{</span>
-            <span class="s2">&quot;cfengine_stdlib.cf&quot;</span>,
-            <span class="s2">&quot;cftest1.cf&quot;</span>,                                             <span class="c"># 将cftest1.cf引入进来</span>
-           <span class="o">}</span>;
-
- <span class="nv">version</span> <span class="o">=</span>&amp;gt; <span class="s2">&quot;Community Promises.cf 1.0.0&quot;</span>;
-<span class="o">}</span>
-.......
-</pre></div>
-
-
-<p>&nbsp;</p>
-<p>做好之后先本地同步,然后启动server:
-<pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1</p>
-<div class="codehilite"><pre><span class="err">到如下提示表示成功</span><span class="o">:</span>
-<span class="err">```</span><span class="n">bash</span> 
-<span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bootstrap</span> <span class="n">to</span> <span class="mf">172.16.1.1</span> <span class="n">completed</span> <span class="n">successfully</span>
-<span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">cf</span>
-<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="o">:::</span><span class="mi">5308</span>                     <span class="o">:::*</span>                        <span class="n">LISTEN</span>      <span class="mi">20173</span><span class="o">/</span><span class="n">cf</span><span class="o">-</span><span class="n">serverd</span>
-</pre></div>
-
-
-<p>然后执行策略:</p>
-<div class="codehilite"><pre>/var/cfengine/bin/cf-agent
-R: --&amp;gt; CFE is running on cfhub
-R: I<span class="err">&#39;</span>am cfengine 3 client
-</pre></div>
-
-
-<p>&nbsp;</p>
-<p>cfengine默认是让本机地址的16位网络连接同步的,如果新加入一个另一网段的设备允许同步,比如允许192.168.1.网段同步,编辑/var/cfengine/masterfiles/promises.cf,找到bundle common def</p>
-<div class="codehilite"><pre>vi /var/cfengine/masterfiles/promises.cf
-bundle common def
-<span class="o">{</span>
- vars:                                            <span class="c"># 定义变量</span>
-   ... ...
-    <span class="s2">&quot;acl&quot;</span> <span class="nv">slist</span> <span class="o">=</span>&amp;gt; <span class="o">{</span>
-                <span class="s2">&quot;$(sys.policy_hub)/16&quot;</span>, <span class="s2">&quot;192.168.1.&quot;</span>,          <span class="c"># 这这个后面添加</span>
-  ... ...
-<span class="o">}</span>
-</pre></div>
-
-
-<p>服务端基本配置完成,客户端(cfengine host),按照本文前面安装的部分进行安装,创建工作目录,复制二进制文件,不用创建配置文件和承诺,然后执行:</p>
-<div class="codehilite"><pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
-</pre></div>
-
-
-<p>会出现和服务器执行一样的提示,就表示成功,如果提示连接不成功,尝试关闭防火墙.同步后执行本地策略:</p>
-<div class="codehilite"><pre>/var/cfengine/bin/cf-agent
-</pre></div>
-
-
-<p>cfengine官方还是建议在生产环境加一个版本控制器用来创建承诺文件,然后给策略分发点用来分发给策略执行点.更多cfengine的语法请参见手册.</p></div>
-        <hr />
-    </div>
-		
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html"><h2>AppArmor引起的无法启动Evince</h2></a>
-        <div class= "well small"> 四 15 十一月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
-evince
-却提示:</p>
-<div class="codehilite"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
-<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
-</pre></div>
-
-
-<p>google说是$XAUTHORITY权限的问题,于是查看:</p>
-<div class="codehilite"><pre>ls -l <span class="nv">$XAUTHORITY</span>
--rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
-</pre></div>
-
-
-<p>更改为如下:</p>
-<div class="codehilite"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
-</pre></div>
-
-
-<p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<div class="codehilite"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html"><h2>Awesome+tmux+gnomeDo打造高效Linux桌面环境</h2></a>
-        <div class= "well small"> 二 04 十二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><h2>引言</h2>
-<p>近期一直在Linux下工作,使用Ubuntu 11.10,经过一段时间的使用和磨合,终于打造出一套适合自己的高效Linux桌面环境,之前也在博客中零散的写了几篇文章分享,在此做一番总结.</p>
-<p>首先先放出桌面截图
-<img alt="Awesome 桌面截图" src="/upload/MyDesktop.png" /></p>
-<h2>Awesome</h2>
-<p>使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.</p>
-<h3>安装</h3>
-<p>Awesome Ubuntu下安装十分简单:</p>
-<div class="codehilite"><pre>sudo apt-get install awesome
-</pre></div>
-
-
-<h3>配置</h3>
-<h4>拷贝配置文件</h4>
-<p>Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:</p>
-<div class="codehilite"><pre>cp /etc/xdg/awesome/rc.lua ~/.config/awesome <span class="c">#  ~/.confg下如没有awesome则手动创建</span>
-</pre></div>
-
-
-<h4>配置自动启程序 ...</h4> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/awesometmuxgnomedoda-zao-gao-xiao-linuxzhuo-mian-huan-jing.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
-        <div class= "well small"> 五 17 二月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
- </div>
-        <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
-<p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
-<span class="c"># Author   : cold night</span>
-<span class="c"># Filename : nglogcut.sh</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html"><h2>bottle的cookie操作小记(获取不是在当前页面创建的cookie)</h2></a>
-        <div class= "well small"> 六 02 六月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
-<div class="codehilite"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
-      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
-           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
-      <span class="k">else</span> <span class="p">:</span>
-           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
-
-<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html"><h2>bottle使用Python装饰器巧妙解决用户验证</h2></a>
-        <div class= "well small"> 六 16 六月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
- </div>
-        <div class="summary"><p>上篇文章发布了一个自己写的用bottle写的web程序,其中收获最大就是Python装饰器的使用.前几天也是比较忙,所以没能分享出来,今天就给大家分享一下.</p>
-<p>首先来分析下需求,web程序后台需要认证,后台页面包含多个页面,最普通的方法就是为每个url添加认证,但是这样就需要每个每个绑定url的后台函数都需要添加类似或者相同的代码,但是这样做代码就过度冗余,而且不利于扩展.</p>
-<p>接下来我们先不谈及装饰器,我们都知道Python是个很强大的语言,她可以将函数当做参数传递给函数,最简单的:</p>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">p</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&#39;Hello,world&#39;</span>
-
-<span class="k">def</span> <span class="nf">funcfactor</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s">&#39;calling function named&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
-    <span class="n">func</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&#39;end&#39;</span>
-
-<span class="n">funcfactor</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="c"># 输出为:</span>
-<span class="c"># calling function named p</span>
-<span class="c"># Hello,world</span>
-<span class="c"># end</span>
-</pre></div>
-
-
-<p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
-<p>我们还可以这么做:</p>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
-    </div>	
-				
-    
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h2>部署Tornado时iptables引发的的一个问题</h2></a>
-        <div class= "well small"> 六 29 九月 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
- </div>
-        <div class="summary"><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
-<p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
-
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
-    <span class="p">}</span>
+<p>也可以使用 <code>EXTRA_PATH_METADATA</code>来为每一项指定路径</p>
+<div class="codehilite"><pre><span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;extra/robots.txt&quot;</span><span class="o">:</span><span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;robots.txt&quot;</span><span class="p">},</span>
+    <span class="s">&quot;extra/404.html&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;404.html&quot;</span><span class="p">},</span>
 <span class="p">}</span>
 </pre></div>
 
 
-<p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+<p>至此, <code>Pelican</code>升级完毕</p></div>
+        <hr />
+    </div>
+		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h2>PyQt + QML 快速开发GUI总结</h2></a>
+        <div class= "well small"> Wed 06 November 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
+而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
+这篇文章会总结这些问题, 避免以后碰到无从下手.</p>
+<p>PS:QML的一些基础问题不会在这里讨论, 本篇文章仅讨论一些经验性的问题, 本篇文章使用PyQt4</p>
+<p><em>请留意文章中间的&quot;注意&quot;</em></p>
+<div class="section" id="pyqt">
+<h2>如何和PyQt交互</h2>
+<p>QML和PyQt交互主要有三种方法: PyQt渲染数据, 信号传递, QML提供接口</p>
+<div class="section" id="pyqtqml">
+<h3>使用PyQt显示QML</h3>
+<p>要想在Python里使用PyQt来调用QML显示, 需要用到 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 实例的 <tt class="docutils literal">setSource</tt> 将一个 <tt class="docutils literal">PyQt4.QtCore.QUrl</tt> 对象传递进去, 然后调用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">show</tt> 方法, 下面是一个例子:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
+<span class="kn">from</span> <span class="nn">PyQt4.QtGui ...</span></pre></div></div></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h2>推荐几款最近发现非常酷的Vim插件</h2></a>
+        <div class= "well small"> Fri 18 October 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:</p>
+<ul class="simple">
+<li>delimitMate
+用于补全括号和引号</li>
+<li>vim-surround
+用于快速切换括号/引号或者标签</li>
+<li>GitGutter
+实时显示git更改</li>
+<li>Gitv
+查看Git详细提交日志(类似gitk)</li>
+<li>vim-commentary
+Vim批量注释工具, 可以注释多行和去除多行注释</li>
+<li>indentLine
+更加美观的显示缩进对齐线</li>
+</ul>
+<p>先放上录屏:</p>
+<div style="width:800; height: 500">
+    <script type="text/javascript" src="http://asciinema.org/a/5981.js" id="asciicast-5981" async></script>
+</div><div class="section" id="id1">
+<h2>安装</h2>
+<p>上面插件可以通过 Vundle 来安装 (了解Vundle猛击 <a class="reference external" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>), 下面是 <tt class="docutils literal">.vimrc</tt> 的配置</p>
+<div class="highlight"><pre>Bundle <span class="s2">&quot;Yggdroot/indentLine&quot;</span>
+Bundle <span class="s2">&quot;airblade/vim-gitgutter&quot;</span>
+Bundle <span class="s2">&quot;gregsexton/gitv&quot;</span>
+Bundle <span class="s2">&quot;tpope/vim-commentary&quot;</span>
+Bundle <span class="s2">&quot;tpope/vim-surround&quot;</span>
+Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
+</pre></div>
+<p>然后重新打开 Vim, 执行 <tt class="docutils literal">:BundleIntall</tt> 等待安装完成 ...</p></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html"><h2>Vim  相对行号</h2></a>
+        <div class= "well small"> Wed 09 October 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p class="first last">大家在用Vim时是否会遇到想复制多行或者想快速向下/向上移动多行时而不知道行数的情况, 相对行号将帮助你轻易的完成类似的任务</p>
+ <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html"><h2>PyQt4 信号和槽详解</h2></a>
+        <div class= "well small"> Sun 22 September 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p class="first last">最近在开发一个基于 <tt class="docutils literal">PyQt4</tt> 的的 GUI程序, 使用过程中一些对信号和槽的理解分享给大家</p>
+ <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html"><h2>Linux 下 Python 实现按任意键退出</h2></a>
+        <div class= "well small"> Tue 20 August 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过<code>termios.h</code>库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:</p>
+<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">termios</span>
+
+
+<span class="k">def</span> <span class="nf">press_any_key_exit</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="c"># 获取标准输入的描述符</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
+
+    <span class="c"># 获取标准输入(终端)的设置</span>
+    <span class="n">old_ttyinfo</span> <span class="o">=</span> <span class="n">termios</span><span class="o">.</span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+
+    <span class="c"># 配置终端</span>
+    <span class="n">new_ttyinfo</span> <span class="o">=</span> <span class="n">old_ttyinfo</span><span class="p">[:]</span>
+
+    <span class="c"># 使用非规范模式(索引3是c_lflag 也就是本地模式)</span>
+    <span class="n">new_ttyinfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">termios</span><span class="o">.</span><span class="n">ICANON ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html"><h2>Vim 代码补全和检查: YouCompleteMe & syntastic</h2></a>
+        <div class= "well small"> Wed 14 August 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
+<h2>升级Vim</h2>
+<p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
+升级Vim需要先卸载原有的Vim</p>
+<div class="codehilite"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
 </pre></div>
 
 
-<p>但是访问nginx总是返回502 Bad ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">read more</a></div>
+<p>并安装以下依赖</p>
+<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h2>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h2></a>
-        <div class= "well small"> 四 19 四月 2012
+        <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h2>发布一个基于Tornado的高效异步的HTTP客户端库</h2></a>
+        <div class= "well small"> Thu 01 August 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
  </div>
-        <div class="summary"><p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
-<p>首先使用环境介绍:
-系统: CentOS 5.5 32位</p>
-<p>Python版本:2.7.2</p>
-<p>nginx:1.0.13</p>
-<p>ip:192.168.3.3/24</p>
-<p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
-<p>首先安装python 2.7.2</p>
-<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
-<span class="n">mkdir</span> <span class="n">python</span>
-<span class="n">cd</span> <span class="n">python</span>
-<span class="cp">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
+        <div class="summary"><p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
+<p><s>TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在<code>Python2.7</code>平台上测试过, 不支持<code>Python3</code></s></p>
+<p>听取了仙子君的意见, 直接对<code>tornado.curl_httpclient.CurlAsyncHTTPClient</code>进行封装</p>
+<h2>安装</h2>
+<p>首先从git clone 下代码</p>
+<div class="codehilite"><pre>git clone https://github.com/coldnight/tornadohttpclient.git
+</pre></div>
+
+
+<p>然后安装它</p>
+<div class="codehilite"><pre><span class="nb">cd </span>tornadohttpclient
+python setup.py install
+</pre></div>
+
+
+<h2>教程</h2>
+<h3>GET</h3>
+<p>TornadoHTTPClient的get方法可以发起一个get请求</p>
+<div class="codehilite"><pre><span class="kn">from ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h2>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h2></a>
-        <div class= "well small"> 五 26 四月 2013
+        <a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html"><h2>解决git提交敏感信息(回退git版本库到某一个commit)</h2></a>
+        <div class= "well small"> Fri 07 June 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
  </div>
-        <div class="summary"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
-<h2>更新内容</h2>
-<ol>
-<li>数据库使用<code>SQLAlchemy</code>重写</li>
-<li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
-<li>改变代码结构, 清理部分代码</li>
-<li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
-<li>废弃一些不常用的命令</li>
-<li>改变数据库表结构</li>
-<li>废弃<code>channel</code>功能, <code>cd</code>命令仅支持切换聊天和安静模式</li>
-<li>删除一些不用的配置</li>
-</ol>
-<h2>如何升级</h2>
-<p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
-<h2>新的依赖</h2>
-<p>本次更新添加了依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">read more</a></div>
+        <div class="summary"><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+<h2>备份本地代码</h2>
+<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
+<h2>回退本地代码的commit</h2>
+<p>备份完数据, 我们就可以先回退本地的版本库</p>
+<div class="codehilite"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
+</pre></div>
+
+
+<h2>回退远端版本库</h2>
+<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
+<h3>新建一个分支, 并提交</h3>
+<div class="codehilite"><pre>git checkout -b temp
+git push origin temp:temp
+</pre></div>
+
+
+<h3>重建主分支</h3>
+<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
+<div class="codehilite"><pre>git push origin --delete ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html">read more</a></div>
     </div>	
 				
-    
+
  
         
 
  
 
     <div class='article'>
-        <a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h2>搭建ntop监测局域网内流量</h2></a>
-        <div class= "well small"> 一 20 二月 2012
+        <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h2>Pual 更新支持SimSimi可以进行互动</h2></a>
+        <div class= "well small"> Thu 30 May 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 
  </div>
-        <div class="summary"><p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
-<p>本文环境:CentOS5.5 32位</p>
+        <div class="summary"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
 <ul>
-<li>ip:192.168.3.101</li>
-<li>rrdtool:rrdtool-1.4.7.tar.gz</li>
-<li>GeoIP:GeoIP-1.4.8.tar.gz</li>
-<li>ntop:ntop-4.1.0.tar.gz</li>
+<li>英汉互译</li>
+<li>为每个用户分配一个session的含有上下文的Python shell</li>
+<li>贴代码</li>
 </ul>
-<h2>一.安装依赖:</h2>
-<h3>安装rrdtool</h3>
-<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
+<hr />
+<p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
+<p><a href="https://github.com/coldnight/pual_bot">项目地址</a></p>
+<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">read more</a></div>
     </div>	
 				
-            <div class="pagination">
+<div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
@@ -555,7 +414,7 @@ wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="
     <li class="next"><a href="http://www.linuxzen.com/author/cold2.html">Next &rarr;</a></li>
 
 </ul>
-</div>    
+</div>
  
   
         </div>
@@ -571,52 +430,50 @@ wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

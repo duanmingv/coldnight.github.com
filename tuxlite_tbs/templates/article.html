@@ -1,7 +1,4 @@
 {% extends "base.html" %}
-{% block description %} {{ article.content | truncate(200) | escape }} {% endblock %}
-{% block keywords %} {{ article.tags | join(',') }} {% endblock %}
-{% block windowtitle %} {{ article.title}} | {{ SITENAME }} {% endblock %}
 {% block content %}
     <div class='article'>
         <div class="content-title">
@@ -9,20 +6,10 @@
             {% include "metadata.html" %}
         </div>
 	
-        <div class="highlight">{{ article.content }}</div>
-
-        {% if article.tags %}
-	    <div class="footer">
-            <ul class="tags">{% for tag in article.tags %}
-                <li>
-                    <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
-                </li>{% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
+        <div>{{ article.content }}</div>
+        {% include "footer_tag.html" %}
         <hr>
-    	   
+       
         <h2>Comments</h2>
 	{% include "twitter.html" %}
 	{% include 'disqus.html' %}

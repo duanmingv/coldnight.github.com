@@ -2,26 +2,21 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title> Linux一些比较实用的小技巧 | cold's world </title>
-    <meta name="description" content=" &lt;p&gt;在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧&lt;/p&gt;
-&lt;h2&gt;文件查找&lt;/h2&gt;
-&lt;p&gt;找出最近修改的文件:&lt;/p&gt;
-&lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;find / -ctime 1 &lt;span class=&#34;c&#34;&gt;# 找出根下最近24小时修改过inode信息的文件(更改权限)&lt;/span&gt;
-find / ... " />
-    <meta name="keywords" content=" 命令,sz,ssh上传下载,shell,sed,rz,lrzsz,Linux,find,awk " />
+    <title>cold's world</title>
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -42,9 +37,9 @@ find / ... " />
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -56,19 +51,18 @@ find / ... " />
     <div class="row">
 
         <div class="span9">
-            <div class='article'>
+    <div class='article'>
         <div class="content-title">
             <h1>Linux一些比较实用的小技巧</h1>
-            一 20 二月 2012
+Mon 20 February 2012
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 
         </div>
 	
-        <div class="highlight"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+        <div><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
 <div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
@@ -135,8 +129,7 @@ sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span>
 <p>通过删除\r来实现转换:</p>
 <div class="codehilite"><pre>tr -d <span class="s1">&#39;\r&#39;</span> file.txt &amp;gt;&amp;gt; file1.txt   <span class="c"># 通过tr命令删除\r字符,并重定向追加到file1.txt</span>
 </pre></div></div>
-
-        	    <div class="footer">
+         <div class="footer">
             <ul class="tags">                <li>
                     <a href="http://www.linuxzen.com/tag/ming-ling.html">命令</a>
                 </li>                <li>
@@ -159,11 +152,10 @@ sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span>
                     <a href="http://www.linuxzen.com/tag/awk.html">awk</a>
                 </li>            </ul>
         </div>
-        
         <hr>
-    	   
+       
         <h2>Comments</h2>
-		<div id="disqus_thread"></div>
+<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'linuxzen'; 
     var disqus_title = 'Linux一些比较实用的小技巧';
@@ -189,52 +181,50 @@ sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span>
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

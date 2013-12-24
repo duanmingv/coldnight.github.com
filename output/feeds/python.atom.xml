@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-08-20T09:54:00+08:00</updated><entry><title>Linux 下 Python 实现按任意键退出</title><link href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html" rel="alternate"></link><updated>2013-08-20T09:54:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-20:linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html</id><summary type="html">&lt;p&gt;初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过&lt;code&gt;termios.h&lt;/code&gt;库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-12-24T00:00:00+08:00</updated><entry><title>将Pelican版本更新到3.3</title><link href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html" rel="alternate"></link><updated>2013-12-24T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-24:jiang-pelicanban-ben-geng-xin-dao-33.html</id><summary type="html">&lt;p&gt;用Pelican有一段时间了, 由于重装了系统, 所以安装&lt;code&gt;Pelican&lt;/code&gt;的最新版本,最新版本为 &lt;code&gt;3.3&lt;/code&gt;, 顺便也升级模板和插件.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Pelican&lt;/code&gt;特别喜欢更改配置文件,  而且错误提示非常烂, 完全不知道在说什么, 而且没有安装markdown包的话根本不提示, 仅仅就错误退出, 下面就这次升级越到的问题做个记录.&lt;/p&gt;
+&lt;h2&gt;Makefile&lt;/h2&gt;
+&lt;p&gt;Pelican升级后会有很多莫名奇妙的问题, 首先之前的&lt;code&gt;Makefile&lt;/code&gt;不能使用, 所以需要重新生成一份:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;pelican&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;quickstart&lt;/span&gt; &lt;span class="p"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当然上面操作会更改配置文件, 我用git管理, 所以很方便的&lt;code&gt;checkout&lt;/code&gt;, 如果你的不是, 先备份下配置文件吧.&lt;/p&gt;
+&lt;h2&gt;ATOM Feed&lt;/h2&gt;
+&lt;p&gt;然后&lt;code&gt;make html&lt;/code&gt;的时候失败提示&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;project&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;output&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;feeds&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;atom&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;overwritten&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;看了 &lt;a href="https://github.com/getpelican/pelican"&gt;pelican&lt;/a&gt;上的&lt;code&gt;issue&lt;/code&gt; 原来是更改了&lt;code&gt;FEED_ATOM&lt;/code&gt;的配置项, 使用了 &lt;code&gt;FEED_ALL_ATOM&lt;/code&gt;配置项, 将&lt;code&gt;FEED_ATOM&lt;/code&gt;配置项改为&lt;code&gt;FEED_ALL_ATOM&lt;/code&gt;配置即可&lt;/p&gt;
+&lt;p&gt;但是改完之后页面的ATOM FEED链接没有指向正确的地址, 查看模板文件, 发现模板还在引用&lt;code&gt;FEED_ATOM&lt;/code&gt;, 改成&lt;code&gt;FEED_ALL_ATOM&lt;/code&gt;即可.&lt;/p&gt;
+&lt;h2&gt;Markdown&lt;/h2&gt;
+&lt;p&gt;如果莫名奇妙的错误, 没有错误信息, 也没有输出HTML, 那么可能就是&lt;code&gt;markdown&lt;/code&gt;包没装, &lt;code&gt;Pelican&lt;/code&gt;的错误提示真心无语.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;U&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;静态文件&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Pelican&lt;/code&gt;去掉了&lt;code&gt;FILE_TO_COPY&lt;/code&gt;项, 所以之前拷贝&lt;code&gt;robots.txt&lt;/code&gt;之类的文件, 就会失效, 使用&lt;code&gt;STATIC_PATHS&lt;/code&gt;即可&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;upload&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;extra/robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s"&gt;&amp;quot;extra/404.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果想指定静态文件位置, 可以使用&lt;code&gt;STATIC_SAVE_AS&lt;/code&gt;, 会将静态文件存到另外一个目录,
+而且对所有&lt;code&gt;STATIC_PATHS&lt;/code&gt;项生效&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_SAVE_AS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;static/&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也可以使用 &lt;code&gt;EXTRA_PATH_METADATA&lt;/code&gt;来为每一项指定路径&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;EXTRA_PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;extra/robots.txt&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;robots.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;extra/404.html&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;path&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;404.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;至此, &lt;code&gt;Pelican&lt;/code&gt;升级完毕&lt;/p&gt;</summary><category term="pelican3.3"></category><category term="升级"></category></entry><entry><title>Linux 下 Python 实现按任意键退出</title><link href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html" rel="alternate"></link><updated>2013-08-20T09:54:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-20:linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html</id><summary type="html">&lt;p&gt;初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过&lt;code&gt;termios.h&lt;/code&gt;库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;

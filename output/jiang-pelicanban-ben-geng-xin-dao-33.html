@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>cold's world</title>
+    <meta name="description" content="">
+    <meta name="author" content="cold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://www.linuxzen.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+         </a>
+
+        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+        </div>
+        
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>将Pelican版本更新到3.3</h1>
+Tue 24 December 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+        </div>
+	
+        <div><p>用Pelican有一段时间了, 由于重装了系统, 所以安装<code>Pelican</code>的最新版本,最新版本为 <code>3.3</code>, 顺便也升级模板和插件.</p>
+<p><code>Pelican</code>特别喜欢更改配置文件,  而且错误提示非常烂, 完全不知道在说什么, 而且没有安装markdown包的话根本不提示, 仅仅就错误退出, 下面就这次升级越到的问题做个记录.</p>
+<h2>Makefile</h2>
+<p>Pelican升级后会有很多莫名奇妙的问题, 首先之前的<code>Makefile</code>不能使用, 所以需要重新生成一份:</p>
+<div class="codehilite"><pre><span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span> <span class="p">.</span>
+</pre></div>
+
+
+<p>当然上面操作会更改配置文件, 我用git管理, 所以很方便的<code>checkout</code>, 如果你的不是, 先备份下配置文件吧.</p>
+<h2>ATOM Feed</h2>
+<p>然后<code>make html</code>的时候失败提示</p>
+<div class="codehilite"><pre><span class="n">File</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">feeds</span><span class="o">/</span><span class="n">all</span><span class="p">.</span><span class="n">atom</span><span class="p">.</span><span class="n">xml</span> <span class="n">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">overwritten</span><span class="o">!</span>
+</pre></div>
+
+
+<p>看了 <a href="https://github.com/getpelican/pelican">pelican</a>上的<code>issue</code> 原来是更改了<code>FEED_ATOM</code>的配置项, 使用了 <code>FEED_ALL_ATOM</code>配置项, 将<code>FEED_ATOM</code>配置项改为<code>FEED_ALL_ATOM</code>配置即可</p>
+<p>但是改完之后页面的ATOM FEED链接没有指向正确的地址, 查看模板文件, 发现模板还在引用<code>FEED_ATOM</code>, 改成<code>FEED_ALL_ATOM</code>即可.</p>
+<h2>Markdown</h2>
+<p>如果莫名奇妙的错误, 没有错误信息, 也没有输出HTML, 那么可能就是<code>markdown</code>包没装, <code>Pelican</code>的错误提示真心无语.</p>
+<div class="codehilite"><pre><span class="n">easy_install</span> <span class="o">-</span><span class="n">U</span> <span class="n">markdown</span>
+</pre></div>
+
+
+<h2>静态文件</h2>
+<p><code>Pelican</code>去掉了<code>FILE_TO_COPY</code>项, 所以之前拷贝<code>robots.txt</code>之类的文件, 就会失效, 使用<code>STATIC_PATHS</code>即可</p>
+<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;upload&quot;</span><span class="p">,</span> <span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span>
+                <span class="s">&quot;extra/404.html&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+</pre></div>
+
+
+<p>如果想指定静态文件位置, 可以使用<code>STATIC_SAVE_AS</code>, 会将静态文件存到另外一个目录,
+而且对所有<code>STATIC_PATHS</code>项生效</p>
+<div class="codehilite"><pre><span class="n">STATIC_SAVE_AS</span> <span class="o">=</span> <span class="s">&quot;static/&quot;</span>
+</pre></div>
+
+
+<p>也可以使用 <code>EXTRA_PATH_METADATA</code>来为每一项指定路径</p>
+<div class="codehilite"><pre><span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;extra/robots.txt&quot;</span><span class="o">:</span><span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;robots.txt&quot;</span><span class="p">},</span>
+    <span class="s">&quot;extra/404.html&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;404.html&quot;</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>至此, <code>Pelican</code>升级完毕</p></div>
+         <div class="footer">
+            <ul class="tags">                <li>
+                    <a href="http://www.linuxzen.com/tag/pelican33.html">pelican3.3</a>
+                </li>                <li>
+                    <a href="http://www.linuxzen.com/tag/sheng-ji.html">升级</a>
+                </li>            </ul>
+        </div>
+        <hr>
+       
+        <h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'linuxzen'; 
+    var disqus_title = '将Pelican版本更新到3.3';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+        
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Site
+                </li>
+            
+                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Categories
+                </li>
+                
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header"> 
+                Links
+                </li>
+            
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>  
+    </div>     </div> 
+<footer>
+<br />
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
+</footer>
+
+</div> <!-- /container -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+ 
+</body>
+</html>

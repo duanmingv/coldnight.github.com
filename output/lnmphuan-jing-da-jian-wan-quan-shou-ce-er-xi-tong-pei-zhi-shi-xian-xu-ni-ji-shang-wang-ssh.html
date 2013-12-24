@@ -2,22 +2,21 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title> lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/) | cold's world </title>
-    <meta name="description" content=" &lt;p&gt;上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH ... " />
-    <meta name="keywords" content=" 虚拟机,上网,ssh,NAT,lnmp " />
+    <title>cold's world</title>
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -38,9 +37,9 @@
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -52,19 +51,18 @@
     <div class="row">
 
         <div class="span9">
-            <div class='article'>
+    <div class='article'>
         <div class="content-title">
             <h1>lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</h1>
-            六 10 三月 2012
+Sat 10 March 2012
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
         </div>
 	
-        <div class="highlight"><p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
+        <div><p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
 <p>要想连接ssh,首先就需要保证windows能和虚拟机Linux进行通信,我们如果想要本机能和虚拟机通信需要设置虚拟机的网卡连接关系,有3中连接关系可以和本机连通:
 一种是Bridged(桥接),就是使用你本机的连接,如果本地用的是局域网DHCP上网可以选择这种方式.
 一种是NAT,就是用NAT模式，就是让虚拟系统借助NAT(网络地址转换)功能，通过宿主机器所在的网络来访问公网。如果本地用的是静态公网ip,本地有无DHCP这个是首选
@@ -191,8 +189,7 @@ chkconfig --add sshd      <span class="c"># 加入开机启动</span>
 <img alt="www.linuxzen.com" src="/upload/QQ截图20120310112713.jpg" /></p>
 <p><img alt="www.linuxzen.com" src="/upload/QQ截图20120310112752.jpg" />
 好了到这里就可以用ssh连接Linux了,尽情探索把,下一节将会讲解yum库的配置和包安装.</p></div>
-
-        	    <div class="footer">
+         <div class="footer">
             <ul class="tags">                <li>
                     <a href="http://www.linuxzen.com/tag/xu-ni-ji.html">虚拟机</a>
                 </li>                <li>
@@ -205,11 +202,10 @@ chkconfig --add sshd      <span class="c"># 加入开机启动</span>
                     <a href="http://www.linuxzen.com/tag/lnmp.html">lnmp</a>
                 </li>            </ul>
         </div>
-        
         <hr>
-    	   
+       
         <h2>Comments</h2>
-		<div id="disqus_thread"></div>
+<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'linuxzen'; 
     var disqus_title = 'lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)';
@@ -235,52 +231,50 @@ chkconfig --add sshd      <span class="c"># 加入开机启动</span>
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

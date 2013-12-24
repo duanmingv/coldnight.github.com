@@ -2,25 +2,21 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title> 根据CentOS定制自己的发行版 | cold's world </title>
-    <meta name="description" content=" &lt;p&gt;本文使用的环境为CentOS5.5 32位.
-首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
-装完系统会再root的根目录下生成3个文件,我们用到两个:
-anaconda-ks.cfg : ... " />
-    <meta name="keywords" content=" 定制,mkisofs,createrepo,comps.xml,CentOS " />
+    <title>cold's world</title>
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -41,9 +37,9 @@ anaconda-ks.cfg : ... " />
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -55,19 +51,18 @@ anaconda-ks.cfg : ... " />
     <div class="row">
 
         <div class="span9">
-            <div class='article'>
+    <div class='article'>
         <div class="content-title">
             <h1>根据CentOS定制自己的发行版</h1>
-            三 18 一月 2012
+Wed 18 January 2012
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
         </div>
 	
-        <div class="highlight"><p>本文使用的环境为CentOS5.5 32位.
+        <div><p>本文使用的环境为CentOS5.5 32位.
 首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
 装完系统会再root的根目录下生成3个文件,我们用到两个:
 anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
@@ -334,8 +329,7 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
 
 
 <p>然后就可以把镜像下载下来进行安装测试了...下一篇就会介绍如何把之前一篇文章介绍的cfengine集成到自己的发行版</p></div>
-
-        	    <div class="footer">
+         <div class="footer">
             <ul class="tags">                <li>
                     <a href="http://www.linuxzen.com/tag/ding-zhi.html">定制</a>
                 </li>                <li>
@@ -348,11 +342,10 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
                     <a href="http://www.linuxzen.com/tag/centos.html">CentOS</a>
                 </li>            </ul>
         </div>
-        
         <hr>
-    	   
+       
         <h2>Comments</h2>
-		<div id="disqus_thread"></div>
+<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'linuxzen'; 
     var disqus_title = '根据CentOS定制自己的发行版';
@@ -378,52 +371,50 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->

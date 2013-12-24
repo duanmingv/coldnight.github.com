@@ -2,23 +2,21 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title> lvs+keepalived实现高可用群集配置详解 | cold's world </title>
-    <meta name="description" content=" &lt;p&gt;lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.&lt;/p&gt;
-&lt;p&gt;lvs有三种工作模式NAT(地址转换),IP ... " />
-    <meta name="keywords" content=" 高可用,详解,群集,lvs,Linux,keepalived, " />
+    <title>cold's world</title>
+    <meta name="description" content="">
     <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
     <script src="http://www.linuxzen.com/theme/html5.js"></script>
     <![endif]-->
-        <link href="http://www.linuxzen.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="cold's world Atom Feed" />
-        
+
     <!-- Le styles -->
     <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
+    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
 
 </head>
@@ -39,9 +37,9 @@
 
         <div class="nav-collapse">
         <ul class="nav">
-                    
-                            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-                        </ul>
+            
+            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
         </div>
         
     </div>
@@ -53,19 +51,18 @@
     <div class="row">
 
         <div class="span9">
-            <div class='article'>
+    <div class='article'>
         <div class="content-title">
             <h1>lvs+keepalived实现高可用群集配置详解</h1>
-            一 16 四月 2012
+Mon 16 April 2012
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
 
-in <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
 
         </div>
 	
-        <div class="highlight"><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
+        <div><p>lvs是一个开源的软件，由毕业于国防科技大学的章文嵩博士于1998年5月创立(中国人的项目)，可以实现LINUX平台下的简单负载均衡。LVS是Linux Virtual Server的缩写，意思是Linux虚拟服务器。本文将介绍lvs结合keepalived实现一个高科用的Linux群集系统.</p>
 <p>lvs有三种工作模式NAT(地址转换),IP Tunneling(IP隧道)、Direct Routing(直接路由)。
 工作效率最低的是NAT模式,但NAT模式可以用于各种系统,各种环境的负载均衡,只需要一个公网ip即可实现
 IP Tunneling模式调度器将连接分发到不同的后端real server,然后由real server处理请求直接相应给用户,大大提高了调度器的调度效率,后端real server没有物理位置和逻辑关系的限制,后端real server可以在Lan/Wlan,但是后端real server必须支持IP隧道协议.
@@ -428,8 +425,7 @@ make <span class="o">&amp;&amp;</span> make install
 
 
 <p>然后浏览器访问192.168.3.100,如果keepalived的persistence_timeout参数值为0,而且两个后端realserver是不同的内容,刷新就可以看到两个不同的页面交替.</p></div>
-
-        	    <div class="footer">
+         <div class="footer">
             <ul class="tags">                <li>
                     <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用</a>
                 </li>                <li>
@@ -442,15 +438,12 @@ make <span class="o">&amp;&amp;</span> make install
                     <a href="http://www.linuxzen.com/tag/linux.html">Linux</a>
                 </li>                <li>
                     <a href="http://www.linuxzen.com/tag/keepalived.html">keepalived</a>
-                </li>                <li>
-                    <a href="http://www.linuxzen.com/tag/.html"></a>
                 </li>            </ul>
         </div>
-        
         <hr>
-    	   
+       
         <h2>Comments</h2>
-		<div id="disqus_thread"></div>
+<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'linuxzen'; 
     var disqus_title = 'lvs+keepalived实现高可用群集配置详解';
@@ -476,52 +469,50 @@ make <span class="o">&amp;&amp;</span> make install
                 <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
                 <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
                 <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-                            </ul>
+            </ul>
             </div>
 
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Categories
                 </li>
                 
-                                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                                   
+                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+                   
             </ul>
             </div>
-            
 
-                        <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header"> 
                 Links
                 </li>
             
-                            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-                        </ul>
+                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            </ul>
             </div>
-            
 
-            
+
+
         </div>  
     </div>     </div> 
 <footer>
 <br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-<script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
-</p>
+<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2012</p>
 </footer>
 
 </div> <!-- /container -->
