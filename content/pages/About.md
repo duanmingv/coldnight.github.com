@@ -6,7 +6,7 @@ Linux 用户, Python 开发者, Vim & Awesome 重度使用者．
 
 ## 开源作品
 * [clubot](https://github.com/coldnight/clubot) 一个gtalk/xmpp群bot
-* [pual_bot](https://github.com/coldnight/clubot) 一个WebQQ机器人
+* [pual_bot](https://github.com/coldnight/pual_bot) 一个WebQQ机器人
 * [tornadohttpclient](https://github.com/coldnight/tornadohttpclient) 一个对`tornado.curl_httpclient`的封装
 
 ## 许可
