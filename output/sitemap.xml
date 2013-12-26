@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2013-12-26T16:04:11-00:00</lastmod>
+<lastmod>2013-12-26T18:04:10-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2013-12-26T16:04:11-00:00</lastmod>
+<lastmod>2013-12-26T18:04:10-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2013-12-26T16:04:11-00:00</lastmod>
+<lastmod>2013-12-26T18:04:10-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2013-12-26T16:04:11-00:00</lastmod>
+<lastmod>2013-12-26T18:04:10-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html</loc>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -656,7 +663,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/vim.html</loc>
-<lastmod>2013-10-18T13:14:00-00:00</lastmod>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -893,8 +900,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/mail.html</loc>
-<lastmod>2012-04-21T18:26:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/zhi-shi.html</loc>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1154,6 +1161,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/pual.html</loc>
 <lastmod>2013-05-30T09:50:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/vimwiki.html</loc>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/wiki.html</loc>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1650,7 +1671,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/vim.html</loc>
-<lastmod>2013-10-18T13:14:00-00:00</lastmod>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1713,7 +1734,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/git.html</loc>
-<lastmod>2013-10-18T13:14:00-00:00</lastmod>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1838,6 +1859,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/mail.html</loc>
+<lastmod>2012-04-21T18:26:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/chuang-ti.html</loc>
 <lastmod>2012-10-25T10:23:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1951,7 +1979,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/guan-li.html</loc>
-<lastmod>2012-12-14T08:57:00-00:00</lastmod>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2483,7 +2511,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2013-12-24T00:00:00-00:00</lastmod>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

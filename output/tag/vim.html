@@ -59,8 +59,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h1>推荐几款最近发现非常酷的Vim插件</h1></a>
-Fri 18 October 2013
+            <a href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html"><h1>使用 Vimwiki + git 做知识管理</h1></a>
+Thu 26 December 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -69,7 +69,199 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
         </div>
         
-        <div><p>最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:</p>
+        <div><p>一直在找一个合适的知识管理工具, 用过 Evernote, 但是不支持 Markdown, 用了一段时间也放弃了.
+最近 python-cn 列表里也在讨论这个问题, 看到有人使用 Vimwiki, 所以就尝试了一下.</p>
+<p>安装后,试着写了点东西, 发现很方便做知识管理和记录笔记, 可以生成HTML, 可以定制模板,
+这里不讨论如何使用, Vimwiki 的文档介绍的很详细,</p>
+<p>我使用<a href="http://bootcss.com">bootstrap</a>和 jquery 对模板进行了一些定制:</p>
+<ul>
+<li>添加导航</li>
+<li>将toc移动到左侧</li>
+</ul>
+<p>下面将介绍我是如何做的, 并在最后附上如何部署的</p>
+<h3>指定模板</h3>
+<p>首先需要更改默认模板</p>
+<div class="codehilite"><pre>    <span class="k">let</span> <span class="k">g</span>:vimwiki_list <span class="p">=</span> [{<span class="s1">&#39;path&#39;</span>: <span class="s1">&#39;~/vimwiki&#39;</span><span class="p">,</span>
+    \    <span class="s1">&#39;path_html&#39;</span>: <span class="s1">&#39;~/vimwiki_html&#39;</span><span class="p">,</span>
+    \    <span class="s1">&#39;template_path&#39;</span>: <span class="s1">&#39;~/vimwiki/template&#39;</span><span class="p">,</span>
+    \    <span class="s1">&#39;template_default&#39;</span>: <span class="s2">&quot;default.tpl&quot;</span>}]
+</pre></div>
+
+
+<p>并将默认的模板作为模板进行修改</p>
+<div class="codehilite"><pre>mkdir -p ~/vimwiki/template
+cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
+</pre></div>
+
+
+<h3>添加静态文件</h3>
+<p>将jqeury和bootstrap的js和css文件放到 ~/vimwik_html目录下,</p>
+<p>为了统一修改和发布 Wiki, 我将静态文件放在 ~/vimwiki 的 static 目录下, 
+并在 ~/vimwiki_html 创建一个软链链接到这个目录, 下面是我 static 目录的一个快照</p>
+<div class="codehilite"><pre><span class="nv">$ </span>tree ~/vimwiki/static 
+~/vimwiki/static
+├── bootstrap
+│   ├── css
+│   │   ├── bootstrap.min.css
+│   │   └── bootstrap-theme.min.css
+│   ├── fonts
+│   │   ├── glyphicons-halflings-regular.eot
+│   │   ├── glyphicons-halflings-regular.svg
+│   │   ├── glyphicons-halflings-regular.ttf
+│   │   └── glyphicons-halflings-regular.woff
+│   └── js
+│       └── bootstrap.min.js
+├── css
+│   └── wiki.css
+└── js
+    ├── jquery-1.8.3.min.js
+    └── wiki.js
+
+6 directories, 10 files
+</pre></div>
+
+
+<p>其中<code>wiki.js</code>和<code>wiki.css</code>分别是自定义的Javascript和CSS
+然后在~/vimwiki_html中创建链接</p>
+<div class="codehilite"><pre><span class="nv">$ </span>ln -s ~/vimwiki/static ~/vimwiki_html/static
+</pre></div>
+
+
+<h3>在模板中引用静态文件</h3>
+<p>结合 <code>%root_path%</code>模板变量引入静态文件</p>
+<div class="codehilite"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;Stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;%root_path%static/css/wiki.css&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;Stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;%root_path%static/bootstrap/css/bootstrap.min.css&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;%root_path%static/js/jquery-1.8.3.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;%root_path%static/bootstrap/js/bootstrap.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;%root_path%static/js/wiki.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+
+
+<h3>创建导航</h3>
+<p>根据 Boostrap 文档中的例子很容易就可以创建一个好看的导航</p>
+<div class="codehilite"><pre><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;navbar navbar-default navbar-inverse&quot;</span> <span class="na">role=</span><span class="s">&quot;navigation&quot;</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;navbar-header&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">data-target=</span><span class="s">&quot;.bs-navbar-collapse&quot;</span> <span class="na">data-toggle=</span><span class="s">&quot;collapse&quot;</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">class=</span><span class="s">&quot;navbar-toggle&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;sr-only&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon-bar&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon-bar&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+        <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon-bar&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+      <span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">&quot;navbar-brand&quot;</span> <span class="na">href=</span><span class="s">&quot;/index.html&quot;</span><span class="nt">&gt;</span>cold&#39;s wiki<span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;collapse navbar-collapse&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav navbar-nav&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;%root_path%index.html&quot;</span><span class="nt">&gt;</span>首页<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;%root_path%diary/diary.html&quot;</span><span class="nt">&gt;</span>日记<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;%root_path%TODO.html&quot;</span><span class="nt">&gt;</span>TODO<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/nav&gt;</span>
+</pre></div>
+
+
+<p>然后将 content 变量放在 'contaniner' 中</p>
+<div class="codehilite"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container content-body&quot;</span><span class="nt">&gt;</span>
+    %content%
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<h2>替换样式和将 toc 移动到左侧</h2>
+<p>替换表格样式</p>
+<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;table table-bordered table-striped table-hover&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>然后将 <code>toc</code> 移动到右侧, 并使用 <code>affix</code> 效果</p>
+<div class="codehilite"><pre><span class="c1">// 生成左侧toc导航</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">().</span><span class="nx">trim</span><span class="p">()){</span>
+    <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.content-body&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">toc_html</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;toc&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span>
+    <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">html</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">toc_html</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;col-md-3&quot;&gt;\n&#39;</span><span class="o">+</span><span class="nx">toc_html</span><span class="o">+</span><span class="s1">&#39;\n&lt;/div&gt;\n&#39;</span><span class="p">;</span>
+    <span class="nx">html</span> <span class="o">+=</span> <span class="s1">&#39;&lt;div class=&quot;col-md-9&quot;&gt;\n&#39;</span><span class="o">+</span><span class="nx">content</span><span class="o">+</span><span class="s1">&#39;\n&lt;/div&gt;\n&#39;</span><span class="p">;</span>
+    <span class="nx">html</span> <span class="o">=</span> <span class="nx">html</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/blockquote/g</span><span class="p">,</span> <span class="s2">&quot;pre&quot;</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.content-body&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;bs-sidebar&quot;</span><span class="p">);</span>
+    <span class="cm">/* $(&quot;.toc&quot;).attr(&quot;role&quot;, &quot;complementary&quot;); */</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;data-spy&quot;</span><span class="p">,</span> <span class="s2">&quot;affix&quot;</span><span class="p">);</span>
+    <span class="cm">/* $(&quot;.toc&quot;).attr(&quot;data-offset-top&quot;, &quot;200&quot;) */</span>
+    <span class="kd">var</span> <span class="nx">uls</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;ul&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">uls</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">ul</span> <span class="o">=</span> <span class="nx">uls</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">ul</span><span class="p">).</span><span class="nx">parent</span><span class="p">(),</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">ul</span><span class="p">).</span><span class="nx">parent</span><span class="p">()</span> <span class="o">==</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">ul</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">hasClass</span><span class="p">(</span><span class="s2">&quot;toc&quot;</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">ul</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">hasClass</span><span class="p">(</span><span class="s2">&quot;toc&quot;</span><span class="p">))</span>
+            <span class="nx">$</span><span class="p">(</span><span class="nx">ul</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;nav bs-sidenav&quot;</span><span class="p">);</span>
+        <span class="k">else</span>
+            <span class="nx">$</span><span class="p">(</span><span class="nx">ul</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;nav&quot;</span><span class="p">);</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>完整的<a href="http://wiki.linuxzen.com/static/js/wiki.js">wiki.js</a></p>
+<h2>自定义样式</h2>
+<p>我同时还用 Vimwiki 做TODO管理, 原有的样式感觉挺不错的, 就拷贝了一份, 
+还有一点是从 bootcss.com 文档页面扒下来的,
+可以在<a href="http://wiki.linuxzen.com/static/css/wiki.css">这里</a>看到.</p>
+<h2>部署</h2>
+<p>我将我的vimwiki上传到了 <a href="https://bitbucket.org">bitbucket</a>, 然后添加了一个定义更新的脚本,
+下面是脚本内容:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<span class="nv">PWD</span><span class="o">=</span><span class="s2">&quot;/home/yourusername/vimwiki&quot;</span>
+<span class="nb">cd</span> <span class="s2">&quot;$PWD&quot;</span>
+git pull | grep <span class="s2">&quot;Allready up-to-date.&quot;</span> 2&gt;&amp;1 &gt; /dev/null
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span>
+<span class="k">then</span>
+<span class="k">    </span>vim +VimwikiIndex +VimwikiAll2HTML +qa
+<span class="k">fi</span>
+<span class="nb">cd</span> -
+</pre></div>
+
+
+<p>上面脚本命名为 <code>update.sh</code> 保存在 <code>~/vimwiki</code> 下, 通过 <code>crontab</code> 进行定时调用</p>
+<div class="codehilite"><pre><span class="nv">$ </span>crontab -l
+*/30 * * * * /bin/bash /home/yourusername/vimwiki/update.sh &amp;&gt; /dev/null
+</pre></div>
+
+
+<h2>使用 Disqus 评论系统</h2>
+<p>我在 <code>template/default.tpl</code> 添加了代码来使用 <code>Disqus</code> 评论系统, 这里不在详述</p>
+<h2>已经上线的Wiki</h2>
+<p>当然现在我已经部署了自己的wiki, 猛击<a href="http://wiki.linuxzen.com">这里</a>进入</p>
+<h2>接下来</h2>
+<p>现在wiki还没有代码高亮, 我不想使用那个js的高亮, 想通过 <code>pygments</code> 来做代码高亮,
+所以接下想通过 <code>pygments</code> 对代码进行高亮</p>
+<h2>参考</h2>
+<ul>
+<li><a href="http://www.berlinix.com/vim/vimwiki_with_bootstrap_jquery.php">用jQuery和Bootstrap美化VimWiki输出</a></li>
+</ul></div>
+        <hr />
+    </div>
+		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h2>推荐几款最近发现非常酷的Vim插件</h2></a>
+        <div class= "well small"> Fri 18 October 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:</p>
 <ul class="simple">
 <li>delimitMate
 用于补全括号和引号</li>
@@ -97,72 +289,9 @@ Bundle <span class="s2">&quot;tpope/vim-commentary&quot;</span>
 Bundle <span class="s2">&quot;tpope/vim-surround&quot;</span>
 Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
 </pre></div>
-<p>然后重新打开 Vim, 执行 <tt class="docutils literal">:BundleIntall</tt> 等待安装完成</p>
-</div>
-<div class="section" id="id3">
-<h2>配置使用</h2>
-<p>delimitMate和GitGutter安装完成不用任何配置即可使用, 下面我们先介绍 <tt class="docutils literal"><span class="pre">vim-surround</span></tt> 插件的使用</p>
-<div class="section" id="vim-surround">
-<h3>vim-surround</h3>
-<p>这个插件可以快速的为字符串包围/改变或去除引号/括号或者HTML标签</p>
-<div class="section" id="id4">
-<h4>为单个单词包围</h4>
-<p>在命令模式下, 使用 <tt class="docutils literal">ysiw</tt> + <tt class="docutils literal"><span class="pre">'/&quot;/(/[/{</span></tt> 就可以为光标下的一个单词包围上 <tt class="docutils literal"><span class="pre">'/&quot;/(/[/{</span></tt></p>
-<p>比如 <tt class="docutils literal">ysiw'</tt> 为光标下的单词包围上单引号, <tt class="docutils literal">ysiw&quot;</tt> 为光标下单词包围上双引号, 依此类推.</p>
-<p>vim-surround 同时还支持包围html标签, 将光标放到某单词试试下面指令</p>
-<div class="highlight"><pre>ysiw<span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>
-ysiw<span class="p">&lt;</span><span class="k">p</span> class<span class="p">=</span><span class="s2">&quot;meta&quot;</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-<div class="section" id="id5">
-<h4>包围一行</h4>
-<p><tt class="docutils literal">yssb</tt> 可以快速为一行包围圆括号,  <tt class="docutils literal">yss</tt> + <tt class="docutils literal"><span class="pre">'/&quot;/(/[/{</span></tt> 可以为正行快速包围相应的引号/括号</p>
-<p>比如 <tt class="docutils literal">yss&quot;</tt>  为一行包围双引号</p>
-</div>
-<div class="section" id="id6">
-<h4>更改包围</h4>
-<p><tt class="docutils literal">cs</tt> 指令可以更改包围, 比如 <tt class="docutils literal">cs'&quot;</tt> 是将单引号变成双引号, <tt class="docutils literal">cs&quot;(</tt> 是将双引号变成圆括号</p>
-<p>vim-surround支持将括号或者引号变更为html标签, 试试下面命令</p>
-<div class="highlight"><pre><span class="k">cs</span>&#39;<span class="p">&lt;</span><span class="k">p</span><span class="p">&gt;</span>
-</pre></div>
-<p>上面命令将单引号换成 <tt class="docutils literal">&lt;p&gt;</tt> 标签</p>
-</div>
-<div class="section" id="id7">
-<h4>去除包围</h4>
-<p><tt class="docutils literal">ds</tt> 指令可以取出包围, 后面需跟包围的内容, <tt class="docutils literal">ds&quot;</tt> 是去除双引号包围, ``</p>
-</div>
-</div>
-<div class="section" id="indentline">
-<h3>indentLine</h3>
-<p>这个插件安装成功后就会显示缩进对齐线, 我们仅仅在 <tt class="docutils literal">.vimrc</tt> 里加一行来切换是否显示</p>
-<div class="highlight"><pre>map <span class="p">&lt;</span>leader<span class="p">&gt;</span><span class="k">il</span> :IndentLinesToggle<span class="p">&lt;</span>CR<span class="p">&gt;</span>
-</pre></div>
-<p>这样我们就可以通过 <tt class="docutils literal">&lt;leader&gt; il</tt> (我的leader映射的,)来切换是否显示对齐线</p>
-</div>
-<div class="section" id="gitv">
-<h3>Gitv</h3>
-<p>Gitv 实现了可以用Vim来查看Git的详细提交信息, 只需要打开Vim 执行 <tt class="docutils literal">:Gitv</tt></p>
-</div>
-<div class="section" id="vim-commentary">
-<h3>vim-commentary</h3>
-<p>这个插件可以快速注释与反注释多行内容, 但是它的注释符使用的是 <tt class="docutils literal">commentstring</tt>, 默认是 <tt class="docutils literal">/* %s */</tt>, 但这个值满足不了Python 和 Shell这样的语言,
-在 <tt class="docutils literal">.vimrc</tt> 添加如下内容</p>
-<div class="highlight"><pre>autocmd <span class="nb">FileType</span> python<span class="p">,</span><span class="k">shell</span> <span class="k">set</span> <span class="nb">commentstring</span><span class="p">=</span>#\ %<span class="k">s</span>                 <span class="c">&quot; 设置Python注释字符</span>
-autocmd <span class="nb">FileType</span> mako <span class="k">set</span> <span class="nb">cms</span><span class="p">=</span>##\ %<span class="k">s</span>
-</pre></div>
-<p><tt class="docutils literal">Visual</tt> 模式下 <tt class="docutils literal">gc</tt> 命令可以注释选中的行</p>
-<p>普通模式下  <tt class="docutils literal">gcc</tt> 指令可以快速注释一行</p>
-<p><tt class="docutils literal">gcu</tt> 可以撤销注释</p>
-</div>
-</div>
-<div class="section" id="id8">
-<h2>最后</h2>
-<p>有什么没介绍到的大家可以看看帮助, 大家也可以围观这个强大Vim配置: <a class="reference external" href="https://github.com/liangxianzhe/dotvim">https://github.com/liangxianzhe/dotvim</a></p>
-</div>
-</div>
-        <hr />
-    </div>
-		
+<p>然后重新打开 Vim, 执行 <tt class="docutils literal">:BundleIntall</tt> 等待安装完成 ...</p></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html">read more</a></div>
+    </div>	
+				
 
  
         
@@ -404,49 +533,14 @@ fugitive 可以在git获得:</p>
     <span class="k">set ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html">read more</a></div>
     </div>	
 				
-
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h2>Linux下配置vim一键编译C/C++并执行</h2></a>
-        <div class= "well small"> Thu 05 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
-<p>首先在/usr/bin/下创建compile脚本:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
-</pre></div>
-
-
-<p>添加如下内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Filename : compile</span>
-<span class="c"># Describe : To compile c/c++</span>
-<span class="c"># Author   : cold night(www.linuxzen.com)</span>
-<span class="c"># Version  : 0.2</span>
-<span class="c"># Change   : 增加终端着色 </span>
-
-clear
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
-<span class="k">then</span>
-<span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
-    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
-    </div>	
-				
 <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
     <li class="active"><a href="http://www.linuxzen.com/tag/vim.html">1</a></li>
+    <li class=""><a href="http://www.linuxzen.com/tag/vim2.html">2</a></li>
 
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+    <li class="next"><a href="http://www.linuxzen.com/tag/vim2.html">Next &rarr;</a></li>
 
 </ul>
 </div>

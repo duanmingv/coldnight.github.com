@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>cold's world</title>
-    <meta name="description" content="">
+    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim.">
     <meta name="keywords" content="Python, Linux, vim, 开源">
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,55 @@
     <div class="row">
 
         <div class="span9">
-    <h1>Authors on cold's world</h1>        <li><a href="http://www.linuxzen.com/author/cold.html">cold</a> (81)</li>
+        
+
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h2>Linux下配置vim一键编译C/C++并执行</h2></a>
+        <div class= "well small"> Thu 05 April 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
+<p>首先在/usr/bin/下创建compile脚本:</p>
+<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
+</pre></div>
+
+
+<p>添加如下内容:</p>
+<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Filename : compile</span>
+<span class="c"># Describe : To compile c/c++</span>
+<span class="c"># Author   : cold night(www.linuxzen.com)</span>
+<span class="c"># Version  : 0.2</span>
+<span class="c"># Change   : 增加终端着色 </span>
+
+clear
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
+<span class="k">then</span>
+<span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
+    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">read more</a></div>
+    </div>	
+				
+<div class="pagination">
+<ul>
+    <li class="prev"><a href="http://www.linuxzen.com/tag/vim.html">&larr; Previous</a></li>
+
+    <li class=""><a href="http://www.linuxzen.com/tag/vim.html">1</a></li>
+    <li class="active"><a href="http://www.linuxzen.com/tag/vim2.html">2</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
+</ul>
+</div>
+ 
+  
         </div>
         
         <div class="span3">
