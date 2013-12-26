@@ -99,7 +99,7 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;替换样式和将 toc 移动到左侧&lt;/h2&gt;
+&lt;h3&gt;替换样式和将 toc 移动到左侧&lt;/h3&gt;
 &lt;p&gt;替换表格样式&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;table&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;addClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;table table-bordered table-striped table-hover&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -162,14 +162,14 @@ git pull | grep &lt;span class="s2"&gt;&amp;quot;Allready up-to-date.&amp;quot;&
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;使用 Disqus 评论系统&lt;/h2&gt;
+&lt;h3&gt;使用 Disqus 评论系统&lt;/h3&gt;
 &lt;p&gt;我在 &lt;code&gt;template/default.tpl&lt;/code&gt; 添加了代码来使用 &lt;code&gt;Disqus&lt;/code&gt; 评论系统, 这里不在详述&lt;/p&gt;
-&lt;h2&gt;已经上线的Wiki&lt;/h2&gt;
+&lt;h3&gt;已经上线的Wiki&lt;/h3&gt;
 &lt;p&gt;当然现在我已经部署了自己的wiki, 猛击&lt;a href="http://wiki.linuxzen.com"&gt;这里&lt;/a&gt;进入&lt;/p&gt;
-&lt;h2&gt;接下来&lt;/h2&gt;
+&lt;h3&gt;接下来&lt;/h3&gt;
 &lt;p&gt;现在wiki还没有代码高亮, 我不想使用那个js的高亮, 想通过 &lt;code&gt;pygments&lt;/code&gt; 来做代码高亮,
 所以接下想通过 &lt;code&gt;pygments&lt;/code&gt; 对代码进行高亮&lt;/p&gt;
-&lt;h2&gt;参考&lt;/h2&gt;
+&lt;h3&gt;参考&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.berlinix.com/vim/vimwiki_with_bootstrap_jquery.php"&gt;用jQuery和Bootstrap美化VimWiki输出&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="vim"></category><category term="vimwiki"></category><category term="wiki"></category><category term="知识"></category><category term="管理"></category><category term="git"></category></entry><entry><title>将Pelican版本更新到3.3</title><link href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html" rel="alternate"></link><updated>2013-12-24T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-24:jiang-pelicanban-ben-geng-xin-dao-33.html</id><summary type="html">&lt;p&gt;用Pelican有一段时间了, 由于重装了系统, 所以安装&lt;code&gt;Pelican&lt;/code&gt;的最新版本,最新版本为 &lt;code&gt;3.3&lt;/code&gt;, 顺便也升级模板和插件.&lt;/p&gt;

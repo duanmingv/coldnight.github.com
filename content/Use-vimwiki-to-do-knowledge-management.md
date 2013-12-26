@@ -105,7 +105,7 @@ $ ln -s ~/vimwiki/static ~/vimwiki_html/static
 </div>
 ```
 
-## 替换样式和将 toc 移动到左侧
+### 替换样式和将 toc 移动到左侧
 替换表格样式
 ```javascript
 $("table").addClass("table table-bordered table-striped table-hover");
@@ -170,17 +170,17 @@ $ crontab -l
 */30 * * * * /bin/bash /home/yourusername/vimwiki/update.sh &> /dev/null
 ```
 
-## 使用 Disqus 评论系统
+### 使用 Disqus 评论系统
 我在 `template/default.tpl` 添加了代码来使用 `Disqus` 评论系统, 这里不在详述
 
 
-## 已经上线的Wiki
+### 已经上线的Wiki
 当然现在我已经部署了自己的wiki, 猛击[这里](http://wiki.linuxzen.com)进入
 
-## 接下来
+### 接下来
 现在wiki还没有代码高亮, 我不想使用那个js的高亮, 想通过 `pygments` 来做代码高亮,
 所以接下想通过 `pygments` 对代码进行高亮
 
 
-## 参考
+### 参考
 * [用jQuery和Bootstrap美化VimWiki输出]( http://www.berlinix.com/vim/vimwiki_with_bootstrap_jquery.php )
