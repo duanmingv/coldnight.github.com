@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,7 +70,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
 <p>下面放出脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Author      : cold</span>
 <span class="c"># Homepage    : http://www.linuxzen.com</span>
 <span class="c"># Filename    : checkchange.sh</span>
@@ -136,12 +128,12 @@ checkisdir<span class="o">()</span>
 
 
 <p>这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:</p>
-<div class="codehilite"><pre>sh checkchange.sh /code/python &amp;
+<div class="highlight"><pre>sh checkchange.sh /code/python &amp;
 </pre></div>
 
 
 <p>如果使用svn可以参考下面代码:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Author        : cold</span>
 <span class="c"># Homepage      : http://www.linuxzen.com</span>
 <span class="c"># Filename      : checkupdate.sh</span>
@@ -184,24 +176,24 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+<div class="highlight"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
 find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
 find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
 </pre></div>
 
 
 <p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+<div class="highlight"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
 </pre></div>
 
 
 <h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+<div class="highlight"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
 </pre></div>
 
 
 <h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+<div class="highlight"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
 sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
@@ -222,7 +214,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
@@ -246,30 +238,30 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.</p>
 <p>在脚本的最顶部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> -x
+<div class="highlight"><pre><span class="nb">set</span> -x
 </pre></div>
 
 
 <p>开启调试
 在脚本的最底部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> +x
+<div class="highlight"><pre><span class="nb">set</span> +x
 </pre></div>
 
 
 <p>关闭调试
 如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令</p>
 <p>&nbsp;</p>
-<div class="codehilite"><pre>script
+<div class="highlight"><pre>script
 </pre></div>
 
 
 <p>然后执行要捕捉内容的命令,完成后通过</p>
-<div class="codehilite"><pre><span class="nb">exit</span>
+<div class="highlight"><pre><span class="nb">exit</span>
 </pre></div>
 
 
 <p>退出,当前目录下会生成typescript,通过</p>
-<div class="codehilite"><pre>more typescript
+<div class="highlight"><pre>more typescript
 </pre></div>
 
 

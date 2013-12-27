@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -79,18 +71,18 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp</p>
 <p>安装tftp-server</p>
-<div class="codehilite"><pre>yum -y install tftp-server
+<div class="highlight"><pre>yum -y install tftp-server
 </pre></div>
 
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<div class="codehilite"><pre>vi /etc/xinetd.d/tftp
+<div class="highlight"><pre>vi /etc/xinetd.d/tftp
 </pre></div>
 
 
 <p>修改配置文件</p>
 <p>&nbsp;</p>
-<div class="codehilite"><pre>service tftp
+<div class="highlight"><pre>service tftp
 <span class="o">{</span>
         <span class="nv">socket_type</span>             <span class="o">=</span> dgram
         <span class="nv">protocol</span>                <span class="o">=</span> udp
@@ -107,20 +99,20 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>启动tftp</p>
-<div class="codehilite"><pre>service xinetd restart
+<div class="highlight"><pre>service xinetd restart
 Stopping xinetd: <span class="o">[</span>  OK  <span class="o">]</span>
 Starting xinetd: <span class="o">[</span>  OK  <span class="o">]</span>
 </pre></div>
 
 
 <p>2.在tftp根目录下创建启动文件供客户端下载:</p>
-<div class="codehilite"><pre><span class="c"># 复制网卡启动文件</span>
+<div class="highlight"><pre><span class="c"># 复制网卡启动文件</span>
 cp /usr/lib/syslinux/pxelinux.0 /tftpboot
 </pre></div>
 
 
 <p>将安装光盘上/image/pxeboot/initrd.img和vmlinux复制到/tftpboot/中</p>
-<div class="codehilite"><pre><span class="c"># 挂载光盘</span>
+<div class="highlight"><pre><span class="c"># 挂载光盘</span>
 mount /dev/hdc /mnt
 <span class="c"># 复制文件</span>
 cp /mnt/isolinux/vmlinuz /tftpboot/
@@ -129,7 +121,7 @@ cp /mnt/isolinux/initrd.img /tftpboot/
 
 
 <p>创建pxe启动菜单:</p>
-<div class="codehilite"><pre><span class="c"># 创建存放启动菜单的目录</span>
+<div class="highlight"><pre><span class="c"># 创建存放启动菜单的目录</span>
 <span class="nb">cd</span> /tftpboot
 mkdir pxelinux.cfg
 <span class="c"># 从安装光盘内复制启动菜单命名为default</span>
@@ -138,7 +130,7 @@ cp /mnt/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
 
 
 <p>编辑启动菜单:</p>
-<div class="codehilite"><pre>vi /tftpboot/pxelinux.cfg/default
+<div class="highlight"><pre>vi /tftpboot/pxelinux.cfg/default
 default ColdOS
 prompt 1
 timeout 600
@@ -150,12 +142,12 @@ label ColdOS
 
 <p>3.安装配置dhcp服务器
 安装</p>
-<div class="codehilite"><pre>yum -y install dhcp
+<div class="highlight"><pre>yum -y install dhcp
 </pre></div>
 
 
 <p>配置</p>
-<div class="codehilite"><pre><span class="c"># 创建配置文件</span>
+<div class="highlight"><pre><span class="c"># 创建配置文件</span>
 cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
 <span class="c"># 编辑配置文件</span>
 vi /etc/dhcpd.conf
@@ -189,12 +181,12 @@ Starting dhcpd: <span class="o">[</span> OK <span class="o">]</span>
 
 <p>4.安装配置http服务器
 安装:</p>
-<div class="codehilite"><pre>yum -y install httpd
+<div class="highlight"><pre>yum -y install httpd
 </pre></div>
 
 
 <p>首先把安装光盘里的内容拷到本地服务器上:</p>
-<div class="codehilite"><pre><span class="c"># 创建目录</span>
+<div class="highlight"><pre><span class="c"># 创建目录</span>
 mkdir -p /pxe/cold/
 <span class="c"># 复制文件</span>
 <span class="o">(</span> <span class="nb">cd</span> /mnt/ &amp;amp;&amp;amp; tar -cf - . <span class="o">)</span> ¦ <span class="o">(</span><span class="nb">cd</span> /pxe/cold &amp;amp;&amp;amp; tar -xvf - <span class="o">)</span>
@@ -202,7 +194,7 @@ mkdir -p /pxe/cold/
 
 
 <p>配置apache</p>
-<div class="codehilite"><pre><span class="c"># 编辑配置文件:</span>
+<div class="highlight"><pre><span class="c"># 编辑配置文件:</span>
 vi /etc/httpd/conf/httpd.conf
 <span class="c"># 更改apache根目录(将配置文件中的两处/var/www改成/pxe)</span>
 DocumentRoot <span class="s2">&quot;/pxe&quot;</span>
@@ -220,19 +212,19 @@ DocumentRoot <span class="s2">&quot;/pxe&quot;</span>
 
 
 <p>配置完成后启动apache</p>
-<div class="codehilite"><pre>service httpd start
+<div class="highlight"><pre>service httpd start
 </pre></div>
 
 
 <p>5.更改ks文件(ks文件可在CentOS图形界面下用kickstart程序直接生成,这里不做介绍)</p>
 <p>因为网络安装,又需要部署cfengine的话,就需要更改cfengine的获取方式,首先要将文件夹打包:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /pxe/cold
+<div class="highlight"><pre><span class="nb">cd</span> /pxe/cold
 tar -cvf cfengine.tar cfengine/
 </pre></div>
 
 
 <p>然后编辑ks文件</p>
-<div class="codehilite"><pre><span class="c"># 编辑ks文件</span>
+<div class="highlight"><pre><span class="c"># 编辑ks文件</span>
 vi /pxe/cold/isolinux/ks.cfg
 install
 cdrom

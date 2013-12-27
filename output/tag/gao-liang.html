@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -79,12 +71,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         <div><p>做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮</p>
 <p>下面来介绍一下它:</p>
 <p>首先安装很简单,使用easy_install来进行安装:</p>
-<div class="codehilite"><pre>easy_install pygments
+<div class="highlight"><pre>easy_install pygments
 </pre></div>
 
 
 <p>安装完后我们来使用,Python的简单不会让大家失望:</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
 <span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
 <span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
 
@@ -96,12 +88,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <h5>结果</h5>
-<div class="codehilite"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable&quot;&gt;&lt;tr&gt;&lt;td class=&quot;linenos&quot;&gt;&lt;div class=&quot;linenodiv&quot;&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello, world&amp;quot;&lt;/span&gt;</span><span class="se">\n</span><span class="s1">&lt;/pre&gt;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#39;</span>
+<div class="highlight"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable&quot;&gt;&lt;tr&gt;&lt;td class=&quot;linenos&quot;&gt;&lt;div class=&quot;linenodiv&quot;&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;quot;hello, world&amp;quot;&lt;/span&gt;</span><span class="se">\n</span><span class="s1">&lt;/pre&gt;&lt;/div&gt;</span><span class="se">\n</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#39;</span>
 </pre></div>
 
 
 <p>这样就简单的对代码进行了高亮,当然如果你做了上面操作,然后把内容输入到一个文件里查看,肯定大呼坑爹,因为根本没高亮,因为默认是不会输出css的 我们还要获取css加入到html中去:</p>
-<div class="codehilite"><pre><span class="n">css</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
+<div class="highlight"><pre><span class="n">css</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="n">get_style_defs</span><span class="p">()</span>
 </pre></div>
 
 

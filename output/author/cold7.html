@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -82,7 +74,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
+<div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
 <span class="n">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="cp">#下载python2.7.2</span>
@@ -129,12 +121,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
 <p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
 <h3>安装easy_install</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
 </pre></div>
 
 
 <h3>使用easy_install安装web.py</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
     </div>	
 				
 
@@ -154,12 +146,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
 <p>首先在/usr/bin/下创建compile脚本:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
 </pre></div>
 
 
 <p>添加如下内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Filename : compile</span>
 <span class="c"># Describe : To compile c/c++</span>
 <span class="c"># Author   : cold night(www.linuxzen.com)</span>
@@ -198,7 +190,7 @@ server:</p>
 <p>ip:192.168.3.120</p>
 <p>cacti:cacti-0.8.7i.tar.gz</p>
 <p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
+<div class="highlight"><pre>yum -y install ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">read more</a></div>
     </div>	
 				
 
@@ -221,7 +213,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
+<div class="highlight"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
 wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
     </div>	
 				
@@ -242,17 +234,17 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
-<div class="codehilite"><pre>abc-0.1.3-el5.centos.rpm
+<div class="highlight"><pre>abc-0.1.3-el5.centos.rpm
 </pre></div>
 
 
 <p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
-<div class="codehilite"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
+<div class="highlight"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
 </pre></div>
 
 
 <p>卸载这个包使用:</p>
-<div class="codehilite"><pre>rpm -e abc
+<div class="highlight"><pre>rpm -e abc
 </pre></div>
 
 

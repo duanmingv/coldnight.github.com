@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -77,13 +69,13 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         </div>
         
         <div><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
+<div class="highlight"><pre><span class="err">拼</span>    <span class="n">pin1</span>
 <span class="err">音</span>    <span class="n">yin1</span>
 </pre></div>
 
 
 <p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding:utf-8 -*-</span>
 <span class="c">#</span>
 <span class="c"># Author : cold night</span>
@@ -147,7 +139,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>嗯,写好后测试正常,提交后告诉同事,同事一测发现重庆怎么跑到最后啊,不对啊,有bug啊,我重新将重庆加入到我的测试,真是不行阿,好吧可能是对照表的问题,打开找了下,能找到重啊,难道是decode出问题了,于是打开咱的ipython shell,结果输入重庆,一回车终端崩了,好吧,我再试还是崩,于是我想可能是utf-8的bug或者python的uft-8的bug,于是我将我的想法告知了同事,同事也打开了<code>ipython试</code>了下,结果他的可以正常输入,正常decode/encode,这下我想可能是方法的问题吧.</p>
 <p>于是看看有无别的办法,看到一个对Linux有效可能对window有效的办法,好嘛正好咱也Linux果断拿过来试试,于是下面的代码诞生了:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding:utf-8 -*-</span>
 <span class="c">#</span>
 <span class="c"># Author : cold night</span>
@@ -239,7 +231,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>lambda</h3>
 <p>Python用于支持将函数赋值给变量的一个操作符
 默认是返回的,所以不用再加return关键字,不然会报错</p>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
 <span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
 <span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
 </pre></div>
@@ -253,7 +245,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>reduce()</h3>
 <p>将序列中的元素通过一个二元函数处理返回一个结果</p>
 <h2>将上面三个函数和lambda结合使用</h2>
-<div class="codehilite"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<div class="highlight"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 <span class="c"># 序列中的每个元素加1</span>
 <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">read more</a></div>
     </div>	

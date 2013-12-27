@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,7 +70,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
 <p>下面放出脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Author      : cold</span>
 <span class="c"># Homepage    : http://www.linuxzen.com</span>
 <span class="c"># Filename    : checkchange.sh</span>
@@ -136,12 +128,12 @@ checkisdir<span class="o">()</span>
 
 
 <p>这里主要测试变更后重启uwsgi,使用方法:我的bottle程序在/code/python下:</p>
-<div class="codehilite"><pre>sh checkchange.sh /code/python &amp;
+<div class="highlight"><pre>sh checkchange.sh /code/python &amp;
 </pre></div>
 
 
 <p>如果使用svn可以参考下面代码:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Author        : cold</span>
 <span class="c"># Homepage      : http://www.linuxzen.com</span>
 <span class="c"># Filename      : checkupdate.sh</span>
@@ -187,14 +179,14 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 ip:192.168.3.1</p>
 <p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
 首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
+<div class="highlight"><pre><span class="n">emerge</span> <span class="n">vim</span>
 </pre></div>
 
 
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
+<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
     </div>	
 				
 
@@ -220,7 +212,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
+<div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
 <span class="n">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="cp">#下载python2.7.2</span>

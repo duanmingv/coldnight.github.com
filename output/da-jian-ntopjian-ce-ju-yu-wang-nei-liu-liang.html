@@ -20,14 +20,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -81,7 +73,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 </ul>
 <h2>一.安装依赖:</h2>
 <h3>安装rrdtool</h3>
-<div class="codehilite"><pre>yum -y install libxml2 glib-devel pango-devel
+<div class="highlight"><pre>yum -y install libxml2 glib-devel pango-devel
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  <span class="c"># 下载</span>
 tar -zxvf rrdtool-1.4.7.tar.gz
 <span class="nb">cd </span>rrdtool-1.4.7
@@ -90,7 +82,7 @@ tar -zxvf rrdtool-1.4.7.tar.gz
 
 
 <h3>安装geoip:</h3>
-<div class="codehilite"><pre>wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
+<div class="highlight"><pre>wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
 tar -zxvf GeoIP-1.4.8.tar.gz
 <span class="nb">cd </span>GeoIP-1.4.8
 ./configure &amp;amp;&amp;amp; make &amp;amp;&amp;amp; make install
@@ -98,14 +90,14 @@ tar -zxvf GeoIP-1.4.8.tar.gz
 
 
 <h3>安装其余依赖:</h3>
-<div class="codehilite"><pre>yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
+<div class="highlight"><pre>yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
  intltool
 </pre></div>
 
 
 <p>&nbsp;</p>
 <h2>二.下载安装:</h2>
-<div class="codehilite"><pre>wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
+<div class="highlight"><pre>wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
 tar -zxvf ntop-4.1.0.tar.gz
 <span class="nb">cd </span>ntop-4.1.0
 ./autogen.sh --with-tcpwrap --with-rrd-home<span class="o">=</span>/opt/rrdtool-1.4.7/
@@ -115,17 +107,17 @@ make &amp;amp;&amp;amp; make install
 
 <h2>三.配置启动</h2>
 <p>更改检测数据保存目录的权限:</p>
-<div class="codehilite"><pre>chown -R nobody /usr/local/var/ntop/
+<div class="highlight"><pre>chown -R nobody /usr/local/var/ntop/
 </pre></div>
 
 
 <p>创建admin管理密码:</p>
-<div class="codehilite"><pre>ntop -A
+<div class="highlight"><pre>ntop -A
 </pre></div>
 
 
 <p>在eth0上启动ntop:</p>
-<div class="codehilite"><pre>ntop -d -i eth0 -M
+<div class="highlight"><pre>ntop -d -i eth0 -M
 </pre></div>
 
 

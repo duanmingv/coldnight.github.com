@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -84,19 +76,19 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
 <h1>使用</h1>
 <p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
-<div class="codehilite"><pre>make html   <span class="c"># 生成html</span>
+<div class="highlight"><pre>make html   <span class="c"># 生成html</span>
 make clean  <span class="c"># 删除output</span>
 </pre></div>
 
 
 <h2>技巧</h2>
 <p>我是将生成的html通过nginx来打开(Nginx配置就很简单了, 这里就不做介绍), 那么如何确保更新呢?我将整个博客上传到github, 这样随时随地可以<code>clone</code>下来进行更改然后<code>push</code>上去,在服务器我通过crontab来定时更新html</p>
-<div class="codehilite"><pre>crontab -e
+<div class="highlight"><pre>crontab -e
 </pre></div>
 
 
 <p>添加如下内容</p>
-<div class="codehilite"><pre>*/5 * * * * <span class="nb">cd</span> /path/to/your/blogsource/ <span class="o">&amp;&amp;</span> git pull &amp;&gt; /dev/null
+<div class="highlight"><pre>*/5 * * * * <span class="nb">cd</span> /path/to/your/blogsource/ <span class="o">&amp;&amp;</span> git pull &amp;&gt; /dev/null
 </pre></div>
 
 

@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -77,12 +69,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         </div>
         
         <div><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
-<div class="codehilite"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>但是这并不行, 然后查看表信息:</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
 <span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
   <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
   <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
@@ -99,7 +91,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>发现原来创建表的时候用的<code>latin1</code>编码, 而老的表是用<code>utf-8</code>编码创建的, <code>SQLAlchemy</code>中并没有发现有创建表时指定指定编码的方法. 所以只能在<code>MySQL</code>本身来找:</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="n">VARIABLES</span> <span class="k">like</span> <span class="s2">&quot;character%%&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="n">VARIABLES</span> <span class="k">like</span> <span class="s2">&quot;character%%&quot;</span><span class="p">;</span>
 <span class="o">+--------------------------+-----------------------------+</span>
 <span class="o">|</span> <span class="n">Variable_name</span>            <span class="o">|</span> <span class="n">Value</span>                       <span class="o">|</span>
 <span class="o">+--------------------------+-----------------------------+</span>
@@ -125,23 +117,23 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>发现 <code>MySQL</code>默认的和数据库都是<code>latin1</code>的编码, 所以更改数据库配置</p>
-<div class="codehilite"><pre>vi /etc/mysql/my.cnf      <span class="c"># MySQL配置文件在Ubuntu上的位置, 其他系统可能有差异</span>
+<div class="highlight"><pre>vi /etc/mysql/my.cnf      <span class="c"># MySQL配置文件在Ubuntu上的位置, 其他系统可能有差异</span>
 </pre></div>
 
 
 <p>分别在<code>[client]</code> <code>[mysqld]</code>下添加</p>
-<div class="codehilite"><pre><span class="k">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="n">set</span> <span class="o">=</span> <span class="n">utf8</span>
+<div class="highlight"><pre><span class="k">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="n">set</span> <span class="o">=</span> <span class="n">utf8</span>
 </pre></div>
 
 
 <p>这时重启MySQL居然起不来, 说<code>default-character-set</code>是无效的变量, 查看<code>MySQL</code>版本发现是5.5, 找资料说5.5的服务端编码设置变量是<code>character-set-server</code>, 所以将<code>[mysqld]</code>上的<code>default-character-set = utf8</code>改为 <code>character-set-server = utf8</code>, 并重启<code>MySQL</code></p>
 <p>然后更改数据库编码:</p>
-<div class="codehilite"><pre><span class="k">alter</span> <span class="k">database</span> <span class="n">clubot</span> <span class="k">character</span> <span class="kt">set</span> <span class="n">utf8</span><span class="p">;</span>
+<div class="highlight"><pre><span class="k">alter</span> <span class="k">database</span> <span class="n">clubot</span> <span class="k">character</span> <span class="kt">set</span> <span class="n">utf8</span><span class="p">;</span>
 </pre></div>
 
 
 <p>删除新建的表, 并重新导入数据中文就正常了</p>
-<div class="codehilite"><pre><span class="o">&gt;</span> <span class="k">use</span> <span class="n">clubot</span><span class="p">;</span>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="k">use</span> <span class="n">clubot</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_status</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_infos</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_history</span><span class="p">;</span>
@@ -190,7 +182,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
 <p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*- coding: utf8 -*-</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">#=============================================================================</span>
@@ -223,7 +215,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
+<div class="highlight"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
 wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
     </div>	
 				
@@ -272,17 +264,17 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
 MySQL预编译参数:</p>
-<div class="codehilite"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
+<div class="highlight"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
 </pre></div>
 
 
 <p>top</p>
-<div class="codehilite"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
+<div class="highlight"><pre>32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
 </pre></div>
 
 
 <p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
-<div class="codehilite"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
+<div class="highlight"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
 
 __ Key _________________________________________________________________ ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">read more</a></div>
     </div>	

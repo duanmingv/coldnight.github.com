@@ -11,7 +11,7 @@ vip:192.168.3.103/24
 MySQL:mysql-5.0.95.tar.gz
 heartbeat:Heartbeat-3-0-7e3a82377fa8.tar.bz2&lt;/p&gt;
 &lt;h3&gt;一、安装部署MySQL&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install ncurses-devel openssl-devel
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install ncurses-devel openssl-devel
 wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/
 useradd -M -s /sbin/nologin mysql
 tar -zxvf mysql-5.0.95.tar.gz
@@ -38,7 +38,7 @@ ln -s /usr/local/mysql/bin/* /usr/local/bin/ &lt;span class="c"&gt;# 为二进�
 
 
 &lt;p&gt;配置MySQl主从实现数据同步,在主从服务器上修改my.cnf(这里是新安装的数据库,如果是仅仅加从库,需要把主库的数据备份导入到从库,这里不再讲述)&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/my.cnf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/my.cnf
 &lt;span class="c"&gt;# [mysqld]里修改:&lt;/span&gt;
 &lt;span class="nv"&gt;log_bin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /var/log/mysql/mysql-bin.log      &lt;span class="c"&gt;# 启动二进制文件&lt;/span&gt;
 server-id &lt;span class="o"&gt;=&lt;/span&gt; 1921683101                      &lt;span class="c"&gt;# 设置服务器id&lt;/span&gt;
@@ -46,18 +46,18 @@ server-id &lt;span class="o"&gt;=&lt;/span&gt; 1921683101                      &
 
 
 &lt;p&gt;启动主库:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service mysqld start
+&lt;div class="highlight"&gt;&lt;pre&gt;service mysqld start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在主库上创建一个用户授权给从库,用户为backup密码为backup:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; grant replication slave on *.* to &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;192.168.3.102&amp;#39;&lt;/span&gt; identified by &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;;
+&lt;div class="highlight"&gt;&lt;pre&gt;mysql&amp;amp;gt; grant replication slave on *.* to &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;192.168.3.102&amp;#39;&lt;/span&gt; identified by &lt;span class="s1"&gt;&amp;#39;backup&amp;#39;&lt;/span&gt;;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.16 sec&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看主库状态:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; show master status;
+&lt;div class="highlight"&gt;&lt;pre&gt;mysql&amp;amp;gt; show master status;
 +------------------+-----------+--------------+------------------+
 ¦ File             ¦ Position  ¦ Binlog_Do_DB ¦ Binlog_Ignore_DB ¦
 +------------------+-----------+--------------+------------------+
@@ -68,7 +68,7 @@ Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.16 sec&lt;span c
 
 
 &lt;p&gt;修改从库配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;server-id &lt;span class="o"&gt;=&lt;/span&gt; 1921683102                 &lt;span class="c"&gt;# server id必须保持唯一&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;server-id &lt;span class="o"&gt;=&lt;/span&gt; 1921683102                 &lt;span class="c"&gt;# server id必须保持唯一&lt;/span&gt;
 &lt;span class="nv"&gt;log_bin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /var/log/mysql/mysql-bin.log &lt;span class="c"&gt;# 启用二进制日志&lt;/span&gt;
 master-host &lt;span class="o"&gt;=&lt;/span&gt; 192.168.3.101       &lt;span class="c"&gt;# 主库ip&lt;/span&gt;
 master-user &lt;span class="o"&gt;=&lt;/span&gt; backup                  &lt;span class="c"&gt;# 账号&lt;/span&gt;
@@ -79,12 +79,12 @@ master-connect-retry&lt;span class="o"&gt;=&lt;/span&gt;60             &lt;span 
 
 
 &lt;p&gt;启动从库,并查看状态:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service mysqld start
+&lt;div class="highlight"&gt;&lt;pre&gt;service mysqld start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在从库上执行下操作,指定主库的二进制文件名和偏移量(刚才在主库show master status;查看的参数):&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; show slave status &lt;span class="se"&gt;\G&lt;/span&gt;;
+&lt;div class="highlight"&gt;&lt;pre&gt;mysql&amp;amp;gt; show slave status &lt;span class="se"&gt;\G&lt;/span&gt;;
 *************************** 1. row ***************************
              Slave_IO_State: Waiting &lt;span class="k"&gt;for &lt;/span&gt;master to send event
                 Master_Host: 192.168.3.101
@@ -128,7 +128,7 @@ No query specified
 
 &lt;p&gt;如果show slave status \G;&lt;span style="color: #ff0000;"&gt;Slave_SQL_Running: No&lt;/span&gt;&lt;span style="color: #000000;"&gt;,则执在从库上执行下面命令(两个参数值通过在主库执行show master status; 命令查看获得):
 &lt;/span&gt;&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql&amp;amp;gt; stop slave;
+&lt;div class="highlight"&gt;&lt;pre&gt;mysql&amp;amp;gt; stop slave;
 Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.00 sec&lt;span class="o"&gt;)&lt;/span&gt;
 
 mysql&amp;amp;gt; change master to &lt;span class="nv"&gt;master_log_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;mysql-bin.000003&amp;#39;&lt;/span&gt;,master_log_pos&lt;span class="o"&gt;=&lt;/span&gt;236;
@@ -140,12 +140,12 @@ Query OK, 0 rows affected &lt;span class="o"&gt;(&lt;/span&gt;0.01 sec&lt;span c
 &lt;p&gt;在主库上创建一个数据库看看是否同步.&lt;/p&gt;
 &lt;h3&gt;二、安装部署heartbeat实现双机热备份&lt;/h3&gt;
 &lt;h3&gt;安装依赖&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum  -y install pkgconfig glib2-devel python-devel pam-devel gnutls-devel swig
+&lt;div class="highlight"&gt;&lt;pre&gt;yum  -y install pkgconfig glib2-devel python-devel pam-devel gnutls-devel swig
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装libnet&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://download.fedora.redhat.com/pub/epel/5/i386/libnet-1.1.5-1.el5.i386.rpm
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://download.fedora.redhat.com/pub/epel/5/i386/libnet-1.1.5-1.el5.i386.rpm
 rpm -ivh libnet-1.1.5-1.el5.i386.rpm
 wget http://download.fedora.redhat.com/pub/epel/5/i386/libnet-devel-1.1.5-1.el5.i386.rpm
 rpm -ivh libnet-devel-1.1.5-1.el5.i386.rpm
@@ -153,7 +153,7 @@ rpm -ivh libnet-devel-1.1.5-1.el5.i386.rpm
 
 
 &lt;h3&gt;安装:&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;useradd -M -s /sbin/nologin hacluster
+&lt;div class="highlight"&gt;&lt;pre&gt;useradd -M -s /sbin/nologin hacluster
 useradd -M -s /sbin/nologin haclient
 wget http://www.ultramonkey.org/download/heartbeat/2.0.8/heartbeat-2.0.8.tar.gz
 tar -zxvf heartbeat-2.0.8.tar.gz
@@ -165,7 +165,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 &lt;p&gt;创建配置文件:
 安装后要配置三个文件（如没有可手动建立）：ha.cf、haresources、authkeys。这三个配置文件需要在/etc/ha.d目录下面，但是默认是没有这三个文件的，可以到官网上下这三个文件，也可以在源码包里找这三个文件，在源码目录下的DOC子目录里。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/ha.cf
+&lt;div class="highlight"&gt;&lt;pre&gt;cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/ha.cf
 cat /usr/local/share/doc/heartbeat-2.0.8/haresources  | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep -v &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; &amp;amp;gt;&amp;amp;gt; /etc/ha.d/haresources
 cat /usr/local/share/doc/heartbeat-2.0.8/authkeys | egrep -v &lt;span class="s1"&gt;&amp;#39;^#\W&amp;#39;&lt;/span&gt; | grep &lt;span class="s1"&gt;&amp;#39;^#$&amp;#39;&lt;/span&gt; -v &amp;amp;gt; /etc/ha.d/authkeys
 &lt;/pre&gt;&lt;/div&gt;
@@ -173,7 +173,7 @@ cat /usr/local/share/doc/heartbeat-2.0.8/authkeys | egrep -v &lt;span class="s1"
 
 &lt;p&gt;编辑配置文件:&lt;/p&gt;
 &lt;p&gt;编辑ha.cf,该文件中包括为Heartbeat使用何种介质通路和如何配置他们的信息.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt; vi /etc/ha.d/ha.cf 
+&lt;div class="highlight"&gt;&lt;pre&gt; vi /etc/ha.d/ha.cf 
 
 debugfile /var/log/ha-debug   &lt;span class="c"&gt;# 用于记录heartbeat的调试信息&lt;/span&gt;
 logfile /var/log/ha-log       &lt;span class="c"&gt;# 用于记录heartbeat的日志信息&lt;/span&gt;
@@ -198,7 +198,7 @@ apiauth ipfail &lt;span class="nv"&gt;gid&lt;/span&gt;&lt;span class="o"&gt;=&lt
 
 
 &lt;p&gt;配置haresources ,该文件列出所有节点所提供的服务以及服务的默认所有者.所有节点上的该文件必须相同&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/ha.d/haresources
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/ha.d/haresources
 
 master.org    IPaddr::192.168.3.103 mysql  &lt;span class="c"&gt;# vip&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -206,7 +206,7 @@ master.org    IPaddr::192.168.3.103 mysql  &lt;span class="c"&gt;# vip&lt;/span&
 
 &lt;p&gt;&lt;code&gt;注意:!!&lt;/code&gt;haresources最后一个字段是某个服务的心跳,如果mysql,如果主从库使用的是同一台盘阵或者一个分布式文件系统,这里一定要填写真实的启动脚本(/etc/init.d下),如果是主从同步的话请务必不填写真正的启动脚本,因为主库心跳存活的话heartbeat会自动停止从库的mysql,这样就无法同步,主库发生故障时转移故障就没有意义.&lt;/p&gt;
 &lt;p&gt;配置authkeys, authkeys决定了您的认证密钥。共有三种认证方式：crc，md5，和sha1果您的Heartbeat运行于 安全 网络之上，如本例中的交叉线，可以使用crc，从资源的角度来看，这是代价最低的方法。如果网络并不 安全 ，但您也希望降低CPU使用，则使用md5。最后，如果您想得到最好的认证，而不考虑CPU使用情况，则使用sha1，它在三者之中最难破解。&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/ha.d/authkeys
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/ha.d/authkeys
 
 auth 1
 1 crc
@@ -216,7 +216,7 @@ chmod 600 /etc/ha.d/authkeys
 
 &lt;p&gt;不论您在关键字auth后面指定的是什么索引值，在后面必须要作为键值再次出现。如果您指定“auth 4”，则在后面一定要有一行的内容为“4 ”。
 配置从库:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;scp root@192.168.3.101:/etc/ha.d/ha.cf /etc/ha.d/
+&lt;div class="highlight"&gt;&lt;pre&gt;scp root@192.168.3.101:/etc/ha.d/ha.cf /etc/ha.d/
 scp root@192.168.3.101:/etc/ha.d/authkeys /etc/ha.d/
 scp root@192.168.3.101:/etc/ha.d/haresources /etc/ha.d/
 vi /etc/ha.d/ha.cf
@@ -239,12 +239,12 @@ apiauth ipfail &lt;span class="nv"&gt;gid&lt;/span&gt;&lt;span class="o"&gt;=&lt
 
 
 &lt;p&gt;启动主库heartbeat:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;server heartbeat start
+&lt;div class="highlight"&gt;&lt;pre&gt;server heartbeat start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看日志:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat /var/log/ha-log
+&lt;div class="highlight"&gt;&lt;pre&gt;cat /var/log/ha-log
 
 heartbeat&lt;span class="o"&gt;[&lt;/span&gt;32239&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_13:45:29 info: Link 192.168.3.254:192.168.3.254 up.
 heartbeat&lt;span class="o"&gt;[&lt;/span&gt;32239&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_13:45:29 info: Status update &lt;span class="k"&gt;for &lt;/span&gt;node 192.168.3.254: status ping
@@ -284,12 +284,12 @@ heartbeat&lt;span class="o"&gt;[&lt;/span&gt;32239&lt;span class="o"&gt;]&lt;/sp
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;从日志中看出来slave.org没起来是死亡的,并添加192.168.3.103vip&lt;/p&gt;
 &lt;p&gt;启动从库heartbeat&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;server heartbeat start
+&lt;div class="highlight"&gt;&lt;pre&gt;server heartbeat start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;启动之后查看日志信息&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;Feb 19 13:50:22 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Local status now &lt;span class="nb"&gt;set &lt;/span&gt;to: &lt;span class="s1"&gt;&amp;#39;up&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Feb 19 13:50:22 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Local status now &lt;span class="nb"&gt;set &lt;/span&gt;to: &lt;span class="s1"&gt;&amp;#39;up&amp;#39;&lt;/span&gt;
 Feb 19 13:50:23 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Link master.org:eth0 up.
 Feb 19 13:50:23 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Status update &lt;span class="k"&gt;for &lt;/span&gt;node master.org: status active
 Feb 19 13:50:23 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: info: Link 192.168.3.254:192.168.3.254 up.
@@ -332,12 +332,12 @@ Feb 19 13:50:46 slave heartbeat: &lt;span class="o"&gt;[&lt;/span&gt;29159&lt;sp
 
 
 &lt;p&gt;现在尝试停止主库的MySQL服务&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;pkill mysqld
+&lt;div class="highlight"&gt;&lt;pre&gt;pkill mysqld
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看日志并无变化,所以得出结论heartbeat只检测心跳也就是只检测设备是否宕机,不会检测MySQL服务,所以我们同样要有一个脚本来检测MySQL服务,如果mysql服务宕掉,则尝试启动服务,若启动服务失败则kill掉heartbeat进程实现故障转移(和上一遍nginx+keepalived原理一致),脚本内容如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c"&gt;# filename:mysqlsc.sh&lt;/span&gt;
 ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤mysql进程&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有mysql进程会返回0则认为mysql存活&lt;/span&gt;
@@ -356,18 +356,18 @@ ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;
 
 
 &lt;p&gt;给这个脚本执行权限然后后台运行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;chmod +x mysqlsc.sh
+&lt;div class="highlight"&gt;&lt;pre&gt;chmod +x mysqlsc.sh
 nohup sh mysqlsc.sh &amp;amp;amp; &lt;span class="c"&gt;# 后台运行&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;下面来尝试停止主库的heartbeat:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service heartbeat stop
+&lt;div class="highlight"&gt;&lt;pre&gt;service heartbeat stop
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看从库日志:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_14:03:05 info: Received shutdown notice from &lt;span class="s1"&gt;&amp;#39;master.org&amp;#39;&lt;/span&gt;.
+&lt;div class="highlight"&gt;&lt;pre&gt;heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_14:03:05 info: Received shutdown notice from &lt;span class="s1"&gt;&amp;#39;master.org&amp;#39;&lt;/span&gt;.
 heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_14:03:05 info: Resources being acquired from master.org.
 heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29308&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_14:03:05 info: acquire &lt;span class="nb"&gt;local &lt;/span&gt;HA resources &lt;span class="o"&gt;(&lt;/span&gt;standby&lt;span class="o"&gt;)&lt;/span&gt;.
 heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29308&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_14:03:05 info: &lt;span class="nb"&gt;local &lt;/span&gt;HA resource acquisition completed &lt;span class="o"&gt;(&lt;/span&gt;standby&lt;span class="o"&gt;)&lt;/span&gt;.
@@ -393,17 +393,17 @@ heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/sp
 heartbeat&lt;span class="o"&gt;[&lt;/span&gt;29159&lt;span class="o"&gt;]&lt;/span&gt;: 2012/02/19_14:03:17 info: Link master.org:eth0 dead.
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="高可用"></category><category term="心跳"></category><category term="双机"></category><category term="vip"></category><category term="MySQL"></category><category term="heartbeat"></category></entry><entry><title>MySQL优化笔记</title><link href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html" rel="alternate"></link><updated>2012-02-04T13:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-04:mysqlyou-hua-bi-ji.html</id><summary type="html">&lt;p&gt;之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
 MySQL预编译参数:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt; ./configure  --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
+&lt;div class="highlight"&gt;&lt;pre&gt; ./configure  --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;top&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
+&lt;div class="highlight"&gt;&lt;pre&gt;32553 mysql     20   0  125m  17m 4064 S  0.0  1.7   5:13.01 mysqld
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用mysqlreport获取MySQL运行参数:&lt;!--more--&gt;&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
+&lt;div class="highlight"&gt;&lt;pre&gt;MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
 
 __ Key _________________________________________________________________
 Buffer used    62.00k of  16.00M  %Used:   0.38
@@ -518,7 +518,7 @@ Rows
 
 
 &lt;p&gt;首先在预编译参数上进行优化&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/mysql &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/mysql &lt;span class="se"&gt;\&lt;/span&gt;
 --without-debug &lt;span class="se"&gt;\ &lt;/span&gt;                                &lt;span class="c"&gt;# 取消调试模式提高性能&lt;/span&gt;
 --with-extra-charsets&lt;span class="o"&gt;=&lt;/span&gt;utf8,gbk &lt;span class="se"&gt;\ &lt;/span&gt;                 &lt;span class="c"&gt;# 仅仅指定需要的默认字符集提高性能&lt;/span&gt;
 --enable-assembler &lt;span class="se"&gt;\ &lt;/span&gt;                             &lt;span class="c"&gt;# 使用汇编模式提高性能&lt;/span&gt;
@@ -531,7 +531,7 @@ Rows
 
 &lt;p&gt;安装完成后进一步优化my.cnf:
 因为MySQL 只会 Cache 索引(*.MYI)，因此您只要将数据库中所有的 MYI 档案加总起来就是key buffer 的值,计算MYI档案的总大小:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;du -hc &lt;span class="sb"&gt;`&lt;/span&gt;find /usr/local/mysql/var/ -name *.MYI&lt;span class="sb"&gt;`&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;du -hc &lt;span class="sb"&gt;`&lt;/span&gt;find /usr/local/mysql/var/ -name *.MYI&lt;span class="sb"&gt;`&lt;/span&gt;
 4.0K    /usr/local/mysql/var/myblog/wp_term_taxonomy.MYI
 8.0K    /usr/local/mysql/var/myblog/wp_posts.MYI
 8.0K    /usr/local/mysql/var/myblog/wp_usermeta.MYI
@@ -565,14 +565,14 @@ Rows
 
 
 &lt;p&gt;修改my.cnf参数大小:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/my.cnf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/my.cnf
 &lt;span class="c"&gt;# 降低key_buffer的值&lt;/span&gt;
 &lt;span class="nv"&gt;key_buffer&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 4M
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;重启MySQL执行top命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;18125 mysql     20   0  109m  11m 2152 S  0.0  1.1   0:00.08 mysqld
+&lt;div class="highlight"&gt;&lt;pre&gt;18125 mysql     20   0  109m  11m 2152 S  0.0  1.1   0:00.08 mysqld
 &lt;/pre&gt;&lt;/div&gt;
 
 

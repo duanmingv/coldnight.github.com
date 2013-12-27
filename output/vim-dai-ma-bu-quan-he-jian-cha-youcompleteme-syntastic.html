@@ -23,14 +23,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,12 +70,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h2>升级Vim</h2>
 <p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
 升级Vim需要先卸载原有的Vim</p>
-<div class="codehilite"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
+<div class="highlight"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
 </pre></div>
 
 
 <p>并安装以下依赖</p>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
     <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
     <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxpm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxt</span><span class="o">-</span><span class="n">dev</span> \
     <span class="n">python</span><span class="o">-</span><span class="n">dev</span> <span class="n">ruby</span><span class="o">-</span><span class="n">dev</span> <span class="n">mercurial</span> <span class="n">checkinstall</span>
@@ -91,12 +83,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>下载最新的Vim源码, 这里从代码仓库获取(需要<code>hg</code>没有自行安装)</p>
-<div class="codehilite"><pre>hg clone https://vim.googlecode.com/hg/ vim
+<div class="highlight"><pre>hg clone https://vim.googlecode.com/hg/ vim
 </pre></div>
 
 
 <p>然后进入目录编译安装Vim</p>
-<div class="codehilite"><pre><span class="nb">cd </span>vim
+<div class="highlight"><pre><span class="nb">cd </span>vim
 ./configure --with-features<span class="o">=</span>huge <span class="se">\</span>
             --enable-rubyinterp<span class="o">=</span>yes <span class="se">\</span>
             --enable-pythoninterp<span class="o">=</span>yes <span class="se">\</span>
@@ -115,20 +107,20 @@ sudo checkinstall
 <p>到<a href="http://llvm.org/releases/download.html#3.3">llvm.org</a>上下载相应的版本解压到~/ycm_temp</p>
 <h4>编译</h4>
 <p>下载<a href="http://llvm.org/releases/3.3/cfe-3.3.src.tar.gz">clang</a>和<a href="http://llvm.org/releases/3.3/llvm-3.3.src.tar.gz">llvm</a>, 解压llvm</p>
-<div class="codehilite"><pre>mkdir ~/ycm_temp
+<div class="highlight"><pre>mkdir ~/ycm_temp
 <span class="nb">cd</span> ~/ycm_temp
 tar -zxvf llvm-3.3.src.tar.gz -C llvm.src
 </pre></div>
 
 
 <p>解压 clang到llvm.src/tools</p>
-<div class="codehilite"><pre>tar -zxvf cfe-3.3.src.tar.gz -C ~/ycm_temp/llvm.src/tools/
+<div class="highlight"><pre>tar -zxvf cfe-3.3.src.tar.gz -C ~/ycm_temp/llvm.src/tools/
 mv ~/ycm_temp/llvm.src/tools/cfe-3.3.src ~/ycm_temp/llvm/tools/clang
 </pre></div>
 
 
 <p>编译llvm会自动编译clang</p>
-<div class="codehilite"><pre><span class="nb">cd</span> ~/ycm_temp
+<div class="highlight"><pre><span class="nb">cd</span> ~/ycm_temp
 mkdir llvm_build
 <span class="nb">cd </span>llvm_build
 cmake ../llvm.src/CMakeList.txt ../llvm.src
@@ -139,7 +131,7 @@ make
 <h2>安装YouCompleteMe</h2>
 <p>使用Vundle安装YouComplete(猛击<a href="/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>了解Vundle)</p>
 <h3>编译ycm_core</h3>
-<div class="codehilite"><pre>mkdir ~/ycm_build
+<div class="highlight"><pre>mkdir ~/ycm_build
 <span class="nb">cd</span> ~/ycm_build
 cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm.src/lib/libclang.so 
 make ycm_core
@@ -147,7 +139,7 @@ make ycm_core
 
 
 <p>下载llvm二进制的可以参考</p>
-<div class="codehilite"><pre>cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm_root_path/lib/libclang.so
+<div class="highlight"><pre>cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span>  ~/.vim/bundle/YouCompleteMe/cpp -DEXTERNAL_LIBCLANG_PATH<span class="o">=</span>~/ycm_temp/llvm_root_path/lib/libclang.so
 </pre></div>
 
 
@@ -156,24 +148,24 @@ make ycm_core
 <p>YouCompleteMe 每次加载配置文件会有一个提示, 很烦人, 可以通过将<code>g:ycm_confirm_extra_conf</code>置为0关闭提示</p>
 <h3>补全Python</h3>
 <p>YouCompleteMe 通过 <code>jedi</code>插件来补全Python, 可以通过<code>Vundle</code>安装此插件,在.vimrc中添加</p>
-<div class="codehilite"><pre><span class="n">Bundle</span> <span class="s">&quot;davidhalter/jedi&quot;</span>
+<div class="highlight"><pre><span class="n">Bundle</span> <span class="s">&quot;davidhalter/jedi&quot;</span>
 </pre></div>
 
 
 <h2>代码检查</h2>
 <p><code>syntastic</code>是一个代码检查的插件, 通过<code>Vundle</code>安装它, 在.vimrc中添加</p>
-<div class="codehilite"><pre><span class="n">Bundle</span> <span class="s">&quot;scrooloose/syntastic&quot;</span>
+<div class="highlight"><pre><span class="n">Bundle</span> <span class="s">&quot;scrooloose/syntastic&quot;</span>
 </pre></div>
 
 
 <p>重新打开Vim, 执行</p>
-<div class="codehilite"><pre><span class="o">:</span><span class="n">BundleInstall</span>
+<div class="highlight"><pre><span class="o">:</span><span class="n">BundleInstall</span>
 </pre></div>
 
 
 <h3>配置</h3>
 <p>因为Python已经有<code>pylint</code>来检查, 而且<code>syntastic</code>检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查</p>
-<div class="codehilite"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">syntastic_ignore_files</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;.*\.py$&quot;</span><span class="p">]</span>
+<div class="highlight"><pre><span class="n">let</span> <span class="n">g</span><span class="o">:</span><span class="n">syntastic_ignore_files</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;.*\.py$&quot;</span><span class="p">]</span>
 </pre></div></div>
          <div class="footer">
             <ul class="tags">                <li>

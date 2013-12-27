@@ -21,14 +21,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -74,13 +66,13 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 	
         <div><p>最近重新拾起Django,但是Django并不支持mongodb,但是有一个模块mongoengine可以实现Django Model类似的封装.但是mongoengine的中文文档几乎没有,有的也是简短的几句介绍和使用.下面我就分享一下我在使用过程中所记录下的一些笔记,可能有点乱.大家可以参考一下.</p>
 <h2>安装mongoengine</h2>
-<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
+<div class="highlight"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
 <span class="n">easy_install</span> <span class="n">mongoengine</span>
 </pre></div>
 
 
 <h2>基本使用</h2>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="c"># 连接数据库</span>
 <span class="n">connect</span><span class="p">(</span><span class="s">&#39;blog&#39;</span><span class="p">)</span>   <span class="c"># 连接本地blog数据库</span>
@@ -98,14 +90,14 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>和Django的model使用很类似,所以也不解释什么.</p>
 <h3>插入</h3>
-<div class="codehilite"><pre><span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span>   <span class="c"># 如果required为True则必须赋予初始值,如果有default,赋予初始值则使用默认值</span>
+<div class="highlight"><pre><span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span>   <span class="c"># 如果required为True则必须赋予初始值,如果有default,赋予初始值则使用默认值</span>
 <span class="n">cate</span><span class="o">.</span><span class="n">save</span><span class="p">()</span> <span class="c"># 保存到数据库</span>
 </pre></div>
 
 
 <h3>查询和更新</h3>
 <p>文档类有一个 objects 属性.我们使用它来查询数据库.</p>
-<div class="codehilite"><pre><span class="c"># 返回集合里的所有文档对象的列表</span>
+<div class="highlight"><pre><span class="c"># 返回集合里的所有文档对象的列表</span>
 <span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
 <span class="c"># 返回所有符合查询条件的结果的文档对象列表</span>
@@ -130,7 +122,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <h3>ReferenceField 引用字段:</h3>
 <p>通过引用字段可以通过文档直接获取引用字段引用的那个文档:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">artnum</span> <span class="o">=</span> <span class="n">IntField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -145,7 +137,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <h4>插入引用字段</h4>
-<div class="codehilite"><pre><span class="n">cate</span> <span class="o">=</span><span class="n">Categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">cate</span> <span class="o">=</span><span class="n">Categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span>
 <span class="n">cate</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="n">post</span> <span class="o">=</span> <span class="n">Posts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span><span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;Linux&quot;</span><span class="p">,</span><span class="s">&quot;web&quot;</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
 <span class="n">post</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -154,7 +146,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <h4>通过引用字段直接获取引用文档对象</h4>
 <p>一般文档查询会返回一个列表(尽管只有一个结果),我们想要获得一个文档对象可以使用索引获取第一个文档对象,但是mongoengine建议使用first()来获取第一个:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">categories</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">categories</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span>
 
 <span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span><span class="o">.</span><span class="n">name</span>
@@ -163,14 +155,14 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>查询包含Linux分类的文章</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">cate</span> <span class="o">=</span> <span class="n">Categories</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linux&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">Posts</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
 </pre></div>
 
 
 <h3>EmbeddedDocument 嵌入文档</h3>
 <p>继承EmbeddedDocument的文档类就是嵌入文档,嵌入文档用于嵌入其他文档的EmbeddedDocumentField 字段,比如上面例子的tags字段如果改成嵌入文档的话可以将Posts文档类改成如下方式:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Posts</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Posts</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
 
     <span class="n">title</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -180,14 +172,14 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>还需要添加一个Tags嵌入文档类:</p>
-<div class="codehilite"><pre><span class="k">class</span> <span class="nc">Tags</span><span class="p">(</span><span class="n">EmbeddedDocument</span><span class="p">):</span>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">Tags</span><span class="p">(</span><span class="n">EmbeddedDocument</span><span class="p">):</span>
 <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">()</span>
 <span class="n">date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
 </pre></div>
 
 
 <p>我们像如下方式插入Posts文档中的Tags</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linuxzen&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Linuxzen&quot;</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">post</span> <span class="o">=</span> <span class="n">Posts</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="s">&quot;Linuxzen.com&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="n">tag</span><span class="p">],</span> <span class="n">categories</span><span class="o">=</span><span class="n">cate</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">Tags</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;mysite&quot;</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">post</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
@@ -202,7 +194,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <h3>时间段查询</h3>
-<div class="codehilite"><pre>    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight"><pre>    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">month</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">:</span>
         <span class="n">emonth</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">eyear</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
@@ -216,7 +208,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <h3>分片</h3>
 <p>slice用于分片</p>
-<div class="codehilite"><pre><span class="c"># comments - skip 5, limit 10</span>
+<div class="highlight"><pre><span class="c"># comments - skip 5, limit 10</span>
 <span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="n">slice__comments</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
 
 <span class="c"># 也可以使用索引值分片</span>
@@ -235,7 +227,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>使用原始语句查询</h3>
 <p>如果想使用原始的pymongo查询方式可以使用__raw__操作符 Page.objects(<strong>raw</strong>={'tags':'coding'})
 使用$inc和$set操作符</p>
-<div class="codehilite"><pre><span class="c"># 更新嵌入文档comments字段by的值为joe的文档字段votes增加1</span>
+<div class="highlight"><pre><span class="c"># 更新嵌入文档comments字段by的值为joe的文档字段votes增加1</span>
 <span class="n">Page</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">comments_by</span><span class="o">=</span><span class="s">&quot;joe&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">inc__votes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c"># 更新嵌入文档comments字段by的值为joe的文档字段votes设置为1</span>
@@ -244,7 +236,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <h3>其他技巧</h3>
-<div class="codehilite"><pre><span class="c">#查询结果转换成字典</span>
+<div class="highlight"><pre><span class="c">#查询结果转换成字典</span>
 <span class="n">users_dict</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="p">()</span><span class="o">.</span><span class="n">to_mongo</span><span class="p">()</span>
 
 <span class="c"># 排序,按日期排列</span>

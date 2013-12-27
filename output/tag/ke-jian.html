@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -86,13 +78,13 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 当前字符的ASCII和16进制码
 右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
 fugitive 可以在git获得:</p>
-<div class="codehilite"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">http</span><span class="o">:</span><span class="c1">//github.com/tpope/vim-fugitive.git</span>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">http</span><span class="o">:</span><span class="c1">//github.com/tpope/vim-fugitive.git</span>
 </pre></div>
 
 
 <p>将plugin目录下的fugitive.vim复制到~/.vim/plugin下
 在~/.vimrc添加如下内容</p>
-<div class="codehilite"><pre><span class="k">if</span> has<span class="p">(</span><span class="s1">&#39;statusline&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="k">if</span> has<span class="p">(</span><span class="s1">&#39;statusline&#39;</span><span class="p">)</span>
     <span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
     <span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>%<span class="p">&lt;</span>%<span class="k">f</span>\   <span class="c">&quot; 文件名</span>
     <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="k">w</span>%<span class="k">h</span>%<span class="k">m</span>%<span class="k">r</span> <span class="c">&quot; 选项</span>
@@ -106,7 +98,7 @@ fugitive 可以在git获得:</p>
 
 
 <p>要想在编辑时将空白可见可以在.vimrc中添加如下内容:</p>
-<div class="codehilite"><pre><span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;-,</span>trail:<span class="p">-,</span>extends:#<span class="p">,</span>nbsp:<span class="p">-</span>
+<div class="highlight"><pre><span class="k">set</span> <span class="nb">listchars</span><span class="p">=</span><span class="k">tab</span>:<span class="p">&gt;-,</span>trail:<span class="p">-,</span>extends:#<span class="p">,</span>nbsp:<span class="p">-</span>
 </pre></div>
 
 

@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,7 +70,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
 <p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*- coding: utf8 -*-</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">#=============================================================================</span>
@@ -262,13 +254,13 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>将这个脚本保存为pymail放到/usr/bin/下,并赋予其执行权限:</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pymail</span>
+<div class="highlight"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pymail</span>
 </pre></div>
 
 
 <p>可以使用 -h指定smtp发件服务器,默认认为指定-h需要认证, 所以就需要smtp服务器支持认证,同时需要-u指定用户名(需加"@域名"),-p指定密码.
 如果不指定-h就会使用本地smtp服务器,默认不需要认证,所以本地的smtp服务器就不能支持认证,同时不需指定-u,-p参数</p>
-<div class="codehilite"><pre><span class="o">-</span><span class="n">t</span> <span class="err">指定收件人多个可用</span><span class="p">,</span><span class="err">号分割</span><span class="p">.</span>
+<div class="highlight"><pre><span class="o">-</span><span class="n">t</span> <span class="err">指定收件人多个可用</span><span class="p">,</span><span class="err">号分割</span><span class="p">.</span>
 <span class="o">-</span><span class="n">a</span> <span class="err">指定附件路径</span>
 <span class="o">-</span><span class="n">n</span> <span class="err">指定附件名</span><span class="p">(</span><span class="err">可省略</span><span class="p">)</span>
 <span class="o">-</span><span class="n">h</span> <span class="err">显示帮助信息</span><span class="p">.</span>
@@ -278,7 +270,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>执行后会要求输入邮件内容,写完用.结束
 也可以用管道下面给出几个实例:</p>
-<div class="codehilite"><pre><span class="c">#使用本地smtp服务发送</span>
+<div class="highlight"><pre><span class="c">#使用本地smtp服务发送</span>
 <span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -s <span class="s2">&quot;Linuxzen backup&quot;</span> -t 123456@qq.com -a /tmp/linuxzen.tar.gz
 <span class="c"># 使用126邮箱发送</span>
 <span class="nb">echo</span> <span class="s1">&#39;linuxzen.com backup&#39;</span> | pymail -u linuxzen@126.com -p linuxzen.com -h smtp.126.com -s <span class="s1">&#39;Linuxzen backup &quot; -t 123456@qq.com -a /tmp/linuxzen.tar.gz </span>
@@ -292,13 +284,13 @@ this is a <span class="nb">test </span>mail
 
 
 <p>下面之前使用的mysql定时备份的脚本:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
 6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
 <span class="nv">DATE</span><span class="o">=</span><span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>
 mysqldump -u root blogdata &gt; /tmp/blogdate.<span class="s2">&quot;$DATE&quot;</span>.sql
@@ -309,18 +301,18 @@ uuencode blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz blogdata.
 </td></tr></table>
 
 <p>没有命令uuencode安装sharutils包即可</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">sharutils</span>
+<div class="highlight"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">sharutils</span>
 </pre></div>
 
 
 <p>然后使用crontab调用这个脚本定时执行,前面说了 这个脚本在CentOS5.x下正常工作,但是放到CentOS6下就不带附件,所以使用我们自己编写的python脚本脚本内容如下:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
 6
-7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
 <span class="nv">DATE</span><span class="o">=</span><span class="sb">`</span>date +%Y%m%d<span class="sb">`</span>
 mysqldump -u root blogdata &gt; /tmp/myblog.<span class="s2">&quot;$DATE&quot;</span>.sql
@@ -331,7 +323,7 @@ tar -zcf blogdata.<span class="s2">&quot;$DATE&quot;</span>.sql.tar.gz myblog.<s
 </td></tr></table>
 
 <p>我们使用126邮箱来发送 这样就可以把自带的sendmail 停掉:</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">sendmail</span> <span class="n">stop</span>
+<div class="highlight"><pre><span class="n">service</span> <span class="n">sendmail</span> <span class="n">stop</span>
 <span class="n">chkonfig</span> <span class="o">--</span><span class="n">del</span> <span class="n">sendmail</span>
 </pre></div></div>
         <hr />

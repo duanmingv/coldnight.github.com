@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title> Python将汉字按拼音排序--一个多音字引发的悲剧 | cold's world</title>
     <meta name="description" content=" &lt;p&gt;今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:&lt;/p&gt;
-&lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;拼&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;pin1&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;拼&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;pin1&lt;/span&gt;
 &lt;span class=&#34;err&#34;&gt;音&lt;/span&gt;    &lt;span ... ">
     <meta name="keywords" content=" 汉字排序,汉字,排序,拼音,多音字,python ">
     <meta name="author" content="cold">
@@ -21,14 +21,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -73,13 +65,13 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         </div>
 	
         <div><p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
-<div class="codehilite"><pre><span class="err">拼</span>    <span class="n">pin1</span>
+<div class="highlight"><pre><span class="err">拼</span>    <span class="n">pin1</span>
 <span class="err">音</span>    <span class="n">yin1</span>
 </pre></div>
 
 
 <p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding:utf-8 -*-</span>
 <span class="c">#</span>
 <span class="c"># Author : cold night</span>
@@ -143,7 +135,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>嗯,写好后测试正常,提交后告诉同事,同事一测发现重庆怎么跑到最后啊,不对啊,有bug啊,我重新将重庆加入到我的测试,真是不行阿,好吧可能是对照表的问题,打开找了下,能找到重啊,难道是decode出问题了,于是打开咱的ipython shell,结果输入重庆,一回车终端崩了,好吧,我再试还是崩,于是我想可能是utf-8的bug或者python的uft-8的bug,于是我将我的想法告知了同事,同事也打开了<code>ipython试</code>了下,结果他的可以正常输入,正常decode/encode,这下我想可能是方法的问题吧.</p>
 <p>于是看看有无别的办法,看到一个对Linux有效可能对window有效的办法,好嘛正好咱也Linux果断拿过来试试,于是下面的代码诞生了:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding:utf-8 -*-</span>
 <span class="c">#</span>
 <span class="c"># Author : cold night</span>

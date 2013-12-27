@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -90,17 +82,17 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 </ul>
 <p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
 <p>下载:</p>
-<div class="codehilite"><pre>wget https://cfengine.com/source-code/download?file<span class="o">=</span>cfengine-3.2.3.tar.gz
+<div class="highlight"><pre>wget https://cfengine.com/source-code/download?file<span class="o">=</span>cfengine-3.2.3.tar.gz
 </pre></div>
 
 
 <p>安装依赖:</p>
-<div class="codehilite"><pre>yum -y install db4-devel pcre-devel openssl-devel flex
+<div class="highlight"><pre>yum -y install db4-devel pcre-devel openssl-devel flex
 </pre></div>
 
 
 <p>编译安装:</p>
-<div class="codehilite"><pre>tar -zxvf download<span class="se">\?</span>file<span class="se">\=</span>cfengine-3.2.3.tar.gz
+<div class="highlight"><pre>tar -zxvf download<span class="se">\?</span>file<span class="se">\=</span>cfengine-3.2.3.tar.gz
 <span class="nb">cd </span>cfengine-3.2.3/
 ./configure --prefix<span class="o">=</span>/usr/local/cfengine
 make &amp;amp;&amp;amp; make install
@@ -108,7 +100,7 @@ make &amp;amp;&amp;amp; make install
 
 
 <p>为了保证cfengine正常工作创建cfengine工作目录:</p>
-<div class="codehilite"><pre>mkdir -p /var/cfengine/masterfiles  <span class="c"># 存放要分发的承诺</span>
+<div class="highlight"><pre>mkdir -p /var/cfengine/masterfiles  <span class="c"># 存放要分发的承诺</span>
 mkdir /var/cfengine/inputs          <span class="c"># 存放要执行的承诺</span>
 mkdir /var/cfengine/outputs         <span class="c"># 存放执行承诺的输出</span>
 mkdir /var/cfengine/bin             <span class="c"># 存放二进制文件</span>
@@ -116,7 +108,7 @@ mkdir /var/cfengine/bin             <span class="c"># 存放二进制文件</spa
 
 
 <p>复制二进制文件:</p>
-<div class="codehilite"><pre>cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
+<div class="highlight"><pre>cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
 ls -l /var/cfengine/bin/
 total 964
 -rwxr-xr-x 1 root root 235958 Jan 13  2012 cf-agent           <span class="c"># 执行承诺</span>
@@ -132,7 +124,7 @@ total 964
 
 
 <p>一个cfengine的hello, world:</p>
-<div class="codehilite"><pre>vi /var/cfengine/inputs/test.cf                                               <span class="c"># 新建一个承诺文件,添加下面内容</span>
+<div class="highlight"><pre>vi /var/cfengine/inputs/test.cf                                               <span class="c"># 新建一个承诺文件,添加下面内容</span>
 <span class="c">###################</span>
 <span class="c"># 这里顺便解释一下cfengine的语法,cfengine的语法大都如下</span>
 <span class="c"># &amp;lt;它是什么&amp;gt; &amp;lt;它对什么起作用&amp;gt; &amp;lt;它叫什么&amp;gt;</span>
@@ -155,13 +147,13 @@ R: Hello world!                                                      <span class
 
 
 <p>为策略分发点创建配置文件:</p>
-<div class="codehilite"><pre>cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
+<div class="highlight"><pre>cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
 </pre></div>
 
 
 <p>编辑策略文件:
 新建一个cftest1.cf承诺文件</p>
-<div class="codehilite"><pre>vi /var/cfengine/masterfiles/cftest1.cf                  <span class="c"># 新建一个cftest1.cf</span>
+<div class="highlight"><pre>vi /var/cfengine/masterfiles/cftest1.cf                  <span class="c"># 新建一个cftest1.cf</span>
 <span class="c"># 添加如下内容:</span>
 bundle agent <span class="nb">test</span>
 <span class="o">{</span>
@@ -173,7 +165,7 @@ reports:
 
 
 <p>然后编辑promises.cf文件加入执行这个承诺束的支持:</p>
-<div class="codehilite"><pre>vi /var/cfengine/masterfiles/promises.cf
+<div class="highlight"><pre>vi /var/cfengine/masterfiles/promises.cf
 body common control
 <span class="o">{</span>
  <span class="nv">bundlesequence</span> <span class="o">=</span>&amp;gt; <span class="o">{</span> <span class="s2">&quot;main&quot;</span>, <span class="s2">&quot;test&quot;</span> <span class="o">}</span>;                                <span class="c"># 将test加入的承诺束队列</span>
@@ -192,7 +184,7 @@ body common control
 <p>&nbsp;</p>
 <p>做好之后先本地同步,然后启动server:
 <pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1</p>
-<div class="codehilite"><pre><span class="err">到如下提示表示成功</span><span class="o">:</span>
+<div class="highlight"><pre><span class="err">到如下提示表示成功</span><span class="o">:</span>
 <span class="err">```</span><span class="n">bash</span> 
 <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bootstrap</span> <span class="n">to</span> <span class="mf">172.16.1.1</span> <span class="n">completed</span> <span class="n">successfully</span>
 <span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">cf</span>
@@ -201,7 +193,7 @@ body common control
 
 
 <p>然后执行策略:</p>
-<div class="codehilite"><pre>/var/cfengine/bin/cf-agent
+<div class="highlight"><pre>/var/cfengine/bin/cf-agent
 R: --&amp;gt; CFE is running on cfhub
 R: I<span class="err">&#39;</span>am cfengine 3 client
 </pre></div>
@@ -209,7 +201,7 @@ R: I<span class="err">&#39;</span>am cfengine 3 client
 
 <p>&nbsp;</p>
 <p>cfengine默认是让本机地址的16位网络连接同步的,如果新加入一个另一网段的设备允许同步,比如允许192.168.1.网段同步,编辑/var/cfengine/masterfiles/promises.cf,找到bundle common def</p>
-<div class="codehilite"><pre>vi /var/cfengine/masterfiles/promises.cf
+<div class="highlight"><pre>vi /var/cfengine/masterfiles/promises.cf
 bundle common def
 <span class="o">{</span>
  vars:                                            <span class="c"># 定义变量</span>
@@ -222,12 +214,12 @@ bundle common def
 
 
 <p>服务端基本配置完成,客户端(cfengine host),按照本文前面安装的部分进行安装,创建工作目录,复制二进制文件,不用创建配置文件和承诺,然后执行:</p>
-<div class="codehilite"><pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
+<div class="highlight"><pre>/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
 </pre></div>
 
 
 <p>会出现和服务器执行一样的提示,就表示成功,如果提示连接不成功,尝试关闭防火墙.同步后执行本地策略:</p>
-<div class="codehilite"><pre>/var/cfengine/bin/cf-agent
+<div class="highlight"><pre>/var/cfengine/bin/cf-agent
 </pre></div>
 
 

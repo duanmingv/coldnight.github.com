@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -81,7 +73,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
 后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.</p>
 <h2>1 安装Terminator</h2>
-<div class="codehilite"><pre>sudo apt-get install terminator
+<div class="highlight"><pre>sudo apt-get install terminator
 </pre></div>
 
 
@@ -93,7 +85,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>2.1 配置</h3>
 <p>terminator配置文件在<code>~/.config/terminator/config</code>
 可以通过这个配置文件配置<code>terminator</code>的字体和颜色</p>
-<div class="codehilite"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
+<div class="highlight"><pre><span class="n">font</span> <span class="o">=</span> <span class="n">Monaco</span> <span class="mi">10</span>  <span class="err">#设置体字</span>
 <span class="n">background_color</span> <span class="o">=</span> <span class="s">&quot;#204070&quot;</span> <span class="err">#</span> <span class="err">背景颜色</span>
 <span class="n">foreground_color</span> <span class="o">=</span> <span class="s">&quot;#F0F0F0&quot;</span> <span class="err">#</span> <span class="err">字体颜色</span>
 <span class="n">cursor_blink</span> <span class="o">=</span> <span class="n">True</span>          <span class="err">#</span> <span class="err">设置光标</span>
@@ -105,21 +97,21 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>更多配置可以参见配置文件:</p>
-<div class="codehilite"><pre>man terminator_config
+<div class="highlight"><pre>man terminator_config
 </pre></div>
 
 
 <h2>3 Guake</h2>
 <p><code>Guake</code>是一个下拉式的gnome桌面环境下的终端程序，因此你只需要按一个键F12就可以调用他，然后再按一次以便隐藏他。Guake支持<code>快捷键</code>、<code>标签</code>、<code>背景透明</code>等特性。</p>
 <h3>3.1 安装 Guake</h3>
-<div class="codehilite"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">guake</span>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">guake</span>
 </pre></div>
 
 
 <h3>3.2 使用Guake</h3>
 <p>启用guake后即可按<code>F12</code>调出来,很酷
 快捷键和gnome terminal相同</p>
-<div class="codehilite"><pre><span class="n">Ctrl</span><span class="o">-</span><span class="n">T</span> <span class="err">新建标签</span>
+<div class="highlight"><pre><span class="n">Ctrl</span><span class="o">-</span><span class="n">T</span> <span class="err">新建标签</span>
 <span class="n">F2</span> <span class="err">重命名标签</span>
 <span class="n">Ctrl</span><span class="o">-</span><span class="n">PageUp</span> <span class="err">上一个标签</span>
 <span class="n">Ctrl</span><span class="o">-</span><span class="n">PageDwon</span> <span class="err">下一个标签</span>
@@ -146,7 +138,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin

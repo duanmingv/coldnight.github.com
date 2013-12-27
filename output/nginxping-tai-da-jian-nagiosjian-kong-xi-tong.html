@@ -22,14 +22,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -95,22 +87,22 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h2>安装:</h2>
 <h3>安装准备</h3>
 <p>创建nagios系统用户:</p>
-<div class="codehilite"><pre>useradd  nagios
+<div class="highlight"><pre>useradd  nagios
 </pre></div>
 
 
 <p>安装依赖:</p>
-<div class="codehilite"><pre>yum -y install gd-devel libpng-devel libtool-ltdl-devel
+<div class="highlight"><pre>yum -y install gd-devel libpng-devel libtool-ltdl-devel
 </pre></div>
 
 
 <p>下载nagios内核:</p>
-<div class="codehilite"><pre>wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
+<div class="highlight"><pre>wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
 </pre></div>
 
 
 <h3>安装nagios内核:</h3>
-<div class="codehilite"><pre>tar -zxvf nagios-3.3.1.tar.gz
+<div class="highlight"><pre>tar -zxvf nagios-3.3.1.tar.gz
 <span class="nb">cd </span>nagios
 ./configure --prefix<span class="o">=</span>/usr/local/nagios
 make all
@@ -123,7 +115,7 @@ make install-init          <span class="c"># 安装nagios启动脚本</span>
 
 <h3>安装插件:</h3>
 <p>nagios没有什么都做不了的,插件极大的扩展了nagios功能,除了安装官方常用插件外,也可以根据自己需求编写插件.</p>
-<div class="codehilite"><pre>wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
+<div class="highlight"><pre>wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
 tar -zxvf nagios-plugins-1.4.15.tar.gz
 <span class="nb">cd </span>nagios-plugins-1.4.15
 ./configure --prefix<span class="o">=</span>/usr/local/nagios
@@ -135,7 +127,7 @@ make  &amp;amp;&amp;amp; make install
 <p>web服务器不是nagios所必须的,但是如果你无法忍受通过日志文件来监控各个主机状态,那么web服务器就至关重要,所以我们还是花上一点时间为之后的节省更多的时间.</p>
 <p>这里web服务器使用当前主流的nginx:</p>
 <p>安装nginx</p>
-<div class="codehilite"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
+<div class="highlight"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
 &amp;amp;nbsp;yum&amp;amp;nbsp;&amp;amp;nbsp;-y&amp;amp;nbsp;install&amp;amp;nbsp;zlib-devel&amp;amp;nbsp;pcre-devel&amp;amp;nbsp;openssl-devel &amp;amp;nbsp;# 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
 <span class="nb">cd </span>nginx-1.0.11
@@ -145,7 +137,7 @@ make &amp;amp;&amp;amp; make install
 
 
 <p>配置nginx支持cgi:</p>
-<div class="codehilite"><pre>wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
+<div class="highlight"><pre>wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
 tar -zxvf FCGI-0.67.tar.gz
 <span class="nb">cd </span>FCGI-0.67
 perl Makefile.PL
@@ -166,7 +158,7 @@ make &amp;amp;&amp;amp; make install
 
 
 <p>创建cgiwarp-fcgi.pl(内容参照<a href="http://wiki.nginx.org/NginxSimpleCGI">这里</a>),将cgiwarp-fcgi.pl放到/usr/local/bin下给执行权限,并执行:</p>
-<div class="codehilite"><pre>chmod +x /usr/local/bin/cgiwarp-fcgi.pl
+<div class="highlight"><pre>chmod +x /usr/local/bin/cgiwarp-fcgi.pl
 mkdir -p /var/run/nginx/
 perl /usr/local/bin/cgiwarp-fcgi.pl
 chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  <span class="c"># 改变属主为nobody,是nginx正常使用</span>
@@ -174,7 +166,7 @@ chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  <span class="c"># 改�
 
 
 <p>配置nginx支持身份验证</p>
-<div class="codehilite"><pre>yum -y install httpd
+<div class="highlight"><pre>yum -y install httpd
 chkconfig --del httpd
 mkdir /usr/local/nginx/conf/htpasswd
 htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   <span class="c"># 添加nagiosadmin用户</span>
@@ -184,7 +176,7 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   <span class="c">
 <p>还需要配置nginx支持php,这里使用php-fpm的方式,这里就不介绍.</p>
 <h2>配置</h2>
 <p>首先配置nginx:</p>
-<div class="codehilite"><pre>    server <span class="o">{</span>
+<div class="highlight"><pre>    server <span class="o">{</span>
         listen  192.168.3.3:80;
         server_name 192.168.3.3;
         auth_basic <span class="s2">&quot;Nagios&quot;</span>;
@@ -240,7 +232,7 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   <span class="c">
 
 
 <p>修改nagios主配文件,修改nagios运行账户:</p>
-<div class="codehilite"><pre>vi /usr/local/nagios/etc/nagios.cfg
+<div class="highlight"><pre>vi /usr/local/nagios/etc/nagios.cfg
 
 <span class="c"># 编辑下面选项:</span>
 <span class="nv">nagios_user</span><span class="o">=</span>nobody
@@ -249,13 +241,13 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   <span class="c">
 
 <p>修改cgi.cfg配置文件
 修改默认认证cgi用户的为刚才用htpasswd创建的nagiosadmin,或用htpasswd新建一个用户用来认证cgi文件(不然nagios报错:<code>It appears as though you do not have permission to view information for any of the hosts you requested...</code>)</p>
-<div class="codehilite"><pre>vi /usr/local/nagios/etc/cgi.cfg
+<div class="highlight"><pre>vi /usr/local/nagios/etc/cgi.cfg
 <span class="nv">default_user_name</span><span class="o">=</span>nagiosadmin
 </pre></div>
 
 
 <p>修改localhost.cfg添加一个新的监控主机:</p>
-<div class="codehilite"><pre>vi /usr/local/nagios/etc/objects/localhost.cfg
+<div class="highlight"><pre>vi /usr/local/nagios/etc/objects/localhost.cfg
 
 <span class="c">#  通过定义host添加一个主机</span>
 <span class="c">#  添加一个ip为192.168.3.102的监控主机</span>
@@ -278,13 +270,13 @@ define service<span class="o">{</span>
 
 
 <p>修改nagios安装目录权限:</p>
-<div class="codehilite"><pre>chown -R nobody.nagios /usr/local/nagios
+<div class="highlight"><pre>chown -R nobody.nagios /usr/local/nagios
 chmod -R 775 /usr/local/nagios/
 </pre></div>
 
 
 <p>检查nagios配置文件:</p>
-<div class="codehilite"><pre>/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+<div class="highlight"><pre>/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 </pre></div>
 
 
@@ -293,7 +285,7 @@ chmod -R 775 /usr/local/nagios/
 Total Errors:   0
 Things look okay - No serious problems were detected during the pre-flight check</p>
 <p>启动nagios:</p>
-<div class="codehilite"><pre>service nagios start
+<div class="highlight"><pre>service nagios start
 Starting nagios: <span class="k">done</span>.
 </pre></div>
 

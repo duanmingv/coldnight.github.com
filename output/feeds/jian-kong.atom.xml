@@ -9,12 +9,12 @@ server:&lt;/p&gt;
 &lt;p&gt;ip:192.168.3.120&lt;/p&gt;
 &lt;p&gt;cacti:cacti-0.8.7i.tar.gz&lt;/p&gt;
 &lt;p&gt;cacti使用SNMP采集数据,首先安装snmp数据采集工具:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install lm_sensors net-snmp net-snmp-utils
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install lm_sensors net-snmp net-snmp-utils
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;同时cacti又依赖于rrdtool生成图表所以首先安装rrdtool:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
 yum -y install cairo-devel glib2-devel pango-devel intltool   &lt;span class="c"&gt;# 安装rrdtool依赖&lt;/span&gt;
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local
 make &amp;amp;amp;&amp;amp;amp; make install
@@ -22,7 +22,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 
 &lt;p&gt;下面就来下载cacti安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
 tar -zxvf cacti-0.8.7i.tar.gz
 cp -r cacti-0.8.7i /usr/local/nginx/html/cacti  &lt;span class="c"&gt;# 复制到html目录&lt;/span&gt;
 useradd cactiuser -M -s /sbin/nologin          &lt;span class="c"&gt;# 创建cacti用户&lt;/span&gt;
@@ -32,7 +32,7 @@ chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
 
 
 &lt;p&gt;然后进入到数据库创建cacti数据和创建一个用户:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;create database cactidb default character &lt;span class="nb"&gt;set &lt;/span&gt;utf8;   &lt;span class="c"&gt;#创建数据库&lt;/span&gt;
 grant all on cactidb.* to cactiuser@localhost identified by &lt;span class="s1"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;; &lt;span class="c"&gt;# 创建一个mysql用户&lt;/span&gt;
 use cactidb   &lt;span class="c"&gt;# 使用刚才创建的数据库&lt;/span&gt;
 &lt;span class="nb"&gt;source&lt;/span&gt; /usr/local/nginx/html/cacti/cacti.sql &lt;span class="c"&gt;# 导入cacti数据&lt;/span&gt;
@@ -40,13 +40,13 @@ use cactidb   &lt;span class="c"&gt;# 使用刚才创建的数据库&lt;/span&gt
 
 
 &lt;p&gt;接下来我们编辑cacti配置文件/usr/local/nginx/html/cacti/include/config.php&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/cacti/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/cacti/
 vi include/config.php
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;编辑下面内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$database_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;mysql&amp;quot;&lt;/span&gt;;            &lt;span class="c"&gt;# 数据库类型&lt;/span&gt;
 &lt;span class="nv"&gt;$database_default&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactidb&amp;quot;&lt;/span&gt;;       &lt;span class="c"&gt;# 数据库名字&lt;/span&gt;
 &lt;span class="nv"&gt;$database_hostname&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库主机&lt;/span&gt;
 &lt;span class="nv"&gt;$database_username&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;cactiuser&amp;quot;&lt;/span&gt;;    &lt;span class="c"&gt;# 数据库用户&lt;/span&gt;
@@ -57,7 +57,7 @@ vi include/config.php
 
 
 &lt;p&gt;然后修改nginx配置文件像下面:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;        location / &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;        location / &lt;span class="o"&gt;{&lt;/span&gt;
             root   html;
             index  index.php;
         &lt;span class="o"&gt;}&lt;/span&gt;
@@ -73,67 +73,67 @@ vi include/config.php
 
 
 &lt;p&gt;重启nginx&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;pkill -9 nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;pkill -9 nginx
 /usr/local/nginx/sbin/nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后设置php时区,&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/cacti/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/cacti/
 vi include/global_constants.php
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在第二行添加&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;;
+&lt;div class="highlight"&gt;&lt;pre&gt;date_default_timezone_set&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Asia/Chongqing&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;接下来配置snmp,编辑/etc/snmp/snmpd.conf&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/snmp/snmpd.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/snmp/snmpd.conf
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后找到41行将public改成一个较为复杂的名字:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;com2sec notConfigUser  default       public
+&lt;div class="highlight"&gt;&lt;pre&gt;com2sec notConfigUser  default       public
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后找到62行&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;access  notConfigGroup &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;      any       noauth    exact  systemview none none
+&lt;div class="highlight"&gt;&lt;pre&gt;access  notConfigGroup &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;      any       noauth    exact  systemview none none
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;将systemview改成all:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;access  notConfigGroup &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;      any       noauth    exact  all none none
+&lt;div class="highlight"&gt;&lt;pre&gt;access  notConfigGroup &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;      any       noauth    exact  all none none
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后去掉85行的注释:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;view all    included  .1                               80
+&lt;div class="highlight"&gt;&lt;pre&gt;view all    included  .1                               80
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;保存配置文件后启动snmp&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service snmpd start
+&lt;div class="highlight"&gt;&lt;pre&gt;service snmpd start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后在浏览器里输入:http://192.168.3.120/cacti/
 然后根据提示一步步安装,安装好后使用admin密码admin登录.如果点击graphs不能显示图像的话执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;php /usr/local/nginx/html/cacti/poller.php   &lt;span class="c"&gt;# nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;php /usr/local/nginx/html/cacti/poller.php   &lt;span class="c"&gt;# nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;为了方便把这句加入到cron,执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install vixie-cron  &lt;span class="c"&gt;#安装&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install vixie-cron  &lt;span class="c"&gt;#安装&lt;/span&gt;
 service crond start
 crontab -e
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
+&lt;div class="highlight"&gt;&lt;pre&gt;*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -163,22 +163,22 @@ $_SESSION['username']='';&lt;/p&gt;</summary><category term="监控"></category>
 &lt;h2&gt;安装:&lt;/h2&gt;
 &lt;h3&gt;安装准备&lt;/h3&gt;
 &lt;p&gt;创建nagios系统用户:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;useradd  nagios
+&lt;div class="highlight"&gt;&lt;pre&gt;useradd  nagios
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install gd-devel libpng-devel libtool-ltdl-devel
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install gd-devel libpng-devel libtool-ltdl-devel
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;下载nagios内核:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-3.3.1.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;安装nagios内核:&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf nagios-3.3.1.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;tar -zxvf nagios-3.3.1.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nagios
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios
 make all
@@ -191,7 +191,7 @@ make install-init          &lt;span class="c"&gt;# 安装nagios启动脚本&lt;/
 
 &lt;h3&gt;安装插件:&lt;/h3&gt;
 &lt;p&gt;nagios没有什么都做不了的,插件极大的扩展了nagios功能,除了安装官方常用插件外,也可以根据自己需求编写插件.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://prdownloads.sourceforge.net/sourceforge/nagiosplug/nagios-plugins-1.4.15.tar.gz
 tar -zxvf nagios-plugins-1.4.15.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nagios-plugins-1.4.15
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios
@@ -203,7 +203,7 @@ make  &amp;amp;amp;&amp;amp;amp; make install
 &lt;p&gt;web服务器不是nagios所必须的,但是如果你无法忍受通过日志文件来监控各个主机状态,那么web服务器就至关重要,所以我们还是花上一点时间为之后的节省更多的时间.&lt;/p&gt;
 &lt;p&gt;这里web服务器使用当前主流的nginx:&lt;/p&gt;
 &lt;p&gt;安装nginx&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
 &amp;amp;amp;nbsp;yum&amp;amp;amp;nbsp;&amp;amp;amp;nbsp;-y&amp;amp;amp;nbsp;install&amp;amp;amp;nbsp;zlib-devel&amp;amp;amp;nbsp;pcre-devel&amp;amp;amp;nbsp;openssl-devel &amp;amp;amp;nbsp;# 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
@@ -213,7 +213,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 
 &lt;p&gt;配置nginx支持cgi:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://www.cpan.org/modules/by-module/FCGI/FCGI-0.67.tar.gz
 tar -zxvf FCGI-0.67.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;FCGI-0.67
 perl Makefile.PL
@@ -234,7 +234,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 
 &lt;p&gt;创建cgiwarp-fcgi.pl(内容参照&lt;a href="http://wiki.nginx.org/NginxSimpleCGI"&gt;这里&lt;/a&gt;),将cgiwarp-fcgi.pl放到/usr/local/bin下给执行权限,并执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;chmod +x /usr/local/bin/cgiwarp-fcgi.pl
+&lt;div class="highlight"&gt;&lt;pre&gt;chmod +x /usr/local/bin/cgiwarp-fcgi.pl
 mkdir -p /var/run/nginx/
 perl /usr/local/bin/cgiwarp-fcgi.pl
 chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  &lt;span class="c"&gt;# 改变属主为nobody,是nginx正常使用&lt;/span&gt;
@@ -242,7 +242,7 @@ chown nobody.nobody /var/run/nginx/cgiwrap-dispatch.sock  &lt;span class="c"&gt;
 
 
 &lt;p&gt;配置nginx支持身份验证&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install httpd
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install httpd
 chkconfig --del httpd
 mkdir /usr/local/nginx/conf/htpasswd
 htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="c"&gt;# 添加nagiosadmin用户&lt;/span&gt;
@@ -252,7 +252,7 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="
 &lt;p&gt;还需要配置nginx支持php,这里使用php-fpm的方式,这里就不介绍.&lt;/p&gt;
 &lt;h2&gt;配置&lt;/h2&gt;
 &lt;p&gt;首先配置nginx:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    server &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    server &lt;span class="o"&gt;{&lt;/span&gt;
         listen  192.168.3.3:80;
         server_name 192.168.3.3;
         auth_basic &lt;span class="s2"&gt;&amp;quot;Nagios&amp;quot;&lt;/span&gt;;
@@ -308,7 +308,7 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="
 
 
 &lt;p&gt;修改nagios主配文件,修改nagios运行账户:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/nagios.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/nagios.cfg
 
 &lt;span class="c"&gt;# 编辑下面选项:&lt;/span&gt;
 &lt;span class="nv"&gt;nagios_user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nobody
@@ -317,13 +317,13 @@ htpasswd -c /usr/local/nginx/conf/htpasswd/nagios nagiosadmin   &lt;span class="
 
 &lt;p&gt;修改cgi.cfg配置文件
 修改默认认证cgi用户的为刚才用htpasswd创建的nagiosadmin,或用htpasswd新建一个用户用来认证cgi文件(不然nagios报错:&lt;code&gt;It appears as though you do not have permission to view information for any of the hosts you requested...&lt;/code&gt;)&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/cgi.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/cgi.cfg
 &lt;span class="nv"&gt;default_user_name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nagiosadmin
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改localhost.cfg添加一个新的监控主机:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/objects/localhost.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /usr/local/nagios/etc/objects/localhost.cfg
 
 &lt;span class="c"&gt;#  通过定义host添加一个主机&lt;/span&gt;
 &lt;span class="c"&gt;#  添加一个ip为192.168.3.102的监控主机&lt;/span&gt;
@@ -346,13 +346,13 @@ define service&lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;修改nagios安装目录权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;chown -R nobody.nagios /usr/local/nagios
+&lt;div class="highlight"&gt;&lt;pre&gt;chown -R nobody.nagios /usr/local/nagios
 chmod -R 775 /usr/local/nagios/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;检查nagios配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -361,7 +361,7 @@ chmod -R 775 /usr/local/nagios/
 Total Errors:   0
 Things look okay - No serious problems were detected during the pre-flight check&lt;/p&gt;
 &lt;p&gt;启动nagios:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service nagios start
+&lt;div class="highlight"&gt;&lt;pre&gt;service nagios start
 Starting nagios: &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -377,7 +377,7 @@ Starting nagios: &lt;span class="k"&gt;done&lt;/span&gt;.
 &lt;/ul&gt;
 &lt;h2&gt;一.安装依赖:&lt;/h2&gt;
 &lt;h3&gt;安装rrdtool&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install libxml2 glib-devel pango-devel
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install libxml2 glib-devel pango-devel
 wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz                  &lt;span class="c"&gt;# 下载&lt;/span&gt;
 tar -zxvf rrdtool-1.4.7.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;rrdtool-1.4.7
@@ -386,7 +386,7 @@ tar -zxvf rrdtool-1.4.7.tar.gz
 
 
 &lt;h3&gt;安装geoip:&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://geolite.maxmind.com/download/geoip/api/c/GeoIP-1.4.8.tar.gz
 tar -zxvf GeoIP-1.4.8.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;GeoIP-1.4.8
 ./configure &amp;amp;amp;&amp;amp;amp; make &amp;amp;amp;&amp;amp;amp; make install
@@ -394,14 +394,14 @@ tar -zxvf GeoIP-1.4.8.tar.gz
 
 
 &lt;h3&gt;安装其余依赖:&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install libtool libpcap-devel gd-devel gdbm-devel openssl-devel
  intltool
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;h2&gt;二.下载安装:&lt;/h2&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://sourceforge.net/projects/ntop/files/ntop/Stable/ntop-4.1.0.tar.gz/download
 tar -zxvf ntop-4.1.0.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;ntop-4.1.0
 ./autogen.sh --with-tcpwrap --with-rrd-home&lt;span class="o"&gt;=&lt;/span&gt;/opt/rrdtool-1.4.7/
@@ -411,17 +411,17 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 &lt;h2&gt;三.配置启动&lt;/h2&gt;
 &lt;p&gt;更改检测数据保存目录的权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;chown -R nobody /usr/local/var/ntop/
+&lt;div class="highlight"&gt;&lt;pre&gt;chown -R nobody /usr/local/var/ntop/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;创建admin管理密码:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ntop -A
+&lt;div class="highlight"&gt;&lt;pre&gt;ntop -A
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在eth0上启动ntop:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ntop -d -i eth0 -M
+&lt;div class="highlight"&gt;&lt;pre&gt;ntop -d -i eth0 -M
 &lt;/pre&gt;&lt;/div&gt;
 
 

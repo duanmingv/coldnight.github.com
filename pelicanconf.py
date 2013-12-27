@@ -52,7 +52,8 @@ LINKS =  (('eleven', 'http://eleveni386.7axu.com'),
 
 DEFAULT_PAGINATION = 10
 
-MD_EXTENSIONS =  (['codehilite', 'extra', 'fenced_code', 'tables', 'sane_lists'])
+MD_EXTENSIONS =  (['codehilite(css_class=highlight)', 'extra',
+                   'fenced_code', 'tables', 'sane_lists'])
 
 PLUGIN_PATH = u"pelican-plugins"
 PLUGINS = ['sitemap']#, 'gzip_cache']

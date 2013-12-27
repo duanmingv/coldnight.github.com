@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -77,24 +69,24 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
-<div class="codehilite"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+<div class="highlight"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
 find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
 find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
 </pre></div>
 
 
 <p>使用通配符查找文件</p>
-<div class="codehilite"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+<div class="highlight"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
 </pre></div>
 
 
 <h2>文本替换</h2>
-<div class="codehilite"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+<div class="highlight"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
 </pre></div>
 
 
 <h2>显示指定行</h2>
-<div class="codehilite"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+<div class="highlight"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
 sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
     </div>	
 				
@@ -115,7 +107,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
@@ -146,12 +138,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp</p>
 <p>安装tftp-server</p>
-<div class="codehilite"><pre>yum -y install tftp-server
+<div class="highlight"><pre>yum -y install tftp-server
 </pre></div>
 
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<div class="codehilite"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
+<div class="highlight"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
     </div>	
 				
 
@@ -175,7 +167,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <!--more-->
 
 <p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
-<div class="codehilite"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+<div class="highlight"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
 vi cfpkgs.list
 <span class="c"># 添加如下内容</span>
 keyutils-libs-devel
@@ -221,7 +213,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 </ul>
 <p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
 <p>下载:</p>
-<div class="codehilite"><pre>wget https://cfengine.com/source-code/download ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
+<div class="highlight"><pre>wget https://cfengine.com/source-code/download ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
     </div>	
 				
 
@@ -241,30 +233,30 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  </div>
         <div class="summary"><p>有时候shell脚本不会给予明显的调试信息,而且有时不报错,但是脚本没有达到预期的效果这时候脚本调试就可以帮你准确定位错误.</p>
 <p>在脚本的最顶部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> -x
+<div class="highlight"><pre><span class="nb">set</span> -x
 </pre></div>
 
 
 <p>开启调试
 在脚本的最底部加上</p>
-<div class="codehilite"><pre><span class="nb">set</span> +x
+<div class="highlight"><pre><span class="nb">set</span> +x
 </pre></div>
 
 
 <p>关闭调试
 如果在终端界面下,调试信息过多,调试信息是无法重定向到文件的,所以该怎样查看调试呢,当然这对SecureCRT连接的当然不是问题,但是如果是终端界面的话,可以使用命令</p>
 <p>&nbsp;</p>
-<div class="codehilite"><pre>script
+<div class="highlight"><pre>script
 </pre></div>
 
 
 <p>然后执行要捕捉内容的命令,完成后通过</p>
-<div class="codehilite"><pre><span class="nb">exit</span>
+<div class="highlight"><pre><span class="nb">exit</span>
 </pre></div>
 
 
 <p>退出,当前目录下会生成typescript,通过</p>
-<div class="codehilite"><pre>more typescript
+<div class="highlight"><pre>more typescript
 </pre></div>
 
 

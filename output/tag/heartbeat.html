@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -88,7 +80,7 @@ vip:192.168.3.103/24
 MySQL:mysql-5.0.95.tar.gz
 heartbeat:Heartbeat-3-0-7e3a82377fa8.tar.bz2</p>
 <h3>一、安装部署MySQL</h3>
-<div class="codehilite"><pre>yum -y install ncurses-devel openssl-devel
+<div class="highlight"><pre>yum -y install ncurses-devel openssl-devel
 wget http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/
 useradd -M -s /sbin/nologin mysql
 tar -zxvf mysql-5.0.95.tar.gz
@@ -115,7 +107,7 @@ ln -s /usr/local/mysql/bin/* /usr/local/bin/ <span class="c"># 为二进制文�
 
 
 <p>配置MySQl主从实现数据同步,在主从服务器上修改my.cnf(这里是新安装的数据库,如果是仅仅加从库,需要把主库的数据备份导入到从库,这里不再讲述)</p>
-<div class="codehilite"><pre>vi /etc/my.cnf
+<div class="highlight"><pre>vi /etc/my.cnf
 <span class="c"># [mysqld]里修改:</span>
 <span class="nv">log_bin</span> <span class="o">=</span> /var/log/mysql/mysql-bin.log      <span class="c"># 启动二进制文件</span>
 server-id <span class="o">=</span> 1921683101                      <span class="c"># 设置服务器id</span>
@@ -123,18 +115,18 @@ server-id <span class="o">=</span> 1921683101                      <span class="
 
 
 <p>启动主库:</p>
-<div class="codehilite"><pre>service mysqld start
+<div class="highlight"><pre>service mysqld start
 </pre></div>
 
 
 <p>在主库上创建一个用户授权给从库,用户为backup密码为backup:</p>
-<div class="codehilite"><pre>mysql&amp;gt; grant replication slave on *.* to <span class="s1">&#39;backup&#39;</span>@<span class="s1">&#39;192.168.3.102&#39;</span> identified by <span class="s1">&#39;backup&#39;</span>;
+<div class="highlight"><pre>mysql&amp;gt; grant replication slave on *.* to <span class="s1">&#39;backup&#39;</span>@<span class="s1">&#39;192.168.3.102&#39;</span> identified by <span class="s1">&#39;backup&#39;</span>;
 Query OK, 0 rows affected <span class="o">(</span>0.16 sec<span class="o">)</span>
 </pre></div>
 
 
 <p>查看主库状态:</p>
-<div class="codehilite"><pre>mysql&amp;gt; show master status;
+<div class="highlight"><pre>mysql&amp;gt; show master status;
 +------------------+-----------+--------------+------------------+
 ¦ File             ¦ Position  ¦ Binlog_Do_DB ¦ Binlog_Ignore_DB ¦
 +------------------+-----------+--------------+------------------+
@@ -145,7 +137,7 @@ Query OK, 0 rows affected <span class="o">(</span>0.16 sec<span class="o">)</spa
 
 
 <p>修改从库配置文件:</p>
-<div class="codehilite"><pre>server-id <span class="o">=</span> 1921683102                 <span class="c"># server id必须保持唯一</span>
+<div class="highlight"><pre>server-id <span class="o">=</span> 1921683102                 <span class="c"># server id必须保持唯一</span>
 <span class="nv">log_bin</span> <span class="o">=</span> /var/log/mysql/mysql-bin.log <span class="c"># 启用二进制日志</span>
 master-host <span class="o">=</span> 192.168.3.101       <span class="c"># 主库ip</span>
 master-user <span class="o">=</span> backup                  <span class="c"># 账号</span>
@@ -156,12 +148,12 @@ master-connect-retry<span class="o">=</span>60             <span class="c"># 连
 
 
 <p>启动从库,并查看状态:</p>
-<div class="codehilite"><pre>service mysqld start
+<div class="highlight"><pre>service mysqld start
 </pre></div>
 
 
 <p>在从库上执行下操作,指定主库的二进制文件名和偏移量(刚才在主库show master status;查看的参数):</p>
-<div class="codehilite"><pre>mysql&amp;gt; show slave status <span class="se">\G</span>;
+<div class="highlight"><pre>mysql&amp;gt; show slave status <span class="se">\G</span>;
 *************************** 1. row ***************************
              Slave_IO_State: Waiting <span class="k">for </span>master to send event
                 Master_Host: 192.168.3.101
@@ -205,7 +197,7 @@ No query specified
 
 <p>如果show slave status \G;<span style="color: #ff0000;">Slave_SQL_Running: No</span><span style="color: #000000;">,则执在从库上执行下面命令(两个参数值通过在主库执行show master status; 命令查看获得):
 </span></p>
-<div class="codehilite"><pre>mysql&amp;gt; stop slave;
+<div class="highlight"><pre>mysql&amp;gt; stop slave;
 Query OK, 0 rows affected <span class="o">(</span>0.00 sec<span class="o">)</span>
 
 mysql&amp;gt; change master to <span class="nv">master_log_file</span><span class="o">=</span><span class="s1">&#39;mysql-bin.000003&#39;</span>,master_log_pos<span class="o">=</span>236;
@@ -217,12 +209,12 @@ Query OK, 0 rows affected <span class="o">(</span>0.01 sec<span class="o">)</spa
 <p>在主库上创建一个数据库看看是否同步.</p>
 <h3>二、安装部署heartbeat实现双机热备份</h3>
 <h3>安装依赖</h3>
-<div class="codehilite"><pre>yum  -y install pkgconfig glib2-devel python-devel pam-devel gnutls-devel swig
+<div class="highlight"><pre>yum  -y install pkgconfig glib2-devel python-devel pam-devel gnutls-devel swig
 </pre></div>
 
 
 <p>安装libnet</p>
-<div class="codehilite"><pre>wget http://download.fedora.redhat.com/pub/epel/5/i386/libnet-1.1.5-1.el5.i386.rpm
+<div class="highlight"><pre>wget http://download.fedora.redhat.com/pub/epel/5/i386/libnet-1.1.5-1.el5.i386.rpm
 rpm -ivh libnet-1.1.5-1.el5.i386.rpm
 wget http://download.fedora.redhat.com/pub/epel/5/i386/libnet-devel-1.1.5-1.el5.i386.rpm
 rpm -ivh libnet-devel-1.1.5-1.el5.i386.rpm
@@ -230,7 +222,7 @@ rpm -ivh libnet-devel-1.1.5-1.el5.i386.rpm
 
 
 <h3>安装:</h3>
-<div class="codehilite"><pre>useradd -M -s /sbin/nologin hacluster
+<div class="highlight"><pre>useradd -M -s /sbin/nologin hacluster
 useradd -M -s /sbin/nologin haclient
 wget http://www.ultramonkey.org/download/heartbeat/2.0.8/heartbeat-2.0.8.tar.gz
 tar -zxvf heartbeat-2.0.8.tar.gz
@@ -242,7 +234,7 @@ make &amp;amp;&amp;amp; make install
 
 <p>创建配置文件:
 安装后要配置三个文件（如没有可手动建立）：ha.cf、haresources、authkeys。这三个配置文件需要在/etc/ha.d目录下面，但是默认是没有这三个文件的，可以到官网上下这三个文件，也可以在源码包里找这三个文件，在源码目录下的DOC子目录里。</p>
-<div class="codehilite"><pre>cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf | egrep -v <span class="s1">&#39;^#\W&#39;</span> | grep -v <span class="s1">&#39;^#$&#39;</span> &amp;gt;&amp;gt; /etc/ha.d/ha.cf
+<div class="highlight"><pre>cat /usr/local/share/doc/heartbeat-2.0.8/ha.cf | egrep -v <span class="s1">&#39;^#\W&#39;</span> | grep -v <span class="s1">&#39;^#$&#39;</span> &amp;gt;&amp;gt; /etc/ha.d/ha.cf
 cat /usr/local/share/doc/heartbeat-2.0.8/haresources  | egrep -v <span class="s1">&#39;^#\W&#39;</span> | grep -v <span class="s1">&#39;^#$&#39;</span> &amp;gt;&amp;gt; /etc/ha.d/haresources
 cat /usr/local/share/doc/heartbeat-2.0.8/authkeys | egrep -v <span class="s1">&#39;^#\W&#39;</span> | grep <span class="s1">&#39;^#$&#39;</span> -v &amp;gt; /etc/ha.d/authkeys
 </pre></div>
@@ -250,7 +242,7 @@ cat /usr/local/share/doc/heartbeat-2.0.8/authkeys | egrep -v <span class="s1">&#
 
 <p>编辑配置文件:</p>
 <p>编辑ha.cf,该文件中包括为Heartbeat使用何种介质通路和如何配置他们的信息.</p>
-<div class="codehilite"><pre> vi /etc/ha.d/ha.cf 
+<div class="highlight"><pre> vi /etc/ha.d/ha.cf 
 
 debugfile /var/log/ha-debug   <span class="c"># 用于记录heartbeat的调试信息</span>
 logfile /var/log/ha-log       <span class="c"># 用于记录heartbeat的日志信息</span>
@@ -275,7 +267,7 @@ apiauth ipfail <span class="nv">gid</span><span class="o">=</span>haclient <span
 
 
 <p>配置haresources ,该文件列出所有节点所提供的服务以及服务的默认所有者.所有节点上的该文件必须相同</p>
-<div class="codehilite"><pre>vi /etc/ha.d/haresources
+<div class="highlight"><pre>vi /etc/ha.d/haresources
 
 master.org    IPaddr::192.168.3.103 mysql  <span class="c"># vip</span>
 </pre></div>
@@ -283,7 +275,7 @@ master.org    IPaddr::192.168.3.103 mysql  <span class="c"># vip</span>
 
 <p><code>注意:!!</code>haresources最后一个字段是某个服务的心跳,如果mysql,如果主从库使用的是同一台盘阵或者一个分布式文件系统,这里一定要填写真实的启动脚本(/etc/init.d下),如果是主从同步的话请务必不填写真正的启动脚本,因为主库心跳存活的话heartbeat会自动停止从库的mysql,这样就无法同步,主库发生故障时转移故障就没有意义.</p>
 <p>配置authkeys, authkeys决定了您的认证密钥。共有三种认证方式：crc，md5，和sha1果您的Heartbeat运行于 安全 网络之上，如本例中的交叉线，可以使用crc，从资源的角度来看，这是代价最低的方法。如果网络并不 安全 ，但您也希望降低CPU使用，则使用md5。最后，如果您想得到最好的认证，而不考虑CPU使用情况，则使用sha1，它在三者之中最难破解。</p>
-<div class="codehilite"><pre>vi /etc/ha.d/authkeys
+<div class="highlight"><pre>vi /etc/ha.d/authkeys
 
 auth 1
 1 crc
@@ -293,7 +285,7 @@ chmod 600 /etc/ha.d/authkeys
 
 <p>不论您在关键字auth后面指定的是什么索引值，在后面必须要作为键值再次出现。如果您指定“auth 4”，则在后面一定要有一行的内容为“4 ”。
 配置从库:</p>
-<div class="codehilite"><pre>scp root@192.168.3.101:/etc/ha.d/ha.cf /etc/ha.d/
+<div class="highlight"><pre>scp root@192.168.3.101:/etc/ha.d/ha.cf /etc/ha.d/
 scp root@192.168.3.101:/etc/ha.d/authkeys /etc/ha.d/
 scp root@192.168.3.101:/etc/ha.d/haresources /etc/ha.d/
 vi /etc/ha.d/ha.cf
@@ -316,12 +308,12 @@ apiauth ipfail <span class="nv">gid</span><span class="o">=</span>haclient <span
 
 
 <p>启动主库heartbeat:</p>
-<div class="codehilite"><pre>server heartbeat start
+<div class="highlight"><pre>server heartbeat start
 </pre></div>
 
 
 <p>查看日志:</p>
-<div class="codehilite"><pre>cat /var/log/ha-log
+<div class="highlight"><pre>cat /var/log/ha-log
 
 heartbeat<span class="o">[</span>32239<span class="o">]</span>: 2012/02/19_13:45:29 info: Link 192.168.3.254:192.168.3.254 up.
 heartbeat<span class="o">[</span>32239<span class="o">]</span>: 2012/02/19_13:45:29 info: Status update <span class="k">for </span>node 192.168.3.254: status ping
@@ -361,12 +353,12 @@ heartbeat<span class="o">[</span>32239<span class="o">]</span>: 2012/02/19_13:45
 <p>&nbsp;</p>
 <p>从日志中看出来slave.org没起来是死亡的,并添加192.168.3.103vip</p>
 <p>启动从库heartbeat</p>
-<div class="codehilite"><pre>server heartbeat start
+<div class="highlight"><pre>server heartbeat start
 </pre></div>
 
 
 <p>启动之后查看日志信息</p>
-<div class="codehilite"><pre>Feb 19 13:50:22 slave heartbeat: <span class="o">[</span>29159<span class="o">]</span>: info: Local status now <span class="nb">set </span>to: <span class="s1">&#39;up&#39;</span>
+<div class="highlight"><pre>Feb 19 13:50:22 slave heartbeat: <span class="o">[</span>29159<span class="o">]</span>: info: Local status now <span class="nb">set </span>to: <span class="s1">&#39;up&#39;</span>
 Feb 19 13:50:23 slave heartbeat: <span class="o">[</span>29159<span class="o">]</span>: info: Link master.org:eth0 up.
 Feb 19 13:50:23 slave heartbeat: <span class="o">[</span>29159<span class="o">]</span>: info: Status update <span class="k">for </span>node master.org: status active
 Feb 19 13:50:23 slave heartbeat: <span class="o">[</span>29159<span class="o">]</span>: info: Link 192.168.3.254:192.168.3.254 up.
@@ -409,12 +401,12 @@ Feb 19 13:50:46 slave heartbeat: <span class="o">[</span>29159<span class="o">]<
 
 
 <p>现在尝试停止主库的MySQL服务</p>
-<div class="codehilite"><pre>pkill mysqld
+<div class="highlight"><pre>pkill mysqld
 </pre></div>
 
 
 <p>查看日志并无变化,所以得出结论heartbeat只检测心跳也就是只检测设备是否宕机,不会检测MySQL服务,所以我们同样要有一个脚本来检测MySQL服务,如果mysql服务宕掉,则尝试启动服务,若启动服务失败则kill掉heartbeat进程实现故障转移(和上一遍nginx+keepalived原理一致),脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># filename:mysqlsc.sh</span>
 ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <span class="c"># 过滤mysql进程</span>
 <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>               <span class="c"># 如果过滤有mysql进程会返回0则认为mysql存活</span>
@@ -433,18 +425,18 @@ ps aux ¦ grep mysqld ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   
 
 
 <p>给这个脚本执行权限然后后台运行:</p>
-<div class="codehilite"><pre>chmod +x mysqlsc.sh
+<div class="highlight"><pre>chmod +x mysqlsc.sh
 nohup sh mysqlsc.sh &amp;amp; <span class="c"># 后台运行</span>
 </pre></div>
 
 
 <p>下面来尝试停止主库的heartbeat:</p>
-<div class="codehilite"><pre>service heartbeat stop
+<div class="highlight"><pre>service heartbeat stop
 </pre></div>
 
 
 <p>查看从库日志:</p>
-<div class="codehilite"><pre>heartbeat<span class="o">[</span>29159<span class="o">]</span>: 2012/02/19_14:03:05 info: Received shutdown notice from <span class="s1">&#39;master.org&#39;</span>.
+<div class="highlight"><pre>heartbeat<span class="o">[</span>29159<span class="o">]</span>: 2012/02/19_14:03:05 info: Received shutdown notice from <span class="s1">&#39;master.org&#39;</span>.
 heartbeat<span class="o">[</span>29159<span class="o">]</span>: 2012/02/19_14:03:05 info: Resources being acquired from master.org.
 heartbeat<span class="o">[</span>29308<span class="o">]</span>: 2012/02/19_14:03:05 info: acquire <span class="nb">local </span>HA resources <span class="o">(</span>standby<span class="o">)</span>.
 heartbeat<span class="o">[</span>29308<span class="o">]</span>: 2012/02/19_14:03:05 info: <span class="nb">local </span>HA resource acquisition completed <span class="o">(</span>standby<span class="o">)</span>.

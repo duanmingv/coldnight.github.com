@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,7 +70,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
 <p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<div class="codehilite"><pre><span class="k">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="k">server</span> <span class="p">{</span>
     <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
     <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
 
@@ -94,12 +86,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+<div class="highlight"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
 </pre></div>
 
 
 <p>但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条</p>
-<div class="codehilite"><pre>iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+<div class="highlight"><pre>iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
 </pre></div>
 
 

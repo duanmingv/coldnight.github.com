@@ -23,14 +23,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -83,7 +75,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>下面我们来介绍这些特性</p>
 <p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
 如下面代码:</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
@@ -106,7 +98,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 没有达到我们想要的效果,另外还有一种常见的使用,因为我们知道普通变量传递给
 函数,函数在内部更改是不会影响到外部变量的,那么列表和字典呢?
 我们来看如下代码,我们创建一个函数,是字典就添加一个键和值,是列表就在尾部添加一个元素</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">add_something</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">add_something</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
 <span class="o">...</span>     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="o">...</span>             <span class="n">info</span><span class="p">[</span><span class="s">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Hello,&#39;</span><span class="o">+</span> <span class="n">info</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
 <span class="o">...</span>     <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
@@ -127,7 +119,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 如果我们其他地方需要同样的列表进行处理,如果你不知道这个特性就会产生很难寻找的bug
 当上面并不是我们想要的我们该如何避免上面呢,我们可以对列表/字典做一个拷贝,而不是
 简单的引用</p>
-<div class="codehilite"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">]</span>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="s">&#39;night&#39;</span><span class="p">,</span> <span class="s">&#39;linuxzen.com&#39;</span><span class="p">]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span> <span class="o">=</span> <span class="n">names</span><span class="p">[:]</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">names2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;cold night&#39;</span><span class="p">)</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">names</span>

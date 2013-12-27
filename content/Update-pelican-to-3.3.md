@@ -32,8 +32,20 @@ Pelican升级后会有很多莫名奇妙的问题, 首先之前的`Makefile`不�
     
     easy_install -U markdown
 
+### Markdown 代码高亮
+Markdown 是通过指定 MD\_EXTENSIONS 选项类配置代码高亮的之前配置这样就可以
+```python
+MD_EXTENSIONS =  (['codehilite', 'extra', 'fenced_code', 'tables', 'sane_lists'])
+```
+但是发现现在无法高亮代码, 查看了源码原来要手动指定高亮 css, 不然css会设置成
+ codhilite 
+ ```python
+MD_EXTENSIONS =  (['codehilite(css_class=highlight)', 'extra',
+                   'fenced_code', 'tables', 'sane_lists'])
+ ```
+
 ## 静态文件
-`Pelican`去掉了`FILE_TO_COPY`项, 所以之前拷贝`robots.txt`之类的文件, 就会失效, 使用`STATIC_PATHS`即可
+`Pelican`去掉了`FILE\_TO\_COPY`项, 所以之前拷贝`robots.txt`之类的文件, 就会失效, 使用`STATIC_PATHS`即可
 
     STATIC_PATHS = [u"upload", "extra/robots.txt",
                     "extra/404.html",

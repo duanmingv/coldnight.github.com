@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -80,14 +72,14 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p><code>Pelican</code>特别喜欢更改配置文件,  而且错误提示非常烂, 完全不知道在说什么, 而且没有安装markdown包的话根本不提示, 仅仅就错误退出, 下面就这次升级越到的问题做个记录.</p>
 <h2>Makefile</h2>
 <p>Pelican升级后会有很多莫名奇妙的问题, 首先之前的<code>Makefile</code>不能使用, 所以需要重新生成一份:</p>
-<div class="codehilite"><pre><span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span> <span class="p">.</span>
+<div class="highlight"><pre><span class="n">pelican</span><span class="o">-</span><span class="n">quickstart</span> <span class="p">.</span>
 </pre></div>
 
 
 <p>当然上面操作会更改配置文件, 我用git管理, 所以很方便的<code>checkout</code>, 如果你的不是, 先备份下配置文件吧.</p>
 <h2>ATOM Feed</h2>
 <p>然后<code>make html</code>的时候失败提示</p>
-<div class="codehilite"><pre><span class="n">File</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">feeds</span><span class="o">/</span><span class="n">all</span><span class="p">.</span><span class="n">atom</span><span class="p">.</span><span class="n">xml</span> <span class="n">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">overwritten</span><span class="o">!</span>
+<div class="highlight"><pre><span class="n">File</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">feeds</span><span class="o">/</span><span class="n">all</span><span class="p">.</span><span class="n">atom</span><span class="p">.</span><span class="n">xml</span> <span class="n">is</span> <span class="n">to</span> <span class="n">be</span> <span class="n">overwritten</span><span class="o">!</span>
 </pre></div>
 
 
@@ -95,13 +87,24 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>但是改完之后页面的ATOM FEED链接没有指向正确的地址, 查看模板文件, 发现模板还在引用<code>FEED_ATOM</code>, 改成<code>FEED_ALL_ATOM</code>即可.</p>
 <h2>Markdown</h2>
 <p>如果莫名奇妙的错误, 没有错误信息, 也没有输出HTML, 那么可能就是<code>markdown</code>包没装, <code>Pelican</code>的错误提示真心无语.</p>
-<div class="codehilite"><pre><span class="n">easy_install</span> <span class="o">-</span><span class="n">U</span> <span class="n">markdown</span>
+<div class="highlight"><pre><span class="n">easy_install</span> <span class="o">-</span><span class="n">U</span> <span class="n">markdown</span>
 </pre></div>
 
 
+<h3>Markdown 代码高亮</h3>
+<p>Markdown 是通过指定 MD_EXTENSIONS 选项类配置代码高亮的之前配置这样就可以</p>
+<div class="highlight"><pre><span class="n">MD_EXTENSIONS</span> <span class="o">=</span>  <span class="p">([</span><span class="s">&#39;codehilite&#39;</span><span class="p">,</span> <span class="s">&#39;extra&#39;</span><span class="p">,</span> <span class="s">&#39;fenced_code&#39;</span><span class="p">,</span> <span class="s">&#39;tables&#39;</span><span class="p">,</span> <span class="s">&#39;sane_lists&#39;</span><span class="p">])</span>
+</pre></div>
+
+
+<p>但是发现现在无法高亮代码, 查看了源码原来要手动指定高亮 css, 不然css会设置成
+ codhilite 
+ <code>python
+MD_EXTENSIONS =  (['codehilite(css_class=highlight)', 'extra',
+                   'fenced_code', 'tables', 'sane_lists'])</code></p>
 <h2>静态文件</h2>
-<p><code>Pelican</code>去掉了<code>FILE_TO_COPY</code>项, 所以之前拷贝<code>robots.txt</code>之类的文件, 就会失效, 使用<code>STATIC_PATHS</code>即可</p>
-<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;upload&quot;</span><span class="p">,</span> <span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span>
+<p><code>Pelican</code>去掉了<code>FILE\_TO\_COPY</code>项, 所以之前拷贝<code>robots.txt</code>之类的文件, 就会失效, 使用<code>STATIC_PATHS</code>即可</p>
+<div class="highlight"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span><span class="s">&quot;upload&quot;</span><span class="p">,</span> <span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span>
                 <span class="s">&quot;extra/404.html&quot;</span><span class="p">,</span>
             <span class="p">]</span>
 </pre></div>
@@ -109,12 +112,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>如果想指定静态文件位置, 可以使用<code>STATIC_SAVE_AS</code>, 会将静态文件存到另外一个目录,
 而且对所有<code>STATIC_PATHS</code>项生效</p>
-<div class="codehilite"><pre><span class="n">STATIC_SAVE_AS</span> <span class="o">=</span> <span class="s">&quot;static/&quot;</span>
+<div class="highlight"><pre><span class="n">STATIC_SAVE_AS</span> <span class="o">=</span> <span class="s">&quot;static/&quot;</span>
 </pre></div>
 
 
 <p>也可以使用 <code>EXTRA_PATH_METADATA</code>来为每一项指定路径</p>
-<div class="codehilite"><pre><span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&quot;extra/robots.txt&quot;</span><span class="o">:</span><span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;robots.txt&quot;</span><span class="p">},</span>
     <span class="s">&quot;extra/404.html&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s">&quot;path&quot;</span><span class="o">:</span><span class="s">&quot;404.html&quot;</span><span class="p">},</span>
 <span class="p">}</span>

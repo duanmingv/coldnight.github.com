@@ -13,12 +13,12 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 &lt;p&gt;后端real server: 192.168.3.3/24 |192.168.3.102/24(我们这里使用备用lvs作为一个测试&lt;/p&gt;
 &lt;p&gt;vip(virtual ip):192.168.3.100/24&lt;/p&gt;
 &lt;p&gt;lvs在2.6的内核中是默认支持的,所以我们就不需要在来安装,但是我们需要安装用户配置工具ipvsadm&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;ipvsadm&lt;/span&gt;           &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;分别在主从&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;上执行安装&lt;/span&gt;&lt;span class="n"&gt;ipvsadm&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;ipvsadm&lt;/span&gt;           &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;分别在主从&lt;/span&gt;&lt;span class="n"&gt;lvs&lt;/span&gt;&lt;span class="err"&gt;上执行安装&lt;/span&gt;&lt;span class="n"&gt;ipvsadm&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;我们查看lvs是否支持:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsmod&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;ip_vs&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lsmod&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;ip_vs&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt;
 &lt;span class="n"&gt;ip_vs&lt;/span&gt;                  &lt;span class="mi"&gt;78081&lt;/span&gt;  &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;span class="n"&gt;modprobe&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt;&lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;ip_vs&lt;/span&gt;
 &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;modules&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.6.18&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;194.&lt;/span&gt;&lt;span class="n"&gt;el5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ipvs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ip_vs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ko&lt;/span&gt;
@@ -38,14 +38,14 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 
 &lt;p&gt;本文介绍lvs的&lt;code&gt;DR&lt;/code&gt;模式,首先部署keepalived.本博前面已经介绍如何来安装keepalived.这里就不在只简单的贴一下步骤:&lt;/p&gt;
 &lt;p&gt;在主备服务器上部署keepalived(因为前面已经rpm包安装了ipvsadm,所以就不需要重复安装):&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sysctl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sysctl&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ipv4&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ip_forward&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;此参数改为&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;span class="n"&gt;sysctl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使修改生效&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum  -y install openssl-devel
+&lt;div class="highlight"&gt;&lt;pre&gt;yum  -y install openssl-devel
 &lt;span class="c"&gt;# 下载并安装keepalived&lt;/span&gt;
 wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
 tar -zxvf keepalived-1.1.19.tar.gz
@@ -59,7 +59,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;p&gt;在主备lvs上安装keepalived完毕后我们先来配置主lvs上的keepalived:
 编辑配置文件&lt;code&gt;/etc/keepalived/keepalived.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt;
 
 &lt;span class="n"&gt;global_defs&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
    &lt;span class="n"&gt;notification_email&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -117,7 +117,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;配置备用lvs的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;!&lt;/span&gt; &lt;span class="n"&gt;Configuration&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt;
 
 &lt;span class="n"&gt;global_defs&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
    &lt;span class="n"&gt;notification_email&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
@@ -177,7 +177,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 &lt;p&gt;由于使用keepalived就不需要使用脚本来配置lvs调度器,但是这里我们还是会给出一个脚本内容,但我们不会用到这个脚本:lvs已经内置于内核,配置命令是ipvsadm,所以lvs的一些操作是通过ipvsadm来控制.下面我们就编写脚本来实现lvs的DR模式:&lt;/p&gt;
 &lt;p&gt;编写脚本lvsdr:&lt;/p&gt;
 &lt;p&gt;我们把lvs&lt;code&gt;vi /etc/init.d/lvsdr&lt;/code&gt;添加如下内容&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
 &lt;span class="c"&gt;# 定义虚拟ip&lt;/span&gt;
 &lt;span class="nv"&gt;VIP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.100
 &lt;span class="c"&gt;# 定义realserver,并已逗号分开&lt;/span&gt;
@@ -230,18 +230,18 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;编辑完毕保存退出,然后给这个脚本执行权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lvsdr&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lvsdr&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后就可以通过service命令来启动lvs dr模式&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;lvsdr&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;lvsdr&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;将这个脚本分别放到主备lvs的/etc/init.d/下,赋予执行权限.
 我们真正需要的是realserver的脚本,下面我们来编写realserver脚本,同样放在/etc/init.d/下,编辑rs脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/init.d/lvsrs
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/init.d/lvsrs
 &lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
 &lt;span class="nv"&gt;VIP&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;192.168.3.100
 . /etc/rc.d/init.d/functions
@@ -272,7 +272,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;给脚本赋予执行权限&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lvsrs&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lvsrs&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -280,12 +280,12 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 &lt;p&gt;先来确认下我们做的变动:主从lvs分别安装keepalived,并且在/etc/init.d/下添加了lvsdr脚本(不使用).&lt;/p&gt;
 &lt;p&gt;后端realserver分别在/etc/init.d/下添加了lvsrs脚本.我们先测试keepalived:&lt;/p&gt;
 &lt;p&gt;首先在主调度器上启动keepalived:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看日志文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;
 &lt;span class="n"&gt;Mar&lt;/span&gt; &lt;span class="mi"&gt;21&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;29&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;device&lt;/span&gt; &lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="n"&gt;left&lt;/span&gt; &lt;span class="n"&gt;promiscuous&lt;/span&gt; &lt;span class="n"&gt;mode&lt;/span&gt;
 &lt;span class="n"&gt;Mar&lt;/span&gt; &lt;span class="mi"&gt;21&lt;/span&gt; &lt;span class="mi"&gt;22&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;29&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1700&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1332340150.598&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;eth0&lt;/span&gt; &lt;span class="n"&gt;prom&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="n"&gt;old_prom&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;256&lt;/span&gt; &lt;span class="n"&gt;auid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4294967295&lt;/span&gt; &lt;span class="n"&gt;ses&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4294967295&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt; &lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="n"&gt;Keepalived&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Starting&lt;/span&gt; &lt;span class="n"&gt;Keepalived&lt;/span&gt; &lt;span class="n"&gt;v1&lt;/span&gt;&lt;span class="mf"&gt;.1.19&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mo"&gt;04&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;2012&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -316,7 +316,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;然后在备用调度器上启动keepalived然后查看日志:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Entering&lt;/span&gt; &lt;span class="n"&gt;BACKUP&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Entering&lt;/span&gt; &lt;span class="n"&gt;BACKUP&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP&lt;/span&gt; &lt;span class="n"&gt;sockpool&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ifindex&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;proto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;112&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;fd&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt; &lt;span class="n"&gt;reports&lt;/span&gt; &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.102&lt;/span&gt; &lt;span class="n"&gt;added&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;33&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_healthcheckers&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Registering&lt;/span&gt; &lt;span class="n"&gt;Kernel&lt;/span&gt; &lt;span class="n"&gt;netlink&lt;/span&gt; &lt;span class="n"&gt;reflector&lt;/span&gt;
@@ -329,12 +329,12 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;在主调度器上执行&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;keepalived&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看备用调度器日志:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tail&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;44&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Transition&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;Entering&lt;/span&gt; &lt;span class="n"&gt;MASTER&lt;/span&gt; &lt;span class="n"&gt;STATE&lt;/span&gt;
 &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;16&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;45&lt;/span&gt; &lt;span class="n"&gt;slave&lt;/span&gt; &lt;span class="n"&gt;Keepalived_vrrp&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;VRRP_Instance&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VI_1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;VIPs&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
@@ -346,7 +346,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;p&gt;我们看到keepalived已经成功切换.&lt;/p&gt;
 &lt;p&gt;然后我们使用ipvsadm命令查看(在此之前要确认后端realserver已经启动了web服务):&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ipvsadm&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ipvsadm&lt;/span&gt;
 &lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="n"&gt;Virtual&lt;/span&gt; &lt;span class="n"&gt;Server&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="mf"&gt;1.2.1&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;4096&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;Prot&lt;/span&gt; &lt;span class="n"&gt;LocalAddress&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Port&lt;/span&gt; &lt;span class="n"&gt;Scheduler&lt;/span&gt; &lt;span class="n"&gt;Flags&lt;/span&gt;
   &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;RemoteAddress&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Port&lt;/span&gt;           &lt;span class="n"&gt;Forward&lt;/span&gt; &lt;span class="n"&gt;Weight&lt;/span&gt; &lt;span class="n"&gt;ActiveConn&lt;/span&gt; &lt;span class="n"&gt;InActConn&lt;/span&gt;
@@ -357,7 +357,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;然后分别启动后端realserver的lvsrs服务:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;servie&lt;/span&gt; &lt;span class="n"&gt;lvsrs&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;servie&lt;/span&gt; &lt;span class="n"&gt;lvsrs&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -380,12 +380,12 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 &lt;p&gt;本文采用第一种方式来进行vip为:192.168.3.253&lt;/p&gt;
 &lt;h2&gt;一、在主备服务器上部署nginx&lt;/h2&gt;
 &lt;h3&gt;1.下载&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://nginx.org/download/nginx-1.0.11.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;2.安装&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt; yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
+&lt;div class="highlight"&gt;&lt;pre&gt; yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.11
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
@@ -395,7 +395,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 &lt;p&gt;3.配置&lt;/p&gt;
 &lt;p&gt;配置主调度器的nginx,编辑nginx.conf&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/local/nginx/conf/nginx.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /usr/local/nginx/conf/nginx.conf
 
 http &lt;span class="o"&gt;{&lt;/span&gt;
     include       mime.types;
@@ -461,7 +461,7 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 
 &lt;p&gt;(&lt;code&gt;注意:&lt;/code&gt;配置文件中注释ip_hash,以为ip_hash这个功能将保证这个客户端请求总是被转发到一台服务器上,所以如果启用了ip_hash指令,将不能再使用weight(权重参数),配置文件中加入为解释ip_hash指令)
 配置备用nginx,将监听ip改为备用调度器的ip&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
     include       mime.types;
     default_type  application/octet-stream;
 
@@ -505,26 +505,26 @@ http &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;然后启动主备nginx:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/usr/local/nginx/sbin/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;/usr/local/nginx/sbin/nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;二、在主备服务器上部署keepalived&lt;/h2&gt;
 &lt;p&gt;安装
 安装依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install kernel-devel              &lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install kernel-devel              &lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;开启路由转发:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/sysctl.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/sysctl.conf
 net.ipv4.ip_forward &lt;span class="o"&gt;=&lt;/span&gt; 1 &lt;span class="c"&gt;# 此参数改为1&lt;/span&gt;
 sysctl -p &lt;span class="c"&gt;# 使修改生效&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;首先安装ipvs:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  &lt;span class="c"&gt;# ipvs需要内核文件,做一个软连接&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  &lt;span class="c"&gt;# ipvs需要内核文件,做一个软连接&lt;/span&gt;
 &lt;span class="c"&gt;# 下载&lt;/span&gt;
 wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
 tar -zxvf ipvsadm-1.24.tar.gz
@@ -535,7 +535,7 @@ make install
 
 
 &lt;p&gt;然后安装keepalived&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 下载&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 下载&lt;/span&gt;
 wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
 tar -zxvf keepalived-1.1.19.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;keepalived-1.1.19
@@ -548,7 +548,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 &lt;h3&gt;配置keepalived&lt;/h3&gt;
 &lt;p&gt;编辑主调度器配置文件/etc/keepalived/keepalived.conf ###&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;global_defs &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;global_defs &lt;span class="o"&gt;{&lt;/span&gt;
    notification_email &lt;span class="o"&gt;{&lt;/span&gt;
         cold_night@linuxzen.com             &lt;span class="c"&gt;# 定义通知邮箱,有多个可以换行添加&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -604,7 +604,7 @@ virtual_server 192.168.3.253 80 &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;配置备用调度器的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;global_defs &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;global_defs &lt;span class="o"&gt;{&lt;/span&gt;
    notification_email &lt;span class="o"&gt;{&lt;/span&gt;
         cold_night@linuxzen.com
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -660,21 +660,21 @@ virtual_server 192.168.3.253 80 &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;主备上启动keepalived:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service keepalived start
+&lt;div class="highlight"&gt;&lt;pre&gt;service keepalived start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;三、测试-----部署后端服务器&lt;/h2&gt;
 &lt;p&gt;在后端服务器安装nginx,这里仅部署一台然后创建3个基于ip的虚拟主机供测试:
 绑定ip:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ifconfig eth0:1 192.168.3.4/24
+&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig eth0:1 192.168.3.4/24
 ifconfig eth0:2 192.168.3.5/24
 ifconfig eth0:3 192.168.3.6/24
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装nginx后编辑配置文件,在http块里添加:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;http &lt;span class="o"&gt;{&lt;/span&gt;
     server &lt;span class="o"&gt;{&lt;/span&gt;
         listen  192.168.3.4:80;
         server_name     192.168.3.4;
@@ -709,7 +709,7 @@ ifconfig eth0:3 192.168.3.6/24
 
 
 &lt;p&gt;创建虚拟主机根目录,并创建不通的首页文档:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/local/nginx/html/
 mkdir s1 s2 s3
 &lt;span class="nb"&gt;echo &lt;/span&gt;server1 &amp;amp;gt; s1/index.html
 &lt;span class="nb"&gt;echo &lt;/span&gt;server2 &amp;amp;gt; s2/index.html
@@ -718,7 +718,7 @@ mkdir s1 s2 s3
 
 
 &lt;p&gt;启动nginx:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/usr/local/nginx/sbin/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;/usr/local/nginx/sbin/nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -726,12 +726,12 @@ mkdir s1 s2 s3
 &lt;p&gt;刷新会看到显示不同的内容:server1,server2,server3(生产中的服务器应该是一样的)
 [gallery link="file" order="DESC"]
 现在停掉主调度器的keepalived&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;pkill keepalived
+&lt;div class="highlight"&gt;&lt;pre&gt;pkill keepalived
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看备调度器的日志:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat /var/log/messages
+&lt;div class="highlight"&gt;&lt;pre&gt;cat /var/log/messages
 Feb 10 16:36:27 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; Transition to MASTER STATE
 Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; Entering MASTER STATE
 Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;/span&gt;VI_1&lt;span class="o"&gt;)&lt;/span&gt; setting protocol VIPs.
@@ -745,7 +745,7 @@ Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance&lt;span class="o"&gt;(&lt;
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;现在访问&lt;code&gt;http://192.168.3.253&lt;/code&gt;依然可以访问.
 大家也看到了备机keepalived只有检测主机的keepalived停止的时候才会切换vip,而不是检测一台real server的某一服务(比如检测80端口的HTTP)切换vip,所以在nginx进程停止的时候,如果服务器没有宕机这时候就无法实现故障转移,所以我们编写一个检测nginx状态的脚本结合keepalived实现故障转移:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c"&gt;#filename:nsc.sh&lt;/span&gt;
 ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;amp;amp;2   &lt;span class="c"&gt;# 过滤nginx进程&lt;/span&gt;
 &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -eq 0 &lt;span class="o"&gt;]]&lt;/span&gt;               &lt;span class="c"&gt;# 如果过滤有nginx进程会返回0则认为nginx存活&lt;/span&gt;
@@ -764,7 +764,7 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;amp;gt; /dev/null 1&amp;amp;gt;&amp;a
 
 
 &lt;p&gt;然后后台运行此脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;nohup sh nsc.sh &amp;amp;
+&lt;div class="highlight"&gt;&lt;pre&gt;nohup sh nsc.sh &amp;amp;
 &lt;/pre&gt;&lt;/div&gt;
 
 

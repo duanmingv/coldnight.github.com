@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -76,7 +68,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h2>安装</h2>
 <p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
 <h3>建立 virtualenv</h3>
-<div class="codehilite"><pre>virtualenv pelican      <span class="c"># 创建</span>
+<div class="highlight"><pre>virtualenv pelican      <span class="c"># 创建</span>
 <span class="nb">cd </span>pelican
 sh bin/activate            <span class="c"># 激活虚拟环境</span>
 </pre></div>
@@ -84,7 +76,7 @@ sh bin/activate            <span class="c"># 激活虚拟环境</span>
 
 <p>上面建立了一个Python的虚拟环境(这个命令不是内置可以使用 <code>easy_install virtualenv</code> 安装)</p>
 <h3>从github克隆最新代码安装Pelican</h3>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican.git            <span class="c"># 代码</span>
+<div class="highlight"><pre>git clone git://github.com/getpelican/pelican.git            <span class="c"># 代码</span>
 <span class="nb">cd </span>pelican
 python setup.py install
 </pre></div>
@@ -92,14 +84,14 @@ python setup.py install
 
 <p>上面步骤完成后就安装了Pelican</p>
 <h2>开始一个博客</h2>
-<div class="codehilite"><pre>mkdir /path/to/your/blog
+<div class="highlight"><pre>mkdir /path/to/your/blog
 <span class="nb">cd</span> /path/to/your/blog
 pelican-quickstart
 </pre></div>
 
 
 <p>在回答一系列问题过后你的博客就建成的, 主要生成下列文件:</p>
-<div class="codehilite"><pre>.
+<div class="highlight"><pre>.
 |-- content                <span class="c"># 所有文章放于此目录</span>
 |-- develop_server.sh      <span class="c"># 用于开启测试服务器</span>
 |-- Makefile               <span class="c"># 方便管理博客的Makefile</span>
@@ -111,7 +103,7 @@ pelican-quickstart
 
 <h3>写一篇文章</h3>
 <p>在 <code>content</code> 目录新建一个 <code>test.md</code>文件, 填入一下内容:</p>
-<div class="codehilite"><pre><span class="nl">Title:</span> <span class="err">文章标题</span>
+<div class="highlight"><pre><span class="nl">Title:</span> <span class="err">文章标题</span>
 <span class="nl">Date:</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">04</span><span class="o">-</span><span class="mi">18</span>
 <span class="nl">Category:</span> <span class="err">文章类别</span>
 <span class="nl">Tag:</span> <span class="err">标签</span><span class="mi">1</span><span class="p">,</span> <span class="err">标签</span><span class="mi">2</span>
@@ -121,13 +113,13 @@ pelican-quickstart
 
 
 <p>然后执行:</p>
-<div class="codehilite"><pre>make html
+<div class="highlight"><pre>make html
 </pre></div>
 
 
 <p>用以生成html</p>
 <p>然后执行</p>
-<div class="codehilite"><pre>./develop_server.sh start
+<div class="highlight"><pre>./develop_server.sh start
 </pre></div>
 
 
@@ -135,12 +127,12 @@ pelican-quickstart
 <h3>创建一个页面</h3>
 <p>这里以创建 <code>About</code>页面为例</p>
 <p>在<code>content</code>目录创建<code>pages</code>目录</p>
-<div class="codehilite"><pre>mkdir content/pages
+<div class="highlight"><pre>mkdir content/pages
 </pre></div>
 
 
 <p>然后创建<code>About.md</code>并填入下面内容</p>
-<div class="codehilite"><pre>Title: About Me
+<div class="highlight"><pre>Title: About Me
 Date: 2013-04-18
 
 About me content
@@ -150,48 +142,48 @@ About me content
 <p>执行 <code>make html</code> 生成html, 然后打开 <code>http://localhost:8000</code>查看效果</p>
 <h3>让Pelican支持评论</h3>
 <p>Pelican 使用<code>Disqus</code>评论, 可以申请在<a href="https://disqus.com/">Disqus</a>上申请一个站点, 然后在<code>pelicanconf.py</code>里添加或修改<code>DISQUS_SITENAME</code>项:</p>
-<div class="codehilite"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
+<div class="highlight"><pre><span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">u&quot;linuxzen&quot;</span>
 </pre></div>
 
 
 <p>执行</p>
-<div class="codehilite"><pre>make html
+<div class="highlight"><pre>make html
 </pre></div>
 
 
 <p>浏览器打开 <code>http://localhost:8000</code>查看效果</p>
 <h3>更换主题</h3>
 <p>Pelican本身也提供了一些主题可供选择, 可以从github克隆下来</p>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
+<div class="highlight"><pre>git clone git://github.com/getpelican/pelican-themes.git     <span class="c"># 主题</span>
 </pre></div>
 
 
 <p>然后在里面找到想要的主题, 然后拷到博客项目当前目录, 这里已<code>neat</code>为例</p>
-<div class="codehilite"><pre>cp -r /path/to/themes/from/github/neat .
+<div class="highlight"><pre>cp -r /path/to/themes/from/github/neat .
 </pre></div>
 
 
 <p>然后在 <code>pelicanconf.py</code> 配置文件里添加或修改 <code>THEME</code>项为 <code>neat</code></p>
-<div class="codehilite"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="s">&quot;neat&quot;</span>
+<div class="highlight"><pre><span class="n">THEME</span> <span class="o">=</span> <span class="s">&quot;neat&quot;</span>
 </pre></div>
 
 
 <p>重新执行 </p>
-<div class="codehilite"><pre>make html
+<div class="highlight"><pre>make html
 </pre></div>
 
 
 <p>然后打开 <code>http://localhost:8000</code> 查看效果</p>
 <h3>使用插件</h3>
 <p>Pelican 一开始是将插件内置的, 但是新版本 Pelican将插件隔离了出来, 所以我们要到github上 克隆一份新的插件, 在博客目录执行</p>
-<div class="codehilite"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
+<div class="highlight"><pre>git clone git://github.com/getpelican/pelican-plugins.git    <span class="c"># 插件</span>
 </pre></div>
 
 
 <p>现在我们博客目录就新添了一个 <code>pelican-plugins</code>目录, 我们已配置<code>sitemap</code>插件为例,
 <code>sitemap</code>插件可以生成 <code>sitemap.xml</code> 供搜索引擎使用</p>
 <p>在<code>pelicanconf.py</code>配置文件里加上如下项:</p>
-<div class="codehilite"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&quot;pelican-plugins&quot;</span>
+<div class="highlight"><pre><span class="n">PLUGIN_PATH</span> <span class="o">=</span> <span class="s">u&quot;pelican-plugins&quot;</span>
 
 <span class="n">PLUGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;sitemap&quot;</span><span class="p">]</span>
 
@@ -213,14 +205,14 @@ About me content
 
 
 <p>然后再执行</p>
-<div class="codehilite"><pre>make html
+<div class="highlight"><pre>make html
 </pre></div>
 
 
 <p>打开浏览器请求 <code>http://localhost:8000/sitemap.xml</code>即可看到生成的 Sitemap 了</p>
 <h3>拷贝静态文件</h3>
 <p>如果我们定义静态的文件, 该如何将它在每次生成的时候拷贝到 output 目录呢, 我们以<code>robots.txt</code> 为例, 在我们的 content/extra 下面我们放了一个定义好的 <code>robots.txt</code>文件, 在<code>pelicanconf.py</code>更改或添加 <code>FILES_TO_COPY</code>项:</p>
-<div class="codehilite"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
+<div class="highlight"><pre><span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">(</span>
     <span class="p">(</span><span class="s">&quot;extra/robots.txt&quot;</span><span class="p">,</span> <span class="s">&quot;robots.txt&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 </pre></div>
@@ -229,12 +221,12 @@ About me content
 <p>这样在每次生成html的时候都会把 <code>content/extra</code>下的 <code>robots.txt</code> 拷贝到 <code>output</code>目录下</p>
 <h3>拷贝静态目录</h3>
 <p>如果是一个静目录怎么办? 我们可以在<code>pelicanconf.py</code>里添加或修改 <code>STATIC_PATHS</code>项, 比如我们有个<code>img</code>目录用来放文章所使用的图片, 我们可以在<code>pelicanconf.py</code>添加</p>
-<div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
+<div class="highlight"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&quot;img&quot;</span><span class="p">]</span>
 </pre></div>
 
 
 <p>然后执行 </p>
-<div class="codehilite"><pre>make html
+<div class="highlight"><pre>make html
 </pre></div>
 
 

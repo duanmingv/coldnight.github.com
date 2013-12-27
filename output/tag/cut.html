@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,7 +70,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
@@ -102,12 +94,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>然后保存为nglogcut.sh存放在/root/下,下面给脚本赋予执行权限</p>
-<div class="codehilite"><pre>chmod +x /root/nglogcut.sh
+<div class="highlight"><pre>chmod +x /root/nglogcut.sh
 </pre></div>
 
 
 <p>配置crond自动执行:</p>
-<div class="codehilite"><pre>crontab -e    <span class="c"># 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径</span>
+<div class="highlight"><pre>crontab -e    <span class="c"># 执行crontab -e为当前用户添加,但必须要再脚本前面声明PATH路径,或命令用绝对路径</span>
 
 <span class="c"># 添加如下内容:</span>
 00 2 */3 * * /bin/sh /root/nglogcut.sh 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2 <span class="c"># 每3天执行日志分割(可根据自己情况来定义执行周期)</span>

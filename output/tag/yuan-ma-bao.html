@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -81,7 +73,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
+<div class="highlight"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
 wget http://nginx.org/download/nginx-1.0.13.tar.gz    <span class="c"># 下载</span>
 nginx会有几个依赖包,我们首先安装依赖,不要安装过程中会报错:
 yum  -y install zlib-devel pcre-devel openssl-devel
@@ -90,14 +82,14 @@ yum  -y install zlib-devel pcre-devel openssl-devel
 
 <p>一般源代码安装分4个步骤(有人也会省去第一个步骤),<code>解压</code>(tar命令)<code>预编译</code>(执行源码包下的configure),<code>编译</code>(make),<code>编译安装</code>(make install)
 首先我们解压源码包:</p>
-<div class="codehilite"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.0.13</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+<div class="highlight"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.0.13</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
 </pre></div>
 
 
 <p>这里解释下加压参数,z代表gzip(也就是后面的.gz文件)x代表加压,v表示显示详细信息,-f使用档案文件或设备(必选参数)</p>
 <p>然后我们进行预编译,一般预编译会带上一些参数,已达到我们想要安装的效果,比如启用某个功能,禁用某个功能:</p>
 <p>进入源码包目录进行预编译:</p>
-<div class="codehilite"><pre><span class="nb">cd </span>nginx-1.0.13
+<div class="highlight"><pre><span class="nb">cd </span>nginx-1.0.13
  ./configure --prefix<span class="o">=</span>/usr/local/nginx<span class="se">\ </span>  <span class="c"># 指定安装目录为/usr/local/nginx</span>
 --with-openssl<span class="o">=</span>/usr/include/openssl<span class="se">\ </span> <span class="c"># 启用ssl</span>
 --with-pcre<span class="se">\ </span>                         <span class="c"># 启用正规表达式</span>
@@ -107,28 +99,28 @@ yum  -y install zlib-devel pcre-devel openssl-devel
 
 <p>其中./configure指执行当前目录下的<code>configure</code>文件</p>
 <p>预编译完成后我们就可以进行编译和安装:</p>
-<div class="codehilite"><pre><span class="n">make</span>           <span class="err">#编译</span>
+<div class="highlight"><pre><span class="n">make</span>           <span class="err">#编译</span>
 </pre></div>
 
 
 <p>执行后make后会有大量输出,等待输出完成后如果没有报错就可以进行安装执行:</p>
-<div class="codehilite"><pre><span class="n">make</span> <span class="n">install</span>   <span class="err">#安装</span>
+<div class="highlight"><pre><span class="n">make</span> <span class="n">install</span>   <span class="err">#安装</span>
 </pre></div>
 
 
 <p>安装完成后我们可以到相应的目录查看安装的文件:</p>
-<div class="codehilite"><pre>ls /usr/local/nginx/
+<div class="highlight"><pre>ls /usr/local/nginx/
 conf  html  logs  sbin
 </pre></div>
 
 
 <p>好了,下面我们启动nginx:</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nginx</span>
+<div class="highlight"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nginx</span>
 </pre></div>
 
 
 <p>通过查看端口看nginx是否启动成功,nginx占用TCP的80端口,执行下面命令:</p>
-<div class="codehilite"><pre> <span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="err">¦</span> <span class="n">grep</span> <span class="mi">80</span>
+<div class="highlight"><pre> <span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="err">¦</span> <span class="n">grep</span> <span class="mi">80</span>
 <span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">80</span>                  <span class="mf">0.0.0.0</span><span class="o">:*</span>                   <span class="n">LISTEN</span>      <span class="mi">5946</span><span class="o">/</span><span class="n">nginx</span>
 </pre></div>
 
@@ -136,23 +128,23 @@ conf  html  logs  sbin
 <p>我们查看80端口是开放的</p>
 <p>然后打开浏览器访问http://192.168.3.120,我们会看到Welcome to nginx(之前的版本是 It's Work):</p>
 <p>nginx安装完毕后我们来安装MySQL ,我们使用MySQl-5.0.95版首先下载:</p>
-<div class="codehilite"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/</span>
+<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/</span>
 </pre></div>
 
 
 <p>安装之前我们先做一些准备工作,</p>
 <p>安装依赖:</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">ncurses</span><span class="o">-</span><span class="n">devel</span>
+<div class="highlight"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">ncurses</span><span class="o">-</span><span class="n">devel</span>
 </pre></div>
 
 
 <p>创建MySQL用户:</p>
-<div class="codehilite"><pre>useradd -M -s /sbin/nologin mysql  <span class="c"># -M不创建home目录,-s指定shell为不登录</span>
+<div class="highlight"><pre>useradd -M -s /sbin/nologin mysql  <span class="c"># -M不创建home目录,-s指定shell为不登录</span>
 </pre></div>
 
 
 <p>然后进行安装:</p>
-<div class="codehilite"><pre>tar -zxvf mysql-5.0.95.tar.gz
+<div class="highlight"><pre>tar -zxvf mysql-5.0.95.tar.gz
 <span class="nb">cd </span>mysql-5.0.95
 ./configure --prefix<span class="o">=</span>/usr/local/mysql <span class="se">\</span>
 --without-debug <span class="se">\ </span>                                <span class="c"># 取消调试模式提高性能</span>
@@ -168,48 +160,48 @@ make install
 
 
 <p>安装完成后复制配置文件和启动脚本:</p>
-<div class="codehilite"><pre>cp support-files/my-medium.cnf /etc/my.cnf         <span class="c"># 复制配置文件</span>
+<div class="highlight"><pre>cp support-files/my-medium.cnf /etc/my.cnf         <span class="c"># 复制配置文件</span>
 cp support-files/mysql.server /etc/init.d/mysqld   <span class="c"># 复制启动脚本</span>
 chmod +x /etc/init.d/mysqld         <span class="c"># 给启动脚本执行权限</span>
 </pre></div>
 
 
 <p>为了以后方便我们为所有的二进制可执行文件和动态链接库文件做一个软连接:</p>
-<div class="codehilite"><pre>ln -s /usr/local/mysql/bin/* /usr/local/bin/              <span class="c"># 为可执行的二进制文件做软连接</span>
+<div class="highlight"><pre>ln -s /usr/local/mysql/bin/* /usr/local/bin/              <span class="c"># 为可执行的二进制文件做软连接</span>
 ln -s /usr/local/mysql/lib/mysql/lib* /usr/lib/  <span class="c"># 为动态链接库做一个软连接</span>
 </pre></div>
 
 
 <p>然后我们初始化数据库:</p>
-<div class="codehilite"><pre>mysql_install_db --user<span class="o">=</span>mysql  <span class="c"># 用MySQL用户安装数据库</span>
+<div class="highlight"><pre>mysql_install_db --user<span class="o">=</span>mysql  <span class="c"># 用MySQL用户安装数据库</span>
 </pre></div>
 
 
 <p>为了MySQL能正常使用我们需要更改一下MySQL安装目录和MySQL的数据库目录的属主和属组:</p>
-<div class="codehilite"><pre>chown -R root.mysql /usr/local/mysql/           <span class="c"># 更改安装目录属主为root,属组为mysql</span>
+<div class="highlight"><pre>chown -R root.mysql /usr/local/mysql/           <span class="c"># 更改安装目录属主为root,属组为mysql</span>
 chown -R mysql.mysql /usr/local/mysql/var/      <span class="c"># 更改数据库目录属主和属组都为mysql</span>
 </pre></div>
 
 
 <p>这里的<code>-R</code>参数用来应用到所有子目录和文件</p>
 <p>配置完毕后我们启动mysql:</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">mysqld</span> <span class="n">start</span>
+<div class="highlight"><pre><span class="n">service</span> <span class="n">mysqld</span> <span class="n">start</span>
 </pre></div>
 
 
 <p>现在我们查看MySQL是否启动成功,MySQL占用TCP的3306端口,我们查看端口是否被占用:</p>
-<div class="codehilite"><pre><span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="err">¦</span> <span class="n">grep</span> <span class="mi">3306</span>
+<div class="highlight"><pre><span class="n">netstat</span> <span class="o">-</span><span class="n">antlp</span> <span class="err">¦</span> <span class="n">grep</span> <span class="mi">3306</span>
 <span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0.0.0</span><span class="o">:</span><span class="mi">3306</span>                <span class="mf">0.0.0.0</span><span class="o">:*</span>                   <span class="n">LISTEN</span>      <span class="mi">32143</span><span class="o">/</span><span class="n">mysqld</span>
 </pre></div>
 
 
 <p>然后我们通过mysql命令来连接mysql:</p>
-<div class="codehilite"><pre><span class="n">mysql</span>
+<div class="highlight"><pre><span class="n">mysql</span>
 </pre></div>
 
 
 <p>会显示如下内容表示已经成功启动MySQL并已经连接上</p>
-<div class="codehilite"><pre><span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MySQL</span> <span class="n">monitor</span><span class="p">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="n">with</span> <span class="p">;</span> <span class="n">or</span> <span class="err">\</span><span class="n">g</span><span class="p">.</span>
+<div class="highlight"><pre><span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MySQL</span> <span class="n">monitor</span><span class="p">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="n">with</span> <span class="p">;</span> <span class="n">or</span> <span class="err">\</span><span class="n">g</span><span class="p">.</span>
 <span class="n">Your</span> <span class="n">MySQL</span> <span class="n">connection</span> <span class="n">id</span> <span class="n">is</span> <span class="mi">1</span>
 <span class="n">Server</span> <span class="n">version</span><span class="o">:</span> <span class="mf">5.0.95</span><span class="o">-</span><span class="n">log</span> <span class="n">Source</span> <span class="n">distribution</span>
 
@@ -227,7 +219,7 @@ chown -R mysql.mysql /usr/local/mysql/var/      <span class="c"># 更改数据�
 
 <p>MySQL安装完毕下面我们就来安装PHP,安装PHP前首先要安装几个源码包依赖:<code>libmcrypt</code> <code>mhash</code> <code>mcrypt</code></p>
 <p>首先来安装几个源码包依赖:</p>
-<div class="codehilite"><pre>wget http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.bz2/download
+<div class="highlight"><pre>wget http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.bz2/download
 tar -jxvf libmcrypt-2.5.8.tar.bz2   <span class="c"># 这个包是bz2的  使用-j参数解压</span>
 <span class="nb">cd </span>libmcrypt-2.5.8
 ./configure
@@ -255,17 +247,17 @@ make install
 
 
 <p>然后下载php:</p>
-<div class="codehilite"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//cn2.php.net/get/php-5.4.0.tar.bz2/from/this/mirror</span>
+<div class="highlight"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//cn2.php.net/get/php-5.4.0.tar.bz2/from/this/mirror</span>
 </pre></div>
 
 
 <p>安装依赖:</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="err">–</span><span class="n">y</span> <span class="n">install</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">devel</span> <span class="n">curl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libpng</span><span class="o">-</span><span class="n">devel</span> <span class="n">openldap</span><span class="o">-</span><span class="n">devel</span>
+<div class="highlight"><pre><span class="n">yum</span> <span class="err">–</span><span class="n">y</span> <span class="n">install</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">devel</span> <span class="n">curl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libpng</span><span class="o">-</span><span class="n">devel</span> <span class="n">openldap</span><span class="o">-</span><span class="n">devel</span>
 </pre></div>
 
 
 <p>我们使用nginx调用php的时候使用fpm的方式,在php 5.4中加入了对php-fpm的支持,所以就不需要打补丁了.安装PHP:</p>
-<div class="codehilite"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">jxvf</span> <span class="n">php</span><span class="o">-</span><span class="mf">5.4.0</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">bz2</span>
+<div class="highlight"><pre><span class="n">tar</span> <span class="o">-</span><span class="n">jxvf</span> <span class="n">php</span><span class="o">-</span><span class="mf">5.4.0</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">bz2</span>
 <span class="n">cd</span> <span class="n">php</span><span class="o">-</span><span class="mf">5.4.0</span>
 <span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">mysql</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">zlib</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">xml</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">rpath</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">safe</span><span class="o">-</span><span class="n">mode</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">bcmath</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">shmop</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">sysvsem</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">curl</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">curlwrappers</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">fpm</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">fastcgi</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">mcrypt</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">gd</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">openssl</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">mhash</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">sockets</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">ldap</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">ldap</span><span class="o">-</span><span class="n">sasl</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">xmlrpc</span> <span class="o">-</span><span class="n">enable</span><span class="o">-</span><span class="n">zip</span> <span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">soap</span>
 <span class="n">make</span>
@@ -275,35 +267,35 @@ make install
 
 <p>到这里整个LNMP已经安装完成.下面我们就配置php和nginx能运行php网站:
 首先为php创建配置文件:</p>
-<div class="codehilite"><pre><span class="n">cp</span> <span class="n">php</span><span class="p">.</span><span class="n">ini</span><span class="o">-</span><span class="n">production</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">php</span><span class="p">.</span><span class="n">ini</span> <span class="err">#</span> <span class="err">如果是开发就复制</span><span class="n">php</span><span class="p">.</span><span class="n">ini</span><span class="o">-</span><span class="n">development</span>
+<div class="highlight"><pre><span class="n">cp</span> <span class="n">php</span><span class="p">.</span><span class="n">ini</span><span class="o">-</span><span class="n">production</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">php</span><span class="p">.</span><span class="n">ini</span> <span class="err">#</span> <span class="err">如果是开发就复制</span><span class="n">php</span><span class="p">.</span><span class="n">ini</span><span class="o">-</span><span class="n">development</span>
 <span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="k">default</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="p">.</span><span class="n">conf</span>
 <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">php</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
 </pre></div>
 
 
 <p>配置php-fpm,编辑php-fpm.conf</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="p">.</span><span class="n">conf</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="p">.</span><span class="n">conf</span>
 </pre></div>
 
 
 <p>找到listen那一行,修改成如下内容:</p>
-<div class="codehilite"><pre><span class="n">listen</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="p">.</span><span class="n">sock</span>   <span class="err">#</span> <span class="err">使用</span><span class="n">unix</span> <span class="n">socket</span>
+<div class="highlight"><pre><span class="n">listen</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span><span class="p">.</span><span class="n">sock</span>   <span class="err">#</span> <span class="err">使用</span><span class="n">unix</span> <span class="n">socket</span>
 </pre></div>
 
 
 <p>启动php-fpm</p>
-<div class="codehilite"><pre><span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span>
+<div class="highlight"><pre><span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span>
 <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">php</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">php</span><span class="o">-</span><span class="n">fpm</span>
 </pre></div>
 
 
 <p>然后配置nginx,编辑nginx配置文件</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">conf</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">conf</span>
 </pre></div>
 
 
 <p>修改nginx配置文件支持php:</p>
-<div class="codehilite"><pre>    <span class="n">server</span> <span class="p">{</span>
+<div class="highlight"><pre>    <span class="n">server</span> <span class="p">{</span>
         <span class="n">listen</span>       <span class="mi">80</span><span class="p">;</span>
         <span class="n">server_name</span>  <span class="n">localhost</span><span class="p">;</span>
 
@@ -328,18 +320,18 @@ make install
 
 
 <p>修改完毕后保存退出重启nginx:</p>
-<div class="codehilite"><pre><span class="n">pkill</span> <span class="o">-</span><span class="mi">9</span> <span class="n">nignx</span>
+<div class="highlight"><pre><span class="n">pkill</span> <span class="o">-</span><span class="mi">9</span> <span class="n">nignx</span>
 <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nginx</span>
 </pre></div>
 
 
 <p>然后在/usr/local/nginx/html下创建index.php,</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span>
 </pre></div>
 
 
 <p>添加下面内容:</p>
-<div class="codehilite"><pre><span class="cp">&lt;?php</span>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="nb">phpinfo</span><span class="p">();</span>
 <span class="cp">?&gt;</span>
 </pre></div>

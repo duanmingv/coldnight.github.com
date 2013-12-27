@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -72,37 +64,37 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 	
         <div><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
 <p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
-<div class="codehilite"><pre><span class="n">which</span> <span class="n">restorecon</span>
+<div class="highlight"><pre><span class="n">which</span> <span class="n">restorecon</span>
 <span class="n">whereis</span> <span class="n">restorecon</span>
 </pre></div>
 
 
 <p>没结果,继续手动查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
+<div class="highlight"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
 <span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
 </pre></div>
 
 
 <p>有一条但是不是我们想要的,猜测大概是包没装
 先yum搜索一下吧:</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="n">search</span> <span class="n">restorecon</span>
+<div class="highlight"><pre><span class="n">yum</span> <span class="n">search</span> <span class="n">restorecon</span>
 </pre></div>
 
 
 <p>好吧依然没有结果.google一下说是缺少policycoreutils这个包.安装这个包:</p>
-<div class="codehilite"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">policycoreutils</span>
+<div class="highlight"><pre><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">policycoreutils</span>
 </pre></div>
 
 
 <p>然后查看:</p>
-<div class="codehilite"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="o">-</span><span class="n">l</span> <span class="err">¦</span><span class="n">grep</span> <span class="n">restore</span>
+<div class="highlight"><pre><span class="n">ls</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="o">-</span><span class="n">l</span> <span class="err">¦</span><span class="n">grep</span> <span class="n">restore</span>
 <span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore</span> <span class="o">-&gt;</span> <span class="n">iptables</span><span class="o">-</span><span class="n">multi</span>
 <span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>      <span class="mi">8</span> <span class="n">Apr</span> <span class="mi">30</span> <span class="mi">10</span><span class="o">:</span><span class="mi">31</span> <span class="n">restorecon</span> <span class="o">-&gt;</span> <span class="n">setfiles</span>
 </pre></div>
 
 
 <p>然后运行命令保存iptables策略:</p>
-<div class="codehilite"><pre><span class="n">service</span> <span class="n">iptables</span> <span class="n">save</span>
+<div class="highlight"><pre><span class="n">service</span> <span class="n">iptables</span> <span class="n">save</span>
 <span class="nl">iptables:</span> <span class="n">Saving</span> <span class="n">firewall</span> <span class="n">rules</span> <span class="n">to</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">iptables</span><span class="o">:</span> <span class="p">[</span>  <span class="n">OK</span>  <span class="p">]</span>
 </pre></div>
 

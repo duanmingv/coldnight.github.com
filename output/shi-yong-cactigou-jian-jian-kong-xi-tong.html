@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -80,12 +72,12 @@ server:</p>
 <p>ip:192.168.3.120</p>
 <p>cacti:cacti-0.8.7i.tar.gz</p>
 <p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
-<div class="codehilite"><pre>yum -y install lm_sensors net-snmp net-snmp-utils
+<div class="highlight"><pre>yum -y install lm_sensors net-snmp net-snmp-utils
 </pre></div>
 
 
 <p>同时cacti又依赖于rrdtool生成图表所以首先安装rrdtool:</p>
-<div class="codehilite"><pre>wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
+<div class="highlight"><pre>wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz
 yum -y install cairo-devel glib2-devel pango-devel intltool   <span class="c"># 安装rrdtool依赖</span>
 ./configure --prefix<span class="o">=</span>/usr/local
 make &amp;amp;&amp;amp; make install
@@ -93,7 +85,7 @@ make &amp;amp;&amp;amp; make install
 
 
 <p>下面就来下载cacti安装:</p>
-<div class="codehilite"><pre>wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
+<div class="highlight"><pre>wget http://www.cacti.net/downloads/cacti-0.8.7i.tar.gz
 tar -zxvf cacti-0.8.7i.tar.gz
 cp -r cacti-0.8.7i /usr/local/nginx/html/cacti  <span class="c"># 复制到html目录</span>
 useradd cactiuser -M -s /sbin/nologin          <span class="c"># 创建cacti用户</span>
@@ -103,7 +95,7 @@ chown -R cactiuser.cactiuser /usr/local/nginx/html/cacti/log/
 
 
 <p>然后进入到数据库创建cacti数据和创建一个用户:</p>
-<div class="codehilite"><pre>create database cactidb default character <span class="nb">set </span>utf8;   <span class="c">#创建数据库</span>
+<div class="highlight"><pre>create database cactidb default character <span class="nb">set </span>utf8;   <span class="c">#创建数据库</span>
 grant all on cactidb.* to cactiuser@localhost identified by <span class="s1">&#39;123456&#39;</span>; <span class="c"># 创建一个mysql用户</span>
 use cactidb   <span class="c"># 使用刚才创建的数据库</span>
 <span class="nb">source</span> /usr/local/nginx/html/cacti/cacti.sql <span class="c"># 导入cacti数据</span>
@@ -111,13 +103,13 @@ use cactidb   <span class="c"># 使用刚才创建的数据库</span>
 
 
 <p>接下来我们编辑cacti配置文件/usr/local/nginx/html/cacti/include/config.php</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/local/nginx/html/cacti/
+<div class="highlight"><pre><span class="nb">cd</span> /usr/local/nginx/html/cacti/
 vi include/config.php
 </pre></div>
 
 
 <p>编辑下面内容:</p>
-<div class="codehilite"><pre><span class="nv">$database_type</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span>;            <span class="c"># 数据库类型</span>
+<div class="highlight"><pre><span class="nv">$database_type</span> <span class="o">=</span> <span class="s2">&quot;mysql&quot;</span>;            <span class="c"># 数据库类型</span>
 <span class="nv">$database_default</span> <span class="o">=</span> <span class="s2">&quot;cactidb&quot;</span>;       <span class="c"># 数据库名字</span>
 <span class="nv">$database_hostname</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>;    <span class="c"># 数据库主机</span>
 <span class="nv">$database_username</span> <span class="o">=</span> <span class="s2">&quot;cactiuser&quot;</span>;    <span class="c"># 数据库用户</span>
@@ -128,7 +120,7 @@ vi include/config.php
 
 
 <p>然后修改nginx配置文件像下面:</p>
-<div class="codehilite"><pre>        location / <span class="o">{</span>
+<div class="highlight"><pre>        location / <span class="o">{</span>
             root   html;
             index  index.php;
         <span class="o">}</span>
@@ -144,67 +136,67 @@ vi include/config.php
 
 
 <p>重启nginx</p>
-<div class="codehilite"><pre>pkill -9 nginx
+<div class="highlight"><pre>pkill -9 nginx
 /usr/local/nginx/sbin/nginx
 </pre></div>
 
 
 <p>然后设置php时区,</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/local/nginx/html/cacti/
+<div class="highlight"><pre><span class="nb">cd</span> /usr/local/nginx/html/cacti/
 vi include/global_constants.php
 </pre></div>
 
 
 <p>在第二行添加</p>
-<div class="codehilite"><pre>date_default_timezone_set<span class="o">(</span><span class="s2">&quot;Asia/Chongqing&quot;</span><span class="o">)</span>;
+<div class="highlight"><pre>date_default_timezone_set<span class="o">(</span><span class="s2">&quot;Asia/Chongqing&quot;</span><span class="o">)</span>;
 </pre></div>
 
 
 <p>接下来配置snmp,编辑/etc/snmp/snmpd.conf</p>
-<div class="codehilite"><pre>vi /etc/snmp/snmpd.conf
+<div class="highlight"><pre>vi /etc/snmp/snmpd.conf
 </pre></div>
 
 
 <p>然后找到41行将public改成一个较为复杂的名字:</p>
-<div class="codehilite"><pre>com2sec notConfigUser  default       public
+<div class="highlight"><pre>com2sec notConfigUser  default       public
 </pre></div>
 
 
 <p>然后找到62行</p>
-<div class="codehilite"><pre>access  notConfigGroup <span class="s2">&quot;&quot;</span>      any       noauth    exact  systemview none none
+<div class="highlight"><pre>access  notConfigGroup <span class="s2">&quot;&quot;</span>      any       noauth    exact  systemview none none
 </pre></div>
 
 
 <p>将systemview改成all:</p>
-<div class="codehilite"><pre>access  notConfigGroup <span class="s2">&quot;&quot;</span>      any       noauth    exact  all none none
+<div class="highlight"><pre>access  notConfigGroup <span class="s2">&quot;&quot;</span>      any       noauth    exact  all none none
 </pre></div>
 
 
 <p>然后去掉85行的注释:</p>
-<div class="codehilite"><pre>view all    included  .1                               80
+<div class="highlight"><pre>view all    included  .1                               80
 </pre></div>
 
 
 <p>保存配置文件后启动snmp</p>
-<div class="codehilite"><pre>service snmpd start
+<div class="highlight"><pre>service snmpd start
 </pre></div>
 
 
 <p>然后在浏览器里输入:http://192.168.3.120/cacti/
 然后根据提示一步步安装,安装好后使用admin密码admin登录.如果点击graphs不能显示图像的话执行:</p>
-<div class="codehilite"><pre>php /usr/local/nginx/html/cacti/poller.php   <span class="c"># nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟</span>
+<div class="highlight"><pre>php /usr/local/nginx/html/cacti/poller.php   <span class="c"># nginx下不会自动生成*.rrd文件必须手动执行这条命令才会生成,Debug没报错,测试权限也没问题,不知道怎么回事,望知道的能告知小弟</span>
 </pre></div>
 
 
 <p>为了方便把这句加入到cron,执行:</p>
-<div class="codehilite"><pre>yum -y install vixie-cron  <span class="c">#安装</span>
+<div class="highlight"><pre>yum -y install vixie-cron  <span class="c">#安装</span>
 service crond start
 crontab -e
 </pre></div>
 
 
 <p>添加如下内容:</p>
-<div class="codehilite"><pre>*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
+<div class="highlight"><pre>*/5 * * * * /usr/bin/php /usr/local/nginx/html/cacti/poller.php
 </pre></div>
 
 

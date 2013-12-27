@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,7 +70,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*-coding:utf8 -*-</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">#=============================================================================</span>
@@ -164,13 +156,13 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>为了更方便的使用我们把这个脚本命名位pytranslate,放到/usr/bin下,并赋予执行权限:</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pytranslate</span>
+<div class="highlight"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pytranslate</span>
 </pre></div>
 
 
 <p>然后我们就可以使用它进行翻译了:
 翻译英文到中文:</p>
-<div class="codehilite"><pre><span class="n">pytranslate</span> <span class="n">en2zh</span> <span class="n">extent</span>
+<div class="highlight"><pre><span class="n">pytranslate</span> <span class="n">en2zh</span> <span class="n">extent</span>
 <span class="err">源词</span><span class="o">:</span> <span class="n">extent</span>
 <span class="err">结果</span><span class="o">:</span> <span class="err">程度</span>
 <span class="err">拼音</span><span class="o">:</span> <span class="n">Ch</span><span class="err">é</span><span class="n">ngd</span><span class="err">ù</span>

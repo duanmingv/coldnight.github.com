@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title> Linux 下 Python 实现按任意键退出 | cold's world</title>
     <meta name="description" content=" &lt;p&gt;初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过&lt;code&gt;termios.h&lt;/code&gt;库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:&lt;/p&gt;
-&lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span ... ">
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span ... ">
     <meta name="keywords" content=" Python,Linux,任意键,退出,按 ">
     <meta name="author" content="cold">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,14 +20,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -72,7 +64,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         </div>
 	
         <div><p>初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过<code>termios.h</code>库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding:utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -113,7 +105,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>其他关于<code>termios</code>的信息可以参考Linux手册:</p>
-<div class="codehilite"><pre>man 3 termios
+<div class="highlight"><pre>man 3 termios
 </pre></div>
 
 

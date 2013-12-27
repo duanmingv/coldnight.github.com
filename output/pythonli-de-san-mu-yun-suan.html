@@ -23,14 +23,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -84,7 +76,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>如果or任意一个值为真,则立刻返回这个值
 如果所有值都为假,则or返回最后一个假值</p>
 <h3>例子</h3>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
 <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
 <span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
 <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
@@ -98,7 +90,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h2>使用单行if else 模拟三目运算</h2>
 <p>result if True / False else fresult
 if为真时候结果为result,为假的时候结果为fresult</p>
-<div class="codehilite"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="k">if</span> <span class="bp">True</span> <span class="k">else</span> <span class="s">&#39;not test&#39;</span> <span class="c"># result = &#39;test&#39;</span>
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="k">if</span> <span class="bp">True</span> <span class="k">else</span> <span class="s">&#39;not test&#39;</span> <span class="c"># result = &#39;test&#39;</span>
 <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="k">if</span> <span class="bp">False</span> <span class="k">else</span> <span class="s">&#39;not test&#39;</span> <span class="c"># result = &#39;not test&#39;</span>
 </pre></div></div>
          <div class="footer">

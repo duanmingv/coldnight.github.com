@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -95,12 +87,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>本文采用第一种方式来进行vip为:192.168.3.253</p>
 <h2>一、在主备服务器上部署nginx</h2>
 <h3>1.下载</h3>
-<div class="codehilite"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
+<div class="highlight"><pre>wget http://nginx.org/download/nginx-1.0.11.tar.gz
 </pre></div>
 
 
 <h3>2.安装</h3>
-<div class="codehilite"><pre> yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
+<div class="highlight"><pre> yum  -y install zlib-devel pcre-devel openssl-devel  # 安装依赖
 tar -zxvf nginx-1.0.11.tar.gz
 <span class="nb">cd </span>nginx-1.0.11
 ./configure --prefix<span class="o">=</span>/usr/local/nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module
@@ -110,7 +102,7 @@ make &amp;amp;&amp;amp; make install
 
 <p>3.配置</p>
 <p>配置主调度器的nginx,编辑nginx.conf</p>
-<div class="codehilite"><pre>vi /usr/local/nginx/conf/nginx.conf
+<div class="highlight"><pre>vi /usr/local/nginx/conf/nginx.conf
 
 http <span class="o">{</span>
     include       mime.types;
@@ -176,7 +168,7 @@ http <span class="o">{</span>
 
 <p>(<code>注意:</code>配置文件中注释ip_hash,以为ip_hash这个功能将保证这个客户端请求总是被转发到一台服务器上,所以如果启用了ip_hash指令,将不能再使用weight(权重参数),配置文件中加入为解释ip_hash指令)
 配置备用nginx,将监听ip改为备用调度器的ip</p>
-<div class="codehilite"><pre>http <span class="o">{</span>
+<div class="highlight"><pre>http <span class="o">{</span>
     include       mime.types;
     default_type  application/octet-stream;
 
@@ -220,26 +212,26 @@ http <span class="o">{</span>
 
 
 <p>然后启动主备nginx:</p>
-<div class="codehilite"><pre>/usr/local/nginx/sbin/nginx
+<div class="highlight"><pre>/usr/local/nginx/sbin/nginx
 </pre></div>
 
 
 <h2>二、在主备服务器上部署keepalived</h2>
 <p>安装
 安装依赖:</p>
-<div class="codehilite"><pre>yum -y install kernel-devel              <span class="c"># 安装依赖</span>
+<div class="highlight"><pre>yum -y install kernel-devel              <span class="c"># 安装依赖</span>
 </pre></div>
 
 
 <p>开启路由转发:</p>
-<div class="codehilite"><pre>vi /etc/sysctl.conf
+<div class="highlight"><pre>vi /etc/sysctl.conf
 net.ipv4.ip_forward <span class="o">=</span> 1 <span class="c"># 此参数改为1</span>
 sysctl -p <span class="c"># 使修改生效</span>
 </pre></div>
 
 
 <p>首先安装ipvs:</p>
-<div class="codehilite"><pre>ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  <span class="c"># ipvs需要内核文件,做一个软连接</span>
+<div class="highlight"><pre>ln -s /usr/src/kernels/2.6.18-194.el5-i686/ /usr/src/linux  <span class="c"># ipvs需要内核文件,做一个软连接</span>
 <span class="c"># 下载</span>
 wget http://www.linuxvirtualserver.org/software/kernel-2.6/ipvsadm-1.24.tar.gz
 tar -zxvf ipvsadm-1.24.tar.gz
@@ -250,7 +242,7 @@ make install
 
 
 <p>然后安装keepalived</p>
-<div class="codehilite"><pre><span class="c"># 下载</span>
+<div class="highlight"><pre><span class="c"># 下载</span>
 wget http://www.keepalived.org/software/keepalived-1.1.19.tar.gz
 tar -zxvf keepalived-1.1.19.tar.gz
 <span class="nb">cd </span>keepalived-1.1.19
@@ -263,7 +255,7 @@ make &amp;amp;&amp;amp; make install
 
 <h3>配置keepalived</h3>
 <p>编辑主调度器配置文件/etc/keepalived/keepalived.conf ###</p>
-<div class="codehilite"><pre>global_defs <span class="o">{</span>
+<div class="highlight"><pre>global_defs <span class="o">{</span>
    notification_email <span class="o">{</span>
         cold_night@linuxzen.com             <span class="c"># 定义通知邮箱,有多个可以换行添加</span>
 <span class="o">}</span>
@@ -319,7 +311,7 @@ virtual_server 192.168.3.253 80 <span class="o">{</span>
 
 
 <p>配置备用调度器的keepalived,只需要将state MASTER 改为state BACKUP,降低priority 100 的值:</p>
-<div class="codehilite"><pre>global_defs <span class="o">{</span>
+<div class="highlight"><pre>global_defs <span class="o">{</span>
    notification_email <span class="o">{</span>
         cold_night@linuxzen.com
 <span class="o">}</span>
@@ -375,21 +367,21 @@ virtual_server 192.168.3.253 80 <span class="o">{</span>
 
 
 <p>主备上启动keepalived:</p>
-<div class="codehilite"><pre>service keepalived start
+<div class="highlight"><pre>service keepalived start
 </pre></div>
 
 
 <h2>三、测试-----部署后端服务器</h2>
 <p>在后端服务器安装nginx,这里仅部署一台然后创建3个基于ip的虚拟主机供测试:
 绑定ip:</p>
-<div class="codehilite"><pre>ifconfig eth0:1 192.168.3.4/24
+<div class="highlight"><pre>ifconfig eth0:1 192.168.3.4/24
 ifconfig eth0:2 192.168.3.5/24
 ifconfig eth0:3 192.168.3.6/24
 </pre></div>
 
 
 <p>安装nginx后编辑配置文件,在http块里添加:</p>
-<div class="codehilite"><pre>http <span class="o">{</span>
+<div class="highlight"><pre>http <span class="o">{</span>
     server <span class="o">{</span>
         listen  192.168.3.4:80;
         server_name     192.168.3.4;
@@ -424,7 +416,7 @@ ifconfig eth0:3 192.168.3.6/24
 
 
 <p>创建虚拟主机根目录,并创建不通的首页文档:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/local/nginx/html/
+<div class="highlight"><pre><span class="nb">cd</span> /usr/local/nginx/html/
 mkdir s1 s2 s3
 <span class="nb">echo </span>server1 &amp;gt; s1/index.html
 <span class="nb">echo </span>server2 &amp;gt; s2/index.html
@@ -433,7 +425,7 @@ mkdir s1 s2 s3
 
 
 <p>启动nginx:</p>
-<div class="codehilite"><pre>/usr/local/nginx/sbin/nginx
+<div class="highlight"><pre>/usr/local/nginx/sbin/nginx
 </pre></div>
 
 
@@ -441,12 +433,12 @@ mkdir s1 s2 s3
 <p>刷新会看到显示不同的内容:server1,server2,server3(生产中的服务器应该是一样的)
 [gallery link="file" order="DESC"]
 现在停掉主调度器的keepalived</p>
-<div class="codehilite"><pre>pkill keepalived
+<div class="highlight"><pre>pkill keepalived
 </pre></div>
 
 
 <p>查看备调度器的日志:</p>
-<div class="codehilite"><pre>cat /var/log/messages
+<div class="highlight"><pre>cat /var/log/messages
 Feb 10 16:36:27 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> Transition to MASTER STATE
 Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> Entering MASTER STATE
 Feb 10 16:36:28 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_1<span class="o">)</span> setting protocol VIPs.
@@ -460,7 +452,7 @@ Feb 10 16:36:33 cfhost Keepalived_vrrp: VRRP_Instance<span class="o">(</span>VI_
 <p>&nbsp;</p>
 <p>现在访问<code>http://192.168.3.253</code>依然可以访问.
 大家也看到了备机keepalived只有检测主机的keepalived停止的时候才会切换vip,而不是检测一台real server的某一服务(比如检测80端口的HTTP)切换vip,所以在nginx进程停止的时候,如果服务器没有宕机这时候就无法实现故障转移,所以我们编写一个检测nginx状态的脚本结合keepalived实现故障转移:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c">#filename:nsc.sh</span>
 ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <span class="c"># 过滤nginx进程</span>
 <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> -eq 0 <span class="o">]]</span>               <span class="c"># 如果过滤有nginx进程会返回0则认为nginx存活</span>
@@ -479,7 +471,7 @@ ps aux ¦ grep nginx ¦ grep -v grep 2&amp;gt; /dev/null 1&amp;gt;&amp;amp;2   <
 
 
 <p>然后后台运行此脚本:</p>
-<div class="codehilite"><pre>nohup sh nsc.sh &amp;
+<div class="highlight"><pre>nohup sh nsc.sh &amp;
 </pre></div>
 
 

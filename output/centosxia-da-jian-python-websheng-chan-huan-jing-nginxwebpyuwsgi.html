@@ -21,14 +21,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -80,7 +72,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>ip:192.168.3.3/24</p>
 <p>由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2</p>
 <p>首先安装python 2.7.2</p>
-<div class="codehilite"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
+<div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
 <span class="n">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="cp">#下载python2.7.2</span>
@@ -92,7 +84,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>先别急着安装,为什么后面的步骤能顺利进行我们需要我们的python支持zlib模块,</p>
-<div class="codehilite"><pre>vi Modules/Setup
+<div class="highlight"><pre>vi Modules/Setup
 <span class="c">#在454行左右找到:#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz</span>
 <span class="c"># 去掉注释</span>
 zlib zlibmodule.c -I<span class="k">$(</span>prefix<span class="k">)</span>/include -L<span class="k">$(</span>exec_prefix<span class="k">)</span>/lib -lz
@@ -102,20 +94,20 @@ make <span class="o">&amp;&amp;</span> make install
 
 
 <p>安装完成后我们想更方面的使用我们新安装的Python我们做如下更改.</p>
-<div class="codehilite"><pre>mv /usr/bin/python /usr/bin/python24
+<div class="highlight"><pre>mv /usr/bin/python /usr/bin/python24
 ln -s /usr/local/python27/bin/python /usr/bin/python
 ln -s /usr/local/python27/bin/python2.7 /usr/bin/python2.7
 </pre></div>
 
 
 <p>这样改完我们的yum就无法工作了,我们要修改yum来使yum工作:</p>
-<div class="codehilite"><pre>vi /usr/bin/yum
+<div class="highlight"><pre>vi /usr/bin/yum
 </pre></div>
 
 
 <p>将/#!/usr/bin/python改为#!/usr/bin/python2.4即可正常工作(版本可能不一样需查看自己系统自带的版本是什么)</p>
 <p>现在我们执行python -V查看应该就是我们刚刚安装的2.7.2版本:</p>
-<div class="codehilite"><pre>python -V
+<div class="highlight"><pre>python -V
 Python 2.7.2
 </pre></div>
 
@@ -123,39 +115,39 @@ Python 2.7.2
 <p>我们安装了python下面我们就来武装我们的新python,</p>
 <p>我们先为新的Python安装python的setuptools,配备easy_install.easy_install用于安装Python第三方扩展包而且只要一个命令即可完成:</p>
 <p>下载:</p>
-<div class="codehilite"><pre>wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5<span class="o">=</span>fe1f997bc722265116870bc7919059ea
+<div class="highlight"><pre>wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5<span class="o">=</span>fe1f997bc722265116870bc7919059ea
 </pre></div>
 
 
 <p>然后直接执行安装:</p>
-<div class="codehilite"><pre><span class="n">sh</span> <span class="n">setuptools</span><span class="o">-</span><span class="mf">0.6</span><span class="n">c11</span><span class="o">-</span><span class="n">py2</span><span class="mf">.7</span><span class="p">.</span><span class="n">egg</span>
+<div class="highlight"><pre><span class="n">sh</span> <span class="n">setuptools</span><span class="o">-</span><span class="mf">0.6</span><span class="n">c11</span><span class="o">-</span><span class="n">py2</span><span class="mf">.7</span><span class="p">.</span><span class="n">egg</span>
 </pre></div>
 
 
 <p>安装好之后我们做一个软链接方便我们使用:</p>
-<div class="codehilite"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">python27</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">easy_install</span><span class="o">*</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
+<div class="highlight"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">python27</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">easy_install</span><span class="o">*</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span>
 </pre></div>
 
 
 <p>然后我们来使用easy_install来安装Python第三方扩展</p>
 <p>安装本文所需要的web.py</p>
-<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">web</span><span class="p">.</span><span class="n">py</span>
+<div class="highlight"><pre><span class="n">easy_install</span> <span class="n">web</span><span class="p">.</span><span class="n">py</span>
 </pre></div>
 
 
 <p>然后我们打开Python shell输入</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">web</span>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">web</span>
 </pre></div>
 
 
 <p>如果没有报错则说明我们安装成功
 安装flup:</p>
-<div class="codehilite"><pre><span class="n">easy_install</span> <span class="n">flup</span>
+<div class="highlight"><pre><span class="n">easy_install</span> <span class="n">flup</span>
 </pre></div>
 
 
 <p>安装Spawn-fcgi :</p>
-<div class="codehilite"><pre><span class="n">wegt</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz</span>
+<div class="highlight"><pre><span class="n">wegt</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz</span>
 <span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span><span class="o">-</span><span class="mf">1.6.3</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
 <span class="n">cd</span> <span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span><span class="o">-</span><span class="mf">1.6.3</span>
 <span class="p">.</span><span class="o">/</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span>
@@ -165,7 +157,7 @@ Python 2.7.2
 
 
 <p>到这里我们就完成了Python的所有包安装,下面我们来部署nginx(本博有大量文章来介绍安装nginx,这里还是再来一遍吧..)</p>
-<div class="codehilite"><pre>yum -y install zlib-devel pcre-devel openssl-devel  <span class="c"># 安装依赖</span>
+<div class="highlight"><pre>yum -y install zlib-devel pcre-devel openssl-devel  <span class="c"># 安装依赖</span>
 wget http://nginx.org/download/nginx-1.0.13.tar.gz <span class="c"># 下载</span>
 tar -zxvf nginx-1.0.13.tar.gz
 <span class="nb">cd </span>nginx-1.0.13
@@ -178,7 +170,7 @@ make  <span class="o">&amp;&amp;</span> make install
 
 
 <p>我们修改nginx的配置文件:</p>
-<div class="codehilite"><pre>        <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+<div class="highlight"><pre>        <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
 <span class="cp">#           root   html;</span>
 <span class="cp">#          index  index.html index.htm;</span>
             <span class="n">include</span> <span class="n">fastcgi_params</span><span class="p">;</span>
@@ -193,7 +185,7 @@ make  <span class="o">&amp;&amp;</span> make install
 
 
 <p>然后创建一个web.py程序:</p>
-<div class="codehilite"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*-coding:utf8-*-</span>
 <span class="kn">import</span> <span class="nn">web</span>
 <span class="n">urls</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;/.*&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">)</span>
@@ -211,12 +203,12 @@ make  <span class="o">&amp;&amp;</span> make install
 
 <p>将内容保存到/usr/local/nginx/html/下命名为index.py(或任意你喜欢的名字)
 然后赋予其执行权限:</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
+<div class="highlight"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
 </pre></div>
 
 
 <p>通过命令创建spawn-fcgi进程:</p>
-<div class="codehilite"><pre><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>  <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pyweb</span><span class="p">.</span><span class="n">sock</span> <span class="o">-</span><span class="n">u</span> <span class="n">nobody</span> <span class="o">-</span><span class="n">g</span> <span class="n">nobody</span>
+<div class="highlight"><pre><span class="n">spawn</span><span class="o">-</span><span class="n">fcgi</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>  <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pyweb</span><span class="p">.</span><span class="n">sock</span> <span class="o">-</span><span class="n">u</span> <span class="n">nobody</span> <span class="o">-</span><span class="n">g</span> <span class="n">nobody</span>
 </pre></div>
 
 

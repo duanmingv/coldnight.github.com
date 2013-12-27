@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -78,12 +70,12 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
         
         <div><p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
 <p>首先在/usr/bin/下创建compile脚本:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
 </pre></div>
 
 
 <p>添加如下内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Filename : compile</span>
 <span class="c"># Describe : To compile c/c++</span>
 <span class="c"># Author   : cold night(www.linuxzen.com)</span>
@@ -147,17 +139,17 @@ clear
 
 
 <p>然后给脚本赋予执行权限</p>
-<div class="codehilite"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
+<div class="highlight"><pre><span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
 </pre></div>
 
 
 <p>然后编辑vim配置文件:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">~/</span><span class="p">.</span><span class="n">vimrc</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">~/</span><span class="p">.</span><span class="n">vimrc</span>
 </pre></div>
 
 
 <p>然后添加下面内容:</p>
-<div class="codehilite"><pre><span class="c">&quot; C++ complier</span>
+<div class="highlight"><pre><span class="c">&quot; C++ complier</span>
 autocmd <span class="nb">FileType</span> cpp map <span class="p">&lt;</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Esc<span class="p">&gt;</span>:<span class="k">w</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>:<span class="p">!</span><span class="k">compile</span> %<span class="p">&lt;</span>CR<span class="p">&gt;</span>
 autocmd <span class="nb">FileType</span> <span class="k">cc</span> map <span class="p">&lt;</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Esc<span class="p">&gt;</span>:<span class="k">w</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>:<span class="p">!</span><span class="k">compile</span> %<span class="p">&lt;</span>CR<span class="p">&gt;</span>
 autocmd <span class="nb">FileType</span> <span class="k">c</span> map <span class="p">&lt;</span>F8<span class="p">&gt;</span> <span class="p">&lt;</span>Esc<span class="p">&gt;</span>:<span class="k">w</span><span class="p">!&lt;</span>CR<span class="p">&gt;</span>:<span class="p">!</span><span class="k">compile</span> %<span class="p">&lt;</span>CR<span class="p">&gt;</span>

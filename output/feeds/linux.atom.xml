@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/linux.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-04-25T14:36:00+08:00</updated><entry><title>grep挽救了我一个下午: 恢复rm -f删除的代码</title><link href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html" rel="alternate"></link><updated>2013-04-25T14:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-25:grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html</id><summary type="html">&lt;p&gt;今天对代码进行重构, 新添加了一个&lt;code&gt;logics.py&lt;/code&gt;模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个&lt;code&gt;logs&lt;/code&gt;文件夹是不需要的所以我打算清掉它, 但是&lt;code&gt;zsh&lt;/code&gt;将补全定位到&lt;code&gt;logics.py&lt;/code&gt;, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:&lt;a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/"&gt;用grep恢复误删的文本&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个&lt;code&gt;Logics&lt;/code&gt;类并且上面差不多30行, 往下差不多300行的样子, 我删除&lt;code&gt;logics.py&lt;/code&gt;所在的分区是&lt;code&gt;/dev/sda7&lt;/code&gt;, 所以我运行了下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;grep -a -B 50 -A 400 &lt;span class="s2"&gt;&amp;quot;class Logics(object):&amp;quot;&lt;/span&gt; /dev/sda7 &amp;gt; tmp
+&lt;div class="highlight"&gt;&lt;pre&gt;grep -a -B 50 -A 400 &lt;span class="s2"&gt;&amp;quot;class Logics(object):&amp;quot;&lt;/span&gt; /dev/sda7 &amp;gt; tmp
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -14,20 +14,20 @@
 &lt;p&gt;使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.&lt;/p&gt;
 &lt;h3&gt;安装&lt;/h3&gt;
 &lt;p&gt;Awesome Ubuntu下安装十分简单:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install awesome
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install awesome
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;配置&lt;/h3&gt;
 &lt;h4&gt;拷贝配置文件&lt;/h4&gt;
 &lt;p&gt;Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp /etc/xdg/awesome/rc.lua ~/.config/awesome &lt;span class="c"&gt;#  ~/.confg下如没有awesome则手动创建&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cp /etc/xdg/awesome/rc.lua ~/.config/awesome &lt;span class="c"&gt;#  ~/.confg下如没有awesome则手动创建&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h4&gt;配置自动启程序&lt;/h4&gt;
 &lt;p&gt;使用awesome之后之前设置的自动启动就会失效,因为Awesome启动是通过配置文件控制的,在配置文件(~/.config/awesome/rc.lua)加上如下内容可以配置自启动程序:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
 &lt;span class="n"&gt;autorunApps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
 &lt;span class="p"&gt;{&lt;/span&gt; 
     &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;pidgin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -49,7 +49,7 @@
 &lt;h4&gt;使用gnome桌面元素&lt;/h4&gt;
 &lt;p&gt;awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
 在宿主目录创建.xinitrc,添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
 gnome-settings-daemon &amp;amp;     &lt;span class="c"&gt;# 使用gnome桌面元素&lt;/span&gt;
 nm-applet --sm-disable &amp;amp;    &lt;span class="c"&gt;# 托盘栏添加网卡图标&lt;/span&gt;
 &lt;span class="nb"&gt;exec &lt;/span&gt;awesome
@@ -57,7 +57,7 @@ nm-applet --sm-disable &amp;amp;    &lt;span class="c"&gt;# 托盘栏添加网�
 
 
 &lt;p&gt;如果不生效,则执行下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ln -sf ~/.xinitrc ~/.xprofile
+&lt;div class="highlight"&gt;&lt;pre&gt;ln -sf ~/.xinitrc ~/.xprofile
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -65,23 +65,23 @@ nm-applet --sm-disable &amp;amp;    &lt;span class="c"&gt;# 托盘栏添加网�
 &lt;p&gt;可以自己编写lua脚本对Awesome进行美化,当然还有很多已经写好的配置,我们叫他为主题
 awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下载.
 我们可以使用git将主题整体克隆下来&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
+&lt;div class="highlight"&gt;&lt;pre&gt;git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后修改~/.config/awesome/rc.lua的beautiful.init()的参数改为主题的路径:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;beautiful&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;/your/home/path/.config/awesome/themes/bamboo/theme.lua&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;beautiful&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;/your/home/path/.config/awesome/themes/bamboo/theme.lua&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;如果背景图片无法显示,安装feh:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install feh
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install feh
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;使用&lt;/h3&gt;
 &lt;p&gt;配置完成后注销使用Awesome会话登录,Awesome使用Win键作为主键,几个常用的为:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以在多个桌面切换&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt; &lt;span class="err"&gt;可以在多个桌面切换&lt;/span&gt;
 &lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="err"&gt;可以重启&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
 &lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="err"&gt;可以切换窗口&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;类&lt;/span&gt;&lt;span class="n"&gt;Vim&lt;/span&gt;&lt;span class="err"&gt;操作&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
 &lt;span class="n"&gt;Win&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="err"&gt;可以最大&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;小化窗口&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -92,7 +92,7 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 
 
 &lt;p&gt;下面给出完整的快捷键:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Enter&lt;/span&gt;           &lt;span class="err"&gt;打开终端&lt;/span&gt;                                               
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Enter&lt;/span&gt;           &lt;span class="err"&gt;打开终端&lt;/span&gt;                                               
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;               &lt;span class="err"&gt;执行程序或命令&lt;/span&gt;
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;w&lt;/span&gt;               &lt;span class="err"&gt;打开&lt;/span&gt;&lt;span class="n"&gt;Awesome&lt;/span&gt;&lt;span class="err"&gt;主菜单（鼠标右键关闭）&lt;/span&gt;                                                   
 &lt;span class="n"&gt;Mod4&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;Shift&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;       &lt;span class="err"&gt;关闭当前窗口或应用&lt;/span&gt;                                     
@@ -138,13 +138,13 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 &lt;h2&gt;Tmux&lt;/h2&gt;
 &lt;p&gt;tmux是一款替代screen的产品,除了拥有screen的基本功能外,还有窗口分隔,多人共享等功能.尤其是窗口分隔功能异常突出.同时tmux简化了很多快捷键.还支持vi/emacs风格的快捷键绑定&lt;/p&gt;
 &lt;h3&gt;安装&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install tmux
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install tmux
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;配置&lt;/h3&gt;
 &lt;p&gt;tmux 使用~/.tmux.conf作为配置文件,所以我们可以将配置添加到这个文件中,网上很多资料都将前缀键绑定到Ctrl+a,但我喜欢使用Ctrl+a跳到行首,所以我还是使用默认的前缀键Ctrl+b.下面是我的配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;set &lt;span class="o"&gt;-&lt;/span&gt;g default&lt;span class="o"&gt;-&lt;/span&gt;terminal &lt;span class="s"&gt;&amp;quot;screen-256color&amp;quot;&lt;/span&gt; 
+&lt;div class="highlight"&gt;&lt;pre&gt;set &lt;span class="o"&gt;-&lt;/span&gt;g default&lt;span class="o"&gt;-&lt;/span&gt;terminal &lt;span class="s"&gt;&amp;quot;screen-256color&amp;quot;&lt;/span&gt; 
 set &lt;span class="o"&gt;-&lt;/span&gt;g display&lt;span class="o"&gt;-&lt;/span&gt;time &lt;span class="m"&gt;3000&lt;/span&gt;                   
 set &lt;span class="o"&gt;-&lt;/span&gt;g escape&lt;span class="o"&gt;-&lt;/span&gt;time &lt;span class="m"&gt;0&lt;/span&gt;
 set &lt;span class="o"&gt;-&lt;/span&gt;g history&lt;span class="o"&gt;-&lt;/span&gt;limit &lt;span class="m"&gt;65535&lt;/span&gt;                 
@@ -244,7 +244,7 @@ set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span
 
 &lt;h3&gt;使用&lt;/h3&gt;
 &lt;p&gt;我使用terminator配合tmux使用,更改terminator的配置(~/.config/terminator/conf)&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;[profiles]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[profiles]&lt;/span&gt;
   &lt;span class="k"&gt;[[default]]&lt;/span&gt;
     &lt;span class="na"&gt;login_shell&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;True&lt;/span&gt;
 &lt;span class="s"&gt;    use_custom_command = True   # 允许自定义命令&lt;/span&gt;
@@ -258,7 +258,7 @@ set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span
 
 
 &lt;h3&gt;常用快捷键:&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="err"&gt;创建一个水平分隔&lt;/span&gt; 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="err"&gt;创建一个水平分隔&lt;/span&gt; 
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="err"&gt;创建一个垂直分隔&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;上下左右切换分割窗&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;向上下左右扩展分割窗大小&lt;/span&gt;
@@ -273,43 +273,43 @@ set &lt;span class="o"&gt;-&lt;/span&gt;g status&lt;span class="o"&gt;-&lt;/span
 &lt;p&gt;Gnome Do 之前博客里有介绍请看&lt;a href="/2012/9/1/Linux桌面高效工作----使用Gnome-DO/"&gt;这里&lt;/a&gt;,由于Gonme Do使用Win+Space快捷键已经被Awesome占用,所以为了正常使用Gnome Do 我将Gnome Do的快捷键绑定到&lt;code&gt;Win+G&lt;/code&gt;.&lt;/p&gt;</summary><category term="高效"></category><category term="桌面"></category><category term="Tmux"></category><category term="Linux"></category><category term="gnome do"></category><category term="awesome"></category></entry><entry><title>AppArmor引起的无法启动Evince</title><link href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html" rel="alternate"></link><updated>2012-11-15T16:05:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-11-15:apparmoryin-qi-de-wu-fa-qi-dong-evince.html</id><summary type="html">&lt;p&gt;今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
 evince
 却提示:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;specified&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;protocol&lt;/span&gt; &lt;span class="n"&gt;specified&lt;/span&gt;
 &lt;span class="n"&gt;Cannot&lt;/span&gt; &lt;span class="n"&gt;parse&lt;/span&gt; &lt;span class="n"&gt;arguments&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="err"&gt;无法打开显示：&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;google说是$XAUTHORITY权限的问题,于是查看:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ls -l &lt;span class="nv"&gt;$XAUTHORITY&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ls -l &lt;span class="nv"&gt;$XAUTHORITY&lt;/span&gt;
 -rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;更改为如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;chmod +rw &lt;span class="nv"&gt;$XAUTHORITY&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;chmod +rw &lt;span class="nv"&gt;$XAUTHORITY&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;还是不行,这时候猛然想起查看日志,日志有如下一行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Nov&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;48&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="n"&gt;Vostro&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;13010.203241&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1400&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1352965733.221&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;74&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;apparmor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DENIED&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;operation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;open&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/bin/evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/data/home/vim/.Xauthority&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7088&lt;/span&gt; &lt;span class="n"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;requested_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;denied_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;fsuid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt; &lt;span class="n"&gt;ouid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Nov&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;48&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;53&lt;/span&gt; &lt;span class="n"&gt;Vostro&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;13010.203241&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1400&lt;/span&gt; &lt;span class="n"&gt;audit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1352965733.221&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;74&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;apparmor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;DENIED&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;operation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;open&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;parent&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;profile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/usr/bin/evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/data/home/vim/.Xauthority&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;pid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;7088&lt;/span&gt; &lt;span class="n"&gt;comm&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;evince&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;requested_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;denied_mask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;r&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;fsuid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt; &lt;span class="n"&gt;ouid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1000&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;好吧,问题是一个叫做AppArmor的内核模块引起的,它阻止了evince读取.Xauthority,找到配置文件,添加:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo vim /etc/apparmor.d/usr.bin.evince 
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo vim /etc/apparmor.d/usr.bin.evince 
 @&lt;span class="o"&gt;{&lt;/span&gt;HOME&lt;span class="o"&gt;}&lt;/span&gt;/.Xauthority rw,
 sudo /etc/init.d/apparmor restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;做完这些还是刷同样的日志,无奈只有禁用它了:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo ln -sf /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo ln -sf /etc/apparmor.d/usr.bin.evince /etc/apparmor.d/disable/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;重启apparmor就能打开Evince了,都不知道这玩意是怎么加上的,之前都没问题.&lt;/p&gt;
 &lt;p&gt;此次解决看来Linux问题解决之路是从日志开始的,长时间Linux桌面工作差点都给忘掉日志的重要性.&lt;/p&gt;</summary><category term="Ubuntu"></category><category term="evince"></category><category term="apparmor"></category></entry><entry><title>Linux高效工作----平铺式窗体管理器Awesome</title><link href="http://www.linuxzen.com/linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html" rel="alternate"></link><updated>2012-10-25T10:23:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-10-25:linuxgao-xiao-gong-zuo-ping-pu-shi-chuang-ti-guan-li-qi-awesome.html</id><summary type="html">&lt;p&gt;在Linux桌面环境下开发,总想更高效的工作,我已经装备了Gnome Do和terminator,但是我还是觉得不够快我更加希望能解放右手(当然不是找个妹子戒撸,只是右手的鼠标),而且terminator在跑的东西过多的时候开多个terminator不太好管理,这时候一个词进入了我的眼睛平铺式窗体管理器,与传统窗体管理器不同的是平铺式窗体管理器的窗口不会重叠,窗口会被自动调整成正好铺满全屏的尺寸,也就是说无论开多少窗口都会把屏幕占满,如果想象力贫乏就装一个试试吧:&lt;/p&gt;
 &lt;p&gt;Awesome是一款运行在Unix和类Unix(Linux/FreeBSD)等系统上的一款平铺式窗体管理器,有占用资源小,易于管理和操作等等有点,这里不罗嗦这些说说安装,Ubuntu安装很简单&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install awesome
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install awesome
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -324,14 +324,14 @@ sudo /etc/init.d/apparmor restart
 &lt;p&gt;是不是很高效!是不是解放了右手,问题来了,我的&lt;code&gt;gnome-do&lt;/code&gt;无法用了,&lt;code&gt;win+space&lt;/code&gt;被占了阿,好吧我把&lt;code&gt;Gnome-Do&lt;/code&gt;的快捷键调成&lt;code&gt;Alt+Space&lt;/code&gt;,&lt;/p&gt;
 &lt;p&gt;但是如何添加开机启动程序呢,很简单Awesome的配置文件是一个lua脚本(我不懂),可以在这个脚本里添加启动程序&lt;/p&gt;
 &lt;p&gt;创建配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/
 mkdir .config/awesome/
 cp /etc/xdg/awesome/rc.lua .config/awesome/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;编辑配置文件在文件末尾添加:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;autorun&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
 &lt;span class="n"&gt;autorunApps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
 &lt;span class="p"&gt;{&lt;/span&gt; 
     &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="s"&gt;pidgin&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -352,7 +352,7 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 &lt;p&gt;很简单吧,应该看得出在哪里添加启动的程序吧,这里启动了&lt;code&gt;pidgin&lt;/code&gt;,&lt;code&gt;雷鸟&lt;/code&gt;,&lt;code&gt;gnome-do&lt;/code&gt;,&lt;code&gt;guake&lt;/code&gt;和&lt;code&gt;wine&lt;/code&gt;的&lt;code&gt;qq2012&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;还有很多强大的功能这里就不在介绍配置方法,可以自行google之&lt;/p&gt;</summary><category term="高效"></category><category term="管理器"></category><category term="窗体"></category><category term="桌面"></category><category term="平铺式"></category><category term="Linux"></category><category term="awesome"></category></entry><entry><title>部署Tornado时iptables引发的的一个问题</title><link href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html" rel="alternate"></link><updated>2012-09-29T19:11:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-09-29:bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html</id><summary type="html">&lt;p&gt;今天在CentOS上部署了一个Tornado,使用nginx做代理,&lt;/p&gt;
 &lt;p&gt;tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;www.linuxzen.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -368,12 +368,12 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 
 
 &lt;p&gt;iptables filter表的INPUT链是DROP的,所以添加如下规则:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -382,7 +382,7 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 &lt;p&gt;比如你安装了pidgin插件只需输入联系人的名字即可打开与他/她的会话,安装了file这个插件输入文件/目录的名字即可打开目录或文件,&lt;/p&gt;
 &lt;p&gt;当然还有一个不足就是不支持中文&lt;/p&gt;
 &lt;p&gt;ubuntu用户可以按照下面安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install gnome-do
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install gnome-do
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -391,7 +391,7 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 我总是在想要做另外一个操作,但又不想结束当前的工作,之前我习惯于再打开一个终端,但是后来终端越来越多导致我想找回原来的工作的时候就变的很费力,而且对桌面有洁癖的人不允许任务栏太杂
 后来发现了一款终端软件terminator,它支持分割终端,并可以在终端中快速切换.还有一款下拉式的终端软件Guake可以随意呼出隐藏.下面就一一介绍一下.&lt;/p&gt;
 &lt;h2&gt;1 安装Terminator&lt;/h2&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sudo apt-get install terminator
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo apt-get install terminator
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -403,7 +403,7 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 &lt;h3&gt;2.1 配置&lt;/h3&gt;
 &lt;p&gt;terminator配置文件在&lt;code&gt;~/.config/terminator/config&lt;/code&gt;
 可以通过这个配置文件配置&lt;code&gt;terminator&lt;/code&gt;的字体和颜色&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;font&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Monaco&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;  &lt;span class="err"&gt;#设置体字&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;font&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Monaco&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;  &lt;span class="err"&gt;#设置体字&lt;/span&gt;
 &lt;span class="n"&gt;background_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#204070&amp;quot;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;背景颜色&lt;/span&gt;
 &lt;span class="n"&gt;foreground_color&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;#F0F0F0&amp;quot;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;字体颜色&lt;/span&gt;
 &lt;span class="n"&gt;cursor_blink&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;True&lt;/span&gt;          &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;设置光标&lt;/span&gt;
@@ -415,21 +415,21 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 
 
 &lt;p&gt;更多配置可以参见配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;man terminator_config
+&lt;div class="highlight"&gt;&lt;pre&gt;man terminator_config
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;3 Guake&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;Guake&lt;/code&gt;是一个下拉式的gnome桌面环境下的终端程序，因此你只需要按一个键F12就可以调用他，然后再按一次以便隐藏他。Guake支持&lt;code&gt;快捷键&lt;/code&gt;、&lt;code&gt;标签&lt;/code&gt;、&lt;code&gt;背景透明&lt;/code&gt;等特性。&lt;/p&gt;
 &lt;h3&gt;3.1 安装 Guake&lt;/h3&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;guake&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;guake&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;3.2 使用Guake&lt;/h3&gt;
 &lt;p&gt;启用guake后即可按&lt;code&gt;F12&lt;/code&gt;调出来,很酷
 快捷键和gnome terminal相同&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="err"&gt;新建标签&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="err"&gt;新建标签&lt;/span&gt;
 &lt;span class="n"&gt;F2&lt;/span&gt; &lt;span class="err"&gt;重命名标签&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;PageUp&lt;/span&gt; &lt;span class="err"&gt;上一个标签&lt;/span&gt;
 &lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;PageDwon&lt;/span&gt; &lt;span class="err"&gt;下一个标签&lt;/span&gt;
@@ -454,20 +454,20 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 ip:192.168.3.1&lt;/p&gt;
 &lt;p&gt;好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
 首先Gentoo没有默认安装vim,先安装vim:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;emerge&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;emerge&lt;/span&gt; &lt;span class="n"&gt;vim&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;安装配置Python&lt;/h3&gt;
 &lt;p&gt;最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/portage/dev-lang/python/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/portage/dev-lang/python/
 emerge python-2.7.2-r3.ebuild
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;等待安装完成后使系统默认使用python2.7,先查看默认项&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;eselect&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;eselect&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;
 &lt;span class="n"&gt;Available&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;interpreters&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt; 
   &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;   &lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="mf"&gt;.2&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
@@ -475,28 +475,28 @@ emerge python-2.7.2-r3.ebuild
 
 
 &lt;p&gt;默认使用3.2,选择python2.7&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;eselect python &lt;span class="nb"&gt;set &lt;/span&gt;1
+&lt;div class="highlight"&gt;&lt;pre&gt;eselect python &lt;span class="nb"&gt;set &lt;/span&gt;1
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;选择过后别忘记执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;python-updater
+&lt;div class="highlight"&gt;&lt;pre&gt;python-updater
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;好了我已经将python换成了常用的python2.7,下面来安装easy_install:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;emerge setuptools
+&lt;div class="highlight"&gt;&lt;pre&gt;emerge setuptools
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装完后使用easy_install安装bottle框架和mongodb驱动:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;easy_install bottle
+&lt;div class="highlight"&gt;&lt;pre&gt;easy_install bottle
 easy_install pymogon
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装uwsgi/nginx/virtualenv:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;emerge nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;emerge nginx
 emerge uwsgi
 emerge virtualenv
 &lt;/pre&gt;&lt;/div&gt;
@@ -504,7 +504,7 @@ emerge virtualenv
 
 &lt;h3&gt;使用virtualenv创建应用&lt;/h3&gt;
 &lt;p&gt;我们使用virtualenv创建一个应用:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /code/python
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir /code/python
 virtualenv /code/python
 &lt;span class="nb"&gt;source &lt;/span&gt;bin/activate
 &lt;/pre&gt;&lt;/div&gt;
@@ -513,13 +513,13 @@ virtualenv /code/python
 &lt;p&gt;然后查看应用目录下会多出几个目录.&lt;/p&gt;
 &lt;h3&gt;配置uWSGI&lt;/h3&gt;
 &lt;p&gt;首先创建一个uwsgi配置文件,并编辑它:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
+&lt;div class="highlight"&gt;&lt;pre&gt;cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
 vi /etc/conf.d/uwsgi.py
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;改成内如如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# Distributed under the terms of the GNU General Public License v2&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;# Distributed under the terms of the GNU General Public License v2&lt;/span&gt;
 &lt;span class="cp"&gt;# $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $&lt;/span&gt;
 
 &lt;span class="cp"&gt;# DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!&lt;/span&gt;
@@ -570,12 +570,12 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;然后创建bottle.xml配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /code/bottle.xml
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /code/bottle.xml
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;内容如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;uwsgi&amp;gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;&amp;lt;uwsgi&amp;gt;&lt;/span&gt;
         &lt;span class="nt"&gt;&amp;lt;socket&amp;gt;&lt;/span&gt;/var/tmp/bottle.sock&lt;span class="nt"&gt;&amp;lt;/socket&amp;gt;&lt;/span&gt;
         &lt;span class="nt"&gt;&amp;lt;home&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/home&amp;gt;&lt;/span&gt;
         &lt;span class="nt"&gt;&amp;lt;chdir&amp;gt;&lt;/span&gt;/code/python&lt;span class="nt"&gt;&amp;lt;/chdir&amp;gt;&lt;/span&gt;
@@ -591,23 +591,23 @@ vi /etc/conf.d/uwsgi.py
 
 &lt;p&gt;其中&lt;module&gt;&lt;/module&gt;定义的就是你的web程序,也就是/code/python下要有一个index.py.&lt;/p&gt;
 &lt;p&gt;配置完毕后创建启动脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sf&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;并加入开机启动:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;配置nginx&lt;/h3&gt;
 &lt;p&gt;编辑配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改内容如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="mf"&gt;192.168.3.1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;linuxzen&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -628,13 +628,13 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;同样将nginx作为开机启动:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;首先创建一个bottle程序供测试:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;span class="err"&gt;参考内容如下&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 &lt;span class="cp"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class="cp"&gt;#-*- coding: utf8 -*-&lt;/span&gt;
@@ -657,44 +657,44 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;然后启动nginx和uwsgi:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;uwsgi&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后通过浏览器访问即可看到&lt;code&gt;Hello world!&lt;/code&gt;&lt;/p&gt;</summary><category term="web"></category><category term="virtualenv"></category><category term="uwsgi"></category><category term="python"></category><category term="Gentoo"></category><category term="bottle"></category><category term="nginx"></category></entry><entry><title>iptables:restorecon: command not found无法保存策略解决</title><link href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html" rel="alternate"></link><updated>2012-04-30T10:43:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-04-30:iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html</id><summary type="html">&lt;p&gt;今天更新了几条iptables,但是运行命令&lt;code&gt;service iptables save&lt;/code&gt;保存时确提示&lt;code&gt;iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;好吧,很明显的错误,找不到restorecon命令. 查找一下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;which&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
 &lt;span class="n"&gt;whereis&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;没结果,继续手动查看:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
 &lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;有一条但是不是我们想要的,猜测大概是包没装
 先yum搜索一下吧:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="n"&gt;search&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;好吧依然没有结果.google一下说是缺少policycoreutils这个包.安装这个包:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;policycoreutils&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;policycoreutils&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后查看:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ls&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;l&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt;&lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;restore&lt;/span&gt;
 &lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;     &lt;span class="mi"&gt;14&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;19&lt;/span&gt; &lt;span class="mi"&gt;09&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;58&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;restore&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;multi&lt;/span&gt;
 &lt;span class="n"&gt;lrwxrwxrwx&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="n"&gt;root&lt;/span&gt;      &lt;span class="mi"&gt;8&lt;/span&gt; &lt;span class="n"&gt;Apr&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;31&lt;/span&gt; &lt;span class="n"&gt;restorecon&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;setfiles&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后运行命令保存iptables策略:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt; &lt;span class="n"&gt;save&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;iptables&lt;/span&gt; &lt;span class="n"&gt;save&lt;/span&gt;
 &lt;span class="nl"&gt;iptables:&lt;/span&gt; &lt;span class="n"&gt;Saving&lt;/span&gt; &lt;span class="n"&gt;firewall&lt;/span&gt; &lt;span class="n"&gt;rules&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sysconfig&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;iptables&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;  &lt;span class="n"&gt;OK&lt;/span&gt;  &lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -707,7 +707,7 @@ vi /etc/conf.d/uwsgi.py
 &lt;p&gt;ip:192.168.3.3/24&lt;/p&gt;
 &lt;p&gt;由于CentOS默认自带都python(2.4.3)版本较低,所以我们采用手动编译安装python的方式来使用python 2.7.2&lt;/p&gt;
 &lt;p&gt;首先安装python 2.7.2&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;src&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;
 &lt;span class="cp"&gt;#下载python2.7.2&lt;/span&gt;
@@ -719,7 +719,7 @@ vi /etc/conf.d/uwsgi.py
 
 
 &lt;p&gt;先别急着安装,为什么后面的步骤能顺利进行我们需要我们的python支持zlib模块,&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi Modules/Setup
+&lt;div class="highlight"&gt;&lt;pre&gt;vi Modules/Setup
 &lt;span class="c"&gt;#在454行左右找到:#zlib zlibmodule.c -I$(prefix)/include -L$(exec_prefix)/lib -lz&lt;/span&gt;
 &lt;span class="c"&gt;# 去掉注释&lt;/span&gt;
 zlib zlibmodule.c -I&lt;span class="k"&gt;$(&lt;/span&gt;prefix&lt;span class="k"&gt;)&lt;/span&gt;/include -L&lt;span class="k"&gt;$(&lt;/span&gt;exec_prefix&lt;span class="k"&gt;)&lt;/span&gt;/lib -lz
@@ -729,20 +729,20 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;安装完成后我们想更方面的使用我们新安装的Python我们做如下更改.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mv /usr/bin/python /usr/bin/python24
+&lt;div class="highlight"&gt;&lt;pre&gt;mv /usr/bin/python /usr/bin/python24
 ln -s /usr/local/python27/bin/python /usr/bin/python
 ln -s /usr/local/python27/bin/python2.7 /usr/bin/python2.7
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;这样改完我们的yum就无法工作了,我们要修改yum来使yum工作:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /usr/bin/yum
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /usr/bin/yum
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;将/#!/usr/bin/python改为#!/usr/bin/python2.4即可正常工作(版本可能不一样需查看自己系统自带的版本是什么)&lt;/p&gt;
 &lt;p&gt;现在我们执行python -V查看应该就是我们刚刚安装的2.7.2版本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;python -V
+&lt;div class="highlight"&gt;&lt;pre&gt;python -V
 Python 2.7.2
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -750,39 +750,39 @@ Python 2.7.2
 &lt;p&gt;我们安装了python下面我们就来武装我们的新python,&lt;/p&gt;
 &lt;p&gt;我们先为新的Python安装python的setuptools,配备easy_install.easy_install用于安装Python第三方扩展包而且只要一个命令即可完成:&lt;/p&gt;
 &lt;p&gt;下载:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5&lt;span class="o"&gt;=&lt;/span&gt;fe1f997bc722265116870bc7919059ea
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg#md5&lt;span class="o"&gt;=&lt;/span&gt;fe1f997bc722265116870bc7919059ea
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后直接执行安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="n"&gt;c11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;py2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;egg&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;0.6&lt;/span&gt;&lt;span class="n"&gt;c11&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;py2&lt;/span&gt;&lt;span class="mf"&gt;.7&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;egg&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装好之后我们做一个软链接方便我们使用:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python27&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后我们来使用easy_install来安装Python第三方扩展&lt;/p&gt;
 &lt;p&gt;安装本文所需要的web.py&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后我们打开Python shell输入&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;如果没有报错则说明我们安装成功
 安装flup:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;flup&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;easy_install&lt;/span&gt; &lt;span class="n"&gt;flup&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装Spawn-fcgi :&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wegt&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wegt&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//www.lighttpd.net/download/spawn-fcgi-1.6.3.tar.gz&lt;/span&gt;
 &lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.6.3&lt;/span&gt;
 &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt;
@@ -792,7 +792,7 @@ Python 2.7.2
 
 
 &lt;p&gt;到这里我们就完成了Python的所有包安装,下面我们来部署nginx(本博有大量文章来介绍安装nginx,这里还是再来一遍吧..)&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install zlib-devel pcre-devel openssl-devel  &lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install zlib-devel pcre-devel openssl-devel  &lt;span class="c"&gt;# 安装依赖&lt;/span&gt;
 wget http://nginx.org/download/nginx-1.0.13.tar.gz &lt;span class="c"&gt;# 下载&lt;/span&gt;
 tar -zxvf nginx-1.0.13.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.13
@@ -805,7 +805,7 @@ make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;我们修改nginx的配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="cp"&gt;#           root   html;&lt;/span&gt;
 &lt;span class="cp"&gt;#          index  index.html index.htm;&lt;/span&gt;
             &lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="n"&gt;fastcgi_params&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -820,7 +820,7 @@ make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 
 &lt;p&gt;然后创建一个web.py程序:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class="c"&gt;#-*-coding:utf8-*-&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;web&lt;/span&gt;
 &lt;span class="n"&gt;urls&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/.*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -838,12 +838,12 @@ make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;p&gt;将内容保存到/usr/local/nginx/html/下命名为index.py(或任意你喜欢的名字)
 然后赋予其执行权限:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过命令创建spawn-fcgi进程:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;spawn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fcgi&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyweb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;nobody&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -852,7 +852,7 @@ make  &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 &lt;p&gt;PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。&lt;/p&gt;
 &lt;p&gt;nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/src                                           &lt;span class="c"&gt;# 一般软件源码放在这个目录下&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/src                                           &lt;span class="c"&gt;# 一般软件源码放在这个目录下&lt;/span&gt;
 wget http://nginx.org/download/nginx-1.0.13.tar.gz    &lt;span class="c"&gt;# 下载&lt;/span&gt;
 nginx会有几个依赖包,我们首先安装依赖,不要安装过程中会报错:
 yum  -y install zlib-devel pcre-devel openssl-devel
@@ -861,14 +861,14 @@ yum  -y install zlib-devel pcre-devel openssl-devel
 
 &lt;p&gt;一般源代码安装分4个步骤(有人也会省去第一个步骤),&lt;code&gt;解压&lt;/code&gt;(tar命令)&lt;code&gt;预编译&lt;/code&gt;(执行源码包下的configure),&lt;code&gt;编译&lt;/code&gt;(make),&lt;code&gt;编译安装&lt;/code&gt;(make install)
 首先我们解压源码包:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.0.13&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zxvf&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1.0.13&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;这里解释下加压参数,z代表gzip(也就是后面的.gz文件)x代表加压,v表示显示详细信息,-f使用档案文件或设备(必选参数)&lt;/p&gt;
 &lt;p&gt;然后我们进行预编译,一般预编译会带上一些参数,已达到我们想要安装的效果,比如启用某个功能,禁用某个功能:&lt;/p&gt;
 &lt;p&gt;进入源码包目录进行预编译:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.13
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;nginx-1.0.13
  ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nginx&lt;span class="se"&gt;\ &lt;/span&gt;  &lt;span class="c"&gt;# 指定安装目录为/usr/local/nginx&lt;/span&gt;
 --with-openssl&lt;span class="o"&gt;=&lt;/span&gt;/usr/include/openssl&lt;span class="se"&gt;\ &lt;/span&gt; &lt;span class="c"&gt;# 启用ssl&lt;/span&gt;
 --with-pcre&lt;span class="se"&gt;\ &lt;/span&gt;                         &lt;span class="c"&gt;# 启用正规表达式&lt;/span&gt;
@@ -878,28 +878,28 @@ yum  -y install zlib-devel pcre-devel openssl-devel
 
 &lt;p&gt;其中./configure指执行当前目录下的&lt;code&gt;configure&lt;/code&gt;文件&lt;/p&gt;
 &lt;p&gt;预编译完成后我们就可以进行编译和安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt;           &lt;span class="err"&gt;#编译&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt;           &lt;span class="err"&gt;#编译&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;执行后make后会有大量输出,等待输出完成后如果没有报错就可以进行安装执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;   &lt;span class="err"&gt;#安装&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;   &lt;span class="err"&gt;#安装&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装完成后我们可以到相应的目录查看安装的文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ls /usr/local/nginx/
+&lt;div class="highlight"&gt;&lt;pre&gt;ls /usr/local/nginx/
 conf  html  logs  sbin
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;好了,下面我们启动nginx:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过查看端口看nginx是否启动成功,nginx占用TCP的80端口,执行下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt; &lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;
 &lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;80&lt;/span&gt;                  &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;5946&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -907,23 +907,23 @@ conf  html  logs  sbin
 &lt;p&gt;我们查看80端口是开放的&lt;/p&gt;
 &lt;p&gt;然后打开浏览器访问http://192.168.3.120,我们会看到Welcome to nginx(之前的版本是 It's Work):&lt;/p&gt;
 &lt;p&gt;nginx安装完毕后我们来安装MySQL ,我们使用MySQl-5.0.95版首先下载:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.95.tar.gz/from/http://mysql.cdpa.nsysu.edu.tw/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装之前我们先做一些准备工作,&lt;/p&gt;
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;ncurses&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;ncurses&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;创建MySQL用户:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;useradd -M -s /sbin/nologin mysql  &lt;span class="c"&gt;# -M不创建home目录,-s指定shell为不登录&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;useradd -M -s /sbin/nologin mysql  &lt;span class="c"&gt;# -M不创建home目录,-s指定shell为不登录&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后进行安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf mysql-5.0.95.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;tar -zxvf mysql-5.0.95.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;mysql-5.0.95
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/mysql &lt;span class="se"&gt;\&lt;/span&gt;
 --without-debug &lt;span class="se"&gt;\ &lt;/span&gt;                                &lt;span class="c"&gt;# 取消调试模式提高性能&lt;/span&gt;
@@ -939,48 +939,48 @@ make install
 
 
 &lt;p&gt;安装完成后复制配置文件和启动脚本:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp support-files/my-medium.cnf /etc/my.cnf         &lt;span class="c"&gt;# 复制配置文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cp support-files/my-medium.cnf /etc/my.cnf         &lt;span class="c"&gt;# 复制配置文件&lt;/span&gt;
 cp support-files/mysql.server /etc/init.d/mysqld   &lt;span class="c"&gt;# 复制启动脚本&lt;/span&gt;
 chmod +x /etc/init.d/mysqld         &lt;span class="c"&gt;# 给启动脚本执行权限&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;为了以后方便我们为所有的二进制可执行文件和动态链接库文件做一个软连接:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ln -s /usr/local/mysql/bin/* /usr/local/bin/              &lt;span class="c"&gt;# 为可执行的二进制文件做软连接&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ln -s /usr/local/mysql/bin/* /usr/local/bin/              &lt;span class="c"&gt;# 为可执行的二进制文件做软连接&lt;/span&gt;
 ln -s /usr/local/mysql/lib/mysql/lib* /usr/lib/  &lt;span class="c"&gt;# 为动态链接库做一个软连接&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后我们初始化数据库:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mysql_install_db --user&lt;span class="o"&gt;=&lt;/span&gt;mysql  &lt;span class="c"&gt;# 用MySQL用户安装数据库&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mysql_install_db --user&lt;span class="o"&gt;=&lt;/span&gt;mysql  &lt;span class="c"&gt;# 用MySQL用户安装数据库&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;为了MySQL能正常使用我们需要更改一下MySQL安装目录和MySQL的数据库目录的属主和属组:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;chown -R root.mysql /usr/local/mysql/           &lt;span class="c"&gt;# 更改安装目录属主为root,属组为mysql&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;chown -R root.mysql /usr/local/mysql/           &lt;span class="c"&gt;# 更改安装目录属主为root,属组为mysql&lt;/span&gt;
 chown -R mysql.mysql /usr/local/mysql/var/      &lt;span class="c"&gt;# 更改数据库目录属主和属组都为mysql&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;这里的&lt;code&gt;-R&lt;/code&gt;参数用来应用到所有子目录和文件&lt;/p&gt;
 &lt;p&gt;配置完毕后我们启动mysql:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;mysqld&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;mysqld&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;现在我们查看MySQL是否启动成功,MySQL占用TCP的3306端口,我们查看端口是否被占用:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;3306&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="err"&gt;¦&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="mi"&gt;3306&lt;/span&gt;
 &lt;span class="n"&gt;tcp&lt;/span&gt;        &lt;span class="mi"&gt;0&lt;/span&gt;      &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;                &lt;span class="mf"&gt;0.0.0.0&lt;/span&gt;&lt;span class="o"&gt;:*&lt;/span&gt;                   &lt;span class="n"&gt;LISTEN&lt;/span&gt;      &lt;span class="mi"&gt;32143&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysqld&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后我们通过mysql命令来连接mysql:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;会显示如下内容表示已经成功启动MySQL并已经连接上&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;Welcome&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;monitor&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;Commands&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Welcome&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;monitor&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;  &lt;span class="n"&gt;Commands&lt;/span&gt; &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 &lt;span class="n"&gt;Your&lt;/span&gt; &lt;span class="n"&gt;MySQL&lt;/span&gt; &lt;span class="n"&gt;connection&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="n"&gt;is&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
 &lt;span class="n"&gt;Server&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;5.0.95&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt; &lt;span class="n"&gt;Source&lt;/span&gt; &lt;span class="n"&gt;distribution&lt;/span&gt;
 
@@ -998,7 +998,7 @@ chown -R mysql.mysql /usr/local/mysql/var/      &lt;span class="c"&gt;# 更改�
 
 &lt;p&gt;MySQL安装完毕下面我们就来安装PHP,安装PHP前首先要安装几个源码包依赖:&lt;code&gt;libmcrypt&lt;/code&gt; &lt;code&gt;mhash&lt;/code&gt; &lt;code&gt;mcrypt&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;首先来安装几个源码包依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.bz2/download
+&lt;div class="highlight"&gt;&lt;pre&gt;wget http://sourceforge.net/projects/mcrypt/files/Libmcrypt/2.5.8/libmcrypt-2.5.8.tar.bz2/download
 tar -jxvf libmcrypt-2.5.8.tar.bz2   &lt;span class="c"&gt;# 这个包是bz2的  使用-j参数解压&lt;/span&gt;
 &lt;span class="nb"&gt;cd &lt;/span&gt;libmcrypt-2.5.8
 ./configure
@@ -1026,17 +1026,17 @@ make install
 
 
 &lt;p&gt;然后下载php:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//cn2.php.net/get/php-5.4.0.tar.bz2/from/this/mirror&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//cn2.php.net/get/php-5.4.0.tar.bz2/from/this/mirror&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="err"&gt;–&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libxml2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;curl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;libpng&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;openldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;yum&lt;/span&gt; &lt;span class="err"&gt;–&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;libxml2&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;curl&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;libpng&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt; &lt;span class="n"&gt;openldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;devel&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;我们使用nginx调用php的时候使用fpm的方式,在php 5.4中加入了对php-fpm的支持,所以就不需要打补丁了.安装PHP:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jxvf&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;tar&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;jxvf&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bz2&lt;/span&gt;
 &lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;5.4.0&lt;/span&gt;
 &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;configure&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;mysql&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zlib&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xml&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;disable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rpath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;safe&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mode&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bcmath&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;shmop&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sysvsem&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;curlwrappers&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fastcgi&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mcrypt&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;gd&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;openssl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;mhash&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sockets&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ldap&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sasl&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;xmlrpc&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;zip&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;soap&lt;/span&gt;
 &lt;span class="n"&gt;make&lt;/span&gt;
@@ -1046,35 +1046,35 @@ make install
 
 &lt;p&gt;到这里整个LNMP已经安装完成.下面我们就配置php和nginx能运行php网站:
 首先为php创建配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;production&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;如果是开发就复制&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;development&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;production&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;如果是开发就复制&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ini&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;development&lt;/span&gt;
 &lt;span class="n"&gt;cp&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;span class="n"&gt;ln&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;配置php-fpm,编辑php-fpm.conf&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;找到listen那一行,修改成如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用&lt;/span&gt;&lt;span class="n"&gt;unix&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;   &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;使用&lt;/span&gt;&lt;span class="n"&gt;unix&lt;/span&gt; &lt;span class="n"&gt;socket&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;启动php-fpm&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
 &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;fpm&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后配置nginx,编辑nginx配置文件&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改nginx配置文件支持php:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
         &lt;span class="n"&gt;listen&lt;/span&gt;       &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
         &lt;span class="n"&gt;server_name&lt;/span&gt;  &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -1099,18 +1099,18 @@ make install
 
 
 &lt;p&gt;修改完毕后保存退出重启nginx:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;pkill&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="n"&gt;nignx&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;pkill&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="n"&gt;nignx&lt;/span&gt;
 &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后在/usr/local/nginx/html下创建index.php,&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;html&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;php&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;添加下面内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;&amp;lt;?php&lt;/span&gt;
 &lt;span class="nb"&gt;phpinfo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
 &lt;span class="cp"&gt;?&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1120,17 +1120,17 @@ make install
 &lt;p&gt;&lt;img alt="linuxzen.com" src="/upload/QQ截图20120313133251.jpg" /&gt;
 到这里我们的LNMP环境就完全搭建成功,运行你的网站或者学习你的PHP吧.&lt;/p&gt;</summary><category term="源码包"></category><category term="安装"></category><category term="php"></category><category term="nginx"></category><category term="MySQL"></category><category term="Linux"></category><category term="CentOS"></category></entry><entry><title>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html" rel="alternate"></link><updated>2012-03-13T10:06:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-03-13:lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html</id><summary type="html">&lt;p&gt;上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令&lt;/p&gt;
 &lt;p&gt;比如你有一个包为:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;abc-0.1.3-el5.centos.rpm
+&lt;div class="highlight"&gt;&lt;pre&gt;abc-0.1.3-el5.centos.rpm
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;rpm -ivh abc-0.1.3-el5.centos.rpm    &lt;span class="c"&gt;# i是安装 v是显示详细信息,-h显示安装进度&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;rpm -ivh abc-0.1.3-el5.centos.rpm    &lt;span class="c"&gt;# i是安装 v是显示详细信息,-h显示安装进度&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;卸载这个包使用:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;rpm -e abc
+&lt;div class="highlight"&gt;&lt;pre&gt;rpm -e abc
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1141,22 +1141,22 @@ make install
 &lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120311164241.jpg" /&gt;
 &lt;img alt="wwww.linuxzen.com" src="/upload/QQ截图20120311164417.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;然后ok保存,在终端或在你的ssh客户端上输入下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mount /dev/hdc /mnt    &lt;span class="c"&gt;# 将光盘挂载到/mnt下&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mount /dev/hdc /mnt    &lt;span class="c"&gt;# 将光盘挂载到/mnt下&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后修改yum配置文件,首先我们不是用默认提供的官方源,我们把CentOS-Base.repo重命名一下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+&lt;div class="highlight"&gt;&lt;pre&gt;mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后修改本地源配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/yum.repos.d/CentOS-Media.repo
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/yum.repos.d/CentOS-Media.repo
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;按i进入输入模式,修改成如下内容&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;[&lt;/span&gt;c5-media&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;[&lt;/span&gt;c5-media&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;CentOS-&lt;span class="nv"&gt;$releasever&lt;/span&gt; - Media
 &lt;span class="nv"&gt;baseurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;file:///mnt                           &lt;span class="c"&gt;# 源为挂载光盘的目录/mnt下&lt;/span&gt;
 &lt;span class="c"&gt;#       file:///media/CentOS/&lt;/span&gt;
@@ -1168,7 +1168,7 @@ make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;修改完毕按`&lt;/span&gt;&lt;span class="n"&gt;Esc&lt;/span&gt;&lt;span class="err"&gt;`进入命令模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;输入`&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="err"&gt;`进入末行模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在末行模式输入`&lt;/span&gt;&lt;span class="n"&gt;wq&lt;/span&gt;&lt;span class="err"&gt;`保存退出&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;修改完毕按`&lt;/span&gt;&lt;span class="n"&gt;Esc&lt;/span&gt;&lt;span class="err"&gt;`进入命令模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;输入`&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="err"&gt;`进入末行模式&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;在末行模式输入`&lt;/span&gt;&lt;span class="n"&gt;wq&lt;/span&gt;&lt;span class="err"&gt;`保存退出&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;
 
 &lt;span class="err"&gt;修改完毕后执行&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 &lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt;
@@ -1179,7 +1179,7 @@ make install
 &lt;p&gt;会看到类似下面的输入,表示我们的配置是成功的:
 &lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120313095321.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;配置完成后我们用他来安装几个常用的工具,&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install setuptool lrzsz wget gcc gcc-c++ make which bzip2 groff man
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install setuptool lrzsz wget gcc gcc-c++ make which bzip2 groff man
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1191,7 +1191,7 @@ make使用gcc根据makefile进行编译源代码
 which是一个查找命令的工具
 bzip2是一个压缩软件一般供tar调用
 man是一个查看手册命令,如果碰到不懂的命令可以man一下.比如你不知道wget命令的用法可以:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;man wget
+&lt;div class="highlight"&gt;&lt;pre&gt;man wget
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1213,13 +1213,13 @@ man是一个查看手册命令,如果碰到不懂的命令可以man一下.比如
 &lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310102222.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;设置好后然后点击OK保存退出.&lt;/p&gt;
 &lt;p&gt;一切已经就绪,下面我们就开始我们的Linux之旅.首先进入系统,在login:界面输入root用户,然后输入安装时输入的root密码.进入系统.首先我们来配置网卡.CentOS的网卡路径在"/etc/sysconifg/network-scripts/"下面,第一个网卡一般命名为eth0,网卡配置文件则是ifcfg-eth0,第二个是eth1,配置文件ifcfg-eth1,后面的以此类推.下面我们来配置网卡:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/sysconfig/network-scripts/ifcfg-eth0
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;(在这里说一下,Linux有一个很方便的功能当路径太长不方便记忆时,可打出一部分敲Tab键如果这个是唯一的就会自动补全,如果不是就敲两下Tab,就会列出所有可选内容,文件和命令一样)
 按i进入输入模式,将配置文件改成如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;DEVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;eth0                   &lt;span class="c"&gt;# 设备名&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;DEVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;eth0                   &lt;span class="c"&gt;# 设备名&lt;/span&gt;
 &lt;span class="nv"&gt;HWADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;00:00:00:00:01         &lt;span class="c"&gt;# MAC地址&lt;/span&gt;
 &lt;span class="nv"&gt;BOOTPROTO&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static              &lt;span class="c"&gt;# IP获取方式为static,如果是dhcp则是使用DHCP获取&lt;/span&gt;
 &lt;span class="nv"&gt;ONBOOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes                    &lt;span class="c"&gt;# 是否启用网卡(也就是是否在重启设备或重启网卡时启动这个网卡)&lt;/span&gt;
@@ -1231,30 +1231,30 @@ man是一个查看手册命令,如果碰到不懂的命令可以man一下.比如
 
 &lt;p&gt;编辑完成后按Esc进入末行模式然后输入:wq保存退出
 然后重启网卡,如果都是[OK]的就没有问题&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service network restart
+&lt;div class="highlight"&gt;&lt;pre&gt;service network restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看网络配置的命令是&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ifconfig
+&lt;div class="highlight"&gt;&lt;pre&gt;ifconfig
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310104548.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;ping命令用来检测网络连通性,配置好后我们ping网关测试:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ping 192.168.3.254
+&lt;div class="highlight"&gt;&lt;pre&gt;ping 192.168.3.254
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;如果显示如下则表示是通的,如果不是则表示不通
 &lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310104753.jpg" /&gt;
 如果能正常访问网络我们还需要配置一个DNS服务器,指定一个DNS服务器的配置文件为:/etc/resolv.conf.Linux可以配置3个DNS.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/resolv.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/resolv.conf
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;同样按i或a进入输入模式添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;nameserver    192.168.3.254    &lt;span class="c"&gt;# 本地DNS&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;nameserver    192.168.3.254    &lt;span class="c"&gt;# 本地DNS&lt;/span&gt;
 nameserver    202.106.0.20     &lt;span class="c"&gt;# 北京地区网通DNS&lt;/span&gt;
 nameserver    8.8.8.8          &lt;span class="c"&gt;# google的根DNS&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1266,12 +1266,12 @@ nameserver    8.8.8.8          &lt;span class="c"&gt;# google的根DNS&lt;/span&
 &lt;p&gt;好了到这一步Linux已经可以访问internet了.下面我们就配置ssh连接虚拟机.连接ssh的软件有几款都是比较不错的,个人觉得最好的还是Secure CRT,这个是收费的但较低版本还是可以在百度/谷歌上找到特别码(你懂得),还有一款是putty,这一个款开源软件而且只有几百KB,很轻量级.&lt;/p&gt;
 &lt;p&gt;我们首先要关闭selinux(一款美国国家安全局贡献出来的软件,如果会配置可以开启,如果不会就关闭)
 编辑/etc/selinux/config:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/selinux/config
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/selinux/config
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后按i进入输入模式,修改SELINUX参数为disabled:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# This file controls the state of SELinux on the system.&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# This file controls the state of SELinux on the system.&lt;/span&gt;
 &lt;span class="c"&gt;# SELINUX= can take one of these three values:&lt;/span&gt;
 &lt;span class="c"&gt;#       enforcing - SELinux security policy is enforced.&lt;/span&gt;
 &lt;span class="c"&gt;#       permissive - SELinux prints warnings instead of enforcing.&lt;/span&gt;
@@ -1285,12 +1285,12 @@ nameserver    8.8.8.8          &lt;span class="c"&gt;# google的根DNS&lt;/span&
 
 
 &lt;p&gt;然后重启系统&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;reboot
+&lt;div class="highlight"&gt;&lt;pre&gt;reboot
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后清空系统自带防火墙&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;iptables -Z
+&lt;div class="highlight"&gt;&lt;pre&gt;iptables -Z
 iptables -F
 iptables -X
 service iptables save
@@ -1299,14 +1299,14 @@ service iptables save
 
 &lt;p&gt;然后我们就可以使用ssh连接Linux虚拟机
 首先确保Linux启动了ssh,ssh占用TCP的22端口.执行命令查看22端口是否开放:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;netstat -antlp | grep 22
+&lt;div class="highlight"&gt;&lt;pre&gt;netstat -antlp | grep 22
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;如果出现如下内容则表示ssh已经启动:
 &lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310111326.jpg" /&gt;
 如果没有启动尝试运行下面命令:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service sshd start        &lt;span class="c"&gt;# 启动ssh服务&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;service sshd start        &lt;span class="c"&gt;# 启动ssh服务&lt;/span&gt;
 chkconfig --add sshd      &lt;span class="c"&gt;# 加入开机启动&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -1365,18 +1365,18 @@ chkconfig --add sshd      &lt;span class="c"&gt;# 加入开机启动&lt;/span&gt
 &lt;p&gt;本文使用dhcpd分配ip,使用tftp-server提供下载启动文件,apache提供下载安装文件
 1.安装配置tftp&lt;/p&gt;
 &lt;p&gt;安装tftp-server&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install tftp-server
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install tftp-server
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;配置tftp-server,编辑/etc/xinetd.d/tftp&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /etc/xinetd.d/tftp
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /etc/xinetd.d/tftp
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;修改配置文件&lt;/p&gt;
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service tftp
+&lt;div class="highlight"&gt;&lt;pre&gt;service tftp
 &lt;span class="o"&gt;{&lt;/span&gt;
         &lt;span class="nv"&gt;socket_type&lt;/span&gt;             &lt;span class="o"&gt;=&lt;/span&gt; dgram
         &lt;span class="nv"&gt;protocol&lt;/span&gt;                &lt;span class="o"&gt;=&lt;/span&gt; udp
@@ -1393,20 +1393,20 @@ chkconfig --add sshd      &lt;span class="c"&gt;# 加入开机启动&lt;/span&gt
 
 
 &lt;p&gt;启动tftp&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service xinetd restart
+&lt;div class="highlight"&gt;&lt;pre&gt;service xinetd restart
 Stopping xinetd: &lt;span class="o"&gt;[&lt;/span&gt;  OK  &lt;span class="o"&gt;]&lt;/span&gt;
 Starting xinetd: &lt;span class="o"&gt;[&lt;/span&gt;  OK  &lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;2.在tftp根目录下创建启动文件供客户端下载:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 复制网卡启动文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 复制网卡启动文件&lt;/span&gt;
 cp /usr/lib/syslinux/pxelinux.0 /tftpboot
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;将安装光盘上/image/pxeboot/initrd.img和vmlinux复制到/tftpboot/中&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 挂载光盘&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 挂载光盘&lt;/span&gt;
 mount /dev/hdc /mnt
 &lt;span class="c"&gt;# 复制文件&lt;/span&gt;
 cp /mnt/isolinux/vmlinuz /tftpboot/
@@ -1415,7 +1415,7 @@ cp /mnt/isolinux/initrd.img /tftpboot/
 
 
 &lt;p&gt;创建pxe启动菜单:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建存放启动菜单的目录&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建存放启动菜单的目录&lt;/span&gt;
 &lt;span class="nb"&gt;cd&lt;/span&gt; /tftpboot
 mkdir pxelinux.cfg
 &lt;span class="c"&gt;# 从安装光盘内复制启动菜单命名为default&lt;/span&gt;
@@ -1424,7 +1424,7 @@ cp /mnt/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
 
 
 &lt;p&gt;编辑启动菜单:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /tftpboot/pxelinux.cfg/default
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /tftpboot/pxelinux.cfg/default
 default ColdOS
 prompt 1
 timeout 600
@@ -1436,12 +1436,12 @@ label ColdOS
 
 &lt;p&gt;3.安装配置dhcp服务器
 安装&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install dhcp
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install dhcp
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;配置&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建配置文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建配置文件&lt;/span&gt;
 cp /usr/share/doc/dhcp-3.0.5/dhcpd.conf.sample /etc/dhcpd.conf
 &lt;span class="c"&gt;# 编辑配置文件&lt;/span&gt;
 vi /etc/dhcpd.conf
@@ -1475,12 +1475,12 @@ Starting dhcpd: &lt;span class="o"&gt;[&lt;/span&gt; OK &lt;span class="o"&gt;]&
 
 &lt;p&gt;4.安装配置http服务器
 安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install httpd
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install httpd
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;首先把安装光盘里的内容拷到本地服务器上:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建目录&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建目录&lt;/span&gt;
 mkdir -p /pxe/cold/
 &lt;span class="c"&gt;# 复制文件&lt;/span&gt;
 &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; /mnt/ &amp;amp;amp;&amp;amp;amp; tar -cf - . &lt;span class="o"&gt;)&lt;/span&gt; ¦ &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold &amp;amp;amp;&amp;amp;amp; tar -xvf - &lt;span class="o"&gt;)&lt;/span&gt;
@@ -1488,7 +1488,7 @@ mkdir -p /pxe/cold/
 
 
 &lt;p&gt;配置apache&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 编辑配置文件:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 编辑配置文件:&lt;/span&gt;
 vi /etc/httpd/conf/httpd.conf
 &lt;span class="c"&gt;# 更改apache根目录(将配置文件中的两处/var/www改成/pxe)&lt;/span&gt;
 DocumentRoot &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;
@@ -1506,19 +1506,19 @@ DocumentRoot &lt;span class="s2"&gt;&amp;quot;/pxe&amp;quot;&lt;/span&gt;
 
 
 &lt;p&gt;配置完成后启动apache&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;service httpd start
+&lt;div class="highlight"&gt;&lt;pre&gt;service httpd start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;5.更改ks文件(ks文件可在CentOS图形界面下用kickstart程序直接生成,这里不做介绍)&lt;/p&gt;
 &lt;p&gt;因为网络安装,又需要部署cfengine的话,就需要更改cfengine的获取方式,首先要将文件夹打包:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /pxe/cold
 tar -cvf cfengine.tar cfengine/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后编辑ks文件&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 编辑ks文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 编辑ks文件&lt;/span&gt;
 vi /pxe/cold/isolinux/ks.cfg
 install
 cdrom
@@ -1565,7 +1565,7 @@ cp -r /cfengine /mnt/sysimage/usr/local/
 &lt;!--more--&gt;
 
 &lt;p&gt;首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 把依赖包添加到cfpkgs.list&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 把依赖包添加到cfpkgs.list&lt;/span&gt;
 vi cfpkgs.list
 &lt;span class="c"&gt;# 添加如下内容&lt;/span&gt;
 keyutils-libs-devel
@@ -1584,14 +1584,14 @@ openssl-devel
 
 
 &lt;p&gt;复制完包之后就需要编辑comps.xml,&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold/
 &lt;span class="c"&gt;# 编辑comps.xml&lt;/span&gt;
 vi repodata/comps.xml
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;向comps.xml添加这几个包group节点&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;group&amp;amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &amp;amp;lt;group&amp;amp;gt;
     &amp;amp;lt;id&amp;amp;gt;cfengine&amp;amp;lt;/id&amp;amp;gt;
     &amp;amp;lt;name&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
     &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cfengine&amp;amp;lt;/name&amp;amp;gt;
@@ -1616,23 +1616,23 @@ vi repodata/comps.xml
 
 
 &lt;p&gt;然后通过命令创建源:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;createrepo -g repodata/comps.xml  CentOS/
+&lt;div class="highlight"&gt;&lt;pre&gt;createrepo -g repodata/comps.xml  CentOS/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;计算comps.xml的sha值&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;sha1sum repodata/comps.xml 
+&lt;div class="highlight"&gt;&lt;pre&gt;sha1sum repodata/comps.xml 
 f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;编辑repomd.xml&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi repodata/repomd.xml
+&lt;div class="highlight"&gt;&lt;pre&gt;vi repodata/repomd.xml
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;将新的sha值更新到repomd.xml&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
     &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
     &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;f6f086a3c2b7eee2050580aa3e74c841dd406dfc&amp;amp;lt;/checksum&amp;amp;gt;
     &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
@@ -1641,12 +1641,12 @@ f6f086a3c2b7eee2050580aa3e74c841dd406dfc  repodata/comps.xml
 
 
 &lt;p&gt;接下来把我们编译好的cfengine(根据&lt;a title="安装配置cfengine实现自动化配置Linux/Unix服务器" href="/post/17" target="_blank"&gt;安装配置cfengine实现自动化配置Linux/Unix服务器&lt;/a&gt;)复制到定制的发行版的目录下:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp -r /usr/local/cfengine/ /usr/cold/
+&lt;div class="highlight"&gt;&lt;pre&gt;cp -r /usr/local/cfengine/ /usr/cold/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后编辑ks文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi isolinux/ks.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;vi isolinux/ks.cfg
 &lt;span class="c"&gt;# 在末尾添加如下内容&lt;/span&gt;
 %packages
 @core
@@ -1672,12 +1672,12 @@ cp -r /a/cfengine /mnt/sysimage/usr/local/
 
 
 &lt;p&gt;然后制作镜像:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/ColdOS-0.1-i386.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table .
+&lt;div class="highlight"&gt;&lt;pre&gt;mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/ColdOS-0.1-i386.iso -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table .
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后把镜像下载下来进行安装,安装完成后执行&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-key              &lt;span class="c"&gt;# 生成认证证书&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;/var/cfengine/bin/cf-key              &lt;span class="c"&gt;# 生成认证证书&lt;/span&gt;
 /var/cfengine/bin/cf-agent --bootstrap --policy-server cfhubip
 /var/cfengine/bin/cf-agent   &lt;span class="c"&gt;# 执行承诺&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -1685,7 +1685,7 @@ cp -r /a/cfengine /mnt/sysimage/usr/local/
 
 &lt;p&gt;即可从cfhubip那里下载承诺文件执行承诺,根据cfhub进行本地配置
 还可以根据%post更加自由的定制自己的系统,比如最小化安装后会无法使用本地镜像来使用yum可以定义一个局域网yum,在%post --nochroot添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cat &amp;amp;lt;&amp;amp;lt;__EOF__ &amp;amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
+&lt;div class="highlight"&gt;&lt;pre&gt;cat &amp;amp;lt;&amp;amp;lt;__EOF__ &amp;amp;gt; /mnt/sysimage/etc/yum.repos.d/CentOS-Media.repo
 &lt;span class="c"&gt;# CentOS-Media.repo&lt;/span&gt;
 &lt;span class="c"&gt;#  yum --disablerepo=\* --enablerepo=cold [command]&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;cold&lt;span class="o"&gt;]&lt;/span&gt;
@@ -1706,7 +1706,7 @@ mv /mnt/sysimage/etc/yum.repos.d/CentOS-Base.repo /mnt/sysimage/etc/yum.repos.d/
 anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
 install.log            : 记录安装过程中所安装的包
 我们首先要做的就是建立我们的自己发行版的目录,在一个剩余大小大于4G的分区创建自己发行版的目录,比如我的发行版叫ColdOS,然后挂载DVD光盘,把光盘上的内容复制到自己发行版的目录:&lt;!--more--&gt;&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir /usr/cold                 &lt;span class="c"&gt;# 创建发行版目录&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir /usr/cold                 &lt;span class="c"&gt;# 创建发行版目录&lt;/span&gt;
 mount /dev/hdc /mnt             &lt;span class="c"&gt;# 挂载IDE光驱&lt;/span&gt;
 &lt;span class="c"&gt;# 或&lt;/span&gt;
 mount /dev/cdrom /mnt
@@ -1721,7 +1721,7 @@ mount -o loop iso路径 /mnt
 
 
 &lt;p&gt;复制完成后发行版目录应该是:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;ls -la /usr/cold
+&lt;div class="highlight"&gt;&lt;pre&gt;ls -la /usr/cold
 total 511
 drwxr-xr-x  7 root root   6144 Apr 30  2010 .
 drwxr-xr-x 21 root root   4096 Dec 13 18:07 ..
@@ -1761,7 +1761,7 @@ drwxr-xr-x  2 root root   2048 Apr 30  2010 repodata
 
 
 &lt;p&gt;现在对系统进行精简:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;rm -f RELEASE-NOTES-*
+&lt;div class="highlight"&gt;&lt;pre&gt;rm -f RELEASE-NOTES-*
  rm -rf NOTES/
 rm -f RPM-GPG-KEY-*
 rm -f EULA
@@ -1771,7 +1771,7 @@ rm -f CentOS/*                          &lt;span class="c"&gt;# 删除所有rpm�
 
 
 &lt;p&gt;精简完后应该是这样子的:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;s -la /usr/cold/
+&lt;div class="highlight"&gt;&lt;pre&gt;s -la /usr/cold/
 total 20
 drwxr-xr-x  6 root root   4096 Dec 13 19:39 .
 drwxr-xr-x 16 root root   4096 Dec 13 23:14 ..
@@ -1786,7 +1786,7 @@ drwxr-xr-x  2 root root   4096 Dec 14 01:42 repodata
 
 
 &lt;p&gt;现在根据install.log创建packages.list,用来安装所需要的rpm包:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 根据install.log,提取其中的rpm包名,&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 根据install.log,提取其中的rpm包名,&lt;/span&gt;
 cat install.log ¦ grep Installing ¦ awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; ¦ awk -F&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{ if (NF==2){ print $2} else {print $1}}&amp;#39;&lt;/span&gt; &amp;amp;gt; packages.list
 &lt;span class="c"&gt;# 如果仅仅最小化安装就失去了定制自己的发行版的意义&lt;/span&gt;
 &lt;span class="c"&gt;# 向packages.list添加几个常用的工具,需要先用yum安装一遍记住包的依赖关系&lt;/span&gt;
@@ -1815,14 +1815,14 @@ man
 
 &lt;p&gt;复制完所需的RPM包之后我们如何来让系统安装的时候安装我们自定义添加的包呢?
 首先我们需要编辑repodata/comps.xml,但是comps.xml文件内容太杂,大概 2万多行,所以我们需要对comps.xml进行一个预处理:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# comps.xml包含最多的是各国语言&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# comps.xml包含最多的是各国语言&lt;/span&gt;
 &lt;span class="c"&gt;# 我们先去除不需要的语言,这里我只需要英文,&lt;/span&gt;
 sed -ri &lt;span class="s1"&gt;&amp;#39;/xml:lang/ {/en_GB/!d}&amp;#39;&lt;/span&gt; comps.xml  &lt;span class="c"&gt;# 如果需要保留其他语言比如中文,在en_GB后添加&amp;quot;¦zh_CN&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;去除了各国语言的comps.xml大概包含2000多行,现在我们要进一步处理,删除除了id为core的group的其他节点,删除完后comps.xml大概只剩下73行.现在我们要把我们自己添加的包顶一个group节点,在紧跟id为core的group节点(也就是&amp;lt;/group&amp;gt;后面)添加如下内容:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;group&amp;amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;amp;lt;group&amp;amp;gt;
     &amp;amp;lt;id&amp;amp;gt;useful&amp;amp;lt;/id&amp;amp;gt;
     &amp;amp;lt;name&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
     &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Useful&amp;amp;lt;/name&amp;amp;gt;
@@ -1851,7 +1851,7 @@ sed -ri &lt;span class="s1"&gt;&amp;#39;/xml:lang/ {/en_GB/!d}&amp;#39;&lt;/span
 
 
 &lt;p&gt;上面添加了一个id为useful的group节点,下面把这两个节点放到一个类别里:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;  &amp;amp;lt;category&amp;amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &amp;amp;lt;category&amp;amp;gt;
     &amp;amp;lt;id&amp;amp;gt;cold&amp;amp;lt;/id&amp;amp;gt;
     &amp;amp;lt;name&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
     &amp;amp;lt;name xml:lang&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;en_GB&amp;quot;&lt;/span&gt;&amp;amp;gt;Cold&amp;amp;lt;/name&amp;amp;gt;
@@ -1867,7 +1867,7 @@ sed -ri &lt;span class="s1"&gt;&amp;#39;/xml:lang/ {/en_GB/!d}&amp;#39;&lt;/span
 
 
 &lt;p&gt;然后根据我们的comps.xml创建源:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 安装所需要的工具&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 安装所需要的工具&lt;/span&gt;
 yum -y install createrepo anaconda anaconda-runtime
 &lt;span class="c"&gt;# 创建源&lt;/span&gt;
 createrepo -g /usr/cold/repodata/comps.xml /usr/cold/CentOS
@@ -1881,14 +1881,14 @@ Saving other metadata
 
 &lt;p&gt;由于我们编辑了comps.xml,所以comps.xml的sha值会改变,这样就会导致跟repomd.xml中所记录的不同,安装的时候会报错:An error occurred umounting the CD. Please make sure you'are not accessing  /mnt/source from the shell on tty2 an the click OK retry.
 所以我们更改完comps.xml要计算comps.xml的sha值&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 计算comps.xml的sha值&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 计算comps.xml的sha值&lt;/span&gt;
 sha1sum repodata/comps.xml
 c1d304cae50f969370a72d95e3cd2f71087fc73a  repodata/comps.xml
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;然后更新到repomd.xml中编辑repodata/repomd.xml找到location href="repodata/comps.xml"/的一个data节点把sha值更新为刚刚计算的&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&amp;amp;lt;data &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&amp;amp;gt;
     &amp;amp;lt;location &lt;span class="nv"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;repodata/comps.xml&amp;quot;&lt;/span&gt;/&amp;amp;gt;
     &amp;amp;lt;checksum &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;sha&amp;quot;&lt;/span&gt;&amp;amp;gt;c1d304cae50f969370a72d95e3cd2f71087fc73a&amp;amp;lt;/checksum&amp;amp;gt;
     &amp;amp;lt;timestamp&amp;amp;gt;1272586365&amp;amp;lt;/timestamp&amp;amp;gt;
@@ -1899,7 +1899,7 @@ c1d304cae50f969370a72d95e3cd2f71087fc73a  repodata/comps.xml
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;comps.xml里新加了一个咱们的useful 组,怎么使系统安装我们定义的包呢?怎么自定义安装过程呢?下面将讲解根据anaconda-ks.cfg文件定义安装过程:
 首先复制anaconda-ks.cfg到我们的发行版目录:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp ~/anaconda-ks.cfg /usr/cold/isolinux/ks.cfg         &lt;span class="c"&gt;# 复制到isolinux下并命名为ks.cfg&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;cp ~/anaconda-ks.cfg /usr/cold/isolinux/ks.cfg         &lt;span class="c"&gt;# 复制到isolinux下并命名为ks.cfg&lt;/span&gt;
 &lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold
 &lt;span class="c"&gt;# 编辑kickstart脚本&lt;/span&gt;
 vi isolinux/ks.cfg
@@ -1930,7 +1930,7 @@ part swap --size&lt;span class="o"&gt;=&lt;/span&gt;1 --grow --maxsize&lt;span c
 
 
 &lt;p&gt;然后就要修改配置文件使安装时使用ks.cfg的配置来安装,修改isolinux.cfg:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi isolinux/isolinux.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;vi isolinux/isolinux.cfg
 default linux                                 &lt;span class="c"&gt;# 默认启动的label&lt;/span&gt;
 prompt 1
 timeout 10                                    &lt;span class="c"&gt;# 等待时间为1秒钟&lt;/span&gt;
@@ -1958,7 +1958,7 @@ label memtest86
 
 
 &lt;p&gt;到这里配置就基本完成,下面就是制作iso镜像进行安装测试:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 首先安装工具&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 首先安装工具&lt;/span&gt;
 yum -y install mkisofs
 &lt;span class="c"&gt;# 创建iso镜像:&lt;/span&gt;
 &lt;span class="nb"&gt;cd&lt;/span&gt; /usr/cold
@@ -1980,17 +1980,17 @@ mkisofs -R -J -T -r -l -d -allow-multidot -allow-leading-dots -no-bak -o /usr/Co
 &lt;/ul&gt;
 &lt;p&gt;系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.&lt;/p&gt;
 &lt;p&gt;下载:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;wget https://cfengine.com/source-code/download?file&lt;span class="o"&gt;=&lt;/span&gt;cfengine-3.2.3.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;wget https://cfengine.com/source-code/download?file&lt;span class="o"&gt;=&lt;/span&gt;cfengine-3.2.3.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装依赖:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;yum -y install db4-devel pcre-devel openssl-devel flex
+&lt;div class="highlight"&gt;&lt;pre&gt;yum -y install db4-devel pcre-devel openssl-devel flex
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;编译安装:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;tar -zxvf download&lt;span class="se"&gt;\?&lt;/span&gt;file&lt;span class="se"&gt;\=&lt;/span&gt;cfengine-3.2.3.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;tar -zxvf download&lt;span class="se"&gt;\?&lt;/span&gt;file&lt;span class="se"&gt;\=&lt;/span&gt;cfengine-3.2.3.tar.gz
 &lt;span class="nb"&gt;cd &lt;/span&gt;cfengine-3.2.3/
 ./configure --prefix&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/cfengine
 make &amp;amp;amp;&amp;amp;amp; make install
@@ -1998,7 +1998,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 
 &lt;p&gt;为了保证cfengine正常工作创建cfengine工作目录:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;mkdir -p /var/cfengine/masterfiles  &lt;span class="c"&gt;# 存放要分发的承诺&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;mkdir -p /var/cfengine/masterfiles  &lt;span class="c"&gt;# 存放要分发的承诺&lt;/span&gt;
 mkdir /var/cfengine/inputs          &lt;span class="c"&gt;# 存放要执行的承诺&lt;/span&gt;
 mkdir /var/cfengine/outputs         &lt;span class="c"&gt;# 存放执行承诺的输出&lt;/span&gt;
 mkdir /var/cfengine/bin             &lt;span class="c"&gt;# 存放二进制文件&lt;/span&gt;
@@ -2006,7 +2006,7 @@ mkdir /var/cfengine/bin             &lt;span class="c"&gt;# 存放二进制文�
 
 
 &lt;p&gt;复制二进制文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
+&lt;div class="highlight"&gt;&lt;pre&gt;cp /usr/local/cfengine/sbin/cf-* /var/cfengine/bin/
 ls -l /var/cfengine/bin/
 total 964
 -rwxr-xr-x 1 root root 235958 Jan 13  2012 cf-agent           &lt;span class="c"&gt;# 执行承诺&lt;/span&gt;
@@ -2022,7 +2022,7 @@ total 964
 
 
 &lt;p&gt;一个cfengine的hello, world:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/inputs/test.cf                                               &lt;span class="c"&gt;# 新建一个承诺文件,添加下面内容&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /var/cfengine/inputs/test.cf                                               &lt;span class="c"&gt;# 新建一个承诺文件,添加下面内容&lt;/span&gt;
 &lt;span class="c"&gt;###################&lt;/span&gt;
 &lt;span class="c"&gt;# 这里顺便解释一下cfengine的语法,cfengine的语法大都如下&lt;/span&gt;
 &lt;span class="c"&gt;# &amp;amp;lt;它是什么&amp;amp;gt; &amp;amp;lt;它对什么起作用&amp;amp;gt; &amp;amp;lt;它叫什么&amp;amp;gt;&lt;/span&gt;
@@ -2045,13 +2045,13 @@ R: Hello world!                                                      &lt;span cl
 
 
 &lt;p&gt;为策略分发点创建配置文件:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
+&lt;div class="highlight"&gt;&lt;pre&gt;cp /usr/local/cfengine/share/cfengine/masterfiles/* /var/cfengine/masterfile
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;编辑策略文件:
 新建一个cftest1.cf承诺文件&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/cftest1.cf                  &lt;span class="c"&gt;# 新建一个cftest1.cf&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/cftest1.cf                  &lt;span class="c"&gt;# 新建一个cftest1.cf&lt;/span&gt;
 &lt;span class="c"&gt;# 添加如下内容:&lt;/span&gt;
 bundle agent &lt;span class="nb"&gt;test&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
@@ -2063,7 +2063,7 @@ reports:
 
 
 &lt;p&gt;然后编辑promises.cf文件加入执行这个承诺束的支持:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
 body common control
 &lt;span class="o"&gt;{&lt;/span&gt;
  &lt;span class="nv"&gt;bundlesequence&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;amp;gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;main&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;;                                &lt;span class="c"&gt;# 将test加入的承诺束队列&lt;/span&gt;
@@ -2082,7 +2082,7 @@ body common control
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;做好之后先本地同步,然后启动server:
 &lt;pre&gt;/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="err"&gt;到如下提示表示成功&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;到如下提示表示成功&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
 &lt;span class="err"&gt;```&lt;/span&gt;&lt;span class="n"&gt;bash&lt;/span&gt; 
 &lt;span class="o"&gt;-&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;gt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;Bootstrap&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="mf"&gt;172.16.1.1&lt;/span&gt; &lt;span class="n"&gt;completed&lt;/span&gt; &lt;span class="n"&gt;successfully&lt;/span&gt;
 &lt;span class="n"&gt;netstat&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;antlp&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;grep&lt;/span&gt; &lt;span class="n"&gt;cf&lt;/span&gt;
@@ -2091,7 +2091,7 @@ body common control
 
 
 &lt;p&gt;然后执行策略:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
+&lt;div class="highlight"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
 R: --&amp;amp;gt; CFE is running on cfhub
 R: I&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;am cfengine 3 client
 &lt;/pre&gt;&lt;/div&gt;
@@ -2099,7 +2099,7 @@ R: I&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;am cfengine 3 client
 
 &lt;p&gt;&amp;nbsp;&lt;/p&gt;
 &lt;p&gt;cfengine默认是让本机地址的16位网络连接同步的,如果新加入一个另一网段的设备允许同步,比如允许192.168.1.网段同步,编辑/var/cfengine/masterfiles/promises.cf,找到bundle common def&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
+&lt;div class="highlight"&gt;&lt;pre&gt;vi /var/cfengine/masterfiles/promises.cf
 bundle common def
 &lt;span class="o"&gt;{&lt;/span&gt;
  vars:                                            &lt;span class="c"&gt;# 定义变量&lt;/span&gt;
@@ -2112,12 +2112,12 @@ bundle common def
 
 
 &lt;p&gt;服务端基本配置完成,客户端(cfengine host),按照本文前面安装的部分进行安装,创建工作目录,复制二进制文件,不用创建配置文件和承诺,然后执行:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
+&lt;div class="highlight"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent  --bootstrap --policy-server 172.16.1.1
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;会出现和服务器执行一样的提示,就表示成功,如果提示连接不成功,尝试关闭防火墙.同步后执行本地策略:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
+&lt;div class="highlight"&gt;&lt;pre&gt;/var/cfengine/bin/cf-agent
 &lt;/pre&gt;&lt;/div&gt;
 
 

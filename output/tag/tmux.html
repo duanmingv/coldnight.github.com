@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -84,20 +76,20 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>使用Ubuntu 11.10不习惯默认搭载的Unity,Gnome 3也不尽人如意,也使用xfce/openbox,但使用都不是很好,没有Windows的体验好,然后接触了Awesome,Awesome是一款平铺式窗体管理器,Awesome会去除窗口的标题栏等.会使窗口尽量小的占用桌面空间,而且大部分窗口操作都可以通过键盘来进行操作,免除了各位身为键盘高手的码农们频繁拿鼠标的烦恼.</p>
 <h3>安装</h3>
 <p>Awesome Ubuntu下安装十分简单:</p>
-<div class="codehilite"><pre>sudo apt-get install awesome
+<div class="highlight"><pre>sudo apt-get install awesome
 </pre></div>
 
 
 <h3>配置</h3>
 <h4>拷贝配置文件</h4>
 <p>Awesome 的配置文件使用lua脚本,所以如果你会lua配置起来会得心应手,我们先拷贝一个基础配置文件,然后在这个基础上进行更改:</p>
-<div class="codehilite"><pre>cp /etc/xdg/awesome/rc.lua ~/.config/awesome <span class="c">#  ~/.confg下如没有awesome则手动创建</span>
+<div class="highlight"><pre>cp /etc/xdg/awesome/rc.lua ~/.config/awesome <span class="c">#  ~/.confg下如没有awesome则手动创建</span>
 </pre></div>
 
 
 <h4>配置自动启程序</h4>
 <p>使用awesome之后之前设置的自动启动就会失效,因为Awesome启动是通过配置文件控制的,在配置文件(~/.config/awesome/rc.lua)加上如下内容可以配置自启动程序:</p>
-<div class="codehilite"><pre><span class="n">autorun</span> <span class="o">=</span> <span class="kc">true</span>
+<div class="highlight"><pre><span class="n">autorun</span> <span class="o">=</span> <span class="kc">true</span>
 <span class="n">autorunApps</span> <span class="o">=</span> 
 <span class="p">{</span> 
     <span class="s2">&quot;</span><span class="s">pidgin&quot;</span><span class="p">,</span>
@@ -119,7 +111,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h4>使用gnome桌面元素</h4>
 <p>awesome仅仅是一款窗体管理器,如果不进行相应配置awesome会使用默认的x window元素,非常丑陋我们来配置awesome使用GNOME桌面管理:
 在宿主目录创建.xinitrc,添加如下内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 gnome-settings-daemon &amp;     <span class="c"># 使用gnome桌面元素</span>
 nm-applet --sm-disable &amp;    <span class="c"># 托盘栏添加网卡图标</span>
 <span class="nb">exec </span>awesome
@@ -127,7 +119,7 @@ nm-applet --sm-disable &amp;    <span class="c"># 托盘栏添加网卡图标</s
 
 
 <p>如果不生效,则执行下面命令:</p>
-<div class="codehilite"><pre>ln -sf ~/.xinitrc ~/.xprofile
+<div class="highlight"><pre>ln -sf ~/.xinitrc ~/.xprofile
 </pre></div>
 
 
@@ -135,23 +127,23 @@ nm-applet --sm-disable &amp;    <span class="c"># 托盘栏添加网卡图标</s
 <p>可以自己编写lua脚本对Awesome进行美化,当然还有很多已经写好的配置,我们叫他为主题
 awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下载.
 我们可以使用git将主题整体克隆下来</p>
-<div class="codehilite"><pre>git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
+<div class="highlight"><pre>git clone git://github.com/mikar/awesome-themes.git ~/.config/awesome/themes
 </pre></div>
 
 
 <p>然后修改~/.config/awesome/rc.lua的beautiful.init()的参数改为主题的路径:</p>
-<div class="codehilite"><pre><span class="n">beautiful</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">/your/home/path/.config/awesome/themes/bamboo/theme.lua&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">beautiful</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;</span><span class="s">/your/home/path/.config/awesome/themes/bamboo/theme.lua&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>如果背景图片无法显示,安装feh:</p>
-<div class="codehilite"><pre>sudo apt-get install feh
+<div class="highlight"><pre>sudo apt-get install feh
 </pre></div>
 
 
 <h3>使用</h3>
 <p>配置完成后注销使用Awesome会话登录,Awesome使用Win键作为主键,几个常用的为:</p>
-<div class="codehilite"><pre><span class="n">Win</span><span class="o">+</span><span class="n">num</span> <span class="err">可以在多个桌面切换</span>
+<div class="highlight"><pre><span class="n">Win</span><span class="o">+</span><span class="n">num</span> <span class="err">可以在多个桌面切换</span>
 <span class="n">Win</span><span class="o">+</span><span class="n">Ctrl</span><span class="o">+</span><span class="n">r</span> <span class="err">可以重启</span><span class="n">Awesome</span><span class="p">,</span>
 <span class="n">Win</span><span class="o">+</span><span class="n">k</span><span class="o">/</span><span class="n">j</span><span class="err">可以切换窗口</span><span class="p">(</span><span class="err">类</span><span class="n">Vim</span><span class="err">操作</span><span class="p">),</span>
 <span class="n">Win</span><span class="o">+</span><span class="n">m</span><span class="o">/</span><span class="n">n</span><span class="err">可以最大</span><span class="o">/</span><span class="err">小化窗口</span><span class="p">,</span>
@@ -162,7 +154,7 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 
 
 <p>下面给出完整的快捷键:</p>
-<div class="codehilite"><pre><span class="n">Mod4</span> <span class="o">+</span> <span class="n">Enter</span>           <span class="err">打开终端</span>                                               
+<div class="highlight"><pre><span class="n">Mod4</span> <span class="o">+</span> <span class="n">Enter</span>           <span class="err">打开终端</span>                                               
 <span class="n">Mod4</span> <span class="o">+</span> <span class="n">r</span>               <span class="err">执行程序或命令</span>
 <span class="n">Mod4</span> <span class="o">+</span> <span class="n">w</span>               <span class="err">打开</span><span class="n">Awesome</span><span class="err">主菜单（鼠标右键关闭）</span>                                                   
 <span class="n">Mod4</span> <span class="o">+</span> <span class="n">Shift</span> <span class="o">+</span> <span class="n">c</span>       <span class="err">关闭当前窗口或应用</span>                                     
@@ -208,13 +200,13 @@ awesome的所有主题可以在 https://github.com/mikar/awesome-themes 上下�
 <h2>Tmux</h2>
 <p>tmux是一款替代screen的产品,除了拥有screen的基本功能外,还有窗口分隔,多人共享等功能.尤其是窗口分隔功能异常突出.同时tmux简化了很多快捷键.还支持vi/emacs风格的快捷键绑定</p>
 <h3>安装</h3>
-<div class="codehilite"><pre>sudo apt-get install tmux
+<div class="highlight"><pre>sudo apt-get install tmux
 </pre></div>
 
 
 <h3>配置</h3>
 <p>tmux 使用~/.tmux.conf作为配置文件,所以我们可以将配置添加到这个文件中,网上很多资料都将前缀键绑定到Ctrl+a,但我喜欢使用Ctrl+a跳到行首,所以我还是使用默认的前缀键Ctrl+b.下面是我的配置文件:</p>
-<div class="codehilite"><pre>set <span class="o">-</span>g default<span class="o">-</span>terminal <span class="s">&quot;screen-256color&quot;</span> 
+<div class="highlight"><pre>set <span class="o">-</span>g default<span class="o">-</span>terminal <span class="s">&quot;screen-256color&quot;</span> 
 set <span class="o">-</span>g display<span class="o">-</span>time <span class="m">3000</span>                   
 set <span class="o">-</span>g escape<span class="o">-</span>time <span class="m">0</span>
 set <span class="o">-</span>g history<span class="o">-</span>limit <span class="m">65535</span>                 
@@ -314,7 +306,7 @@ set <span class="o">-</span>g status<span class="o">-</span>right <span class="s
 
 <h3>使用</h3>
 <p>我使用terminator配合tmux使用,更改terminator的配置(~/.config/terminator/conf)</p>
-<div class="codehilite"><pre><span class="k">[profiles]</span>
+<div class="highlight"><pre><span class="k">[profiles]</span>
   <span class="k">[[default]]</span>
     <span class="na">login_shell</span> <span class="o">=</span> <span class="s">True</span>
 <span class="s">    use_custom_command = True   # 允许自定义命令</span>
@@ -328,7 +320,7 @@ set <span class="o">-</span>g status<span class="o">-</span>right <span class="s
 
 
 <h3>常用快捷键:</h3>
-<div class="codehilite"><pre><span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">-</span> <span class="err">创建一个水平分隔</span> 
+<div class="highlight"><pre><span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">-</span> <span class="err">创建一个水平分隔</span> 
 <span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="o">|</span> <span class="err">创建一个垂直分隔</span>
 <span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">j</span><span class="o">/</span><span class="n">k</span><span class="o">/</span><span class="n">h</span><span class="o">/</span><span class="n">l</span> <span class="err">上下左右切换分割窗</span>
 <span class="n">Ctrl</span><span class="o">+</span><span class="n">b</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">j</span><span class="o">/</span><span class="n">k</span><span class="o">/</span><span class="n">h</span><span class="o">/</span><span class="n">l</span> <span class="err">向上下左右扩展分割窗大小</span>

@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -79,17 +71,17 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>下面介绍一下安装:</p>
 <p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
 <p>下载源码:</p>
-<div class="codehilite"><pre>git clone git://github.com/coldnight/clubot.git
+<div class="highlight"><pre>git clone git://github.com/coldnight/clubot.git
 </pre></div>
 
 
 <p>安装依赖:</p>
-<div class="codehilite"><pre>easy_install pyxmpp2
+<div class="highlight"><pre>easy_install pyxmpp2
 </pre></div>
 
 
 <p>修改settings.py文件,填入bot的账户和密码,执行:</p>
-<div class="codehilite"><pre>python clubot.py
+<div class="highlight"><pre>python clubot.py
 </pre></div>
 
 

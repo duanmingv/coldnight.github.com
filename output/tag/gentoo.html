@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -82,20 +74,20 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 ip:192.168.3.1</p>
 <p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
 首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="codehilite"><pre><span class="n">emerge</span> <span class="n">vim</span>
+<div class="highlight"><pre><span class="n">emerge</span> <span class="n">vim</span>
 </pre></div>
 
 
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="codehilite"><pre><span class="nb">cd</span> /usr/portage/dev-lang/python/
+<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang/python/
 emerge python-2.7.2-r3.ebuild
 </pre></div>
 
 
 <p>等待安装完成后使系统默认使用python2.7,先查看默认项</p>
-<div class="codehilite"><pre><span class="n">eselect</span> <span class="n">python</span> <span class="n">list</span>
+<div class="highlight"><pre><span class="n">eselect</span> <span class="n">python</span> <span class="n">list</span>
 <span class="n">Available</span> <span class="n">Python</span> <span class="n">interpreters</span><span class="o">:</span>
   <span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="n">python2</span><span class="mf">.7</span> 
   <span class="p">[</span><span class="mi">2</span><span class="p">]</span>   <span class="n">python3</span><span class="mf">.2</span> <span class="o">*</span>
@@ -103,28 +95,28 @@ emerge python-2.7.2-r3.ebuild
 
 
 <p>默认使用3.2,选择python2.7</p>
-<div class="codehilite"><pre>eselect python <span class="nb">set </span>1
+<div class="highlight"><pre>eselect python <span class="nb">set </span>1
 </pre></div>
 
 
 <p>选择过后别忘记执行:</p>
-<div class="codehilite"><pre>python-updater
+<div class="highlight"><pre>python-updater
 </pre></div>
 
 
 <p>好了我已经将python换成了常用的python2.7,下面来安装easy_install:</p>
-<div class="codehilite"><pre>emerge setuptools
+<div class="highlight"><pre>emerge setuptools
 </pre></div>
 
 
 <p>安装完后使用easy_install安装bottle框架和mongodb驱动:</p>
-<div class="codehilite"><pre>easy_install bottle
+<div class="highlight"><pre>easy_install bottle
 easy_install pymogon
 </pre></div>
 
 
 <p>安装uwsgi/nginx/virtualenv:</p>
-<div class="codehilite"><pre>emerge nginx
+<div class="highlight"><pre>emerge nginx
 emerge uwsgi
 emerge virtualenv
 </pre></div>
@@ -132,7 +124,7 @@ emerge virtualenv
 
 <h3>使用virtualenv创建应用</h3>
 <p>我们使用virtualenv创建一个应用:</p>
-<div class="codehilite"><pre>mkdir /code/python
+<div class="highlight"><pre>mkdir /code/python
 virtualenv /code/python
 <span class="nb">source </span>bin/activate
 </pre></div>
@@ -141,13 +133,13 @@ virtualenv /code/python
 <p>然后查看应用目录下会多出几个目录.</p>
 <h3>配置uWSGI</h3>
 <p>首先创建一个uwsgi配置文件,并编辑它:</p>
-<div class="codehilite"><pre>cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
+<div class="highlight"><pre>cp /etc/conf.d/uwsgi /etc/conf.d/uwsgi.py
 vi /etc/conf.d/uwsgi.py
 </pre></div>
 
 
 <p>改成内如如下:</p>
-<div class="codehilite"><pre><span class="cp"># Distributed under the terms of the GNU General Public License v2</span>
+<div class="highlight"><pre><span class="cp"># Distributed under the terms of the GNU General Public License v2</span>
 <span class="cp"># $Header: /var/cvsroot/gentoo-x86/www-servers/uwsgi/files/uwsgi.confd,v 1.1 2011/05/31 19:49:07 maksbotan Exp $</span>
 
 <span class="cp"># DO NOT MODIFY THIS FILE DIRECTLY! CREATE A COPY AND MODIFY THAT INSTEAD!</span>
@@ -198,12 +190,12 @@ vi /etc/conf.d/uwsgi.py
 
 
 <p>然后创建bottle.xml配置文件:</p>
-<div class="codehilite"><pre>vi /code/bottle.xml
+<div class="highlight"><pre>vi /code/bottle.xml
 </pre></div>
 
 
 <p>内容如下:</p>
-<div class="codehilite"><pre><span class="nt">&lt;uwsgi&gt;</span>
+<div class="highlight"><pre><span class="nt">&lt;uwsgi&gt;</span>
         <span class="nt">&lt;socket&gt;</span>/var/tmp/bottle.sock<span class="nt">&lt;/socket&gt;</span>
         <span class="nt">&lt;home&gt;</span>/code/python<span class="nt">&lt;/home&gt;</span>
         <span class="nt">&lt;chdir&gt;</span>/code/python<span class="nt">&lt;/chdir&gt;</span>
@@ -219,23 +211,23 @@ vi /etc/conf.d/uwsgi.py
 
 <p>其中<module></module>定义的就是你的web程序,也就是/code/python下要有一个index.py.</p>
 <p>配置完毕后创建启动脚本:</p>
-<div class="codehilite"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span>
+<div class="highlight"><pre><span class="n">ln</span> <span class="o">-</span><span class="n">sf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span>
 </pre></div>
 
 
 <p>并加入开机启动:</p>
-<div class="codehilite"><pre><span class="n">rc</span><span class="o">-</span><span class="n">update</span> <span class="n">add</span> <span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span> <span class="k">default</span>
+<div class="highlight"><pre><span class="n">rc</span><span class="o">-</span><span class="n">update</span> <span class="n">add</span> <span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span> <span class="k">default</span>
 </pre></div>
 
 
 <h3>配置nginx</h3>
 <p>编辑配置文件:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">conf</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">conf</span>
 </pre></div>
 
 
 <p>修改内容如下:</p>
-<div class="codehilite"><pre>    <span class="n">server</span> <span class="p">{</span>
+<div class="highlight"><pre>    <span class="n">server</span> <span class="p">{</span>
         <span class="n">listen</span> <span class="mf">192.168.3.1</span><span class="o">:</span><span class="mi">80</span><span class="p">;</span>
         <span class="n">server_name</span> <span class="n">linuxzen</span><span class="p">.</span><span class="n">com</span><span class="p">;</span>
 
@@ -256,13 +248,13 @@ vi /etc/conf.d/uwsgi.py
 
 
 <p>同样将nginx作为开机启动:</p>
-<div class="codehilite"><pre><span class="n">rc</span><span class="o">-</span><span class="n">update</span> <span class="n">add</span> <span class="n">nginx</span> <span class="k">default</span>
+<div class="highlight"><pre><span class="n">rc</span><span class="o">-</span><span class="n">update</span> <span class="n">add</span> <span class="n">nginx</span> <span class="k">default</span>
 </pre></div>
 
 
 <h2>测试</h2>
 <p>首先创建一个bottle程序供测试:</p>
-<div class="codehilite"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">py</span>
 <span class="err">参考内容如下</span><span class="o">:</span>
 <span class="cp">#!/usr/bin/env python</span>
 <span class="cp">#-*- coding: utf8 -*-</span>
@@ -285,7 +277,7 @@ vi /etc/conf.d/uwsgi.py
 
 
 <p>然后启动nginx和uwsgi:</p>
-<div class="codehilite"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">start</span>
+<div class="highlight"><pre><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">start</span>
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">uwsgi</span><span class="p">.</span><span class="n">py</span> <span class="n">start</span>
 </pre></div>
 

@@ -19,14 +19,6 @@
     <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
     <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
-    <script type="text/javascript">
-    $(function(){
-        $("a[href^='http://']").each(function(){
-          this.target = "_blank";
-        });
-    });
-    </script>
-
 </head>
 
 <body>
@@ -88,7 +80,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>下面将介绍我是如何做的, 并在最后附上如何部署的</p>
 <h3>指定模板</h3>
 <p>首先需要更改默认模板</p>
-<div class="codehilite"><pre>    <span class="k">let</span> <span class="k">g</span>:vimwiki_list <span class="p">=</span> [{<span class="s1">&#39;path&#39;</span>: <span class="s1">&#39;~/vimwiki&#39;</span><span class="p">,</span>
+<div class="highlight"><pre>    <span class="k">let</span> <span class="k">g</span>:vimwiki_list <span class="p">=</span> [{<span class="s1">&#39;path&#39;</span>: <span class="s1">&#39;~/vimwiki&#39;</span><span class="p">,</span>
     \    <span class="s1">&#39;path_html&#39;</span>: <span class="s1">&#39;~/vimwiki_html&#39;</span><span class="p">,</span>
     \    <span class="s1">&#39;template_path&#39;</span>: <span class="s1">&#39;~/vimwiki/template&#39;</span><span class="p">,</span>
     \    <span class="s1">&#39;template_default&#39;</span>: <span class="s2">&quot;default.tpl&quot;</span>}]
@@ -96,7 +88,7 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>并将默认的模板作为模板进行修改</p>
-<div class="codehilite"><pre>mkdir -p ~/vimwiki/template
+<div class="highlight"><pre>mkdir -p ~/vimwiki/template
 cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 </pre></div>
 
@@ -105,7 +97,7 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 <p>将jqeury和bootstrap的js和css文件放到 ~/vimwik_html目录下,</p>
 <p>为了统一修改和发布 Wiki, 我将静态文件放在 ~/vimwiki 的 static 目录下, 
 并在 ~/vimwiki_html 创建一个软链链接到这个目录, 下面是我 static 目录的一个快照</p>
-<div class="codehilite"><pre><span class="nv">$ </span>tree ~/vimwiki/static 
+<div class="highlight"><pre><span class="nv">$ </span>tree ~/vimwiki/static 
 ~/vimwiki/static
 ├── bootstrap
 │   ├── css
@@ -130,13 +122,13 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 
 <p>其中<code>wiki.js</code>和<code>wiki.css</code>分别是自定义的Javascript和CSS
 然后在~/vimwiki_html中创建链接</p>
-<div class="codehilite"><pre><span class="nv">$ </span>ln -s ~/vimwiki/static ~/vimwiki_html/static
+<div class="highlight"><pre><span class="nv">$ </span>ln -s ~/vimwiki/static ~/vimwiki_html/static
 </pre></div>
 
 
 <h3>在模板中引用静态文件</h3>
 <p>结合 <code>%root_path%</code>模板变量引入静态文件</p>
-<div class="codehilite"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;Stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;%root_path%static/css/wiki.css&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;Stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;%root_path%static/css/wiki.css&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;Stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href=</span><span class="s">&quot;%root_path%static/bootstrap/css/bootstrap.min.css&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;%root_path%static/js/jquery-1.8.3.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;%root_path%static/bootstrap/js/bootstrap.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
@@ -146,7 +138,7 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 
 <h3>创建导航</h3>
 <p>根据 Boostrap 文档中的例子很容易就可以创建一个好看的导航</p>
-<div class="codehilite"><pre><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;navbar navbar-default navbar-inverse&quot;</span> <span class="na">role=</span><span class="s">&quot;navigation&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span class="nt">&lt;nav</span> <span class="na">class=</span><span class="s">&quot;navbar navbar-default navbar-inverse&quot;</span> <span class="na">role=</span><span class="s">&quot;navigation&quot;</span><span class="nt">&gt;</span>
  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;navbar-header&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;button</span> <span class="na">data-target=</span><span class="s">&quot;.bs-navbar-collapse&quot;</span> <span class="na">data-toggle=</span><span class="s">&quot;collapse&quot;</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">class=</span><span class="s">&quot;navbar-toggle&quot;</span><span class="nt">&gt;</span>
@@ -170,7 +162,7 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 
 
 <p>然后将 content 变量放在 'contaniner' 中</p>
-<div class="codehilite"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container content-body&quot;</span><span class="nt">&gt;</span>
+<div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container content-body&quot;</span><span class="nt">&gt;</span>
     %content%
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
@@ -178,12 +170,12 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 
 <h3>替换样式和将 toc 移动到左侧</h3>
 <p>替换表格样式</p>
-<div class="codehilite"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;table table-bordered table-striped table-hover&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;table table-bordered table-striped table-hover&quot;</span><span class="p">);</span>
 </pre></div>
 
 
 <p>然后将 <code>toc</code> 移动到右侧, 并使用 <code>affix</code> 效果</p>
-<div class="codehilite"><pre><span class="c1">// 生成左侧toc导航</span>
+<div class="highlight"><pre><span class="c1">// 生成左侧toc导航</span>
 <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">().</span><span class="nx">trim</span><span class="p">()){</span>
     <span class="kd">var</span> <span class="nx">html</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.content-body&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">();</span>
     <span class="kd">var</span> <span class="nx">toc_html</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;toc&quot;&gt;&#39;</span><span class="o">+</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.toc&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span>
@@ -220,7 +212,7 @@ cp ~/.vim/bundle/vimwiki/autoload/vimwiki/default.tpl ~/vimwiki/template
 <h2>部署</h2>
 <p>我将我的vimwiki上传到了 <a href="https://bitbucket.org">bitbucket</a>, 然后添加了一个定义更新的脚本,
 下面是脚本内容:</p>
-<div class="codehilite"><pre><span class="c">#!/bin/sh</span>
+<div class="highlight"><pre><span class="c">#!/bin/sh</span>
 <span class="nv">PWD</span><span class="o">=</span><span class="s2">&quot;/home/yourusername/vimwiki&quot;</span>
 <span class="nb">cd</span> <span class="s2">&quot;$PWD&quot;</span>
 git pull | grep <span class="s2">&quot;Allready up-to-date.&quot;</span> 2&gt;&amp;1 &gt; /dev/null
@@ -234,7 +226,7 @@ git pull | grep <span class="s2">&quot;Allready up-to-date.&quot;</span> 2&gt;&a
 
 
 <p>上面脚本命名为 <code>update.sh</code> 保存在 <code>~/vimwiki</code> 下, 通过 <code>crontab</code> 进行定时调用</p>
-<div class="codehilite"><pre><span class="nv">$ </span>crontab -l
+<div class="highlight"><pre><span class="nv">$ </span>crontab -l
 */30 * * * * /bin/bash /home/yourusername/vimwiki/update.sh &amp;&gt; /dev/null
 </pre></div>
 
