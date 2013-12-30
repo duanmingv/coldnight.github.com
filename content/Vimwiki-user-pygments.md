@@ -1,4 +1,4 @@
-title: 使用 Pygemnts 对 Vimwiki 进行代码高亮
+title: 使用 Pygments 对 Vimwiki 进行代码高亮
 tags: vim, vimwiki, pygments, python, highlight
 category: Vim
 date: 2013-12-27
