@@ -58,6 +58,44 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html"><h2>分享Vim两种好用的功能:状态行和空白字符可见</h2></a>
+        <div class= "well small"> Sat 29 September 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>马上要放假了,没事折腾了一下Vim发现了两个非常棒的功能,一个是给Vim添加一个状态栏,一个是可以在编辑的时候显示空白,</p>
+<p>我的状态栏显示了:
+正在编辑的文件名,
+选项
+是Git显示git分支(需要fugitive插件)
+文件类型
+当前目录
+当前字符的ASCII和16进制码
+右边是当前光标所在行/列,文件的位置的百分比,和文件的长度
+fugitive 可以在git获得:</p>
+<div class="highlight"><pre><span class="n">git</span> <span class="n">clone</span> <span class="n">http</span><span class="o">:</span><span class="c1">//github.com/tpope/vim-fugitive.git</span>
+</pre></div>
+
+
+<p>将plugin目录下的fugitive.vim复制到~/.vim/plugin下
+在~/.vimrc添加如下内容</p>
+<div class="highlight"><pre><span class="k">if</span> has<span class="p">(</span><span class="s1">&#39;statusline&#39;</span><span class="p">)</span>
+    <span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">=</span>%<span class="p">&lt;</span>%<span class="k">f</span>\   <span class="c">&quot; 文件名</span>
+    <span class="k">set</span> <span class="nb">statusline</span><span class="p">+=</span>%<span class="k">w</span>%<span class="k">h</span>%<span class="k">m</span>%<span class="k">r</span> <span class="c">&quot; 选项</span>
+    <span class="k">set ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h2>Linux下配置vim一键编译C/C++并执行</h2></a>
         <div class= "well small"> Thu 05 April 2012
 

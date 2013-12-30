@@ -58,6 +58,44 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html"><h2>用Python对各种编程语言进行代码高亮</h2></a>
+        <div class= "well small"> Sat 29 September 2012
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>做了一个在线代码高亮的项目,因为写的Gtalk群Bot需要这个功能支持,贴到第三方怕被人给封,所以干脆想自己写一个,强大的Python一如既往没让我失望,一个强大的Pygments模块可以对多种(很多)语言进行代码高亮</p>
+<p>下面来介绍一下它:</p>
+<p>首先安装很简单,使用easy_install来进行安装:</p>
+<div class="highlight"><pre>easy_install pygments
+</pre></div>
+
+
+<p>安装完后我们来使用,Python的简单不会让大家失望:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">PythonLexver</span>
+<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
+
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="s">&#39;emacs&#39;</span><span class="p">,</span> <span class="n">linenos</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="s">&#39;print &quot;hello, world&quot;&#39;</span><span class="p">,</span> <span class="n">PythonLexer</span><span class="p">(),</span> <span class="n">formatter</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">code</span>
+</pre></div>
+
+
+<h5>结果</h5>
+<div class="highlight"><pre><span class="s1">&#39;&lt;table class=&quot;highlighttable ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html"><h2>Python 优雅的操作字典</h2></a>
         <div class= "well small"> Mon 17 September 2012
 
@@ -361,45 +399,6 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
     <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html">read more</a></div>
-    </div>	
-				
-
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html"><h2>bottle使用Python装饰器巧妙解决用户验证</h2></a>
-        <div class= "well small"> Sat 16 June 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><p>上篇文章发布了一个自己写的用bottle写的web程序,其中收获最大就是Python装饰器的使用.前几天也是比较忙,所以没能分享出来,今天就给大家分享一下.</p>
-<p>首先来分析下需求,web程序后台需要认证,后台页面包含多个页面,最普通的方法就是为每个url添加认证,但是这样就需要每个每个绑定url的后台函数都需要添加类似或者相同的代码,但是这样做代码就过度冗余,而且不利于扩展.</p>
-<p>接下来我们先不谈及装饰器,我们都知道Python是个很强大的语言,她可以将函数当做参数传递给函数,最简单的:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">p</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&#39;Hello,world&#39;</span>
-
-<span class="k">def</span> <span class="nf">funcfactor</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s">&#39;calling function named&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
-    <span class="n">func</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&#39;end&#39;</span>
-
-<span class="n">funcfactor</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-<span class="c"># 输出为:</span>
-<span class="c"># calling function named p</span>
-<span class="c"># Hello,world</span>
-<span class="c"># end</span>
-</pre></div>
-
-
-<p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
-<p>我们还可以这么做:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
     </div>	
 				
 <div class="pagination">

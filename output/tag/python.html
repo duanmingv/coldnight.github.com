@@ -58,8 +58,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h1>PyQt + QML 快速开发GUI总结</h1></a>
-Wed 06 November 2013
+            <a href="http://www.linuxzen.com/shi-yong-pygemnts-dui-vimwiki-jin-xing-dai-ma-gao-liang.html"><h1>使用 Pygemnts 对 Vimwiki 进行代码高亮</h1></a>
+Fri 27 December 2013
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -68,7 +68,175 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
         </div>
         
-        <div><p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+        <div><p>Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
+所以不想使用, 比较倾向使用 Pygments 在 Vimwiki 生成 HTML 的时候对代码进行高亮.</p>
+<h1>尝试</h1>
+<h2>使用 custom_wiki2html 选项</h2>
+<p>仔细的看了 Vimwiki 的帮助文档, 发现有一个 custom_wiki2html 
+(<code>:h vimwiki-option-custom_wiki2html</code>) 的选项可以指定自己
+的脚本来处理 wiki2html, 尝试了一下, 发现这个脚本是在生成 HTML 之前调用,
+而且如果对 wiki 文件处理之后无法替换回原来的内容(后来发现这个仅仅是对使用 Markdown
+语法作为 Wiki 语法设定的), 所以放弃了.</p>
+<h2>Fork 仓库, 更改代码</h2>
+<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库
+clone 到本地进行修改, 通过直接 hack 代码在 Vimwiki 处理之前对代码进行高亮.</p>
+<h3>思路</h3>
+<p>粗略的看了下代码, Vimwiki 是将文件读入, 然后逐行处理, 看来只能在文件读取之后
+对内容做一些操作.</p>
+<p>Vimscript 的 readfile 返回一个列表, 每一个元素代表一行, 编写一个函数处理这个
+列表, 并返回, 在 autoload/vimwiki/html.vim 里的 第 1350 行找到
+<code>vimwiki#html#CustomWiki2HTML</code> 函数, 并在其上面添加一个函数</p>
+<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:highlight_code_with_pygments<span class="p">(</span>lsource<span class="p">)</span> <span class="c">&quot;{{{</span>
+  <span class="k">if</span> <span class="p">!</span>has<span class="p">(</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">a</span>:lsource
+  <span class="k">endif</span>
+  <span class="k">let</span> <span class="k">s</span>:lsource <span class="p">=</span> deepcopy<span class="p">(</span><span class="k">a</span>:lsource<span class="p">)</span>
+  <span class="k">let</span> <span class="k">s</span>:content <span class="p">=</span> <span class="s1">&#39;&#39;</span>
+python <span class="p">&lt;&lt;</span>EOF
+<span class="nb">def</span> handle<span class="p">()</span>:
+  import <span class="k">vim</span>
+
+  import <span class="k">re</span>
+  import os
+
+  <span class="k">try</span>:
+    import pygments
+  except ImportError:
+    <span class="k">vim</span>.command<span class="p">(</span><span class="s2">&quot;echoerr &#39;Cannot import pygments library, please install it.&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+  from pygments.lexers import get_lexer_by_name
+  from pygments.formatters import HtmlFormatter
+  from pygments import <span class="nb">highlight</span>
+  from pygments.util import ClassNotFound
+
+  CODE_RE <span class="p">=</span> <span class="k">re</span>.<span class="k">compile</span><span class="p">(</span><span class="k">r</span><span class="s1">&#39;\n({{{(\w*?)\s(.*?)\s}}})&#39;</span><span class="p">,</span> <span class="k">re</span>.M<span class="p">|</span><span class="k">re</span>.U<span class="p">|</span><span class="k">re</span>.S<span class="p">)</span>
+
+  data <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s2">&quot;s:lsource&quot;</span><span class="p">)</span>
+  content <span class="p">=</span> <span class="s2">&quot;\n&quot;</span>.<span class="k">join</span><span class="p">(</span>data<span class="p">)</span>
+  <span class="k">new</span> <span class="p">=</span> False
+  css_class <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s2">&quot;VimwikiGet(&#39;pygments_class&#39;)&quot;</span><span class="p">)</span>
+  <span class="k">for</span> source<span class="p">,</span> lang_type<span class="p">,</span> code <span class="k">in</span> CODE_RE.findall<span class="p">(</span>content<span class="p">)</span>:
+    lang_type <span class="p">=</span> lang_type or <span class="s2">&quot;text&quot;</span>
+    <span class="k">try</span>:
+      lexer <span class="p">=</span> get_lexer_by_name<span class="p">(</span>lang_type<span class="p">)</span>
+    except ClassNotFound:
+      lexer <span class="p">=</span> get_lexer_by_name<span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+
+    formatter <span class="p">=</span> HtmlFormatter<span class="p">(</span><span class="nb">encoding</span><span class="p">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span> cssclass<span class="p">=</span>css_class<span class="p">,</span>
+                              noclasses<span class="p">=</span>False<span class="p">,</span> style<span class="p">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+                              linenos <span class="p">=</span> None<span class="p">,</span> <span class="nb">nowrap</span> <span class="p">=</span> True<span class="p">)</span>
+
+    hcode <span class="p">=</span> <span class="nb">highlight</span><span class="p">(</span>code<span class="p">,</span> lexer<span class="p">,</span> formatter<span class="p">)</span>
+    content <span class="p">=</span> content.replace<span class="p">(</span>source<span class="p">,</span> hcode<span class="p">)</span>
+    <span class="k">if</span> <span class="k">new</span> <span class="k">is</span> False:
+      <span class="k">new</span> <span class="p">=</span> True
+
+  <span class="k">if</span> <span class="k">new</span>:
+    <span class="k">vim</span>.command<span class="p">(</span><span class="s2">&quot;let s:content=&#39;%s&#39;&quot;</span> % content.replace<span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;\&#39;&quot;</span><span class="p">))</span>
+
+handle<span class="p">()</span>
+
+EOF
+
+  <span class="k">if</span> <span class="k">s</span>:content <span class="p">!=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">let</span> <span class="k">s</span>:lsource <span class="p">=</span> split<span class="p">(</span><span class="k">s</span>:content<span class="p">,</span> <span class="s1">&#39;\n&#39;</span><span class="p">)</span>
+  <span class="k">endif</span>
+
+  <span class="k">return</span> <span class="k">s</span>:lsource
+<span class="k">endfunction</span> <span class="c">&quot;}}}</span>
+</pre></div>
+
+
+<p>然后在 <code>vimwiki#html#Wiki2HTML</code> 函数内读取文件的下面调用此函数</p>
+<div class="highlight"><pre>...
+    <span class="k">let</span> lsource <span class="p">=</span> readfile<span class="p">(</span>wikifile<span class="p">)</span>
+
+    <span class="k">let</span> lsource <span class="p">=</span> <span class="k">s</span>:highlight_code_with_pygments<span class="p">(</span>lsource<span class="p">)</span>
+...
+</pre></div>
+
+
+<p>当然需要还需要拷贝 css 文件, 修改模板等, 这里不一一详述</p>
+<h3>结果</h3>
+<p>好吧, 确实工作了, 但是新的问题出来了, 高亮后替换成HTML的内容会被 Vimwiki 第二次处理
+所以 HTML 的格式全乱了,  CSS 样式也肯定不行了. 找了一下没有办法能避免 Vimwiki 不
+处理一段内容(为什么已经是 HTMl 了 Vimwiki 还要处理呢)</p>
+<p>上述方法不行, 那只能再想想办法了</p>
+<h3>使用特殊的注释: %nowiki</h3>
+<p>为了解决上面重复处理已转化成 HTML 内容的问题, 我添加 %nowiki 语法,
+以 %nowiki 这个开头的行将不处理. 然后将高亮的代码替换成 %nowiki 开始的行,
+将上面 Python 相关代码加上如下内容:</p>
+<div class="highlight"><pre><span class="o">...</span>
+<span class="n">hcode</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
+
+<span class="c"># 添加以下语句</span>
+<span class="n">hcode</span> <span class="o">=</span> <span class="s">&quot;%nowiki&quot;</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">%nowiki&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hcode</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">))</span>
+
+<span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">hcode</span><span class="p">)</span>
+<span class="o">..</span>
+</pre></div>
+
+
+<p>然后找到 <code>s:parse_line</code> 函数, 在处理 toc 的下面添加</p>
+<div class="highlight"><pre><span class="c">  &quot; toc -- placeholder &quot;{{{</span>
+  <span class="k">if</span> <span class="p">!</span>processed
+    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^\s*%toc&#39;</span>
+      <span class="k">let</span> processed <span class="p">=</span> <span class="m">1</span>
+      <span class="k">let</span> param <span class="p">=</span> matchstr<span class="p">(</span>line<span class="p">,</span> <span class="s1">&#39;^\s*%toc\s\zs.*&#39;</span><span class="p">)</span>
+      <span class="k">let</span> state.placeholder <span class="p">=</span> [<span class="s1">&#39;toc&#39;</span><span class="p">,</span> param]
+    <span class="k">endif</span>
+  <span class="k">endif</span>
+<span class="c">  &quot;}}}</span>
+
+<span class="c">  &quot; 添加处理 nowiki</span>
+<span class="c">  &quot; nowiki &quot;{{{</span>
+  <span class="k">if</span> <span class="p">!</span>processed
+    <span class="k">if</span> line<span class="p">=~</span> <span class="s1">&#39;^\s*%nowiki&#39;</span>
+      <span class="k">let</span> processed <span class="p">=</span> <span class="m">1</span>
+      <span class="k">call</span> add<span class="p">(</span>res_lines<span class="p">,</span> substitute<span class="p">(</span>line<span class="p">,</span> <span class="s1">&#39;^\s*%nowiki&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+    <span class="k">endif</span>
+  <span class="k">endif</span> <span class="c">&quot;}}}</span>
+</pre></div>
+
+
+<p>然后找到 <code>s:safe_html</code> 函数, 添加如下语句</p>
+<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:safe_html<span class="p">(</span>line<span class="p">)</span> <span class="c">&quot;{{{</span>
+<span class="c">  &quot; 不处理 %nowiki </span>
+  <span class="k">if</span> <span class="k">a</span>:line<span class="p">=~</span> <span class="s1">&#39;^\s*%nowiki&#39;</span>
+    <span class="k">return</span> <span class="k">a</span>:line
+  <span class="k">endif</span>
+
+  ...
+<span class="k">endfunction</span>
+</pre></div>
+
+
+<p>大功告成, 这样就可以正常的使用 pygments 进行高亮代码</p>
+<h1>成果</h1>
+<p>修改后的代码放在了 github 上, 在 <a href="https://github.com/coldnight/vimwiki">这里</a>, 
+有需要的可以安装, 但这个更改仅仅是对我个人使用, 可能不会跟随主线程版本的更新.</p>
+<p>当然我添加了一些选项来开启/关闭使用pygments, 安装后在 Vim 中执行 <code>:h vimwiki-option-use_pygments</code></p>
+<p>大家通过代码也看到了, 要使用改变之后的插件 Vim 需要编译 +python 并且需要安装 pygments Python 库.</p></div>
+        <hr />
+    </div>
+		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h2>PyQt + QML 快速开发GUI总结</h2></a>
+        <div class= "well small"> Wed 06 November 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
 结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
 而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
 这篇文章会总结这些问题, 避免以后碰到无从下手.</p>
@@ -81,367 +249,9 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>使用PyQt显示QML</h3>
 <p>要想在Python里使用PyQt来调用QML显示, 需要用到 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 实例的 <tt class="docutils literal">setSource</tt> 将一个 <tt class="docutils literal">PyQt4.QtCore.QUrl</tt> 对象传递进去, 然后调用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">show</tt> 方法, 下面是一个例子:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span>
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;/path/to/demo.qml&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="section" id="id1">
-<h3>通过PyQt渲染数据到QML</h3>
-<p>渲染QML变量有两种方法, 一种是QML中没有定义的变量, 一种是在QML中已经定义好的变量,
-第一种是预定义变量, 第二种是设置变量</p>
-<div class="section" id="id2">
-<h4>预定义变量</h4>
-<p><tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 的 <tt class="docutils literal">rootContext</tt> 方法会返回一个QML上下文, 通过这个对象可以对QML进行一些变量的预定义</p>
-<p><em>注意</em>, 预定义变量必须在 <tt class="docutils literal">setSource</tt> 调用之前进行, 还有如果是字符串类型如要使用 <tt class="docutils literal">PyQt4.QtCore.QString</tt> 进行转换,
-数字可以不用转换, 如果是列表或字典需要使用 <tt class="docutils literal">PyQt4.QtCore.QVariant</tt> 进行转换, 下面是一个例子:</p>
-<p>test.qml:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">30</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.py:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">rootContext</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootContext</span><span class="p">()</span>
-<span class="n">rootContext</span><span class="o">.</span><span class="n">setContextProperty</span><span class="p">(</span><span class="s">&quot;textData&quot;</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>如果将 <tt class="docutils literal">rootContext</tt> 两行移到 <tt class="docutils literal">view.setSource</tt> 下面, QML里将找不到对 <tt class="docutils literal">textData</tt> 的引用</p>
-</div>
-<div class="section" id="id3">
-<h4>设置变量</h4>
-<p>如果QML里已经定义好了变量, 而我们就可以在PyQt里对它进行更改, 对QML里的变量更改需要使用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">rootObject</tt> 方法返回的 <tt class="docutils literal">rootObject</tt> 对象, 调用 <tt class="docutils literal">rootObject</tt> 对象的 <tt class="docutils literal">setProperty</tt> 方法即可对QML里变量做出更改</p>
-<p><em>注意</em>, 使用 <tt class="docutils literal">rootObject</tt> 对QML的更改必须在 <tt class="docutils literal">setSource</tt> 之后, 否则 <tt class="docutils literal">rootObject</tt> 方法将返回 <em>None</em>, 下面是一个例子</p>
-<p>test.qml:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span>
-    <span class="nx">property</span> <span class="nx">string</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">30</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.py:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;textData&quot;</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面例子我们在QML定义了 <tt class="docutils literal">textData</tt> 变量, 并在 <tt class="docutils literal">setSource</tt> 之后使用 <tt class="docutils literal">rootObject</tt> 的 <tt class="docutils literal">setProperty</tt> 对 <tt class="docutils literal">textData</tt> 变量进行了更改</p>
-</div>
-</div>
-<div class="section" id="qml">
-<h3>QML信号的传递</h3>
-<p>QML有信号机制, 可以在QML之间使用JavaScript进行触发和接收, 当然也可以将信号传递给后端的PyQt,
-我们在此不讨论QML内部的信号, 我们仅讨论QML信号传递到PyQt这部分, QML使用signal创建信号, 信号可以携带参数,
-使用调用函数的方法可以触发信号, 下面是一个例子:</p>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面我们定义了一个 <tt class="docutils literal">mclicked</tt> 的信号, 并且在点击时会触发这个信号, PyQt 可以通过 <tt class="docutils literal">rootObject</tt> 获取这个信号, 并为这个信号绑定槽:</p>
-<p>test.py</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">on_click</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;hi&quot;</span>
-
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">mclicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面为QML的 <tt class="docutils literal">mclicked</tt> 信号绑定了一个函数, 当点击QML窗体时, 控制台就会输出 hi</p>
-</div>
-<div class="section" id="id4">
-<h3>QML提供接口</h3>
-<p>上面我们定义了信号, 如果响应信号仅仅在控制台输出没有意义, 我们可以通过QML在顶级元素定义JavaScript函数
-向PyQt提供接口, 下面是例子:</p>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="kd">id: testText</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nx">set_text</span><span class="p">(</span><span class="nx">text</span><span class="p">){</span>
-        <span class="nx">testText</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面我们在QML顶级元素定义了一个 <tt class="docutils literal">set_text</tt> 函数, 接下来我们就可以通过 <tt class="docutils literal">rootObject</tt> 进行调用</p>
-<p>test.py</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">on_click</span><span class="p">():</span>
-    <span class="n">rootObject</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Clicked&quot;</span><span class="p">)</span>
-
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">mclicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面我们用响应信号的槽, 通过 <tt class="docutils literal">rootObject</tt> 调用QML提供的函数接口, 当点击窗体时, 显示文字会从 <tt class="docutils literal">Click Me</tt> 变成 <tt class="docutils literal">Clicked</tt>,
-当然这仅仅是个例子, 这种响应可以在QML里直接完成</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="kd">id: testText</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nx">set_text</span><span class="p">(){</span>
-        <span class="nx">testText</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;Clicked&quot;</span>
-    <span class="p">}</span>
-
-    <span class="k">Component.onCompleted :</span> <span class="p">{</span>
-        <span class="nx">mclicked</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">set_text</span><span class="p">);</span>  <span class="c1">// 在加载完成后为mclicked信号绑定槽</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>一些坑</h2>
-<div class="section" id="id6">
-<h3>QML全部变量内部状态更改</h3>
-<p>QML定义使用 <tt class="docutils literal">property</tt> 定义的变量是全局的, 这些变量是无法对其内部状态进行更改的,
-当然数字和字符串没有这方面问题, 但是数组和对象的更改就不行, 比如下面的更改是无效的</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-    <span class="nx">property</span> <span class="nx">variant</span> <span class="k">testData:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-
-    <span class="nx">Repeater</span> <span class="p">{</span>
-        <span class="k">model:</span><span class="nx">testData</span><span class="p">;</span>
-
-        <span class="nx">Text</span> <span class="p">{</span>
-            <span class="k">text:</span> <span class="nx">modelData</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="kd">id: testArea</span>
-        <span class="nx">anchors</span><span class="p">.</span><span class="nx">fill</span><span class="p">;</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">testData</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="nx">testData</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面是无法更改testData的内部状态的, 解决办法是先将全局变量赋值给局部变量, 更改完毕后覆盖全局变量</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-    <span class="nx">property</span> <span class="nx">variant</span> <span class="k">testData:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-
-    <span class="nx">Repeater</span> <span class="p">{</span>
-        <span class="k">model:</span><span class="nx">testData</span><span class="p">;</span>
-
-        <span class="nx">Text</span> <span class="p">{</span>
-            <span class="k">text:</span> <span class="nx">modelData</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="kd">id: testArea</span>
-        <span class="nx">anchors</span><span class="p">.</span><span class="nx">fill</span><span class="p">;</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">testData</span><span class="p">;</span>  <span class="c1">// 赋值给局部变量</span>
-            <span class="nx">tmp</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="nx">tmp</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-            <span class="nx">testData</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面即可成功更改 <tt class="docutils literal">testData</tt> 的内部状态</p>
-</div>
-<div class="section" id="id7">
-<h3>空列表引发的段错误</h3>
-<p>从PyQt向QML中渲染数据, 难免会渲染空列表, 但是这在某些平台(Windows)会引发段错误, 搞得人莫名其妙,
-解决办法就是将空列表转换为 <em>None</em></p>
-</div>
-</div>
-<div class="section" id="id8">
-<h2>一些技巧</h2>
-<div class="section" id="js">
-<h3>结合js</h3>
-<p>给元素的属性赋值是可以使用js语句的, 当然复杂的语句可以写成函数,指定这个函数, 使用函数的返回值,
-下面是一个隔行变色的例子:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">400</span><span class="p">;</span>
-    <span class="nx">Repeater</span><span class="p">{</span>
-        <span class="k">model:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="nx">Rectangle</span> <span class="p">{</span>
-            <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">100</span><span class="p">;</span>
-            <span class="k">color:</span> <span class="nx">index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&quot;blue&quot;</span> <span class="o">:</span> <span class="s2">&quot;black&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="section" id="id9">
-<h3>自定义元素</h3>
-<p>多处都使用的内容, 可以提取出来放在一个以大写开头的文件名的文件里, 然后同目录使用文件名就可以引用这个元素,
-其他目录可以使用 <tt class="docutils literal">import</tt> 导入这个目录(相对路径导入), 就可以使用目录里的元素了,</p>
-<p>比如我在 <tt class="docutils literal">Demo.qml</tt>  定义了一些内容,  同目录或导入这个目录的其他QML文件我就可以直接使用 <tt class="docutils literal">Demo</tt> 元素了</p>
-</div>
-<div class="section" id="id10">
-<h3>自定义元素属性</h3>
-<p>为了更好的可重用, 定义一些属性是必须的 可以用通过  <tt class="docutils literal">property alias source:target</tt> 定义属性别名, 当别人引用
-这个元素, 并在元素内定义 <tt class="docutils literal">source</tt> 属性, 就会自动映射到 <tt class="docutils literal">target</tt> 上, 下面是一个例子</p>
-<p>Demo.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: demo</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">50</span><span class="p">;</span>
-
-    <span class="nx">property</span> <span class="nx">alias</span> <span class="k">text:</span> <span class="nx">demoText</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
-
-    <span class="nx">Text</span><span class="p">{</span>
-        <span class="kd">id: demoText</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Demo&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Demo</span> <span class="p">{</span>
-    <span class="k">text:</span> <span class="s2">&quot;Nice Demo&quot;</span>
-<span class="p">}</span>
-</pre></div>
-<p>使用qmlviwer 查看 test.qml, 会显示 &quot;Nice Demo&quot; 文字</p>
-<p>当然也可以直接在自定义元素使用 <tt class="docutils literal">property</tt> 定义变量, 在使用该元素时定义该属性:</p>
-<p>Demo.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: demo</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">50</span><span class="p">;</span>
-
-    <span class="nx">property</span> <span class="nx">string</span> <span class="k">textData:</span><span class="s2">&quot;Demo&quot;</span><span class="p">;</span>
-
-    <span class="nx">Text</span><span class="p">{</span>
-        <span class="kd">id: demoText</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Demo</span> <span class="p">{</span>
-    <span class="k">textData:</span> <span class="s2">&quot;Nice Demo&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-        <hr />
-    </div>
-		
+<span class="kn">from</span> <span class="nn">PyQt4.QtGui ...</span></pre></div></div></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html">read more</a></div>
+    </div>	
+				
 
  
         
@@ -684,32 +494,6 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="c">#   E-mail  :   wh_linux@126.com</span>
 <span class="c">#   Date    :   13/03/04 09:58:26</span>
 <span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
-    </div>	
-				
-
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h2>使用更加高效的epoll作为pyxmpp2的主循环</h2></a>
-        <div class= "well small"> Tue 05 February 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><h2>引子</h2>
-<p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
-<h2>实现</h2>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">read more</a></div>
     </div>	
 				
 <div class="pagination">

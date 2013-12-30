@@ -1,5 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-12-26T00:00:00+08:00</updated><entry><title>使用 Vimwiki + git 做知识管理</title><link href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html" rel="alternate"></link><updated>2013-12-26T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-26:shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html</id><summary type="html">&lt;p&gt;一直在找一个合适的知识管理工具, 用过 Evernote, 但是不支持 Markdown, 用了一段时间也放弃了.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2013-12-27T00:00:00+08:00</updated><entry><title>使用 Pygemnts 对 Vimwiki 进行代码高亮</title><link href="http://www.linuxzen.com/shi-yong-pygemnts-dui-vimwiki-jin-xing-dai-ma-gao-liang.html" rel="alternate"></link><updated>2013-12-27T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-27:shi-yong-pygemnts-dui-vimwiki-jin-xing-dai-ma-gao-liang.html</id><summary type="html">&lt;p&gt;Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
+所以不想使用, 比较倾向使用 Pygments 在 Vimwiki 生成 HTML 的时候对代码进行高亮.&lt;/p&gt;
+&lt;h1&gt;尝试&lt;/h1&gt;
+&lt;h2&gt;使用 custom_wiki2html 选项&lt;/h2&gt;
+&lt;p&gt;仔细的看了 Vimwiki 的帮助文档, 发现有一个 custom_wiki2html 
+(&lt;code&gt;:h vimwiki-option-custom_wiki2html&lt;/code&gt;) 的选项可以指定自己
+的脚本来处理 wiki2html, 尝试了一下, 发现这个脚本是在生成 HTML 之前调用,
+而且如果对 wiki 文件处理之后无法替换回原来的内容(后来发现这个仅仅是对使用 Markdown
+语法作为 Wiki 语法设定的), 所以放弃了.&lt;/p&gt;
+&lt;h2&gt;Fork 仓库, 更改代码&lt;/h2&gt;
+&lt;p&gt;后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库
+clone 到本地进行修改, 通过直接 hack 代码在 Vimwiki 处理之前对代码进行高亮.&lt;/p&gt;
+&lt;h3&gt;思路&lt;/h3&gt;
+&lt;p&gt;粗略的看了下代码, Vimwiki 是将文件读入, 然后逐行处理, 看来只能在文件读取之后
+对内容做一些操作.&lt;/p&gt;
+&lt;p&gt;Vimscript 的 readfile 返回一个列表, 每一个元素代表一行, 编写一个函数处理这个
+列表, 并返回, 在 autoload/vimwiki/html.vim 里的 第 1350 行找到
+&lt;code&gt;vimwiki#html#CustomWiki2HTML&lt;/code&gt; 函数, 并在其上面添加一个函数&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:highlight_code_with_pygments&lt;span class="p"&gt;(&lt;/span&gt;lsource&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;{{{&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;!&lt;/span&gt;has&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;python&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt;:lsource
+  &lt;span class="k"&gt;endif&lt;/span&gt;
+  &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:lsource &lt;span class="p"&gt;=&lt;/span&gt; deepcopy&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;a&lt;/span&gt;:lsource&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:content &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+python &lt;span class="p"&gt;&amp;lt;&amp;lt;&lt;/span&gt;EOF
+&lt;span class="nb"&gt;def&lt;/span&gt; handle&lt;span class="p"&gt;()&lt;/span&gt;:
+  import &lt;span class="k"&gt;vim&lt;/span&gt;
+
+  import &lt;span class="k"&gt;re&lt;/span&gt;
+  import os
+
+  &lt;span class="k"&gt;try&lt;/span&gt;:
+    import pygments
+  except ImportError:
+    &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;echoerr &amp;#39;Cannot import pygments library, please install it.&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt;
+
+  from pygments.lexers import get_lexer_by_name
+  from pygments.formatters import HtmlFormatter
+  from pygments import &lt;span class="nb"&gt;highlight&lt;/span&gt;
+  from pygments.util import ClassNotFound
+
+  CODE_RE &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;re&lt;/span&gt;.&lt;span class="k"&gt;compile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;r&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;\n({{{(\w*?)\s(.*?)\s}}})&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;re&lt;/span&gt;.M&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="k"&gt;re&lt;/span&gt;.U&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="k"&gt;re&lt;/span&gt;.S&lt;span class="p"&gt;)&lt;/span&gt;
+
+  data &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;vim&lt;/span&gt;.eval&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;s:lsource&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  content &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;.&lt;span class="k"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;data&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; False
+  css_class &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;vim&lt;/span&gt;.eval&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;VimwikiGet(&amp;#39;pygments_class&amp;#39;)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;for&lt;/span&gt; source&lt;span class="p"&gt;,&lt;/span&gt; lang_type&lt;span class="p"&gt;,&lt;/span&gt; code &lt;span class="k"&gt;in&lt;/span&gt; CODE_RE.findall&lt;span class="p"&gt;(&lt;/span&gt;content&lt;span class="p"&gt;)&lt;/span&gt;:
+    lang_type &lt;span class="p"&gt;=&lt;/span&gt; lang_type or &lt;span class="s2"&gt;&amp;quot;text&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt;:
+      lexer &lt;span class="p"&gt;=&lt;/span&gt; get_lexer_by_name&lt;span class="p"&gt;(&lt;/span&gt;lang_type&lt;span class="p"&gt;)&lt;/span&gt;
+    except ClassNotFound:
+      lexer &lt;span class="p"&gt;=&lt;/span&gt; get_lexer_by_name&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    formatter &lt;span class="p"&gt;=&lt;/span&gt; HtmlFormatter&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;encoding&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;utf8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; cssclass&lt;span class="p"&gt;=&lt;/span&gt;css_class&lt;span class="p"&gt;,&lt;/span&gt;
+                              noclasses&lt;span class="p"&gt;=&lt;/span&gt;False&lt;span class="p"&gt;,&lt;/span&gt; style&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                              linenos &lt;span class="p"&gt;=&lt;/span&gt; None&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;nowrap&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; True&lt;span class="p"&gt;)&lt;/span&gt;
+
+    hcode &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;highlight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;code&lt;span class="p"&gt;,&lt;/span&gt; lexer&lt;span class="p"&gt;,&lt;/span&gt; formatter&lt;span class="p"&gt;)&lt;/span&gt;
+    content &lt;span class="p"&gt;=&lt;/span&gt; content.replace&lt;span class="p"&gt;(&lt;/span&gt;source&lt;span class="p"&gt;,&lt;/span&gt; hcode&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; False:
+      &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; True
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt;:
+    &lt;span class="k"&gt;vim&lt;/span&gt;.command&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;let s:content=&amp;#39;%s&amp;#39;&amp;quot;&lt;/span&gt; % content.replace&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;\&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+handle&lt;span class="p"&gt;()&lt;/span&gt;
+
+EOF
+
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:content &lt;span class="p"&gt;!=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:lsource &lt;span class="p"&gt;=&lt;/span&gt; split&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;s&lt;/span&gt;:content&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="k"&gt;endif&lt;/span&gt;
+
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:lsource
+&lt;span class="k"&gt;endfunction&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;}}}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后在 &lt;code&gt;vimwiki#html#Wiki2HTML&lt;/code&gt; 函数内读取文件的下面调用此函数&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;...
+    &lt;span class="k"&gt;let&lt;/span&gt; lsource &lt;span class="p"&gt;=&lt;/span&gt; readfile&lt;span class="p"&gt;(&lt;/span&gt;wikifile&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;let&lt;/span&gt; lsource &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:highlight_code_with_pygments&lt;span class="p"&gt;(&lt;/span&gt;lsource&lt;span class="p"&gt;)&lt;/span&gt;
+...
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当然需要还需要拷贝 css 文件, 修改模板等, 这里不一一详述&lt;/p&gt;
+&lt;h3&gt;结果&lt;/h3&gt;
+&lt;p&gt;好吧, 确实工作了, 但是新的问题出来了, 高亮后替换成HTML的内容会被 Vimwiki 第二次处理
+所以 HTML 的格式全乱了,  CSS 样式也肯定不行了. 找了一下没有办法能避免 Vimwiki 不
+处理一段内容(为什么已经是 HTMl 了 Vimwiki 还要处理呢)&lt;/p&gt;
+&lt;p&gt;上述方法不行, 那只能再想想办法了&lt;/p&gt;
+&lt;h3&gt;使用特殊的注释: %nowiki&lt;/h3&gt;
+&lt;p&gt;为了解决上面重复处理已转化成 HTML 内容的问题, 我添加 %nowiki 语法,
+以 %nowiki 这个开头的行将不处理. 然后将高亮的代码替换成 %nowiki 开始的行,
+将上面 Python 相关代码加上如下内容:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="n"&gt;hcode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;highlight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;lexer&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;formatter&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# 添加以下语句&lt;/span&gt;
+&lt;span class="n"&gt;hcode&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;%nowiki&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;%nowiki&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hcode&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="n"&gt;content&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hcode&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;..&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后找到 &lt;code&gt;s:parse_line&lt;/code&gt; 函数, 在处理 toc 的下面添加&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;  &amp;quot; toc -- placeholder &amp;quot;{{{&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;!&lt;/span&gt;processed
+    &lt;span class="k"&gt;if&lt;/span&gt; line &lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\s*%toc&amp;#39;&lt;/span&gt;
+      &lt;span class="k"&gt;let&lt;/span&gt; processed &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+      &lt;span class="k"&gt;let&lt;/span&gt; param &lt;span class="p"&gt;=&lt;/span&gt; matchstr&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\s*%toc\s\zs.*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="k"&gt;let&lt;/span&gt; state.placeholder &lt;span class="p"&gt;=&lt;/span&gt; [&lt;span class="s1"&gt;&amp;#39;toc&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; param]
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+  &lt;span class="k"&gt;endif&lt;/span&gt;
+&lt;span class="c"&gt;  &amp;quot;}}}&lt;/span&gt;
+
+&lt;span class="c"&gt;  &amp;quot; 添加处理 nowiki&lt;/span&gt;
+&lt;span class="c"&gt;  &amp;quot; nowiki &amp;quot;{{{&lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;!&lt;/span&gt;processed
+    &lt;span class="k"&gt;if&lt;/span&gt; line&lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\s*%nowiki&amp;#39;&lt;/span&gt;
+      &lt;span class="k"&gt;let&lt;/span&gt; processed &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+      &lt;span class="k"&gt;call&lt;/span&gt; add&lt;span class="p"&gt;(&lt;/span&gt;res_lines&lt;span class="p"&gt;,&lt;/span&gt; substitute&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\s*%nowiki&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="k"&gt;endif&lt;/span&gt;
+  &lt;span class="k"&gt;endif&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;}}}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后找到 &lt;code&gt;s:safe_html&lt;/code&gt; 函数, 添加如下语句&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="p"&gt;!&lt;/span&gt; &lt;span class="k"&gt;s&lt;/span&gt;:safe_html&lt;span class="p"&gt;(&lt;/span&gt;line&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;&amp;quot;{{{&lt;/span&gt;
+&lt;span class="c"&gt;  &amp;quot; 不处理 %nowiki &lt;/span&gt;
+  &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt;:line&lt;span class="p"&gt;=~&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;^\s*%nowiki&amp;#39;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt;:line
+  &lt;span class="k"&gt;endif&lt;/span&gt;
+
+  ...
+&lt;span class="k"&gt;endfunction&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;大功告成, 这样就可以正常的使用 pygments 进行高亮代码&lt;/p&gt;
+&lt;h1&gt;成果&lt;/h1&gt;
+&lt;p&gt;修改后的代码放在了 github 上, 在 &lt;a href="https://github.com/coldnight/vimwiki"&gt;这里&lt;/a&gt;, 
+有需要的可以安装, 但这个更改仅仅是对我个人使用, 可能不会跟随主线程版本的更新.&lt;/p&gt;
+&lt;p&gt;当然我添加了一些选项来开启/关闭使用pygments, 安装后在 Vim 中执行 &lt;code&gt;:h vimwiki-option-use_pygments&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;大家通过代码也看到了, 要使用改变之后的插件 Vim 需要编译 +python 并且需要安装 pygments Python 库.&lt;/p&gt;</summary><category term="vim"></category><category term="vimwiki"></category><category term="pygments"></category><category term="python"></category><category term="highlight"></category></entry><entry><title>使用 Vimwiki + git 做知识管理</title><link href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html" rel="alternate"></link><updated>2013-12-26T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-26:shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html</id><summary type="html">&lt;p&gt;一直在找一个合适的知识管理工具, 用过 Evernote, 但是不支持 Markdown, 用了一段时间也放弃了.
 最近 python-cn 列表里也在讨论这个问题, 看到有人使用 Vimwiki, 所以就尝试了一下.&lt;/p&gt;
 &lt;p&gt;安装后,试着写了点东西, 发现很方便做知识管理和记录笔记, 可以生成HTML, 可以定制模板,
 这里不讨论如何使用, Vimwiki 的文档介绍的很详细,&lt;/p&gt;

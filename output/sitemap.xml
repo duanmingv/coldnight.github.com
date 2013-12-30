@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2013-12-27T15:24:58-00:00</lastmod>
+<lastmod>2013-12-30T10:34:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2013-12-27T15:24:58-00:00</lastmod>
+<lastmod>2013-12-30T10:34:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2013-12-27T15:24:58-00:00</lastmod>
+<lastmod>2013-12-30T10:34:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2013-12-27T15:24:58-00:00</lastmod>
+<lastmod>2013-12-30T10:34:14-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/shi-yong-pygemnts-dui-vimwiki-jin-xing-dai-ma-gao-liang.html</loc>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -663,7 +670,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/vim.html</loc>
-<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -830,13 +837,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/pygments.html</loc>
-<lastmod>2012-09-29T15:11:00-00:00</lastmod>
-<changefreq>daily</changefreq>
-<priority>0.5</priority>
-</url>
-
-<url>
 <loc>http://www.linuxzen.com/tag/ding-shi.html</loc>
 <lastmod>2012-04-21T18:26:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -950,7 +950,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2013-11-06T15:25:00-00:00</lastmod>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1167,7 +1167,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/vimwiki.html</loc>
-<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1671,7 +1671,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/vim.html</loc>
-<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1684,8 +1684,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/xing-hao.html</loc>
-<lastmod>2013-10-09T14:50:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/pygments.html</loc>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1845,6 +1845,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/guan-li.html</loc>
+<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/nginxren-zheng.html</loc>
 <lastmod>2012-02-26T10:48:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1978,8 +1985,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/guan-li.html</loc>
-<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/highlight.html</loc>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2384,6 +2391,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/xing-hao.html</loc>
+<lastmod>2013-10-09T14:50:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/man.html</loc>
 <lastmod>2012-03-13T10:06:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -2511,7 +2525,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2013-12-26T00:00:00-00:00</lastmod>
+<lastmod>2013-12-27T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
