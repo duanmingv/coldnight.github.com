@@ -56,13 +56,50 @@
     <h2 class="content-title">
         About
     </h2>
-    <h2>博主</h2>
-<p>Linux 用户, Python 开发者, Vim &amp; Awesome 重度使用者．</p>
+    <h2>关于</h2>
+<div class="highlight"><pre><span class="nv">$ </span>whoami
+cold
+
+<span class="nv">$ </span>archey3
+               +                OS: Arch Linux x86_64
+               <span class="c">#                Hostname: Dream</span>
+              <span class="c">###               Kernel Release: 3.10.32-1-lts</span>
+             <span class="c">#####              Uptime: 22:03</span>
+             <span class="c">######             WM: Awesome</span>
+            ; <span class="c">#####;            DE: GNOME</span>
+           +##.#####            Packages: 864
+          +##########           RAM: 1417 MB / 3923 MB
+         <span class="c">#############;         Processor Type: Intel(R) Core(TM)2 Duo CPU     E7500  @ 2.93GHz</span>
+        <span class="c">###############+        $EDITOR: vim</span>
+       <span class="c">#######   #######        Root: 21G / 40G (52%) (ext3)</span>
+     .######;     ;<span class="c">###;`&quot;.      </span>
+    .#######;     ;<span class="c">#####.       </span>
+    <span class="c">#########.   .########`     </span>
+   <span class="c">######&#39;           &#39;######    </span>
+  ;<span class="c">####                 ####;   </span>
+  <span class="c">##&#39;                     &#39;##   </span>
+ <span class="c">#&#39;                         `#  </span>
+
+<span class="nv">$ </span><span class="nb">history</span> | sed <span class="s2">&quot;s#^\s\+[0-9]\+\s\+##g&quot;</span> | grep -oP <span class="s2">&quot;(?&lt;=^|\|)\w+&quot;</span>|sort |uniq -c| sort -k1,1nr -k2
+   1757 vim
+   1275 ls
+   1251 git
+    854 sudo
+    577 py
+    423 <span class="nb">cd</span>
+<span class="nb">    </span>282 rm
+    171 cc
+    170 cp
+    151 cat
+</pre></div>
+
+
 <h2>开源作品</h2>
 <ul>
 <li><a href="https://github.com/coldnight/clubot">clubot</a> 一个gtalk/xmpp群bot</li>
 <li><a href="https://github.com/coldnight/pual_bot">pual_bot</a> 一个WebQQ机器人</li>
 <li><a href="https://github.com/coldnight/tornadohttpclient">tornadohttpclient</a> 一个对<code>tornado.curl_httpclient</code>的封装</li>
+<li><a href="https://github.com/coldnight/twqq">twqq</a> 基于 Tornado 的高效的异步的 WebQQ 客户端库</li>
 </ul>
 <h2>许可</h2>
 <p><img alt="知识共享许可协议" src="http://i.creativecommons.org/l/by-sa/3.0/cn/88x31.png" />
