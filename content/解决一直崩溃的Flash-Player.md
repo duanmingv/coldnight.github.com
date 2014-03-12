@@ -1,4 +1,4 @@
-title: 解决一直崩溃的 Adobe Falsh Player
+title: 解决一直崩溃的 Adobe Flash Player
 date: 2014-03-12
 category: Linux
 tags: archlinux, flash player, crash, 解决
