@@ -58,8 +58,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h1>grep挽救了我一个下午: 恢复rm -f删除的代码</h1></a>
-Thu 25 April 2013
+            <a href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-falsh-player.html"><h1>解决一直崩溃的 Adobe Falsh Player</h1></a>
+Wed 12 March 2014
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -68,17 +68,68 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
         </div>
         
-        <div><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
-<p>好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个<code>Logics</code>类并且上面差不多30行, 往下差不多300行的样子, 我删除<code>logics.py</code>所在的分区是<code>/dev/sda7</code>, 所以我运行了下面命令:</p>
-<div class="highlight"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 &gt; tmp
+        <div><p>1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
+一打开视屏就 crash.  从那之后就一直用手机看视屏, 很别扭, 放着大屏不用一直盯着手机看看.
+今天下定决心找找原因. google 了一阵也没有啥结果, 所以我决定卸载现有的, 手动安装一个试试.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">flashplugin</span>
 </pre></div>
 
 
-<p>经过漫长的等待, 这个命令还没结束, 我忍不住看了下 tmp的内容, 我发现我找到了这段代码</p>
-<p>当然损失并不是没有, 损失就是中文注释全部乱码, 但我满足了, 我只要重写注释就可以了.</p></div>
+<p>结果卸载的时候输出段信息:</p>
+<div class="highlight"><pre><span class="nl">warning:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span> <span class="n">saved</span> <span class="n">as</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">pacsave</span>
+</pre></div>
+
+
+<p>然后我看了下文件内容</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/adobe/mms.cfg.pacsave
+<span class="c">#Hardware video decoding</span>
+<span class="nv">EnableLinuxHWVideoDecode</span><span class="o">=</span>1
+</pre></div>
+
+
+<p>瞬间觉得可能是这个选项引起的, 所以我又装上了 flashplugin</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">flashplugin</span>
+</pre></div>
+
+
+<p>同样看到一段信息</p>
+<div class="highlight"><pre> <span class="o">&gt;&gt;</span> 
+ <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">have</span> <span class="n">an</span> <span class="n">NVIDIA</span> <span class="n">card</span> <span class="n">that</span> <span class="n">supports</span> <span class="n">libvdpau</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">Crystal</span> <span class="n">HD</span> <span class="n">chips</span><span class="p">,</span>
+ <span class="o">&gt;&gt;</span> <span class="n">uncomment</span> <span class="n">EnableLinuxHWVideoDecode</span><span class="o">=</span><span class="mi">1</span> <span class="n">from</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span>
+ <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">run</span> <span class="n">into</span> <span class="n">problems</span><span class="p">,</span> <span class="n">please</span> <span class="n">contact</span> <span class="n">nVidia</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">along</span> <span class="n">with</span> <span class="n">your</span> <span class="n">system</span> <span class="n">config</span> <span class="n">info</span> <span class="o">/</span> <span class="n">driver</span> <span class="n">version</span><span class="p">.</span>
+ <span class="o">&gt;&gt;</span> 
+<span class="n">Optional</span> <span class="n">dependencies</span> <span class="k">for</span> <span class="n">flashplugin</span>
+    <span class="nl">libvdpau:</span> <span class="n">GPU</span> <span class="n">acceleration</span> <span class="n">on</span> <span class="n">Nvidia</span> <span class="n">card</span> <span class="p">[</span><span class="n">installed</span><span class="p">]</span>
+</pre></div>
+
+
+<p>然后我就知道了为什么会出现那个选项打开的情况了, 一开始安装 Archlinux 的时候我误以为我的显卡是 NVIDIA 的,
+然后就安装了 NVIDIA 的驱动, 后来仔细一看原来是集成的 Intel 显卡XD, 估计在一开始安装 flashplugin
+的时候自动开启了. 然后换了显卡驱动我也不清楚.现在看新的配置文件 EnableLinuxHWVIdeoDecode=1 是注释掉的.</p>
+<p>接下来就是验证喽, 打开一个视屏, 果然不 crash 了.</p></div>
         <hr />
     </div>
 		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h2>grep挽救了我一个下午: 恢复rm -f删除的代码</h2></a>
+        <div class= "well small"> Thu 25 April 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
+<p>好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个<code>Logics</code>类并且上面差不多30行, 往下差不多300行的样子, 我删除<code>logics.py</code>所在的分区是<code>/dev/sda7</code>, 所以我运行了下面命令:</p>
+<div class="highlight"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html">read more</a></div>
+    </div>	
+				
 
  
         
@@ -346,33 +397,6 @@ ip:192.168.3.1</p>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
 <div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
-    </div>	
-				
-
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h2>iptables:restorecon: command not found无法保存策略解决</h2></a>
-        <div class= "well small"> Mon 30 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
-<p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
-<div class="highlight"><pre><span class="n">which</span> <span class="n">restorecon</span>
-<span class="n">whereis</span> <span class="n">restorecon</span>
-</pre></div>
-
-
-<p>没结果,继续手动查看:</p>
-<div class="highlight"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
     </div>	
 				
 <div class="pagination">

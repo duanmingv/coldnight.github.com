@@ -58,6 +58,37 @@
  
 
     <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h2>使用WebQQ协议桥接XMPP和QQ群</h2></a>
+        <div class= "well small"> Thu 14 March 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><h2>介绍</h2>
+<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
+<h2>实施</h2>
+<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
+<a href="https://github.com/coldnight/qxbot/tree/threading_version">thread_version</a></p>
+<h2>优化</h2>
+<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   Wood.D</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/03/04 09:58:26</span>
+<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">read more</a></div>
+    </div>	
+				
+
+ 
+        
+
+ 
+
+    <div class='article'>
         <a href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h2>使用Pelican博客静态生成系统</h2></a>
         <div class= "well small"> Thu 14 March 2013
 
@@ -313,36 +344,6 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>然后在你的.vimrc里添加下面内容:</p>
 <div class="highlight"><pre><span class="k">set</span> <span class="nb">nocompatible</span>
 <span class="k">filetype</span> off                              <span class="c">&quot; 先关闭文件类型 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html">read more</a></div>
-    </div>	
-				
-
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html"><h2>Vim打开Python源码自动添加#!行和编码行 升级版</h2></a>
-        <div class= "well small"> Thu 13 December 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
-<div class="highlight"><pre><span class="c">&quot;Python 注释</span>
-<span class="k">function</span> InsertPythonComment<span class="p">()</span>
-    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
-    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
-    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
-        <span class="k">return</span>
-    <span class="k">endif</span>
-    normal O
-    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
-    normal <span class="k">o</span>
-    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
-    normal <span class="k">o ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html">read more</a></div>
     </div>	
 				
 <div class="pagination">

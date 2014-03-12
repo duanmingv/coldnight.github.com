@@ -58,8 +58,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html"><h1>使用 Pygments 对 Vimwiki 进行代码高亮</h1></a>
-Fri 27 December 2013
+            <a href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-falsh-player.html"><h1>解决一直崩溃的 Adobe Falsh Player</h1></a>
+Wed 12 March 2014
 
 by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
@@ -68,7 +68,64 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
  
         </div>
         
-        <div><p>Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
+        <div><p>1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
+一打开视屏就 crash.  从那之后就一直用手机看视屏, 很别扭, 放着大屏不用一直盯着手机看看.
+今天下定决心找找原因. google 了一阵也没有啥结果, 所以我决定卸载现有的, 手动安装一个试试.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">flashplugin</span>
+</pre></div>
+
+
+<p>结果卸载的时候输出段信息:</p>
+<div class="highlight"><pre><span class="nl">warning:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span> <span class="n">saved</span> <span class="n">as</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">pacsave</span>
+</pre></div>
+
+
+<p>然后我看了下文件内容</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/adobe/mms.cfg.pacsave
+<span class="c">#Hardware video decoding</span>
+<span class="nv">EnableLinuxHWVideoDecode</span><span class="o">=</span>1
+</pre></div>
+
+
+<p>瞬间觉得可能是这个选项引起的, 所以我又装上了 flashplugin</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">flashplugin</span>
+</pre></div>
+
+
+<p>同样看到一段信息</p>
+<div class="highlight"><pre> <span class="o">&gt;&gt;</span> 
+ <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">have</span> <span class="n">an</span> <span class="n">NVIDIA</span> <span class="n">card</span> <span class="n">that</span> <span class="n">supports</span> <span class="n">libvdpau</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">Crystal</span> <span class="n">HD</span> <span class="n">chips</span><span class="p">,</span>
+ <span class="o">&gt;&gt;</span> <span class="n">uncomment</span> <span class="n">EnableLinuxHWVideoDecode</span><span class="o">=</span><span class="mi">1</span> <span class="n">from</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span>
+ <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">run</span> <span class="n">into</span> <span class="n">problems</span><span class="p">,</span> <span class="n">please</span> <span class="n">contact</span> <span class="n">nVidia</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">along</span> <span class="n">with</span> <span class="n">your</span> <span class="n">system</span> <span class="n">config</span> <span class="n">info</span> <span class="o">/</span> <span class="n">driver</span> <span class="n">version</span><span class="p">.</span>
+ <span class="o">&gt;&gt;</span> 
+<span class="n">Optional</span> <span class="n">dependencies</span> <span class="k">for</span> <span class="n">flashplugin</span>
+    <span class="nl">libvdpau:</span> <span class="n">GPU</span> <span class="n">acceleration</span> <span class="n">on</span> <span class="n">Nvidia</span> <span class="n">card</span> <span class="p">[</span><span class="n">installed</span><span class="p">]</span>
+</pre></div>
+
+
+<p>然后我就知道了为什么会出现那个选项打开的情况了, 一开始安装 Archlinux 的时候我误以为我的显卡是 NVIDIA 的,
+然后就安装了 NVIDIA 的驱动, 后来仔细一看原来是集成的 Intel 显卡XD, 估计在一开始安装 flashplugin
+的时候自动开启了. 然后换了显卡驱动我也不清楚.现在看新的配置文件 EnableLinuxHWVIdeoDecode=1 是注释掉的.</p>
+<p>接下来就是验证喽, 打开一个视屏, 果然不 crash 了.</p></div>
+        <hr />
+    </div>
+		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html"><h2>使用 Pygments 对 Vimwiki 进行代码高亮</h2></a>
+        <div class= "well small"> Fri 27 December 2013
+
+by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
 所以不想使用, 比较倾向使用 Pygments 在 Vimwiki 生成 HTML 的时候对代码进行高亮.</p>
 <h1>尝试</h1>
 <h2>使用 custom_wiki2html 选项</h2>
@@ -78,149 +135,9 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 而且如果对 wiki 文件处理之后无法替换回原来的内容(后来发现这个仅仅是对使用 Markdown
 语法作为 Wiki 语法设定的), 所以放弃了.</p>
 <h2>Fork 仓库, 更改代码</h2>
-<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库
-clone 到本地进行修改, 通过直接 hack 代码在 Vimwiki 处理之前对代码进行高亮.</p>
-<h3>思路</h3>
-<p>粗略的看了下代码, Vimwiki 是将文件读入, 然后逐行处理, 看来只能在文件读取之后
-对内容做一些操作.</p>
-<p>Vimscript 的 readfile 返回一个列表, 每一个元素代表一行, 编写一个函数处理这个
-列表, 并返回, 在 autoload/vimwiki/html.vim 里的 第 1350 行找到
-<code>vimwiki#html#CustomWiki2HTML</code> 函数, 并在其上面添加一个函数</p>
-<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:highlight_code_with_pygments<span class="p">(</span>lsource<span class="p">)</span> <span class="c">&quot;{{{</span>
-  <span class="k">if</span> <span class="p">!</span>has<span class="p">(</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="k">a</span>:lsource
-  <span class="k">endif</span>
-  <span class="k">let</span> <span class="k">s</span>:lsource <span class="p">=</span> deepcopy<span class="p">(</span><span class="k">a</span>:lsource<span class="p">)</span>
-  <span class="k">let</span> <span class="k">s</span>:content <span class="p">=</span> <span class="s1">&#39;&#39;</span>
-python <span class="p">&lt;&lt;</span>EOF
-<span class="nb">def</span> handle<span class="p">()</span>:
-  import <span class="k">vim</span>
-
-  import <span class="k">re</span>
-  import os
-
-  <span class="k">try</span>:
-    import pygments
-  except ImportError:
-    <span class="k">vim</span>.command<span class="p">(</span><span class="s2">&quot;echoerr &#39;Cannot import pygments library, please install it.&#39;&quot;</span><span class="p">)</span>
-    <span class="k">return</span>
-
-  from pygments.lexers import get_lexer_by_name
-  from pygments.formatters import HtmlFormatter
-  from pygments import <span class="nb">highlight</span>
-  from pygments.util import ClassNotFound
-
-  CODE_RE <span class="p">=</span> <span class="k">re</span>.<span class="k">compile</span><span class="p">(</span><span class="k">r</span><span class="s1">&#39;\n({{{(\w*?)\s(.*?)\s}}})&#39;</span><span class="p">,</span> <span class="k">re</span>.M<span class="p">|</span><span class="k">re</span>.U<span class="p">|</span><span class="k">re</span>.S<span class="p">)</span>
-
-  data <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s2">&quot;s:lsource&quot;</span><span class="p">)</span>
-  content <span class="p">=</span> <span class="s2">&quot;\n&quot;</span>.<span class="k">join</span><span class="p">(</span>data<span class="p">)</span>
-  <span class="k">new</span> <span class="p">=</span> False
-  css_class <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s2">&quot;VimwikiGet(&#39;pygments_class&#39;)&quot;</span><span class="p">)</span>
-  <span class="k">for</span> source<span class="p">,</span> lang_type<span class="p">,</span> code <span class="k">in</span> CODE_RE.findall<span class="p">(</span>content<span class="p">)</span>:
-    lang_type <span class="p">=</span> lang_type or <span class="s2">&quot;text&quot;</span>
-    <span class="k">try</span>:
-      lexer <span class="p">=</span> get_lexer_by_name<span class="p">(</span>lang_type<span class="p">)</span>
-    except ClassNotFound:
-      lexer <span class="p">=</span> get_lexer_by_name<span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-
-    formatter <span class="p">=</span> HtmlFormatter<span class="p">(</span><span class="nb">encoding</span><span class="p">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span> cssclass<span class="p">=</span>css_class<span class="p">,</span>
-                              noclasses<span class="p">=</span>False<span class="p">,</span> style<span class="p">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-                              linenos <span class="p">=</span> None<span class="p">,</span> <span class="nb">nowrap</span> <span class="p">=</span> True<span class="p">)</span>
-
-    hcode <span class="p">=</span> <span class="nb">highlight</span><span class="p">(</span>code<span class="p">,</span> lexer<span class="p">,</span> formatter<span class="p">)</span>
-    content <span class="p">=</span> content.replace<span class="p">(</span>source<span class="p">,</span> hcode<span class="p">)</span>
-    <span class="k">if</span> <span class="k">new</span> <span class="k">is</span> False:
-      <span class="k">new</span> <span class="p">=</span> True
-
-  <span class="k">if</span> <span class="k">new</span>:
-    <span class="k">vim</span>.command<span class="p">(</span><span class="s2">&quot;let s:content=&#39;%s&#39;&quot;</span> % content.replace<span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;\&#39;&quot;</span><span class="p">))</span>
-
-handle<span class="p">()</span>
-
-EOF
-
-  <span class="k">if</span> <span class="k">s</span>:content <span class="p">!=</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">let</span> <span class="k">s</span>:lsource <span class="p">=</span> split<span class="p">(</span><span class="k">s</span>:content<span class="p">,</span> <span class="s1">&#39;\n&#39;</span><span class="p">)</span>
-  <span class="k">endif</span>
-
-  <span class="k">return</span> <span class="k">s</span>:lsource
-<span class="k">endfunction</span> <span class="c">&quot;}}}</span>
-</pre></div>
-
-
-<p>然后在 <code>vimwiki#html#Wiki2HTML</code> 函数内读取文件的下面调用此函数</p>
-<div class="highlight"><pre>...
-    <span class="k">let</span> lsource <span class="p">=</span> readfile<span class="p">(</span>wikifile<span class="p">)</span>
-
-    <span class="k">let</span> lsource <span class="p">=</span> <span class="k">s</span>:highlight_code_with_pygments<span class="p">(</span>lsource<span class="p">)</span>
-...
-</pre></div>
-
-
-<p>当然需要还需要拷贝 css 文件, 修改模板等, 这里不一一详述</p>
-<h3>结果</h3>
-<p>好吧, 确实工作了, 但是新的问题出来了, 高亮后替换成HTML的内容会被 Vimwiki 第二次处理
-所以 HTML 的格式全乱了,  CSS 样式也肯定不行了. 找了一下没有办法能避免 Vimwiki 不
-处理一段内容(为什么已经是 HTMl 了 Vimwiki 还要处理呢)</p>
-<p>上述方法不行, 那只能再想想办法了</p>
-<h3>使用特殊的注释: %nowiki</h3>
-<p>为了解决上面重复处理已转化成 HTML 内容的问题, 我添加 %nowiki 语法,
-以 %nowiki 这个开头的行将不处理. 然后将高亮的代码替换成 %nowiki 开始的行,
-将上面 Python 相关代码加上如下内容:</p>
-<div class="highlight"><pre><span class="o">...</span>
-<span class="n">hcode</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
-
-<span class="c"># 添加以下语句</span>
-<span class="n">hcode</span> <span class="o">=</span> <span class="s">&quot;%nowiki&quot;</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">%nowiki&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hcode</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">))</span>
-
-<span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">hcode</span><span class="p">)</span>
-<span class="o">..</span>
-</pre></div>
-
-
-<p>然后找到 <code>s:parse_line</code> 函数, 在处理 toc 的下面添加</p>
-<div class="highlight"><pre><span class="c">  &quot; toc -- placeholder &quot;{{{</span>
-  <span class="k">if</span> <span class="p">!</span>processed
-    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^\s*%toc&#39;</span>
-      <span class="k">let</span> processed <span class="p">=</span> <span class="m">1</span>
-      <span class="k">let</span> param <span class="p">=</span> matchstr<span class="p">(</span>line<span class="p">,</span> <span class="s1">&#39;^\s*%toc\s\zs.*&#39;</span><span class="p">)</span>
-      <span class="k">let</span> state.placeholder <span class="p">=</span> [<span class="s1">&#39;toc&#39;</span><span class="p">,</span> param]
-    <span class="k">endif</span>
-  <span class="k">endif</span>
-<span class="c">  &quot;}}}</span>
-
-<span class="c">  &quot; 添加处理 nowiki</span>
-<span class="c">  &quot; nowiki &quot;{{{</span>
-  <span class="k">if</span> <span class="p">!</span>processed
-    <span class="k">if</span> line<span class="p">=~</span> <span class="s1">&#39;^\s*%nowiki&#39;</span>
-      <span class="k">let</span> processed <span class="p">=</span> <span class="m">1</span>
-      <span class="k">call</span> add<span class="p">(</span>res_lines<span class="p">,</span> substitute<span class="p">(</span>line<span class="p">,</span> <span class="s1">&#39;^\s*%nowiki&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
-    <span class="k">endif</span>
-  <span class="k">endif</span> <span class="c">&quot;}}}</span>
-</pre></div>
-
-
-<p>然后找到 <code>s:safe_html</code> 函数, 添加如下语句</p>
-<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:safe_html<span class="p">(</span>line<span class="p">)</span> <span class="c">&quot;{{{</span>
-<span class="c">  &quot; 不处理 %nowiki </span>
-  <span class="k">if</span> <span class="k">a</span>:line<span class="p">=~</span> <span class="s1">&#39;^\s*%nowiki&#39;</span>
-    <span class="k">return</span> <span class="k">a</span>:line
-  <span class="k">endif</span>
-
-  ...
-<span class="k">endfunction</span>
-</pre></div>
-
-
-<p>大功告成, 这样就可以正常的使用 pygments 进行高亮代码</p>
-<h1>成果</h1>
-<p>修改后的代码放在了 github 上, 在 <a href="https://github.com/coldnight/vimwiki">这里</a>, 
-有需要的可以安装, 但这个更改仅仅是对我个人使用, 可能不会跟随主线程版本的更新.</p>
-<p>当然我添加了一些选项来开启/关闭使用pygments, 安装后在 Vim 中执行 <code>:h vimwiki-option-use_pygments</code></p>
-<p>大家通过代码也看到了, 要使用改变之后的插件 Vim 需要编译 +python 并且需要安装 pygments Python 库.</p></div>
-        <hr />
-    </div>
-		
+<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html">read more</a></div>
+    </div>	
+				
 
  
         
@@ -457,42 +374,6 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
     <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
     <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html">read more</a></div>
-    </div>	
-				
-
- 
-        
-
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h2>发布一个基于Tornado的高效异步的HTTP客户端库</h2></a>
-        <div class= "well small"> Thu 01 August 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- </div>
-        <div class="summary"><p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
-<p><s>TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在<code>Python2.7</code>平台上测试过, 不支持<code>Python3</code></s></p>
-<p>听取了仙子君的意见, 直接对<code>tornado.curl_httpclient.CurlAsyncHTTPClient</code>进行封装</p>
-<h2>安装</h2>
-<p>首先从git clone 下代码</p>
-<div class="highlight"><pre>git clone https://github.com/coldnight/tornadohttpclient.git
-</pre></div>
-
-
-<p>然后安装它</p>
-<div class="highlight"><pre><span class="nb">cd </span>tornadohttpclient
-python setup.py install
-</pre></div>
-
-
-<h2>教程</h2>
-<h3>GET</h3>
-<p>TornadoHTTPClient的get方法可以发起一个get请求</p>
-<div class="highlight"><pre><span class="kn">from ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">read more</a></div>
     </div>	
 				
 <div class="pagination">

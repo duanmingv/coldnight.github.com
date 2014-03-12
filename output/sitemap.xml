@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2013-12-30T10:43:53-00:00</lastmod>
+<lastmod>2014-03-12T10:45:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2013-12-30T10:43:53-00:00</lastmod>
+<lastmod>2014-03-12T10:45:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2013-12-30T10:43:53-00:00</lastmod>
+<lastmod>2014-03-12T10:45:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2013-12-30T10:43:53-00:00</lastmod>
+<lastmod>2014-03-12T10:45:48-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-falsh-player.html</loc>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -635,7 +642,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/linux.html</loc>
-<lastmod>2013-04-25T14:36:00-00:00</lastmod>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -755,6 +762,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/clubot.html</loc>
 <lastmod>2013-04-26T15:40:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/pylibmc.html</loc>
+<lastmod>2013-01-16T16:14:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -886,6 +900,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/archlinux.html</loc>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/dict.html</loc>
 <lastmod>2012-09-17T11:42:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -935,8 +956,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/diao-shi.html</loc>
-<lastmod>2012-08-10T16:16:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/crash.html</loc>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1019,8 +1040,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/pylibmc.html</loc>
-<lastmod>2013-01-16T16:14:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/bao.html</loc>
+<lastmod>2013-01-25T14:55:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1138,8 +1159,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/bao.html</loc>
-<lastmod>2013-01-25T14:55:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/jie-jue.html</loc>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1642,6 +1663,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/bu-quan.html</loc>
+<lastmod>2013-08-14T00:00:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/fu-wu-qi.html</loc>
 <lastmod>2012-01-17T23:06:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1922,8 +1950,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/bu-quan.html</loc>
-<lastmod>2013-08-14T00:00:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/flash-player.html</loc>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2120,6 +2148,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/powerline.html</loc>
 <lastmod>2013-01-05T15:01:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/diao-shi.html</loc>
+<lastmod>2012-08-10T16:16:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2525,7 +2560,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2013-12-27T00:00:00-00:00</lastmod>
+<lastmod>2014-03-12T00:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
