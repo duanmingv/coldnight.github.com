@@ -26,7 +26,7 @@ $ archey3
   ##'                     '##   
  #'                         `#  
 
-$ history | sed "s#^\s\+[0-9]\+\s\+##g" | grep -oP "(?<=^|\|)\w+"|sort |uniq -c| sort -k1,1nr -k2
+$ history | sed "s#^\s\+[0-9]\+\s\+##g" | grep -oP "(?<=^|\|)\w+"|sort |uniq -c| sort -k1,1nr -k2 | head
    1757 vim
    1275 ls
    1251 git

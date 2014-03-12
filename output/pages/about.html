@@ -80,7 +80,7 @@ cold
   <span class="c">##&#39;                     &#39;##   </span>
  <span class="c">#&#39;                         `#  </span>
 
-<span class="nv">$ </span><span class="nb">history</span> | sed <span class="s2">&quot;s#^\s\+[0-9]\+\s\+##g&quot;</span> | grep -oP <span class="s2">&quot;(?&lt;=^|\|)\w+&quot;</span>|sort |uniq -c| sort -k1,1nr -k2
+<span class="nv">$ </span><span class="nb">history</span> | sed <span class="s2">&quot;s#^\s\+[0-9]\+\s\+##g&quot;</span> | grep -oP <span class="s2">&quot;(?&lt;=^|\|)\w+&quot;</span>|sort |uniq -c| sort -k1,1nr -k2 | head
    1757 vim
    1275 ls
    1251 git
