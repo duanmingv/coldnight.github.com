@@ -38,3 +38,5 @@ Optional dependencies for flashplugin
 的时候自动开启了. 然后换了显卡驱动我也不清楚.现在看新的配置文件 EnableLinuxHWVIdeoDecode=1 是注释掉的.
 
 接下来就是验证喽, 打开一个视屏, 果然不 crash 了.
+
+然后开启这个选项, 果然预料中的接着 crash.

@@ -37,7 +37,8 @@
 &lt;p&gt;然后我就知道了为什么会出现那个选项打开的情况了, 一开始安装 Archlinux 的时候我误以为我的显卡是 NVIDIA 的,
 然后就安装了 NVIDIA 的驱动, 后来仔细一看原来是集成的 Intel 显卡XD, 估计在一开始安装 flashplugin
 的时候自动开启了. 然后换了显卡驱动我也不清楚.现在看新的配置文件 EnableLinuxHWVIdeoDecode=1 是注释掉的.&lt;/p&gt;
-&lt;p&gt;接下来就是验证喽, 打开一个视屏, 果然不 crash 了.&lt;/p&gt;</summary><category term="archlinux"></category><category term="flash player"></category><category term="crash"></category><category term="解决"></category></entry><entry><title>使用 Pygments 对 Vimwiki 进行代码高亮</title><link href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html" rel="alternate"></link><updated>2013-12-27T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-27:shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html</id><summary type="html">&lt;p&gt;Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
+&lt;p&gt;接下来就是验证喽, 打开一个视屏, 果然不 crash 了.&lt;/p&gt;
+&lt;p&gt;然后开启这个选项, 果然预料中的接着 crash.&lt;/p&gt;</summary><category term="archlinux"></category><category term="flash player"></category><category term="crash"></category><category term="解决"></category></entry><entry><title>使用 Pygments 对 Vimwiki 进行代码高亮</title><link href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html" rel="alternate"></link><updated>2013-12-27T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-12-27:shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html</id><summary type="html">&lt;p&gt;Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
 所以不想使用, 比较倾向使用 Pygments 在 Vimwiki 生成 HTML 的时候对代码进行高亮.&lt;/p&gt;
 &lt;h1&gt;尝试&lt;/h1&gt;
 &lt;h2&gt;使用 custom_wiki2html 选项&lt;/h2&gt;
