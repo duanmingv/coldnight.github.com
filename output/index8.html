@@ -1,95 +1,90 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
     <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim.">
-    <meta name="keywords" content="Python, Linux, vim, 开源">
-    <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="navbar-inner">
-    <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
-
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
-
-        <div class="nav-collapse">
-        <ul class="nav">
-            
-            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-        </ul>
-        </div>
-        
-    </div>
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
     </div>
 </div>
+</div>
 
-<div class="container">
-    <div class="content">
-    <div class="row">
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
 
-        <div class="span9">
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
         
 
-        
 
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h2>lnmp环境搭建完全手册(一)------系统安装</h2></a>
-        <div class= "well small"> Thu 08 March 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(一)------系统安装</h3></a>
+<h6 class="subheader" title="2012-03-08T12:05:00">Thu 08 March 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
+<p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
 首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.</p>
 <p>安装VMware这里就不介绍了,给出VMware Workstation 8.0的<a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;vmware=downloadBinary&amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;pot=1&amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;tranId=70310191&amp;amp;downloadURL&quot;">下载地址</a></p>
 <p>VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
 我们还要准备CentOS5.5 的iso镜像用来安装系统.<a href="&quot;http://download.chinaunix.net/down.php?id=31679&amp;amp;ResourceID=12271&amp;amp;site=6">下载地址</a></p>
-<p>下面我们就来新建一个虚拟机安装CentOS ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">read more</a></div>
-    </div>	
-				
+<p>下面我们就来新建一个虚拟机安装CentOS ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/xu-ni-ji.html">虚拟机 </a>
+    <a href="http://www.linuxzen.com/tag/cao-zuo-xi-tong.html">操作系统 </a>
+    <a href="http://www.linuxzen.com/tag/an-zhuang.html">安装 </a>
+    <a href="http://www.linuxzen.com/tag/vmware.html">VMware </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h2>nginx平台搭建nagios监控系统</h2></a>
-        <div class= "well small"> Sun 26 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h3 class="article-title">nginx平台搭建nagios监控系统</h3></a>
+<h6 class="subheader" title="2012-02-26T10:48:00">Sun 26 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
+<p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
 <p>Nagios 功能:</p>
 <ul>
 <li>监视网络服务 (SMTP, POP3, HTTP, NNTP, PING等)</li>
@@ -106,25 +101,35 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <li>系统:CentOS 5.5 32bit</li>
 <li>ip:192.168.3.3</li>
 <li>nagios core:nagios-3.3.1.tar.gz</li>
-<li>web:nginx(nginx-1 ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">read more</a></div>
-    </div>	
-				
+<li>web:nginx(nginx-1 ...</li></ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pei-zhi.html">配置 </a>
+    <a href="http://www.linuxzen.com/tag/jian-kong.html">监控 </a>
+    <a href="http://www.linuxzen.com/tag/rewrite.html">rewrite </a>
+    <a href="http://www.linuxzen.com/tag/nginxren-zheng.html">nginx认证 </a>
+    <a href="http://www.linuxzen.com/tag/nginxzhi-chi-cgi.html">nginx支持cgi </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/nagios.html">nagios </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h2>搭建ntop监测局域网内流量</h2></a>
-        <div class= "well small"> Mon 20 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h3 class="article-title">搭建ntop监测局域网内流量</h3></a>
+<h6 class="subheader" title="2012-02-20T17:37:00">Mon 20 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
+<p>ntop是一种监控网络流量的工具，用ntop显示网络的使用情况比其他一些网管软件更加直观、详细。ntop甚至可以列出每个节点计算机的网络带宽利用率。ntop是一个灵活的、功能齐全的，用来监控和解决局域网问题的工具。它同时提供命令行输入和Web界面，可应用于嵌入式Web服务。</p>
 <p>本文环境:CentOS5.5 32位</p>
 <ul>
 <li>ip:192.168.3.101</li>
@@ -135,25 +140,32 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h2>一.安装依赖:</h2>
 <h3>安装rrdtool</h3>
 <div class="highlight"><pre>yum -y install libxml2 glib-devel pango-devel
-wget http://oss.oetiker.ch ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">read more</a></div>
-    </div>	
-				
+wget http://oss.oetiker.ch ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/jian-kong.html">监控 </a>
+    <a href="http://www.linuxzen.com/tag/liu-liang.html">流量 </a>
+    <a href="http://www.linuxzen.com/tag/ju-yu-wang.html">局域网 </a>
+    <a href="http://www.linuxzen.com/tag/ntop.html">ntop </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h2>Linux一些比较实用的小技巧</h2></a>
-        <div class= "well small"> Mon 20 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h3 class="article-title">Linux一些比较实用的小技巧</h3></a>
+<h6 class="subheader" title="2012-02-20T11:30:00">Mon 20 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
 <h2>文件查找</h2>
 <p>找出最近修改的文件:</p>
 <div class="highlight"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
@@ -174,49 +186,70 @@ find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</
 
 <h2>显示指定行</h2>
 <div class="highlight"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">read more</a></div>
-    </div>	
-				
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ming-ling.html">命令 </a>
+    <a href="http://www.linuxzen.com/tag/sz.html">sz </a>
+    <a href="http://www.linuxzen.com/tag/sshshang-chuan-xia-zai.html">ssh上传下载 </a>
+    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
+    <a href="http://www.linuxzen.com/tag/sed.html">sed </a>
+    <a href="http://www.linuxzen.com/tag/rz.html">rz </a>
+    <a href="http://www.linuxzen.com/tag/lrzsz.html">lrzsz </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/find.html">find </a>
+    <a href="http://www.linuxzen.com/tag/awk.html">awk </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h2>编写Linux shell脚本来实现nginx日志分割</h2></a>
-        <div class= "well small"> Fri 17 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h3 class="article-title">编写Linux shell脚本来实现nginx日志分割</h3></a>
+<h6 class="subheader" title="2012-02-17T10:27:00">Fri 17 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
+<p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
 <p>好了,废话不多说,脚本内容如下:</p>
 <div class="highlight"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># Author   : cold night</span>
 <span class="c"># Filename : nglogcut.sh</span>
 <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">read more</a></div>
-    </div>	
-				
+<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ri-zhi.html">日志 </a>
+    <a href="http://www.linuxzen.com/tag/fen-ge.html">分割 </a>
+    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/log.html">log </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cut.html">cut </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h2>heartbeat实现MySQL双机高可用</h2></a>
-        <div class= "well small"> Sun 12 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h3 class="article-title">heartbeat实现MySQL双机高可用</h3></a>
+<h6 class="subheader" title="2012-02-12T17:01:00">Sun 12 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
+<p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
 <p>当我们的MySQL数据库故障或MySQL数据库服务器出现故障的时候我们希望有一个备用能自动代替主MySQL数据来完成当前的任务,当主MySQL服务器恢复故障的时候备用的能切换到备用等待下一次故障出现.这里我们就结合故障检测HA来实现.</p>
 <p>HA会定时发送心跳包检测主备服务器的健康状态,当主服务器出现故障时会自动将vip切换到备用服务器,由备用服务器执行主服务器的任务,MySQL要实现这样的功能就必须保证主备服务器的数据一致.这就要用到MySQL主从双机.
 <!--more-->
@@ -226,25 +259,33 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 备用MySQL:192.168.3.102/24   主机名:slave.org
 vip:192.168.3.103/24
 MySQL:mysql-5.0.95.tar.gz
-heartbeat ...</!--more--></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">read more</a></div>
-    </div>	
-				
+heartbeat ...</!--more--></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用 </a>
+    <a href="http://www.linuxzen.com/tag/xin-tiao.html">心跳 </a>
+    <a href="http://www.linuxzen.com/tag/shuang-ji.html">双机 </a>
+    <a href="http://www.linuxzen.com/tag/vip.html">vip </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/heartbeat.html">heartbeat </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h2>nginx+keepalived配置高可用HTTP群集</h2></a>
-        <div class= "well small"> Thu 09 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h3 class="article-title">nginx+keepalived配置高可用HTTP群集</h3></a>
+<h6 class="subheader" title="2012-02-09T17:35:00">Thu 09 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+<p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
 一般集群主要架构为:</p>
 <p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
 第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
@@ -256,25 +297,34 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <li>CentOS 5.5 32位</li>
 <li>nginx:nginx-1.0.11</li>
 <li>keepalived：keepalived-1.1.19.tar.gz</li>
-<li>主调度器 ...</li></ul> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">read more</a></div>
-    </div>	
-				
+<li>主调度器 ...</li></ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用 </a>
+    <a href="http://www.linuxzen.com/tag/fu-zai-jun-heng.html">负载均衡 </a>
+    <a href="http://www.linuxzen.com/tag/qun-ji.html">群集 </a>
+    <a href="http://www.linuxzen.com/tag/fan-xiang-dai-li.html">反向代理 </a>
+    <a href="http://www.linuxzen.com/tag/shuang-ji.html">双机 </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/keepalived.html">keepalived </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h2>MySQL优化笔记</h2></a>
-        <div class= "well small"> Sat 04 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h3 class="article-title">MySQL优化笔记</h3></a>
+<h6 class="subheader" title="2012-02-04T13:36:00">Sat 04 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
+<p>之前安装时没注意MySQL的优化,先想对MySQL做一下优化.首先看一下没有优化之前各个参数:
 MySQL预编译参数:</p>
 <div class="highlight"><pre> ./configure  --prefix<span class="o">=</span>/usr/local/mysql --with-ssl --with-readline --with-big-tables --enable-assembler
 </pre></div>
@@ -288,25 +338,33 @@ MySQL预编译参数:</p>
 <p>使用mysqlreport获取MySQL运行参数:<!--more--></p>
 <div class="highlight"><pre>MySQL 5.0.40-log         uptime 15 22:1:21      Sat Feb  4 10:04:23 2012
 
-__ Key _________________________________________________________________ ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">read more</a></div>
-    </div>	
-				
+__ Key _________________________________________________________________ ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/bian-yi-can-shu.html">编译参数 </a>
+    <a href="http://www.linuxzen.com/tag/you-hua.html">优化 </a>
+    <a href="http://www.linuxzen.com/tag/mysqlpei-zhi-wen-jian.html">mysql配置文件 </a>
+    <a href="http://www.linuxzen.com/tag/mysqlfu-wu.html">MySQL服务 </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/mycnf.html">my.cnf </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html"><h2>用pxe安装自己定制的发行版快速部署系统环境</h2></a>
-        <div class= "well small"> Thu 02 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html"><h3 class="article-title">用pxe安装自己定制的发行版快速部署系统环境</h3></a>
+<h6 class="subheader" title="2012-02-02T11:37:00">Thu 02 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
+<p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
 <p>这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
 基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)</p>
 <p>使用环境:CentOS 5.5 32位</p>
@@ -320,25 +378,33 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<div class="highlight"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre>vi ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/wang-luo-an-zhuang.html">网络安装 </a>
+    <a href="http://www.linuxzen.com/tag/wang-qia-qi-dong.html">网卡启动 </a>
+    <a href="http://www.linuxzen.com/tag/wu-ren-zhi-shou.html">无人值守 </a>
+    <a href="http://www.linuxzen.com/tag/pxe.html">pxe </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html"><h2>将cfengine集成到自己定制的发行版</h2></a>
-        <div class= "well small"> Thu 19 January 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html"><h3 class="article-title">将cfengine集成到自己定制的发行版</h3></a>
+<h6 class="subheader" title="2012-01-19T11:35:00">Thu 19 January 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+<p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
 本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.</p>
 <p>本文完全根据<a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank">上一篇</a>文章而来,挂载光驱安装工具等等这里就不介绍了.</p>
 <!--more-->
@@ -358,94 +424,95 @@ krb5-devel
 flex
 openssl-devel 
 <span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
-    </div>	
-				
-<div class="pagination">
-<ul>
-    <li class="prev"><a href="http://www.linuxzen.com/index7.html">&larr; Previous</a></li>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
-    <li class=""><a href="http://www.linuxzen.com/index.html">1</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index2.html">2</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index3.html">3</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index4.html">4</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index5.html">5</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index6.html">6</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index7.html">7</a></li>
-    <li class="active"><a href="http://www.linuxzen.com/index8.html">8</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index9.html">9</a></li>
-
-    <li class="next"><a href="http://www.linuxzen.com/index9.html">Next &rarr;</a></li>
-
-</ul>
-</div>
- 
-  
-        </div>
-        
-        <div class="span3">
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Site
-                </li>
-            
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
-                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Categories
-                </li>
-                
-                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                   
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Links
-                </li>
-            
-                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-            </ul>
-            </div>
-
-
-
-        </div>  
-    </div>     </div> 
-<footer>
-<br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ji-cheng.html">集成 </a>
+    <a href="http://www.linuxzen.com/tag/ding-zhi.html">定制 </a>
+    <a href="http://www.linuxzen.com/tag/fa-xing-ban.html">发行版 </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
 </p>
-</footer>
 
-</div> <!-- /container -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
- 
-</body>
+
+
+<p><a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 8 of 9</h6>
+
+<p>
+            <a href="http://www.linuxzen.com/index7.html">&laquo; Prev</a>
+
+        <a href="http://www.linuxzen.com/index9.html">Next &raquo;</a>
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
 </html>

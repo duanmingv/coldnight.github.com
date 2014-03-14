@@ -1,74 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim.">
-    <meta name="keywords" content="Python, Linux, vim, 开源">
-    <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
-    <![endif]-->
+    <title>cold's world - 数据库</title>
 
-    <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="navbar-inner">
-    <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
-
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
-
-        <div class="nav-collapse">
-        <ul class="nav">
-            
-            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-        </ul>
-        </div>
-        
-    </div>
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
     </div>
 </div>
+</div>
 
-<div class="container">
-    <div class="content">
-    <div class="row">
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
 
-        <div class="span9">
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
         
 
-        
+            <article>
+                <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h3 class="article-title">SQLAlchemy MySQL数据库乱码解决</h3></a>
+<h6 class="subheader" title="2013-04-26T00:00:00">Fri 26 April 2013
+</h6>
 
 
-    <div class='article'>
-        <div class="content-title">
-            <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h1>SQLAlchemy MySQL数据库乱码解决</h1></a>
-Fri 26 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
-
-
- 
-        </div>
-        
-        <div><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
+<p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
 <div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -138,87 +122,94 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_infos</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_history</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="k">drop</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
-</pre></div></div>
-        <hr />
-    </div>
-		
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
-    <li class="active"><a href="http://www.linuxzen.com/tag/shu-ju-ku.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>
- 
-  
-        </div>
-        
-        <div class="span3">
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Site
-                </li>
-            
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
-                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Categories
-                </li>
-                
-                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                   
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Links
-                </li>
-            
-                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-            </ul>
-            </div>
-
-
-
-        </div>  
-    </div>     </div> 
-<footer>
-<br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/sqlalchemy.html">sqlalchemy </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/shu-ju-ku.html">数据库 </a>
+    <a href="http://www.linuxzen.com/tag/luan-ma.html">乱码 </a>
+    <a href="http://www.linuxzen.com/tag/utf8.html">utf8 </a>
 </p>
-</footer>
 
-</div> <!-- /container -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
- 
-</body>
+
+
+<p><a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html#disqus_thread">comments</a></p>            </article>
+
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
+
+<p>
+
+</p>
+</div>
+
+
+
+            <!-- /#posts-list -->
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
 </html>

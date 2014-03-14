@@ -1,72 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim.">
-    <meta name="keywords" content="Python, Linux, vim, 开源">
-    <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
-    <![endif]-->
+    <title>cold's world - python</title>
 
-    <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="navbar-inner">
-    <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
-
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
-
-        <div class="nav-collapse">
-        <ul class="nav">
-            
-            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-        </ul>
-        </div>
-        
-    </div>
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
     </div>
 </div>
+</div>
 
-<div class="container">
-    <div class="content">
-    <div class="row">
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
 
-        <div class="span9">
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
         
 
-        
 
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html"><h2>bottle使用Python装饰器巧妙解决用户验证</h2></a>
-        <div class= "well small"> Sat 16 June 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html"><h3 class="article-title">bottle使用Python装饰器巧妙解决用户验证</h3></a>
+<h6 class="subheader" title="2012-06-16T17:33:00">Sat 16 June 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>上篇文章发布了一个自己写的用bottle写的web程序,其中收获最大就是Python装饰器的使用.前几天也是比较忙,所以没能分享出来,今天就给大家分享一下.</p>
+<p>上篇文章发布了一个自己写的用bottle写的web程序,其中收获最大就是Python装饰器的使用.前几天也是比较忙,所以没能分享出来,今天就给大家分享一下.</p>
 <p>首先来分析下需求,web程序后台需要认证,后台页面包含多个页面,最普通的方法就是为每个url添加认证,但是这样就需要每个每个绑定url的后台函数都需要添加类似或者相同的代码,但是这样做代码就过度冗余,而且不利于扩展.</p>
 <p>接下来我们先不谈及装饰器,我们都知道Python是个很强大的语言,她可以将函数当做参数传递给函数,最简单的:</p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">p</span><span class="p">():</span>
@@ -87,25 +74,32 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>一目了然的程序,定义一个函数p(),将函数p当做参数传递给喊出funcfactor,在执行p函数前后加上一些动作.</p>
 <p>我们还可以这么做:</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">p ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/yan-zheng.html">验证 </a>
+    <a href="http://www.linuxzen.com/tag/zhuang-shi-qi.html">装饰器 </a>
+    <a href="http://www.linuxzen.com/tag/yong-hu.html">用户 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bottleshi-yong-pythonzhuang-shi-qi-qiao-miao-jie-jue-yong-hu-yan-zheng.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html"><h2>用bottle+mongodb写的一个blog程序</h2></a>
-        <div class= "well small"> Sat 16 June 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html"><h3 class="article-title">用bottle+mongodb写的一个blog程序</h3></a>
+<h6 class="subheader" title="2012-06-16T16:20:00">Sat 16 June 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
+<p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
 <p>前台显示文章:
 按分类显示
 按标签显示
@@ -127,25 +121,33 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>|----encrypt.py包含加密函数</p>
 <p>+-static       静态文件目录:包括js css image</p>
 <p>+-views        模版目录</p>
-<p>+-index.py     用于启动整个程序 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html">read more</a></div>
-    </div>	
-				
+<p>+-index.py     用于启动整个程序 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/xiang-mu.html">项目 </a>
+    <a href="http://www.linuxzen.com/tag/shi-li.html">实例 </a>
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/mongodb.html">mongodb </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html"><h2>bottle的cookie操作小记(获取不是在当前页面创建的cookie)</h2></a>
-        <div class= "well small"> Sat 02 June 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html"><h3 class="article-title">bottle的cookie操作小记(获取不是在当前页面创建的cookie)</h3></a>
+<h6 class="subheader" title="2012-06-02T17:51:00">Sat 02 June 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
+<p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
 <div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
       <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
@@ -158,25 +160,31 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
-      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">read more</a></div>
-    </div>	
-				
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/cookie.html">cookie </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html"><h2>使用beaker让bottle支持session</h2></a>
-        <div class= "well small"> Sat 26 May 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html"><h3 class="article-title">使用beaker让bottle支持session</h3></a>
+<h6 class="subheader" title="2012-05-26T11:38:00">Sat 26 May 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
+<p>bottle是一个小型web框架,很小只有一个文件,但功能确很强大,学起来也简单,简单和小巧的同时也有很多不足,某些功能支持还不是很完善,比如session.但是也有它自身的好处,我们可以自己或使用别的模块来扩展它,不像django,很强大,但是想要进一步扩展的时候确无从下手.我们可以把非常简单而强大的bottle自己动手将它变得更加强大和完善.</p>
 <p>bottle小巧支持cookie但是不支持session.为了安全起见我们有时候希望使用的session.我们可以使用中间件beaker来扩展bottle,使我们的bottle应用支持session.废话不多说.首先beaker不是内置模块,我们首先来安装它.当然你可以网上下包手动安装,我们使用最简单的:</p>
 <div class="highlight"><pre>easy_install beaker
 </pre></div>
@@ -189,25 +197,32 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="kn">from</span> <span class="nn">beaker.middleware</span> <span class="kn">import</span> <span class="n">SessionMiddleware</span>
 
 <span class="n">session_opts</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s">&#39;session.type ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">read more</a></div>
-    </div>	
-				
+                <span class="s">&#39;session.type ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/session.html">session </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+    <a href="http://www.linuxzen.com/tag/beaker.html">beaker </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h2>使用Linux shell实时检测文件变更</h2></a>
-        <div class= "well small"> Fri 18 May 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h3 class="article-title">使用Linux shell实时检测文件变更</h3></a>
+<h6 class="subheader" title="2012-05-18T11:16:00">Fri 18 May 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
+<p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
 <p>下面放出脚本内容:</p>
 <div class="highlight"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Author      : cold</span>
@@ -218,25 +233,36 @@ checkisdir<span class="o">()</span>
         <span class="c"># Have one argument</span>
         <span class="c"># The argument is a directory</span>
         <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
-        <span class="k">do ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">read more</a></div>
-    </div>	
-				
+        <span class="k">do ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/jian-ce.html">检测 </a>
+    <a href="http://www.linuxzen.com/tag/wen-jian.html">文件 </a>
+    <a href="http://www.linuxzen.com/tag/shi-shi.html">实时 </a>
+    <a href="http://www.linuxzen.com/tag/bian-geng.html">变更 </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h2>Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h2></a>
-        <div class= "well small"> Wed 16 May 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h3 class="article-title">Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h3></a>
+<h6 class="subheader" title="2012-05-16T11:05:00">Wed 16 May 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
+<p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
 <h2>环境:</h2>
 <p>系统:Gentoo
 ip:192.168.3.1</p>
@@ -249,25 +275,34 @@ ip:192.168.3.1</p>
 <h3>安装配置Python</h3>
 <p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
 Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/virtualenv.html">virtualenv </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/gentoo.html">Gentoo </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h2>用Python写的终端下的翻译工具</h2></a>
-        <div class= "well small"> Mon 23 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h3 class="article-title">用Python写的终端下的翻译工具</h3></a>
+<h6 class="subheader" title="2012-04-23T23:23:00">Mon 23 April 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
+<p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
 <p>好了不费话了,下面放代码:</p>
 <div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*-coding:utf8 -*-</span>
@@ -278,25 +313,32 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="sd">#       Author: cold</span>
 <span class="sd">#        Email: wh_linux@126.com</span>
 <span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">read more</a></div>
-    </div>	
-				
+<span class="sd">#      Version ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/fan-yi.html">翻译 </a>
+    <a href="http://www.linuxzen.com/tag/zhong-duan.html">终端 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/google.html">google </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h2>用python发带附件的邮件用来定时备份mysql数据库</h2></a>
-        <div class= "well small"> Sat 21 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h3 class="article-title">用python发带附件的邮件用来定时备份mysql数据库</h3></a>
+<h6 class="subheader" title="2012-04-21T18:26:00">Sat 21 April 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
+<p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
 <p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
 <div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c">#-*- coding: utf8 -*-</span>
@@ -308,25 +350,35 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="sd">#        Email: wh_linux@126.com</span>
 <span class="sd">#     HomePage: http://www.linuxzen.com</span>
 <span class="sd">#      Version: 0.0.1</span>
-<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">read more</a></div>
-    </div>	
-				
+<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/fu-jian.html">附件 </a>
+    <a href="http://www.linuxzen.com/tag/you-jian.html">邮件 </a>
+    <a href="http://www.linuxzen.com/tag/ding-shi.html">定时 </a>
+    <a href="http://www.linuxzen.com/tag/bei-fen.html">备份 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/pymail.html">pymail </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/mail.html">mail </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h2>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h2></a>
-        <div class= "well small"> Thu 19 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h3 class="article-title">CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h3></a>
+<h6 class="subheader" title="2012-04-19T17:59:00">Thu 19 April 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
+<p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
 <p>首先使用环境介绍:
 系统: CentOS 5.5 32位</p>
 <p>Python版本:2.7.2</p>
@@ -338,25 +390,33 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="n">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="cp">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
-    </div>	
-				
+<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/webpy.html">web.py </a>
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/spawn-fcgi.html">spawn-fcgi </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h2>使用Python进行web开发</h2></a>
-        <div class= "well small"> Fri 13 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h3 class="article-title">使用Python进行web开发</h3></a>
+<h6 class="subheader" title="2012-04-13T16:39:00">Fri 13 April 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
+<p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
 <p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
 <h3>安装easy_install</h3>
 <div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
@@ -364,89 +424,94 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <h3>使用easy_install安装web.py</h3>
-<div class="highlight"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">read more</a></div>
-    </div>	
-				
-<div class="pagination">
-<ul>
-    <li class="prev"><a href="http://www.linuxzen.com/tag/python3.html">&larr; Previous</a></li>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
-    <li class=""><a href="http://www.linuxzen.com/tag/python.html">1</a></li>
-    <li class=""><a href="http://www.linuxzen.com/tag/python2.html">2</a></li>
-    <li class=""><a href="http://www.linuxzen.com/tag/python3.html">3</a></li>
-    <li class="active"><a href="http://www.linuxzen.com/tag/python4.html">4</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>
- 
-  
-        </div>
-        
-        <div class="span3">
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Site
-                </li>
-            
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
-                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Categories
-                </li>
-                
-                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                   
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Links
-                </li>
-            
-                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-            </ul>
-            </div>
-
-
-
-        </div>  
-    </div>     </div> 
-<footer>
-<br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/kai-fa.html">开发 </a>
+    <a href="http://www.linuxzen.com/tag/webpy.html">web.py </a>
+    <a href="http://www.linuxzen.com/tag/ubuntu.html">Ubuntu </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
 </p>
-</footer>
 
-</div> <!-- /container -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
- 
-</body>
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 4 of 4</h6>
+
+<p>
+            <a href="http://www.linuxzen.com/tag/python3.html">&laquo; Prev</a>
+
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
 </html>

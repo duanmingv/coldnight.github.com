@@ -1,72 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim.">
-    <meta name="keywords" content="Python, Linux, vim, 开源">
-    <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
-    <![endif]-->
+    <title>cold's world - Linux</title>
 
-    <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="navbar-inner">
-    <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
-
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
-
-        <div class="nav-collapse">
-        <ul class="nav">
-            
-            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-        </ul>
-        </div>
-        
-    </div>
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
     </div>
 </div>
+</div>
 
-<div class="container">
-    <div class="content">
-    <div class="row">
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
 
-        <div class="span9">
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
         
 
-        
 
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h2>iptables:restorecon: command not found无法保存策略解决</h2></a>
-        <div class= "well small"> Mon 30 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h3 class="article-title">iptables:restorecon: command not found无法保存策略解决</h3></a>
+<h6 class="subheader" title="2012-04-30T10:43:00">Mon 30 April 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
+<p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
 <p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
 <div class="highlight"><pre><span class="n">which</span> <span class="n">restorecon</span>
 <span class="n">whereis</span> <span class="n">restorecon</span>
@@ -75,25 +62,32 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 <p>没结果,继续手动查看:</p>
 <div class="highlight"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">read more</a></div>
-    </div>	
-				
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/fang-huo-qiang.html">防火墙 </a>
+    <a href="http://www.linuxzen.com/tag/ce-lue.html">策略 </a>
+    <a href="http://www.linuxzen.com/tag/wu-fa-bao-cun.html">无法保存 </a>
+    <a href="http://www.linuxzen.com/tag/restorecon.html">restorecon </a>
+    <a href="http://www.linuxzen.com/tag/iptables.html">iptables </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h2>CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h2></a>
-        <div class= "well small"> Thu 19 April 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h3 class="article-title">CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h3></a>
+<h6 class="subheader" title="2012-04-19T17:59:00">Thu 19 April 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
+<p>前面都一篇文章介绍介绍了Ubuntu下web.py的开发环境搭建,这篇文章主要来介绍如何让web.py结合nginx来实现生产环境</p>
 <p>首先使用环境介绍:
 系统: CentOS 5.5 32位</p>
 <p>Python版本:2.7.2</p>
@@ -105,49 +99,66 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <span class="n">mkdir</span> <span class="n">python</span>
 <span class="n">cd</span> <span class="n">python</span>
 <span class="cp">#下载python2.7.2</span>
-<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">read more</a></div>
-    </div>	
-				
+<span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/webpy.html">web.py </a>
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/spawn-fcgi.html">spawn-fcgi </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h2>lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h2></a>
-        <div class= "well small"> Tue 13 March 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h3></a>
+<h6 class="subheader" title="2012-03-13T13:13:00">Tue 13 March 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
+<p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
 <p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
 <p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
 <p>nginx当前最新稳定版是nginx-1.0.13
 首先我们下载nginx,在Linux下执行下面命令:</p>
 <div class="highlight"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">read more</a></div>
-    </div>	
-				
+wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/yuan-ma-bao.html">源码包 </a>
+    <a href="http://www.linuxzen.com/tag/an-zhuang.html">安装 </a>
+    <a href="http://www.linuxzen.com/tag/php.html">php </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h2>lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h2></a>
-        <div class= "well small"> Tue 13 March 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h3></a>
+<h6 class="subheader" title="2012-03-13T10:06:00">Tue 13 March 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
+<p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
 <p>比如你有一个包为:</p>
 <div class="highlight"><pre>abc-0.1.3-el5.centos.rpm
 </pre></div>
@@ -164,25 +175,33 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>卸载只要指定包名即可卸载.</p>
-<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">read more</a></div>
-    </div>	
-				
+<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/yum.html">yum </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/man.html">man </a>
+    <a href="http://www.linuxzen.com/tag/lnmp.html">lnmp </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html"><h2>lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</h2></a>
-        <div class= "well small"> Sat 10 March 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html"><h3 class="article-title">lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</h3></a>
+<h6 class="subheader" title="2012-03-10T11:31:00">Sat 10 March 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
+<p>上一篇介绍了如何安装Linux,安装Linux后我们如果只在终端界面下配置会很麻烦,我们可以通过windows连接linux的ssh进行配置linux.SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议。</p>
 <p>要想连接ssh,首先就需要保证windows能和虚拟机Linux进行通信,我们如果想要本机能和虚拟机通信需要设置虚拟机的网卡连接关系,有3中连接关系可以和本机连通:
 一种是Bridged(桥接),就是使用你本机的连接,如果本地用的是局域网DHCP上网可以选择这种方式.
 一种是NAT,就是用NAT模式，就是让虚拟系统借助NAT(网络地址转换)功能，通过宿主机器所在的网络来访问公网。如果本地用的是静态公网ip,本地有无DHCP这个是首选
@@ -194,48 +213,63 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <p>做完这步之后我们还要编辑一下虚拟机的虚拟卡设置,以达到我们使用静态ip上网的需求:</p>
 <p>点击虚拟机的Edit(编辑)-&gt;Virtual Network Editor(虚拟网卡编辑器):
 <img alt="www.linuxzen.com" src="/upload/QQ截图20120310101559.jpg" />
-在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html">read more</a></div>
-    </div>	
-				
+在弹出的界面选中VMnet8 NAT,然后修改最下面的Subnet IP ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/xu-ni-ji.html">虚拟机 </a>
+    <a href="http://www.linuxzen.com/tag/shang-wang.html">上网 </a>
+    <a href="http://www.linuxzen.com/tag/ssh.html">ssh </a>
+    <a href="http://www.linuxzen.com/tag/nat.html">NAT </a>
+    <a href="http://www.linuxzen.com/tag/lnmp.html">lnmp </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h2>lnmp环境搭建完全手册(一)------系统安装</h2></a>
-        <div class= "well small"> Thu 08 March 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(一)------系统安装</h3></a>
+<h6 class="subheader" title="2012-03-08T12:05:00">Thu 08 March 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
+<p>在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
 首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.</p>
 <p>安装VMware这里就不介绍了,给出VMware Workstation 8.0的<a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;vmware=downloadBinary&amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;pot=1&amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;tranId=70310191&amp;amp;downloadURL&quot;">下载地址</a></p>
 <p>VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
 我们还要准备CentOS5.5 的iso镜像用来安装系统.<a href="&quot;http://download.chinaunix.net/down.php?id=31679&amp;amp;ResourceID=12271&amp;amp;site=6">下载地址</a></p>
-<p>下面我们就来新建一个虚拟机安装CentOS ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">read more</a></div>
-    </div>	
-				
+<p>下面我们就来新建一个虚拟机安装CentOS ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/xu-ni-ji.html">虚拟机 </a>
+    <a href="http://www.linuxzen.com/tag/cao-zuo-xi-tong.html">操作系统 </a>
+    <a href="http://www.linuxzen.com/tag/an-zhuang.html">安装 </a>
+    <a href="http://www.linuxzen.com/tag/vmware.html">VMware </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html"><h2>用pxe安装自己定制的发行版快速部署系统环境</h2></a>
-        <div class= "well small"> Thu 02 February 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html"><h3 class="article-title">用pxe安装自己定制的发行版快速部署系统环境</h3></a>
+<h6 class="subheader" title="2012-02-02T11:37:00">Thu 02 February 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
+<p>自己的发行版出来之后如何快速应用到企业中,可以使用PXE网络安装实现无人值守安装. 先解释下PXE安装,这是由Intel开发的一项技术,支持通过网络从远程服务器下载启动文件系统本机,从而实现网络安装操作系统.</p>
 <p>这里需要网络传输就需要ip,所以需要DHCP服务器,传输文件需要简单的传输协议就需要tftp服务器,安装的过程中需要传输安装文件就需要一个文件服务器(ftp/http/nfs等)
 基本流程就是通过DHCP获取ip并获取下一步的服务器地址(也就是tftp),然后下载启动文件,通过启动文件获取指定的下一个服务器的地址(安装文件的远程路径)</p>
 <p>使用环境:CentOS 5.5 32位</p>
@@ -249,25 +283,33 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 
 
 <p>配置tftp-server,编辑/etc/xinetd.d/tftp</p>
-<div class="highlight"><pre>vi ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre>vi ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/wang-luo-an-zhuang.html">网络安装 </a>
+    <a href="http://www.linuxzen.com/tag/wang-qia-qi-dong.html">网卡启动 </a>
+    <a href="http://www.linuxzen.com/tag/wu-ren-zhi-shou.html">无人值守 </a>
+    <a href="http://www.linuxzen.com/tag/pxe.html">pxe </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html"><h2>将cfengine集成到自己定制的发行版</h2></a>
-        <div class= "well small"> Thu 19 January 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html"><h3 class="article-title">将cfengine集成到自己定制的发行版</h3></a>
+<h6 class="subheader" title="2012-01-19T11:35:00">Thu 19 January 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+<p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
 本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.</p>
 <p>本文完全根据<a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank">上一篇</a>文章而来,挂载光驱安装工具等等这里就不介绍了.</p>
 <!--more-->
@@ -287,25 +329,32 @@ krb5-devel
 flex
 openssl-devel 
 <span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
-<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">read more</a></div>
-    </div>	
-				
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ji-cheng.html">集成 </a>
+    <a href="http://www.linuxzen.com/tag/ding-zhi.html">定制 </a>
+    <a href="http://www.linuxzen.com/tag/fa-xing-ban.html">发行版 </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html"><h2>根据CentOS定制自己的发行版</h2></a>
-        <div class= "well small"> Wed 18 January 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html"><h3 class="article-title">根据CentOS定制自己的发行版</h3></a>
+<h6 class="subheader" title="2012-01-18T11:13:00">Wed 18 January 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>本文使用的环境为CentOS5.5 32位.
+<p>本文使用的环境为CentOS5.5 32位.
 首先要做的是最小化安装CentOS,就是安装过程中选择要安装包的时候使用自定义,然后去除所有要安装的包,系统就会默认最小化安装系统.
 装完系统会再root的根目录下生成3个文件,我们用到两个:
 anaconda-ks.cfg : kisckstart脚本,记录安装过程的配置,包括选择语言,选择键盘,分区,root密码等等等等
@@ -319,25 +368,32 @@ mount /dev/cdrom /mnt
 mount -o loop iso路径 /mnt
 
 <span class="c"># 然后使用 tar命令把光盘的内容复制到/usr/cold</span>
-<span class="c"># 都说这个命令比cp快 ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">read more</a></div>
-    </div>	
-				
+<span class="c"># 都说这个命令比cp快 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ding-zhi.html">定制 </a>
+    <a href="http://www.linuxzen.com/tag/mkisofs.html">mkisofs </a>
+    <a href="http://www.linuxzen.com/tag/createrepo.html">createrepo </a>
+    <a href="http://www.linuxzen.com/tag/compsxml.html">comps.xml </a>
+    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h2>安装配置cfengine实现自动化配置Linux/Unix服务器</h2></a>
-        <div class= "well small"> Tue 17 January 2012
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h3 class="article-title">安装配置cfengine实现自动化配置Linux/Unix服务器</h3></a>
+<h6 class="subheader" title="2012-01-17T23:06:00">Tue 17 January 2012
+</h6>
 
 
- </div>
-        <div class="summary"><p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
+<p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
 <p>cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:</p>
 <ul>
 <li>一个版本控制器(subversion)用来创建策略</li>
@@ -351,87 +407,95 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 </ul>
 <p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
 <p>下载:</p>
-<div class="highlight"><pre>wget https://cfengine.com/source-code/download ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">read more</a></div>
-    </div>	
-				
-<div class="pagination">
-<ul>
-    <li class="prev"><a href="http://www.linuxzen.com/category/linux.html">&larr; Previous</a></li>
+<div class="highlight"><pre>wget https://cfengine.com/source-code/download ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
-    <li class=""><a href="http://www.linuxzen.com/category/linux.html">1</a></li>
-    <li class="active"><a href="http://www.linuxzen.com/category/linux2.html">2</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>
- 
-  
-        </div>
-        
-        <div class="span3">
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Site
-                </li>
-            
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
-                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Categories
-                </li>
-                
-                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                   
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Links
-                </li>
-            
-                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-            </ul>
-            </div>
-
-
-
-        </div>  
-    </div>     </div> 
-<footer>
-<br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/zi-dong-pei-zhi.html">自动配置 </a>
+    <a href="http://www.linuxzen.com/tag/zi-dong-hua.html">自动化 </a>
+    <a href="http://www.linuxzen.com/tag/fu-wu-qi.html">服务器 </a>
+    <a href="http://www.linuxzen.com/tag/unix.html">Unix </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
 </p>
-</footer>
 
-</div> <!-- /container -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
- 
-</body>
+
+
+<p><a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 2 of 2</h6>
+
+<p>
+            <a href="http://www.linuxzen.com/category/linux.html">&laquo; Prev</a>
+
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
 </html>

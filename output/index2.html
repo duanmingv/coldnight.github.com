@@ -1,72 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
     <title>cold's world</title>
-    <meta name="description" content="博主一个爱好开源技术的人, 对Python比较熟悉,也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,其中包括但不限于Linux/Python/Vim.">
-    <meta name="keywords" content="Python, Linux, vim, 开源">
-    <meta name="author" content="cold">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-    <script src="http://www.linuxzen.com/theme/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le styles -->
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/local.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/tag.css" rel="stylesheet">
-    <link href="http://www.linuxzen.com/theme/pygments.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
 </head>
 
 <body>
 
-<div class="navbar">
-    <div class="navbar-inner">
-    <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
-
-        <a class="brand" href="http://www.linuxzen.com">cold's world</a>
-
-        <div class="nav-collapse">
-        <ul class="nav">
-            
-            <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
-        </ul>
-        </div>
-        
-    </div>
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
     </div>
 </div>
+</div>
 
-<div class="container">
-    <div class="content">
-    <div class="row">
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
 
-        <div class="span9">
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
         
 
-        
 
- 
-
-    <div class='article'>
-        <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h2>发布一个基于Tornado的高效异步的HTTP客户端库</h2></a>
-        <div class= "well small"> Thu 01 August 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h3 class="article-title">发布一个基于Tornado的高效异步的HTTP客户端库</h3></a>
+<h6 class="subheader" title="2013-08-01T10:46:00">Thu 01 August 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
+<p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
 <p><s>TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在<code>Python2.7</code>平台上测试过, 不支持<code>Python3</code></s></p>
 <p>听取了仙子君的意见, 直接对<code>tornado.curl_httpclient.CurlAsyncHTTPClient</code>进行封装</p>
 <h2>安装</h2>
@@ -84,25 +71,33 @@ python setup.py install
 <h2>教程</h2>
 <h3>GET</h3>
 <p>TornadoHTTPClient的get方法可以发起一个get请求</p>
-<div class="highlight"><pre><span class="kn">from ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre><span class="kn">from ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/http.html">http </a>
+    <a href="http://www.linuxzen.com/tag/client.html">client </a>
+    <a href="http://www.linuxzen.com/tag/module.html">module </a>
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/gao-xiao.html">高效 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html"><h2>解决git提交敏感信息(回退git版本库到某一个commit)</h2></a>
-        <div class= "well small"> Fri 07 June 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html"><h3 class="article-title">解决git提交敏感信息(回退git版本库到某一个commit)</h3></a>
+<h6 class="subheader" title="2013-06-07T00:00:00">Fri 07 June 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+<p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
 <h2>备份本地代码</h2>
 <p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
 <h2>回退本地代码的commit</h2>
@@ -121,25 +116,32 @@ git push origin temp:temp
 
 <h3>重建主分支</h3>
 <p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
-<div class="highlight"><pre>git push origin --delete ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre>git push origin --delete ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/git.html">git</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/git.html">git </a>
+    <a href="http://www.linuxzen.com/tag/min-gan-xin-xi.html">敏感信息 </a>
+    <a href="http://www.linuxzen.com/tag/hui-tui.html">回退 </a>
+    <a href="http://www.linuxzen.com/tag/commit.html">commit </a>
+    <a href="http://www.linuxzen.com/tag/ban-ben-ku.html">版本库 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h2>Pual 更新支持SimSimi可以进行互动</h2></a>
-        <div class= "well small"> Thu 30 May 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h3 class="article-title">Pual 更新支持SimSimi可以进行互动</h3></a>
+<h6 class="subheader" title="2013-05-30T09:50:00">Thu 30 May 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
+<p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
 <ul>
 <li>英汉互译</li>
 <li>为每个用户分配一个session的含有上下文的Python shell</li>
@@ -148,25 +150,31 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <hr />
 <p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
 <p><a href="https://github.com/coldnight/pual_bot">项目地址</a></p>
-<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">read more</a></div>
-    </div>	
-				
+<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pual.html">Pual </a>
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/bot.html">bot </a>
+    <a href="http://www.linuxzen.com/tag/simsimi.html">SimSimi </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h2>说说Python装饰器</h2></a>
-        <div class= "well small"> Mon 20 May 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h3 class="article-title">说说Python装饰器</h3></a>
+<h6 class="subheader" title="2013-05-20T14:52:00">Mon 20 May 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
+<p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
 <p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
 <div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
 
@@ -192,25 +200,29 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 </pre></div>
 
 
-<p>装饰器将在解释器运行一开始就被加载 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">read more</a></div>
-    </div>	
-				
+<p>装饰器将在解释器运行一开始就被加载 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/zhuang-shi-qi.html">装饰器 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h2>clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h2></a>
-        <div class= "well small"> Fri 26 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h3 class="article-title">clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h3></a>
+<h6 class="subheader" title="2013-04-26T15:40:00">Fri 26 April 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+<p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
 <h2>更新内容</h2>
 <ol>
 <li>数据库使用<code>SQLAlchemy</code>重写</li>
@@ -225,25 +237,35 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h2>如何升级</h2>
 <p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
 <h2>新的依赖</h2>
-<p>本次更新添加了依赖 ...</p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">read more</a></div>
-    </div>	
-				
+<p>本次更新添加了依赖 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/clubot.html">clubot </a>
+    <a href="http://www.linuxzen.com/tag/pyxmpp2.html">pyxmpp2 </a>
+    <a href="http://www.linuxzen.com/tag/gtalk.html">gtalk </a>
+    <a href="http://www.linuxzen.com/tag/xmpp.html">xmpp </a>
+    <a href="http://www.linuxzen.com/tag/geng-xin.html">更新 </a>
+    <a href="http://www.linuxzen.com/tag/zhong-xie.html">重写 </a>
+    <a href="http://www.linuxzen.com/tag/sqlalchemy.html">SQLAlchemy </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h2>SQLAlchemy MySQL数据库乱码解决</h2></a>
-        <div class= "well small"> Fri 26 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h3 class="article-title">SQLAlchemy MySQL数据库乱码解决</h3></a>
+<h6 class="subheader" title="2013-04-26T00:00:00">Fri 26 April 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
+<p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
 <div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -255,91 +277,119 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
   <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
   <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
-  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">read more</a></div>
-    </div>	
-				
+  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/sqlalchemy.html">sqlalchemy </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/shu-ju-ku.html">数据库 </a>
+    <a href="http://www.linuxzen.com/tag/luan-ma.html">乱码 </a>
+    <a href="http://www.linuxzen.com/tag/utf8.html">utf8 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h2>grep挽救了我一个下午: 恢复rm -f删除的代码</h2></a>
-        <div class= "well small"> Thu 25 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html"><h3 class="article-title">grep挽救了我一个下午: 恢复rm -f删除的代码</h3></a>
+<h6 class="subheader" title="2013-04-25T14:36:00">Thu 25 April 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
+<p>今天对代码进行重构, 新添加了一个<code>logics.py</code>模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个<code>logs</code>文件夹是不需要的所以我打算清掉它, 但是<code>zsh</code>将补全定位到<code>logics.py</code>, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:<a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/">用grep恢复误删的文本</a></p>
 <p>好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个<code>Logics</code>类并且上面差不多30行, 往下差不多300行的样子, 我删除<code>logics.py</code>所在的分区是<code>/dev/sda7</code>, 所以我运行了下面命令:</p>
-<div class="highlight"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 ...</pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html">read more</a></div>
-    </div>	
-				
+<div class="highlight"><pre>grep -a -B 50 -A 400 <span class="s2">&quot;class Logics(object):&quot;</span> /dev/sda7 ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/grep.html">grep </a>
+    <a href="http://www.linuxzen.com/tag/rm.html">rm </a>
+    <a href="http://www.linuxzen.com/tag/-f.html">-f </a>
+    <a href="http://www.linuxzen.com/tag/hui-fu.html">恢复 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h2>借用Tornado实现高效的WebQQ机器人</h2></a>
-        <div class= "well small"> Tue 23 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h3 class="article-title">借用Tornado实现高效的WebQQ机器人</h3></a>
+<h6 class="subheader" title="2013-04-23T13:36:00">Tue 23 April 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+<p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
 <p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
 <h2>引子</h2>
 <p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
 <h2>原理</h2>
-<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">read more</a></div>
-    </div>	
-				
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/gao-xiao.html">高效 </a>
+    <a href="http://www.linuxzen.com/tag/webqq.html">webqq </a>
+    <a href="http://www.linuxzen.com/tag/bing-fa.html">并发 </a>
+    <a href="http://www.linuxzen.com/tag/xie-yi.html">协议 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h2>使用Pelican打造静态博客</h2></a>
-        <div class= "well small"> Thu 18 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h3 class="article-title">使用Pelican打造静态博客</h3></a>
+<h6 class="subheader" title="2013-04-18T09:40:00">Thu 18 April 2013
+</h6>
 
 
- </div>
-        <div class="summary"><p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
+<p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
 <h2>介绍</h2>
 <p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
 <h2>安装</h2>
 <p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
-<h3>建立 virtualenv ...</h3> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">read more</a></div>
-    </div>	
-				
+<h3>建立 virtualenv ...</h3><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
- 
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/jing-tai.html">静态 </a>
+    <a href="http://www.linuxzen.com/tag/sheng-cheng.html">生成 </a>
+    <a href="http://www.linuxzen.com/tag/pelican.html">Pelican </a>
+    <a href="http://www.linuxzen.com/tag/bo-ke.html">博客 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
         
 
- 
 
-    <div class='article'>
-        <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h2>使用Tornado进行网络异步编程</h2></a>
-        <div class= "well small"> Mon 15 April 2013
-
-by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
- 
+            <article>
+                <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h3 class="article-title">使用Tornado进行网络异步编程</h3></a>
+<h6 class="subheader" title="2013-04-15T16:09:00">Mon 15 April 2013
+</h6>
 
 
- </div>
-        <div class="summary"><h2>Tornado</h2>
+<h2>Tornado</h2>
 <p><code>Tornado</code> 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用<code>Tornado</code>编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以<code>Tornado</code>不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器</p>
 <p>Torando 在Linux和FreeBSD上使用高效的异步I/O模型 <code>epoll</code> 和<code>kqueue</code>来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高</p>
 <h2>接口</h2>
@@ -348,94 +398,95 @@ by <a class="url fn" href="http://www.linuxzen.com/author/cold.html">cold</a>
 <h3>add_handler</h3>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div> <a class="btn btn-info xsmall" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">read more</a></div>
-    </div>	
-				
-<div class="pagination">
-<ul>
-    <li class="prev"><a href="http://www.linuxzen.com/index.html">&larr; Previous</a></li>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
-    <li class=""><a href="http://www.linuxzen.com/index.html">1</a></li>
-    <li class="active"><a href="http://www.linuxzen.com/index2.html">2</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index3.html">3</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index4.html">4</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index5.html">5</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index6.html">6</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index7.html">7</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index8.html">8</a></li>
-    <li class=""><a href="http://www.linuxzen.com/index9.html">9</a></li>
-
-    <li class="next"><a href="http://www.linuxzen.com/index3.html">Next &rarr;</a></li>
-
-</ul>
-</div>
- 
-  
-        </div>
-        
-        <div class="span3">
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Site
-                </li>
-            
-                <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
-                <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
-                <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Categories
-                </li>
-                
-                <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
-                <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
-                <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
-                <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
-                <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
-                <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
-                <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
-                <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
-                <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
-                   
-            </ul>
-            </div>
-
-
-            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
-            <ul class="nav nav-list">
-                <li class="nav-header"> 
-                Links
-                </li>
-            
-                <li><a href="http://eleveni386.7axu.com">eleven</a></li>
-                <li><a href="http://neteue.com">小邪兽_deepin</a></li>
-                <li><a href="http://frantic1048.com/">Frantic1048</a></li>
-                <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
-            </ul>
-            </div>
-
-
-
-        </div>  
-    </div>     </div> 
-<footer>
-<br />
-<p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2013
-    <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/wang-luo.html">网络 </a>
+    <a href="http://www.linuxzen.com/tag/yi-bu.html">异步 </a>
+    <a href="http://www.linuxzen.com/tag/bian-cheng.html">编程 </a>
 </p>
-</footer>
 
-</div> <!-- /container -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-collapse.js"></script>
-<a href="https://github.com/coldnight/coldnight.github.com"><img style="position: absolute; top: 40px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
- 
-</body>
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 2 of 9</h6>
+
+<p>
+            <a href="http://www.linuxzen.com/index.html">&laquo; Prev</a>
+
+        <a href="http://www.linuxzen.com/index3.html">Next &raquo;</a>
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
 </html>
