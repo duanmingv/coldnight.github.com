@@ -156,6 +156,9 @@ lsof: status error on /mnt: Host is down
 <li>lsof: <a href="http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 <li>卸载 cifs: <a href="http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 </ul>
+<h2>补充</h2>
+<p>根据 <a href="http://lilydjwg.is-programmer.com/">依云</a> 评论, 通过<code>strace -f</code>
+可以很明显的看到 <code>zsh</code> 在 <code>lstat("/mnt",</code> 的时候阻塞了.</p>
 <p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
     Tagged: 
