@@ -92,12 +92,9 @@ $ sudo mount -t cifs -o guest //ip.of.host/share /mnt
 $ umount -a -t cifs -l /mnt
 ```
 
-## 检测
+## 结果
 现在打开 zsh 也不阻塞了, `df -h` 也同样不阻塞了. 上面 Ss 的进程可以用 -9 杀掉,
 但是僵尸(D) 进程无法杀掉.
-
-## 疑惑
-为什么 zsh 创建一个 pipe 会涉及到挂载的文件系统呢? 对于这点很疑惑.
 
 ## 参考
 * lsof: [http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount](http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html)
@@ -106,3 +103,4 @@ $ umount -a -t cifs -l /mnt
 ## 补充
 根据 [依云](http://lilydjwg.is-programmer.com/) 的评论, 通过`strace -f`
 可以很明显的看到 `zsh` 在 `lstat("/mnt",` 的时候阻塞了.
+

@@ -146,18 +146,16 @@ lsof: status error on /mnt: Host is down
 </pre></div>
 
 
-<h2>检测</h2>
+<h2>结果</h2>
 <p>现在打开 zsh 也不阻塞了, <code>df -h</code> 也同样不阻塞了. 上面 Ss 的进程可以用 -9 杀掉,
 但是僵尸(D) 进程无法杀掉.</p>
-<h2>疑惑</h2>
-<p>为什么 zsh 创建一个 pipe 会涉及到挂载的文件系统呢? 对于这点很疑惑.</p>
 <h2>参考</h2>
 <ul>
 <li>lsof: <a href="http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 <li>卸载 cifs: <a href="http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 </ul>
 <h2>补充</h2>
-<p>根据 <a href="http://lilydjwg.is-programmer.com/">依云</a> 评论, 通过<code>strace -f</code>
+<p>根据 <a href="http://lilydjwg.is-programmer.com/">依云</a> 的评论, 通过<code>strace -f</code>
 可以很明显的看到 <code>zsh</code> 在 <code>lstat("/mnt",</code> 的时候阻塞了.</p>
 <p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
