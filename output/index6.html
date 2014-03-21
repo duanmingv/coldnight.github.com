@@ -48,6 +48,56 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h3 class="article-title">lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h3></a>
+<h6 class="subheader" title="2012-08-10T16:02:00">Fri 10 August 2012
+</h6>
+
+
+<p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
+<h2>介绍</h2>
+<h3>lambda</h3>
+<p>Python用于支持将函数赋值给变量的一个操作符
+默认是返回的,所以不用再加return关键字,不然会报错</p>
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
+<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
+</pre></div>
+
+
+<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
+<h3>map()</h3>
+<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
+<h3>filter()</h3>
+<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
+<h3>reduce()</h3>
+<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
+<h2>将上面三个函数和lambda结合使用</h2>
+<div class="highlight"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c"># 序列中的每个元素加1</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pai-xu.html">排序 </a>
+    <a href="http://www.linuxzen.com/tag/lie-biao.html">列表 </a>
+    <a href="http://www.linuxzen.com/tag/sorted.html">sorted </a>
+    <a href="http://www.linuxzen.com/tag/reduce.html">reduce </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/map.html">map </a>
+    <a href="http://www.linuxzen.com/tag/list.html">list </a>
+    <a href="http://www.linuxzen.com/tag/lambda.html">lambda </a>
+    <a href="http://www.linuxzen.com/tag/filter.html">filter </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h3 class="article-title">Python 常用的列表操作</h3></a>
 <h6 class="subheader" title="2012-08-10T15:48:00">Fri 10 August 2012
 </h6>
@@ -410,40 +460,6 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
 
 <p><a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h3 class="article-title">iptables:restorecon: command not found无法保存策略解决</h3></a>
-<h6 class="subheader" title="2012-04-30T10:43:00">Mon 30 April 2012
-</h6>
-
-
-<p>今天更新了几条iptables,但是运行命令<code>service iptables save</code>保存时确提示<code>iptables: Saving firewall rules to /etc/sysconfig/iptables: /etc/init.d/iptables: line 268: restorecon: command not found</code></p>
-<p>好吧,很明显的错误,找不到restorecon命令. 查找一下:</p>
-<div class="highlight"><pre><span class="n">which</span> <span class="n">restorecon</span>
-<span class="n">whereis</span> <span class="n">restorecon</span>
-</pre></div>
-
-
-<p>没结果,继续手动查看:</p>
-<div class="highlight"><pre><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span> <span class="err">¦</span> <span class="n">grep</span> <span class="n">restore</span>
-<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">14</span> <span class="n">Apr</span> <span class="mi">19</span> <span class="mi">09</span><span class="o">:</span><span class="mi">58</span> <span class="n">iptables</span><span class="o">-</span><span class="n">restore ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/fang-huo-qiang.html">防火墙 </a>
-    <a href="http://www.linuxzen.com/tag/ce-lue.html">策略 </a>
-    <a href="http://www.linuxzen.com/tag/wu-fa-bao-cun.html">无法保存 </a>
-    <a href="http://www.linuxzen.com/tag/restorecon.html">restorecon </a>
-    <a href="http://www.linuxzen.com/tag/iptables.html">iptables </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

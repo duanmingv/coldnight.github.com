@@ -48,6 +48,46 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h3 class="article-title">Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h3></a>
+<h6 class="subheader" title="2012-05-16T11:05:00">Wed 16 May 2012
+</h6>
+
+
+<p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
+<h2>环境:</h2>
+<p>系统:Gentoo
+ip:192.168.3.1</p>
+<p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
+首先Gentoo没有默认安装vim,先安装vim:</p>
+<div class="highlight"><pre><span class="n">emerge</span> <span class="n">vim</span>
+</pre></div>
+
+
+<h3>安装配置Python</h3>
+<p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
+Gentoo使用emerge包管理,安装Python2.7:</p>
+<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/virtualenv.html">virtualenv </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/gentoo.html">Gentoo </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h3 class="article-title">iptables:restorecon: command not found无法保存策略解决</h3></a>
 <h6 class="subheader" title="2012-04-30T10:43:00">Mon 30 April 2012
 </h6>
@@ -384,53 +424,14 @@ mount -o loop iso路径 /mnt
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h3 class="article-title">安装配置cfengine实现自动化配置Linux/Unix服务器</h3></a>
-<h6 class="subheader" title="2012-01-17T23:06:00">Tue 17 January 2012
-</h6>
-
-
-<p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
-<p>cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:</p>
-<ul>
-<li>一个版本控制器(subversion)用来创建策略</li>
-<li>多个策略分发器(cfenginehub)用来分发策略----server</li>
-<li>多个策略执行器(cfengine host)用来执行策略-----client,</li>
-</ul>
-<p>本文使用的环境为:</p>
-<ul>
-<li>cfhub: 172.16.1.1/24</li>
-<li>cfhost: 172.16.1.2/24</li>
-</ul>
-<p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
-<p>下载:</p>
-<div class="highlight"><pre>wget https://cfengine.com/source-code/download ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/zi-dong-pei-zhi.html">自动配置 </a>
-    <a href="http://www.linuxzen.com/tag/zi-dong-hua.html">自动化 </a>
-    <a href="http://www.linuxzen.com/tag/fu-wu-qi.html">服务器 </a>
-    <a href="http://www.linuxzen.com/tag/unix.html">Unix </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 2 of 2</h6>
+<h6 class="subheader">Page 2 of 3</h6>
 
 <p>
             <a href="http://www.linuxzen.com/category/linux.html">&laquo; Prev</a>
 
+        <a href="http://www.linuxzen.com/category/linux3.html">Next &raquo;</a>
 </p>
 </div>
 

@@ -48,6 +48,45 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html"><h3 class="article-title">Vim 代码补全和检查: YouCompleteMe & syntastic</h3></a>
+<h6 class="subheader" title="2013-08-14T00:00:00">Wed 14 August 2013
+</h6>
+
+
+<p>Vim 7.4 发布, 最近升级了Vim, 并安装了YouCompleteMe和Syntastic插件, 这里记录下过程</p>
+<h2>升级Vim</h2>
+<p>YouCompleteMe 需要Vim 7.3.584+的支持, 并且开启 +python , 可以通过<code>:version</code>查看
+升级Vim需要先卸载原有的Vim</p>
+<div class="highlight"><pre>sudo apt-get remove vim vim-tiny vim-common vim-runtime gvim vim-gui-common
+</pre></div>
+
+
+<p>并安装以下依赖</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libncurses5</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnome2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgnomeui</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libgtk2</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libatk1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libbonoboui2</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libcairo2</span><span class="o">-</span><span class="n">dev ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/vim.html">Vim </a>
+    <a href="http://www.linuxzen.com/tag/bu-quan.html">补全 </a>
+    <a href="http://www.linuxzen.com/tag/74.html">7.4 </a>
+    <a href="http://www.linuxzen.com/tag/sheng-ji.html">升级 </a>
+    <a href="http://www.linuxzen.com/tag/jian-cha.html">检查 </a>
+    <a href="http://www.linuxzen.com/tag/cyu-yan.html">C语言 </a>
+    <a href="http://www.linuxzen.com/tag/youcompleteme.html">YouCompleteMe </a>
+    <a href="http://www.linuxzen.com/tag/syntastic.html">syntastic </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vim-dai-ma-bu-quan-he-jian-cha-youcompleteme-syntastic.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h3 class="article-title">发布一个基于Tornado的高效异步的HTTP客户端库</h3></a>
 <h6 class="subheader" title="2013-08-01T10:46:00">Thu 01 August 2013
 </h6>
@@ -377,40 +416,6 @@ git push origin temp:temp
 
 
 <p><a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h3 class="article-title">使用Tornado进行网络异步编程</h3></a>
-<h6 class="subheader" title="2013-04-15T16:09:00">Mon 15 April 2013
-</h6>
-
-
-<h2>Tornado</h2>
-<p><code>Tornado</code> 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用<code>Tornado</code>编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以<code>Tornado</code>不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器</p>
-<p>Torando 在Linux和FreeBSD上使用高效的异步I/O模型 <code>epoll</code> 和<code>kqueue</code>来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高</p>
-<h2>接口</h2>
-<p>当然我们可以不仅仅把<code>Tornado</code>看作是一个web框架和web服务器, 我们可以利用<code>Tornado</code>提供的接口进行高效的网络异步编程,</p>
-<p><code>tornado.ioloop.IOLoop</code> 提供了三个接口可以用于网络编程:</p>
-<h3>add_handler</h3>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
-    <a href="http://www.linuxzen.com/tag/wang-luo.html">网络 </a>
-    <a href="http://www.linuxzen.com/tag/yi-bu.html">异步 </a>
-    <a href="http://www.linuxzen.com/tag/bian-cheng.html">编程 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

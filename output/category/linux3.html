@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>cold's world - Linux</title>
+
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+
+            <article>
+                <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h3 class="article-title">安装配置cfengine实现自动化配置Linux/Unix服务器</h3></a>
+<h6 class="subheader" title="2012-01-17T23:06:00">Tue 17 January 2012
+</h6>
+
+
+<p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
+<p>cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:</p>
+<ul>
+<li>一个版本控制器(subversion)用来创建策略</li>
+<li>多个策略分发器(cfenginehub)用来分发策略----server</li>
+<li>多个策略执行器(cfengine host)用来执行策略-----client,</li>
+</ul>
+<p>本文使用的环境为:</p>
+<ul>
+<li>cfhub: 172.16.1.1/24</li>
+<li>cfhost: 172.16.1.2/24</li>
+</ul>
+<p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
+<p>下载:</p>
+<div class="highlight"><pre>wget https://cfengine.com/source-code/download ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/zi-dong-pei-zhi.html">自动配置 </a>
+    <a href="http://www.linuxzen.com/tag/zi-dong-hua.html">自动化 </a>
+    <a href="http://www.linuxzen.com/tag/fu-wu-qi.html">服务器 </a>
+    <a href="http://www.linuxzen.com/tag/unix.html">Unix </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+            <!-- /#posts-list -->
+<div class="pagination-centered">
+<h6 class="subheader">Page 3 of 3</h6>
+
+<p>
+            <a href="http://www.linuxzen.com/category/linux2.html">&laquo; Prev</a>
+
+</p>
+</div>
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                <script src="http://s96.cnzz.com/stat.php?id=3767683&web_id=3767683&show=pic" language="JavaScript"></script>
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+</html>

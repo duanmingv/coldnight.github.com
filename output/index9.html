@@ -48,6 +48,51 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html"><h3 class="article-title">将cfengine集成到自己定制的发行版</h3></a>
+<h6 class="subheader" title="2012-01-19T11:35:00">Thu 19 January 2012
+</h6>
+
+
+<p>上一篇文章介绍如何定制自己的发行版,并且完全根据CentOS进行定制,我们看到了用cfengine管理Linux系统的优势,如何快速部署cfengine呢,我们把cfengine集成到自己的定制的Linux中.
+本文根据编译好的cfengine来进行定制,大家都知道编译之前会有很多依赖,所以我们需要安装系统的时候把依赖装好,然后把编译好的二进制文件复制到当前系统中.</p>
+<p>本文完全根据<a title="根据CentOS定制自己的发行版" href="/post/36" target="_blank">上一篇</a>文章而来,挂载光驱安装工具等等这里就不介绍了.</p>
+<!--more-->
+
+<p>首先.记录cfengine依赖包的依赖关系,然后把这些包复制到定制发行版的目录下,cfengine所依赖的包如下:</p>
+<div class="highlight"><pre><span class="c"># 把依赖包添加到cfpkgs.list</span>
+vi cfpkgs.list
+<span class="c"># 添加如下内容</span>
+keyutils-libs-devel
+zlib-devel
+e2fsprogs-devel 
+libsepol-devel
+libselinux-devel
+db4-devel
+pcre-devel
+krb5-devel
+flex
+openssl-devel 
+<span class="c"># 然后根据cfpkgs.list把包复制到发行版的CentOS目录下:</span>
+<span class="k">for </span>i in <span class="sb">`</span>cat cfpkgs.list <span class="sb">`</span>:; <span class="k">do </span><span class="nv">file</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span> ¦ sed <span class="s1">&#39;s/://g&#39;</span><span class="sb">`</span>; cp /mnt ...</pre></div></!--more--><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ji-cheng.html">集成 </a>
+    <a href="http://www.linuxzen.com/tag/ding-zhi.html">定制 </a>
+    <a href="http://www.linuxzen.com/tag/fa-xing-ban.html">发行版 </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cfengine.html">cfengine </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html"><h3 class="article-title">根据CentOS定制自己的发行版</h3></a>
 <h6 class="subheader" title="2012-01-18T11:13:00">Wed 18 January 2012
 </h6>

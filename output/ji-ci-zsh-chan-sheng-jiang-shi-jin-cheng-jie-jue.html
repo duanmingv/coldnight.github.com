@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>cold's world - 命令</title>
+    <title>记一次 zsh 产生僵尸进程解决</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -43,16 +43,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html" rel="bookmark"
+        title="Permalink to 记一次 zsh 产生僵尸进程解决">记一次 zsh 产生僵尸进程解决</a></h3>
+    </header>
 
-            <article>
-                <a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html"><h3 class="article-title">记一次 zsh 产生僵尸进程解决</h3></a>
 <h6 class="subheader" title="2014-03-21T10:47:00">Fri 21 March 2014
 </h6>
 
 
-<h2>问题描述</h2>
+    <h2>问题描述</h2>
 <p>今天使用 vmplayer 运行了 xp 系统, 关闭后在 zsh 里继续敲命令就阻塞了,
 然后就关闭了终端重新打开, 还是阻塞, 重复几次依然如此. 然后使用 gVim
 将 shell 切换到 bash, 终端可以正常打开, 然后运行</p>
@@ -154,7 +155,8 @@ lsof: status error on /mnt: Host is down
 <ul>
 <li>lsof: <a href="http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 <li>卸载 cifs: <a href="http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
-</ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+</ul>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/zsh.html">zsh </a>
@@ -167,72 +169,22 @@ lsof: status error on /mnt: Host is down
 
 
 
-<p><a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html#disqus_thread">comments</a></p>            </article>
 
+	<h4>Comments</h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'linuxzen'
+        var disqus_identifier = "记一次 zsh 产生僵尸进程解决";
+        var disqus_url = "http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html";
 
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h3 class="article-title">Linux一些比较实用的小技巧</h3></a>
-<h6 class="subheader" title="2012-02-20T11:30:00">Mon 20 February 2012
-</h6>
-
-
-<p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
-<h2>文件查找</h2>
-<p>找出最近修改的文件:</p>
-<div class="highlight"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
-</pre></div>
-
-
-<p>使用通配符查找文件</p>
-<div class="highlight"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
-</pre></div>
-
-
-<h2>文本替换</h2>
-<div class="highlight"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
-</pre></div>
-
-
-<h2>显示指定行</h2>
-<div class="highlight"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/ming-ling.html">命令 </a>
-    <a href="http://www.linuxzen.com/tag/sz.html">sz </a>
-    <a href="http://www.linuxzen.com/tag/sshshang-chuan-xia-zai.html">ssh上传下载 </a>
-    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
-    <a href="http://www.linuxzen.com/tag/sed.html">sed </a>
-    <a href="http://www.linuxzen.com/tag/rz.html">rz </a>
-    <a href="http://www.linuxzen.com/tag/lrzsz.html">lrzsz </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/find.html">find </a>
-    <a href="http://www.linuxzen.com/tag/awk.html">awk </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
-
-<p>
-
-</p>
-</div>
-
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
     </div>
     <!-- End Main Content -->
 
