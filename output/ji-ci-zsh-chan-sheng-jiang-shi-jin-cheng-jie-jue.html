@@ -70,7 +70,13 @@ wh       28628  0.0  0.0  47356  3492 ?        D    09:42   0:00 -/bin/zsh
 </pre></div>
 
 
-<p>发现好多僵尸进程, 而且都 kill 不掉.</p>
+<p><s>发现好多僵尸进程, 而且都 kill 不掉.</s>
+发现好多 D 状态的进程, 查看 <code>ps</code> 的手册, D 状态的解释是</p>
+<div class="highlight"><pre><span class="n">D</span>    <span class="n">uninterruptible</span> <span class="n">sleep</span> <span class="p">(</span><span class="n">usually</span> <span class="n">io</span><span class="p">)</span>
+</pre></div>
+
+
+<p>进程可能是由 I/O 引起的不可间断的等待.</p>
 <h2>解决</h2>
 <p>首先当然是 <code>strace</code> 登场</p>
 <div class="highlight"><pre><span class="nv">$ </span>strace zsh
@@ -91,34 +97,33 @@ lseek<span class="o">(</span>11, 0, SEEK_CUR<span class="o">)</span>            
 </pre></div>
 
 
-<p>然后就会卡在上面那个状态一会, 继续运行, 这段的完整结果为</p>
-<div class="highlight"><pre><span class="n">pipe</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>                            <span class="o">=</span> <span class="mi">0</span>
-<span class="n">fcntl</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">F_DUPFD</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>                   <span class="o">=</span> <span class="mi">11</span>
-<span class="n">close</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                                <span class="o">=</span> <span class="mi">0</span>
-<span class="n">fcntl</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">F_DUPFD</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>                   <span class="o">=</span> <span class="mi">12</span>
-<span class="n">close</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                                <span class="o">=</span> <span class="mi">0</span>
-<span class="n">rt_sigprocmask</span><span class="p">(</span><span class="n">SIG_BLOCK</span><span class="p">,</span> <span class="p">[</span><span class="n">CHLD</span><span class="p">],</span> <span class="p">[</span><span class="n">CHLD</span> <span class="n">WINCH</span><span class="p">],</span> <span class="mi">8</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">clone</span><span class="p">(</span><span class="n">child_stack</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">CLONE_CHILD_CLEARTID</span><span class="o">|</span><span class="n">CLONE_CHILD_SETTID</span><span class="o">|</span><span class="n">SIGCHLD</span><span class="p">,</span> <span class="n">child_tidptr</span><span class="o">=</span><span class="mh">0x7fd94caef9d0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">8750</span>
-<span class="n">close</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>                               <span class="o">=</span> <span class="mi">0</span>
-<span class="n">fcntl</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="n">F_GETFL</span><span class="p">)</span>                      <span class="o">=</span> <span class="mi">0</span> <span class="p">(</span><span class="n">flags</span> <span class="n">O_RDONLY</span><span class="p">)</span>
-<span class="n">fstat</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="p">{</span><span class="n">st_mode</span><span class="o">=</span><span class="n">S_IFIFO</span><span class="o">|</span><span class="mo">0600</span><span class="p">,</span> <span class="n">st_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="p">...})</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">mmap</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="o">|</span><span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_PRIVATE</span><span class="o">|</span><span class="n">MAP_ANONYMOUS</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x7fd94caf3000</span>
-<span class="n">lseek</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SEEK_CUR</span><span class="p">)</span>                  <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ESPIPE</span> <span class="p">(</span><span class="n">Illegal</span> <span class="n">seek</span><span class="p">)</span>
-<span class="n">read</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="s">&quot;/data/home/wh</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>       <span class="o">=</span> <span class="mi">14</span>
-<span class="n">read</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>                      <span class="o">=</span> <span class="mi">0</span>
-<span class="n">close</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>  
+<p>从上面可以看出, zsh 打开了一个 pipe, 但是读取的时候阻塞了.</p>
+<p>现在调用 <code>strace -f</code> 查看管道另一头的在做些什么</p>
+<div class="highlight"><pre><span class="nv">$ </span>strace -f zsh
+<span class="o">[</span>pid 28429<span class="o">]</span> chdir<span class="o">(</span><span class="s2">&quot;..&quot;</span><span class="o">)</span>                 <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> stat<span class="o">(</span><span class="s2">&quot;..&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFDIR|0755, <span class="nv">st_size</span><span class="o">=</span>4096, ...<span class="o">})</span> <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> openat<span class="o">(</span>AT_FDCWD, <span class="s2">&quot;..&quot;</span>, O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC<span class="o">)</span> <span class="o">=</span> 3
+<span class="o">[</span>pid 28429<span class="o">]</span> getdents<span class="o">(</span>3, /* 12 entries */, 32768<span class="o">)</span> <span class="o">=</span> 344
+<span class="o">[</span>pid 28429<span class="o">]</span> lstat<span class="o">(</span><span class="s2">&quot;../home&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFDIR|0755, <span class="nv">st_size</span><span class="o">=</span>4096, ...<span class="o">})</span> <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> close<span class="o">(</span>3<span class="o">)</span>                    <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> chdir<span class="o">(</span><span class="s2">&quot;..&quot;</span><span class="o">)</span>                 <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> stat<span class="o">(</span><span class="s2">&quot;..&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFDIR|0755, <span class="nv">st_size</span><span class="o">=</span>4096, ...<span class="o">})</span> <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> openat<span class="o">(</span>AT_FDCWD, <span class="s2">&quot;..&quot;</span>, O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC<span class="o">)</span> <span class="o">=</span> 3
+<span class="o">[</span>pid 28429<span class="o">]</span> getdents<span class="o">(</span>3, /* 26 entries */, 32768<span class="o">)</span> <span class="o">=</span> 672
+<span class="o">[</span>pid 28429<span class="o">]</span> lstat<span class="o">(</span><span class="s2">&quot;../lib&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFLNK|0777, <span class="nv">st_size</span><span class="o">=</span>7, ...<span class="o">})</span> <span class="o">=</span> 0
+<span class="o">[</span>pid 28429<span class="o">]</span> lstat<span class="o">(</span><span class="s2">&quot;../mnt&quot;</span>,
 </pre></div>
 
 
-<p>从上面可以看出, zsh 打开了一个 pipe, 但是读取的时候阻塞了.</p>
-<p>此时我无意中敲了下 <code>df -h</code> 发现也很慢, 当然 strace 下 它</p>
+<p>上面可以看到 zsh 在 <code>lstat("../mnt")</code> 的时候产生了等待</p>
+<p>/mnt 一般挂载一些东西, 运行 <code>df -h</code> 查看一下, 发现也很慢, 当然 strace 下 它</p>
 <div class="highlight"><pre><span class="nv">$ </span>strace df -h
 ...
-stat<span class="o">(</span><span class="s2">&quot;/mnt&quot;</span>, 
+stat<span class="o">(</span><span class="s2">&quot;/mnt&quot;</span>,
 </pre></div>
 
 
-<p>发现它是卡在了读取 <code>/mnt</code>. 尝试 <code>umount</code> 它:</p>
+<p>发现它同样卡在了读取 <code>/mnt</code>. 尝试 <code>umount</code> 它:</p>
 <div class="highlight"><pre><span class="nv">$ </span>sudo umount /mnt
 umount: /mnt: target is busy
         <span class="o">(</span>In some cases useful info about processes that
@@ -148,24 +153,24 @@ lsof: status error on /mnt: Host is down
 
 <h2>结果</h2>
 <p>现在打开 zsh 也不阻塞了, <code>df -h</code> 也同样不阻塞了. 上面 Ss 的进程可以用 -9 杀掉,
-但是僵尸(D) 进程无法杀掉.</p>
+但是 D 状态进程无法杀掉.</p>
 <h2>参考</h2>
 <ul>
 <li>lsof: <a href="http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 <li>卸载 cifs: <a href="http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
 </ul>
-<h2>补充</h2>
-<p>根据 <a href="http://lilydjwg.is-programmer.com/">依云</a> 的评论, 通过<code>strace -f</code>
-可以很明显的看到 <code>zsh</code> 在 <code>lstat("/mnt",</code> 的时候阻塞了.</p>
+<h2>更新</h2>
+<p>经过 <a href="http://lilydjwg.is-programmer.com/">依云</a> 和 <a href="http://eleveni386.7axu.com">eleven</a>
+的指正对文章做了一些修改, 感谢两位.</p>
 <p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/zsh.html">zsh </a>
-    <a href="http://www.linuxzen.com/tag/zombie.html">zombie </a>
-    <a href="http://www.linuxzen.com/tag/jiang-shi.html">僵尸 </a>
     <a href="http://www.linuxzen.com/tag/jin-cheng.html">进程 </a>
     <a href="http://www.linuxzen.com/tag/zu-sai.html">阻塞 </a>
     <a href="http://www.linuxzen.com/tag/ming-ling.html">命令 </a>
+    <a href="http://www.linuxzen.com/tag/d.html">D </a>
+    <a href="http://www.linuxzen.com/tag/jiang-shi.html">僵尸 </a>
 </p>
 
 
