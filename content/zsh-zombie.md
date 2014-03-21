@@ -102,3 +102,7 @@ $ umount -a -t cifs -l /mnt
 ## 参考
 * lsof: [http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount](http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html)
 * 卸载 cifs: [http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount](http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount)
+
+## 补充
+根据 [依云](http://lilydjwg.is-programmer.com/) 评论, 通过`strace -f`
+可以很明显的看到 `zsh` 在 `lstat("/mnt",` 的时候阻塞了.
