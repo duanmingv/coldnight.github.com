@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>cold's world - cold</title>
+    <title>Tornado 多进程实现分析</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -43,16 +43,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html" rel="bookmark"
+        title="Permalink to Tornado 多进程实现分析">Tornado 多进程实现分析</a></h3>
+    </header>
 
-            <article>
-                <a href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html"><h3 class="article-title">Tornado 多进程实现分析</h3></a>
 <h6 class="subheader" title="2014-04-11T14:35:00">Fri 11 April 2014
 </h6>
 
 
-<h2>引子</h2>
+    <h2>引子</h2>
 <p>Tornado 是一个网络异步的的web开发框架, 并且可以利用多进程进行提高效率, 
 下面是创建一个多进程 tornado 程序的例子.</p>
 <div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
@@ -177,7 +178,8 @@ Windows 上的名字, 所以看到这里就很明确了.</p>
 <p>当成功建立连接的子进程还在处理这个连接的时候又过来一个连接, 这时候就会有另外一个
 子进程接手这个连接.</p>
 <p>Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
-同一个请求也就不会被多个子进程处理.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+同一个请求也就不会被多个子进程处理.</p>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/python.html">Python </a>
@@ -191,345 +193,22 @@ Windows 上的名字, 所以看到这里就很明确了.</p>
 
 
 
-<p><a href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html#disqus_thread">comments</a></p>            </article>
 
-
-                <hr  class="gradient"/>
-
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html"><h3 class="article-title">记一次 zsh 产生僵尸进程解决</h3></a>
-<h6 class="subheader" title="2014-03-21T10:47:00">Fri 21 March 2014
-</h6>
-
-
-<h2>问题描述</h2>
-<p>今天使用 vmplayer 运行了 xp 系统, 关闭后在 zsh 里继续敲命令就阻塞了,
-然后就关闭了终端重新打开, 还是阻塞, 重复几次依然如此. 然后使用 gVim
-将 shell 切换到 bash, 终端可以正常打开, 然后运行</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps aux | grep zsh
-wh       27552  0.0  0.1  47244  5164 ?        Ss   09:38   0:00 zsh
-wh       27553  0.0  0.1  47244  5156 ?        Ss   09:38   0 ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/zsh.html">zsh </a>
-    <a href="http://www.linuxzen.com/tag/jin-cheng.html">进程 </a>
-    <a href="http://www.linuxzen.com/tag/zu-sai.html">阻塞 </a>
-    <a href="http://www.linuxzen.com/tag/ming-ling.html">命令 </a>
-    <a href="http://www.linuxzen.com/tag/d.html">D </a>
-    <a href="http://www.linuxzen.com/tag/jiang-shi.html">僵尸 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-flash-player.html"><h3 class="article-title">解决一直崩溃的 Adobe Flash Player</h3></a>
-<h6 class="subheader" title="2014-03-12T00:00:00">Wed 12 March 2014
-</h6>
-
-
-<p>1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
-一打开视屏就 crash.  从那之后就一直用手机看视屏, 很别扭, 放着大屏不用一直盯着手机看看.
-今天下定决心找找原因. google 了一阵也没有啥结果, 所以我决定卸载现有的, 手动安装一个试试.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">flashplugin</span>
-</pre></div>
-
-
-<p>结果卸载的时候输出段信息:</p>
-<div class="highlight"><pre><span class="nl">warning:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span> <span class="n">saved</span> <span class="n">as</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">pacsave</span>
-</pre></div>
-
-
-<p>然后我看了下文件内容</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/adobe/mms.cfg.pacsave
-<span class="c">#Hardware video decoding</span>
-<span class="nv">EnableLinuxHWVideoDecode</span><span class="o">=</span>1
-</pre></div>
-
-
-<p>瞬间觉得可能是这个选项引起的, 所以我又装上了 flashplugin ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/archlinux.html">archlinux </a>
-    <a href="http://www.linuxzen.com/tag/flash-player.html">flash player </a>
-    <a href="http://www.linuxzen.com/tag/crash.html">crash </a>
-    <a href="http://www.linuxzen.com/tag/jie-jue.html">解决 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-flash-player.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-flash-player.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html"><h3 class="article-title">使用 Pygments 对 Vimwiki 进行代码高亮</h3></a>
-<h6 class="subheader" title="2013-12-27T00:00:00">Fri 27 December 2013
-</h6>
-
-
-<p>Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
-所以不想使用, 比较倾向使用 Pygments 在 Vimwiki 生成 HTML 的时候对代码进行高亮.</p>
-<h1>尝试</h1>
-<h2>使用 custom_wiki2html 选项</h2>
-<p>仔细的看了 Vimwiki 的帮助文档, 发现有一个 custom_wiki2html 
-(<code>:h vimwiki-option-custom_wiki2html</code>) 的选项可以指定自己
-的脚本来处理 wiki2html, 尝试了一下, 发现这个脚本是在生成 HTML 之前调用,
-而且如果对 wiki 文件处理之后无法替换回原来的内容(后来发现这个仅仅是对使用 Markdown
-语法作为 Wiki 语法设定的), 所以放弃了.</p>
-<h2>Fork 仓库, 更改代码</h2>
-<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
-    <a href="http://www.linuxzen.com/tag/vimwiki.html">vimwiki </a>
-    <a href="http://www.linuxzen.com/tag/pygments.html">pygments </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/highlight.html">highlight </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html"><h3 class="article-title">使用 Vimwiki + git 做知识管理</h3></a>
-<h6 class="subheader" title="2013-12-26T00:00:00">Thu 26 December 2013
-</h6>
-
-
-<p>一直在找一个合适的知识管理工具, 用过 Evernote, 但是不支持 Markdown, 用了一段时间也放弃了.
-最近 python-cn 列表里也在讨论这个问题, 看到有人使用 Vimwiki, 所以就尝试了一下.</p>
-<p>安装后,试着写了点东西, 发现很方便做知识管理和记录笔记, 可以生成HTML, 可以定制模板,
-这里不讨论如何使用, Vimwiki 的文档介绍的很详细,</p>
-<p>我使用<a href="http://bootcss.com">bootstrap</a>和 jquery 对模板进行了一些定制:</p>
-<ul>
-<li>添加导航</li>
-<li>将toc移动到左侧</li>
-</ul>
-<p>下面将介绍我是如何做的, 并在最后附上如何部署的</p>
-<h3>指定模板</h3>
-<p>首先需要更改默认模板</p>
-<div class="highlight"><pre>    <span class="k">let</span> <span class="k">g</span>:vimwiki_list <span class="p">=</span> [{<span class="s1">&#39;path&#39;</span>: <span class="s1">&#39;~/vimwiki&#39;</span><span class="p">,</span>
-    \    <span class="s1">&#39;path_html&#39;</span>: <span class="s1">&#39;~/vimwiki_html&#39;</span><span class="p">,</span>
-    \    <span class="s1">&#39;template_path&#39;</span>: <span class="s1">&#39;~/vimwiki/template&#39;</span><span class="p">,</span>
-    \    <span class="s1">&#39;template_default&#39;</span>: <span class="s2">&quot;default.tpl&quot;</span>}]
-</pre></div>
-
-
-<p>并将默认的模板作为模板进行修改</p>
-<div class="highlight"><pre>mkdir -p ~/vimwiki/template
-cp ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
-    <a href="http://www.linuxzen.com/tag/vimwiki.html">vimwiki </a>
-    <a href="http://www.linuxzen.com/tag/wiki.html">wiki </a>
-    <a href="http://www.linuxzen.com/tag/zhi-shi.html">知识 </a>
-    <a href="http://www.linuxzen.com/tag/guan-li.html">管理 </a>
-    <a href="http://www.linuxzen.com/tag/git.html">git </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html"><h3 class="article-title">将Pelican版本更新到3.3</h3></a>
-<h6 class="subheader" title="2013-12-24T00:00:00">Tue 24 December 2013
-</h6>
-
-
-<p>记录升级Pelican到3.3的过程和一些吐槽,</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/pelican33.html">pelican3.3 </a>
-    <a href="http://www.linuxzen.com/tag/sheng-ji.html">升级 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h3 class="article-title">PyQt + QML 快速开发GUI总结</h3></a>
-<h6 class="subheader" title="2013-11-06T15:25:00">Wed 06 November 2013
-</h6>
-
-
-<p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
-结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
-而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
-这篇文章会总结这些问题, 避免以后碰到无从下手.</p>
-<p>PS:QML的一些基础问题不会在这里讨论, 本篇文章仅讨论一些经验性的问题, 本篇文章使用PyQt4</p>
-<p><em>请留意文章中间的&quot;注意&quot;</em></p>
-<div class="section" id="pyqt">
-<h2>如何和PyQt交互</h2>
-<p>QML和PyQt交互主要有三种方法: PyQt渲染数据, 信号传递, QML提供接口</p>
-<div class="section" id="pyqtqml">
-<h3>使用PyQt显示QML</h3>
-<p>要想在Python里使用PyQt来调用QML显示, 需要用到 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 实例的 <tt class="docutils literal">setSource</tt> 将一个 <tt class="docutils literal">PyQt4.QtCore.QUrl</tt> 对象传递进去, 然后调用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">show</tt> 方法, 下面是一个例子:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui ...</span></pre></div></div></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/qml.html">QML </a>
-    <a href="http://www.linuxzen.com/tag/pyqt.html">PyQt </a>
-    <a href="http://www.linuxzen.com/tag/gui.html">Gui </a>
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/qt.html">Qt </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h3 class="article-title">推荐几款最近发现非常酷的Vim插件</h3></a>
-<h6 class="subheader" title="2013-10-18T13:14:00">Fri 18 October 2013
-</h6>
-
-
-<p>最近看一个github上的Vim配置, 发现了几款非常酷而且非常有用的Vim插件:</p>
-<ul class="simple">
-<li>delimitMate
-用于补全括号和引号</li>
-<li>vim-surround
-用于快速切换括号/引号或者标签</li>
-<li>GitGutter
-实时显示git更改</li>
-<li>Gitv
-查看Git详细提交日志(类似gitk)</li>
-<li>vim-commentary
-Vim批量注释工具, 可以注释多行和去除多行注释</li>
-<li>indentLine
-更加美观的显示缩进对齐线</li>
-</ul>
-<p>先放上录屏:</p>
-<div style="width:800; height: 500">
-    <script type="text/javascript" src="http://asciinema.org/a/5981.js" id="asciicast-5981" async></script>
-</div><div class="section" id="id1">
-<h2>安装</h2>
-<p>上面插件可以通过 Vundle 来安装 (了解Vundle猛击 <a class="reference external" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html">这里</a>), 下面是 <tt class="docutils literal">.vimrc</tt> 的配置</p>
-<div class="highlight"><pre>Bundle <span class="s2">&quot;Yggdroot/indentLine&quot;</span>
-Bundle <span class="s2">&quot;airblade/vim-gitgutter&quot;</span>
-Bundle <span class="s2">&quot;gregsexton/gitv&quot;</span>
-Bundle <span class="s2">&quot;tpope/vim-commentary&quot;</span>
-Bundle <span class="s2">&quot;tpope/vim-surround&quot;</span>
-Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
-</pre></div>
-<p>然后重新打开 Vim, 执行 <tt class="docutils literal">:BundleIntall</tt> 等待安装完成 ...</p></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/vim.html">Vim </a>
-    <a href="http://www.linuxzen.com/tag/cha-jian.html">插件 </a>
-    <a href="http://www.linuxzen.com/tag/ku.html">酷 </a>
-    <a href="http://www.linuxzen.com/tag/suo-jin-dui-qi-xian.html">缩进对齐线 </a>
-    <a href="http://www.linuxzen.com/tag/git.html">Git </a>
-    <a href="http://www.linuxzen.com/tag/surround.html">surround </a>
-    <a href="http://www.linuxzen.com/tag/delimitmate.html">delimitMate </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html"><h3 class="article-title">Vim  相对行号</h3></a>
-<h6 class="subheader" title="2013-10-09T14:50:00">Wed 09 October 2013
-</h6>
-
-
-<p class="first last">大家在用Vim时是否会遇到想复制多行或者想快速向下/向上移动多行时而不知道行数的情况, 相对行号将帮助你轻易的完成类似的任务</p>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/vim.html">Vim </a>
-    <a href="http://www.linuxzen.com/tag/xiang-dui.html">相对 </a>
-    <a href="http://www.linuxzen.com/tag/xing-hao.html">行号 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vim-xiang-dui-xing-hao.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html"><h3 class="article-title">PyQt4 信号和槽详解</h3></a>
-<h6 class="subheader" title="2013-09-22T10:10:00">Sun 22 September 2013
-</h6>
-
-
-<p class="first last">最近在开发一个基于 <tt class="docutils literal">PyQt4</tt> 的的 GUI程序, 使用过程中一些对信号和槽的理解分享给大家</p>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/pyqt4.html">PyQt4 </a>
-    <a href="http://www.linuxzen.com/tag/xin-hao.html">信号 </a>
-    <a href="http://www.linuxzen.com/tag/cao.html">槽 </a>
-    <a href="http://www.linuxzen.com/tag/qt.html">Qt </a>
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/gui.html">GUI </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-            <!-- /#posts-list -->
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 9</h6>
-
-<p>
-
-        <a href="http://www.linuxzen.com/author/cold2.html">Next &raquo;</a>
-</p>
-</div>
-
+	<h4>Comments</h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'linuxzen'
+        var disqus_identifier = "Tornado 多进程实现分析";
+        var disqus_url = "http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html";
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
     </div>
     <!-- End Main Content -->
 

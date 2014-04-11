@@ -1,6 +1,6 @@
-Title: Tornado 多进程分析
+Title: Tornado 多进程实现分析
 Date: 2014-04-11 14:35
-Tags: Python, fork_processes, tornado, 多进程, web
+Tags: Python, fork_processes, tornado, 多进程, web, 提升, 效率
 Category: Python
 
 ## 引子

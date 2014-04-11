@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2014-04-11T15:54:11-00:00</lastmod>
+<lastmod>2014-04-11T15:55:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2014-04-11T15:54:11-00:00</lastmod>
+<lastmod>2014-04-11T15:55:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2014-04-11T15:54:11-00:00</lastmod>
+<lastmod>2014-04-11T15:55:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2014-04-11T15:54:11-00:00</lastmod>
+<lastmod>2014-04-11T15:55:33-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -39,7 +39,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tornado-duo-jin-cheng-fen-xi.html</loc>
+<loc>http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html</loc>
 <lastmod>2014-04-11T14:35:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.7</priority>
@@ -2020,6 +2020,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/ti-sheng.html</loc>
+<lastmod>2014-04-11T14:35:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/cao-zuo-xi-tong.html</loc>
 <lastmod>2012-03-08T12:05:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -2468,8 +2475,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/piao-liang.html</loc>
-<lastmod>2013-01-05T15:01:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/xiao-lu.html</loc>
+<lastmod>2014-04-11T14:35:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2491,6 +2498,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/xing-hao.html</loc>
 <lastmod>2013-10-09T14:50:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/piao-liang.html</loc>
+<lastmod>2013-01-05T15:01:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
