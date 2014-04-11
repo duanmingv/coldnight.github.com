@@ -48,6 +48,46 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h3 class="article-title">用Python将绝对URL替换成相对URL</h3></a>
+<h6 class="subheader" title="2012-09-29T15:52:00">Sat 29 September 2012
+</h6>
+
+
+<p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
+<p>脚本内容如下:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c"># author  : cold night</span>
+<span class="c"># email   : wh_linux@126.com</span>
+<span class="c">#</span>
+
+<span class="kn">import</span> <span class="nn">pymongo</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/jue-dui.html">绝对 </a>
+    <a href="http://www.linuxzen.com/tag/xiang-dui.html">相对 </a>
+    <a href="http://www.linuxzen.com/tag/ti-huan.html">替换 </a>
+    <a href="http://www.linuxzen.com/tag/url.html">url </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html"><h3 class="article-title">用Python对各种编程语言进行代码高亮</h3></a>
 <h6 class="subheader" title="2012-09-29T15:11:00">Sat 29 September 2012
 </h6>
@@ -427,52 +467,9 @@ import pdb; pdb.set_trace()
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html"><h3 class="article-title">mongoengine使用笔记</h3></a>
-<h6 class="subheader" title="2012-06-23T10:02:00">Sat 23 June 2012
-</h6>
-
-
-<p>最近重新拾起Django,但是Django并不支持mongodb,但是有一个模块mongoengine可以实现Django Model类似的封装.但是mongoengine的中文文档几乎没有,有的也是简短的几句介绍和使用.下面我就分享一下我在使用过程中所记录下的一些笔记,可能有点乱.大家可以参考一下.</p>
-<h2>安装mongoengine</h2>
-<div class="highlight"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
-<span class="n">easy_install</span> <span class="n">mongoengine</span>
-</pre></div>
-
-
-<h2>基本使用</h2>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="c"># 连接数据库</span>
-<span class="n">connect</span><span class="p">(</span><span class="s">&#39;blog&#39;</span><span class="p">)</span>   <span class="c"># 连接本地blog数据库</span>
-<span class="c"># 如需验证和指定主机名</span>
-<span class="c"># connect(&#39;blog&#39;, host=&#39;192.168.3.1&#39;, username=&#39;root&#39;, password=&#39;1234&#39;)</span>
-
-<span class="c"># 定义分类文档</span>
-<span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-    <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/pymongo.html">pymongo </a>
-    <a href="http://www.linuxzen.com/tag/nosql.html">nosql </a>
-    <a href="http://www.linuxzen.com/tag/mongoengine.html">mongoengine </a>
-    <a href="http://www.linuxzen.com/tag/mongodb.html">mongodb </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 3 of 4</h6>
+<h6 class="subheader">Page 3 of 5</h6>
 
 <p>
             <a href="http://www.linuxzen.com/tag/python2.html">&laquo; Prev</a>

@@ -47,6 +47,158 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/tornado-duo-jin-cheng-fen-xi.html"><h3 class="article-title">Tornado 多进程分析</h3></a>
+<h6 class="subheader" title="2014-04-11T14:35:00">Fri 11 April 2014
+</h6>
+
+
+<h2>引子</h2>
+<p>Tornado 是一个网络异步的的web开发框架, 并且可以利用多进程进行提高效率, 
+下面是创建一个多进程 tornado 程序的例子.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   14/04/11 14:26:59</span>
+<span class="c">#   Desc    :</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">tornado.web</span>
+<span class="kn">import</span> <span class="nn">tornado.httpserver</span>
+<span class="kn">import</span> <span class="nn">tornado.ioloop</span>
+<span class="kn">import</span> <span class="nn">tornado.netutil</span>
+<span class="kn">import</span> <span class="nn">tornado.process</span>
+
+
+<span class="k">class</span> <span class="nc">LongHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">Application</span><span class="p">(([</span><span class="s">r&#39;/&#39;</span><span class="p">,</span> <span class="n">LongHandler</span><span class="p">],</span> <span class="p">))</span>
+    <span class="n">sockets</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">netutil</span><span class="o">.</span><span class="n">bind_sockets</span><span class="p">(</span><span class="mi">8090</span><span class="p">)</span>
+    <span class="n">tornado</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">fork_processes</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
+    <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>上面代码使用 <code>tornado.process.fork_processes</code> 创建了2个子进程, 同时用时访问这个
+服务两次,  分别会返回两个相邻的pid. 可以看到 tornado 确实使用了两个进程来同时完成任务.</p>
+<p>我很一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢.</p>
+<h2>探究</h2>
+<p>我们首先是调用 <code>tornado.netutil.bind_sockets</code> 来创建一个 socket(或一个 socket 列表),</p>
+<p>接着我们调用 <code>tornado.process.fork_processes</code> 来 fork 子进程, 
+阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进程退出
+则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.
+子进程则继续执行调用这个函数之后的代码.</p>
+<p>我们在 fork 子进程后做了如下操作.</p>
+<div class="highlight"><pre>    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
+    <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>我们先看看 <code>tornado.httpserver.HTTPServer.add_sockets</code> 发现<code>HTTPServer</code>是继承的
+<code>tornado.netutil.TCPServer</code>, add_sockets 也是实现在 <code>TCPServer</code> 中</p>
+<p><code>tornado.netutil.TCPServer.add_sockets</code></p>
+<div class="highlight"><pre>    <span class="k">def</span> <span class="nf">add_sockets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sockets</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes this server start accepting connections on the given sockets.</span>
+
+<span class="sd">        The ``sockets`` parameter is a list of socket objects such as</span>
+<span class="sd">        those returned by `bind_sockets`.</span>
+<span class="sd">        `add_sockets` is typically used in combination with that</span>
+<span class="sd">        method and `tornado.process.fork_processes` to provide greater</span>
+<span class="sd">        control over the initialization of a multi-process server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">sock</span> <span class="ow">in</span> <span class="n">sockets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sockets</span><span class="p">[</span><span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()]</span> <span class="o">=</span> <span class="n">sock</span>
+            <span class="n">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_connection</span><span class="p">,</span>
+                               <span class="n">io_loop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span><span class="p">)</span>
+</pre></div>
+
+
+<p>主要是映射了下 socket 和 socket 对应的文件描述符, 我们看看它调用的
+<code>add_accept_handler</code></p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">io_loop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds an ``IOLoop`` event handler to accept new connections on ``sock``.</span>
+
+<span class="sd">    When a connection is accepted, ``callback(connection, address)`` will</span>
+<span class="sd">    be run (``connection`` is a socket object, and ``address`` is the</span>
+<span class="sd">    address of the other end of the connection).  Note that this signature</span>
+<span class="sd">    is different from the ``callback(fd, events)`` signature used for</span>
+<span class="sd">    ``IOLoop`` handlers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">accept_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">connection</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span><span class="p">):</span>
+                    <span class="k">return</span>
+                <span class="k">raise</span>
+            <span class="n">callback</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+    <span class="n">io_loop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">accept_handler</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+</pre></div>
+
+
+<p>我们知道 <strong>I/O多路复用</strong> 在处理服务端 socket 时, 当有连接请求过来时, 会触发
+可读的事件, 此函数将 socket 在主事件循环中注册读事件(IOLoop.READ), 它的回调
+会创建连接, 我注意到回调里的异常捕获有这样几行</p>
+<div class="highlight"><pre>                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span><span class="p">):</span>
+                    <span class="k">return</span>
+                <span class="k">raise</span>
+</pre></div>
+
+
+<p>发现在创建连接的时候为什么跳过这个异常呢?那么 <code>EWOULDBLOCK</code> 和 <code>EAGAIN</code> 是是什么呢?
+通过查找知道它的意思是在非阻塞模式下, 不需要重读或重写, <code>EAGAIN</code> 是 <code>EWOULDBLOCK</code> 在
+Windows 上的名字, 所以看到这里就很明确了.</p>
+<h2>结论</h2>
+<p>Tornado 多进程的处理流程是先创建 socket, 然后再 fork 子进程, 这样所有的子进程实际都监听
+一个(或多个)文件描述符, 也就是都在监听同样的 socket.</p>
+<p>当连接过来所有的子进程都会收到可读事件, 这时候所有的子进程都会跳到 <code>accept_handler</code>
+回调函数, 尝试建立连接.</p>
+<p>一旦其中一个子进程成功的建立了连接, 当其他子进程再尝试建立这个连接的时候就会触发
+<code>EWOULDBLOCK</code>(或 EAGAIN) 错误. 这时候回调函数判断是这个错误则返回函数不做处理.</p>
+<p>当成功建立连接的子进程还在处理这个连接的时候又过来一个连接, 这时候就会有另外一个
+子进程接手这个连接.</p>
+<p>Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
+同一个请求也就不会被多个子进程处理.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/fork_processes.html">fork_processes </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/duo-jin-cheng.html">多进程 </a>
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/tornado-duo-jin-cheng-fen-xi.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html"><h3 class="article-title">使用 Pygments 对 Vimwiki 进行代码高亮</h3></a>
 <h6 class="subheader" title="2013-12-27T00:00:00">Fri 27 December 2013
 </h6>
@@ -62,146 +214,7 @@
 而且如果对 wiki 文件处理之后无法替换回原来的内容(后来发现这个仅仅是对使用 Markdown
 语法作为 Wiki 语法设定的), 所以放弃了.</p>
 <h2>Fork 仓库, 更改代码</h2>
-<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库
-clone 到本地进行修改, 通过直接 hack 代码在 Vimwiki 处理之前对代码进行高亮.</p>
-<h3>思路</h3>
-<p>粗略的看了下代码, Vimwiki 是将文件读入, 然后逐行处理, 看来只能在文件读取之后
-对内容做一些操作.</p>
-<p>Vimscript 的 readfile 返回一个列表, 每一个元素代表一行, 编写一个函数处理这个
-列表, 并返回, 在 autoload/vimwiki/html.vim 里的 第 1350 行找到
-<code>vimwiki#html#CustomWiki2HTML</code> 函数, 并在其上面添加一个函数</p>
-<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:highlight_code_with_pygments<span class="p">(</span>lsource<span class="p">)</span> <span class="c">&quot;{{{</span>
-  <span class="k">if</span> <span class="p">!</span>has<span class="p">(</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="k">a</span>:lsource
-  <span class="k">endif</span>
-  <span class="k">let</span> <span class="k">s</span>:lsource <span class="p">=</span> deepcopy<span class="p">(</span><span class="k">a</span>:lsource<span class="p">)</span>
-  <span class="k">let</span> <span class="k">s</span>:content <span class="p">=</span> <span class="s1">&#39;&#39;</span>
-python <span class="p">&lt;&lt;</span>EOF
-<span class="nb">def</span> handle<span class="p">()</span>:
-  import <span class="k">vim</span>
-
-  import <span class="k">re</span>
-  import os
-
-  <span class="k">try</span>:
-    import pygments
-  except ImportError:
-    <span class="k">vim</span>.command<span class="p">(</span><span class="s2">&quot;echoerr &#39;Cannot import pygments library, please install it.&#39;&quot;</span><span class="p">)</span>
-    <span class="k">return</span>
-
-  from pygments.lexers import get_lexer_by_name
-  from pygments.formatters import HtmlFormatter
-  from pygments import <span class="nb">highlight</span>
-  from pygments.util import ClassNotFound
-
-  CODE_RE <span class="p">=</span> <span class="k">re</span>.<span class="k">compile</span><span class="p">(</span><span class="k">r</span><span class="s1">&#39;\n({{{(\w*?)\s(.*?)\s}}})&#39;</span><span class="p">,</span> <span class="k">re</span>.M<span class="p">|</span><span class="k">re</span>.U<span class="p">|</span><span class="k">re</span>.S<span class="p">)</span>
-
-  data <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s2">&quot;s:lsource&quot;</span><span class="p">)</span>
-  content <span class="p">=</span> <span class="s2">&quot;\n&quot;</span>.<span class="k">join</span><span class="p">(</span>data<span class="p">)</span>
-  <span class="k">new</span> <span class="p">=</span> False
-  css_class <span class="p">=</span> <span class="k">vim</span>.eval<span class="p">(</span><span class="s2">&quot;VimwikiGet(&#39;pygments_class&#39;)&quot;</span><span class="p">)</span>
-  <span class="k">for</span> source<span class="p">,</span> lang_type<span class="p">,</span> code <span class="k">in</span> CODE_RE.findall<span class="p">(</span>content<span class="p">)</span>:
-    lang_type <span class="p">=</span> lang_type or <span class="s2">&quot;text&quot;</span>
-    <span class="k">try</span>:
-      lexer <span class="p">=</span> get_lexer_by_name<span class="p">(</span>lang_type<span class="p">)</span>
-    except ClassNotFound:
-      lexer <span class="p">=</span> get_lexer_by_name<span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
-
-    formatter <span class="p">=</span> HtmlFormatter<span class="p">(</span><span class="nb">encoding</span><span class="p">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span> cssclass<span class="p">=</span>css_class<span class="p">,</span>
-                              noclasses<span class="p">=</span>False<span class="p">,</span> style<span class="p">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-                              linenos <span class="p">=</span> None<span class="p">,</span> <span class="nb">nowrap</span> <span class="p">=</span> True<span class="p">)</span>
-
-    hcode <span class="p">=</span> <span class="nb">highlight</span><span class="p">(</span>code<span class="p">,</span> lexer<span class="p">,</span> formatter<span class="p">)</span>
-    content <span class="p">=</span> content.replace<span class="p">(</span>source<span class="p">,</span> hcode<span class="p">)</span>
-    <span class="k">if</span> <span class="k">new</span> <span class="k">is</span> False:
-      <span class="k">new</span> <span class="p">=</span> True
-
-  <span class="k">if</span> <span class="k">new</span>:
-    <span class="k">vim</span>.command<span class="p">(</span><span class="s2">&quot;let s:content=&#39;%s&#39;&quot;</span> % content.replace<span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;\&#39;&quot;</span><span class="p">))</span>
-
-handle<span class="p">()</span>
-
-EOF
-
-  <span class="k">if</span> <span class="k">s</span>:content <span class="p">!=</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">let</span> <span class="k">s</span>:lsource <span class="p">=</span> split<span class="p">(</span><span class="k">s</span>:content<span class="p">,</span> <span class="s1">&#39;\n&#39;</span><span class="p">)</span>
-  <span class="k">endif</span>
-
-  <span class="k">return</span> <span class="k">s</span>:lsource
-<span class="k">endfunction</span> <span class="c">&quot;}}}</span>
-</pre></div>
-
-
-<p>然后在 <code>vimwiki#html#Wiki2HTML</code> 函数内读取文件的下面调用此函数</p>
-<div class="highlight"><pre>...
-    <span class="k">let</span> lsource <span class="p">=</span> readfile<span class="p">(</span>wikifile<span class="p">)</span>
-
-    <span class="k">let</span> lsource <span class="p">=</span> <span class="k">s</span>:highlight_code_with_pygments<span class="p">(</span>lsource<span class="p">)</span>
-...
-</pre></div>
-
-
-<p>当然需要还需要拷贝 css 文件, 修改模板等, 这里不一一详述</p>
-<h3>结果</h3>
-<p>好吧, 确实工作了, 但是新的问题出来了, 高亮后替换成HTML的内容会被 Vimwiki 第二次处理
-所以 HTML 的格式全乱了,  CSS 样式也肯定不行了. 找了一下没有办法能避免 Vimwiki 不
-处理一段内容(为什么已经是 HTMl 了 Vimwiki 还要处理呢)</p>
-<p>上述方法不行, 那只能再想想办法了</p>
-<h3>使用特殊的注释: %nowiki</h3>
-<p>为了解决上面重复处理已转化成 HTML 内容的问题, 我添加 %nowiki 语法,
-以 %nowiki 这个开头的行将不处理. 然后将高亮的代码替换成 %nowiki 开始的行,
-将上面 Python 相关代码加上如下内容:</p>
-<div class="highlight"><pre><span class="o">...</span>
-<span class="n">hcode</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
-
-<span class="c"># 添加以下语句</span>
-<span class="n">hcode</span> <span class="o">=</span> <span class="s">&quot;%nowiki&quot;</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">%nowiki&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hcode</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">))</span>
-
-<span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">hcode</span><span class="p">)</span>
-<span class="o">..</span>
-</pre></div>
-
-
-<p>然后找到 <code>s:parse_line</code> 函数, 在处理 toc 的下面添加</p>
-<div class="highlight"><pre><span class="c">  &quot; toc -- placeholder &quot;{{{</span>
-  <span class="k">if</span> <span class="p">!</span>processed
-    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^\s*%toc&#39;</span>
-      <span class="k">let</span> processed <span class="p">=</span> <span class="m">1</span>
-      <span class="k">let</span> param <span class="p">=</span> matchstr<span class="p">(</span>line<span class="p">,</span> <span class="s1">&#39;^\s*%toc\s\zs.*&#39;</span><span class="p">)</span>
-      <span class="k">let</span> state.placeholder <span class="p">=</span> [<span class="s1">&#39;toc&#39;</span><span class="p">,</span> param]
-    <span class="k">endif</span>
-  <span class="k">endif</span>
-<span class="c">  &quot;}}}</span>
-
-<span class="c">  &quot; 添加处理 nowiki</span>
-<span class="c">  &quot; nowiki &quot;{{{</span>
-  <span class="k">if</span> <span class="p">!</span>processed
-    <span class="k">if</span> line<span class="p">=~</span> <span class="s1">&#39;^\s*%nowiki&#39;</span>
-      <span class="k">let</span> processed <span class="p">=</span> <span class="m">1</span>
-      <span class="k">call</span> add<span class="p">(</span>res_lines<span class="p">,</span> substitute<span class="p">(</span>line<span class="p">,</span> <span class="s1">&#39;^\s*%nowiki&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
-    <span class="k">endif</span>
-  <span class="k">endif</span> <span class="c">&quot;}}}</span>
-</pre></div>
-
-
-<p>然后找到 <code>s:safe_html</code> 函数, 添加如下语句</p>
-<div class="highlight"><pre><span class="k">function</span><span class="p">!</span> <span class="k">s</span>:safe_html<span class="p">(</span>line<span class="p">)</span> <span class="c">&quot;{{{</span>
-<span class="c">  &quot; 不处理 %nowiki </span>
-  <span class="k">if</span> <span class="k">a</span>:line<span class="p">=~</span> <span class="s1">&#39;^\s*%nowiki&#39;</span>
-    <span class="k">return</span> <span class="k">a</span>:line
-  <span class="k">endif</span>
-
-  ...
-<span class="k">endfunction</span>
-</pre></div>
-
-
-<p>大功告成, 这样就可以正常的使用 pygments 进行高亮代码</p>
-<h1>成果</h1>
-<p>修改后的代码放在了 github 上, 在 <a href="https://github.com/coldnight/vimwiki">这里</a>, 
-有需要的可以安装, 但这个更改仅仅是对我个人使用, 可能不会跟随主线程版本的更新.</p>
-<p>当然我添加了一些选项来开启/关闭使用pygments, 安装后在 Vim 中执行 <code>:h vimwiki-option-use_pygments</code></p>
-<p>大家通过代码也看到了, 要使用改变之后的插件 Vim 需要编译 +python 并且需要安装 pygments Python 库.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
@@ -213,11 +226,9 @@ EOF
 
 
 
-<p><a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -517,47 +528,9 @@ python setup.py install
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h3 class="article-title">使用WebQQ协议桥接XMPP和QQ群</h3></a>
-<h6 class="subheader" title="2013-03-14T16:09:00">Thu 14 March 2013
-</h6>
-
-
-<h2>介绍</h2>
-<p>无意中看见有人利用WebQQ协议开发出Linux下Pidgin的插件, 让Pidgin来收发QQ消息, 突然想将<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>和QQ群来桥接起来一定非常有趣,这样就可以通过gtalk收发QQ来的消息, 不过前期还是想将<code>clubot</code>和QQ群桥接起来.</p>
-<h2>实施</h2>
-<p>想到了就开始弄呗, 于是上网找了写有关WebQQ的协议, 首先写出了一个根据<code>urllib2</code>的版本并使用线程同时跑WebQQ和xmpp, 源码可以查看:
-<a href="https://github.com/coldnight/qxbot/tree/threading_version">thread_version</a></p>
-<h2>优化</h2>
-<p>上面的线程版效率不是很高, 由于都是网络请求, 所以想加入可以加入到pyxmpp2的mainloop中, 使用复用I/O模型来提高效率, 首先需要解决的是将http请求通过urllib2改为socket, 于是写出HTTPSock类来实现这个需求:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   Wood.D</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/03/04 09:58:26</span>
-<span class="c">#   Desc    :   Http Socket 实现 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/webqq.html">WebQQ </a>
-    <a href="http://www.linuxzen.com/tag/xmpp.html">xmpp </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/xmpp.html">XMPP </a>
-    <a href="http://www.linuxzen.com/tag/pyxmpp2.html">pyxmpp2 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 1 of 4</h6>
+<h6 class="subheader">Page 1 of 5</h6>
 
 <p>
 

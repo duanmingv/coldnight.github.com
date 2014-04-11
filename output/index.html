@@ -47,6 +47,158 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/tornado-duo-jin-cheng-fen-xi.html"><h3 class="article-title">Tornado 多进程分析</h3></a>
+<h6 class="subheader" title="2014-04-11T14:35:00">Fri 11 April 2014
+</h6>
+
+
+<h2>引子</h2>
+<p>Tornado 是一个网络异步的的web开发框架, 并且可以利用多进程进行提高效率, 
+下面是创建一个多进程 tornado 程序的例子.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   14/04/11 14:26:59</span>
+<span class="c">#   Desc    :</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">tornado.web</span>
+<span class="kn">import</span> <span class="nn">tornado.httpserver</span>
+<span class="kn">import</span> <span class="nn">tornado.ioloop</span>
+<span class="kn">import</span> <span class="nn">tornado.netutil</span>
+<span class="kn">import</span> <span class="nn">tornado.process</span>
+
+
+<span class="k">class</span> <span class="nc">LongHandler</span><span class="p">(</span><span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">Application</span><span class="p">(([</span><span class="s">r&#39;/&#39;</span><span class="p">,</span> <span class="n">LongHandler</span><span class="p">],</span> <span class="p">))</span>
+    <span class="n">sockets</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">netutil</span><span class="o">.</span><span class="n">bind_sockets</span><span class="p">(</span><span class="mi">8090</span><span class="p">)</span>
+    <span class="n">tornado</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">fork_processes</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
+    <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>上面代码使用 <code>tornado.process.fork_processes</code> 创建了2个子进程, 同时用时访问这个
+服务两次,  分别会返回两个相邻的pid. 可以看到 tornado 确实使用了两个进程来同时完成任务.</p>
+<p>我很一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢.</p>
+<h2>探究</h2>
+<p>我们首先是调用 <code>tornado.netutil.bind_sockets</code> 来创建一个 socket(或一个 socket 列表),</p>
+<p>接着我们调用 <code>tornado.process.fork_processes</code> 来 fork 子进程, 
+阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进程退出
+则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.
+子进程则继续执行调用这个函数之后的代码.</p>
+<p>我们在 fork 子进程后做了如下操作.</p>
+<div class="highlight"><pre>    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
+    <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>我们先看看 <code>tornado.httpserver.HTTPServer.add_sockets</code> 发现<code>HTTPServer</code>是继承的
+<code>tornado.netutil.TCPServer</code>, add_sockets 也是实现在 <code>TCPServer</code> 中</p>
+<p><code>tornado.netutil.TCPServer.add_sockets</code></p>
+<div class="highlight"><pre>    <span class="k">def</span> <span class="nf">add_sockets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sockets</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes this server start accepting connections on the given sockets.</span>
+
+<span class="sd">        The ``sockets`` parameter is a list of socket objects such as</span>
+<span class="sd">        those returned by `bind_sockets`.</span>
+<span class="sd">        `add_sockets` is typically used in combination with that</span>
+<span class="sd">        method and `tornado.process.fork_processes` to provide greater</span>
+<span class="sd">        control over the initialization of a multi-process server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">sock</span> <span class="ow">in</span> <span class="n">sockets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sockets</span><span class="p">[</span><span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()]</span> <span class="o">=</span> <span class="n">sock</span>
+            <span class="n">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_connection</span><span class="p">,</span>
+                               <span class="n">io_loop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span><span class="p">)</span>
+</pre></div>
+
+
+<p>主要是映射了下 socket 和 socket 对应的文件描述符, 我们看看它调用的
+<code>add_accept_handler</code></p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">io_loop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds an ``IOLoop`` event handler to accept new connections on ``sock``.</span>
+
+<span class="sd">    When a connection is accepted, ``callback(connection, address)`` will</span>
+<span class="sd">    be run (``connection`` is a socket object, and ``address`` is the</span>
+<span class="sd">    address of the other end of the connection).  Note that this signature</span>
+<span class="sd">    is different from the ``callback(fd, events)`` signature used for</span>
+<span class="sd">    ``IOLoop`` handlers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">accept_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">connection</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span><span class="p">):</span>
+                    <span class="k">return</span>
+                <span class="k">raise</span>
+            <span class="n">callback</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
+    <span class="n">io_loop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">accept_handler</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
+</pre></div>
+
+
+<p>我们知道 <strong>I/O多路复用</strong> 在处理服务端 socket 时, 当有连接请求过来时, 会触发
+可读的事件, 此函数将 socket 在主事件循环中注册读事件(IOLoop.READ), 它的回调
+会创建连接, 我注意到回调里的异常捕获有这样几行</p>
+<div class="highlight"><pre>                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span><span class="p">):</span>
+                    <span class="k">return</span>
+                <span class="k">raise</span>
+</pre></div>
+
+
+<p>发现在创建连接的时候为什么跳过这个异常呢?那么 <code>EWOULDBLOCK</code> 和 <code>EAGAIN</code> 是是什么呢?
+通过查找知道它的意思是在非阻塞模式下, 不需要重读或重写, <code>EAGAIN</code> 是 <code>EWOULDBLOCK</code> 在
+Windows 上的名字, 所以看到这里就很明确了.</p>
+<h2>结论</h2>
+<p>Tornado 多进程的处理流程是先创建 socket, 然后再 fork 子进程, 这样所有的子进程实际都监听
+一个(或多个)文件描述符, 也就是都在监听同样的 socket.</p>
+<p>当连接过来所有的子进程都会收到可读事件, 这时候所有的子进程都会跳到 <code>accept_handler</code>
+回调函数, 尝试建立连接.</p>
+<p>一旦其中一个子进程成功的建立了连接, 当其他子进程再尝试建立这个连接的时候就会触发
+<code>EWOULDBLOCK</code>(或 EAGAIN) 错误. 这时候回调函数判断是这个错误则返回函数不做处理.</p>
+<p>当成功建立连接的子进程还在处理这个连接的时候又过来一个连接, 这时候就会有另外一个
+子进程接手这个连接.</p>
+<p>Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
+同一个请求也就不会被多个子进程处理.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/fork_processes.html">fork_processes </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/duo-jin-cheng.html">多进程 </a>
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/tornado-duo-jin-cheng-fen-xi.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html"><h3 class="article-title">记一次 zsh 产生僵尸进程解决</h3></a>
 <h6 class="subheader" title="2014-03-21T10:47:00">Fri 21 March 2014
 </h6>
@@ -58,109 +210,7 @@
 将 shell 切换到 bash, 终端可以正常打开, 然后运行</p>
 <div class="highlight"><pre><span class="nv">$ </span>ps aux | grep zsh
 wh       27552  0.0  0.1  47244  5164 ?        Ss   09:38   0:00 zsh
-wh       27553  0.0  0.1  47244  5156 ?        Ss   09:38   0:00 zsh
-wh       27600  0.0  0.0  47348  3492 ?        D    09:38   0:00 zsh
-wh       27609  0.0  0.0  47348  3488 ?        D    09:38   0:00 zsh
-wh       27614  0.0  0.0  47348  3484 ?        D    09:38   0:00 zsh
-wh       27697  0.0  0.1  47248  5172 ?        Ss   09:39   0:00 -/bin/zsh
-wh       27718  0.0  0.0  47356  3496 ?        D    09:39   0:00 -/bin/zsh
-root     28040  0.0  0.0  36640  2812 tty2     Ss+  09:40   0:00 -zsh
-wh       28628  0.0  0.0  47356  3492 ?        D    09:42   0:00 -/bin/zsh
-</pre></div>
-
-
-<p><s>发现好多僵尸进程, 而且都 kill 不掉.</s>
-发现好多 D 状态的进程, 查看 <code>ps</code> 的手册, D 状态的解释是</p>
-<div class="highlight"><pre><span class="n">D</span>    <span class="n">uninterruptible</span> <span class="n">sleep</span> <span class="p">(</span><span class="n">usually</span> <span class="n">io</span><span class="p">)</span>
-</pre></div>
-
-
-<p>进程可能是由 I/O 引起的不可间断的等待.</p>
-<h2>解决</h2>
-<p>首先当然是 <code>strace</code> 登场</p>
-<div class="highlight"><pre><span class="nv">$ </span>strace zsh
-...
-pipe<span class="o">([</span>3, 4<span class="o">])</span>                            <span class="o">=</span> 0
-fcntl<span class="o">(</span>3, F_DUPFD, 10<span class="o">)</span>                   <span class="o">=</span> 11
-close<span class="o">(</span>3<span class="o">)</span>                                <span class="o">=</span> 0
-fcntl<span class="o">(</span>4, F_DUPFD, 10<span class="o">)</span>                   <span class="o">=</span> 12
-close<span class="o">(</span>4<span class="o">)</span>                                <span class="o">=</span> 0
-rt_sigprocmask<span class="o">(</span>SIG_BLOCK, <span class="o">[</span>CHLD<span class="o">]</span>, <span class="o">[</span>CHLD WINCH<span class="o">]</span>, 8<span class="o">)</span> <span class="o">=</span> 0
-clone<span class="o">(</span><span class="nv">child_stack</span><span class="o">=</span>0, <span class="nv">flags</span><span class="o">=</span>CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, <span class="nv">child_tidptr</span><span class="o">=</span>0x7fd94caef9d0<span class="o">)</span> <span class="o">=</span> 8750
-close<span class="o">(</span>12<span class="o">)</span>                               <span class="o">=</span> 0
-fcntl<span class="o">(</span>11, F_GETFL<span class="o">)</span>                      <span class="o">=</span> 0 <span class="o">(</span>flags O_RDONLY<span class="o">)</span>
-fstat<span class="o">(</span>11, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFIFO|0600, <span class="nv">st_size</span><span class="o">=</span>0, ...<span class="o">})</span> <span class="o">=</span> 0
-mmap<span class="o">(</span>NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0<span class="o">)</span> <span class="o">=</span> 0x7fd94caf3000
-lseek<span class="o">(</span>11, 0, SEEK_CUR<span class="o">)</span>                  <span class="o">=</span> -1 ESPIPE <span class="o">(</span>Illegal seek<span class="o">)</span>
-<span class="nb">read</span><span class="o">(</span>11,
-</pre></div>
-
-
-<p>从上面可以看出, zsh 打开了一个 pipe, 但是读取的时候阻塞了.</p>
-<p>现在调用 <code>strace -f</code> 查看管道另一头的在做些什么</p>
-<div class="highlight"><pre><span class="nv">$ </span>strace -f zsh
-<span class="o">[</span>pid 28429<span class="o">]</span> chdir<span class="o">(</span><span class="s2">&quot;..&quot;</span><span class="o">)</span>                 <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> stat<span class="o">(</span><span class="s2">&quot;..&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFDIR|0755, <span class="nv">st_size</span><span class="o">=</span>4096, ...<span class="o">})</span> <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> openat<span class="o">(</span>AT_FDCWD, <span class="s2">&quot;..&quot;</span>, O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC<span class="o">)</span> <span class="o">=</span> 3
-<span class="o">[</span>pid 28429<span class="o">]</span> getdents<span class="o">(</span>3, /* 12 entries */, 32768<span class="o">)</span> <span class="o">=</span> 344
-<span class="o">[</span>pid 28429<span class="o">]</span> lstat<span class="o">(</span><span class="s2">&quot;../home&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFDIR|0755, <span class="nv">st_size</span><span class="o">=</span>4096, ...<span class="o">})</span> <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> close<span class="o">(</span>3<span class="o">)</span>                    <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> chdir<span class="o">(</span><span class="s2">&quot;..&quot;</span><span class="o">)</span>                 <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> stat<span class="o">(</span><span class="s2">&quot;..&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFDIR|0755, <span class="nv">st_size</span><span class="o">=</span>4096, ...<span class="o">})</span> <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> openat<span class="o">(</span>AT_FDCWD, <span class="s2">&quot;..&quot;</span>, O_RDONLY|O_NONBLOCK|O_DIRECTORY|O_CLOEXEC<span class="o">)</span> <span class="o">=</span> 3
-<span class="o">[</span>pid 28429<span class="o">]</span> getdents<span class="o">(</span>3, /* 26 entries */, 32768<span class="o">)</span> <span class="o">=</span> 672
-<span class="o">[</span>pid 28429<span class="o">]</span> lstat<span class="o">(</span><span class="s2">&quot;../lib&quot;</span>, <span class="o">{</span><span class="nv">st_mode</span><span class="o">=</span>S_IFLNK|0777, <span class="nv">st_size</span><span class="o">=</span>7, ...<span class="o">})</span> <span class="o">=</span> 0
-<span class="o">[</span>pid 28429<span class="o">]</span> lstat<span class="o">(</span><span class="s2">&quot;../mnt&quot;</span>,
-</pre></div>
-
-
-<p>上面可以看到 zsh 在 <code>lstat("../mnt")</code> 的时候产生了等待</p>
-<p>/mnt 一般挂载一些东西, 运行 <code>df -h</code> 查看一下, 发现也很慢, 当然 strace 下 它</p>
-<div class="highlight"><pre><span class="nv">$ </span>strace df -h
-...
-stat<span class="o">(</span><span class="s2">&quot;/mnt&quot;</span>,
-</pre></div>
-
-
-<p>发现它同样卡在了读取 <code>/mnt</code>. 尝试 <code>umount</code> 它:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo umount /mnt
-umount: /mnt: target is busy
-        <span class="o">(</span>In some cases useful info about processes that
-         use the device is found by lsof<span class="o">(</span>8<span class="o">)</span> or fuser<span class="o">(</span>1<span class="o">)</span>.<span class="o">)</span>
-</pre></div>
-
-
-<p>说是被某个程序使用, 现在该 <code>lsof</code> 登场了</p>
-<div class="highlight"><pre><span class="nv">$ </span>lsof /mnt
-lsof /mnt
-lsof: WARNING: can<span class="err">&#39;</span>t stat<span class="o">()</span> cifs file system /mnt
-      Output information may be incomplete.
-lsof: status error on /mnt: Host is down
-</pre></div>
-
-
-<p>好吧, 看到这里我就想明白了, 因为开虚拟机的时候我挂载了虚拟机里的一个共享目录</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo mount -t cifs -o guest //ip.of.host/share /mnt
-</pre></div>
-
-
-<p>在虚拟机关闭之后没有卸载, 导致在对这个目录 <code>stat</code> 的时候会有一个网络超时时间.</p>
-<p>然后就卸载它</p>
-<div class="highlight"><pre><span class="nv">$ </span>umount -a -t cifs -l /mnt
-</pre></div>
-
-
-<h2>结果</h2>
-<p>现在打开 zsh 也不阻塞了, <code>df -h</code> 也同样不阻塞了. 上面 Ss 的进程可以用 -9 杀掉,
-但是 D 状态进程无法杀掉.</p>
-<h2>参考</h2>
-<ul>
-<li>lsof: <a href="http://www.ibm.com/developerworks/cn/aix/library/au-lsof.html">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
-<li>卸载 cifs: <a href="http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount">http://stackoverflow.com/questions/74626/how-do-you-force-a-cifs-connection-to-unmount</a></li>
-</ul>
-<h2>更新</h2>
-<p>经过 <a href="http://lilydjwg.is-programmer.com/">依云</a> 和 <a href="http://eleveni386.7axu.com">eleven</a>
-的指正对文章做了一些修改, 感谢两位.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+wh       27553  0.0  0.1  47244  5156 ?        Ss   09:38   0 ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/zsh.html">zsh </a>
@@ -173,11 +223,9 @@ lsof: status error on /mnt: Host is down
 
 
 
-<p><a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -467,50 +515,6 @@ Bundle <span class="s2">&quot;Raimondi/delimitMate&quot;</span>
 
 
 <p><a href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html"><h3 class="article-title">Linux 下 Python 实现按任意键退出</h3></a>
-<h6 class="subheader" title="2013-08-20T09:54:00">Tue 20 August 2013
-</h6>
-
-
-<p>初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过<code>termios.h</code>库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">termios</span>
-
-
-<span class="k">def</span> <span class="nf">press_any_key_exit</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="c"># 获取标准输入的描述符</span>
-    <span class="n">fd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
-
-    <span class="c"># 获取标准输入(终端)的设置</span>
-    <span class="n">old_ttyinfo</span> <span class="o">=</span> <span class="n">termios</span><span class="o">.</span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-
-    <span class="c"># 配置终端</span>
-    <span class="n">new_ttyinfo</span> <span class="o">=</span> <span class="n">old_ttyinfo</span><span class="p">[:]</span>
-
-    <span class="c"># 使用非规范模式(索引3是c_lflag 也就是本地模式)</span>
-    <span class="n">new_ttyinfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">termios</span><span class="o">.</span><span class="n">ICANON ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/ren-yi-jian.html">任意键 </a>
-    <a href="http://www.linuxzen.com/tag/tui-chu.html">退出 </a>
-    <a href="http://www.linuxzen.com/tag/an.html">按 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

@@ -48,6 +48,40 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h3 class="article-title">使用Tornado进行网络异步编程</h3></a>
+<h6 class="subheader" title="2013-04-15T16:09:00">Mon 15 April 2013
+</h6>
+
+
+<h2>Tornado</h2>
+<p><code>Tornado</code> 是一款非阻塞可扩展的使用Python编写的web服务器和Python Web框架, 可以使用<code>Tornado</code>编写Web程序并不依赖任何web服务器直接提供高效的web服务.所以<code>Tornado</code>不仅仅是一个web框架而且还是一款可以用于生产环境的高效的web服务器</p>
+<p>Torando 在Linux和FreeBSD上使用高效的异步I/O模型 <code>epoll</code> 和<code>kqueue</code>来实现高效的web服务器, 所以 tornado在Linux上和FreeBSD系列性能可以达到最高</p>
+<h2>接口</h2>
+<p>当然我们可以不仅仅把<code>Tornado</code>看作是一个web框架和web服务器, 我们可以利用<code>Tornado</code>提供的接口进行高效的网络异步编程,</p>
+<p><code>tornado.ioloop.IOLoop</code> 提供了三个接口可以用于网络编程:</p>
+<h3>add_handler</h3>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_context</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_impl</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span> <span class="o">|</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/wang-luo.html">网络 </a>
+    <a href="http://www.linuxzen.com/tag/yi-bu.html">异步 </a>
+    <a href="http://www.linuxzen.com/tag/bian-cheng.html">编程 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h3 class="article-title">使用WebQQ协议桥接XMPP和QQ群</h3></a>
 <h6 class="subheader" title="2013-03-14T16:09:00">Thu 14 March 2013
 </h6>
@@ -376,46 +410,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h3 class="article-title">用Python将绝对URL替换成相对URL</h3></a>
-<h6 class="subheader" title="2012-09-29T15:52:00">Sat 29 September 2012
-</h6>
-
-
-<p>公司一个项目需要上传图片,一开始同事将图片上传后结合当前主机拼成了一个绝对的URL(<a href="#">http://192.168.1.1:888/m/getimg?filename=xxx.jpg</a>由于同时给手机终端提供接口,在手机终端会引起一些bug,改完代码后要求将以前的uri替换成相对的URL(/m/getimg?filename=xxx.jpg),由于图片是用img标签嵌入到内容同时用a标签括起显示大图的,所以需要读取数据库并对内容进行替换,</p>
-<p>脚本内容如下:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#</span>
-<span class="c"># author  : cold night</span>
-<span class="c"># email   : wh_linux@126.com</span>
-<span class="c">#</span>
-
-<span class="kn">import</span> <span class="nn">pymongo</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
-
-<span class="n">conn</span> <span class="o">=</span> <span class="n">pymongo</span><span class="o">.</span><span class="n">Connection</span><span class="p">()</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">conn ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/jue-dui.html">绝对 </a>
-    <a href="http://www.linuxzen.com/tag/xiang-dui.html">相对 </a>
-    <a href="http://www.linuxzen.com/tag/ti-huan.html">替换 </a>
-    <a href="http://www.linuxzen.com/tag/url.html">url </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

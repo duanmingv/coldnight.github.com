@@ -48,6 +48,36 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h3 class="article-title">使用Pelican打造静态博客</h3></a>
+<h6 class="subheader" title="2013-04-18T09:40:00">Thu 18 April 2013
+</h6>
+
+
+<p>前面有文章介绍本站采用了<code>Python</code>编写的<code>Pelican</code>静态生成博客系统, 之所以没有使用当前很火的<code>Jekyll</code>, 是因为它是<code>Ruby</code>编写, 而我又对<code>Ruby</code>没有啥兴趣, 所以还是选择了使用了我熟悉的Python编写的这套系统, 我用了一段时间,打算将使用经验分享出来</p>
+<h2>介绍</h2>
+<p><code>Pelican</code>是一套开源的使用Python编写的博客静态生成, 可以添加文章和和创建页面, 可以使用<code>MarkDown</code> <code>reStructuredText</code> 和 <code>AsiiDoc</code> 的格式来抒写, 同时使用 <code>Disqus</code>评论系统, 支持 <code>RSS</code>和<code>Atom</code>输出, 插件, 主题, 代码高亮等功能, 采用<code>Jajin2</code>模板引擎, 可以很容易的更改模板</p>
+<h2>安装</h2>
+<p>可以从<code>github</code>克隆最新的代码安装, 并且建议在<code>virtualenv</code>下使用:</p>
+<h3>建立 virtualenv ...</h3><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/jing-tai.html">静态 </a>
+    <a href="http://www.linuxzen.com/tag/sheng-cheng.html">生成 </a>
+    <a href="http://www.linuxzen.com/tag/pelican.html">Pelican </a>
+    <a href="http://www.linuxzen.com/tag/bo-ke.html">博客 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h3 class="article-title">使用Tornado进行网络异步编程</h3></a>
 <h6 class="subheader" title="2013-04-15T16:09:00">Mon 15 April 2013
 </h6>
@@ -369,41 +399,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h3 class="article-title">Vim 结合Python编写的翻译插件</h3></a>
-<h6 class="subheader" title="2013-01-04T17:58:00">Fri 04 January 2013
-</h6>
-
-
-<p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
-<div class="highlight"><pre><span class="c">&quot;   Author  :   cold</span>
-<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
-<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
-<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
-<span class="c">&quot;   Useage  :</span>
-<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
-<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
-<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
-
-<span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/fan-yi.html">翻译 </a>
-    <a href="http://www.linuxzen.com/tag/cha-jian.html">插件 </a>
-    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

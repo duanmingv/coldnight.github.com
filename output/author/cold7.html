@@ -48,6 +48,46 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h3 class="article-title">Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h3></a>
+<h6 class="subheader" title="2012-05-16T11:05:00">Wed 16 May 2012
+</h6>
+
+
+<p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
+<h2>环境:</h2>
+<p>系统:Gentoo
+ip:192.168.3.1</p>
+<p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
+首先Gentoo没有默认安装vim,先安装vim:</p>
+<div class="highlight"><pre><span class="n">emerge</span> <span class="n">vim</span>
+</pre></div>
+
+
+<h3>安装配置Python</h3>
+<p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
+Gentoo使用emerge包管理,安装Python2.7:</p>
+<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/virtualenv.html">virtualenv </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/gentoo.html">Gentoo </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h3 class="article-title">iptables:restorecon: command not found无法保存策略解决</h3></a>
 <h6 class="subheader" title="2012-04-30T10:43:00">Mon 30 April 2012
 </h6>
@@ -363,49 +403,6 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
 
 <p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h3></a>
-<h6 class="subheader" title="2012-03-13T10:06:00">Tue 13 March 2012
-</h6>
-
-
-<p>上两篇文章我给大家讲解了系统的安装,网络和ssh的配置和连接,这篇就给大家讲一下Linux如何安装包.CentOS使用rpm包管理,rpm包安装使用rpm命令</p>
-<p>比如你有一个包为:</p>
-<div class="highlight"><pre>abc-0.1.3-el5.centos.rpm
-</pre></div>
-
-
-<p>包的名称由3部分组成,第一部分是包名,第二部分是版本号,第三部分是使用平台.如果想安装这个包使用如下命令安装:</p>
-<div class="highlight"><pre>rpm -ivh abc-0.1.3-el5.centos.rpm    <span class="c"># i是安装 v是显示详细信息,-h显示安装进度</span>
-</pre></div>
-
-
-<p>卸载这个包使用:</p>
-<div class="highlight"><pre>rpm -e abc
-</pre></div>
-
-
-<p>卸载只要指定包名即可卸载.</p>
-<p>因为Linux下的包依赖关系很复杂,一个包可能会有很多的依赖包,必须把所有依赖包都装了才能安装这个包.所以使用rpm安装包,就变得很麻烦很头疼.如果想工作变的轻松,我们可以借助工具,在rhel5发行的时候就集成了一个工具yum.Yum（全称为 Yellow dog Updater, Modified）是一个在Fedora和RedHat以及SUSE、CentOS中的Shell前端软件包管理器。基於RPM包管理，能够从指定的服务器自动下载RPM包并且安装，可以自动处理依赖性关系 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/yum.html">yum </a>
-    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
-    <a href="http://www.linuxzen.com/tag/man.html">man </a>
-    <a href="http://www.linuxzen.com/tag/lnmp.html">lnmp </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
