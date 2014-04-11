@@ -4,12 +4,6 @@
 下面是创建一个多进程 tornado 程序的例子.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
-&lt;span class="c"&gt;#   Author  :   cold&lt;/span&gt;
-&lt;span class="c"&gt;#   E-mail  :   wh_linux@126.com&lt;/span&gt;
-&lt;span class="c"&gt;#   Date    :   14/04/11 14:26:59&lt;/span&gt;
-&lt;span class="c"&gt;#   Desc    :&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
 
@@ -39,13 +33,13 @@
 
 &lt;p&gt;上面代码使用 &lt;code&gt;tornado.process.fork_processes&lt;/code&gt; 创建了2个子进程, 同时用时访问这个
 服务两次,  分别会返回两个相邻的pid. 可以看到 tornado 确实使用了两个进程来同时完成任务.&lt;/p&gt;
-&lt;p&gt;我很一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢.&lt;/p&gt;
+&lt;p&gt;我一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢?&lt;/p&gt;
 &lt;h2&gt;探究&lt;/h2&gt;
 &lt;p&gt;我们首先是调用 &lt;code&gt;tornado.netutil.bind_sockets&lt;/code&gt; 来创建一个 socket(或一个 socket 列表),&lt;/p&gt;
 &lt;p&gt;接着我们调用 &lt;code&gt;tornado.process.fork_processes&lt;/code&gt; 来 fork 子进程, 
-阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进程退出
-则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.
-子进程则继续执行调用这个函数之后的代码.&lt;/p&gt;
+阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进
+程退出则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.&lt;/p&gt;
+&lt;p&gt;调用这个函数之后, 子进程中函数会返回, 子进程则继续执行调用这个函数之后的代码.&lt;/p&gt;
 &lt;p&gt;我们在 fork 子进程后做了如下操作.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;tornado&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;httpserver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HTTPServer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="n"&gt;server&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_sockets&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sockets&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -57,14 +51,6 @@
 &lt;code&gt;tornado.netutil.TCPServer&lt;/code&gt;, add_sockets 也是实现在 &lt;code&gt;TCPServer&lt;/code&gt; 中&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;tornado.netutil.TCPServer.add_sockets&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_sockets&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sockets&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Makes this server start accepting connections on the given sockets.&lt;/span&gt;
-
-&lt;span class="sd"&gt;        The ``sockets`` parameter is a list of socket objects such as&lt;/span&gt;
-&lt;span class="sd"&gt;        those returned by `bind_sockets`.&lt;/span&gt;
-&lt;span class="sd"&gt;        `add_sockets` is typically used in combination with that&lt;/span&gt;
-&lt;span class="sd"&gt;        method and `tornado.process.fork_processes` to provide greater&lt;/span&gt;
-&lt;span class="sd"&gt;        control over the initialization of a multi-process server.&lt;/span&gt;
-&lt;span class="sd"&gt;        &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io_loop&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
             &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io_loop&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 
@@ -78,14 +64,6 @@
 &lt;p&gt;主要是映射了下 socket 和 socket 对应的文件描述符, 我们看看它调用的
 &lt;code&gt;add_accept_handler&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add_accept_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sock&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;callback&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;io_loop&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Adds an ``IOLoop`` event handler to accept new connections on ``sock``.&lt;/span&gt;
-
-&lt;span class="sd"&gt;    When a connection is accepted, ``callback(connection, address)`` will&lt;/span&gt;
-&lt;span class="sd"&gt;    be run (``connection`` is a socket object, and ``address`` is the&lt;/span&gt;
-&lt;span class="sd"&gt;    address of the other end of the connection).  Note that this signature&lt;/span&gt;
-&lt;span class="sd"&gt;    is different from the ``callback(fd, events)`` signature used for&lt;/span&gt;
-&lt;span class="sd"&gt;    ``IOLoop`` handlers.&lt;/span&gt;
-&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;io_loop&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="n"&gt;io_loop&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;IOLoop&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;instance&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 
@@ -111,7 +89,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;发现在创建连接的时候为什么跳过这个异常呢?那么 &lt;code&gt;EWOULDBLOCK&lt;/code&gt; 和 &lt;code&gt;EAGAIN&lt;/code&gt; 是是什么呢?
+&lt;p&gt;发现在创建连接的时候会跳过这个异常呢, 为什么?那么 &lt;code&gt;EWOULDBLOCK&lt;/code&gt; 和 &lt;code&gt;EAGAIN&lt;/code&gt; 是是什么呢?
 通过查找知道它的意思是在非阻塞模式下, 不需要重读或重写, &lt;code&gt;EAGAIN&lt;/code&gt; 是 &lt;code&gt;EWOULDBLOCK&lt;/code&gt; 在
 Windows 上的名字, 所以看到这里就很明确了.&lt;/p&gt;
 &lt;h2&gt;结论&lt;/h2&gt;
@@ -124,7 +102,11 @@ Windows 上的名字, 所以看到这里就很明确了.&lt;/p&gt;
 &lt;p&gt;当成功建立连接的子进程还在处理这个连接的时候又过来一个连接, 这时候就会有另外一个
 子进程接手这个连接.&lt;/p&gt;
 &lt;p&gt;Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
-同一个请求也就不会被多个子进程处理.&lt;/p&gt;</summary><category term="Python"></category><category term="fork_processes"></category><category term="tornado"></category><category term="多进程"></category><category term="web"></category><category term="提升"></category><category term="效率"></category></entry><entry><title>记一次 zsh 产生僵尸进程解决</title><link href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html" rel="alternate"></link><updated>2014-03-21T10:47:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-03-21:ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html</id><summary type="html">&lt;h2&gt;问题描述&lt;/h2&gt;
+同一个请求也就不会被多个子进程处理.&lt;/p&gt;
+&lt;h2&gt;后记&lt;/h2&gt;
+&lt;p&gt;写完才发现, 我所使用的代码是 tornado-2.4.post2 版本, 当前最新代码是 3.3.0, 
+查看了下最新代码, 最新代码&lt;code&gt;TCPServer&lt;/code&gt; 写到单独 &lt;code&gt;tornado.tcpserver&lt;/code&gt; 里了, 其他和本文
+相关的并没有什么大的变化.&lt;/p&gt;</summary><category term="Python"></category><category term="fork_processes"></category><category term="tornado"></category><category term="多进程"></category><category term="web"></category><category term="提升"></category><category term="效率"></category></entry><entry><title>记一次 zsh 产生僵尸进程解决</title><link href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html" rel="alternate"></link><updated>2014-03-21T10:47:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-03-21:ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html</id><summary type="html">&lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;p&gt;今天使用 vmplayer 运行了 xp 系统, 关闭后在 zsh 里继续敲命令就阻塞了,
 然后就关闭了终端重新打开, 还是阻塞, 重复几次依然如此. 然后使用 gVim
 将 shell 切换到 bash, 终端可以正常打开, 然后运行&lt;/p&gt;

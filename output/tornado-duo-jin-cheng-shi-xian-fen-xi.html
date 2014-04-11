@@ -58,12 +58,6 @@
 下面是创建一个多进程 tornado 程序的例子.</p>
 <div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   14/04/11 14:26:59</span>
-<span class="c">#   Desc    :</span>
-<span class="c">#</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -93,13 +87,13 @@
 
 <p>上面代码使用 <code>tornado.process.fork_processes</code> 创建了2个子进程, 同时用时访问这个
 服务两次,  分别会返回两个相邻的pid. 可以看到 tornado 确实使用了两个进程来同时完成任务.</p>
-<p>我很一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢.</p>
+<p>我一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢?</p>
 <h2>探究</h2>
 <p>我们首先是调用 <code>tornado.netutil.bind_sockets</code> 来创建一个 socket(或一个 socket 列表),</p>
 <p>接着我们调用 <code>tornado.process.fork_processes</code> 来 fork 子进程, 
-阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进程退出
-则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.
-子进程则继续执行调用这个函数之后的代码.</p>
+阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进
+程退出则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.</p>
+<p>调用这个函数之后, 子进程中函数会返回, 子进程则继续执行调用这个函数之后的代码.</p>
 <p>我们在 fork 子进程后做了如下操作.</p>
 <div class="highlight"><pre>    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
     <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
@@ -111,14 +105,6 @@
 <code>tornado.netutil.TCPServer</code>, add_sockets 也是实现在 <code>TCPServer</code> 中</p>
 <p><code>tornado.netutil.TCPServer.add_sockets</code></p>
 <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">add_sockets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sockets</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Makes this server start accepting connections on the given sockets.</span>
-
-<span class="sd">        The ``sockets`` parameter is a list of socket objects such as</span>
-<span class="sd">        those returned by `bind_sockets`.</span>
-<span class="sd">        `add_sockets` is typically used in combination with that</span>
-<span class="sd">        method and `tornado.process.fork_processes` to provide greater</span>
-<span class="sd">        control over the initialization of a multi-process server.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
 
@@ -132,14 +118,6 @@
 <p>主要是映射了下 socket 和 socket 对应的文件描述符, 我们看看它调用的
 <code>add_accept_handler</code></p>
 <div class="highlight"><pre><span class="k">def</span> <span class="nf">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">io_loop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds an ``IOLoop`` event handler to accept new connections on ``sock``.</span>
-
-<span class="sd">    When a connection is accepted, ``callback(connection, address)`` will</span>
-<span class="sd">    be run (``connection`` is a socket object, and ``address`` is the</span>
-<span class="sd">    address of the other end of the connection).  Note that this signature</span>
-<span class="sd">    is different from the ``callback(fd, events)`` signature used for</span>
-<span class="sd">    ``IOLoop`` handlers.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
 
@@ -165,7 +143,7 @@
 </pre></div>
 
 
-<p>发现在创建连接的时候为什么跳过这个异常呢?那么 <code>EWOULDBLOCK</code> 和 <code>EAGAIN</code> 是是什么呢?
+<p>发现在创建连接的时候会跳过这个异常呢, 为什么?那么 <code>EWOULDBLOCK</code> 和 <code>EAGAIN</code> 是是什么呢?
 通过查找知道它的意思是在非阻塞模式下, 不需要重读或重写, <code>EAGAIN</code> 是 <code>EWOULDBLOCK</code> 在
 Windows 上的名字, 所以看到这里就很明确了.</p>
 <h2>结论</h2>
@@ -179,6 +157,10 @@ Windows 上的名字, 所以看到这里就很明确了.</p>
 子进程接手这个连接.</p>
 <p>Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
 同一个请求也就不会被多个子进程处理.</p>
+<h2>后记</h2>
+<p>写完才发现, 我所使用的代码是 tornado-2.4.post2 版本, 当前最新代码是 3.3.0, 
+查看了下最新代码, 最新代码<code>TCPServer</code> 写到单独 <code>tornado.tcpserver</code> 里了, 其他和本文
+相关的并没有什么大的变化.</p>
 <p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 

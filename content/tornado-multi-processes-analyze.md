@@ -9,12 +9,6 @@ Tornado 是一个网络异步的的web开发框架, 并且可以利用多进程�
 ```python
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-#
-#   Author  :   cold
-#   E-mail  :   wh_linux@126.com
-#   Date    :   14/04/11 14:26:59
-#   Desc    :
-#
 import os
 import time
 
@@ -43,16 +37,17 @@ if __name__ == "__main__":
 上面代码使用 `tornado.process.fork_processes` 创建了2个子进程, 同时用时访问这个
 服务两次,  分别会返回两个相邻的pid. 可以看到 tornado 确实使用了两个进程来同时完成任务.
 
-我很一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢.
+我一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢?
 
 ## 探究
 
 我们首先是调用 `tornado.netutil.bind_sockets` 来创建一个 socket(或一个 socket 列表),
 
 接着我们调用 `tornado.process.fork_processes` 来 fork 子进程, 
-阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进程退出
-则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.
-子进程则继续执行调用这个函数之后的代码.
+阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进
+程退出则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.
+
+调用这个函数之后, 子进程中函数会返回, 子进程则继续执行调用这个函数之后的代码.
 
 我们在 fork 子进程后做了如下操作.
 ```python
@@ -67,14 +62,6 @@ if __name__ == "__main__":
 
 ```python
     def add_sockets(self, sockets):
-        """Makes this server start accepting connections on the given sockets.
-
-        The ``sockets`` parameter is a list of socket objects such as
-        those returned by `bind_sockets`.
-        `add_sockets` is typically used in combination with that
-        method and `tornado.process.fork_processes` to provide greater
-        control over the initialization of a multi-process server.
-        """
         if self.io_loop is None:
             self.io_loop = IOLoop.instance()
 
@@ -89,14 +76,6 @@ if __name__ == "__main__":
 `add_accept_handler`
 ```python
 def add_accept_handler(sock, callback, io_loop=None):
-    """Adds an ``IOLoop`` event handler to accept new connections on ``sock``.
-
-    When a connection is accepted, ``callback(connection, address)`` will
-    be run (``connection`` is a socket object, and ``address`` is the
-    address of the other end of the connection).  Note that this signature
-    is different from the ``callback(fd, events)`` signature used for
-    ``IOLoop`` handlers.
-    """
     if io_loop is None:
         io_loop = IOLoop.instance()
 
@@ -119,7 +98,7 @@ def add_accept_handler(sock, callback, io_loop=None):
                     return
                 raise
 ```
-发现在创建连接的时候为什么跳过这个异常呢?那么 `EWOULDBLOCK` 和 `EAGAIN` 是是什么呢?
+发现在创建连接的时候会跳过这个异常呢, 为什么?那么 `EWOULDBLOCK` 和 `EAGAIN` 是是什么呢?
 通过查找知道它的意思是在非阻塞模式下, 不需要重读或重写, `EAGAIN` 是 `EWOULDBLOCK` 在
 Windows 上的名字, 所以看到这里就很明确了.
 
@@ -138,3 +117,9 @@ Tornado 多进程的处理流程是先创建 socket, 然后再 fork 子进程, �
 
 Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
 同一个请求也就不会被多个子进程处理.
+
+
+## 后记
+写完才发现, 我所使用的代码是 tornado-2.4.post2 版本, 当前最新代码是 3.3.0, 
+查看了下最新代码, 最新代码`TCPServer` 写到单独 `tornado.tcpserver` 里了, 其他和本文
+相关的并没有什么大的变化.
