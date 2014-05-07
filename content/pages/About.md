@@ -12,7 +12,7 @@ $ archey3
               ###               Kernel Release: 3.10.32-1-lts
              #####              Uptime: 22:03
              ######             WM: Awesome
-            ; #####;            DE: GNOME
+            ; #####;            DE: Xfce
            +##.#####            Packages: 864
           +##########           RAM: 1417 MB / 3923 MB
          #############;         Processor Type: Intel(R) Core(TM)2 Duo CPU     E7500  @ 2.93GHz
