@@ -127,6 +127,8 @@ class MainWidget(QtGui.QWidget):
             if str(tmp.host()):
                 self.url = tmp
                 self.http.setHost(self.url.host(), self.url.port(80))
+            else:
+                self.url.setPath(location)
             self.http.get(self.url.path() or "/", self.out)
 
     def on_req_done(self, error):
