@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2014-05-07T10:24:51-00:00</lastmod>
+<lastmod>2014-05-07T16:57:56-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2014-05-07T10:24:51-00:00</lastmod>
+<lastmod>2014-05-07T16:57:56-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2014-05-07T10:24:51-00:00</lastmod>
+<lastmod>2014-05-07T16:57:56-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2014-05-07T10:24:51-00:00</lastmod>
+<lastmod>2014-05-07T16:57:56-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html</loc>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -670,7 +677,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/pyqt.html</loc>
-<lastmod>2013-11-06T15:25:00-00:00</lastmod>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -823,6 +830,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/cacti.html</loc>
+<lastmod>2012-03-14T14:02:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/bian-ma-xin-xi.html</loc>
 <lastmod>2012-12-13T14:31:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -929,7 +943,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/wang-luo.html</loc>
-<lastmod>2013-04-15T16:09:00-00:00</lastmod>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -979,6 +993,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/authorized_keys.html</loc>
 <lastmod>2012-08-10T16:11:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/qhttp.html</loc>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1182,6 +1203,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/wang-luo-an-zhuang.html</loc>
 <lastmod>2012-02-02T11:37:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/qtnetwork.html</loc>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1558,8 +1586,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/qun.html</loc>
-<lastmod>2013-02-05T16:06:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/qnetworkaccessmanager.html</loc>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1859,8 +1887,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/zi-dian.html</loc>
-<lastmod>2012-09-17T11:42:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/qun.html</loc>
+<lastmod>2013-02-05T16:06:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1978,8 +2006,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/cacti.html</loc>
-<lastmod>2012-03-14T14:02:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/zi-dian.html</loc>
+<lastmod>2012-09-17T11:42:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2210,7 +2238,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/yi-bu.html</loc>
-<lastmod>2013-04-15T16:09:00-00:00</lastmod>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2294,7 +2322,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/pyqt.html</loc>
-<lastmod>2013-11-06T15:25:00-00:00</lastmod>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2378,7 +2406,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/http.html</loc>
-<lastmod>2013-08-01T10:46:00-00:00</lastmod>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2637,7 +2665,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2014-04-11T14:35:00-00:00</lastmod>
+<lastmod>2014-05-07T15:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

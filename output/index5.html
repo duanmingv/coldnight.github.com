@@ -48,6 +48,43 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h3 class="article-title">用Vim为Python源码自动添加#!行和编码行</h3></a>
+<h6 class="subheader" title="2012-09-29T18:56:00">Sat 29 September 2012
+</h6>
+
+
+<p>每次开始写Python打开文件第一件事就是写上<code>#!/usr/bin/env python和</code>编码之类的东西,</p>
+<p>太多了,写烦就,写了一个打开Python自动填充的函数,将下面内容添加到<code>~/.vimrc</code>下即可每次打开如果没有上述行则会自动填充:</p>
+<div class="highlight"><pre><span class="k">function</span> InsertPythonHeader<span class="p">()</span>
+    <span class="k">let</span> l1 <span class="p">=</span> getline<span class="p">(</span><span class="m">1</span><span class="p">)</span>
+    <span class="k">let</span> l2 <span class="p">=</span> getline<span class="p">(</span><span class="m">2</span><span class="p">)</span>
+    <span class="k">if</span>  <span class="k">match</span><span class="p">(</span><span class="s1">&#39;\#!/&#39;</span><span class="p">,</span> l1<span class="p">)</span> <span class="p">==</span> <span class="m">0</span>
+        exec <span class="m">1</span>
+        normal O
+        <span class="k">call</span> setline<span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    <span class="k">endif</span>
+    <span class="k">if</span> <span class="k">match</span><span class="p">(</span><span class="s2">&quot;\#&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">==</span> <span class="m">0</span> &amp;&amp; <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> l2<span class="p">)</span>  <span class="p">!=</span> <span class="m">2</span> ¦¦ <span class="p">(</span><span class="k">match</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> l2<span class="p">)</span> <span class="p">!=</span> <span class="m">2</span><span class="p">))</span>
+        exec ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/zi-dong.html">自动 </a>
+    <a href="http://www.linuxzen.com/tag/bian-ma-xin-xi.html">编码信息 </a>
+    <a href="http://www.linuxzen.com/tag/tian-jia.html">添加 </a>
+    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
+    <a href="http://www.linuxzen.com/tag/shbang-line.html">shbang line </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html"><h3 class="article-title">分享Vim两种好用的功能:状态行和空白字符可见</h3></a>
 <h6 class="subheader" title="2012-09-29T17:30:00">Sat 29 September 2012
 </h6>
@@ -412,52 +449,6 @@ fugitive 可以在git获得:</p>
 
 
 <p><a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h3 class="article-title">Python 断点调试</h3></a>
-<h6 class="subheader" title="2012-08-10T16:16:00">Fri 10 August 2012
-</h6>
-
-
-<h2>pdb模块</h2>
-<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
-<h3>插入断点</h3>
-<p>在需要插入断点的地方插入如下代码可以插入一个断点
-import pdb; pdb.set_trace()
-当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<div class="highlight"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
-<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
- <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
-</pre></div>
-
-
-<h3>pdb指令</h3>
-<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
-<ul>
-<li>l 查看代码上下文</li>
-<li>p var 监视变量var</li>
-<li>n 单步执行</li>
-<li>b line  在line行插入断点</li>
-<li>c 继续到下一个断点,没有则执行程序</li>
-<li>r 执行到函数返回前</li>
-</ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/diao-shi.html">调试 </a>
-    <a href="http://www.linuxzen.com/tag/duan-dian.html">断点 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/pdb.html">pdb </a>
-    <a href="http://www.linuxzen.com/tag/debug.html">debug </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

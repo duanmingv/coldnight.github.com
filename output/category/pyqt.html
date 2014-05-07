@@ -47,6 +47,242 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html"><h3 class="article-title">PyQt 中用 QtNetwork 异步发起HTTP请求</h3></a>
+<h6 class="subheader" title="2014-05-07T15:52:00">Wed 07 May 2014
+</h6>
+
+
+<h2>引子</h2>
+<p>最近有需求要在 PyQt 中请求一个链接, 因为比较简单直接用 urllib2 处理了, 但是 urllib2 在
+有延时的时候会造成 GUI 界面卡死. 所以今天研究研究 QtNetwork 模块.</p>
+<p>QtNetwork 中的请求在 PyQt 中都是异步的.</p>
+<h2>简单的请求 QHttp</h2>
+<h3>发起一个GET请求</h3>
+<p><code>PyQt4.QtNetwork.QHttp</code> 可以发起一个简单请求, 需要注意的是这个对象需要通过调用
+<code>setHost</code> 设置请求主机, 然后 调用 <code>get</code>/<code>post</code> 传入 <code>path</code> 才能正常使用.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QHttp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># 绑定 done 信号</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_req_done</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://linuxzen.com/&quot;</span><span class="p">)</span>
+
+        <span class="c"># 设置主机</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">on_req_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">readAll</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Error&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>保存文件</h3>
+<p>如果想要下载文件, 可以给 <code>get</code> 方法传一个 <code>QtCore.QFile</code> 对象, 会将请求内容保存
+到文件</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QHttp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_req_done</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFile</span><span class="p">(</span><span class="s">&quot;./test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_req_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="c"># print self.http.readAll(), status</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Error&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<p>上面代码将请求下来的内容保存到当前目录的 test 文件里.</p>
+<h3>处理头部信息</h3>
+<p>现在有一个需求就是有一个链接会返回一个 301 或 302 的跳转, 但是 <code>PyQt4.QtNetwork.QHttp</code> 没有实现自动跳转, 需要我们自动判断头信息进行跳转.</p>
+<p>我们可以绑定<code>PyQt4.QtNetwork.QHttp.responseHeaderReceived</code>的信号来处理头部信息,
+这个信号将给槽传递一个 <code>PyQt4.QtNetwork.QHttpResponseHeader</code> 的实例.</p>
+<p>通过判断状态吗, 并抓取 <code>Location</code> 头实现跳转</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QHttp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_req_done</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">responseHeaderReceived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_response_header</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://t.cn/zTocACq&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFile</span><span class="p">(</span><span class="s">&quot;./test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_response_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_header</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">response_header</span><span class="o">.</span><span class="n">statusCode</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">301</span><span class="p">,</span> <span class="mi">302</span><span class="p">]:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">response_header</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Location&quot;</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Redirect to: &quot;</span><span class="p">,</span> <span class="n">location</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">host</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">tmp</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">()</span> <span class="ow">or</span> <span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_req_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">readAll</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Error&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<p>运行上面代码, 你将看到下面输出</p>
+<div class="highlight"><pre><span class="n">Redirect</span> <span class="n">to</span><span class="o">:</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.linuxzen.com</span>
+<span class="n">Success</span>
+</pre></div>
+
+
+<h3>处理参数</h3>
+<p>如果你的 GET 请求的 url 是带着参数传给 <code>QUrl</code> 的, 那么 <code>QUrl.path()</code> 将不会返回带参数的
+路径需要自己处理. 可以参见下面的处理函数</p>
+<div class="highlight"><pre>    <span class="k">def</span> <span class="nf">get_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">queryPairDelimiter</span><span class="p">()</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s">&quot;{0}{1}{2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">queryValueDelimiter</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">queryItems</span><span class="p">()</span>
+        <span class="p">)</span>
+</pre></div>
+
+
+<p>请求的时候加上就行了</p>
+<div class="highlight"><pre>    <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;?&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_query_string</span><span class="p">())</span>
+</pre></div>
+
+
+<h2>处理 Cookie ---- QNetworkAccessManager</h2>
+<p>QHttp 是无法自动记录 Cookie 和设置 Cookie的, 如果有这个需求就需要 <code>PyQt4.QtNetwork.QNetworkAccessManager</code></p>
+<p><code>QNetworkAccessManager</code> 的请求方法不在是传入一个 QString, 而是需要传入一个 
+<code>PyQt4.QtNetwork.QNetworkRequest</code> 的实例.</p>
+<p><code>QNetworkAccessManager</code> 同样是异步的, 可以绑定 <code>QNetworkAccessManager.finished</code> 信号, 
+这个信号将会给槽传递一个 <code>PyQt4.QtNetwork.QNetworkReply</code> 的实例.</p>
+<p><code>QNetworkAccessManager.setCookieJar</code> 可以设置一个 <code>PyQt4.QtNetwork.QNetworkCookieJar</code> 对象来
+自动保存和设置 Cookie.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cookiejar</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QNetworkCookieJar</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QNetworkAccessManager</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">setCookieJar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cookiejar</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_reply</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">req</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QNetworkRequest</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com.hk&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">req</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reply</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">reply</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cookiejar</span><span class="o">.</span><span class="n">allCookies</span><span class="p">()</span>
+        <span class="k">print</span> <span class="n">reply</span><span class="o">.</span><span class="n">rawHeaderList</span><span class="p">()</span>
+        <span class="c"># print reply.readAll()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<p>这样就可以携带 Cookie 去请求一些需要 Cookie 认证的请求.</p>
+<h2>总结</h2>
+<p>还有很多内容就不一一介绍, 比如配合 <code>QProgressBar</code>, 添加头部信息, POST 请求, 等.</p>
+<p>这里只是简单介绍下 Qt 自己的网络请求处理方法. 在 PyQt 里用 urllib 等库明显不是好的
+解决办法, 因为会造成界面卡死. 但是 PyQt4 的方式也实在不是很优雅. 要来来回回的调很多
+东西. 但是最起码不会造成界面的卡死.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pyqt.html">PyQt </a>
+    <a href="http://www.linuxzen.com/tag/qtnetwork.html">QtNetwork </a>
+    <a href="http://www.linuxzen.com/tag/qhttp.html">QHttp </a>
+    <a href="http://www.linuxzen.com/tag/qnetworkaccessmanager.html">QNetworkAccessManager </a>
+    <a href="http://www.linuxzen.com/tag/http.html">HTTP </a>
+    <a href="http://www.linuxzen.com/tag/wang-luo.html">网络 </a>
+    <a href="http://www.linuxzen.com/tag/yi-bu.html">异步 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h3 class="article-title">PyQt + QML 快速开发GUI总结</h3></a>
 <h6 class="subheader" title="2013-11-06T15:25:00">Wed 06 November 2013
 </h6>
@@ -65,364 +301,7 @@
 <h3>使用PyQt显示QML</h3>
 <p>要想在Python里使用PyQt来调用QML显示, 需要用到 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 实例的 <tt class="docutils literal">setSource</tt> 将一个 <tt class="docutils literal">PyQt4.QtCore.QUrl</tt> 对象传递进去, 然后调用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">show</tt> 方法, 下面是一个例子:</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span>
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;/path/to/demo.qml&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="section" id="id1">
-<h3>通过PyQt渲染数据到QML</h3>
-<p>渲染QML变量有两种方法, 一种是QML中没有定义的变量, 一种是在QML中已经定义好的变量,
-第一种是预定义变量, 第二种是设置变量</p>
-<div class="section" id="id2">
-<h4>预定义变量</h4>
-<p><tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 的 <tt class="docutils literal">rootContext</tt> 方法会返回一个QML上下文, 通过这个对象可以对QML进行一些变量的预定义</p>
-<p><em>注意</em>, 预定义变量必须在 <tt class="docutils literal">setSource</tt> 调用之前进行, 还有如果是字符串类型如要使用 <tt class="docutils literal">PyQt4.QtCore.QString</tt> 进行转换,
-数字可以不用转换, 如果是列表或字典需要使用 <tt class="docutils literal">PyQt4.QtCore.QVariant</tt> 进行转换, 下面是一个例子:</p>
-<p>test.qml:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">30</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.py:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">rootContext</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootContext</span><span class="p">()</span>
-<span class="n">rootContext</span><span class="o">.</span><span class="n">setContextProperty</span><span class="p">(</span><span class="s">&quot;textData&quot;</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>如果将 <tt class="docutils literal">rootContext</tt> 两行移到 <tt class="docutils literal">view.setSource</tt> 下面, QML里将找不到对 <tt class="docutils literal">textData</tt> 的引用</p>
-</div>
-<div class="section" id="id3">
-<h4>设置变量</h4>
-<p>如果QML里已经定义好了变量, 而我们就可以在PyQt里对它进行更改, 对QML里的变量更改需要使用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">rootObject</tt> 方法返回的 <tt class="docutils literal">rootObject</tt> 对象, 调用 <tt class="docutils literal">rootObject</tt> 对象的 <tt class="docutils literal">setProperty</tt> 方法即可对QML里变量做出更改</p>
-<p><em>注意</em>, 使用 <tt class="docutils literal">rootObject</tt> 对QML的更改必须在 <tt class="docutils literal">setSource</tt> 之后, 否则 <tt class="docutils literal">rootObject</tt> 方法将返回 <em>None</em>, 下面是一个例子</p>
-<p>test.qml:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span>
-    <span class="nx">property</span> <span class="nx">string</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">30</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.py:</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">setProperty</span><span class="p">(</span><span class="s">&quot;textData&quot;</span><span class="p">,</span> <span class="n">QString</span><span class="p">(</span><span class="s">&quot;hi&quot;</span><span class="p">))</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面例子我们在QML定义了 <tt class="docutils literal">textData</tt> 变量, 并在 <tt class="docutils literal">setSource</tt> 之后使用 <tt class="docutils literal">rootObject</tt> 的 <tt class="docutils literal">setProperty</tt> 对 <tt class="docutils literal">textData</tt> 变量进行了更改</p>
-</div>
-</div>
-<div class="section" id="qml">
-<h3>QML信号的传递</h3>
-<p>QML有信号机制, 可以在QML之间使用JavaScript进行触发和接收, 当然也可以将信号传递给后端的PyQt,
-我们在此不讨论QML内部的信号, 我们仅讨论QML信号传递到PyQt这部分, QML使用signal创建信号, 信号可以携带参数,
-使用调用函数的方法可以触发信号, 下面是一个例子:</p>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面我们定义了一个 <tt class="docutils literal">mclicked</tt> 的信号, 并且在点击时会触发这个信号, PyQt 可以通过 <tt class="docutils literal">rootObject</tt> 获取这个信号, 并为这个信号绑定槽:</p>
-<p>test.py</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">on_click</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;hi&quot;</span>
-
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">mclicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面为QML的 <tt class="docutils literal">mclicked</tt> 信号绑定了一个函数, 当点击QML窗体时, 控制台就会输出 hi</p>
-</div>
-<div class="section" id="id4">
-<h3>QML提供接口</h3>
-<p>上面我们定义了信号, 如果响应信号仅仅在控制台输出没有意义, 我们可以通过QML在顶级元素定义JavaScript函数
-向PyQt提供接口, 下面是例子:</p>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="kd">id: testText</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nx">set_text</span><span class="p">(</span><span class="nx">text</span><span class="p">){</span>
-        <span class="nx">testText</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面我们在QML顶级元素定义了一个 <tt class="docutils literal">set_text</tt> 函数, 接下来我们就可以通过 <tt class="docutils literal">rootObject</tt> 进行调用</p>
-<p>test.py</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span>
-<span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QUrl</span><span class="p">,</span> <span class="n">QString</span>
-
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">([])</span>
-
-<span class="n">view</span> <span class="o">=</span> <span class="n">QDeclarativeView</span><span class="p">()</span>
-<span class="n">view</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;test.qml&quot;</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">on_click</span><span class="p">():</span>
-    <span class="n">rootObject</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s">&quot;Clicked&quot;</span><span class="p">)</span>
-
-<span class="n">rootObject</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">rootObject</span><span class="p">()</span>
-<span class="n">rootObject</span><span class="o">.</span><span class="n">mclicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">on_click</span><span class="p">)</span>
-<span class="n">view</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
-</pre></div>
-<p>上面我们用响应信号的槽, 通过 <tt class="docutils literal">rootObject</tt> 调用QML提供的函数接口, 当点击窗体时, 显示文字会从 <tt class="docutils literal">Click Me</tt> 变成 <tt class="docutils literal">Clicked</tt>,
-当然这仅仅是个例子, 这种响应可以在QML里直接完成</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-
-    <span class="nx">signal</span> <span class="nx">mclicked</span><span class="p">;</span>   <span class="c1">// 定义信号</span>
-
-    <span class="nx">Text</span> <span class="p">{</span>
-        <span class="kd">id: testText</span>
-        <span class="k">anchors.fill:</span><span class="nx">parent</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Click Me&quot;</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">mclicked</span><span class="p">();</span>  <span class="c1">// 触发信号</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">function</span> <span class="nx">set_text</span><span class="p">(){</span>
-        <span class="nx">testText</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;Clicked&quot;</span>
-    <span class="p">}</span>
-
-    <span class="k">Component.onCompleted :</span> <span class="p">{</span>
-        <span class="nx">mclicked</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">set_text</span><span class="p">);</span>  <span class="c1">// 在加载完成后为mclicked信号绑定槽</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>一些坑</h2>
-<div class="section" id="id6">
-<h3>QML全部变量内部状态更改</h3>
-<p>QML定义使用 <tt class="docutils literal">property</tt> 定义的变量是全局的, 这些变量是无法对其内部状态进行更改的,
-当然数字和字符串没有这方面问题, 但是数组和对象的更改就不行, 比如下面的更改是无效的</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-    <span class="nx">property</span> <span class="nx">variant</span> <span class="k">testData:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-
-    <span class="nx">Repeater</span> <span class="p">{</span>
-        <span class="k">model:</span><span class="nx">testData</span><span class="p">;</span>
-
-        <span class="nx">Text</span> <span class="p">{</span>
-            <span class="k">text:</span> <span class="nx">modelData</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="kd">id: testArea</span>
-        <span class="nx">anchors</span><span class="p">.</span><span class="nx">fill</span><span class="p">;</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="nx">testData</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="nx">testData</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面是无法更改testData的内部状态的, 解决办法是先将全局变量赋值给局部变量, 更改完毕后覆盖全局变量</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: test</span><span class="p">;</span>
-    <span class="nx">property</span> <span class="nx">variant</span> <span class="k">testData:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span> <span class="s2">&quot;2&quot;</span><span class="p">}</span>
-
-    <span class="nx">Repeater</span> <span class="p">{</span>
-        <span class="k">model:</span><span class="nx">testData</span><span class="p">;</span>
-
-        <span class="nx">Text</span> <span class="p">{</span>
-            <span class="k">text:</span> <span class="nx">modelData</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">MouseArea</span> <span class="p">{</span>
-        <span class="kd">id: testArea</span>
-        <span class="nx">anchors</span><span class="p">.</span><span class="nx">fill</span><span class="p">;</span>
-        <span class="k">onClicked:</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">testData</span><span class="p">;</span>  <span class="c1">// 赋值给局部变量</span>
-            <span class="nx">tmp</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
-            <span class="nx">tmp</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
-            <span class="nx">testData</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>上面即可成功更改 <tt class="docutils literal">testData</tt> 的内部状态</p>
-</div>
-<div class="section" id="id7">
-<h3>空列表引发的段错误</h3>
-<p>从PyQt向QML中渲染数据, 难免会渲染空列表, 但是这在某些平台(Windows)会引发段错误, 搞得人莫名其妙,
-解决办法就是将空列表转换为 <em>None</em></p>
-</div>
-</div>
-<div class="section" id="id8">
-<h2>一些技巧</h2>
-<div class="section" id="js">
-<h3>结合js</h3>
-<p>给元素的属性赋值是可以使用js语句的, 当然复杂的语句可以写成函数,指定这个函数, 使用函数的返回值,
-下面是一个隔行变色的例子:</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">400</span><span class="p">;</span>
-    <span class="nx">Repeater</span><span class="p">{</span>
-        <span class="k">model:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-        <span class="nx">Rectangle</span> <span class="p">{</span>
-            <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">100</span><span class="p">;</span>
-            <span class="k">color:</span> <span class="nx">index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&quot;blue&quot;</span> <span class="o">:</span> <span class="s2">&quot;black&quot;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="section" id="id9">
-<h3>自定义元素</h3>
-<p>多处都使用的内容, 可以提取出来放在一个以大写开头的文件名的文件里, 然后同目录使用文件名就可以引用这个元素,
-其他目录可以使用 <tt class="docutils literal">import</tt> 导入这个目录(相对路径导入), 就可以使用目录里的元素了,</p>
-<p>比如我在 <tt class="docutils literal">Demo.qml</tt>  定义了一些内容,  同目录或导入这个目录的其他QML文件我就可以直接使用 <tt class="docutils literal">Demo</tt> 元素了</p>
-</div>
-<div class="section" id="id10">
-<h3>自定义元素属性</h3>
-<p>为了更好的可重用, 定义一些属性是必须的 可以用通过  <tt class="docutils literal">property alias source:target</tt> 定义属性别名, 当别人引用
-这个元素, 并在元素内定义 <tt class="docutils literal">source</tt> 属性, 就会自动映射到 <tt class="docutils literal">target</tt> 上, 下面是一个例子</p>
-<p>Demo.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: demo</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">50</span><span class="p">;</span>
-
-    <span class="nx">property</span> <span class="nx">alias</span> <span class="k">text:</span> <span class="nx">demoText</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
-
-    <span class="nx">Text</span><span class="p">{</span>
-        <span class="kd">id: demoText</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="s2">&quot;Demo&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Demo</span> <span class="p">{</span>
-    <span class="k">text:</span> <span class="s2">&quot;Nice Demo&quot;</span>
-<span class="p">}</span>
-</pre></div>
-<p>使用qmlviwer 查看 test.qml, 会显示 &quot;Nice Demo&quot; 文字</p>
-<p>当然也可以直接在自定义元素使用 <tt class="docutils literal">property</tt> 定义变量, 在使用该元素时定义该属性:</p>
-<p>Demo.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Rectangle</span> <span class="p">{</span>
-    <span class="kd">id: demo</span>
-    <span class="k">width:</span> <span class="mi">100</span><span class="p">;</span> <span class="k">height:</span> <span class="mi">50</span><span class="p">;</span>
-
-    <span class="nx">property</span> <span class="nx">string</span> <span class="k">textData:</span><span class="s2">&quot;Demo&quot;</span><span class="p">;</span>
-
-    <span class="nx">Text</span><span class="p">{</span>
-        <span class="kd">id: demoText</span><span class="p">;</span>
-        <span class="k">text:</span> <span class="nx">textData</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-<p>test.qml</p>
-<div class="highlight"><pre><span class="kr">import</span> <span class="nx">Qt</span> <span class="mf">4.7</span>
-
-<span class="nx">Demo</span> <span class="p">{</span>
-    <span class="k">textData:</span> <span class="s2">&quot;Nice Demo&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
+<span class="kn">from</span> <span class="nn">PyQt4.QtGui ...</span></pre></div></div></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/qml.html">QML </a>
@@ -434,11 +313,9 @@
 
 
 
-<p><a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 

@@ -48,6 +48,46 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h3 class="article-title">使用Linux shell实时检测文件变更</h3></a>
+<h6 class="subheader" title="2012-05-18T11:16:00">Fri 18 May 2012
+</h6>
+
+
+<p>使用python做web开发,现在流行使用uwsgi调用python程序,但是使用uwsgi一段时间发现有一个弊端,就是每次更改源代码后必须重启uwsgi才能生效,包括更改模板文件也是,我是个懒人,再经过一段时间反复的更改-重启后我终于忍受不了,决定写一个脚本来定时程序目录的文件改动,并及时自动重启uwsgi,来解放我的双手可以不用理会这些琐碎的重启工作. 用了点时间来编写了一个脚本用来判断是否更改,然后判断是否需要重启uwsgi.</p>
+<p>下面放出脚本内容:</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Author      : cold</span>
+<span class="c"># Homepage    : http://www.linuxzen.com</span>
+<span class="c"># Filename    : checkchange.sh</span>
+<span class="c"># Useage      : sh checkchange.sh [dir]</span>
+checkisdir<span class="o">()</span>
+        <span class="c"># Have one argument</span>
+        <span class="c"># The argument is a directory</span>
+        <span class="k">for </span>i in <span class="sb">`</span>ls <span class="nv">$1</span> | sed -e <span class="s1">&#39;s/ /\n/g&#39;</span><span class="sb">`</span>
+        <span class="k">do ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/jian-ce.html">检测 </a>
+    <a href="http://www.linuxzen.com/tag/wen-jian.html">文件 </a>
+    <a href="http://www.linuxzen.com/tag/shi-shi.html">实时 </a>
+    <a href="http://www.linuxzen.com/tag/bian-geng.html">变更 </a>
+    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
+    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h3 class="article-title">Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h3></a>
 <h6 class="subheader" title="2012-05-16T11:05:00">Wed 16 May 2012
 </h6>
@@ -370,39 +410,6 @@ server:</p>
 
 
 <p><a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h3></a>
-<h6 class="subheader" title="2012-03-13T13:13:00">Tue 13 March 2012
-</h6>
-
-
-<p>上面3篇我们主要对系统进行了安装和配置,并且配置了yum包管理器,安装了几个常用的工具,这篇我们就来介绍如何来搭建lnmp环境.这里的LNMP环境是指Linux下搭建Nginx+MySQL+PHP.Nginx是一个高性能的 HTTP 和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。Nginx不仅可以作为web服务器,也可以作为负载均衡器,之前也有文章介绍,大家可以看一下.</p>
-<p>MySQL是一款开源免费的数据软件,MySQL是一个小型关系型数据库管理系统，其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库.</p>
-<p>PHP，是英文超级文本预处理语言Hypertext Preprocessor的缩写。PHP 是一种 HTML 内嵌式的语言，是一种在服务器端执行的嵌入HTML文档的脚本语言，语言的风格有类似于C语言，被广泛的运用。</p>
-<p>nginx当前最新稳定版是nginx-1.0.13
-首先我们下载nginx,在Linux下执行下面命令:</p>
-<div class="highlight"><pre><span class="nb">cd</span> /usr/src                                           <span class="c"># 一般软件源码放在这个目录下</span>
-wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/yuan-ma-bao.html">源码包 </a>
-    <a href="http://www.linuxzen.com/tag/an-zhuang.html">安装 </a>
-    <a href="http://www.linuxzen.com/tag/php.html">php </a>
-    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
-    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

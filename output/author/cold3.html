@@ -48,6 +48,36 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h3 class="article-title">借用Tornado实现高效的WebQQ机器人</h3></a>
+<h6 class="subheader" title="2013-04-23T13:36:00">Tue 23 April 2013
+</h6>
+
+
+<p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+<p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
+<h2>引子</h2>
+<p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
+<h2>原理</h2>
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/gao-xiao.html">高效 </a>
+    <a href="http://www.linuxzen.com/tag/webqq.html">webqq </a>
+    <a href="http://www.linuxzen.com/tag/bing-fa.html">并发 </a>
+    <a href="http://www.linuxzen.com/tag/xie-yi.html">协议 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h3 class="article-title">使用Pelican打造静态博客</h3></a>
 <h6 class="subheader" title="2013-04-18T09:40:00">Thu 18 April 2013
 </h6>
@@ -354,51 +384,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html"><h3 class="article-title">Vim配置系列(二) —- 好看的statusline</h3></a>
-<h6 class="subheader" title="2013-01-05T15:01:00">Sat 05 January 2013
-</h6>
-
-
-<p>Vim是一款文本编辑器,但是这并不影响它有一个好看的外观,大家都知道Vim可以通过配色方案来改变Vim的外观,满足一些"好色之徒",之前大家可能也主意到截图中一个非常漂亮的statusline,这是通过Vim的一个Powerline的插件实现的.之前我们配置了Vundle的插件管理(传送门)我们可以用Vundle安装Powerline,在.vimrc(Windows可能是_vimrc)中添加:</p>
-<div class="highlight"><pre>Bundle <span class="s2">&quot;Lokaltog/vim-powerline&quot;</span>
-</pre></div>
-
-
-<p>然后重新打开vim执行</p>
-<div class="highlight"><pre><span class="p">:</span>BundleInstall
-</pre></div>
-
-
-<p>如果你和github畅通的话就会顺利安装插件,然后在.vimrc里添加</p>
-<div class="highlight"><pre><span class="k">set</span> <span class="nb">laststatus</span><span class="p">=</span><span class="m">2</span>
-<span class="k">let</span> <span class="k">g</span>:Powerline_symbols<span class="p">=</span><span class="s1">&#39;unicode&#39;</span>
-</pre></div>
-
-
-<p>如果gvim打开需要使用/path/to/your/bundle/vim-powerline/fontpatcher/fontpatcher给当前gvim使用的字体打上补丁(依赖需要fontforge和python)</p>
-<p>然后重新打开vim你就会发现一个漂亮的statusline</p>
-<p><img alt="好看的statusline" src="/upload/VimPythonComment1.png" /></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/pei-zhi.html">配置 </a>
-    <a href="http://www.linuxzen.com/tag/xi-lie.html">系列 </a>
-    <a href="http://www.linuxzen.com/tag/piao-liang.html">漂亮 </a>
-    <a href="http://www.linuxzen.com/tag/cha-jian.html">插件 </a>
-    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
-    <a href="http://www.linuxzen.com/tag/statusline.html">statusline </a>
-    <a href="http://www.linuxzen.com/tag/powerline.html">Powerline </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vimpei-zhi-xi-lie-er-hao-kan-de-statusline.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

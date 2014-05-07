@@ -47,6 +47,242 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html"><h3 class="article-title">PyQt 中用 QtNetwork 异步发起HTTP请求</h3></a>
+<h6 class="subheader" title="2014-05-07T15:52:00">Wed 07 May 2014
+</h6>
+
+
+<h2>引子</h2>
+<p>最近有需求要在 PyQt 中请求一个链接, 因为比较简单直接用 urllib2 处理了, 但是 urllib2 在
+有延时的时候会造成 GUI 界面卡死. 所以今天研究研究 QtNetwork 模块.</p>
+<p>QtNetwork 中的请求在 PyQt 中都是异步的.</p>
+<h2>简单的请求 QHttp</h2>
+<h3>发起一个GET请求</h3>
+<p><code>PyQt4.QtNetwork.QHttp</code> 可以发起一个简单请求, 需要注意的是这个对象需要通过调用
+<code>setHost</code> 设置请求主机, 然后 调用 <code>get</code>/<code>post</code> 传入 <code>path</code> 才能正常使用.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QHttp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># 绑定 done 信号</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_req_done</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://linuxzen.com/&quot;</span><span class="p">)</span>
+
+        <span class="c"># 设置主机</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">on_req_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">readAll</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Error&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>保存文件</h3>
+<p>如果想要下载文件, 可以给 <code>get</code> 方法传一个 <code>QtCore.QFile</code> 对象, 会将请求内容保存
+到文件</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QHttp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_req_done</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFile</span><span class="p">(</span><span class="s">&quot;./test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_req_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="c"># print self.http.readAll(), status</span>
+        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Error&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<p>上面代码将请求下来的内容保存到当前目录的 test 文件里.</p>
+<h3>处理头部信息</h3>
+<p>现在有一个需求就是有一个链接会返回一个 301 或 302 的跳转, 但是 <code>PyQt4.QtNetwork.QHttp</code> 没有实现自动跳转, 需要我们自动判断头信息进行跳转.</p>
+<p>我们可以绑定<code>PyQt4.QtNetwork.QHttp.responseHeaderReceived</code>的信号来处理头部信息,
+这个信号将给槽传递一个 <code>PyQt4.QtNetwork.QHttpResponseHeader</code> 的实例.</p>
+<p>通过判断状态吗, 并抓取 <code>Location</code> 头实现跳转</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QHttp</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">done</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_req_done</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">responseHeaderReceived</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_response_header</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://t.cn/zTocACq&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QFile</span><span class="p">(</span><span class="s">&quot;./test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_response_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_header</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">response_header</span><span class="o">.</span><span class="n">statusCode</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">301</span><span class="p">,</span> <span class="mi">302</span><span class="p">]:</span>
+            <span class="n">location</span> <span class="o">=</span> <span class="n">response_header</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s">&quot;Location&quot;</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Redirect to: &quot;</span><span class="p">,</span> <span class="n">location</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getId</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">host</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">tmp</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">setHost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">host</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">()</span> <span class="ow">or</span> <span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_req_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">readAll</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Error&quot;</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">main</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<p>运行上面代码, 你将看到下面输出</p>
+<div class="highlight"><pre><span class="n">Redirect</span> <span class="n">to</span><span class="o">:</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.linuxzen.com</span>
+<span class="n">Success</span>
+</pre></div>
+
+
+<h3>处理参数</h3>
+<p>如果你的 GET 请求的 url 是带着参数传给 <code>QUrl</code> 的, 那么 <code>QUrl.path()</code> 将不会返回带参数的
+路径需要自己处理. 可以参见下面的处理函数</p>
+<div class="highlight"><pre>    <span class="k">def</span> <span class="nf">get_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">queryPairDelimiter</span><span class="p">()</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s">&quot;{0}{1}{2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">queryValueDelimiter</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">queryItems</span><span class="p">()</span>
+        <span class="p">)</span>
+</pre></div>
+
+
+<p>请求的时候加上就行了</p>
+<div class="highlight"><pre>    <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">path</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;?&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_query_string</span><span class="p">())</span>
+</pre></div>
+
+
+<h2>处理 Cookie ---- QNetworkAccessManager</h2>
+<p>QHttp 是无法自动记录 Cookie 和设置 Cookie的, 如果有这个需求就需要 <code>PyQt4.QtNetwork.QNetworkAccessManager</code></p>
+<p><code>QNetworkAccessManager</code> 的请求方法不在是传入一个 QString, 而是需要传入一个 
+<code>PyQt4.QtNetwork.QNetworkRequest</code> 的实例.</p>
+<p><code>QNetworkAccessManager</code> 同样是异步的, 可以绑定 <code>QNetworkAccessManager.finished</code> 信号, 
+这个信号将会给槽传递一个 <code>PyQt4.QtNetwork.QNetworkReply</code> 的实例.</p>
+<p><code>QNetworkAccessManager.setCookieJar</code> 可以设置一个 <code>PyQt4.QtNetwork.QNetworkCookieJar</code> 对象来
+自动保存和设置 Cookie.</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtNetwork</span>
+
+
+<span class="k">class</span> <span class="nc">MainWidget</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MainWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cookiejar</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QNetworkCookieJar</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QNetworkAccessManager</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">setCookieJar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cookiejar</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">finished</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_reply</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">req</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QNetworkRequest</span><span class="p">(</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com.hk&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">req</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reply</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">reply</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cookiejar</span><span class="o">.</span><span class="n">allCookies</span><span class="p">()</span>
+        <span class="k">print</span> <span class="n">reply</span><span class="o">.</span><span class="n">rawHeaderList</span><span class="p">()</span>
+        <span class="c"># print reply.readAll()</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">MainWidget</span><span class="p">()</span>
+    <span class="n">widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+
+
+<p>这样就可以携带 Cookie 去请求一些需要 Cookie 认证的请求.</p>
+<h2>总结</h2>
+<p>还有很多内容就不一一介绍, 比如配合 <code>QProgressBar</code>, 添加头部信息, POST 请求, 等.</p>
+<p>这里只是简单介绍下 Qt 自己的网络请求处理方法. 在 PyQt 里用 urllib 等库明显不是好的
+解决办法, 因为会造成界面卡死. 但是 PyQt4 的方式也实在不是很优雅. 要来来回回的调很多
+东西. 但是最起码不会造成界面的卡死.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pyqt.html">PyQt </a>
+    <a href="http://www.linuxzen.com/tag/qtnetwork.html">QtNetwork </a>
+    <a href="http://www.linuxzen.com/tag/qhttp.html">QHttp </a>
+    <a href="http://www.linuxzen.com/tag/qnetworkaccessmanager.html">QNetworkAccessManager </a>
+    <a href="http://www.linuxzen.com/tag/http.html">HTTP </a>
+    <a href="http://www.linuxzen.com/tag/wang-luo.html">网络 </a>
+    <a href="http://www.linuxzen.com/tag/yi-bu.html">异步 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h3 class="article-title">发布一个基于Tornado的高效异步的HTTP客户端库</h3></a>
 <h6 class="subheader" title="2013-08-01T10:46:00">Thu 01 August 2013
 </h6>
@@ -70,162 +306,7 @@ python setup.py install
 <h2>教程</h2>
 <h3>GET</h3>
 <p>TornadoHTTPClient的get方法可以发起一个get请求</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="c"># 实例化</span>
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="c"># 发出get请求</span>
-<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">)</span>
-
-<span class="c"># 开始主事件循环</span>
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<h3>POST</h3>
-<p>TornadoHTTPClient的post方法可以发起一个post请求</p>
-<h3>读取响应</h3>
-<p>上面仅仅发出了请求, 但是我们无法读取GET请求回来的数据, 我们可以使用一个回调来读取响应</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<p>通过<code>callback</code>关键字参数我们可以传进一个回调函数, 当请求成功时会调用此函数, 并给此函数传递一个与<code>urllib2.urlopen</code>返回一样的reponse实例</p>
-<h3>上传文件</h3>
-<p><code>upload</code>方法可以上传文件, 其接受一个url和文件的field和文件路径, 还有其他post参数</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;打开图片链接&quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">effective_url</span><span class="p">)</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="s">&quot;http://paste.linuxzen.com&quot;</span><span class="p">,</span> <span class="s">&quot;img&quot;</span><span class="p">,</span> <span class="s">&quot;img_test.png&quot;</span><span class="p">,</span>
-                    <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<h3>给callback传递参数</h3>
-<p>有时候callback可能需要访问局部变量, 可以通过 <code>args</code>和<code>kwargs</code>关键字参数, 将<code>callback</code>的参数传递给<code>get</code>/<code>post</code>方法, <code>args</code>参数将会在<code>response</code>参数之后被传递,
-<code>args</code>参数类型应当是一个元组, <code>kwargs</code>参数类型应当是一个字典</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="k">print</span> <span class="n">times</span>
-
-    <span class="k">if</span> <span class="n">times</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
-        <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">))</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<h3>发送延迟请求</h3>
-<p>有时我们需要延迟几秒也发送请求或每隔几秒就发送一个请求, <code>get</code>/<code>post</code>方法的<code>delay</code>关键字参数可以解决, <code>delay</code>参数接受一个单位为秒的数字, 并延迟<code>delay</code>秒后发起请求</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="k">if</span> <span class="n">times</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
-        <span class="c"># 延迟10秒发送此请求</span>
-        <span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">times</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">),</span> <span class="n">delay</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">))</span>
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<h3>给请求传递参数</h3>
-<p>TornadoHTTPClient 的 <code>get</code>/<code>post</code>方法的第二个参数<code>params</code>可以定义请求时传递的参数<code>params</code>的类型为字典或者<code>((key, value), )</code>类型的元组或列表,例如使用百度搜索<code>TornadoHTTPClient</code></p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com/s&quot;</span><span class="p">,</span> <span class="p">((</span><span class="s">&quot;wd&quot;</span><span class="p">,</span> <span class="s">&quot;tornado&quot;</span><span class="p">),),</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<p>以上也使用与POST方法, 比如登录网站</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">&quot;http://ip.or.domain/login&quot;</span><span class="p">,</span> <span class="p">((</span><span class="s">&quot;username&quot;</span><span class="p">,</span> <span class="s">&quot;cold&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;pwd&quot;</span><span class="p">)),</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<h3>指定HTTP头</h3>
-<p>TornadoHTTPClient 的<code>get</code>/<code>post</code>方法的 <code>headers</code>关键字参数可以自定额外的HTTP头信息, 参数类型为一个字典</p>
-<p>指定User-Agent头</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(((</span><span class="s">&quot;User-Agent&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Mozilla/5.0 (X11; Linux x86_64)&quot;</span>\
-                <span class="s">&quot; AppleWebKit/537.11 (KHTML, like Gecko)&quot;</span>\
-                <span class="s">&quot; Chrome/23.0.1271.97 Safari/537.11&quot;</span><span class="p">),</span> <span class="p">))</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
-</pre></div>
-
-
-<h3>使用代理</h3>
-<p>TornadoHTTPClient 的<code>set_proxy</code>方法可以设置代理, 其接受两个参数, 分别是代理的 主机名/ip 代理的端口, <code>unset_proxy</code>可以取消代理</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">tornadohttpclient</span> <span class="kn">import</span> <span class="n">TornadoHTTPClient</span>
-
-<span class="n">http</span> <span class="o">=</span> <span class="n">TornadoHTTPClient</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">unset_proxy</span><span class="p">()</span>
-    <span class="n">http</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-<span class="n">http</span><span class="o">.</span><span class="n">set_proxy</span><span class="p">(</span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="mi">8087</span><span class="p">)</span>
-<span class="n">http</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http://shell.appspot.com&quot;</span><span class="p">,</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">)</span>
-<span class="n">http</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<h3>Cookie</h3>
-<p>TornadoHTTPClient会自动记录和装载Cookie, 可以通过 TornadoHTTPClient实例属性 cookie 获取Cookie</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+<div class="highlight"><pre><span class="kn">from ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
@@ -238,8 +319,11 @@ python setup.py install
 
 
 
-<p><a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>            </article>
+<p><a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
 
+            <!-- /#posts-list -->
 <div class="pagination-centered">
 <h6 class="subheader">Page 1 of 1</h6>
 
@@ -247,10 +331,6 @@ python setup.py install
 
 </p>
 </div>
-
-
-
-            <!-- /#posts-list -->
 
     </div>
     <!-- End Main Content -->
