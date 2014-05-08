@@ -74,9 +74,9 @@ class MainWidget(QtGui.QWidget):
         self.out = QtCore.QFile("./test")
         self.getId = self.http.get(self.url.path(), self.out)
 
-    def on_req_done(self, status):
-        # print self.http.readAll(), status
-        if status:
+    def on_req_done(self, error):
+        # print self.http.readAll(), error
+        if not error:
             print "Success"
         else:
             print "Error"
