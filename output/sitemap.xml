@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2014-05-23T16:38:10-00:00</lastmod>
+<lastmod>2014-05-23T16:43:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2014-05-23T16:38:10-00:00</lastmod>
+<lastmod>2014-05-23T16:43:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2014-05-23T16:38:10-00:00</lastmod>
+<lastmod>2014-05-23T16:43:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2014-05-23T16:38:10-00:00</lastmod>
+<lastmod>2014-05-23T16:43:26-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -900,8 +900,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/ding-shi.html</loc>
-<lastmod>2012-04-21T18:26:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/sheng-cheng.html</loc>
+<lastmod>2013-04-18T09:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1034,7 +1034,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2014-04-11T14:35:00-00:00</lastmod>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1140,6 +1140,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/guan-li-qi.html</loc>
 <lastmod>2012-10-25T10:23:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/yi-zi-pai-xu.html</loc>
+<lastmod>2012-10-24T18:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1376,6 +1383,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/cuo-wu.html</loc>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/jing-tai.html</loc>
 <lastmod>2013-04-18T09:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1509,6 +1523,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/shu-ji.html</loc>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/uwsgi.html</loc>
 <lastmod>2012-05-18T11:16:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -1588,6 +1609,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/ming-ling.html</loc>
 <lastmod>2014-03-21T10:47:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/zheng-shu.html</loc>
+<lastmod>2012-08-10T16:11:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1679,6 +1707,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/yum.html</loc>
 <lastmod>2012-03-13T10:06:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/ding-shi.html</loc>
+<lastmod>2012-04-21T18:26:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1999,8 +2034,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/sheng-cheng.html</loc>
-<lastmod>2013-04-18T09:40:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/zhi-nan.html</loc>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2118,8 +2153,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/zheng-shu.html</loc>
-<lastmod>2012-08-10T16:11:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/ru-men.html</loc>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2384,8 +2419,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/yi-zi-pai-xu.html</loc>
-<lastmod>2012-10-24T18:29:00-00:00</lastmod>
+<loc>http://www.linuxzen.com/tag/xin-shou.html</loc>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2610,6 +2645,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/sheng-ji.html</loc>
 <lastmod>2013-12-24T00:00:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/gong-ju.html</loc>
+<lastmod>2014-05-23T14:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

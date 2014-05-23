@@ -162,7 +162,7 @@ test 函数里文件的第 10 行的语句触发了 UnicodeDecodeError 异常.&l
 规范, 可以参见 &lt;a href="http://legacy.python.org/dev/peps/pep-0008/"&gt;PEP8&lt;/a&gt;&lt;/p&gt;
 &lt;h1&gt;写在后面的话&lt;/h1&gt;
 &lt;p&gt;零零散散的介绍了一些, 在此抛砖引玉欢迎大家补充. 编写 Python 是快乐的, 
-希望本文可以对开始学 Python 的朋友有点帮助, 祝你们学习愉快.&lt;/p&gt;</summary></entry><entry><title>Tornado 多进程实现分析</title><link href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html" rel="alternate"></link><updated>2014-04-11T14:35:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-04-11:tornado-duo-jin-cheng-shi-xian-fen-xi.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
+希望本文可以对开始学 Python 的朋友有点帮助, 祝你们学习愉快.&lt;/p&gt;</summary><category term="Python"></category><category term="入门"></category><category term="指南"></category><category term="新手"></category><category term="错误"></category><category term="书籍"></category><category term="工具"></category></entry><entry><title>Tornado 多进程实现分析</title><link href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html" rel="alternate"></link><updated>2014-04-11T14:35:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-04-11:tornado-duo-jin-cheng-shi-xian-fen-xi.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
 &lt;p&gt;Tornado 是一个网络异步的的web开发框架, 并且可以利用多进程进行提高效率, 
 下面是创建一个多进程 tornado 程序的例子.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;

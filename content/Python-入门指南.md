@@ -1,6 +1,6 @@
 Title: Python 入门指南
 Date: 2014-05-23 14:29
-Tag: Python, 入门, 指南
+Tags: Python, 入门, 指南, 新手, 错误, 书籍, 工具
 Category: Python
 
 # 引子

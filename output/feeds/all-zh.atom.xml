@@ -162,7 +162,7 @@ test 函数里文件的第 10 行的语句触发了 UnicodeDecodeError 异常.&l
 规范, 可以参见 &lt;a href="http://legacy.python.org/dev/peps/pep-0008/"&gt;PEP8&lt;/a&gt;&lt;/p&gt;
 &lt;h1&gt;写在后面的话&lt;/h1&gt;
 &lt;p&gt;零零散散的介绍了一些, 在此抛砖引玉欢迎大家补充. 编写 Python 是快乐的, 
-希望本文可以对开始学 Python 的朋友有点帮助, 祝你们学习愉快.&lt;/p&gt;</summary></entry><entry><title>PyQt 中用 QtNetwork 异步发起HTTP请求</title><link href="http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html" rel="alternate"></link><updated>2014-05-07T15:52:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-05-07:pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
+希望本文可以对开始学 Python 的朋友有点帮助, 祝你们学习愉快.&lt;/p&gt;</summary><category term="Python"></category><category term="入门"></category><category term="指南"></category><category term="新手"></category><category term="错误"></category><category term="书籍"></category><category term="工具"></category></entry><entry><title>PyQt 中用 QtNetwork 异步发起HTTP请求</title><link href="http://www.linuxzen.com/pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html" rel="alternate"></link><updated>2014-05-07T15:52:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-05-07:pyqt-zhong-yong-qtnetwork-yi-bu-fa-qi-httpqing-qiu.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
 &lt;p&gt;最近有需求要在 PyQt 中请求一个链接, 因为比较简单直接用 urllib2 处理了, 但是 urllib2 在
 有延时的时候会造成 GUI 界面卡死. 所以今天研究研究 QtNetwork 模块.&lt;/p&gt;
 &lt;p&gt;QtNetwork 中的请求在 PyQt 中都是异步的.&lt;/p&gt;
