@@ -48,6 +48,41 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h3 class="article-title">使用cacti构建监控系统</h3></a>
+<h6 class="subheader" title="2012-03-14T14:02:00">Wed 14 March 2012
+</h6>
+
+
+<p>Cacti是一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具,它是通过 snmpget来获取数据，使用 RRDtool绘画图形,可以指定每一个用户能查看树状结构、host以及任何一张图，还可以与LDAP结合进行用户验证，同时也能自己增加模板，功能非常强大完善。界面友好。</p>
+<p>cacti是用php语言实现的一个软件，它的主要功能是用snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。因此，snmp和rrdtool是cacti的关键。Snmp关系着数据的收集，rrdtool关系着数据存储和图表的生成。</p>
+<p>cacti依赖于PHP+MYSQL环境,前面的几篇文章已经详细讲解了如何在Linux部署LNMP环境,这篇文章我们就是用前面几章所搭建的环境,所以这里不再讲解如何搭建环境,如果您不会可以先看看前几篇文章.</p>
+<p>下面就介绍如何来部署cacti.</p>
+<p>首先介绍本文所使用的环境:
+server:</p>
+<p>系统为CentOS 5.5 32bit</p>
+<p>ip:192.168.3.120</p>
+<p>cacti:cacti-0.8.7i.tar.gz</p>
+<p>cacti使用SNMP采集数据,首先安装snmp数据采集工具:</p>
+<div class="highlight"><pre>yum -y install ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/jian-kong.html">监控</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/jian-kong.html">监控 </a>
+    <a href="http://www.linuxzen.com/tag/lnmp.html">lnmp </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/centos.html">CentOS </a>
+    <a href="http://www.linuxzen.com/tag/cacti.html">cacti </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h3></a>
 <h6 class="subheader" title="2012-03-13T13:13:00">Tue 13 March 2012
 </h6>
@@ -386,45 +421,6 @@ heartbeat ...</!--more--></p><p class="subheader">Category: <a href="http://www.
 
 
 <p><a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h3 class="article-title">nginx+keepalived配置高可用HTTP群集</h3></a>
-<h6 class="subheader" title="2012-02-09T17:35:00">Thu 09 February 2012
-</h6>
-
-
-<p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
-一般集群主要架构为:</p>
-<p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
-第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
-第二种方式主备同时绑定一个vip,把域名通过DNS轮询的方式解析到这两个服务器上,主机出现故障,备机就将主机绑定vip绑定到备机上,同时arping网关刷新MAC地址.实现故障转移.</p>
-<p>中间为WEB服务器作为real server,处理请求.
-后端为数据库和分布式文件系统.数据库一般为主从两台.分布式文件系统有效解决WEB服务器之间的数据同步.有的还会将图片服务器单独分离出来放在后端.</p>
-<p>本文使用环境:</p>
-<ul>
-<li>CentOS 5.5 32位</li>
-<li>nginx:nginx-1.0.11</li>
-<li>keepalived：keepalived-1.1.19.tar.gz</li>
-<li>主调度器 ...</li></ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用 </a>
-    <a href="http://www.linuxzen.com/tag/fu-zai-jun-heng.html">负载均衡 </a>
-    <a href="http://www.linuxzen.com/tag/qun-ji.html">群集 </a>
-    <a href="http://www.linuxzen.com/tag/fan-xiang-dai-li.html">反向代理 </a>
-    <a href="http://www.linuxzen.com/tag/shuang-ji.html">双机 </a>
-    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
-    <a href="http://www.linuxzen.com/tag/keepalived.html">keepalived </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

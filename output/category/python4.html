@@ -48,6 +48,45 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html"><h3 class="article-title">Python超简单截取中文字符串</h3></a>
+<h6 class="subheader" title="2012-07-11T17:55:00">Wed 11 July 2012
+</h6>
+
+
+<p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="s">&#39;abc&#39;</span>
+</pre></div>
+
+
+<p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
+<div class="highlight"><pre><span class="c">#-*- coding:utf8 -*-</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
+<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
+<span class="c"># 结果u&#39;中文截取</span>
+</pre></div>
+
+
+<p>就这么简单</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/jie-qu.html">截取 </a>
+    <a href="http://www.linuxzen.com/tag/zi-fu-chuan.html">字符串 </a>
+    <a href="http://www.linuxzen.com/tag/utf8.html">utf8 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html"><h3 class="article-title">mongoengine使用笔记</h3></a>
 <h6 class="subheader" title="2012-06-23T10:02:00">Sat 23 June 2012
 </h6>

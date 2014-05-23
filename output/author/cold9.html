@@ -48,6 +48,45 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h3 class="article-title">nginx+keepalived配置高可用HTTP群集</h3></a>
+<h6 class="subheader" title="2012-02-09T17:35:00">Thu 09 February 2012
+</h6>
+
+
+<p>Nginx不仅是一款优秀的WEB服务器,同时可以根据nginx的反代理可以配置成强大的负载均衡器.这里就介绍如何把nginx配置成负载均衡器,并结合keepalived配置高可用的集群.
+一般集群主要架构为:</p>
+<p>前端为负载均衡器两个:主/备,两种工作方式,一种是备机待机状态,主机故障时备机接管主机工作实现故障庄毅,在主机故障恢复完成时备机继续仅需待机状态,第二种是主备同时工作,一台宕机另外一台自动接管另一台的工作实现故障转移.
+第一种方式可以通过将域名解析到一个虚拟ip(vip)上,主负载均衡器绑定虚拟ip,当主负载均衡器出现故障时,通过keepalived自动将vip绑定到备用负载均衡器上同时arping网关刷新MAC地址.,避免单点故障.
+第二种方式主备同时绑定一个vip,把域名通过DNS轮询的方式解析到这两个服务器上,主机出现故障,备机就将主机绑定vip绑定到备机上,同时arping网关刷新MAC地址.实现故障转移.</p>
+<p>中间为WEB服务器作为real server,处理请求.
+后端为数据库和分布式文件系统.数据库一般为主从两台.分布式文件系统有效解决WEB服务器之间的数据同步.有的还会将图片服务器单独分离出来放在后端.</p>
+<p>本文使用环境:</p>
+<ul>
+<li>CentOS 5.5 32位</li>
+<li>nginx:nginx-1.0.11</li>
+<li>keepalived：keepalived-1.1.19.tar.gz</li>
+<li>主调度器 ...</li></ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用 </a>
+    <a href="http://www.linuxzen.com/tag/fu-zai-jun-heng.html">负载均衡 </a>
+    <a href="http://www.linuxzen.com/tag/qun-ji.html">群集 </a>
+    <a href="http://www.linuxzen.com/tag/fan-xiang-dai-li.html">反向代理 </a>
+    <a href="http://www.linuxzen.com/tag/shuang-ji.html">双机 </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/keepalived.html">keepalived </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h3 class="article-title">MySQL优化笔记</h3></a>
 <h6 class="subheader" title="2012-02-04T13:36:00">Sat 04 February 2012
 </h6>

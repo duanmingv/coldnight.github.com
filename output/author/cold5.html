@@ -48,6 +48,53 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h3 class="article-title">部署Tornado时iptables引发的的一个问题</h3></a>
+<h6 class="subheader" title="2012-09-29T19:11:00">Sat 29 September 2012
+</h6>
+
+
+<p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
+<p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
+<div class="highlight"><pre><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
+        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
+<div class="highlight"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+</pre></div>
+
+
+<p>但是访问nginx总是返回502 Bad ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/iptables.html">iptables </a>
+    <a href="http://www.linuxzen.com/tag/bad-gateway.html">bad gateway </a>
+    <a href="http://www.linuxzen.com/tag/502.html">502 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h3 class="article-title">用Vim为Python源码自动添加#!行和编码行</h3></a>
 <h6 class="subheader" title="2012-09-29T18:56:00">Sat 29 September 2012
 </h6>
@@ -407,48 +454,6 @@ fugitive 可以在git获得:</p>
 
 
 <p><a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html"><h3 class="article-title">python里的三目运算</h3></a>
-<h6 class="subheader" title="2012-08-10T16:28:00">Fri 10 August 2012
-</h6>
-
-
-<p>下面说的和三目运算有点相似,但又不一样,实在不知道该如何拟定标题,先就是这个标题吧,大家都知道python中没有三目运算,但是<code>and</code>/<code>or</code>有点类似三目运算:</p>
-<h2>and/or</h2>
-<p>单独使用表示逻辑关系与和或,也可以组和使用,用法如下</p>
-<h3>and</h3>
-<p>and前后如果某一个值为假(False, '', [], {}, None…)则返回第一个假值
-如果所有值都为真则返回最后一个真值</p>
-<h3>or</h3>
-<p>如果or任意一个值为真,则立刻返回这个值
-如果所有值都为假,则or返回最后一个假值</p>
-<h3>例子</h3>
-<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="bp">True</span> <span class="c"># result = True</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;test&#39;</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = ortest</span>
-<span class="n">result</span> <span class="o">=</span> <span class="bp">False</span> <span class="ow">and</span> <span class="s">&#39;ortest&#39;</span> <span class="c"># result = False</span>
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">None</span>  <span class="c"># result = &#39;&#39;</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="ow">or ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/dan-xing.html">单行 </a>
-    <a href="http://www.linuxzen.com/tag/san-mu.html">三目 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/or.html">or </a>
-    <a href="http://www.linuxzen.com/tag/if.html">if </a>
-    <a href="http://www.linuxzen.com/tag/else.html">else </a>
-    <a href="http://www.linuxzen.com/tag/and.html">and </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

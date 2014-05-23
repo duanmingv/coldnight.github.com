@@ -48,6 +48,53 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h3 class="article-title">Python将汉字按拼音排序--一个多音字引发的悲剧</h3></a>
+<h6 class="subheader" title="2012-10-24T18:29:00">Wed 24 October 2012
+</h6>
+
+
+<p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
+<div class="highlight"><pre><span class="err">拼</span>    <span class="n">pin1</span>
+<span class="err">音</span>    <span class="n">yin1</span>
+</pre></div>
+
+
+<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># Author : cold night</span>
+<span class="c"># E-mail : wh_linux@126.com</span>
+<span class="c"># Date   : 12-10-24 下午3:13</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
+    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/yi-zi-pai-xu.html">汉字排序 </a>
+    <a href="http://www.linuxzen.com/tag/yi-zi.html">汉字 </a>
+    <a href="http://www.linuxzen.com/tag/pai-xu.html">排序 </a>
+    <a href="http://www.linuxzen.com/tag/pin-yin.html">拼音 </a>
+    <a href="http://www.linuxzen.com/tag/duo-yin-zi.html">多音字 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h3 class="article-title">用Python将绝对URL替换成相对URL</h3></a>
 <h6 class="subheader" title="2012-09-29T15:52:00">Sat 29 September 2012
 </h6>
@@ -425,45 +472,6 @@ import pdb; pdb.set_trace()
 
 
 <p><a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html"><h3 class="article-title">Python超简单截取中文字符串</h3></a>
-<h6 class="subheader" title="2012-07-11T17:55:00">Wed 11 July 2012
-</h6>
-
-
-<p>web应用难免会截取字符串的需求,Python中截取英文很容易:</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;abce&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
-<span class="s">&#39;abc&#39;</span>
-</pre></div>
-
-
-<p>但是截取utf-8的中文机会截取一半导致一些不是乱码的乱码.其实utf8截取很简单,这里记下来作为备忘</p>
-<div class="highlight"><pre><span class="c">#-*- coding:utf8 -*-</span>
-<span class="n">s</span> <span class="o">=</span> <span class="s">u&#39;中文截取&#39;</span>
-<span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf8&#39;</span><span class="p">)</span>
-<span class="c"># 结果u&#39;中文截取</span>
-</pre></div>
-
-
-<p>就这么简单</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/jie-qu.html">截取 </a>
-    <a href="http://www.linuxzen.com/tag/zi-fu-chuan.html">字符串 </a>
-    <a href="http://www.linuxzen.com/tag/utf8.html">utf8 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonchao-jian-dan-jie-qu-zhong-wen-zi-fu-chuan.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
