@@ -150,7 +150,7 @@ test 函数里文件的第 10 行的语句触发了 UnicodeDecodeError 异常.&l
 &lt;h2&gt;其他工具&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://ipython.org"&gt;IPython&lt;/a&gt; 一个 Python Shell 增强工具&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://virtualenv.readthedocs.org/en/latest/"&gt;vitualenv&lt;/a&gt; 可以用它获取一个干净的 Python 开发环境&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://virtualenv.readthedocs.org/en/latest/"&gt;virtualenv&lt;/a&gt; 可以用它获取一个干净的 Python 开发环境&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1&gt;关于书籍&lt;/h1&gt;
 &lt;p&gt;Python 基础书籍有很多: 《简明 Python 教程》， 《Python 核心编程》《Python 学习手册》《Python参考手册》

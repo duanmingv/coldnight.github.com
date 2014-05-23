@@ -183,7 +183,7 @@ Python 有大量的第三方库, 并且有 `setuptools` 工具可以安装这些
 ## 其他工具
 
 * [IPython](http://ipython.org) 一个 Python Shell 增强工具
-* [vitualenv](http://virtualenv.readthedocs.org/en/latest/) 可以用它获取一个干净的 Python 开发环境
+* [virtualenv](http://virtualenv.readthedocs.org/en/latest/) 可以用它获取一个干净的 Python 开发环境
 
 # 关于书籍
 Python 基础书籍有很多: 《简明 Python 教程》， 《Python 核心编程》《Python 学习手册》《Python参考手册》
