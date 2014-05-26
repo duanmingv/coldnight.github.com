@@ -19,7 +19,7 @@ Python 现在主流应该还是 Python 2.7, Python 2.7 将会是 Python 2.x 的�
 ## 选择版本
 
 在你要开始学习 Python 之前就是要确定要学习的版本,
-不管你是选择 2 还是 3, 虽然有差别, 但是不是很大, 等你熟悉了之后就可以触类旁通.
+不管你是选择 2 还是 3, 虽然有差别, 但不是很大, 等你熟悉了之后就可以触类旁通.
 不必太害怕选择了一个版本到时候无法兼顾另一个版本.
 
 如果你无法确定要学习的版本,可以根据以下方法来确定要学习的版本.
@@ -52,7 +52,7 @@ print 'Hello world!'
 
 在 Python 3 里 print 变成了一个 函数
 ```python
-print('Hello world");
+print('Hello world');
 ```
 
 ### 输入函数的改变
@@ -165,8 +165,8 @@ Python 有大量的第三方库, 并且有 `setuptools` 工具可以安装这些
 
 推荐的下面两个贴代码的网站:
 
-* http://pastebin.com
-* http://paste.ubuntu.org.cn
+* [http://pastebin.com](http://pastebin.com)
+* [http://paste.ubuntu.org.cn](http://paste.ubuntu.org.cn)
 
 # 关于工具
 ## 编辑器

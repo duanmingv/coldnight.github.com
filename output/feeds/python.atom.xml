@@ -10,7 +10,7 @@ Python 现在主流应该还是 Python 2.7, Python 2.7 将会是 Python 2.x 的�
 会支持到 2020 年. 但是 Python 3 也在健康发展, 会慢慢取代 Python 2.7 成为主流版本.&lt;/p&gt;
 &lt;h2&gt;选择版本&lt;/h2&gt;
 &lt;p&gt;在你要开始学习 Python 之前就是要确定要学习的版本,
-不管你是选择 2 还是 3, 虽然有差别, 但是不是很大, 等你熟悉了之后就可以触类旁通.
+不管你是选择 2 还是 3, 虽然有差别, 但不是很大, 等你熟悉了之后就可以触类旁通.
 不必太害怕选择了一个版本到时候无法兼顾另一个版本.&lt;/p&gt;
 &lt;p&gt;如果你无法确定要学习的版本,可以根据以下方法来确定要学习的版本.&lt;/p&gt;
 &lt;h3&gt;手上已有的教程&lt;/h3&gt;
@@ -34,7 +34,7 @@ Python 现在主流应该还是 Python 2.7, Python 2.7 将会是 Python 2.x 的�
 
 
 &lt;p&gt;在 Python 3 里 print 变成了一个 函数&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hello world&amp;quot;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Hello world&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -133,8 +133,8 @@ test 函数里文件的第 10 行的语句触发了 UnicodeDecodeError 异常.&l
 代码直接发出来不是很好的方式, 请尽量贴到支持代码高亮的网站上, 并保持缩进.&lt;/p&gt;
 &lt;p&gt;推荐的下面两个贴代码的网站:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;http://pastebin.com&lt;/li&gt;
-&lt;li&gt;http://paste.ubuntu.org.cn&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://pastebin.com"&gt;http://pastebin.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://paste.ubuntu.org.cn"&gt;http://paste.ubuntu.org.cn&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1&gt;关于工具&lt;/h1&gt;
 &lt;h2&gt;编辑器&lt;/h2&gt;
