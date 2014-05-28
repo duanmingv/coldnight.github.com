@@ -52,7 +52,7 @@ print 'Hello world!'
 
 在 Python 3 里 print 变成了一个 函数
 ```python
-print('Hello world');
+print('Hello world')
 ```
 
 ### 输入函数的改变
