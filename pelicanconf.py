@@ -52,7 +52,8 @@ LINKS = (('eleven', 'http://eleveni386.7axu.com'),
          (u'小邪兽_deepin', "http://neteue.com"),
          (u'Frantic1048', "http://frantic1048.com/"),
          (u"晓风'Blog", "http://www.dongxf.com/"),
-         (u"邪恶的二进制", "http://evilbinary.org/")
+         (u"邪恶的二进制", "http://evilbinary.org/"),
+         (u"城南往事", "http://www.cnwsjs.cn/"),
          )
 
 # Social widget
