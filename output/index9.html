@@ -48,8 +48,44 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h3 class="article-title">heartbeat实现MySQL双机高可用</h3></a>
+<h6 class="subheader" title="2012-02-12T17:01:00">日 12 二月 2012
+</h6>
+
+
+<p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
+<p>当我们的MySQL数据库故障或MySQL数据库服务器出现故障的时候我们希望有一个备用能自动代替主MySQL数据来完成当前的任务,当主MySQL服务器恢复故障的时候备用的能切换到备用等待下一次故障出现.这里我们就结合故障检测HA来实现.</p>
+<p>HA会定时发送心跳包检测主备服务器的健康状态,当主服务器出现故障时会自动将vip切换到备用服务器,由备用服务器执行主服务器的任务,MySQL要实现这样的功能就必须保证主备服务器的数据一致.这就要用到MySQL主从双机.
+<!--more-->
+本文使用环境:
+系统:CentOS 5.5 32位
+主MySQL: ip 192.168.3.101/24 主机名:master.org
+备用MySQL:192.168.3.102/24   主机名:slave.org
+vip:192.168.3.103/24
+MySQL:mysql-5.0.95.tar.gz
+heartbeat ...</!--more--></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用 </a>
+    <a href="http://www.linuxzen.com/tag/xin-tiao.html">心跳 </a>
+    <a href="http://www.linuxzen.com/tag/shuang-ji.html">双机 </a>
+    <a href="http://www.linuxzen.com/tag/vip.html">vip </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/heartbeat.html">heartbeat </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/nginxkeepalivedpei-zhi-gao-ke-yong-httpqun-ji.html"><h3 class="article-title">nginx+keepalived配置高可用HTTP群集</h3></a>
-<h6 class="subheader" title="2012-02-09T17:35:00">Thu 09 February 2012
+<h6 class="subheader" title="2012-02-09T17:35:00">四 09 二月 2012
 </h6>
 
 
@@ -88,7 +124,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/mysqlyou-hua-bi-ji.html"><h3 class="article-title">MySQL优化笔记</h3></a>
-<h6 class="subheader" title="2012-02-04T13:36:00">Sat 04 February 2012
+<h6 class="subheader" title="2012-02-04T13:36:00">六 04 二月 2012
 </h6>
 
 
@@ -128,7 +164,7 @@ __ Key _________________________________________________________________ ...</pr
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pxean-zhuang-zi-ji-ding-zhi-de-fa-xing-ban-kuai-su-bu-shu-xi-tong-huan-jing.html"><h3 class="article-title">用pxe安装自己定制的发行版快速部署系统环境</h3></a>
-<h6 class="subheader" title="2012-02-02T11:37:00">Thu 02 February 2012
+<h6 class="subheader" title="2012-02-02T11:37:00">四 02 二月 2012
 </h6>
 
 
@@ -168,7 +204,7 @@ __ Key _________________________________________________________________ ...</pr
 
             <article>
                 <a href="http://www.linuxzen.com/jiang-cfengineji-cheng-dao-zi-ji-ding-zhi-de-fa-xing-ban.html"><h3 class="article-title">将cfengine集成到自己定制的发行版</h3></a>
-<h6 class="subheader" title="2012-01-19T11:35:00">Thu 19 January 2012
+<h6 class="subheader" title="2012-01-19T11:35:00">四 19 一月 2012
 </h6>
 
 
@@ -213,7 +249,7 @@ openssl-devel
 
             <article>
                 <a href="http://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html"><h3 class="article-title">根据CentOS定制自己的发行版</h3></a>
-<h6 class="subheader" title="2012-01-18T11:13:00">Wed 18 January 2012
+<h6 class="subheader" title="2012-01-18T11:13:00">三 18 一月 2012
 </h6>
 
 
@@ -252,7 +288,7 @@ mount -o loop iso路径 /mnt
 
             <article>
                 <a href="http://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h3 class="article-title">安装配置cfengine实现自动化配置Linux/Unix服务器</h3></a>
-<h6 class="subheader" title="2012-01-17T23:06:00">Tue 17 January 2012
+<h6 class="subheader" title="2012-01-17T23:06:00">二 17 一月 2012
 </h6>
 
 
@@ -292,7 +328,7 @@ mount -o loop iso路径 /mnt
 
             <article>
                 <a href="http://www.linuxzen.com/linux-shelljiao-ben-diao-shi-ji-qiao.html"><h3 class="article-title">Linux shell脚本调试技巧</h3></a>
-<h6 class="subheader" title="2012-01-17T17:04:00">Tue 17 January 2012
+<h6 class="subheader" title="2012-01-17T17:04:00">二 17 一月 2012
 </h6>
 
 

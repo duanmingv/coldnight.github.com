@@ -48,8 +48,38 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h3 class="article-title">借用Tornado实现高效的WebQQ机器人</h3></a>
+<h6 class="subheader" title="2013-04-23T13:36:00">二 23 四月 2013
+</h6>
+
+
+<p>之前有写过一篇文章介绍使用<code>Pyxmpp2</code>桥接QQ和xmpp的文章(<a href="/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">这里</a>).后来我打算将WebQQ单独出来运行, 一开始直接拷贝了<code>pyxmpp2</code>的mainloop, 但是跑起来问题多多, 所以我又研究了利用<code>Tornado</code>进行网络编程(<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">这里</a>), 所以我放弃了<code>Pyxmpp2</code>的mainloop,使用<code>Tornado</code>进行重写</p>
+<p>首先放出<a href="https://github.com/coldnight/pual_bot">项目代码</a></p>
+<h2>引子</h2>
+<p>WebQQ协议是一套基于<code>HTTP</code>的QQ协议, 而用<code>Python</code>的<code>urllib2</code>库进行请求太慢, 因为HTTP本身就使用socket请求, 所以改用多路复用I/O模型, 而<code>Tornado</code>简单高效, 看过代码后可以轻松上手.平台兼容性很好, 所以选择<code>Tornado</code>作为网络框架.</p>
+<h2>原理</h2>
+<p>首先实现了一个 <code>HTTPStream</code>类, 其主要接口是<code>add_request</code>方法, 它接受一个必选参数:<code>request ...</code></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/gao-xiao.html">高效 </a>
+    <a href="http://www.linuxzen.com/tag/webqq.html">webqq </a>
+    <a href="http://www.linuxzen.com/tag/bing-fa.html">并发 </a>
+    <a href="http://www.linuxzen.com/tag/xie-yi.html">协议 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html"><h3 class="article-title">使用Pelican打造静态博客</h3></a>
-<h6 class="subheader" title="2013-04-18T09:40:00">Thu 18 April 2013
+<h6 class="subheader" title="2013-04-18T09:40:00">四 18 四月 2013
 </h6>
 
 
@@ -79,7 +109,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h3 class="article-title">使用Tornado进行网络异步编程</h3></a>
-<h6 class="subheader" title="2013-04-15T16:09:00">Mon 15 April 2013
+<h6 class="subheader" title="2013-04-15T16:09:00">一 15 四月 2013
 </h6>
 
 
@@ -113,7 +143,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html"><h3 class="article-title">使用WebQQ协议桥接XMPP和QQ群</h3></a>
-<h6 class="subheader" title="2013-03-14T16:09:00">Thu 14 March 2013
+<h6 class="subheader" title="2013-03-14T16:09:00">四 14 三月 2013
 </h6>
 
 
@@ -151,7 +181,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h3 class="article-title">使用Pelican博客静态生成系统</h3></a>
-<h6 class="subheader" title="2013-03-14T15:12:00">Thu 14 March 2013
+<h6 class="subheader" title="2013-03-14T15:12:00">四 14 三月 2013
 </h6>
 
 
@@ -183,8 +213,8 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
 
             <article>
-                <a href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h3 class="article-title">vLog 一个使用Python编写的轻量级博客系统</h3></a>
-<h6 class="subheader" title="2013-02-05T16:43:00">Tue 05 February 2013
+                <a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h3 class="article-title">vLog 一个使用Python编写的轻量级博客系统</h3></a>
+<h6 class="subheader" title="2013-02-05T16:43:00">二 05 二月 2013
 </h6>
 
 
@@ -213,7 +243,7 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
 
 
-<p><a href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">Read More</a>
+<p><a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
@@ -222,7 +252,7 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h3 class="article-title">使用更加高效的epoll作为pyxmpp2的主循环</h3></a>
-<h6 class="subheader" title="2013-02-05T16:06:00">Tue 05 February 2013
+<h6 class="subheader" title="2013-02-05T16:06:00">二 05 二月 2013
 </h6>
 
 
@@ -256,7 +286,7 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
             <article>
                 <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h3 class="article-title">Python 重复安装包报错</h3></a>
-<h6 class="subheader" title="2013-01-25T14:55:00">Fri 25 January 2013
+<h6 class="subheader" title="2013-01-25T14:55:00">五 25 一月 2013
 </h6>
 
 
@@ -287,7 +317,7 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
             <article>
                 <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h3 class="article-title">Linux 下使用Python截图自动分享</h3></a>
-<h6 class="subheader" title="2013-01-22T16:59:00">Tue 22 January 2013
+<h6 class="subheader" title="2013-01-22T16:59:00">二 22 一月 2013
 </h6>
 
 
@@ -325,7 +355,7 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
             <article>
                 <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h3 class="article-title">vLog使用Tornado框架结合memcached缓存页面</h3></a>
-<h6 class="subheader" title="2013-01-16T16:14:00">Wed 16 January 2013
+<h6 class="subheader" title="2013-01-16T16:14:00">三 16 一月 2013
 </h6>
 
 
@@ -354,45 +384,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h3 class="article-title">python 使用pyxmpp2编写gtalk群</h3></a>
-<h6 class="subheader" title="2012-10-29T14:48:00">Mon 29 October 2012
-</h6>
-
-
-<p>gtalk是一款google开发的基于xmpp协议的聊天软件,其优点就是协议开源,我们可以通过任何支持xmpp的客户端协议来链接gtalk,但是gtalk不支持群聊天,所以各路高手都会自己来开发一个机器人来支持群功能.</p>
-<p>其实主要原理就是机器人接收到消息后再将消息广播出去,从而达到群的效果.</p>
-<p>python有两个模块可以用来支持xmpp,分别是pyxmpp和pyxmpp2,之前也用pyxmpp写了一个,功能和兼容性不是很好,经常出现问题,所以又使用pyxmpp2重写了一遍,今天修复了一些bug,所以公布出来,大家可以下载测试,也可以加入我们使用gtalk进行群交流,</p>
-<p>我们的gtalk机器人是:<code>clubot@vim-cn.com</code></p>
-<p>喜欢gtalk,同时喜欢Linux/Python/Vim等爱好者的同学可以加进来交流</p>
-<p>如果对我们的代码比较感兴趣,可以访问github,我们将代码放在了github上:https://github.com/coldnight/clubot</p>
-<p>下面介绍一下安装:</p>
-<p>环境为:python 2.7, 因为有少量的shell所以系统需要Linux,也可稍作更改支持windows</p>
-<p>下载源码:</p>
-<div class="highlight"><pre>git clone git://github.com/coldnight/clubot.git
-</pre></div>
-
-
-<p>安装依赖 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/qun.html">群 </a>
-    <a href="http://www.linuxzen.com/tag/xmpp.html">xmpp </a>
-    <a href="http://www.linuxzen.com/tag/pyxmpp2.html">pyxmpp2 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/gtalk.html">gtalk </a>
-    <a href="http://www.linuxzen.com/tag/bot.html">bot </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

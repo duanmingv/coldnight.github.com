@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>解决一直崩溃的 Adobe Flash Player</title>
+    <title>Linux一些比较实用的小技巧</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -45,61 +45,94 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-flash-player.html" rel="bookmark"
-        title="Permalink to 解决一直崩溃的 Adobe Flash Player">解决一直崩溃的 Adobe Flash Player</a></h3>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="bookmark"
+        title="Permalink to Linux一些比较实用的小技巧">Linux一些比较实用的小技巧</a></h3>
     </header>
 
-<h6 class="subheader" title="2014-03-12T00:00:00">Wed 12 March 2014
+<h6 class="subheader" title="2012-02-20T11:30:00">一 20 二月 2012
 </h6>
 
 
-    <p>1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
-一打开视屏就 crash.  从那之后就一直用手机看视屏, 很别扭, 放着大屏不用一直盯着手机看看.
-今天下定决心找找原因. google 了一阵也没有啥结果, 所以我决定卸载现有的, 手动安装一个试试.</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">flashplugin</span>
+    <p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
+<h2>文件查找</h2>
+<p>找出最近修改的文件:</p>
+<div class="highlight"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
+find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
+find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
 </pre></div>
 
 
-<p>结果卸载的时候输出段信息:</p>
-<div class="highlight"><pre><span class="nl">warning:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span> <span class="n">saved</span> <span class="n">as</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">pacsave</span>
+<p>使用通配符查找文件</p>
+<div class="highlight"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
 </pre></div>
 
 
-<p>然后我看了下文件内容</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/adobe/mms.cfg.pacsave
-<span class="c">#Hardware video decoding</span>
-<span class="nv">EnableLinuxHWVideoDecode</span><span class="o">=</span>1
+<h2>文本替换</h2>
+<div class="highlight"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
 </pre></div>
 
 
-<p>瞬间觉得可能是这个选项引起的, 所以我又装上了 flashplugin</p>
-<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">flashplugin</span>
+<h2>显示指定行</h2>
+<div class="highlight"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
+sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行</span>
+sed -n <span class="s2">&quot;3p;5p&quot;</span> /etc/fstab    <span class="c"># 显示第3行和第5行</span>
+awk <span class="s1">&#39;NR==3&#39;</span> /etc/fstab     <span class="c"># 显示第3行</span>
 </pre></div>
 
 
-<p>同样看到一段信息</p>
-<div class="highlight"><pre> <span class="o">&gt;&gt;</span> 
- <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">have</span> <span class="n">an</span> <span class="n">NVIDIA</span> <span class="n">card</span> <span class="n">that</span> <span class="n">supports</span> <span class="n">libvdpau</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">Crystal</span> <span class="n">HD</span> <span class="n">chips</span><span class="p">,</span>
- <span class="o">&gt;&gt;</span> <span class="n">uncomment</span> <span class="n">EnableLinuxHWVideoDecode</span><span class="o">=</span><span class="mi">1</span> <span class="n">from</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span>
- <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">run</span> <span class="n">into</span> <span class="n">problems</span><span class="p">,</span> <span class="n">please</span> <span class="n">contact</span> <span class="n">nVidia</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">along</span> <span class="n">with</span> <span class="n">your</span> <span class="n">system</span> <span class="n">config</span> <span class="n">info</span> <span class="o">/</span> <span class="n">driver</span> <span class="n">version</span><span class="p">.</span>
- <span class="o">&gt;&gt;</span> 
-<span class="n">Optional</span> <span class="n">dependencies</span> <span class="k">for</span> <span class="n">flashplugin</span>
-    <span class="nl">libvdpau:</span> <span class="n">GPU</span> <span class="n">acceleration</span> <span class="n">on</span> <span class="n">Nvidia</span> <span class="n">card</span> <span class="p">[</span><span class="n">installed</span><span class="p">]</span>
+<h2>在行首或行尾添加:</h2>
+<div class="highlight"><pre>sed -e <span class="s1">&#39;s/^/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的行首添加hello</span>
+sed -e <span class="s1">&#39;s/$/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的行尾添加hello</span>
+sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的第3行行首添加hello</span>
 </pre></div>
 
 
-<p>然后我就知道了为什么会出现那个选项打开的情况了, 一开始安装 Archlinux 的时候我误以为我的显卡是 NVIDIA 的,
-然后就安装了 NVIDIA 的驱动, 后来仔细一看原来是集成的 Intel 显卡XD, 估计在一开始安装 flashplugin
-的时候自动开启了. 然后换了显卡驱动我也不清楚.现在看新的配置文件 EnableLinuxHWVIdeoDecode=1 是注释掉的.</p>
-<p>接下来就是验证喽, 打开一个视屏, 果然不 crash 了.</p>
-<p>然后开启这个选项, 果然预料中的接着 crash.</p>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+<h2>在vi里执行命令:</h2>
+<div class="highlight"><pre>vi /etc/sysconfig/networ-scripts/ifcfg-eth0
+<span class="c"># 打开vi,在末行模式下(ESC-&amp;gt;:)</span>
+
+:r!cat /mnt/ip.txt           <span class="c"># 在当前行的下面输入ip.txt的内容,r代表命令输出放到下一行,!后面是要执行的命令</span>
+:.!cat /mnt/ip.txt           <span class="c"># 在当前行输入ip.txt的内容,.代表将命令输出放到当前航</span>
+</pre></div>
+
+
+<h2>执行上一条命令:</h2>
+<p>如果刚执行了一条server network restart,如果又做了一些操作,需要再次执行,按上键调处可以,还有更快捷的就是:</p>
+<div class="highlight"><pre>!ser
+</pre></div>
+
+
+<p>!会在命令历史找与!后面匹配的最近一条命令.</p>
+<h2>通过ssh连接服务器上传下载文件:</h2>
+<p>当你通过ssh连接你的Linux的时候你想下载一个文件到本地,或者像把本地文件上传到远端,你想到用ftp吗?out了,当你通过ssh连接的时候Linux提供了两个命令 rz/sz,命令依赖于包lrzsz.rz命令可以将本地文件通过ssh上传到Linux上,sz pkg 可以将远端的pkg下载到本地.</p>
+<div class="highlight"><pre>yum -y install lrzsz           <span class="c"># 安装</span>
+</pre></div>
+
+
+<p>然后就可以通过rz/sz来上传下载文件,省去了文件服务器,也可更方便更快捷的管理你的服务器</p>
+<h2>windows文件转换为Linux格式的文件</h2>
+<p>windows的文件格式比Linux格式的文件多了一个回车符\r,可以通过命令来实现转换:
+直接转换,dos2unix依赖于包dos2unix:</p>
+<div class="highlight"><pre>dos2unix file.txt     <span class="c"># 需要安装dos2unix包</span>
+</pre></div>
+
+
+<p>通过删除\r来实现转换:</p>
+<div class="highlight"><pre>tr -d <span class="s1">&#39;\r&#39;</span> file.txt &amp;gt;&amp;gt; file1.txt   <span class="c"># 通过tr命令删除\r字符,并重定向追加到file1.txt</span>
+</pre></div>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
 
     Tagged: 
-    <a href="http://www.linuxzen.com/tag/archlinux.html">archlinux </a>
-    <a href="http://www.linuxzen.com/tag/flash-player.html">flash player </a>
-    <a href="http://www.linuxzen.com/tag/crash.html">crash </a>
-    <a href="http://www.linuxzen.com/tag/jie-jue.html">解决 </a>
+    <a href="http://www.linuxzen.com/tag/ming-ling.html">命令 </a>
+    <a href="http://www.linuxzen.com/tag/sz.html">sz </a>
+    <a href="http://www.linuxzen.com/tag/sshshang-chuan-xia-zai.html">ssh上传下载 </a>
+    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
+    <a href="http://www.linuxzen.com/tag/sed.html">sed </a>
+    <a href="http://www.linuxzen.com/tag/rz.html">rz </a>
+    <a href="http://www.linuxzen.com/tag/lrzsz.html">lrzsz </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/find.html">find </a>
+    <a href="http://www.linuxzen.com/tag/awk.html">awk </a>
 </p>
 
 
@@ -109,8 +142,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'linuxzen'
-        var disqus_identifier = "解决一直崩溃的 Adobe Flash Player";
-        var disqus_url = "http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-flash-player.html";
+        var disqus_identifier = "Linux一些比较实用的小技巧";
+        var disqus_url = "http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html";
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

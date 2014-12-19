@@ -48,8 +48,51 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html"><h3 class="article-title">Linux下配置vim一键编译C/C++并执行</h3></a>
+<h6 class="subheader" title="2012-04-05T12:07:00">四 05 四月 2012
+</h6>
+
+
+<p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
+<p>首先在/usr/bin/下创建compile脚本:</p>
+<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
+</pre></div>
+
+
+<p>添加如下内容:</p>
+<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Filename : compile</span>
+<span class="c"># Describe : To compile c/c++</span>
+<span class="c"># Author   : cold night(www.linuxzen.com)</span>
+<span class="c"># Version  : 0.2</span>
+<span class="c"># Change   : 增加终端着色 </span>
+
+clear
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
+<span class="k">then</span>
+<span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
+    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/bian-yi.html">编译 </a>
+    <a href="http://www.linuxzen.com/tag/yi-jian.html">一键 </a>
+    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/cc.html">C/C++ </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-cactigou-jian-jian-kong-xi-tong.html"><h3 class="article-title">使用cacti构建监控系统</h3></a>
-<h6 class="subheader" title="2012-03-14T14:02:00">Wed 14 March 2012
+<h6 class="subheader" title="2012-03-14T14:02:00">三 14 三月 2012
 </h6>
 
 
@@ -84,7 +127,7 @@ server:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-si-lnmpda-jian-yuan-ma-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(四)——lnmp搭建(源码安装)</h3></a>
-<h6 class="subheader" title="2012-03-13T13:13:00">Tue 13 March 2012
+<h6 class="subheader" title="2012-03-13T13:13:00">二 13 三月 2012
 </h6>
 
 
@@ -117,7 +160,7 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
             <article>
                 <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-san-ying-yong-an-zhuang-yumpei-zhi-he-bao-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(三)——应用安装(yum配置和包安装)</h3></a>
-<h6 class="subheader" title="2012-03-13T10:06:00">Tue 13 March 2012
+<h6 class="subheader" title="2012-03-13T10:06:00">二 13 三月 2012
 </h6>
 
 
@@ -160,7 +203,7 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
             <article>
                 <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-er-xi-tong-pei-zhi-shi-xian-xu-ni-ji-shang-wang-ssh.html"><h3 class="article-title">lnmp环境搭建完全手册(二)——系统配置(实现虚拟机上网/ssh/)</h3></a>
-<h6 class="subheader" title="2012-03-10T11:31:00">Sat 10 March 2012
+<h6 class="subheader" title="2012-03-10T11:31:00">六 10 三月 2012
 </h6>
 
 
@@ -196,8 +239,8 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
 
             <article>
-                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(一)------系统安装</h3></a>
-<h6 class="subheader" title="2012-03-08T12:05:00">Thu 08 March 2012
+                <a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html"><h3 class="article-title">lnmp环境搭建完全手册(一)------系统安装</h3></a>
+<h6 class="subheader" title="2012-03-08T12:05:00">四 08 三月 2012
 </h6>
 
 
@@ -219,7 +262,7 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
 
 
-<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html">Read More</a>
+<p><a href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
@@ -228,7 +271,7 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
             <article>
                 <a href="http://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h3 class="article-title">nginx平台搭建nagios监控系统</h3></a>
-<h6 class="subheader" title="2012-02-26T10:48:00">Sun 26 February 2012
+<h6 class="subheader" title="2012-02-26T10:48:00">日 26 二月 2012
 </h6>
 
 
@@ -273,7 +316,7 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="http://
 
             <article>
                 <a href="http://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h3 class="article-title">搭建ntop监测局域网内流量</h3></a>
-<h6 class="subheader" title="2012-02-20T17:37:00">Mon 20 February 2012
+<h6 class="subheader" title="2012-02-20T17:37:00">一 20 二月 2012
 </h6>
 
 
@@ -308,8 +351,8 @@ wget http://oss.oetiker.ch ...</pre></div><p class="subheader">Category: <a href
 
 
             <article>
-                <a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h3 class="article-title">Linux一些比较实用的小技巧</h3></a>
-<h6 class="subheader" title="2012-02-20T11:30:00">Mon 20 February 2012
+                <a href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html"><h3 class="article-title">Linux一些比较实用的小技巧</h3></a>
+<h6 class="subheader" title="2012-02-20T11:30:00">一 20 二月 2012
 </h6>
 
 
@@ -351,7 +394,7 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
 
 
 
-<p><a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">Read More</a>
+<p><a href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
@@ -360,7 +403,7 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
 
             <article>
                 <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h3 class="article-title">编写Linux shell脚本来实现nginx日志分割</h3></a>
-<h6 class="subheader" title="2012-02-17T10:27:00">Fri 17 February 2012
+<h6 class="subheader" title="2012-02-17T10:27:00">五 17 二月 2012
 </h6>
 
 
@@ -385,42 +428,6 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
 
 
 <p><a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html"><h3 class="article-title">heartbeat实现MySQL双机高可用</h3></a>
-<h6 class="subheader" title="2012-02-12T17:01:00">Sun 12 February 2012
-</h6>
-
-
-<p>对于一个网站或一个企业最重要的无疑就是数据,那么数据库的数据安全无疑就更加重要,所以我们必须保证数据库的数据完整,这里就介绍使用heartbeat来实现MySQL双机高可用.</p>
-<p>当我们的MySQL数据库故障或MySQL数据库服务器出现故障的时候我们希望有一个备用能自动代替主MySQL数据来完成当前的任务,当主MySQL服务器恢复故障的时候备用的能切换到备用等待下一次故障出现.这里我们就结合故障检测HA来实现.</p>
-<p>HA会定时发送心跳包检测主备服务器的健康状态,当主服务器出现故障时会自动将vip切换到备用服务器,由备用服务器执行主服务器的任务,MySQL要实现这样的功能就必须保证主备服务器的数据一致.这就要用到MySQL主从双机.
-<!--more-->
-本文使用环境:
-系统:CentOS 5.5 32位
-主MySQL: ip 192.168.3.101/24 主机名:master.org
-备用MySQL:192.168.3.102/24   主机名:slave.org
-vip:192.168.3.103/24
-MySQL:mysql-5.0.95.tar.gz
-heartbeat ...</!--more--></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/mysql.html">MySQL</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/gao-ke-yong.html">高可用 </a>
-    <a href="http://www.linuxzen.com/tag/xin-tiao.html">心跳 </a>
-    <a href="http://www.linuxzen.com/tag/shuang-ji.html">双机 </a>
-    <a href="http://www.linuxzen.com/tag/vip.html">vip </a>
-    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
-    <a href="http://www.linuxzen.com/tag/heartbeat.html">heartbeat </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/heartbeatshi-xian-mysqlshuang-ji-gao-ke-yong.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

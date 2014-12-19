@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>部署Tornado时iptables引发的的一个问题</title>
+    <title>解决一直崩溃的 Adobe Flash Player</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -45,50 +45,61 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html" rel="bookmark"
-        title="Permalink to 部署Tornado时iptables引发的的一个问题">部署Tornado时iptables引发的的一个问题</a></h3>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/jie-jue-yi-zhi-beng-kui-de-adobe-flash-player.html" rel="bookmark"
+        title="Permalink to 解决一直崩溃的 Adobe Flash Player">解决一直崩溃的 Adobe Flash Player</a></h3>
     </header>
 
-<h6 class="subheader" title="2012-09-29T19:11:00">Sat 29 September 2012
+<h6 class="subheader" title="2014-03-12T00:00:00">三 12 三月 2014
 </h6>
 
 
-    <p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
-<p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
-<div class="highlight"><pre><span class="k">server</span> <span class="p">{</span>
-    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
-    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
-
-    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
-        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
-        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
-        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    <p>1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
+一打开视屏就 crash.  从那之后就一直用手机看视屏, 很别扭, 放着大屏不用一直盯着手机看看.
+今天下定决心找找原因. google 了一阵也没有啥结果, 所以我决定卸载现有的, 手动安装一个试试.</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">R</span> <span class="n">flashplugin</span>
 </pre></div>
 
 
-<p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
-<div class="highlight"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+<p>结果卸载的时候输出段信息:</p>
+<div class="highlight"><pre><span class="nl">warning:</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span> <span class="n">saved</span> <span class="n">as</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span><span class="n">pacsave</span>
 </pre></div>
 
 
-<p>但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条</p>
-<div class="highlight"><pre>iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+<p>然后我看了下文件内容</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/adobe/mms.cfg.pacsave
+<span class="c">#Hardware video decoding</span>
+<span class="nv">EnableLinuxHWVideoDecode</span><span class="o">=</span>1
 </pre></div>
 
 
-<p>至此,通过nginx才能正常访问tornado</p>
+<p>瞬间觉得可能是这个选项引起的, 所以我又装上了 flashplugin</p>
+<div class="highlight"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">flashplugin</span>
+</pre></div>
+
+
+<p>同样看到一段信息</p>
+<div class="highlight"><pre> <span class="o">&gt;&gt;</span> 
+ <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">have</span> <span class="n">an</span> <span class="n">NVIDIA</span> <span class="n">card</span> <span class="n">that</span> <span class="n">supports</span> <span class="n">libvdpau</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">Crystal</span> <span class="n">HD</span> <span class="n">chips</span><span class="p">,</span>
+ <span class="o">&gt;&gt;</span> <span class="n">uncomment</span> <span class="n">EnableLinuxHWVideoDecode</span><span class="o">=</span><span class="mi">1</span> <span class="n">from</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">adobe</span><span class="o">/</span><span class="n">mms</span><span class="p">.</span><span class="n">cfg</span><span class="p">.</span>
+ <span class="o">&gt;&gt;</span> <span class="n">If</span> <span class="n">you</span> <span class="n">run</span> <span class="n">into</span> <span class="n">problems</span><span class="p">,</span> <span class="n">please</span> <span class="n">contact</span> <span class="n">nVidia</span> <span class="n">or</span> <span class="n">Broadcom</span> <span class="n">along</span> <span class="n">with</span> <span class="n">your</span> <span class="n">system</span> <span class="n">config</span> <span class="n">info</span> <span class="o">/</span> <span class="n">driver</span> <span class="n">version</span><span class="p">.</span>
+ <span class="o">&gt;&gt;</span> 
+<span class="n">Optional</span> <span class="n">dependencies</span> <span class="k">for</span> <span class="n">flashplugin</span>
+    <span class="nl">libvdpau:</span> <span class="n">GPU</span> <span class="n">acceleration</span> <span class="n">on</span> <span class="n">Nvidia</span> <span class="n">card</span> <span class="p">[</span><span class="n">installed</span><span class="p">]</span>
+</pre></div>
+
+
+<p>然后我就知道了为什么会出现那个选项打开的情况了, 一开始安装 Archlinux 的时候我误以为我的显卡是 NVIDIA 的,
+然后就安装了 NVIDIA 的驱动, 后来仔细一看原来是集成的 Intel 显卡XD, 估计在一开始安装 flashplugin
+的时候自动开启了. 然后换了显卡驱动我也不清楚.现在看新的配置文件 EnableLinuxHWVIdeoDecode=1 是注释掉的.</p>
+<p>接下来就是验证喽, 打开一个视屏, 果然不 crash 了.</p>
+<p>然后开启这个选项, 果然预料中的接着 crash.</p>
 <p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
     Tagged: 
-    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
-    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
-    <a href="http://www.linuxzen.com/tag/iptables.html">iptables </a>
-    <a href="http://www.linuxzen.com/tag/bad-gateway.html">bad gateway </a>
-    <a href="http://www.linuxzen.com/tag/502.html">502 </a>
+    <a href="http://www.linuxzen.com/tag/archlinux.html">archlinux </a>
+    <a href="http://www.linuxzen.com/tag/flash-player.html">flash player </a>
+    <a href="http://www.linuxzen.com/tag/crash.html">crash </a>
+    <a href="http://www.linuxzen.com/tag/jie-jue.html">解决 </a>
 </p>
 
 
@@ -98,8 +109,8 @@
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'linuxzen'
-        var disqus_identifier = "部署Tornado时iptables引发的的一个问题";
-        var disqus_url = "http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html";
+        var disqus_identifier = "解决一直崩溃的 Adobe Flash Player";
+        var disqus_url = "http://www.linuxzen.com/jie-jue-yi-zhi-beng-kui-de-adobe-flash-player.html";
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

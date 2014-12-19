@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>cold's world - coroutine</title>
+
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+        
+        
+
+            <article>
+                <a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html"><h3 class="article-title">基于 Python 生成器的 Tornado 协程异步</h3></a>
+<h6 class="subheader" title="2014-10-19T21:59:00">日 19 十月 2014
+</h6>
+
+
+<p><a href="http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html">Tornado 4.0</a> 已经发布了很长一段时间了,
+新版本广泛的应用了协程(<code>Future</code>)特性.  我们目前已经将 Tornado 升级到最新版本, 而且也大量的使用协程特性. </p>
+<p>很长时间没有更新博客, 今天就简单介绍下 Tornado 协程实现原理, Tornado 的协程是基于 Python 的生成器实现的, 
+所以首先来回顾下生成器.</p>
+<h2>生成器</h2>
+<p>Python 的生成器可以保存执行状态 并在下次调用的时候恢复, 通过在函数体内使用 <code>yield</code> 关键字
+来创建一个生成器, 通过内置函数 <code>next</code> 或生成器的 <code>next</code> 方法来恢复生成器的状态. </p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>我们调用 <code>test</code> 函数, 此时并不会返回结果, 而是会返回一个生成器</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">test</span> <span class="n">at</span> <span class="mh">0x100b3b320</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>我们调用其 <code>next</code> 方法则返回 <code>yield</code> 关键字之后的内容.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+
+
+<p>如果我们接着调用  <code>next</code> 方法, 后面又没有 <code>yield</code> 关键字继续返回的话, 会抛出一个
+<code>StopIteration</code> 异常.</p>
+<p><code>yield</code> 关键字不仅仅能从生成器内部返回状态, 同时也可以将外部信息传递到生成器内部,
+通过将 <code>yeild</code> 关键里赋值给变量, 并调用生成器的 <code>send</code> 方法来将对象传递到生成器
+内部. 需要注意的是生成器的开始必须调用其 <code>next</code> 方法, 后面 <code>send</code> 方法调用的同时
+也会触发 <code>next</code> 动作. 如果没有变量接收 <code>yield</code> 关键字那么 <code>send</code> 传递的值将会
+被丢弃.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="k">yield</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+
+<p>首先调用 <code>next</code> 上面函数返回的生成器将返回 <code>None</code>, 如果这时候直接调用 <code>next</code> 将
+会给生成器发送 <code>None</code>, 如果调用 <code>send</code> 发送一个值, 将打印这个值并抛出 <code>StopIteration</code>
+异常.</p>
+<h2>一个简单地协程</h2>
+<p>以上就是实现协程的所有基础, 为了加深理解, 我们这里写一个小例子, 例子我们只使用协程
+开启两个甚至多个死循环, 下面就是一个极其简单地例子::</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span>
+
+
+<span class="k">def</span> <span class="nf">loop1</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; 循环1负责抛出一个函数和对应的参数, 并接收结果</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="k">yield</span> <span class="nb">sum</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">ret</span><span class="p">]</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="p">,</span> <span class="n">a</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loop1 ret&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">loop2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; 循环2 负责接收函数并计算结果, 然后 yield 出结果</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">func</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="k">yield</span>
+        <span class="k">yield</span> <span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loop2&quot;</span><span class="p">)</span>
+
+
+<span class="n">l1</span> <span class="o">=</span> <span class="n">loop1</span><span class="p">()</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">loop2</span><span class="p">()</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">l2</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+</pre></div>
+
+
+<p>上面例子里 loop1 负责产生任务, loop2 负责执行任务, 主循环负责调度任务并将任务结果发回给
+任务产生者.</p>
+<h2>Tornado 如何做的</h2>
+<p>我们首先看一个使用 Tornado 协程异步的例子</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span>
+
+<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">gen</span>
+<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">web</span>
+<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">httpclient</span>
+
+
+<span class="k">class</span> <span class="nc">ActionHandler</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+
+    <span class="nd">@gen.coroutine</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">httpclient</span><span class="o">.</span><span class="n">AsyncHTTPClient</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">)</span>
+
+        <span class="c"># ...</span>
+</pre></div>
+
+
+<p>其实原理在上面简单地例子里已经讲清楚了, 我们来简单分析一遍上面的例子, 首先 Tornado 得到
+<code>ActionHandler.get</code> 方法抛出(<code>next</code>)的一个任务, 然后异步的去执行任务, 当任务(网络请求)结束或
+异常时 Tornado 取得事件通知然后将结果放回(<code>send</code>)到该方法中让该方法继续执行.</p>
+<p>由于是异步的, 调用这个方法并不会阻塞其他任务执行.</p>
+<p>这时候我们的方法其实就是上个例子 <code>loop1</code> 函数, 而 <code>Tornado</code> 调度并执行了其抛出的任务.</p>
+<h2>总结</h2>
+<p>Tornado 的协程异步可以让异步看起来是顺序执行的, 可以从一大串的 <code>callback</code> 中解脱出来.</p>
+<p><code>Tornado</code> 的协程异步并不是这三言两语能说清楚的, 其中有很复杂的封装和传递, 有兴趣可以自己
+阅读源码.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/generator.html">generator </a>
+    <a href="http://www.linuxzen.com/tag/coroutine.html">coroutine </a>
+    <a href="http://www.linuxzen.com/tag/xie-cheng.html">协程 </a>
+    <a href="http://www.linuxzen.com/tag/sheng-cheng-qi.html">生成器 </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">Tornado </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html#disqus_thread">comments</a></p>            </article>
+
+<div class="pagination-centered">
+<h6 class="subheader">Page 1 of 1</h6>
+
+<p>
+
+</p>
+</div>
+
+
+
+            <!-- /#posts-list -->
+
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            <li><a href="http://evilbinary.org/">邪恶的二进制</a></li>
+            <li><a href="http://www.cnwsjs.cn/">城南往事</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_3767683'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/stat.php%3Fid%3D3767683%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+</html>

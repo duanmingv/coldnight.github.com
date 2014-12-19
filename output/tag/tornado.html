@@ -47,8 +47,149 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html"><h3 class="article-title">基于 Python 生成器的 Tornado 协程异步</h3></a>
+<h6 class="subheader" title="2014-10-19T21:59:00">日 19 十月 2014
+</h6>
+
+
+<p><a href="http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html">Tornado 4.0</a> 已经发布了很长一段时间了,
+新版本广泛的应用了协程(<code>Future</code>)特性.  我们目前已经将 Tornado 升级到最新版本, 而且也大量的使用协程特性. </p>
+<p>很长时间没有更新博客, 今天就简单介绍下 Tornado 协程实现原理, Tornado 的协程是基于 Python 的生成器实现的, 
+所以首先来回顾下生成器.</p>
+<h2>生成器</h2>
+<p>Python 的生成器可以保存执行状态 并在下次调用的时候恢复, 通过在函数体内使用 <code>yield</code> 关键字
+来创建一个生成器, 通过内置函数 <code>next</code> 或生成器的 <code>next</code> 方法来恢复生成器的状态. </p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>我们调用 <code>test</code> 函数, 此时并不会返回结果, 而是会返回一个生成器</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">generator</span> <span class="nb">object</span> <span class="n">test</span> <span class="n">at</span> <span class="mh">0x100b3b320</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>我们调用其 <code>next</code> 方法则返回 <code>yield</code> 关键字之后的内容.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="mi">1</span>
+</pre></div>
+
+
+<p>如果我们接着调用  <code>next</code> 方法, 后面又没有 <code>yield</code> 关键字继续返回的话, 会抛出一个
+<code>StopIteration</code> 异常.</p>
+<p><code>yield</code> 关键字不仅仅能从生成器内部返回状态, 同时也可以将外部信息传递到生成器内部,
+通过将 <code>yeild</code> 关键里赋值给变量, 并调用生成器的 <code>send</code> 方法来将对象传递到生成器
+内部. 需要注意的是生成器的开始必须调用其 <code>next</code> 方法, 后面 <code>send</code> 方法调用的同时
+也会触发 <code>next</code> 动作. 如果没有变量接收 <code>yield</code> 关键字那么 <code>send</code> 传递的值将会
+被丢弃.</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="k">yield</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+
+
+<p>首先调用 <code>next</code> 上面函数返回的生成器将返回 <code>None</code>, 如果这时候直接调用 <code>next</code> 将
+会给生成器发送 <code>None</code>, 如果调用 <code>send</code> 发送一个值, 将打印这个值并抛出 <code>StopIteration</code>
+异常.</p>
+<h2>一个简单地协程</h2>
+<p>以上就是实现协程的所有基础, 为了加深理解, 我们这里写一个小例子, 例子我们只使用协程
+开启两个甚至多个死循环, 下面就是一个极其简单地例子::</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span>
+
+
+<span class="k">def</span> <span class="nf">loop1</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; 循环1负责抛出一个函数和对应的参数, 并接收结果</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="k">yield</span> <span class="nb">sum</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">ret</span><span class="p">]</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="p">,</span> <span class="n">a</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loop1 ret&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">loop2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; 循环2 负责接收函数并计算结果, 然后 yield 出结果</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">func</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="k">yield</span>
+        <span class="k">yield</span> <span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loop2&quot;</span><span class="p">)</span>
+
+
+<span class="n">l1</span> <span class="o">=</span> <span class="n">loop1</span><span class="p">()</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">loop2</span><span class="p">()</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">l2</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+</pre></div>
+
+
+<p>上面例子里 loop1 负责产生任务, loop2 负责执行任务, 主循环负责调度任务并将任务结果发回给
+任务产生者.</p>
+<h2>Tornado 如何做的</h2>
+<p>我们首先看一个使用 Tornado 协程异步的例子</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span>
+
+<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">gen</span>
+<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">web</span>
+<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">httpclient</span>
+
+
+<span class="k">class</span> <span class="nc">ActionHandler</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+
+    <span class="nd">@gen.coroutine</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">httpclient</span><span class="o">.</span><span class="n">AsyncHTTPClient</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">)</span>
+
+        <span class="c"># ...</span>
+</pre></div>
+
+
+<p>其实原理在上面简单地例子里已经讲清楚了, 我们来简单分析一遍上面的例子, 首先 Tornado 得到
+<code>ActionHandler.get</code> 方法抛出(<code>next</code>)的一个任务, 然后异步的去执行任务, 当任务(网络请求)结束或
+异常时 Tornado 取得事件通知然后将结果放回(<code>send</code>)到该方法中让该方法继续执行.</p>
+<p>由于是异步的, 调用这个方法并不会阻塞其他任务执行.</p>
+<p>这时候我们的方法其实就是上个例子 <code>loop1</code> 函数, 而 <code>Tornado</code> 调度并执行了其抛出的任务.</p>
+<h2>总结</h2>
+<p>Tornado 的协程异步可以让异步看起来是顺序执行的, 可以从一大串的 <code>callback</code> 中解脱出来.</p>
+<p><code>Tornado</code> 的协程异步并不是这三言两语能说清楚的, 其中有很复杂的封装和传递, 有兴趣可以自己
+阅读源码.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/generator.html">generator </a>
+    <a href="http://www.linuxzen.com/tag/coroutine.html">coroutine </a>
+    <a href="http://www.linuxzen.com/tag/xie-cheng.html">协程 </a>
+    <a href="http://www.linuxzen.com/tag/sheng-cheng-qi.html">生成器 </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">Tornado </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html"><h3 class="article-title">Tornado 多进程实现分析</h3></a>
-<h6 class="subheader" title="2014-04-11T14:35:00">Fri 11 April 2014
+<h6 class="subheader" title="2014-04-11T14:35:00">五 11 四月 2014
 </h6>
 
 
@@ -74,92 +215,7 @@
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">web</span><span class="o">.</span><span class="n">Application</span><span class="p">(([</span><span class="s">r&#39;/&#39;</span><span class="p">,</span> <span class="n">LongHandler</span><span class="p">],</span> <span class="p">))</span>
-    <span class="n">sockets</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">netutil</span><span class="o">.</span><span class="n">bind_sockets</span><span class="p">(</span><span class="mi">8090</span><span class="p">)</span>
-    <span class="n">tornado</span><span class="o">.</span><span class="n">process</span><span class="o">.</span><span class="n">fork_processes</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-    <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
-    <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<p>上面代码使用 <code>tornado.process.fork_processes</code> 创建了2个子进程, 同时用时访问这个
-服务两次,  分别会返回两个相邻的pid. 可以看到 tornado 确实使用了两个进程来同时完成任务.</p>
-<p>我一直很好奇 tornado 是如何将请求调度到子进程, 多个子进程又如何不同时处理一个请求呢?</p>
-<h2>探究</h2>
-<p>我们首先是调用 <code>tornado.netutil.bind_sockets</code> 来创建一个 socket(或一个 socket 列表),</p>
-<p>接着我们调用 <code>tornado.process.fork_processes</code> 来 fork 子进程, 
-阅读此函数的代码会发现这个函数仅仅是创建子进程, 然后主进程负责等待子进程, 如果子进
-程退出则会根据条件重启子进程, 如果子进程全部退出并不符合重启条件,则主进程退出.</p>
-<p>调用这个函数之后, 子进程中函数会返回, 子进程则继续执行调用这个函数之后的代码.</p>
-<p>我们在 fork 子进程后做了如下操作.</p>
-<div class="highlight"><pre>    <span class="n">server</span> <span class="o">=</span> <span class="n">tornado</span><span class="o">.</span><span class="n">httpserver</span><span class="o">.</span><span class="n">HTTPServer</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
-    <span class="n">server</span><span class="o">.</span><span class="n">add_sockets</span><span class="p">(</span><span class="n">sockets</span><span class="p">)</span>
-    <span class="n">tornado</span><span class="o">.</span><span class="n">ioloop</span><span class="o">.</span><span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-</pre></div>
-
-
-<p>我们先看看 <code>tornado.httpserver.HTTPServer.add_sockets</code> 发现<code>HTTPServer</code>是继承的
-<code>tornado.netutil.TCPServer</code>, add_sockets 也是实现在 <code>TCPServer</code> 中</p>
-<p><code>tornado.netutil.TCPServer.add_sockets</code></p>
-<div class="highlight"><pre>    <span class="k">def</span> <span class="nf">add_sockets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sockets</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
-
-        <span class="k">for</span> <span class="n">sock</span> <span class="ow">in</span> <span class="n">sockets</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sockets</span><span class="p">[</span><span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">()]</span> <span class="o">=</span> <span class="n">sock</span>
-            <span class="n">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_connection</span><span class="p">,</span>
-                               <span class="n">io_loop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">io_loop</span><span class="p">)</span>
-</pre></div>
-
-
-<p>主要是映射了下 socket 和 socket 对应的文件描述符, 我们看看它调用的
-<code>add_accept_handler</code></p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">add_accept_handler</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">io_loop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">io_loop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">io_loop</span> <span class="o">=</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">accept_handler</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">events</span><span class="p">):</span>
-        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">connection</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span><span class="p">):</span>
-                    <span class="k">return</span>
-                <span class="k">raise</span>
-            <span class="n">callback</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-    <span class="n">io_loop</span><span class="o">.</span><span class="n">add_handler</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">accept_handler</span><span class="p">,</span> <span class="n">IOLoop</span><span class="o">.</span><span class="n">READ</span><span class="p">)</span>
-</pre></div>
-
-
-<p>我们知道 <strong>I/O多路复用</strong> 在处理服务端 socket 时, 当有连接请求过来时, 会触发
-可读的事件, 此函数将 socket 在主事件循环中注册读事件(IOLoop.READ), 它的回调
-会创建连接, 我注意到回调里的异常捕获有这样几行</p>
-<div class="highlight"><pre>                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">errno</span><span class="o">.</span><span class="n">EWOULDBLOCK</span><span class="p">,</span> <span class="n">errno</span><span class="o">.</span><span class="n">EAGAIN</span><span class="p">):</span>
-                    <span class="k">return</span>
-                <span class="k">raise</span>
-</pre></div>
-
-
-<p>发现在创建连接的时候会跳过这个异常呢, 为什么?那么 <code>EWOULDBLOCK</code> 和 <code>EAGAIN</code> 是是什么呢?
-通过查找知道它的意思是在非阻塞模式下, 不需要重读或重写, <code>EAGAIN</code> 是 <code>EWOULDBLOCK</code> 在
-Windows 上的名字, 所以看到这里就很明确了.</p>
-<h2>结论</h2>
-<p>Tornado 多进程的处理流程是先创建 socket, 然后再 fork 子进程, 这样所有的子进程实际都监听
-一个(或多个)文件描述符, 也就是都在监听同样的 socket.</p>
-<p>当连接过来所有的子进程都会收到可读事件, 这时候所有的子进程都会跳到 <code>accept_handler</code>
-回调函数, 尝试建立连接.</p>
-<p>一旦其中一个子进程成功的建立了连接, 当其他子进程再尝试建立这个连接的时候就会触发
-<code>EWOULDBLOCK</code>(或 EAGAIN) 错误. 这时候回调函数判断是这个错误则返回函数不做处理.</p>
-<p>当成功建立连接的子进程还在处理这个连接的时候又过来一个连接, 这时候就会有另外一个
-子进程接手这个连接.</p>
-<p>Tornado 就是通过这样一种机制, 利用多进程提升效率, 由于连接只能由一个子进程成功创建,
-同一个请求也就不会被多个子进程处理.</p>
-<h2>后记</h2>
-<p>写完才发现, 我所使用的代码是 tornado-2.4.post2 版本, 当前最新代码是 3.3.0, 
-查看了下最新代码, 最新代码<code>TCPServer</code> 写到单独 <code>tornado.tcpserver</code> 里了, 其他和本文
-相关的并没有什么大的变化.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+<span class="k">if</span> <span class="n">__name__ ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/python.html">Python </a>
@@ -173,18 +229,16 @@ Windows 上的名字, 所以看到这里就很明确了.</p>
 
 
 
-<p><a href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/tornado-duo-jin-cheng-shi-xian-fen-xi.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
 
             <article>
-                <a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h3 class="article-title">发布一个基于Tornado的高效异步的HTTP客户端库</h3></a>
-<h6 class="subheader" title="2013-08-01T10:46:00">Thu 01 August 2013
+                <a href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h3 class="article-title">发布一个基于Tornado的高效异步的HTTP客户端库</h3></a>
+<h6 class="subheader" title="2013-08-01T10:46:00">四 01 八月 2013
 </h6>
 
 
@@ -219,7 +273,7 @@ python setup.py install
 
 
 
-<p><a href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">Read More</a>
+<p><a href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
@@ -228,7 +282,7 @@ python setup.py install
 
             <article>
                 <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h3 class="article-title">clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h3></a>
-<h6 class="subheader" title="2013-04-26T15:40:00">Fri 26 April 2013
+<h6 class="subheader" title="2013-04-26T15:40:00">五 26 四月 2013
 </h6>
 
 
@@ -271,7 +325,7 @@ python setup.py install
 
             <article>
                 <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h3 class="article-title">借用Tornado实现高效的WebQQ机器人</h3></a>
-<h6 class="subheader" title="2013-04-23T13:36:00">Tue 23 April 2013
+<h6 class="subheader" title="2013-04-23T13:36:00">二 23 四月 2013
 </h6>
 
 
@@ -301,7 +355,7 @@ python setup.py install
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"><h3 class="article-title">使用Tornado进行网络异步编程</h3></a>
-<h6 class="subheader" title="2013-04-15T16:09:00">Mon 15 April 2013
+<h6 class="subheader" title="2013-04-15T16:09:00">一 15 四月 2013
 </h6>
 
 
@@ -334,8 +388,8 @@ python setup.py install
 
 
             <article>
-                <a href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h3 class="article-title">vLog 一个使用Python编写的轻量级博客系统</h3></a>
-<h6 class="subheader" title="2013-02-05T16:43:00">Tue 05 February 2013
+                <a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h3 class="article-title">vLog 一个使用Python编写的轻量级博客系统</h3></a>
+<h6 class="subheader" title="2013-02-05T16:43:00">二 05 二月 2013
 </h6>
 
 
@@ -364,7 +418,7 @@ python setup.py install
 
 
 
-<p><a href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">Read More</a>
+<p><a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
@@ -372,8 +426,8 @@ python setup.py install
 
 
             <article>
-                <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h3 class="article-title">部署Tornado时iptables引发的的一个问题</h3></a>
-<h6 class="subheader" title="2012-09-29T19:11:00">Sat 29 September 2012
+                <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html"><h3 class="article-title">部署Tornado时iptables引发的的一个问题</h3></a>
+<h6 class="subheader" title="2012-09-29T19:11:00">六 29 九月 2012
 </h6>
 
 
@@ -411,7 +465,7 @@ python setup.py install
 
 
 
-<p><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">Read More</a>
+<p><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

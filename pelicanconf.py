@@ -68,7 +68,7 @@ DEFAULT_PAGINATION = 10
 MD_EXTENSIONS = (['codehilite(css_class=highlight)', 'extra',
                   'fenced_code', 'tables', 'sane_lists'])
 
-PLUGIN_PATH = u"pelican-plugins"
+PLUGIN_PATHS = [u"pelican-plugins-m"]
 PLUGINS = ['sitemap']  # , 'gzip_cache']
 
 SITEMAP = {
@@ -89,4 +89,4 @@ DESCRIPTION = u"博主一个爱好开源技术的人, 对Python比较熟悉,"\
     u"也喜欢用Python捣腾一些东西, 本博主要分享一些开源技术,"\
     u"其中包括但不限于Linux/Python/Vim."
 
-KEYWORDS = u"Python, Linux, vim, 开源"
+KEYWORDS = u"Python, Linux, vim, 开源, Tornado"

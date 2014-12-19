@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>用bottle+mongodb写的一个blog程序</title>
+    <title>部署Tornado时iptables引发的的一个问题</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -45,51 +45,50 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html" rel="bookmark"
-        title="Permalink to 用bottle+mongodb写的一个blog程序">用bottle+mongodb写的一个blog程序</a></h3>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html" rel="bookmark"
+        title="Permalink to 部署Tornado时iptables引发的的一个问题">部署Tornado时iptables引发的的一个问题</a></h3>
     </header>
 
-<h6 class="subheader" title="2012-06-16T16:20:00">Sat 16 June 2012
+<h6 class="subheader" title="2012-09-29T19:11:00">六 29 九月 2012
 </h6>
 
 
-    <p>我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:</p>
-<p>前台显示文章:
-按分类显示
-按标签显示
-按月份归档显示
-最新文章
-评论
-后台管理:
-管理文章
-管理分类
-管理评论
-发表文章
-用户验证</p>
-<p>目录结构</p>
-<p>water</p>
-<p>+-app           程序目录</p>
-<p>|----admin.py  后台管理</p>
-<p>|----blog.py   前台显示</p>
-<p>|----dbconn.py 数据库连接</p>
-<p>|----encrypt.py包含加密函数</p>
-<p>+-static       静态文件目录:包括js css image</p>
-<p>+-views        模版目录</p>
-<p>+-index.py     用于启动整个程序</p>
-<p>+-initiate.py  初始化脚本,用于创建一个管理用户</p>
-<p>+-setting.py   设置文件,各种设置</p>
-<p>+-static.py    用于程序处理静态文件</p>
-<p>项目代码放在了google code上,可以访问下面链接浏览:
-http://code.google.com/p/sharepythoncode/source/browse/water/</p>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+    <p>今天在CentOS上部署了一个Tornado,使用nginx做代理,</p>
+<p>tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:</p>
+<div class="highlight"><pre><span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">server_name</span> <span class="s">www.linuxzen.com</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass_header</span> <span class="s">Server</span><span class="p">;</span>
+        <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Real_IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+        <span class="kn">proxy_set_header</span> <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>iptables filter表的INPUT链是DROP的,所以添加如下规则:</p>
+<div class="highlight"><pre>iptables -A INPUT -p tcp  -s 127.0.0.1 --dport 8888 -j ACCEPT
+</pre></div>
+
+
+<p>但是访问nginx总是返回502 Bad Gateway.一开始不认为是防火墙的问题,所以百思不得其解,各种问题试过都不行之后,后来想想tornado返回数据同样也是一条进站,所以还需要添加一条</p>
+<div class="highlight"><pre>iptables -A INPUT -p tcp -s 127.0.0.1 --dport 8888 -j ACCEPT
+</pre></div>
+
+
+<p>至此,通过nginx才能正常访问tornado</p>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
 
     Tagged: 
-    <a href="http://www.linuxzen.com/tag/xiang-mu.html">项目 </a>
-    <a href="http://www.linuxzen.com/tag/shi-li.html">实例 </a>
-    <a href="http://www.linuxzen.com/tag/web.html">web </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/mongodb.html">mongodb </a>
-    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="http://www.linuxzen.com/tag/iptables.html">iptables </a>
+    <a href="http://www.linuxzen.com/tag/bad-gateway.html">bad gateway </a>
+    <a href="http://www.linuxzen.com/tag/502.html">502 </a>
 </p>
 
 
@@ -99,8 +98,8 @@ http://code.google.com/p/sharepythoncode/source/browse/water/</p>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'linuxzen'
-        var disqus_identifier = "用bottle+mongodb写的一个blog程序";
-        var disqus_url = "http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html";
+        var disqus_identifier = "部署Tornado时iptables引发的的一个问题";
+        var disqus_url = "http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html";
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

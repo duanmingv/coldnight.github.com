@@ -48,8 +48,55 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h3 class="article-title">Python将汉字按拼音排序--一个多音字引发的悲剧</h3></a>
+<h6 class="subheader" title="2012-10-24T18:29:00">三 24 十月 2012
+</h6>
+
+
+<p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
+<div class="highlight"><pre><span class="err">拼</span>    <span class="n">pin1</span>
+<span class="err">音</span>    <span class="n">yin1</span>
+</pre></div>
+
+
+<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># Author : cold night</span>
+<span class="c"># E-mail : wh_linux@126.com</span>
+<span class="c"># Date   : 12-10-24 下午3:13</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
+    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/yi-zi-pai-xu.html">汉字排序 </a>
+    <a href="http://www.linuxzen.com/tag/yi-zi.html">汉字 </a>
+    <a href="http://www.linuxzen.com/tag/pai-xu.html">排序 </a>
+    <a href="http://www.linuxzen.com/tag/pin-yin.html">拼音 </a>
+    <a href="http://www.linuxzen.com/tag/duo-yin-zi.html">多音字 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h3 class="article-title">用Vim为Python源码自动添加#!行和编码行</h3></a>
-<h6 class="subheader" title="2012-09-29T18:56:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T18:56:00">六 29 九月 2012
 </h6>
 
 
@@ -86,7 +133,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h3 class="article-title">用Python将绝对URL替换成相对URL</h3></a>
-<h6 class="subheader" title="2012-09-29T15:52:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T15:52:00">六 29 九月 2012
 </h6>
 
 
@@ -126,7 +173,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html"><h3 class="article-title">用Python对各种编程语言进行代码高亮</h3></a>
-<h6 class="subheader" title="2012-09-29T15:11:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T15:11:00">六 29 九月 2012
 </h6>
 
 
@@ -170,7 +217,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html"><h3 class="article-title">Python 优雅的操作字典</h3></a>
-<h6 class="subheader" title="2012-09-17T11:42:00">Mon 17 September 2012
+<h6 class="subheader" title="2012-09-17T11:42:00">一 17 九月 2012
 </h6>
 
 
@@ -222,7 +269,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h3 class="article-title">Python 字典和列表陷阱</h3></a>
-<h6 class="subheader" title="2012-09-17T10:22:00">Mon 17 September 2012
+<h6 class="subheader" title="2012-09-17T10:22:00">一 17 九月 2012
 </h6>
 
 
@@ -262,7 +309,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h3 class="article-title">用bottle+mongodb写的blog程序支持mysql啦</h3></a>
-<h6 class="subheader" title="2012-08-14T09:16:00">Tue 14 August 2012
+<h6 class="subheader" title="2012-08-14T09:16:00">二 14 八月 2012
 </h6>
 
 
@@ -294,7 +341,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html"><h3 class="article-title">python里的三目运算</h3></a>
-<h6 class="subheader" title="2012-08-10T16:28:00">Fri 10 August 2012
+<h6 class="subheader" title="2012-08-10T16:28:00">五 10 八月 2012
 </h6>
 
 
@@ -336,7 +383,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h3 class="article-title">Python 断点调试</h3></a>
-<h6 class="subheader" title="2012-08-10T16:16:00">Fri 10 August 2012
+<h6 class="subheader" title="2012-08-10T16:16:00">五 10 八月 2012
 </h6>
 
 
@@ -382,7 +429,7 @@ import pdb; pdb.set_trace()
 
             <article>
                 <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h3 class="article-title">lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h3></a>
-<h6 class="subheader" title="2012-08-10T16:02:00">Fri 10 August 2012
+<h6 class="subheader" title="2012-08-10T16:02:00">五 10 八月 2012
 </h6>
 
 
@@ -424,44 +471,6 @@ import pdb; pdb.set_trace()
 
 
 <p><a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h3 class="article-title">Python 常用的列表操作</h3></a>
-<h6 class="subheader" title="2012-08-10T15:48:00">Fri 10 August 2012
-</h6>
-
-
-<p>这里介绍几个常用的列表操作</p>
-<h3>添加元素</h3>
-<p>添加元素使用列表的内置方法append</p>
-<div class="highlight"><pre><span class="n">number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># number = [1, 2, 3, 4, 5]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span> <span class="c"># number = [1, 2, 3, 4, 5, [6, 7]]</span>
-<span class="n">number</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span><span class="s">&#39;b&#39;</span><span class="p">})</span> <span class="c"># number = [1, 2, 3, 4, [6, 7], {&#39;a&#39;, :&#39;b&#39;}</span>
-</pre></div>
-
-
-<p>可以看到强大的python列表可以嵌套任意类型</p>
-<h3>列表相加</h3>
-<p>要想连接两个列表,可以使用+号连接</p>
-<div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/zhong-fu.html">重复 </a>
-    <a href="http://www.linuxzen.com/tag/xiang-jia.html">相加 </a>
-    <a href="http://www.linuxzen.com/tag/tian-jia.html">添加 </a>
-    <a href="http://www.linuxzen.com/tag/lie-biao.html">列表 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

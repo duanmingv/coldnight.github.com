@@ -1,5 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2014-05-23T14:29:00+08:00</updated><entry><title>Python 入门指南</title><link href="http://www.linuxzen.com/python-ru-men-zhi-nan.html" rel="alternate"></link><updated>2014-05-23T14:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-05-23:python-ru-men-zhi-nan.html</id><summary type="html">&lt;h1&gt;引子&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/python.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2014-10-19T21:59:00+08:00</updated><entry><title>基于 Python 生成器的 Tornado 协程异步</title><link href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html" rel="alternate"></link><updated>2014-10-19T21:59:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-10-19:ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html"&gt;Tornado 4.0&lt;/a&gt; 已经发布了很长一段时间了,
+新版本广泛的应用了协程(&lt;code&gt;Future&lt;/code&gt;)特性.  我们目前已经将 Tornado 升级到最新版本, 而且也大量的使用协程特性. &lt;/p&gt;
+&lt;p&gt;很长时间没有更新博客, 今天就简单介绍下 Tornado 协程实现原理, Tornado 的协程是基于 Python 的生成器实现的, 
+所以首先来回顾下生成器.&lt;/p&gt;
+&lt;h2&gt;生成器&lt;/h2&gt;
+&lt;p&gt;Python 的生成器可以保存执行状态 并在下次调用的时候恢复, 通过在函数体内使用 &lt;code&gt;yield&lt;/code&gt; 关键字
+来创建一个生成器, 通过内置函数 &lt;code&gt;next&lt;/code&gt; 或生成器的 &lt;code&gt;next&lt;/code&gt; 方法来恢复生成器的状态. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们调用 &lt;code&gt;test&lt;/code&gt; 函数, 此时并不会返回结果, 而是会返回一个生成器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;generator&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="mh"&gt;0x100b3b320&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们调用其 &lt;code&gt;next&lt;/code&gt; 方法则返回 &lt;code&gt;yield&lt;/code&gt; 关键字之后的内容.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果我们接着调用  &lt;code&gt;next&lt;/code&gt; 方法, 后面又没有 &lt;code&gt;yield&lt;/code&gt; 关键字继续返回的话, 会抛出一个
+&lt;code&gt;StopIteration&lt;/code&gt; 异常.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;yield&lt;/code&gt; 关键字不仅仅能从生成器内部返回状态, 同时也可以将外部信息传递到生成器内部,
+通过将 &lt;code&gt;yeild&lt;/code&gt; 关键里赋值给变量, 并调用生成器的 &lt;code&gt;send&lt;/code&gt; 方法来将对象传递到生成器
+内部. 需要注意的是生成器的开始必须调用其 &lt;code&gt;next&lt;/code&gt; 方法, 后面 &lt;code&gt;send&lt;/code&gt; 方法调用的同时
+也会触发 &lt;code&gt;next&lt;/code&gt; 动作. 如果没有变量接收 &lt;code&gt;yield&lt;/code&gt; 关键字那么 &lt;code&gt;send&lt;/code&gt; 传递的值将会
+被丢弃.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;首先调用 &lt;code&gt;next&lt;/code&gt; 上面函数返回的生成器将返回 &lt;code&gt;None&lt;/code&gt;, 如果这时候直接调用 &lt;code&gt;next&lt;/code&gt; 将
+会给生成器发送 &lt;code&gt;None&lt;/code&gt;, 如果调用 &lt;code&gt;send&lt;/code&gt; 发送一个值, 将打印这个值并抛出 &lt;code&gt;StopIteration&lt;/code&gt;
+异常.&lt;/p&gt;
+&lt;h2&gt;一个简单地协程&lt;/h2&gt;
+&lt;p&gt;以上就是实现协程的所有基础, 为了加深理解, 我们这里写一个小例子, 例子我们只使用协程
+开启两个甚至多个死循环, 下面就是一个极其简单地例子::&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;absolute_import&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;division&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;with_statement&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;loop1&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 循环1负责抛出一个函数和对应的参数, 并接收结果&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+    &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Loop1 ret&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;loop2&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 循环2 负责接收函数并计算结果, 然后 yield 出结果&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt;
+        &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Loop2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="n"&gt;l1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loop1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;l2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loop2&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;l2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面例子里 loop1 负责产生任务, loop2 负责执行任务, 主循环负责调度任务并将任务结果发回给
+任务产生者.&lt;/p&gt;
+&lt;h2&gt;Tornado 如何做的&lt;/h2&gt;
+&lt;p&gt;我们首先看一个使用 Tornado 协程异步的例子&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;absolute_import&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;division&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;with_statement&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tornado&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;gen&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tornado&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tornado&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;httpclient&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ActionHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RequestHandler&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@gen.coroutine&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;httpclient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AsyncHTTPClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.linuxzen.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="c"&gt;# ...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其实原理在上面简单地例子里已经讲清楚了, 我们来简单分析一遍上面的例子, 首先 Tornado 得到
+&lt;code&gt;ActionHandler.get&lt;/code&gt; 方法抛出(&lt;code&gt;next&lt;/code&gt;)的一个任务, 然后异步的去执行任务, 当任务(网络请求)结束或
+异常时 Tornado 取得事件通知然后将结果放回(&lt;code&gt;send&lt;/code&gt;)到该方法中让该方法继续执行.&lt;/p&gt;
+&lt;p&gt;由于是异步的, 调用这个方法并不会阻塞其他任务执行.&lt;/p&gt;
+&lt;p&gt;这时候我们的方法其实就是上个例子 &lt;code&gt;loop1&lt;/code&gt; 函数, 而 &lt;code&gt;Tornado&lt;/code&gt; 调度并执行了其抛出的任务.&lt;/p&gt;
+&lt;h2&gt;总结&lt;/h2&gt;
+&lt;p&gt;Tornado 的协程异步可以让异步看起来是顺序执行的, 可以从一大串的 &lt;code&gt;callback&lt;/code&gt; 中解脱出来.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Tornado&lt;/code&gt; 的协程异步并不是这三言两语能说清楚的, 其中有很复杂的封装和传递, 有兴趣可以自己
+阅读源码.&lt;/p&gt;</summary><category term="Python"></category><category term="generator"></category><category term="coroutine"></category><category term="协程"></category><category term="生成器"></category><category term="Tornado"></category></entry><entry><title>Python 入门指南</title><link href="http://www.linuxzen.com/python-ru-men-zhi-nan.html" rel="alternate"></link><updated>2014-05-23T14:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-05-23:python-ru-men-zhi-nan.html</id><summary type="html">&lt;h1&gt;引子&lt;/h1&gt;
 &lt;p&gt;经常能在 Python 群里看到很多新人在问一些非常基础的问题, 基本每天都在重复的问这些问题,
 在这里就总结一下这些问题.&lt;/p&gt;
 &lt;p&gt;首先声明, 本文不打算教会你 Python, 本文力图陈列一些新手容易遇到的问题, 并企图教会你
@@ -378,7 +491,7 @@ MD_EXTENSIONS =  (['codehilite(css_class=highlight)', 'extra',
 &lt;p&gt;当缓冲和编辑功能被关闭时, 连接被成为非规范模式.终端处理器仍旧进行特定的字符处理, 例如处理Ctrl-C及换行符之间的转换, 但是编辑键将没有意义, 因此相应的输入被视为常规的数据输入
 程序需要自己实现编辑功能&lt;/p&gt;
 &lt;h3&gt;raw模式&lt;/h3&gt;
-&lt;p&gt;当所有处理都被关闭后, 驱动程序将输入直接传递给程序, 连接被成为raw模式.&lt;/p&gt;</summary><category term="Python"></category><category term="Linux"></category><category term="任意键"></category><category term="退出"></category><category term="按"></category></entry><entry><title>发布一个基于Tornado的高效异步的HTTP客户端库</title><link href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html" rel="alternate"></link><updated>2013-08-01T10:46:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-01:fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html</id><summary type="html">&lt;p&gt;前面的博文提到过&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;使用tornado进行网络异步编程&lt;/a&gt;, 也&lt;a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;使用tornado实现了一个高效的WebQQ机器人&lt;/a&gt;, 由于tornado内置的&lt;code&gt;AsyncHTTPClient&lt;/code&gt;功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 &lt;code&gt;tornadohttpclient&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;当所有处理都被关闭后, 驱动程序将输入直接传递给程序, 连接被成为raw模式.&lt;/p&gt;</summary><category term="Python"></category><category term="Linux"></category><category term="任意键"></category><category term="退出"></category><category term="按"></category></entry><entry><title>发布一个基于Tornado的高效异步的HTTP客户端库</title><link href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html" rel="alternate"></link><updated>2013-08-01T10:46:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-01:fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html</id><summary type="html">&lt;p&gt;前面的博文提到过&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;使用tornado进行网络异步编程&lt;/a&gt;, 也&lt;a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;使用tornado实现了一个高效的WebQQ机器人&lt;/a&gt;, 由于tornado内置的&lt;code&gt;AsyncHTTPClient&lt;/code&gt;功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 &lt;code&gt;tornadohttpclient&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;s&gt;TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在&lt;code&gt;Python2.7&lt;/code&gt;平台上测试过, 不支持&lt;code&gt;Python3&lt;/code&gt;&lt;/s&gt;&lt;/p&gt;
 &lt;p&gt;听取了仙子君的意见, 直接对&lt;code&gt;tornado.curl_httpclient.CurlAsyncHTTPClient&lt;/code&gt;进行封装&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
@@ -1263,7 +1376,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这样就可以没5分钟更新一次&lt;/p&gt;</summary><category term="博客"></category><category term="Pelican"></category><category term="静态"></category><category term="迁移"></category></entry><entry><title>vLog 一个使用Python编写的轻量级博客系统</title><link href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="alternate"></link><updated>2013-02-05T16:43:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-02-05:vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
+&lt;p&gt;这样就可以没5分钟更新一次&lt;/p&gt;</summary><category term="博客"></category><category term="Pelican"></category><category term="静态"></category><category term="迁移"></category></entry><entry><title>vLog 一个使用Python编写的轻量级博客系统</title><link href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="alternate"></link><updated>2013-02-05T16:43:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-02-05:vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
 &lt;h3&gt;何为vLog&lt;/h3&gt;
 &lt;p&gt;大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用&lt;code&gt;Python&lt;/code&gt;的&lt;code&gt;tornado&lt;/code&gt;框架和&lt;code&gt;Jinja2&lt;/code&gt;模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用&lt;code&gt;Markdown&lt;/code&gt;的格式来抒写博文.&lt;/p&gt;
 &lt;h3&gt;为什么vLog&lt;/h3&gt;
@@ -1752,7 +1865,7 @@ Requests: 128 susceed, 0 failed.
 
 &lt;p&gt;即可开启群bot,群bot支持翻译,天气查询,贴代码等等待功能.&lt;/p&gt;
 &lt;p&gt;如果您想贡献代码可以加入我们的bot群:&lt;code&gt;clubot@vim-cn.com&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;如果您有bug可以提交在评论里&lt;/p&gt;</summary><category term="群"></category><category term="xmpp"></category><category term="pyxmpp2"></category><category term="python"></category><category term="gtalk"></category><category term="bot"></category></entry><entry><title>Python将汉字按拼音排序--一个多音字引发的悲剧</title><link href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="alternate"></link><updated>2012-10-24T18:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-10-24:pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html</id><summary type="html">&lt;p&gt;今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:&lt;/p&gt;
+&lt;p&gt;如果您有bug可以提交在评论里&lt;/p&gt;</summary><category term="群"></category><category term="xmpp"></category><category term="pyxmpp2"></category><category term="python"></category><category term="gtalk"></category><category term="bot"></category></entry><entry><title>Python将汉字按拼音排序--一个多音字引发的悲剧</title><link href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="alternate"></link><updated>2012-10-24T18:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-10-24:pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html</id><summary type="html">&lt;p&gt;今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;拼&lt;/span&gt;    &lt;span class="n"&gt;pin1&lt;/span&gt;
 &lt;span class="err"&gt;音&lt;/span&gt;    &lt;span class="n"&gt;yin1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -2625,7 +2738,7 @@ import pdb; pdb.set_trace()
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;至此bottle验证的问题就很优雅的用装饰器解决了.&lt;/p&gt;</summary><category term="验证"></category><category term="装饰器"></category><category term="用户"></category><category term="python"></category><category term="bottle"></category></entry><entry><title>用bottle+mongodb写的一个blog程序</title><link href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html" rel="alternate"></link><updated>2012-06-16T16:20:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-06-16:yong-bottlemongodbxie-de-ge-blogcheng-xu.html</id><summary type="html">&lt;p&gt;我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:&lt;/p&gt;
+&lt;p&gt;至此bottle验证的问题就很优雅的用装饰器解决了.&lt;/p&gt;</summary><category term="验证"></category><category term="装饰器"></category><category term="用户"></category><category term="python"></category><category term="bottle"></category></entry><entry><title>用bottle+mongodb写的一个blog程序</title><link href="http://www.linuxzen.com/yong-bottlemongodbxie-de-yi-ge-blogcheng-xu.html" rel="alternate"></link><updated>2012-06-16T16:20:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-06-16:yong-bottlemongodbxie-de-yi-ge-blogcheng-xu.html</id><summary type="html">&lt;p&gt;我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:&lt;/p&gt;
 &lt;p&gt;前台显示文章:
 按分类显示
 按标签显示

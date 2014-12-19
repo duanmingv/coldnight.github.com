@@ -48,8 +48,55 @@
 
 
             <article>
-                <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html"><h3 class="article-title">部署Tornado时iptables引发的的一个问题</h3></a>
-<h6 class="subheader" title="2012-09-29T19:11:00">Sat 29 September 2012
+                <a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html"><h3 class="article-title">Python将汉字按拼音排序--一个多音字引发的悲剧</h3></a>
+<h6 class="subheader" title="2012-10-24T18:29:00">三 24 十月 2012
+</h6>
+
+
+<p>今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:</p>
+<div class="highlight"><pre><span class="err">拼</span>    <span class="n">pin1</span>
+<span class="err">音</span>    <span class="n">yin1</span>
+</pre></div>
+
+
+<p>将文件保存为<code>pinyindata</code>,于是有了如下对应的python代码:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># Author : cold night</span>
+<span class="c"># E-mail : wh_linux@126.com</span>
+<span class="c"># Date   : 12-10-24 下午3:13</span>
+<span class="c">#</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+
+<span class="k">class</span> <span class="nc">SortedByPy</span><span class="p">:</span>
+    <span class="n">__PYDICT__</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">PYDATA_PATH</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s">&#39;pinyindata&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/yi-zi-pai-xu.html">汉字排序 </a>
+    <a href="http://www.linuxzen.com/tag/yi-zi.html">汉字 </a>
+    <a href="http://www.linuxzen.com/tag/pai-xu.html">排序 </a>
+    <a href="http://www.linuxzen.com/tag/pin-yin.html">拼音 </a>
+    <a href="http://www.linuxzen.com/tag/duo-yin-zi.html">多音字 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
+                <a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html"><h3 class="article-title">部署Tornado时iptables引发的的一个问题</h3></a>
+<h6 class="subheader" title="2012-09-29T19:11:00">六 29 九月 2012
 </h6>
 
 
@@ -87,7 +134,7 @@
 
 
 
-<p><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html">Read More</a>
+<p><a href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
@@ -96,7 +143,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/yong-vimwei-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing.html"><h3 class="article-title">用Vim为Python源码自动添加#!行和编码行</h3></a>
-<h6 class="subheader" title="2012-09-29T18:56:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T18:56:00">六 29 九月 2012
 </h6>
 
 
@@ -133,7 +180,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/fen-xiang-vimliang-chong-hao-yong-de-gong-neng-zhuang-tai-xing-he-kong-bai-zi-fu-ke-jian.html"><h3 class="article-title">分享Vim两种好用的功能:状态行和空白字符可见</h3></a>
-<h6 class="subheader" title="2012-09-29T17:30:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T17:30:00">六 29 九月 2012
 </h6>
 
 
@@ -178,7 +225,7 @@ fugitive 可以在git获得:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pythonjiang-jue-dui-urlti-huan-cheng-xiang-dui-url.html"><h3 class="article-title">用Python将绝对URL替换成相对URL</h3></a>
-<h6 class="subheader" title="2012-09-29T15:52:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T15:52:00">六 29 九月 2012
 </h6>
 
 
@@ -218,7 +265,7 @@ fugitive 可以在git获得:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pythondui-ge-chong-bian-cheng-yu-yan-jin-xing-dai-ma-gao-liang.html"><h3 class="article-title">用Python对各种编程语言进行代码高亮</h3></a>
-<h6 class="subheader" title="2012-09-29T15:11:00">Sat 29 September 2012
+<h6 class="subheader" title="2012-09-29T15:11:00">六 29 九月 2012
 </h6>
 
 
@@ -262,7 +309,7 @@ fugitive 可以在git获得:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/python-you-ya-de-cao-zuo-zi-dian.html"><h3 class="article-title">Python 优雅的操作字典</h3></a>
-<h6 class="subheader" title="2012-09-17T11:42:00">Mon 17 September 2012
+<h6 class="subheader" title="2012-09-17T11:42:00">一 17 九月 2012
 </h6>
 
 
@@ -314,7 +361,7 @@ fugitive 可以在git获得:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h3 class="article-title">Python 字典和列表陷阱</h3></a>
-<h6 class="subheader" title="2012-09-17T10:22:00">Mon 17 September 2012
+<h6 class="subheader" title="2012-09-17T10:22:00">一 17 九月 2012
 </h6>
 
 
@@ -354,7 +401,7 @@ fugitive 可以在git获得:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html"><h3 class="article-title">Linux桌面高效工作----使用Gnome DO</h3></a>
-<h6 class="subheader" title="2012-09-01T08:03:00">Sat 01 September 2012
+<h6 class="subheader" title="2012-09-01T08:03:00">六 01 九月 2012
 </h6>
 
 
@@ -387,7 +434,7 @@ fugitive 可以在git获得:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html"><h3 class="article-title">推荐两款不错的终端软件</h3></a>
-<h6 class="subheader" title="2012-08-29T09:36:00">Wed 29 August 2012
+<h6 class="subheader" title="2012-08-29T09:36:00">三 29 八月 2012
 </h6>
 
 
@@ -422,38 +469,6 @@ fugitive 可以在git获得:</p>
 
 
 <p><a href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/tui-jian-liang-kuan-bu-cuo-de-zhong-duan-ruan-jian.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h3 class="article-title">用bottle+mongodb写的blog程序支持mysql啦</h3></a>
-<h6 class="subheader" title="2012-08-14T09:16:00">Tue 14 August 2012
-</h6>
-
-
-<p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
-<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
-<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
-<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
-<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
-<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/zhi-chi-mysql.html">支持mysql </a>
-    <a href="http://www.linuxzen.com/tag/web.html">web </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
-    <a href="http://www.linuxzen.com/tag/mongodb.html">mongodb </a>
-    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
-    <a href="http://www.linuxzen.com/tag/blog.html">blog </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

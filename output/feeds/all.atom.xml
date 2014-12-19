@@ -1,5 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2014-05-23T14:29:00+08:00</updated><entry><title>Python 入门指南</title><link href="http://www.linuxzen.com/python-ru-men-zhi-nan.html" rel="alternate"></link><updated>2014-05-23T14:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-05-23:python-ru-men-zhi-nan.html</id><summary type="html">&lt;h1&gt;引子&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2014-10-19T21:59:00+08:00</updated><entry><title>基于 Python 生成器的 Tornado 协程异步</title><link href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html" rel="alternate"></link><updated>2014-10-19T21:59:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-10-19:ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html"&gt;Tornado 4.0&lt;/a&gt; 已经发布了很长一段时间了,
+新版本广泛的应用了协程(&lt;code&gt;Future&lt;/code&gt;)特性.  我们目前已经将 Tornado 升级到最新版本, 而且也大量的使用协程特性. &lt;/p&gt;
+&lt;p&gt;很长时间没有更新博客, 今天就简单介绍下 Tornado 协程实现原理, Tornado 的协程是基于 Python 的生成器实现的, 
+所以首先来回顾下生成器.&lt;/p&gt;
+&lt;h2&gt;生成器&lt;/h2&gt;
+&lt;p&gt;Python 的生成器可以保存执行状态 并在下次调用的时候恢复, 通过在函数体内使用 &lt;code&gt;yield&lt;/code&gt; 关键字
+来创建一个生成器, 通过内置函数 &lt;code&gt;next&lt;/code&gt; 或生成器的 &lt;code&gt;next&lt;/code&gt; 方法来恢复生成器的状态. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们调用 &lt;code&gt;test&lt;/code&gt; 函数, 此时并不会返回结果, 而是会返回一个生成器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;generator&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="mh"&gt;0x100b3b320&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我们调用其 &lt;code&gt;next&lt;/code&gt; 方法则返回 &lt;code&gt;yield&lt;/code&gt; 关键字之后的内容.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果我们接着调用  &lt;code&gt;next&lt;/code&gt; 方法, 后面又没有 &lt;code&gt;yield&lt;/code&gt; 关键字继续返回的话, 会抛出一个
+&lt;code&gt;StopIteration&lt;/code&gt; 异常.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;yield&lt;/code&gt; 关键字不仅仅能从生成器内部返回状态, 同时也可以将外部信息传递到生成器内部,
+通过将 &lt;code&gt;yeild&lt;/code&gt; 关键里赋值给变量, 并调用生成器的 &lt;code&gt;send&lt;/code&gt; 方法来将对象传递到生成器
+内部. 需要注意的是生成器的开始必须调用其 &lt;code&gt;next&lt;/code&gt; 方法, 后面 &lt;code&gt;send&lt;/code&gt; 方法调用的同时
+也会触发 &lt;code&gt;next&lt;/code&gt; 动作. 如果没有变量接收 &lt;code&gt;yield&lt;/code&gt; 关键字那么 &lt;code&gt;send&lt;/code&gt; 传递的值将会
+被丢弃.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;首先调用 &lt;code&gt;next&lt;/code&gt; 上面函数返回的生成器将返回 &lt;code&gt;None&lt;/code&gt;, 如果这时候直接调用 &lt;code&gt;next&lt;/code&gt; 将
+会给生成器发送 &lt;code&gt;None&lt;/code&gt;, 如果调用 &lt;code&gt;send&lt;/code&gt; 发送一个值, 将打印这个值并抛出 &lt;code&gt;StopIteration&lt;/code&gt;
+异常.&lt;/p&gt;
+&lt;h2&gt;一个简单地协程&lt;/h2&gt;
+&lt;p&gt;以上就是实现协程的所有基础, 为了加深理解, 我们这里写一个小例子, 例子我们只使用协程
+开启两个甚至多个死循环, 下面就是一个极其简单地例子::&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;absolute_import&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;division&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;with_statement&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;loop1&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 循环1负责抛出一个函数和对应的参数, 并接收结果&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+    &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Loop1 ret&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;loop2&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot; 循环2 负责接收函数并计算结果, 然后 yield 出结果&lt;/span&gt;
+&lt;span class="sd"&gt;    &amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt;
+        &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Loop2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="n"&gt;l1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loop1&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;l2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;loop2&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;l2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;l1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ret&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面例子里 loop1 负责产生任务, loop2 负责执行任务, 主循环负责调度任务并将任务结果发回给
+任务产生者.&lt;/p&gt;
+&lt;h2&gt;Tornado 如何做的&lt;/h2&gt;
+&lt;p&gt;我们首先看一个使用 Tornado 协程异步的例子&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding:utf-8 -*-&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;__future__&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;absolute_import&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;print_function&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;division&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;with_statement&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tornado&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;gen&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tornado&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;tornado&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;httpclient&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ActionHandler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;web&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RequestHandler&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+
+    &lt;span class="nd"&gt;@gen.coroutine&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;response&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;httpclient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AsyncHTTPClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fetch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://www.linuxzen.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="c"&gt;# ...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其实原理在上面简单地例子里已经讲清楚了, 我们来简单分析一遍上面的例子, 首先 Tornado 得到
+&lt;code&gt;ActionHandler.get&lt;/code&gt; 方法抛出(&lt;code&gt;next&lt;/code&gt;)的一个任务, 然后异步的去执行任务, 当任务(网络请求)结束或
+异常时 Tornado 取得事件通知然后将结果放回(&lt;code&gt;send&lt;/code&gt;)到该方法中让该方法继续执行.&lt;/p&gt;
+&lt;p&gt;由于是异步的, 调用这个方法并不会阻塞其他任务执行.&lt;/p&gt;
+&lt;p&gt;这时候我们的方法其实就是上个例子 &lt;code&gt;loop1&lt;/code&gt; 函数, 而 &lt;code&gt;Tornado&lt;/code&gt; 调度并执行了其抛出的任务.&lt;/p&gt;
+&lt;h2&gt;总结&lt;/h2&gt;
+&lt;p&gt;Tornado 的协程异步可以让异步看起来是顺序执行的, 可以从一大串的 &lt;code&gt;callback&lt;/code&gt; 中解脱出来.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Tornado&lt;/code&gt; 的协程异步并不是这三言两语能说清楚的, 其中有很复杂的封装和传递, 有兴趣可以自己
+阅读源码.&lt;/p&gt;</summary><category term="Python"></category><category term="generator"></category><category term="coroutine"></category><category term="协程"></category><category term="生成器"></category><category term="Tornado"></category></entry><entry><title>Python 入门指南</title><link href="http://www.linuxzen.com/python-ru-men-zhi-nan.html" rel="alternate"></link><updated>2014-05-23T14:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-05-23:python-ru-men-zhi-nan.html</id><summary type="html">&lt;h1&gt;引子&lt;/h1&gt;
 &lt;p&gt;经常能在 Python 群里看到很多新人在问一些非常基础的问题, 基本每天都在重复的问这些问题,
 在这里就总结一下这些问题.&lt;/p&gt;
 &lt;p&gt;首先声明, 本文不打算教会你 Python, 本文力图陈列一些新手容易遇到的问题, 并企图教会你
@@ -478,7 +591,7 @@ Windows 上的名字, 所以看到这里就很明确了.&lt;/p&gt;
 &lt;h2&gt;后记&lt;/h2&gt;
 &lt;p&gt;写完才发现, 我所使用的代码是 tornado-2.4.post2 版本, 当前最新代码是 3.3.0, 
 查看了下最新代码, 最新代码&lt;code&gt;TCPServer&lt;/code&gt; 写到单独 &lt;code&gt;tornado.tcpserver&lt;/code&gt; 里了, 其他和本文
-相关的并没有什么大的变化.&lt;/p&gt;</summary><category term="Python"></category><category term="fork_processes"></category><category term="tornado"></category><category term="多进程"></category><category term="web"></category><category term="提升"></category><category term="效率"></category></entry><entry><title>记一次 zsh 产生僵尸进程解决</title><link href="http://www.linuxzen.com/ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html" rel="alternate"></link><updated>2014-03-21T10:47:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-03-21:ji-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html</id><summary type="html">&lt;h2&gt;问题描述&lt;/h2&gt;
+相关的并没有什么大的变化.&lt;/p&gt;</summary><category term="Python"></category><category term="fork_processes"></category><category term="tornado"></category><category term="多进程"></category><category term="web"></category><category term="提升"></category><category term="效率"></category></entry><entry><title>记一次 zsh 产生僵尸进程解决</title><link href="http://www.linuxzen.com/ji-yi-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html" rel="alternate"></link><updated>2014-03-21T10:47:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-03-21:ji-yi-ci-zsh-chan-sheng-jiang-shi-jin-cheng-jie-jue.html</id><summary type="html">&lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;p&gt;今天使用 vmplayer 运行了 xp 系统, 关闭后在 zsh 里继续敲命令就阻塞了,
 然后就关闭了终端重新打开, 还是阻塞, 重复几次依然如此. 然后使用 gVim
 将 shell 切换到 bash, 终端可以正常打开, 然后运行&lt;/p&gt;
@@ -586,7 +699,7 @@ lsof: status error on /mnt: Host is down
 &lt;/ul&gt;
 &lt;h2&gt;更新&lt;/h2&gt;
 &lt;p&gt;经过 &lt;a href="http://lilydjwg.is-programmer.com/"&gt;依云&lt;/a&gt; 和 &lt;a href="http://eleveni386.7axu.com"&gt;eleven&lt;/a&gt;
-的指正对文章做了一些修改, 感谢两位.&lt;/p&gt;</summary><category term="zsh"></category><category term="进程"></category><category term="阻塞"></category><category term="命令"></category><category term="D"></category><category term="僵尸"></category></entry><entry><title>解决一直崩溃的 Adobe Flash Player</title><link href="http://www.linuxzen.com/jie-jue-zhi-beng-kui-de-adobe-flash-player.html" rel="alternate"></link><updated>2014-03-12T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-03-12:jie-jue-zhi-beng-kui-de-adobe-flash-player.html</id><summary type="html">&lt;p&gt;1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
+的指正对文章做了一些修改, 感谢两位.&lt;/p&gt;</summary><category term="zsh"></category><category term="进程"></category><category term="阻塞"></category><category term="命令"></category><category term="D"></category><category term="僵尸"></category></entry><entry><title>解决一直崩溃的 Adobe Flash Player</title><link href="http://www.linuxzen.com/jie-jue-yi-zhi-beng-kui-de-adobe-flash-player.html" rel="alternate"></link><updated>2014-03-12T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2014-03-12:jie-jue-yi-zhi-beng-kui-de-adobe-flash-player.html</id><summary type="html">&lt;p&gt;1月份的时候决定从 Ubuntu 换到 Archlinux, 换完之后 Flash Player 就一直没正常过.
 一打开视屏就 crash.  从那之后就一直用手机看视屏, 很别扭, 放着大屏不用一直盯着手机看看.
 今天下定决心找找原因. google 了一阵也没有啥结果, 所以我决定卸载现有的, 手动安装一个试试.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;R&lt;/span&gt; &lt;span class="n"&gt;flashplugin&lt;/span&gt;
@@ -1861,7 +1974,7 @@ make ycm_core
 &lt;h3&gt;配置&lt;/h3&gt;
 &lt;p&gt;因为Python已经有&lt;code&gt;pylint&lt;/code&gt;来检查, 而且&lt;code&gt;syntastic&lt;/code&gt;检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;let&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;syntastic_ignore_files&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;.*\.py$&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Vim"></category><category term="补全"></category><category term="7.4"></category><category term="升级"></category><category term="检查"></category><category term="C语言"></category><category term="YouCompleteMe"></category><category term="syntastic"></category></entry><entry><title>发布一个基于Tornado的高效异步的HTTP客户端库</title><link href="http://www.linuxzen.com/fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html" rel="alternate"></link><updated>2013-08-01T10:46:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-01:fa-bu-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html</id><summary type="html">&lt;p&gt;前面的博文提到过&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;使用tornado进行网络异步编程&lt;/a&gt;, 也&lt;a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;使用tornado实现了一个高效的WebQQ机器人&lt;/a&gt;, 由于tornado内置的&lt;code&gt;AsyncHTTPClient&lt;/code&gt;功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 &lt;code&gt;tornadohttpclient&lt;/code&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Vim"></category><category term="补全"></category><category term="7.4"></category><category term="升级"></category><category term="检查"></category><category term="C语言"></category><category term="YouCompleteMe"></category><category term="syntastic"></category></entry><entry><title>发布一个基于Tornado的高效异步的HTTP客户端库</title><link href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html" rel="alternate"></link><updated>2013-08-01T10:46:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-08-01:fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html</id><summary type="html">&lt;p&gt;前面的博文提到过&lt;a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html"&gt;使用tornado进行网络异步编程&lt;/a&gt;, 也&lt;a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"&gt;使用tornado实现了一个高效的WebQQ机器人&lt;/a&gt;, 由于tornado内置的&lt;code&gt;AsyncHTTPClient&lt;/code&gt;功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 &lt;code&gt;tornadohttpclient&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;s&gt;TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在&lt;code&gt;Python2.7&lt;/code&gt;平台上测试过, 不支持&lt;code&gt;Python3&lt;/code&gt;&lt;/s&gt;&lt;/p&gt;
 &lt;p&gt;听取了仙子君的意见, 直接对&lt;code&gt;tornado.curl_httpclient.CurlAsyncHTTPClient&lt;/code&gt;进行封装&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
@@ -2034,7 +2147,7 @@ python setup.py install
 
 
 &lt;h3&gt;Cookie&lt;/h3&gt;
-&lt;p&gt;TornadoHTTPClient会自动记录和装载Cookie, 可以通过 TornadoHTTPClient实例属性 cookie 获取Cookie&lt;/p&gt;</summary><category term="tornado"></category><category term="http"></category><category term="client"></category><category term="module"></category><category term="Python"></category><category term="高效"></category></entry><entry><title>解决git提交敏感信息(回退git版本库到某一个commit)</title><link href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html" rel="alternate"></link><updated>2013-06-07T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-06-07:jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html</id><summary type="html">&lt;p&gt;git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.&lt;/p&gt;
+&lt;p&gt;TornadoHTTPClient会自动记录和装载Cookie, 可以通过 TornadoHTTPClient实例属性 cookie 获取Cookie&lt;/p&gt;</summary><category term="tornado"></category><category term="http"></category><category term="client"></category><category term="module"></category><category term="Python"></category><category term="高效"></category></entry><entry><title>解决git提交敏感信息(回退git版本库到某一个commit)</title><link href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html" rel="alternate"></link><updated>2013-06-07T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-06-07:jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html</id><summary type="html">&lt;p&gt;git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.&lt;/p&gt;
 &lt;h2&gt;备份本地代码&lt;/h2&gt;
 &lt;p&gt;首先我们将本地代码的更改备份一下, 以防丢失更改&lt;/p&gt;
 &lt;h2&gt;回退本地代码的commit&lt;/h2&gt;
@@ -2216,7 +2329,7 @@ git push origin --delete temp
 &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_infos&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_history&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;drop&lt;/span&gt; &lt;span class="k"&gt;table&lt;/span&gt; &lt;span class="n"&gt;clubot_members&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="sqlalchemy"></category><category term="MySQL"></category><category term="数据库"></category><category term="乱码"></category><category term="utf8"></category></entry><entry><title>grep挽救了我一个下午: 恢复rm -f删除的代码</title><link href="http://www.linuxzen.com/grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html" rel="alternate"></link><updated>2013-04-25T14:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-25:grepwan-jiu-liao-wo-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html</id><summary type="html">&lt;p&gt;今天对代码进行重构, 新添加了一个&lt;code&gt;logics.py&lt;/code&gt;模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个&lt;code&gt;logs&lt;/code&gt;文件夹是不需要的所以我打算清掉它, 但是&lt;code&gt;zsh&lt;/code&gt;将补全定位到&lt;code&gt;logics.py&lt;/code&gt;, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:&lt;a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/"&gt;用grep恢复误删的文本&lt;/a&gt;&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="sqlalchemy"></category><category term="MySQL"></category><category term="数据库"></category><category term="乱码"></category><category term="utf8"></category></entry><entry><title>grep挽救了我一个下午: 恢复rm -f删除的代码</title><link href="http://www.linuxzen.com/grepwan-jiu-liao-wo-yi-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html" rel="alternate"></link><updated>2013-04-25T14:36:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-04-25:grepwan-jiu-liao-wo-yi-ge-xia-wu-hui-fu-rm-fshan-chu-de-dai-ma.html</id><summary type="html">&lt;p&gt;今天对代码进行重构, 新添加了一个&lt;code&gt;logics.py&lt;/code&gt;模块, 但并没有加入到git库中,  然后对代码进行清理, 有一个&lt;code&gt;logs&lt;/code&gt;文件夹是不需要的所以我打算清掉它, 但是&lt;code&gt;zsh&lt;/code&gt;将补全定位到&lt;code&gt;logics.py&lt;/code&gt;, 手上的动作快过了脑子,直接按了回车, 做完心想完了, 一上午白费了, 还要花一下午的时间来重新写出这个代码, 虽然明知没有希望,但是我还是不想放弃, 于是就google一下有无解决办法,意外的是找到一篇文章:&lt;a href="http://www.vpsee.com/2010/08/using-grep-to-recover-text-files/"&gt;用grep恢复误删的文本&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;好吧虽然不知道能不能用, 但是我要试试, 因为我不想再花一个下午来重写这个模块, 我在模块里定义了一个&lt;code&gt;Logics&lt;/code&gt;类并且上面差不多30行, 往下差不多300行的样子, 我删除&lt;code&gt;logics.py&lt;/code&gt;所在的分区是&lt;code&gt;/dev/sda7&lt;/code&gt;, 所以我运行了下面命令:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;grep -a -B 50 -A 400 &lt;span class="s2"&gt;&amp;quot;class Logics(object):&amp;quot;&lt;/span&gt; /dev/sda7 &amp;gt; tmp
 &lt;/pre&gt;&lt;/div&gt;
@@ -2783,7 +2896,7 @@ make clean  &lt;span class="c"&gt;# 删除output&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这样就可以没5分钟更新一次&lt;/p&gt;</summary><category term="博客"></category><category term="Pelican"></category><category term="静态"></category><category term="迁移"></category></entry><entry><title>vLog 一个使用Python编写的轻量级博客系统</title><link href="http://www.linuxzen.com/vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="alternate"></link><updated>2013-02-05T16:43:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-02-05:vlog-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
+&lt;p&gt;这样就可以没5分钟更新一次&lt;/p&gt;</summary><category term="博客"></category><category term="Pelican"></category><category term="静态"></category><category term="迁移"></category></entry><entry><title>vLog 一个使用Python编写的轻量级博客系统</title><link href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="alternate"></link><updated>2013-02-05T16:43:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2013-02-05:vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html</id><summary type="html">&lt;h2&gt;介绍&lt;/h2&gt;
 &lt;h3&gt;何为vLog&lt;/h3&gt;
 &lt;p&gt;大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用&lt;code&gt;Python&lt;/code&gt;的&lt;code&gt;tornado&lt;/code&gt;框架和&lt;code&gt;Jinja2&lt;/code&gt;模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用&lt;code&gt;Markdown&lt;/code&gt;的格式来抒写博文.&lt;/p&gt;
 &lt;h3&gt;为什么vLog&lt;/h3&gt;
@@ -3401,7 +3514,7 @@ nmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Leader&lt;span class="p"&gt;&amp
 nmap &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;lt&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
 &lt;span class="c"&gt;&amp;quot;XXX 无法判断当前模式,使用映射替代&lt;/span&gt;
 map &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;Leader&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;ts&lt;/span&gt; :&lt;span class="k"&gt;call&lt;/span&gt; Translate&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&amp;lt;&lt;/span&gt;&lt;span class="k"&gt;cr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="翻译"></category><category term="插件"></category><category term="vim"></category><category term="python"></category></entry><entry><title>Vim配置系列(一) ---- 插件管理</title><link href="http://www.linuxzen.com/vimpei-zhi-xi-lie-cha-jian-guan-li.html" rel="alternate"></link><updated>2012-12-14T08:57:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-12-14:vimpei-zhi-xi-lie-cha-jian-guan-li.html</id><summary type="html">&lt;p&gt;最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="翻译"></category><category term="插件"></category><category term="vim"></category><category term="python"></category></entry><entry><title>Vim配置系列(一) ---- 插件管理</title><link href="http://www.linuxzen.com/vimpei-zhi-xi-lie-yi-cha-jian-guan-li.html" rel="alternate"></link><updated>2012-12-14T08:57:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-12-14:vimpei-zhi-xi-lie-yi-cha-jian-guan-li.html</id><summary type="html">&lt;p&gt;最近对Vim进行了一番较大的配置变动,所以就想写出一个系列来将配置过程分享下来,供需要的朋友参考.我们之前配置Vim插件是一大助力,可以帮助我们做一些比较cool或这比较实用的功能,但是我之前都是直接搜索插件然后下载下来,手动拷贝到相应的插件,这种感觉肯定是不爽,不管是Linux还是Python/Ruby都有一套自己的包管理器,可以比较智能的搜索/安装/升级/卸载包.Vim也有类似功能的插件Vundle,他是一款Vim插件管理器,依赖于git,git是一款非常棒的VCS这里不做介绍,有兴趣的可以了解一下.Vundle可以根据配置文件的github或其他git的路径自行安装/升级插件.下面我们来介绍如何安装:
 首先在你的~/.vim下或者$VIM/vimfiles($VIM是vim的安装路径)创建bundle目录&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;mkdir ~/.vim/bundle
 &lt;/pre&gt;&lt;/div&gt;
@@ -3882,7 +3995,7 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 
 
 &lt;p&gt;很简单吧,应该看得出在哪里添加启动的程序吧,这里启动了&lt;code&gt;pidgin&lt;/code&gt;,&lt;code&gt;雷鸟&lt;/code&gt;,&lt;code&gt;gnome-do&lt;/code&gt;,&lt;code&gt;guake&lt;/code&gt;和&lt;code&gt;wine&lt;/code&gt;的&lt;code&gt;qq2012&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;还有很多强大的功能这里就不在介绍配置方法,可以自行google之&lt;/p&gt;</summary><category term="高效"></category><category term="管理器"></category><category term="窗体"></category><category term="桌面"></category><category term="平铺式"></category><category term="Linux"></category><category term="awesome"></category></entry><entry><title>Python将汉字按拼音排序--一个多音字引发的悲剧</title><link href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="alternate"></link><updated>2012-10-24T18:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-10-24:pythonjiang-yi-zi-an-pin-yin-pai-xu-ge-duo-yin-zi-yin-fa-de-bei-ju.html</id><summary type="html">&lt;p&gt;今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:&lt;/p&gt;
+&lt;p&gt;还有很多强大的功能这里就不在介绍配置方法,可以自行google之&lt;/p&gt;</summary><category term="高效"></category><category term="管理器"></category><category term="窗体"></category><category term="桌面"></category><category term="平铺式"></category><category term="Linux"></category><category term="awesome"></category></entry><entry><title>Python将汉字按拼音排序--一个多音字引发的悲剧</title><link href="http://www.linuxzen.com/pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html" rel="alternate"></link><updated>2012-10-24T18:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-10-24:pythonjiang-yi-zi-an-pin-yin-pai-xu-yi-ge-duo-yin-zi-yin-fa-de-bei-ju.html</id><summary type="html">&lt;p&gt;今天同事告诉我一个项目需要将汉字按拼音排序,之前没做过啊,就google之,down了一份汉字与拼音的对照表,对照表格式如下:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;拼&lt;/span&gt;    &lt;span class="n"&gt;pin1&lt;/span&gt;
 &lt;span class="err"&gt;音&lt;/span&gt;    &lt;span class="n"&gt;yin1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -4021,7 +4134,7 @@ cp /etc/xdg/awesome/rc.lua .config/awesome/
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;写好了跑起来测试嘛,重庆还是躺在了最后,我想这应该就是utf-8的bug了吧,系统都这样了,于是和同事交流后认为也许是bug吧,回到座位后我苦思冥想阿,绞尽脑汁啊,看看有没有别的办法阿,突然一道闪电阿,我明白了,重&lt;code&gt;多音字&lt;/code&gt;啊也读&lt;code&gt;zhong&lt;/code&gt;啊,排在最后是对的啊,没有错误,也没有bug,一个&lt;code&gt;多音字&lt;/code&gt;引发的悲剧哇.&lt;/p&gt;</summary><category term="汉字排序"></category><category term="汉字"></category><category term="排序"></category><category term="拼音"></category><category term="多音字"></category><category term="python"></category></entry><entry><title>部署Tornado时iptables引发的的一个问题</title><link href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html" rel="alternate"></link><updated>2012-09-29T19:11:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-09-29:bu-shu-tornadoshi-iptablesyin-fa-de-de-ge-wen-ti.html</id><summary type="html">&lt;p&gt;今天在CentOS上部署了一个Tornado,使用nginx做代理,&lt;/p&gt;
+&lt;p&gt;写好了跑起来测试嘛,重庆还是躺在了最后,我想这应该就是utf-8的bug了吧,系统都这样了,于是和同事交流后认为也许是bug吧,回到座位后我苦思冥想阿,绞尽脑汁啊,看看有没有别的办法阿,突然一道闪电阿,我明白了,重&lt;code&gt;多音字&lt;/code&gt;啊也读&lt;code&gt;zhong&lt;/code&gt;啊,排在最后是对的啊,没有错误,也没有bug,一个&lt;code&gt;多音字&lt;/code&gt;引发的悲剧哇.&lt;/p&gt;</summary><category term="汉字排序"></category><category term="汉字"></category><category term="排序"></category><category term="拼音"></category><category term="多音字"></category><category term="python"></category></entry><entry><title>部署Tornado时iptables引发的的一个问题</title><link href="http://www.linuxzen.com/bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html" rel="alternate"></link><updated>2012-09-29T19:11:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-09-29:bu-shu-tornadoshi-iptablesyin-fa-de-de-yi-ge-wen-ti.html</id><summary type="html">&lt;p&gt;今天在CentOS上部署了一个Tornado,使用nginx做代理,&lt;/p&gt;
 &lt;p&gt;tornado使用8888,端口,使用nginx作为反向代理,配置文件如下:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -4907,7 +5020,7 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;至此bottle验证的问题就很优雅的用装饰器解决了.&lt;/p&gt;</summary><category term="验证"></category><category term="装饰器"></category><category term="用户"></category><category term="python"></category><category term="bottle"></category></entry><entry><title>用bottle+mongodb写的一个blog程序</title><link href="http://www.linuxzen.com/yong-bottlemongodbxie-de-ge-blogcheng-xu.html" rel="alternate"></link><updated>2012-06-16T16:20:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-06-16:yong-bottlemongodbxie-de-ge-blogcheng-xu.html</id><summary type="html">&lt;p&gt;我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:&lt;/p&gt;
+&lt;p&gt;至此bottle验证的问题就很优雅的用装饰器解决了.&lt;/p&gt;</summary><category term="验证"></category><category term="装饰器"></category><category term="用户"></category><category term="python"></category><category term="bottle"></category></entry><entry><title>用bottle+mongodb写的一个blog程序</title><link href="http://www.linuxzen.com/yong-bottlemongodbxie-de-yi-ge-blogcheng-xu.html" rel="alternate"></link><updated>2012-06-16T16:20:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-06-16:yong-bottlemongodbxie-de-yi-ge-blogcheng-xu.html</id><summary type="html">&lt;p&gt;我个人觉得更好更快的学习和掌握某个东西最好的方法就是使用它,多使用它.然后在一次次的解决问题中来快速掌握和了解它.你觉得呢?前段时间接触了bottle这个轻量web框架,和nosql数据库mongodb,为了掌握和了解这她们,我自己做了一个blog程序,参照了vimer.cn里的设计的物理设计.是用bottle作为web开发框架,mongodb作为后台数据库.主要实现功能:&lt;/p&gt;
 &lt;p&gt;前台显示文章:
 按分类显示
 按标签显示
@@ -6350,7 +6463,7 @@ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 &lt;p&gt;然后会看到输出:http://0.0.0.0:8080/&lt;/p&gt;
 &lt;p&gt;然后浏览器访问:http://localhost:8080即可看到
 &lt;code&gt;Hello, world!&lt;/code&gt;
-我们第一个用python写的web程序就建立完成.&lt;/p&gt;</summary><category term="开发"></category><category term="web.py"></category><category term="Ubuntu"></category><category term="python"></category><category term="Linux"></category></entry><entry><title>Linux下配置vim一键编译C/C++并执行</title><link href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html" rel="alternate"></link><updated>2012-04-05T12:07:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-04-05:linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html</id><summary type="html">&lt;p&gt;最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.&lt;/p&gt;
+我们第一个用python写的web程序就建立完成.&lt;/p&gt;</summary><category term="开发"></category><category term="web.py"></category><category term="Ubuntu"></category><category term="python"></category><category term="Linux"></category></entry><entry><title>Linux下配置vim一键编译C/C++并执行</title><link href="http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html" rel="alternate"></link><updated>2012-04-05T12:07:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-04-05:linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html</id><summary type="html">&lt;p&gt;最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.&lt;/p&gt;
 &lt;p&gt;首先在/usr/bin/下创建compile脚本:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;compile&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -7054,7 +7167,7 @@ chkconfig --add sshd      &lt;span class="c"&gt;# 加入开机启动&lt;/span&gt
 &lt;p&gt;然后输入root密码既可以连接登录
 &lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112713.jpg" /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img alt="www.linuxzen.com" src="/upload/QQ截图20120310112752.jpg" /&gt;
-好了到这里就可以用ssh连接Linux了,尽情探索把,下一节将会讲解yum库的配置和包安装.&lt;/p&gt;</summary><category term="虚拟机"></category><category term="上网"></category><category term="ssh"></category><category term="NAT"></category><category term="lnmp"></category></entry><entry><title>lnmp环境搭建完全手册(一)------系统安装</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html" rel="alternate"></link><updated>2012-03-08T12:05:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-03-08:lnmphuan-jing-da-jian-wan-quan-shou-ce-xi-tong-an-zhuang.html</id><summary type="html">&lt;p&gt;在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
+好了到这里就可以用ssh连接Linux了,尽情探索把,下一节将会讲解yum库的配置和包安装.&lt;/p&gt;</summary><category term="虚拟机"></category><category term="上网"></category><category term="ssh"></category><category term="NAT"></category><category term="lnmp"></category></entry><entry><title>lnmp环境搭建完全手册(一)------系统安装</title><link href="http://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html" rel="alternate"></link><updated>2012-03-08T12:05:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-03-08:lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html</id><summary type="html">&lt;p&gt;在之前的文章里也陆陆续续的介绍了nginx/mysql和php的安装和配置,这里做一个整合.也是一个详细的教程,可以让你0基础搭建lnmp环境.
 首先选择一个发行版,个人比较喜欢CentOS,CentOS是Red Hat的再发行版,重新编译了Red Hat,修复n多错误,免费的yum库,这里使用CentOS5.5,虚拟机使用VMware Workstation 8.0.VMware是一个“虚拟PC”软件公司.它可以使你在一台机器上同时运行二个或更多Windows、DOS、LINUX系统。与“多启动”系统相比，VMWare采用了完全不同的概念。多启动系统在一个时刻只能运行一个系统，在系统切换时需要重新启动机器。VMWare是真正“同时”运行，多个操作系统在主系统的平台上，就象标准Windows应用程序那样切换.&lt;/p&gt;
 &lt;p&gt;安装VMware这里就不介绍了,给出VMware Workstation 8.0的&lt;a href="http://www.vmware.com/downloads/downloadBinary.do?downloadGroup=WKST-802-WIN&amp;amp;amp;vmware=downloadBinary&amp;amp;amp;file=VMware-workstation-full-8.0.2-591240.exe&amp;amp;amp;pot=1&amp;amp;amp;code=VMware-workstation-full-8.0.2-591240.exe&amp;amp;amp;hashKey=5d70214cc3ce52f8154f38b7cd52efbe&amp;amp;amp;tranId=70310191&amp;amp;amp;downloadURL&amp;quot;"&gt;下载地址&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;VMware不是免费软件,但是网上会有序列号,大家不想花钱就搜一下就ok了.
@@ -7375,7 +7488,7 @@ make &amp;amp;amp;&amp;amp;amp; make install
 
 &lt;p&gt;客户端浏览监测结果:
 在浏览器上输入:http://192.168.3.101:3000访问即可查看监测结果,Admin可以配置ntop.到此这个监控局域网流量的ntop就搭建完成,这样就可以很方便的查看局域网流量,可以发现是否有人在执行arp攻击等等常见攻击.剩余的功能大家就自己发现吧,这里不错介绍.&lt;/p&gt;
-&lt;p&gt;如果英语阅读困难的话可以,有牛人已经做出来了中文版,大家可以下载安装.&lt;/p&gt;</summary><category term="监控"></category><category term="流量"></category><category term="局域网"></category><category term="ntop"></category><category term="Linux"></category></entry><entry><title>Linux一些比较实用的小技巧</title><link href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="alternate"></link><updated>2012-02-20T11:30:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-20:linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html</id><summary type="html">&lt;p&gt;在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧&lt;/p&gt;
+&lt;p&gt;如果英语阅读困难的话可以,有牛人已经做出来了中文版,大家可以下载安装.&lt;/p&gt;</summary><category term="监控"></category><category term="流量"></category><category term="局域网"></category><category term="ntop"></category><category term="Linux"></category></entry><entry><title>Linux一些比较实用的小技巧</title><link href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="alternate"></link><updated>2012-02-20T11:30:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2012-02-20:linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html</id><summary type="html">&lt;p&gt;在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧&lt;/p&gt;
 &lt;h2&gt;文件查找&lt;/h2&gt;
 &lt;p&gt;找出最近修改的文件:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;find / -ctime 1 &lt;span class="c"&gt;# 找出根下最近24小时修改过inode信息的文件(更改权限)&lt;/span&gt;

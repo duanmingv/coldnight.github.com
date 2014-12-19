@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>解决git提交敏感信息(回退git版本库到某一个commit)</title>
+    <title>vLog 一个使用Python编写的轻量级博客系统</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -45,53 +45,64 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html" rel="bookmark"
-        title="Permalink to 解决git提交敏感信息(回退git版本库到某一个commit)">解决git提交敏感信息(回退git版本库到某一个commit)</a></h3>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html" rel="bookmark"
+        title="Permalink to vLog 一个使用Python编写的轻量级博客系统">vLog 一个使用Python编写的轻量级博客系统</a></h3>
     </header>
 
-<h6 class="subheader" title="2013-06-07T00:00:00">Fri 07 June 2013
+<h6 class="subheader" title="2013-02-05T16:43:00">二 05 二月 2013
 </h6>
 
 
-    <p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
-<h2>备份本地代码</h2>
-<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
-<h2>回退本地代码的commit</h2>
-<p>备份完数据, 我们就可以先回退本地的版本库</p>
-<div class="highlight"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
-</pre></div>
-
-
-<h2>回退远端版本库</h2>
-<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
-<h3>新建一个分支, 并提交</h3>
-<div class="highlight"><pre>git checkout -b temp
-git push origin temp:temp
-</pre></div>
-
-
-<h3>重建主分支</h3>
-<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
-<div class="highlight"><pre>git push origin --delete master   <span class="c"># 删除远端主分支</span>
-git branch -d master              <span class="c"># 删除本地主分支</span>
-git checkout -b master            <span class="c"># 新建主分支并切换到主分支</span>
-git push origin master            <span class="c"># 提交主分支</span>
-</pre></div>
-
-
-<p>这样我们就删除之前提交的敏感信息(如果是<code>github</code>现在就可以把默认分支切换到 <code>master</code>)</p>
-<h3>删除临时分支</h3>
-<div class="highlight"><pre>git branch -d temp
-git push origin --delete temp
-</pre></div>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/git.html">git</a>
+    <h2>介绍</h2>
+<h3>何为vLog</h3>
+<p>大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用<code>Python</code>的<code>tornado</code>框架和<code>Jinja2</code>模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用<code>Markdown</code>的格式来抒写博文.</p>
+<h3>为什么vLog</h3>
+<p>vLog后台十分简单(可以说是简陋),功能也简单,就是一款简单的博客系统,提供了Python终端脚本,可以在终端来抒写博文, vLog使用一套非常简单的缓存系统,缓存使用memcached使得页面加载速度非常快.</p>
+<h3>为什么不vLog</h3>
+<p>相对与wordpress vlog非常简陋,仅仅提供简单的博客功能,而且使用Python编写主机方面支援不太多,虽然有<code>SAE</code>和<code>GAE</code>的支援,但是我没弄过,所以没有支援<code>SAE</code>和<code>GAE</code>(如果你有兴趣,可以添加相关支持)</p>
+<h2>安装</h2>
+<h3>平台</h3>
+<ul>
+<li>Linux</li>
+<li>python2.7</li>
+<li>MySQL</li>
+<li>Memcached 1.4.5</li>
+</ul>
+<h3>依赖库</h3>
+<ul>
+<li>tornado</li>
+<li>jinja2</li>
+<li>MySQLdb</li>
+<li>pylibmc</li>
+</ul>
+<h3>开始安装</h3>
+<p>首先确认config.py的DEBUG是打开的,然后执行run.py,打开浏览器输入当前地址,会跳转到安装页面.按照提示安装,安装完毕后可以关闭DEBUG</p>
+<h2>从Wordpress中导入</h2>
+<h3>从Wordpress导出</h3>
+<p>在wordpress管理后台选择工具-&gt;导出,下载导出文件可以导出一份xml</p>
+<h3>移动媒体文件</h3>
+<p>将/path/to/your/wordpress/wp-content/uploads/下的所有文件移动到/path/to/your/vlog/web/static/upload 下即可</p>
+<p>务必要先执行这一步然后再在后台里导入xml</p>
+<h3>导入到vLog</h3>
+<p>进入vLog后台,选择导入,浏览选中导出的xml, 然后选择开始,等待提示成功后即导入成功</p>
+<h3>手动更改没有生效的链接</h3>
+<p>虽然我已经竭尽所能的让你手头的工作更少,但是还不够,还是存在许多需要手动更改的地方,
+比如每篇文章的没有替换掉的图片链接</p>
+<h3>不足</h3>
+<p>网站迁移后我已经尽力的来保持原来的链接有效,但是我仅仅知道我原来的wordpress的链接,所以仅仅兼容了我原来使用wordpress的旧链接,如果没能兼容您的wordpress的链接在此表示歉意,您可以自己添加提交给我,或者将您的链接提交给我由我来给您添加</p>
+<h2>结合nginx</h2>
+<p>参阅<a href="http://www.tornadoweb.cn/documentation#_14">tornado文档</a></p>
+<h2>源代码</h2>
+<p>代码放在github上: <a href="https://github.com/coldnight/vlog">vLog</a></p>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
-    <a href="http://www.linuxzen.com/tag/git.html">git </a>
-    <a href="http://www.linuxzen.com/tag/min-gan-xin-xi.html">敏感信息 </a>
-    <a href="http://www.linuxzen.com/tag/hui-tui.html">回退 </a>
-    <a href="http://www.linuxzen.com/tag/commit.html">commit </a>
-    <a href="http://www.linuxzen.com/tag/ban-ben-ku.html">版本库 </a>
+    <a href="http://www.linuxzen.com/tag/vlog.html">vLog </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/blog.html">blog </a>
+    <a href="http://www.linuxzen.com/tag/bo-ke.html">博客 </a>
+    <a href="http://www.linuxzen.com/tag/qing-liang.html">轻量 </a>
+    <a href="http://www.linuxzen.com/tag/markdown.html">markdown </a>
 </p>
 
 
@@ -101,8 +112,8 @@ git push origin --delete temp
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'linuxzen'
-        var disqus_identifier = "解决git提交敏感信息(回退git版本库到某一个commit)";
-        var disqus_url = "http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-ge-commit.html";
+        var disqus_identifier = "vLog 一个使用Python编写的轻量级博客系统";
+        var disqus_url = "http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html";
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

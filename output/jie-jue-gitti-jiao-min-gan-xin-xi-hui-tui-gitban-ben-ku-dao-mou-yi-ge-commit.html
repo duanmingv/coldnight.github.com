@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>Linux一些比较实用的小技巧</title>
+    <title>解决git提交敏感信息(回退git版本库到某一个commit)</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -45,94 +45,53 @@
     <div class="large-9 columns">
 <article>
     <header>
-        <h3 class="article-title"><a href="http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html" rel="bookmark"
-        title="Permalink to Linux一些比较实用的小技巧">Linux一些比较实用的小技巧</a></h3>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html" rel="bookmark"
+        title="Permalink to 解决git提交敏感信息(回退git版本库到某一个commit)">解决git提交敏感信息(回退git版本库到某一个commit)</a></h3>
     </header>
 
-<h6 class="subheader" title="2012-02-20T11:30:00">Mon 20 February 2012
+<h6 class="subheader" title="2013-06-07T00:00:00">五 07 六月 2013
 </h6>
 
 
-    <p>在Linux中各种各样的小技巧可以帮助我们更好更快的完成我们的工作,下面就介绍一些我所知道的小技巧</p>
-<h2>文件查找</h2>
-<p>找出最近修改的文件:</p>
-<div class="highlight"><pre>find / -ctime 1 <span class="c"># 找出根下最近24小时修改过inode信息的文件(更改权限)</span>
-find / -mtime 1 <span class="c"># 找出根下最近24小时修改过的文件(内容)</span>
-find / -atime 1 <span class="c"># 找出根下最近24小时访问过的文件</span>
+    <p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+<h2>备份本地代码</h2>
+<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
+<h2>回退本地代码的commit</h2>
+<p>备份完数据, 我们就可以先回退本地的版本库</p>
+<div class="highlight"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
 </pre></div>
 
 
-<p>使用通配符查找文件</p>
-<div class="highlight"><pre>find / -name <span class="s2">&quot;*.log&quot;</span> <span class="c"># 找出根下以log为后缀的文件,这里必须要加双引号,不然会报错,因为找的是多个文件,需要用双引号引起来</span>
+<h2>回退远端版本库</h2>
+<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
+<h3>新建一个分支, 并提交</h3>
+<div class="highlight"><pre>git checkout -b temp
+git push origin temp:temp
 </pre></div>
 
 
-<h2>文本替换</h2>
-<div class="highlight"><pre>sed -e <span class="s1">&#39;2s/ext3/ext4/&#39;</span> /etc/fstab <span class="c"># 将第二行的ext3改成ext4</span>
+<h3>重建主分支</h3>
+<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
+<div class="highlight"><pre>git push origin --delete master   <span class="c"># 删除远端主分支</span>
+git branch -d master              <span class="c"># 删除本地主分支</span>
+git checkout -b master            <span class="c"># 新建主分支并切换到主分支</span>
+git push origin master            <span class="c"># 提交主分支</span>
 </pre></div>
 
 
-<h2>显示指定行</h2>
-<div class="highlight"><pre>sed -n <span class="s2">&quot;3p&quot;</span> /etc/fstab         <span class="c"># 显示第3行</span>
-sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># 显示第3到5行</span>
-sed -n <span class="s2">&quot;3p;5p&quot;</span> /etc/fstab    <span class="c"># 显示第3行和第5行</span>
-awk <span class="s1">&#39;NR==3&#39;</span> /etc/fstab     <span class="c"># 显示第3行</span>
+<p>这样我们就删除之前提交的敏感信息(如果是<code>github</code>现在就可以把默认分支切换到 <code>master</code>)</p>
+<h3>删除临时分支</h3>
+<div class="highlight"><pre>git branch -d temp
+git push origin --delete temp
 </pre></div>
-
-
-<h2>在行首或行尾添加:</h2>
-<div class="highlight"><pre>sed -e <span class="s1">&#39;s/^/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的行首添加hello</span>
-sed -e <span class="s1">&#39;s/$/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的行尾添加hello</span>
-sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span> <span class="c"># 在test文件的第3行行首添加hello</span>
-</pre></div>
-
-
-<h2>在vi里执行命令:</h2>
-<div class="highlight"><pre>vi /etc/sysconfig/networ-scripts/ifcfg-eth0
-<span class="c"># 打开vi,在末行模式下(ESC-&amp;gt;:)</span>
-
-:r!cat /mnt/ip.txt           <span class="c"># 在当前行的下面输入ip.txt的内容,r代表命令输出放到下一行,!后面是要执行的命令</span>
-:.!cat /mnt/ip.txt           <span class="c"># 在当前行输入ip.txt的内容,.代表将命令输出放到当前航</span>
-</pre></div>
-
-
-<h2>执行上一条命令:</h2>
-<p>如果刚执行了一条server network restart,如果又做了一些操作,需要再次执行,按上键调处可以,还有更快捷的就是:</p>
-<div class="highlight"><pre>!ser
-</pre></div>
-
-
-<p>!会在命令历史找与!后面匹配的最近一条命令.</p>
-<h2>通过ssh连接服务器上传下载文件:</h2>
-<p>当你通过ssh连接你的Linux的时候你想下载一个文件到本地,或者像把本地文件上传到远端,你想到用ftp吗?out了,当你通过ssh连接的时候Linux提供了两个命令 rz/sz,命令依赖于包lrzsz.rz命令可以将本地文件通过ssh上传到Linux上,sz pkg 可以将远端的pkg下载到本地.</p>
-<div class="highlight"><pre>yum -y install lrzsz           <span class="c"># 安装</span>
-</pre></div>
-
-
-<p>然后就可以通过rz/sz来上传下载文件,省去了文件服务器,也可更方便更快捷的管理你的服务器</p>
-<h2>windows文件转换为Linux格式的文件</h2>
-<p>windows的文件格式比Linux格式的文件多了一个回车符\r,可以通过命令来实现转换:
-直接转换,dos2unix依赖于包dos2unix:</p>
-<div class="highlight"><pre>dos2unix file.txt     <span class="c"># 需要安装dos2unix包</span>
-</pre></div>
-
-
-<p>通过删除\r来实现转换:</p>
-<div class="highlight"><pre>tr -d <span class="s1">&#39;\r&#39;</span> file.txt &amp;gt;&amp;gt; file1.txt   <span class="c"># 通过tr命令删除\r字符,并重定向追加到file1.txt</span>
-</pre></div>
-<p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/git.html">git</a>
 
     Tagged: 
-    <a href="http://www.linuxzen.com/tag/ming-ling.html">命令 </a>
-    <a href="http://www.linuxzen.com/tag/sz.html">sz </a>
-    <a href="http://www.linuxzen.com/tag/sshshang-chuan-xia-zai.html">ssh上传下载 </a>
-    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
-    <a href="http://www.linuxzen.com/tag/sed.html">sed </a>
-    <a href="http://www.linuxzen.com/tag/rz.html">rz </a>
-    <a href="http://www.linuxzen.com/tag/lrzsz.html">lrzsz </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/find.html">find </a>
-    <a href="http://www.linuxzen.com/tag/awk.html">awk </a>
+    <a href="http://www.linuxzen.com/tag/git.html">git </a>
+    <a href="http://www.linuxzen.com/tag/min-gan-xin-xi.html">敏感信息 </a>
+    <a href="http://www.linuxzen.com/tag/hui-tui.html">回退 </a>
+    <a href="http://www.linuxzen.com/tag/commit.html">commit </a>
+    <a href="http://www.linuxzen.com/tag/ban-ben-ku.html">版本库 </a>
 </p>
 
 
@@ -142,8 +101,8 @@ sed -e <span class="s1">&#39;3s/^/hello&#39;</span> <span class="nb">test</span>
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'linuxzen'
-        var disqus_identifier = "Linux一些比较实用的小技巧";
-        var disqus_url = "http://www.linuxzen.com/linux-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html";
+        var disqus_identifier = "解决git提交敏感信息(回退git版本库到某一个commit)";
+        var disqus_url = "http://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html";
 
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

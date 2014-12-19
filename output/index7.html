@@ -48,8 +48,45 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html"><h3 class="article-title">bottle的cookie操作小记(获取不是在当前页面创建的cookie)</h3></a>
+<h6 class="subheader" title="2012-06-02T17:51:00">六 02 六月 2012
+</h6>
+
+
+<p>这两天为用bottle+mongodb写的一个项目加上登录功能,无奈怎么都获取不到保存的cookie,文档给出让我们这样操作cookie的代码片段:</p>
+<div class="highlight"><pre><span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">login</span><span class="err">’</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">login</span> <span class="p">():</span>
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">username</span> <span class="err">’</span><span class="p">)</span>
+      <span class="n">password</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">forms</span> <span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="err">’</span><span class="n">password</span> <span class="err">’</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">check_user_credentials</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+           <span class="n">response</span> <span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&quot;account&quot;</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">secret</span><span class="o">=</span> <span class="err">’</span><span class="n">some</span><span class="o">-</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="err">’</span><span class="p">)</span>
+           <span class="k">return</span> <span class="s">&quot;Welcome </span><span class="si">%s</span><span class="s">!You are now logged in.&quot;</span> <span class="o">%</span> <span class="n">username</span>
+      <span class="k">else</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="s">&quot;Login failed.&quot;</span> 
+
+<span class="nd">@route</span><span class="p">(</span><span class="err">’</span><span class="o">/</span><span class="n">restricted</span><span class="err">’</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">restricted_area</span> <span class="p">():</span>
+      <span class="n">username</span> <span class="o">=</span> <span class="n">request</span> <span class="o">.</span><span class="n">get_cookie ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/web.html">web </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/cookie.html">cookie </a>
+    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bottlede-cookiecao-zuo-xiao-ji-huo-qu-bu-shi-zai-dang-qian-ye-mian-chuang-jian-de-cookie.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-beakerrang-bottlezhi-chi-session.html"><h3 class="article-title">使用beaker让bottle支持session</h3></a>
-<h6 class="subheader" title="2012-05-26T11:38:00">Sat 26 May 2012
+<h6 class="subheader" title="2012-05-26T11:38:00">六 26 五月 2012
 </h6>
 
 
@@ -87,7 +124,7 @@
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html"><h3 class="article-title">使用Linux shell实时检测文件变更</h3></a>
-<h6 class="subheader" title="2012-05-18T11:16:00">Fri 18 May 2012
+<h6 class="subheader" title="2012-05-18T11:16:00">五 18 五月 2012
 </h6>
 
 
@@ -127,7 +164,7 @@ checkisdir<span class="o">()</span>
 
             <article>
                 <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h3 class="article-title">Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h3></a>
-<h6 class="subheader" title="2012-05-16T11:05:00">Wed 16 May 2012
+<h6 class="subheader" title="2012-05-16T11:05:00">三 16 五月 2012
 </h6>
 
 
@@ -167,7 +204,7 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/iptablesrestorecon-command-not-foundwu-fa-bao-cun-ce-lue-jie-jue.html"><h3 class="article-title">iptables:restorecon: command not found无法保存策略解决</h3></a>
-<h6 class="subheader" title="2012-04-30T10:43:00">Mon 30 April 2012
+<h6 class="subheader" title="2012-04-30T10:43:00">一 30 四月 2012
 </h6>
 
 
@@ -201,7 +238,7 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h3 class="article-title">用Python写的终端下的翻译工具</h3></a>
-<h6 class="subheader" title="2012-04-23T23:23:00">Mon 23 April 2012
+<h6 class="subheader" title="2012-04-23T23:23:00">一 23 四月 2012
 </h6>
 
 
@@ -237,7 +274,7 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h3 class="article-title">用python发带附件的邮件用来定时备份mysql数据库</h3></a>
-<h6 class="subheader" title="2012-04-21T18:26:00">Sat 21 April 2012
+<h6 class="subheader" title="2012-04-21T18:26:00">六 21 四月 2012
 </h6>
 
 
@@ -277,7 +314,7 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h3 class="article-title">CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h3></a>
-<h6 class="subheader" title="2012-04-19T17:59:00">Thu 19 April 2012
+<h6 class="subheader" title="2012-04-19T17:59:00">四 19 四月 2012
 </h6>
 
 
@@ -315,7 +352,7 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
             <article>
                 <a href="http://www.linuxzen.com/lvskeepalivedshi-xian-gao-ke-yong-qun-ji-pei-zhi-xiang-jie.html"><h3 class="article-title">lvs+keepalived实现高可用群集配置详解</h3></a>
-<h6 class="subheader" title="2012-04-16T14:25:00">Mon 16 April 2012
+<h6 class="subheader" title="2012-04-16T14:25:00">一 16 四月 2012
 </h6>
 
 
@@ -345,7 +382,7 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 
             <article>
                 <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h3 class="article-title">使用Python进行web开发</h3></a>
-<h6 class="subheader" title="2012-04-13T16:39:00">Fri 13 April 2012
+<h6 class="subheader" title="2012-04-13T16:39:00">五 13 四月 2012
 </h6>
 
 
@@ -370,49 +407,6 @@ DR(Direct Routing)是效率最高的,与IP Tunneling类似,都是处理一般连
 
 
 <p><a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h3 class="article-title">Linux下配置vim一键编译C/C++并执行</h3></a>
-<h6 class="subheader" title="2012-04-05T12:07:00">Thu 05 April 2012
-</h6>
-
-
-<p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
-<p>首先在/usr/bin/下创建compile脚本:</p>
-<div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
-</pre></div>
-
-
-<p>添加如下内容:</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
-<span class="c"># Filename : compile</span>
-<span class="c"># Describe : To compile c/c++</span>
-<span class="c"># Author   : cold night(www.linuxzen.com)</span>
-<span class="c"># Version  : 0.2</span>
-<span class="c"># Change   : 增加终端着色 </span>
-
-clear
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-eq 1 <span class="o">]</span>
-<span class="k">then</span>
-<span class="k">    </span><span class="nv">filename</span><span class="o">=</span><span class="nv">$1</span>
-    <span class="nv">outname</span><span class="o">=</span><span class="k">${</span><span class="nv">filename ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/bian-yi.html">编译 </a>
-    <a href="http://www.linuxzen.com/tag/jian.html">一键 </a>
-    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/cc.html">C/C++ </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

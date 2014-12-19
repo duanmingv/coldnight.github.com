@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>cold's world - 一键</title>
+    <title>Linux下配置vim一键编译C/C++并执行</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -43,16 +43,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html" rel="bookmark"
+        title="Permalink to Linux下配置vim一键编译C/C++并执行">Linux下配置vim一键编译C/C++并执行</a></h3>
+    </header>
 
-            <article>
-                <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html"><h3 class="article-title">Linux下配置vim一键编译C/C++并执行</h3></a>
-<h6 class="subheader" title="2012-04-05T12:07:00">Thu 05 April 2012
+<h6 class="subheader" title="2012-04-05T12:07:00">四 05 四月 2012
 </h6>
 
 
-<p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
+    <p>最近在学习C++,编辑器当然是vim,想在编辑的时候可以一键编译,于是自己写了一个小脚本配合vim来实现.由于刚开始学,所以对C/C++的扩展名不太了解,所以只对.cpp .cc .c进行处理.</p>
 <p>首先在/usr/bin/下创建compile脚本:</p>
 <div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">compile</span>
 </pre></div>
@@ -140,11 +141,12 @@ autocmd <span class="nb">FileType</span> <span class="k">c</span> map <span clas
 </pre></div>
 
 
-<p>配置完毕我们就可以用vim编辑C/C++源文件的时候按F8就可以进行一键编译执行.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+<p>配置完毕我们就可以用vim编辑C/C++源文件的时候按F8就可以进行一键编译执行.</p>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/bian-yi.html">编译 </a>
-    <a href="http://www.linuxzen.com/tag/jian.html">一键 </a>
+    <a href="http://www.linuxzen.com/tag/yi-jian.html">一键 </a>
     <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
     <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
     <a href="http://www.linuxzen.com/tag/cc.html">C/C++ </a>
@@ -152,20 +154,22 @@ autocmd <span class="nb">FileType</span> <span class="k">c</span> map <span clas
 
 
 
-<p><a href="http://www.linuxzen.com/linuxxia-pei-zhi-vim-jian-bian-yi-ccbing-zhi-xing.html#disqus_thread">comments</a></p>            </article>
 
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
+	<h4>Comments</h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'linuxzen'
+        var disqus_identifier = "Linux下配置vim一键编译C/C++并执行";
+        var disqus_url = "http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html";
 
-<p>
-
-</p>
-</div>
-
-
-
-            <!-- /#posts-list -->
-
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
     </div>
     <!-- End Main Content -->
 
