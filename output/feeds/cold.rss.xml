@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cold's world</title><link>http://www.linuxzen.com/</link><description></description><atom:link href="http://www.linuxzen.com/feeds/cold.rss.xml" rel="self"></atom:link><lastBuildDate>Sun, 19 Oct 2014 21:59:00 +0800</lastBuildDate><item><title>基于 Python 生成器的 Tornado 协程异步</title><link>http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html</link><description>&lt;p&gt;&lt;a href="http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html"&gt;Tornado 4.0&lt;/a&gt; 已经发布了很长一段时间了,
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cold's world</title><link>http://www.linuxzen.com/</link><description></description><atom:link href="http://www.linuxzen.com/feeds/cold.rss.xml" rel="self"></atom:link><lastBuildDate>Fri, 19 Dec 2014 17:15:00 +0800</lastBuildDate><item><title>基于 Python 生成器的 Tornado 协程异步</title><link>http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html</link><description>&lt;p&gt;&lt;a href="http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html"&gt;Tornado 4.0&lt;/a&gt; 已经发布了很长一段时间了,
 新版本广泛的应用了协程(&lt;code&gt;Future&lt;/code&gt;)特性.  我们目前已经将 Tornado 升级到最新版本, 而且也大量的使用协程特性. &lt;/p&gt;
 &lt;p&gt;很长时间没有更新博客, 今天就简单介绍下 Tornado 协程实现原理, Tornado 的协程是基于 Python 的生成器实现的, 
 所以首先来回顾下生成器.&lt;/p&gt;
@@ -112,7 +112,7 @@
 &lt;h2&gt;总结&lt;/h2&gt;
 &lt;p&gt;Tornado 的协程异步可以让异步看起来是顺序执行的, 可以从一大串的 &lt;code&gt;callback&lt;/code&gt; 中解脱出来.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;Tornado&lt;/code&gt; 的协程异步并不是这三言两语能说清楚的, 其中有很复杂的封装和传递, 有兴趣可以自己
-阅读源码.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">cold</dc:creator><pubDate>Sun, 19 Oct 2014 21:59:00 +0800</pubDate><guid>tag:www.linuxzen.com,2014-10-19:ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html</guid><category>Python</category><category>generator</category><category>coroutine</category><category>协程</category><category>生成器</category><category>Tornado</category></item><item><title>Python 入门指南</title><link>http://www.linuxzen.com/python-ru-men-zhi-nan.html</link><description>&lt;h1&gt;引子&lt;/h1&gt;
+阅读源码.&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">cold</dc:creator><pubDate>Fri, 19 Dec 2014 17:15:00 +0800</pubDate><guid>tag:www.linuxzen.com,2014-12-19:ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html</guid><category>Python</category><category>generator</category><category>coroutine</category><category>协程</category><category>生成器</category><category>Tornado</category></item><item><title>Python 入门指南</title><link>http://www.linuxzen.com/python-ru-men-zhi-nan.html</link><description>&lt;h1&gt;引子&lt;/h1&gt;
 &lt;p&gt;经常能在 Python 群里看到很多新人在问一些非常基础的问题, 基本每天都在重复的问这些问题,
 在这里就总结一下这些问题.&lt;/p&gt;
 &lt;p&gt;首先声明, 本文不打算教会你 Python, 本文力图陈列一些新手容易遇到的问题, 并企图教会你

@@ -1,7 +1,7 @@
 title: 基于 Python 生成器的 Tornado 协程异步 
 tags: Python, generator, coroutine, 协程, 生成器, Tornado
 category: Python
-date: 2014-10-19 21:59
+date: 2014-12-19 17:15
 
 
 [Tornado 4.0](http://www.tornadoweb.org/en/branch4.0/releases/v4.0.0.html) 已经发布了很长一段时间了,
