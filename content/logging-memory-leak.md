@@ -18,7 +18,7 @@ import logging
 class Connection(object):
     def __init__(self):
         self._logger_name = "Connection.{}".format(id(self))
-        self.logger = logging.getLogger()
+        self.logger = logging.getLogger(self._logger_name)
 ```
 
 当然测试环境是开 DEBUG, 开 DEBUG 就不会往 syslog 里打, 所以不会出现 UDP 连接数
