@@ -48,6 +48,43 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h3 class="article-title">vLog使用Tornado框架结合memcached缓存页面</h3></a>
+<h6 class="subheader" title="2013-01-16T16:14:00">三 16 一月 2013
+</h6>
+
+
+<h2>原因</h2>
+<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
+<h2>实现</h2>
+<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
+prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/14 09:57:31</span>
+<span class="c">#   Desc ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/memcached.html">Memcached </a>
+    <a href="http://www.linuxzen.com/tag/pylibmc.html">pylibmc </a>
+    <a href="http://www.linuxzen.com/tag/huan-cun.html">缓存 </a>
+    <a href="http://www.linuxzen.com/tag/vlog.html">vLog </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h3 class="article-title">python 使用pyxmpp2编写gtalk群</h3></a>
 <h6 class="subheader" title="2012-10-29T14:48:00">一 29 十月 2012
 </h6>
@@ -426,59 +463,9 @@ import pdb; pdb.set_trace()
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h3 class="article-title">lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h3></a>
-<h6 class="subheader" title="2012-08-10T16:02:00">五 10 八月 2012
-</h6>
-
-
-<p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
-<h2>介绍</h2>
-<h3>lambda</h3>
-<p>Python用于支持将函数赋值给变量的一个操作符
-默认是返回的,所以不用再加return关键字,不然会报错</p>
-<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
-<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
-<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
-</pre></div>
-
-
-<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
-<h3>map()</h3>
-<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
-<h3>filter()</h3>
-<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
-<h3>reduce()</h3>
-<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
-<h2>将上面三个函数和lambda结合使用</h2>
-<div class="highlight"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="c"># 序列中的每个元素加1</span>
-<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/pai-xu.html">排序 </a>
-    <a href="http://www.linuxzen.com/tag/lie-biao.html">列表 </a>
-    <a href="http://www.linuxzen.com/tag/sorted.html">sorted </a>
-    <a href="http://www.linuxzen.com/tag/reduce.html">reduce </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/map.html">map </a>
-    <a href="http://www.linuxzen.com/tag/list.html">list </a>
-    <a href="http://www.linuxzen.com/tag/lambda.html">lambda </a>
-    <a href="http://www.linuxzen.com/tag/filter.html">filter </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 3 of 4</h6>
+<h6 class="subheader">Page 3 of 5</h6>
 
 <p>
             <a href="http://www.linuxzen.com/category/python2.html">&laquo; Prev</a>

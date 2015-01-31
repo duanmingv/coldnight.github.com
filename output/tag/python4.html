@@ -48,6 +48,56 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h3 class="article-title">lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h3></a>
+<h6 class="subheader" title="2012-08-10T16:02:00">五 10 八月 2012
+</h6>
+
+
+<p>lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</p>
+<h2>介绍</h2>
+<h3>lambda</h3>
+<p>Python用于支持将函数赋值给变量的一个操作符
+默认是返回的,所以不用再加return关键字,不然会报错</p>
+<div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+<span class="n">result</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># return 4</span>
+<span class="nb">map</span><span class="p">()</span><span class="o">/</span><span class="nb">filter</span><span class="p">()</span><span class="o">/</span><span class="nb">reduce</span><span class="p">()</span>
+</pre></div>
+
+
+<p>需要两个参数,第一个是一个处理函数,第二个是一个序列(list,tuple,dict)</p>
+<h3>map()</h3>
+<p>将序列中的元素通过处理函数处理后返回一个新的列表</p>
+<h3>filter()</h3>
+<p>将序列中的元素通过函数过滤后返回一个新的列表</p>
+<h3>reduce()</h3>
+<p>将序列中的元素通过一个二元函数处理返回一个结果</p>
+<h2>将上面三个函数和lambda结合使用</h2>
+<div class="highlight"><pre><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c"># 序列中的每个元素加1</span>
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">li</span><span class="p">)</span> <span class="c"># [2 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pai-xu.html">排序 </a>
+    <a href="http://www.linuxzen.com/tag/lie-biao.html">列表 </a>
+    <a href="http://www.linuxzen.com/tag/sorted.html">sorted </a>
+    <a href="http://www.linuxzen.com/tag/reduce.html">reduce </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/map.html">map </a>
+    <a href="http://www.linuxzen.com/tag/list.html">list </a>
+    <a href="http://www.linuxzen.com/tag/lambda.html">lambda </a>
+    <a href="http://www.linuxzen.com/tag/filter.html">filter </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/python-chang-yong-de-lie-biao-cao-zuo.html"><h3 class="article-title">Python 常用的列表操作</h3></a>
 <h6 class="subheader" title="2012-08-10T15:48:00">五 10 八月 2012
 </h6>
@@ -410,42 +460,6 @@ Gentoo使用emerge包管理,安装Python2.7:</p>
 
 
 <p><a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html"><h3 class="article-title">用Python写的终端下的翻译工具</h3></a>
-<h6 class="subheader" title="2012-04-23T23:23:00">一 23 四月 2012
-</h6>
-
-
-<p>为什么写这个程序,为什么不给这个程序配备gui?原因很简单,因为我是一个命令行控,Linux习惯了不习惯了鼠标,总觉得点着不如敲命令快,各位在看这篇文章就说明和本人有相同的爱好.这个用python写的翻译工具是通过google来实现的,由于google返回的数据不是很规范(或者说我没有找到规律),现在前三项能正常显示(源词,翻译结果,和汉语拼音).下面的词性和其他释义可能不同,见谅,望大神可以指点下小弟和帮小弟完善,这里赶紧不尽.</p>
-<p>好了不费话了,下面放代码:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*-coding:utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: translate.py</span>
-<span class="sd">#         Desc: To translate with zh to en or en2zh</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/fan-yi.html">翻译 </a>
-    <a href="http://www.linuxzen.com/tag/zhong-duan.html">终端 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/google.html">google </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

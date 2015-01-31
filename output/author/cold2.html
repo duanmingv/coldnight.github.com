@@ -48,6 +48,44 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h3 class="article-title">PyQt + QML 快速开发GUI总结</h3></a>
+<h6 class="subheader" title="2013-11-06T15:25:00">三 06 十一月 2013
+</h6>
+
+
+<p>最近结束一个使用PyQt+QML开发的项目, 在此对一些经验做出总结分享出来.
+结合QML确实可以快速的构建出GUI程序, 但是相关资料太少, 特别是中文资料,
+而且坑太多, 特别是和后端PyQt结合的时候有很多莫名奇妙的问题.
+这篇文章会总结这些问题, 避免以后碰到无从下手.</p>
+<p>PS:QML的一些基础问题不会在这里讨论, 本篇文章仅讨论一些经验性的问题, 本篇文章使用PyQt4</p>
+<p><em>请留意文章中间的&quot;注意&quot;</em></p>
+<div class="section" id="pyqt">
+<h2>如何和PyQt交互</h2>
+<p>QML和PyQt交互主要有三种方法: PyQt渲染数据, 信号传递, QML提供接口</p>
+<div class="section" id="pyqtqml">
+<h3>使用PyQt显示QML</h3>
+<p>要想在Python里使用PyQt来调用QML显示, 需要用到 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 实例的 <tt class="docutils literal">setSource</tt> 将一个 <tt class="docutils literal">PyQt4.QtCore.QUrl</tt> 对象传递进去, 然后调用 <tt class="docutils literal">PyQt4.QtDeclarative.QDeclarativeView</tt> 对象的 <tt class="docutils literal">show</tt> 方法, 下面是一个例子:</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtDeclarative</span> <span class="kn">import</span> <span class="n">QDeclarativeView</span>
+<span class="kn">from</span> <span class="nn">PyQt4.QtGui ...</span></pre></div></div></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/qml.html">QML </a>
+    <a href="http://www.linuxzen.com/tag/pyqt.html">PyQt </a>
+    <a href="http://www.linuxzen.com/tag/gui.html">Gui </a>
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/qt.html">Qt </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/tui-jian-ji-kuan-zui-jin-fa-xian-fei-chang-ku-de-vimcha-jian.html"><h3 class="article-title">推荐几款最近发现非常酷的Vim插件</h3></a>
 <h6 class="subheader" title="2013-10-18T13:14:00">五 18 十月 2013
 </h6>
@@ -399,49 +437,6 @@ git push origin temp:temp
 
 
 <p><a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h3 class="article-title">clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h3></a>
-<h6 class="subheader" title="2013-04-26T15:40:00">五 26 四月 2013
-</h6>
-
-
-<p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
-<h2>更新内容</h2>
-<ol>
-<li>数据库使用<code>SQLAlchemy</code>重写</li>
-<li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
-<li>改变代码结构, 清理部分代码</li>
-<li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
-<li>废弃一些不常用的命令</li>
-<li>改变数据库表结构</li>
-<li>废弃<code>channel</code>功能, <code>cd</code>命令仅支持切换聊天和安静模式</li>
-<li>删除一些不用的配置</li>
-</ol>
-<h2>如何升级</h2>
-<p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
-<h2>新的依赖</h2>
-<p>本次更新添加了依赖 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/clubot.html">clubot </a>
-    <a href="http://www.linuxzen.com/tag/pyxmpp2.html">pyxmpp2 </a>
-    <a href="http://www.linuxzen.com/tag/gtalk.html">gtalk </a>
-    <a href="http://www.linuxzen.com/tag/xmpp.html">xmpp </a>
-    <a href="http://www.linuxzen.com/tag/geng-xin.html">更新 </a>
-    <a href="http://www.linuxzen.com/tag/zhong-xie.html">重写 </a>
-    <a href="http://www.linuxzen.com/tag/sqlalchemy.html">SQLAlchemy </a>
-    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

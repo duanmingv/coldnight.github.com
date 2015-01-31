@@ -48,6 +48,39 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html"><h3 class="article-title">使用Python进行web开发</h3></a>
+<h6 class="subheader" title="2012-04-13T16:39:00">五 13 四月 2012
+</h6>
+
+
+<p>最近有一个小的web项目,想用喜爱都python,但是想到之前接触过都django我感觉一阵不寒而栗,为什么?Django的配置太过复杂,而且小项目不太适合MVC的开发模式,所以我将目光转向了web.py这个小型web框架,并且真正让我动心都是其官方网站上都一句话:"Django lets you write web apps in Django. TurboGears lets you write web apps in TurboGears. Web.py lets you write web apps in Python." —  Adam Atlas</p>
+<p>最近切换了Ubuntu替换了Win7系统,所以这里介绍下Ubuntu都安装web.py</p>
+<h3>安装easy_install</h3>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+
+
+<h3>使用easy_install安装web.py</h3>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">easy_install ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/kai-fa.html">开发 </a>
+    <a href="http://www.linuxzen.com/tag/webpy.html">web.py </a>
+    <a href="http://www.linuxzen.com/tag/ubuntu.html">Ubuntu </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-pythonjin-xing-webkai-fa.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/linuxxia-pei-zhi-vimyi-jian-bian-yi-ccbing-zhi-xing.html"><h3 class="article-title">Linux下配置vim一键编译C/C++并执行</h3></a>
 <h6 class="subheader" title="2012-04-05T12:07:00">四 05 四月 2012
 </h6>
@@ -395,39 +428,6 @@ sed -n <span class="s2">&quot;3,5p&quot;</span> /etc/gfstab  <span class="c"># �
 
 
 <p><a href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linuxyi-xie-bi-jiao-shi-yong-de-xiao-ji-qiao.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html"><h3 class="article-title">编写Linux shell脚本来实现nginx日志分割</h3></a>
-<h6 class="subheader" title="2012-02-17T10:27:00">五 17 二月 2012
-</h6>
-
-
-<p>nginx的accss日志每天都会产生大量的日志,不过不进行切割会使查看日志变得异常艰难,这里编写一个脚本结合crond来实现nginx的日志切割,切割的格式为日志后缀的数字越小表示离当前日期越近,比如access.log.2存放的内容要比access.log.1的内容要早.</p>
-<p>好了,废话不多说,脚本内容如下:</p>
-<div class="highlight"><pre><span class="c">#!/bin/sh</span>
-<span class="c"># Author   : cold night</span>
-<span class="c"># Filename : nglogcut.sh</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin
-<span class="nv">LogPath</span><span class="o">=</span><span class="s1">&#39;/usr/local/nginx/logs/access.log&#39;</span>    <span class="c"># 定义日志绝对路径 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/shell.html">shell</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/ri-zhi.html">日志 </a>
-    <a href="http://www.linuxzen.com/tag/fen-ge.html">分割 </a>
-    <a href="http://www.linuxzen.com/tag/shell.html">shell </a>
-    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
-    <a href="http://www.linuxzen.com/tag/log.html">log </a>
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/cut.html">cut </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/bian-xie-linux-shelljiao-ben-lai-shi-xian-nginxri-zhi-fen-ge.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

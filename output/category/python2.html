@@ -48,6 +48,43 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h3 class="article-title">SQLAlchemy MySQL数据库乱码解决</h3></a>
+<h6 class="subheader" title="2013-04-26T00:00:00">五 26 四月 2013
+</h6>
+
+
+<p>今天对<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>进行了<a href="/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">升级</a>, 但是导入数据后中文乱码, 一开是找资料说是在创建引擎的时候添加编码信息:</p>
+<div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&quot;mysql://root:@localhost:3306/clubot?charset=utf8&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>但是这并不行, 然后查看表信息:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="k">show</span> <span class="k">create</span> <span class="k">table</span> <span class="n">clubot_members</span><span class="p">;</span>
+<span class="n">clubot_members</span> <span class="o">|</span> <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="ss">`clubot_members`</span> <span class="p">(</span>
+  <span class="ss">`id`</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="no">NULL</span> <span class="kp">AUTO_INCREMENT</span><span class="p">,</span>
+  <span class="ss">`email`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`nick`</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_say`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT</span> <span class="no">NULL</span><span class="p">,</span>
+  <span class="ss">`last_change`</span> <span class="kt">timestamp</span> <span class="no">NULL</span> <span class="k">DEFAULT ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/sqlalchemy.html">sqlalchemy </a>
+    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="http://www.linuxzen.com/tag/shu-ju-ku.html">数据库 </a>
+    <a href="http://www.linuxzen.com/tag/luan-ma.html">乱码 </a>
+    <a href="http://www.linuxzen.com/tag/utf8.html">utf8 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html"><h3 class="article-title">借用Tornado实现高效的WebQQ机器人</h3></a>
 <h6 class="subheader" title="2013-04-23T13:36:00">二 23 四月 2013
 </h6>
@@ -350,46 +387,9 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h3 class="article-title">vLog使用Tornado框架结合memcached缓存页面</h3></a>
-<h6 class="subheader" title="2013-01-16T16:14:00">三 16 一月 2013
-</h6>
-
-
-<h2>原因</h2>
-<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
-<h2>实现</h2>
-<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
-prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/14 09:57:31</span>
-<span class="c">#   Desc ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/memcached.html">Memcached </a>
-    <a href="http://www.linuxzen.com/tag/pylibmc.html">pylibmc </a>
-    <a href="http://www.linuxzen.com/tag/huan-cun.html">缓存 </a>
-    <a href="http://www.linuxzen.com/tag/vlog.html">vLog </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 2 of 4</h6>
+<h6 class="subheader">Page 2 of 5</h6>
 
 <p>
             <a href="http://www.linuxzen.com/category/python.html">&laquo; Prev</a>

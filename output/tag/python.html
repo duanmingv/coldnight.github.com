@@ -47,6 +47,93 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html"><h3 class="article-title">logging 模块误用导致的内存泄露</h3></a>
+<h6 class="subheader" title="2015-01-31T10:58:00">六 31 一月 2015
+</h6>
+
+
+<p>首先介绍下怎么发现的吧, 线上的项目日志是通过 <code>logging</code> 模块打到 syslog 里, 
+跑了一段时间后发现 syslog 的 UDP 连接超过了 8W, 没错是 8 W. 主要是 logging 
+模块用的不对</p>
+<p>我们之前有这么一个需求, 就是针对每一个连接日志输出当前连接的信息, 所以每一个
+连接就创建了一个日志实例, 并分配一个 <code>Formatter</code>, 创建日志实例为了区分其他连接
+所以我就简单粗暴的用了当前对象的 id 来作为日志名称:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+
+
+<span class="k">class</span> <span class="nc">Connection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger_name</span> <span class="o">=</span> <span class="s">&quot;Connection.{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+</pre></div>
+
+
+<p>当然测试环境是开 DEBUG, 开 DEBUG 就不会往 syslog 里打, 所以不会出现 UDP 连接数
+过多, 也就不会知道有内存泄露的, 我们来看看这样为什么会导致内存泄露, 首先看看 
+<code>getLogger</code> 的代码:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a logger with the specified name, creating it if necessary.</span>
+
+<span class="sd">    If no name is specified, return the root logger.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Logger</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">root</span>
+</pre></div>
+
+
+<p>主要调用了 <code>Logger.manager.getLogger</code>, 这个函数有下面一段代码片段</p>
+<div class="highlight"><pre>            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">loggerDict</span><span class="p">:</span>
+                <span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loggerDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span> <span class="n">PlaceHolder</span><span class="p">):</span>
+                    <span class="n">ph</span> <span class="o">=</span> <span class="n">rv</span>
+                    <span class="n">rv</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loggerClass</span> <span class="ow">or</span> <span class="n">_loggerClass</span><span class="p">)(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">rv</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">loggerDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rv</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fixupChildren</span><span class="p">(</span><span class="n">ph</span><span class="p">,</span> <span class="n">rv</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fixupParents</span><span class="p">(</span><span class="n">rv</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rv</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loggerClass</span> <span class="ow">or</span> <span class="n">_loggerClass</span><span class="p">)(</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">rv</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">loggerDict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rv</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fixupParents</span><span class="p">(</span><span class="n">rv</span><span class="p">)</span>
+</pre></div>
+
+
+<p>logging 模块为了保证同一个名称引用同一个日志实例,所以就把所有的日志实例全部存
+在了一个 <code>loggerDict</code> 的字典里, 所以除非程序退出, 创建的日志实例引用是不会释放的,
+所以日志实例里的 <code>handlers</code> 也不会释放. 之前我又用的对象的 id 来作为日志名称
+的一部分, 所以 <code>SyslogHandler</code> 创建的 UDP 连接就一直被占用导致了过多的 UDP 连接. </p>
+<p>为了解决这个问题我在连接关闭的时候加入了如下代码:</p>
+<div class="highlight"><pre><span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">loggerDict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_logger_name</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+
+
+<p>按说只加上上面第一行的代码就应该释放了, 但是没有, 所以又有了第三行代码, SyslogHandler
+才最终释放, 这个问题暂时还不知道为什么, 还需要再查查.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/logging.html">logging </a>
+    <a href="http://www.linuxzen.com/tag/nei-cun-xie-lu.html">内存泄露 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html"><h3 class="article-title">基于 Python 生成器的 Tornado 协程异步</h3></a>
 <h6 class="subheader" title="2014-12-19T17:15:00">五 19 十二月 2014
 </h6>
@@ -70,102 +157,7 @@
 </pre></div>
 
 
-<p>我们调用其 <code>next</code> 方法则返回 <code>yield</code> 关键字之后的内容.</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">t</span> <span class="o">=</span> <span class="n">test</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-<span class="mi">1</span>
-</pre></div>
-
-
-<p>如果我们接着调用  <code>next</code> 方法, 后面又没有 <code>yield</code> 关键字继续返回的话, 会抛出一个
-<code>StopIteration</code> 异常.</p>
-<p><code>yield</code> 关键字不仅仅能从生成器内部返回状态, 同时也可以将外部信息传递到生成器内部,
-通过将 <code>yeild</code> 关键里赋值给变量, 并调用生成器的 <code>send</code> 方法来将对象传递到生成器
-内部. 需要注意的是生成器的开始必须调用其 <code>next</code> 方法, 后面 <code>send</code> 方法调用的同时
-也会触发 <code>next</code> 动作. 如果没有变量接收 <code>yield</code> 关键字那么 <code>send</code> 传递的值将会
-被丢弃.</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="k">yield</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-</pre></div>
-
-
-<p>首先调用 <code>next</code> 上面函数返回的生成器将返回 <code>None</code>, 如果这时候直接调用 <code>next</code> 将
-会给生成器发送 <code>None</code>, 如果调用 <code>send</code> 发送一个值, 将打印这个值并抛出 <code>StopIteration</code>
-异常.</p>
-<h2>一个简单地协程</h2>
-<p>以上就是实现协程的所有基础, 为了加深理解, 我们这里写一个小例子, 例子我们只使用协程
-开启两个甚至多个死循环, 下面就是一个极其简单地例子::</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span>
-
-
-<span class="k">def</span> <span class="nf">loop1</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; 循环1负责抛出一个函数和对应的参数, 并接收结果</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="k">yield</span> <span class="nb">sum</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">ret</span><span class="p">]</span>
-        <span class="n">a</span><span class="p">,</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span><span class="p">,</span> <span class="n">a</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loop1 ret&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">loop2</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; 循环2 负责接收函数并计算结果, 然后 yield 出结果</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-        <span class="n">func</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="k">yield</span>
-        <span class="k">yield</span> <span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Loop2&quot;</span><span class="p">)</span>
-
-
-<span class="n">l1</span> <span class="o">=</span> <span class="n">loop1</span><span class="p">()</span>
-<span class="n">l2</span> <span class="o">=</span> <span class="n">loop2</span><span class="p">()</span>
-<span class="n">tmp</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">l2</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">l2</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
-</pre></div>
-
-
-<p>上面例子里 loop1 负责产生任务, loop2 负责执行任务, 主循环负责调度任务并将任务结果发回给
-任务产生者.</p>
-<h2>Tornado 如何做的</h2>
-<p>我们首先看一个使用 Tornado 协程异步的例子</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">with_statement</span>
-
-<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">gen</span>
-<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">web</span>
-<span class="kn">from</span> <span class="nn">tornado</span> <span class="kn">import</span> <span class="n">httpclient</span>
-
-
-<span class="k">class</span> <span class="nc">ActionHandler</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
-
-    <span class="nd">@gen.coroutine</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">httpclient</span><span class="o">.</span><span class="n">AsyncHTTPClient</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s">&quot;http://www.linuxzen.com&quot;</span><span class="p">)</span>
-
-        <span class="c"># ...</span>
-</pre></div>
-
-
-<p>其实原理在上面简单地例子里已经讲清楚了, 我们来简单分析一遍上面的例子, 首先 Tornado 得到
-<code>ActionHandler.get</code> 方法抛出(<code>next</code>)的一个任务, 然后异步的去执行任务, 当任务(网络请求)结束或
-异常时 Tornado 取得事件通知然后将结果放回(<code>send</code>)到该方法中让该方法继续执行.</p>
-<p>由于是异步的, 调用这个方法并不会阻塞其他任务执行.</p>
-<p>这时候我们的方法其实就是上个例子 <code>loop1</code> 函数, 而 <code>Tornado</code> 调度并执行了其抛出的任务.</p>
-<h2>总结</h2>
-<p>Tornado 的协程异步可以让异步看起来是顺序执行的, 可以从一大串的 <code>callback</code> 中解脱出来.</p>
-<p><code>Tornado</code> 的协程异步并不是这三言两语能说清楚的, 其中有很复杂的封装和传递, 有兴趣可以自己
-阅读源码.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+<p>我们调用其 <code>next ...</code></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/python.html">Python </a>
@@ -178,11 +170,9 @@
 
 
 
-<p><a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/ji-yu-python-sheng-cheng-qi-de-tornado-xie-cheng-yi-bu.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -486,54 +476,6 @@ python setup.py install
 
 
 <p><a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h3 class="article-title">说说Python装饰器</h3></a>
-<h6 class="subheader" title="2013-05-20T14:52:00">一 20 五月 2013
-</h6>
-
-
-<p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
-<p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">return</span> <span class="n">r</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</pre></div>
-
-
-<p>我们用这个装饰器装饰一个<code>test</code>函数</p>
-<div class="highlight"><pre><span class="nd">@run_time</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
-</pre></div>
-
-
-<p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
-<div class="highlight"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</pre></div>
-
-
-<p>装饰器将在解释器运行一开始就被加载 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/zhuang-shi-qi.html">装饰器 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

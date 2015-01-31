@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2014-12-19T17:15:09-00:00</lastmod>
+<lastmod>2015-01-31T11:13:42-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2014-12-19T17:15:09-00:00</lastmod>
+<lastmod>2015-01-31T11:13:42-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2014-12-19T17:15:09-00:00</lastmod>
+<lastmod>2015-01-31T11:13:42-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2014-12-19T17:15:09-00:00</lastmod>
+<lastmod>2015-01-31T11:13:42-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html</loc>
+<lastmod>2015-01-31T10:58:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -698,7 +705,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/python.html</loc>
-<lastmod>2014-12-19T17:15:00+08:06</lastmod>
+<lastmod>2015-01-31T10:58:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -839,6 +846,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/pyxmpp2.html</loc>
 <lastmod>2013-04-26T15:40:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/suo-jin-dui-qi-xian.html</loc>
+<lastmod>2013-10-18T13:14:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1034,7 +1048,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2014-12-19T17:15:00+08:06</lastmod>
+<lastmod>2015-01-31T10:58:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1425,6 +1439,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/nei-cun-xie-lu.html</loc>
+<lastmod>2015-01-31T10:58:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/fa-xing-ban.html</loc>
 <lastmod>2012-01-19T11:35:00+08:06</lastmod>
 <changefreq>daily</changefreq>
@@ -1635,8 +1656,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://www.linuxzen.com/tag/suo-jin-dui-qi-xian.html</loc>
-<lastmod>2013-10-18T13:14:00+08:06</lastmod>
+<loc>http://www.linuxzen.com/tag/logging.html</loc>
+<lastmod>2015-01-31T10:58:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2749,7 +2770,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2014-12-19T17:15:00+08:06</lastmod>
+<lastmod>2015-01-31T10:58:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
