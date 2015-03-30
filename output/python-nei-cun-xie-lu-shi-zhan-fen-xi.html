@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>cold's world - 内存</title>
+    <title>Python 内存泄露实战分析</title>
 
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -43,16 +43,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html" rel="bookmark"
+        title="Permalink to Python 内存泄露实战分析">Python 内存泄露实战分析</a></h3>
+    </header>
 
-            <article>
-                <a href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html"><h3 class="article-title">Python 内存泄露实战分析</h3></a>
 <h6 class="subheader" title="2015-03-30T17:29:00">一 30 三月 2015
 </h6>
 
 
-<h2>引子</h2>
+    <h2>引子</h2>
 <p>之前一直盲目的认为 Python 不会存在内存泄露, 但是眼看着上线的项目随着运行时间的增长
 而越来越大的内存占用, 我意识到我写的程序在发生内存泄露, 之前 debug 过 
 <a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html">logging 模块导致的内存泄露</a>.</p>
@@ -162,7 +163,8 @@
 <h3>日志模块</h3>
 <p>参见 <a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html">logging 模块导致的内存泄露</a>.</p>
 <h2>参考</h2>
-<p><a href="http://www.cnblogs.com/vamei/p/3232088.html">Python 垃圾回收</a></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+<p><a href="http://www.cnblogs.com/vamei/p/3232088.html">Python 垃圾回收</a></p>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/python.html">Python </a>
@@ -175,20 +177,22 @@
 
 
 
-<p><a href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html#disqus_thread">comments</a></p>            </article>
 
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
+	<h4>Comments</h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'linuxzen'
+        var disqus_identifier = "Python 内存泄露实战分析";
+        var disqus_url = "http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html";
 
-<p>
-
-</p>
-</div>
-
-
-
-            <!-- /#posts-list -->
-
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
     </div>
     <!-- End Main Content -->
 

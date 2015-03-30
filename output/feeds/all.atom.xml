@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2015-03-30T17:29:00+08:00</updated><entry><title>Python 内存泄露产生的原因</title><link href="http://www.linuxzen.com/python-nei-cun-xie-lu-chan-sheng-de-yuan-yin.html" rel="alternate"></link><updated>2015-03-30T17:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2015-03-30:python-nei-cun-xie-lu-chan-sheng-de-yuan-yin.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2015-03-30T17:29:00+08:00</updated><entry><title>Python 内存泄露实战分析</title><link href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html" rel="alternate"></link><updated>2015-03-30T17:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2015-03-30:python-nei-cun-xie-lu-shi-zhan-fen-xi.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
 &lt;p&gt;之前一直盲目的认为 Python 不会存在内存泄露, 但是眼看着上线的项目随着运行时间的增长
 而越来越大的内存占用, 我意识到我写的程序在发生内存泄露, 之前 debug 过 
 &lt;a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html"&gt;logging 模块导致的内存泄露&lt;/a&gt;.&lt;/p&gt;
@@ -26,13 +26,13 @@
 &lt;p&gt;同时可以在对象该释放的时候查看对象的引用计数, 通过 &lt;code&gt;sys.getrefcount(obj)&lt;/code&gt;. 如果引用计数变为了 &lt;code&gt;2&lt;/code&gt; 
 则说明该对象在跳出命名空间后就会被正确回收.&lt;/p&gt;
 &lt;h2&gt;产生原因&lt;/h2&gt;
-&lt;p&gt;大部分没有被正确回收可能因为如下原因:&lt;/p&gt;
+&lt;p&gt;项目中大部分没有被正确回收因为如下原因:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;被退出才回收的对象引用&lt;/li&gt;
 &lt;li&gt;交叉引用&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;被退出才回收的对象引用&lt;/h3&gt;
-&lt;p&gt;如果你为了追踪某些东西把分配的对象同时放在一个列表里, 而这个列表只有在程序退出时才会被回收, 
+&lt;p&gt;为了追踪连接所以把连接对象同时放在一个列表里, 而这个列表只有在程序退出时才会被回收, 
 如果不正确处理, 那么分配的对象将也会只在程序退出时才会被回收.&lt;/p&gt;
 &lt;p&gt;全局变量和类变量都只会在程序退出的时候才会被回收:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;_CONNECTIONS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
