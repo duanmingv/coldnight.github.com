@@ -39,7 +39,7 @@ PID=50662;while true; do; ps aux | grep $PID | grep -v grep | awk '{print $5" "$
 
 ## 产生原因
 
-项目中大部分没有被正确回收因为如下原因:
+项目中两种情况导致对象没有被正确回收:
 
 * 被退出才回收的对象引用
 * 交叉引用

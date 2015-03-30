@@ -26,7 +26,7 @@
 &lt;p&gt;同时可以在对象该释放的时候查看对象的引用计数, 通过 &lt;code&gt;sys.getrefcount(obj)&lt;/code&gt;. 如果引用计数变为了 &lt;code&gt;2&lt;/code&gt; 
 则说明该对象在跳出命名空间后就会被正确回收.&lt;/p&gt;
 &lt;h2&gt;产生原因&lt;/h2&gt;
-&lt;p&gt;项目中大部分没有被正确回收因为如下原因:&lt;/p&gt;
+&lt;p&gt;项目中两种情况导致对象没有被正确回收:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;被退出才回收的对象引用&lt;/li&gt;
 &lt;li&gt;交叉引用&lt;/li&gt;
