@@ -38,7 +38,7 @@ STATIC_PATHS = [u"static/upload",
                 "extra/robots.txt",
                 "extra/bdsitemap.txt",
                 "extra/googledbee14f7be5461f0.html",
-                "extra/404.html",
+                # "extra/404.html",
                 ]
 # STATIC_SAVE_AS = "static/upload/"
 EXTRA_PATH_METADATA = {
