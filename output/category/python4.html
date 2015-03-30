@@ -48,6 +48,52 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h3 class="article-title">Python 断点调试</h3></a>
+<h6 class="subheader" title="2012-08-10T16:16:00">五 10 八月 2012
+</h6>
+
+
+<h2>pdb模块</h2>
+<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
+<h3>插入断点</h3>
+<p>在需要插入断点的地方插入如下代码可以插入一个断点
+import pdb; pdb.set_trace()
+当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
+<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
+ <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>pdb指令</h3>
+<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
+<ul>
+<li>l 查看代码上下文</li>
+<li>p var 监视变量var</li>
+<li>n 单步执行</li>
+<li>b line  在line行插入断点</li>
+<li>c 继续到下一个断点,没有则执行程序</li>
+<li>r 执行到函数返回前</li>
+</ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/diao-shi.html">调试 </a>
+    <a href="http://www.linuxzen.com/tag/duan-dian.html">断点 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/pdb.html">pdb </a>
+    <a href="http://www.linuxzen.com/tag/debug.html">debug </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h3 class="article-title">lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h3></a>
 <h6 class="subheader" title="2012-08-10T16:02:00">五 10 八月 2012
 </h6>
@@ -416,46 +462,6 @@
 
 
 <p><a href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonxie-de-zhong-duan-xia-de-fan-yi-gong-ju.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h3 class="article-title">用python发带附件的邮件用来定时备份mysql数据库</h3></a>
-<h6 class="subheader" title="2012-04-21T18:26:00">六 21 四月 2012
-</h6>
-
-
-<p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
-<p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c">#-*- coding: utf8 -*-</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">#=============================================================================</span>
-<span class="sd">#     FileName: mail.py</span>
-<span class="sd">#         Desc: To send email</span>
-<span class="sd">#       Author: cold</span>
-<span class="sd">#        Email: wh_linux@126.com</span>
-<span class="sd">#     HomePage: http://www.linuxzen.com</span>
-<span class="sd">#      Version: 0.0.1</span>
-<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/fu-jian.html">附件 </a>
-    <a href="http://www.linuxzen.com/tag/you-jian.html">邮件 </a>
-    <a href="http://www.linuxzen.com/tag/ding-shi.html">定时 </a>
-    <a href="http://www.linuxzen.com/tag/bei-fen.html">备份 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/pymail.html">pymail </a>
-    <a href="http://www.linuxzen.com/tag/mysql.html">MySQL </a>
-    <a href="http://www.linuxzen.com/tag/mail.html">mail </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

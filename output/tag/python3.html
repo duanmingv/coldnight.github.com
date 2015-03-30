@@ -48,6 +48,44 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html"><h3 class="article-title">Vim打开Python源码自动添加#!行和编码行 升级版</h3></a>
+<h6 class="subheader" title="2012-12-13T14:31:00">四 13 十二月 2012
+</h6>
+
+
+<p>之前给大家分享过一个打开Python源代码时自动添加#!行和编码行来避免一些重复的工作,那个是因为需要大量编写时临时的解决方案,后来使用中会出现一些问题,比如查看别人源码时也会更改一些东西,从而造成git不必要的更新和手动删除的额外动作,所以又写了一个,只是在文件是新打开文件时或者空文件才自动添加的方法,同时再打开python源文件将这个方法绑定要F4上可以手动添加,并会判断是否有这两行,如果有则不执行动作,同时也添加了一些辅助性注释, 比如 作者/邮箱/创建日期和描述,代码实现如下:</p>
+<div class="highlight"><pre><span class="c">&quot;Python 注释</span>
+<span class="k">function</span> InsertPythonComment<span class="p">()</span>
+    exe <span class="s1">&#39;normal&#39;</span>.<span class="m">1</span>.<span class="s1">&#39;G&#39;</span>
+    <span class="k">let</span> line <span class="p">=</span> getline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> line <span class="p">=~</span> <span class="s1">&#39;^#!.*$&#39;</span> <span class="p">||</span> line <span class="p">=~</span> <span class="s1">&#39;^#.*coding:.*$&#39;</span>
+        <span class="k">return</span>
+    <span class="k">endif</span>
+    normal O
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;#!/usr/bin/env python&#39;</span><span class="p">)</span>
+    normal <span class="k">o</span>
+    <span class="k">call</span> setline<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;# -*- coding:utf-8 -*-&#39;</span><span class="p">)</span>
+    normal <span class="k">o ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/zi-dong.html">自动 </a>
+    <a href="http://www.linuxzen.com/tag/bian-ma-xin-xi.html">编码信息 </a>
+    <a href="http://www.linuxzen.com/tag/tian-jia.html">添加 </a>
+    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
+    <a href="http://www.linuxzen.com/tag/shbang-line.html">shbang line </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vimda-kai-pythonyuan-ma-zi-dong-tian-jia-xing-he-bian-ma-xing-sheng-ji-ban.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h3 class="article-title">python 使用pyxmpp2编写gtalk群</h3></a>
 <h6 class="subheader" title="2012-10-29T14:48:00">一 29 十月 2012
 </h6>
@@ -414,52 +452,6 @@
 
 
 <p><a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h3 class="article-title">Python 断点调试</h3></a>
-<h6 class="subheader" title="2012-08-10T16:16:00">五 10 八月 2012
-</h6>
-
-
-<h2>pdb模块</h2>
-<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
-<h3>插入断点</h3>
-<p>在需要插入断点的地方插入如下代码可以插入一个断点
-import pdb; pdb.set_trace()
-当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<div class="highlight"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
-<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
- <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
-</pre></div>
-
-
-<h3>pdb指令</h3>
-<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
-<ul>
-<li>l 查看代码上下文</li>
-<li>p var 监视变量var</li>
-<li>n 单步执行</li>
-<li>b line  在line行插入断点</li>
-<li>c 继续到下一个断点,没有则执行程序</li>
-<li>r 执行到函数返回前</li>
-</ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/diao-shi.html">调试 </a>
-    <a href="http://www.linuxzen.com/tag/duan-dian.html">断点 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/pdb.html">pdb </a>
-    <a href="http://www.linuxzen.com/tag/debug.html">debug </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

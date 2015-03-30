@@ -48,6 +48,44 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h3 class="article-title">Linux 下使用Python截图自动分享</h3></a>
+<h6 class="subheader" title="2013-01-22T16:59:00">二 22 一月 2013
+</h6>
+
+
+<h2>引子</h2>
+<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
+<h2>实现</h2>
+<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
+<h2>代码</h2>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/21 09:54:39</span>
+<span class="c">#   Desc    :   贴代码和图片</span>
+<span class="c">#</span>
+<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">import ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="http://www.linuxzen.com/tag/scrot.html">scrot </a>
+    <a href="http://www.linuxzen.com/tag/jie-tu.html">截图 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h3 class="article-title">vLog使用Tornado框架结合memcached缓存页面</h3></a>
 <h6 class="subheader" title="2013-01-16T16:14:00">三 16 一月 2013
 </h6>
@@ -414,52 +452,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pythonli-de-san-mu-yun-suan.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h3 class="article-title">Python 断点调试</h3></a>
-<h6 class="subheader" title="2012-08-10T16:16:00">五 10 八月 2012
-</h6>
-
-
-<h2>pdb模块</h2>
-<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
-<h3>插入断点</h3>
-<p>在需要插入断点的地方插入如下代码可以插入一个断点
-import pdb; pdb.set_trace()
-当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
-<div class="highlight"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
-<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
- <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
-</pre></div>
-
-
-<h3>pdb指令</h3>
-<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
-<ul>
-<li>l 查看代码上下文</li>
-<li>p var 监视变量var</li>
-<li>n 单步执行</li>
-<li>b line  在line行插入断点</li>
-<li>c 继续到下一个断点,没有则执行程序</li>
-<li>r 执行到函数返回前</li>
-</ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/diao-shi.html">调试 </a>
-    <a href="http://www.linuxzen.com/tag/duan-dian.html">断点 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/pdb.html">pdb </a>
-    <a href="http://www.linuxzen.com/tag/debug.html">debug </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

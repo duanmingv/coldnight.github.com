@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/index.html</loc>
-<lastmod>2015-02-06T12:29:45-00:00</lastmod>
+<lastmod>2015-03-30T18:26:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/archives.html</loc>
-<lastmod>2015-02-06T12:29:45-00:00</lastmod>
+<lastmod>2015-03-30T18:26:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/tags.html</loc>
-<lastmod>2015-02-06T12:29:45-00:00</lastmod>
+<lastmod>2015-03-30T18:26:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://www.linuxzen.com/categories.html</loc>
-<lastmod>2015-02-06T12:29:45-00:00</lastmod>
+<lastmod>2015-03-30T18:26:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/python-nei-cun-xie-lu-chan-sheng-de-yuan-yin.html</loc>
+<lastmod>2015-03-30T17:29:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -705,7 +712,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/category/python.html</loc>
-<lastmod>2015-01-31T10:58:00+08:06</lastmod>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1048,7 +1055,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2015-01-31T10:58:00+08:06</lastmod>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1167,7 +1174,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/tag/yin-yong.html</loc>
-<lastmod>2012-09-17T10:22:00+08:06</lastmod>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1175,6 +1182,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/d.html</loc>
 <lastmod>2014-03-21T10:47:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/jiao-cha.html</loc>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1791,6 +1805,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://www.linuxzen.com/tag/jian-ce.html</loc>
 <lastmod>2012-05-18T11:16:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>http://www.linuxzen.com/tag/nei-cun.html</loc>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2440,6 +2461,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/hui-shou.html</loc>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/nat.html</loc>
 <lastmod>2012-03-10T11:31:00+08:06</lastmod>
 <changefreq>daily</changefreq>
@@ -2671,6 +2699,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://www.linuxzen.com/tag/xie-lu.html</loc>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>http://www.linuxzen.com/tag/or.html</loc>
 <lastmod>2012-08-10T16:28:00+08:06</lastmod>
 <changefreq>daily</changefreq>
@@ -2770,7 +2805,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2015-01-31T10:58:00+08:06</lastmod>
+<lastmod>2015-03-30T17:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

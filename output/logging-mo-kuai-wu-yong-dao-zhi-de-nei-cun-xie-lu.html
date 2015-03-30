@@ -116,6 +116,12 @@
 
 <p>按说只加上上面第一行的代码就应该释放了, 但是没有, 所以又有了第三行代码, SyslogHandler
 才最终释放, 这个问题暂时还不知道为什么, 还需要再查查.</p>
+<p><strong>2015-03-30 更新</strong>
+如果日志名称是以 <code>.</code> 分隔, logging 模块则会将最后一部分作为日志名, 并往上去寻找 <code>父 Logger</code>,
+如果找不到则创建 <code>PlaceHolder</code> 对象作为父, 并引用 <code>Logger</code>.</p>
+<p>比如创建的 Logger 名称为 <code>a.b.c</code>, 那么实际的名称则为 <code>c</code>, 并将 <code>b</code> 作为 <code>c</code> 的父, <code>a</code> 作为 <code>b</code> 的
+父, 如果没有该名称的 <code>Logger</code> 则创建 <code>PlaceHolder</code> 对象作为代替, <code>PlaceHolder</code> 会创建对当前 <code>Logger</code>
+的引用. 所以需要被回收的日志对象名称里不应包含 <code>.</code></p>
 <p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 

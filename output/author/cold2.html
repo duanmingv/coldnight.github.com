@@ -48,6 +48,28 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html"><h3 class="article-title">将Pelican版本更新到3.3</h3></a>
+<h6 class="subheader" title="2013-12-24T00:00:00">二 24 十二月 2013
+</h6>
+
+
+<p>记录升级Pelican到3.3的过程和一些吐槽,</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/pelican33.html">pelican3.3 </a>
+    <a href="http://www.linuxzen.com/tag/sheng-ji.html">升级 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/pyqt-qml-kuai-su-kai-fa-guizong-jie.html"><h3 class="article-title">PyQt + QML 快速开发GUI总结</h3></a>
 <h6 class="subheader" title="2013-11-06T15:25:00">三 06 十一月 2013
 </h6>
@@ -389,54 +411,6 @@ git push origin temp:temp
 
 
 <p><a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h3 class="article-title">说说Python装饰器</h3></a>
-<h6 class="subheader" title="2013-05-20T14:52:00">一 20 五月 2013
-</h6>
-
-
-<p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
-<p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">return</span> <span class="n">r</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</pre></div>
-
-
-<p>我们用这个装饰器装饰一个<code>test</code>函数</p>
-<div class="highlight"><pre><span class="nd">@run_time</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
-</pre></div>
-
-
-<p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
-<div class="highlight"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</pre></div>
-
-
-<p>装饰器将在解释器运行一开始就被加载 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/zhuang-shi-qi.html">装饰器 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

@@ -48,6 +48,49 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h3 class="article-title">clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h3></a>
+<h6 class="subheader" title="2013-04-26T15:40:00">五 26 四月 2013
+</h6>
+
+
+<p><a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>在我的vps上跑了有一段时间了, 最近接触了<code>SQLAlchemy</code> 然后反观<code>clubot</code>的数据库代码部分, 感觉代码又遭有乱实在看不过眼, 所以就使用<code>SQLAlchemy</code>重写了数据库模块, 并将<code>epoll</code>的MainLoop改成<a href="http://lilydjwg.is-programmer.com/">仙子君</a>所写的<a href="https://github.com/lilydjwg/pyxmpp2">TornadoMainLoop</a></p>
+<h2>更新内容</h2>
+<ol>
+<li>数据库使用<code>SQLAlchemy</code>重写</li>
+<li><code>MainLoop</code>改用<code>TornadoMainLoop</code></li>
+<li>改变代码结构, 清理部分代码</li>
+<li>将<code>history</code>命令改为<code>old</code>, 并支持时间查询</li>
+<li>废弃一些不常用的命令</li>
+<li>改变数据库表结构</li>
+<li>废弃<code>channel</code>功能, <code>cd</code>命令仅支持切换聊天和安静模式</li>
+<li>删除一些不用的配置</li>
+</ol>
+<h2>如何升级</h2>
+<p>数据库表结构做了更改, 所以为了兼容之前的数据库本次表名前加上<code>clubot_</code>前缀, 并配以<code>update.py</code>脚本用以支持将旧的数据导入.</p>
+<h2>新的依赖</h2>
+<p>本次更新添加了依赖 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/clubot.html">clubot </a>
+    <a href="http://www.linuxzen.com/tag/pyxmpp2.html">pyxmpp2 </a>
+    <a href="http://www.linuxzen.com/tag/gtalk.html">gtalk </a>
+    <a href="http://www.linuxzen.com/tag/xmpp.html">xmpp </a>
+    <a href="http://www.linuxzen.com/tag/geng-xin.html">更新 </a>
+    <a href="http://www.linuxzen.com/tag/zhong-xie.html">重写 </a>
+    <a href="http://www.linuxzen.com/tag/sqlalchemy.html">SQLAlchemy </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/sqlalchemy-mysqlshu-ju-ku-luan-ma-jie-jue.html"><h3 class="article-title">SQLAlchemy MySQL数据库乱码解决</h3></a>
 <h6 class="subheader" title="2013-04-26T00:00:00">五 26 四月 2013
 </h6>
@@ -346,44 +389,6 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
 
 <p><a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html"><h3 class="article-title">Linux 下使用Python截图自动分享</h3></a>
-<h6 class="subheader" title="2013-01-22T16:59:00">二 22 一月 2013
-</h6>
-
-
-<h2>引子</h2>
-<p>Linux下不支持QQ等功能丰富的IM,虽然可以通过wine运行QQ2012,但是还是喜欢在gtalk群中聊天,gtalk群不支持图片方式,这就要靠我们大家自己来解决了,<a href="http://eleveni386.7axu.com">eleven</a>开放了一个Image上传和显示接口,提供了使用<code>curl</code>来解决,但是我们公司的网络使用<code>squid</code>禁止了<code>curl</code>的访问,所以整天看他们这么爽的分享图片我也不甘心阿,所以就使用Python写了一个分享图片的脚本</p>
-<h2>实现</h2>
-<p>使用scrot截图,然后使用urllib2库上传图片,如果存在PyQt4库则会将结果放到剪贴板上,如果不存在则输出,自行复制</p>
-<h2>代码</h2>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c">#   Author  :   cold</span>
-<span class="c">#   E-mail  :   wh_linux@126.com</span>
-<span class="c">#   Date    :   13/01/21 09:54:39</span>
-<span class="c">#   Desc    :   贴代码和图片</span>
-<span class="c">#</span>
-<span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">json</span>
-<span class="kn">import ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="http://www.linuxzen.com/tag/scrot.html">scrot </a>
-    <a href="http://www.linuxzen.com/tag/jie-tu.html">截图 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/linux-xia-shi-yong-pythonjie-tu-zi-dong-fen-xiang.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

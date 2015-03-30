@@ -48,6 +48,52 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html"><h3 class="article-title">Python 断点调试</h3></a>
+<h6 class="subheader" title="2012-08-10T16:16:00">五 10 八月 2012
+</h6>
+
+
+<h2>pdb模块</h2>
+<p>pdb是一个Python 内置的调式模块这里用来介绍用它进行断点调试</p>
+<h3>插入断点</h3>
+<p>在需要插入断点的地方插入如下代码可以插入一个断点
+import pdb; pdb.set_trace()
+当Python执行到这条语句时在运行shell里就会中断执行出现一个类似下面的shell窗口</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="err">#</span> <span class="err">这里会出现当前运行程序的信息</span><span class="p">,</span><span class="err">源文件和当前函数</span>
+<span class="o">-&gt;</span> <span class="err">#</span> <span class="err">这里是将要运行的语句</span>
+ <span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>pdb指令</h3>
+<p>进入(Pdb)后有很多命令可以使用,可以使用 <code>h</code> 查看帮助</p>
+<ul>
+<li>l 查看代码上下文</li>
+<li>p var 监视变量var</li>
+<li>n 单步执行</li>
+<li>b line  在line行插入断点</li>
+<li>c 继续到下一个断点,没有则执行程序</li>
+<li>r 执行到函数返回前</li>
+</ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/diao-shi.html">调试 </a>
+    <a href="http://www.linuxzen.com/tag/duan-dian.html">断点 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+    <a href="http://www.linuxzen.com/tag/pdb.html">pdb </a>
+    <a href="http://www.linuxzen.com/tag/debug.html">debug </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/python-duan-dian-diao-shi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-duan-dian-diao-shi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/lambda-jie-he-mapfilterreducesorteddeng-han-shu-dui-lie-biao-jin-xing-gao-xiao-cao-zuo.html"><h3 class="article-title">lambda 结合map/filter/reduce/sorted等函数对列表进行高效操作</h3></a>
 <h6 class="subheader" title="2012-08-10T16:02:00">五 10 八月 2012
 </h6>
@@ -420,46 +466,6 @@ checkisdir<span class="o">()</span>
 
 
 <p><a href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-linux-shellshi-shi-jian-ce-wen-jian-bian-geng.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html"><h3 class="article-title">Gentoo下搭建python web环境(nginx+bottle+virtualenv+uwsgi)</h3></a>
-<h6 class="subheader" title="2012-05-16T11:05:00">三 16 五月 2012
-</h6>
-
-
-<p>最近根据Gentoo官方文档整了一台Gentoo的虚拟机,感觉还是不错的,决定放弃CentOS投奔Gentoo,这几天研究NoSQL mongodb和python的bottle框架,web.py效率不是很好,而且是类级,bottle使用装饰器(虽然对她还是懵懂阶段,但是貌似很强大).感觉bottle更加强大和接近python,没有封装太多东西,django只能依照她的思想来做自己的事,最后还是选择了bottle来进入python的web世界,web服务器同样选择nginx.virtualenv可以让一个应用有一个相对独立的环境,特别用于多解释器环境或者经常变更的环境.uwsgi是web和python的中间件(可以这么解释吧).</p>
-<h2>环境:</h2>
-<p>系统:Gentoo
-ip:192.168.3.1</p>
-<p>好吧废话不多说,Gentoo安装过程这里不再详述,官方文档很详细,下面记录安装配置过程.
-首先Gentoo没有默认安装vim,先安装vim:</p>
-<div class="highlight"><pre><span class="n">emerge</span> <span class="n">vim</span>
-</pre></div>
-
-
-<h3>安装配置Python</h3>
-<p>最新版的Gentoo安装完毕后默认使用python3.2,而我惯用Python2.7.先首先安装python2.7.
-Gentoo使用emerge包管理,安装Python2.7:</p>
-<div class="highlight"><pre><span class="nb">cd</span> /usr/portage/dev-lang ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/web.html">web </a>
-    <a href="http://www.linuxzen.com/tag/virtualenv.html">virtualenv </a>
-    <a href="http://www.linuxzen.com/tag/uwsgi.html">uwsgi </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/gentoo.html">Gentoo </a>
-    <a href="http://www.linuxzen.com/tag/bottle.html">bottle </a>
-    <a href="http://www.linuxzen.com/tag/nginx.html">nginx </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/gentooxia-da-jian-python-webhuan-jing-nginxbottlevirtualenvuwsgi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
