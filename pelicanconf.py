@@ -55,6 +55,7 @@ LINKS = (('eleven', 'http://eleveni386.7axu.com'),
          (u"邪恶的二进制", "http://evilbinary.org/"),
          (u"城南往事", "http://www.cnwsjs.cn/"),
          (u"一把汤勺", "http://jeepxiaozi.github.io/"),
+         (u"Zey's Blog", "http://www.zeython.com/"),
          )
 
 # Social widget
