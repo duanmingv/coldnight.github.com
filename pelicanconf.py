@@ -53,7 +53,7 @@ LINKS = (('eleven', 'http://eleveni386.7axu.com'),
          (u'Frantic1048', "http://frantic1048.com/"),
          (u"晓风'Blog", "http://www.dongxf.com/"),
          (u"邪恶的二进制", "http://evilbinary.org/"),
-         (u"城南往事", "http://www.cnwsjs.cn/"),
+         (u"城南往事", "http://www.icnws.com"),
          (u"一把汤勺", "http://jeepxiaozi.github.io/"),
          (u"Zey's Blog", "http://www.zeython.com/"),
          )
