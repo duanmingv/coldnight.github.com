@@ -48,6 +48,50 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html"><h3 class="article-title">发布一个基于Tornado的高效异步的HTTP客户端库</h3></a>
+<h6 class="subheader" title="2013-08-01T10:46:00">四 01 八月 2013
+</h6>
+
+
+<p>前面的博文提到过<a href="/shi-yong-tornadojin-xing-wang-luo-yi-bu-bian-cheng.html">使用tornado进行网络异步编程</a>, 也<a href="/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">使用tornado实现了一个高效的WebQQ机器人</a>, 由于tornado内置的<code>AsyncHTTPClient</code>功能过于单一, 所以自己写了一个基于Tornado的HTTP客户端库, 鉴于自己多处使用了这个库, 所以从项目中提取出来, 写成一个单独库 <code>tornadohttpclient</code></p>
+<p><s>TornadoHTTPClient 是一个基于Tornado的高效的异步HTTP客户端库, 支持Cookie和代理, 目前仅在<code>Python2.7</code>平台上测试过, 不支持<code>Python3</code></s></p>
+<p>听取了仙子君的意见, 直接对<code>tornado.curl_httpclient.CurlAsyncHTTPClient</code>进行封装</p>
+<h2>安装</h2>
+<p>首先从git clone 下代码</p>
+<div class="highlight"><pre>git clone https://github.com/coldnight/tornadohttpclient.git
+</pre></div>
+
+
+<p>然后安装它</p>
+<div class="highlight"><pre><span class="nb">cd </span>tornadohttpclient
+python setup.py install
+</pre></div>
+
+
+<h2>教程</h2>
+<h3>GET</h3>
+<p>TornadoHTTPClient的get方法可以发起一个get请求</p>
+<div class="highlight"><pre><span class="kn">from ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/http.html">http </a>
+    <a href="http://www.linuxzen.com/tag/client.html">client </a>
+    <a href="http://www.linuxzen.com/tag/module.html">module </a>
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/gao-xiao.html">高效 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h3 class="article-title">Pual 更新支持SimSimi可以进行互动</h3></a>
 <h6 class="subheader" title="2013-05-30T09:50:00">四 30 五月 2013
 </h6>
@@ -364,41 +408,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h3 class="article-title">Vim 结合Python编写的翻译插件</h3></a>
-<h6 class="subheader" title="2013-01-04T17:58:00">五 04 一月 2013
-</h6>
-
-
-<p>最近重写了一下之前用Python写的一个终端翻译工具,想着Vim7.3 支持Python于是想将这个功能写为一个插件让Vim也支持翻译功能,现在英汉翻译比较完善, <Leader>t会翻译光标下单词,选中的翻译还不完善,仅仅是个半成品,在此抛砖引玉.将下面代码复制保存为translate.vim 放到~/.vim/plugin目录下即可,代码如下:</p>
-<div class="highlight"><pre><span class="c">&quot;   Author  :   cold</span>
-<span class="c">&quot;   E-mail  :   wh_linux@126.com</span>
-<span class="c">&quot;   Date    :   2012/12/20 16:23</span>
-<span class="c">&quot;   Desc    :   英汉/汉英翻译插件</span>
-<span class="c">&quot;   Useage  :</span>
-<span class="c">&quot;                  &lt;Leader&gt; t 翻译当前光标下内容 //XXX 中文不行</span>
-<span class="c">&quot;                  &lt;Leader&gt; lt 翻译当前行</span>
-<span class="c">&quot;                  &lt;Leader&gt; vt 翻译选中的内容</span>
-
-<span class="k">function</span> GetCursorWord<span class="p">()</span>
-    <span class="k">let</span> column <span class="p">=</span> <span class="k">get</span><span class="p">(</span>getpos<span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">0 ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/fan-yi.html">翻译 </a>
-    <a href="http://www.linuxzen.com/tag/cha-jian.html">插件 </a>
-    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

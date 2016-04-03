@@ -48,6 +48,44 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html"><h3 class="article-title">vLog 一个使用Python编写的轻量级博客系统</h3></a>
+<h6 class="subheader" title="2013-02-05T16:43:00">二 05 二月 2013
+</h6>
+
+
+<h2>介绍</h2>
+<h3>何为vLog</h3>
+<p>大家有人可能注意到博客改变了,是的前面也有文章提到从wordpress迁移到vlog,但是何为vLog这里给大家简要的说明一下,vLog是我使用<code>Python</code>的<code>tornado</code>框架和<code>Jinja2</code>模板引擎,基于MySQL数据的一个轻量级的博客系统,此系统功能比较薄弱,处于开发初期,使用<code>Markdown</code>的格式来抒写博文.</p>
+<h3>为什么vLog</h3>
+<p>vLog后台十分简单(可以说是简陋),功能也简单,就是一款简单的博客系统,提供了Python终端脚本,可以在终端来抒写博文, vLog使用一套非常简单的缓存系统,缓存使用memcached使得页面加载速度非常快.</p>
+<h3>为什么不vLog</h3>
+<p>相对与wordpress vlog非常简陋,仅仅提供简单的博客功能,而且使用Python编写主机方面支援不太多,虽然有<code>SAE</code>和<code>GAE</code>的支援,但是我没弄过,所以没有支援<code>SAE</code>和<code>GAE</code>(如果你有兴趣,可以添加相关支持)</p>
+<h2>安装</h2>
+<h3>平台</h3>
+<ul>
+<li>Linux</li>
+<li>python2.7</li>
+<li>MySQL ...</li></ul><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/vlog.html">vLog </a>
+    <a href="http://www.linuxzen.com/tag/tornado.html">tornado </a>
+    <a href="http://www.linuxzen.com/tag/blog.html">blog </a>
+    <a href="http://www.linuxzen.com/tag/bo-ke.html">博客 </a>
+    <a href="http://www.linuxzen.com/tag/qing-liang.html">轻量 </a>
+    <a href="http://www.linuxzen.com/tag/markdown.html">markdown </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/vlog-yi-ge-shi-yong-pythonbian-xie-de-qing-liang-ji-bo-ke-xi-tong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h3 class="article-title">使用更加高效的epoll作为pyxmpp2的主循环</h3></a>
 <h6 class="subheader" title="2013-02-05T16:06:00">二 05 二月 2013
 </h6>
@@ -387,52 +425,9 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html"><h3 class="article-title">AppArmor引起的无法启动Evince</h3></a>
-<h6 class="subheader" title="2012-11-15T16:05:00">四 15 十一月 2012
-</h6>
-
-
-<p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
-evince
-却提示:</p>
-<div class="highlight"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
-<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
-</pre></div>
-
-
-<p>google说是$XAUTHORITY权限的问题,于是查看:</p>
-<div class="highlight"><pre>ls -l <span class="nv">$XAUTHORITY</span>
--rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
-</pre></div>
-
-
-<p>更改为如下:</p>
-<div class="highlight"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
-</pre></div>
-
-
-<p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
-<div class="highlight"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/ubuntu.html">Ubuntu </a>
-    <a href="http://www.linuxzen.com/tag/evince.html">evince </a>
-    <a href="http://www.linuxzen.com/tag/apparmor.html">apparmor </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 4 of 9</h6>
+<h6 class="subheader">Page 4 of 10</h6>
 
 <p>
             <a href="http://www.linuxzen.com/author/cold3.html">&laquo; Prev</a>

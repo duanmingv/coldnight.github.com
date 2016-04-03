@@ -48,6 +48,46 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h3 class="article-title">Python 字典和列表陷阱</h3></a>
+<h6 class="subheader" title="2012-09-17T10:22:00">一 17 九月 2012
+</h6>
+
+
+<p>Python 中有三个非常好用的数据结构,列表,元组和字典,
+元组是不可变的,列表可以保存任意类型的Python对象,并可以随意扩展没有大小限制,
+字典是一个key-value的键值映射的类型,可以存放任何Python对象,可以嵌套字典,
+值可以是字典元组或者字典</p>
+<p>这里说是Python 字典和列表的陷阱不如说是Python的一些特性,如果不了解这些特性
+就会引发一些难以寻找的bug</p>
+<p>下面我们来介绍这些特性</p>
+<p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
+如下面代码:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
+<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/xian-jing.html">陷阱 </a>
+    <a href="http://www.linuxzen.com/tag/yin-yong.html">引用 </a>
+    <a href="http://www.linuxzen.com/tag/zi-dian.html">字典 </a>
+    <a href="http://www.linuxzen.com/tag/lie-biao.html">列表 </a>
+    <a href="http://www.linuxzen.com/tag/python.html">python </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/linuxzhuo-mian-gao-xiao-gong-zuo-shi-yong-gnome-do.html"><h3 class="article-title">Linux桌面高效工作----使用Gnome DO</h3></a>
 <h6 class="subheader" title="2012-09-01T08:03:00">六 01 九月 2012
 </h6>
@@ -404,52 +444,9 @@ authorizedkeys 或.ssh的权限太open .ssh 目录改成755 权限 authorizedkey
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html"><h3 class="article-title">mongoengine使用笔记</h3></a>
-<h6 class="subheader" title="2012-06-23T10:02:00">六 23 六月 2012
-</h6>
-
-
-<p>最近重新拾起Django,但是Django并不支持mongodb,但是有一个模块mongoengine可以实现Django Model类似的封装.但是mongoengine的中文文档几乎没有,有的也是简短的几句介绍和使用.下面我就分享一下我在使用过程中所记录下的一些笔记,可能有点乱.大家可以参考一下.</p>
-<h2>安装mongoengine</h2>
-<div class="highlight"><pre><span class="n">easy_install</span> <span class="n">pymongo</span> <span class="c"># 依赖库</span>
-<span class="n">easy_install</span> <span class="n">mongoengine</span>
-</pre></div>
-
-
-<h2>基本使用</h2>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">mongoengine</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="c"># 连接数据库</span>
-<span class="n">connect</span><span class="p">(</span><span class="s">&#39;blog&#39;</span><span class="p">)</span>   <span class="c"># 连接本地blog数据库</span>
-<span class="c"># 如需验证和指定主机名</span>
-<span class="c"># connect(&#39;blog&#39;, host=&#39;192.168.3.1&#39;, username=&#39;root&#39;, password=&#39;1234&#39;)</span>
-
-<span class="c"># 定义分类文档</span>
-<span class="k">class</span> <span class="nc">Categories</span><span class="p">(</span><span class="n">Document</span><span class="p">):</span>
-    <span class="s">&#39; 继承Document类,为普通文档 &#39;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">required ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/pymongo.html">pymongo </a>
-    <a href="http://www.linuxzen.com/tag/nosql.html">nosql </a>
-    <a href="http://www.linuxzen.com/tag/mongoengine.html">mongoengine </a>
-    <a href="http://www.linuxzen.com/tag/mongodb.html">mongodb </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/mongoengineshi-yong-bi-ji.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 6 of 9</h6>
+<h6 class="subheader">Page 6 of 10</h6>
 
 <p>
             <a href="http://www.linuxzen.com/author/cold5.html">&laquo; Prev</a>

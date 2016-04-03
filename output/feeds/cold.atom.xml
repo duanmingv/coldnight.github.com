@@ -1,5 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/cold.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2015-03-30T17:29:00+08:00</updated><entry><title>Python 内存泄露实战分析</title><link href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html" rel="alternate"></link><updated>2015-03-30T17:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2015-03-30:python-nei-cun-xie-lu-shi-zhan-fen-xi.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="http://www.linuxzen.com/" rel="alternate"></link><link href="http://www.linuxzen.com/feeds/cold.atom.xml" rel="self"></link><id>http://www.linuxzen.com/</id><updated>2016-04-03T11:42:00+08:00</updated><entry><title>Python mock 使用心得</title><link href="http://www.linuxzen.com/python-mock-shi-yong-xin-de.html" rel="alternate"></link><updated>2016-04-03T11:42:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2016-04-03:python-mock-shi-yong-xin-de.html</id><summary type="html">&lt;p&gt;好久没有更新博客, 趁着清明节小长假和我儿子正在睡觉更新一篇刷刷存在感.
+近来变化很多, 儿子也有了, 工作上也有很多收获. 这篇博客就分享一下关于 &lt;code&gt;mock&lt;/code&gt; 的使用的心得体会.&lt;/p&gt;
+&lt;p&gt;很长一段时间以来写单元测试都类似写执行脚本, 运行一下然后看一下结果. 
+这里面有一部分原因是因为无法规避外部的依赖组件, 比如:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数据库操作&lt;/li&gt;
+&lt;li&gt;外部接口调用&lt;/li&gt;
+&lt;li&gt;外部其他不可控因素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这样写测试只关心当前测试的结果, 而不去管其他测试是否 &lt;code&gt;passed&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;后面随着团队开始进新人, 由于团队里每个人的标准和水平不同, 
+开始不得不重视整体项目的质量, 发现没有好的测试就没有统一的标准来衡量提交代码的质量,
+当然说到代码质量还有另外一个和测试放在一起的标准就是代码风格, 这不是本文的主题所里这里就暂且不提.&lt;/p&gt;
+&lt;p&gt;为了能写好测试就不得不面对现实项目的复杂性, 诸如外部接口数据库操作等. 
+这时开始将目光转向 &lt;code&gt;mock&lt;/code&gt;, 因为之前有听过类似概念, 但是还是有误解, 
+以为把要测的东西都模拟掉了还测试什么呢? 但是真正的了解 &lt;code&gt;mock&lt;/code&gt; 之后才完整的理解了单元测试.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;单元测试应该只针对当前单元进行测试, 所有的外部依赖应该是稳定的, 在别处进行测试过的.&lt;/strong&gt;
+使用 &lt;code&gt;mock&lt;/code&gt; 就可以对外部依赖组件实现进行模拟并且替换掉, 从而隐藏外部组件的实现,
+使得单元测试将焦点只放在当前的逻辑(当前单元),&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;mock&lt;/code&gt; 在 Python3 中是内置的, 直接 &lt;code&gt;import unittest.mock&lt;/code&gt; 即可, 
+但是在 Python2 中是需要额外安装的, 安装完 &lt;code&gt;import mock&lt;/code&gt; 即可&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;pip install -U mock
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;技巧&lt;/h2&gt;
+&lt;p&gt;在本文不详细介绍如何使用, 具体请参见&lt;a href="https://docs.python.org/3/library/unittest.mock.html"&gt;官方文档&lt;/a&gt;.
+这里分享几个技巧.&lt;/p&gt;
+&lt;p&gt;安装官方文档给的示例一开始像下面这么使用 mock&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DemoTestCase&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nd"&gt;@mock.patch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pkg.mod.dep_mod.func&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;autospec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+
+        &lt;span class="c"&gt;# real test code&lt;/span&gt;
+        &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;但是当整个测试都依赖这个组件时上面的使用方式就会产生大量的相同的初始化代码, 
+所以定义了一个装饰器向下面这样&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;unittest&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;functools&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;mock&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;_mock_wrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nd"&gt;@functools.wraps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="nd"&gt;@mock.patch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pkg.mod.dep_mod.func&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;autospec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;wrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;wrapper&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DemoTestCase&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nd"&gt;@_mock_wrapper&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c"&gt;# real test code&lt;/span&gt;
+        &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面操作是很方便, 但是有几个缺点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;代码不够清晰&lt;/li&gt;
+&lt;li&gt;如果增加 mock 组件则需要修改每一个被装饰函数接收的参数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以在仔细阅读官方文档后发现, &lt;code&gt;mock.patch&lt;/code&gt; 返回一个对象, 可以通过 &lt;code&gt;start&lt;/code&gt;/&lt;code&gt;stop&lt;/code&gt; 方法来应用.
+所以产生了下面的代码.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DemoTestCase&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setUp&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DemoTestCase&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setUp&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_patcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;patch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pkg.mod.dep_mod.func&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;autospec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_func_mock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_patcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;tearDown&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DemoTestCase&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;tearDown&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="c"&gt;# cleanup&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_patcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c"&gt;# real test code&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当然如果有多个依赖组件需要 &lt;code&gt;mock&lt;/code&gt; 可以将 &lt;code&gt;patcher&lt;/code&gt; 存在一个列表里在 &lt;code&gt;tearDown&lt;/code&gt; 方法里统一清理.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;不要忘记清理, 因为当前 &lt;code&gt;mock&lt;/code&gt; 的组件应当仅在当前测试里生效, 如果忘记了清理可能会影响到其他测试.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果当前单元测试仅有部分测试依赖该组件也可以通过上下文管理的方式进行管理, 更加灵活.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;contextlib&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DemoTestCase&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unittest&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TestCase&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="nd"&gt;@contextlib.contextmanger&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;_mock_context&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;patcher&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;patch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pkg.mod.dep_mod.func&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;autospec&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;func_mock&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;start&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;return_value&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+            &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="n"&gt;func_mock&lt;/span&gt;
+        &lt;span class="k"&gt;finally&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;patcher&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stop&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;test_demo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;_mock_context&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="c"&gt;# real test code&lt;/span&gt;
+            &lt;span class="n"&gt;func_mock&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assert_called_with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;arg1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;arg2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;写在后面的话&lt;/h2&gt;
+&lt;p&gt;测试对一个项目很重要, 特别是对上了规模的项目, 上了 &lt;code&gt;mock&lt;/code&gt; 之后我花了很长时间将已有项目的测试整理完毕, 
+使测试有效并且可以全部 &lt;code&gt;passed&lt;/code&gt;. 
+有了良好的基础之后接下来就很方便的使用了一些集成工具来限制不规范的代码提交到长期分支, 
+这部分内容将放在下一篇去分享.&lt;/p&gt;</summary><category term="Python"></category><category term="mock"></category><category term="unittest"></category></entry><entry><title>Python 内存泄露实战分析</title><link href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html" rel="alternate"></link><updated>2015-03-30T17:29:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2015-03-30:python-nei-cun-xie-lu-shi-zhan-fen-xi.html</id><summary type="html">&lt;h2&gt;引子&lt;/h2&gt;
 &lt;p&gt;之前一直盲目的认为 Python 不会存在内存泄露, 但是眼看着上线的项目随着运行时间的增长
 而越来越大的内存占用, 我意识到我写的程序在发生内存泄露, 之前 debug 过 
 &lt;a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html"&gt;logging 模块导致的内存泄露&lt;/a&gt;.&lt;/p&gt;

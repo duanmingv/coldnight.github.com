@@ -48,6 +48,53 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html"><h3 class="article-title">使用 Vimwiki + git 做知识管理</h3></a>
+<h6 class="subheader" title="2013-12-26T00:00:00">四 26 十二月 2013
+</h6>
+
+
+<p>一直在找一个合适的知识管理工具, 用过 Evernote, 但是不支持 Markdown, 用了一段时间也放弃了.
+最近 python-cn 列表里也在讨论这个问题, 看到有人使用 Vimwiki, 所以就尝试了一下.</p>
+<p>安装后,试着写了点东西, 发现很方便做知识管理和记录笔记, 可以生成HTML, 可以定制模板,
+这里不讨论如何使用, Vimwiki 的文档介绍的很详细,</p>
+<p>我使用<a href="http://bootcss.com">bootstrap</a>和 jquery 对模板进行了一些定制:</p>
+<ul>
+<li>添加导航</li>
+<li>将toc移动到左侧</li>
+</ul>
+<p>下面将介绍我是如何做的, 并在最后附上如何部署的</p>
+<h3>指定模板</h3>
+<p>首先需要更改默认模板</p>
+<div class="highlight"><pre>    <span class="k">let</span> <span class="k">g</span>:vimwiki_list <span class="p">=</span> [{<span class="s1">&#39;path&#39;</span>: <span class="s1">&#39;~/vimwiki&#39;</span><span class="p">,</span>
+    \    <span class="s1">&#39;path_html&#39;</span>: <span class="s1">&#39;~/vimwiki_html&#39;</span><span class="p">,</span>
+    \    <span class="s1">&#39;template_path&#39;</span>: <span class="s1">&#39;~/vimwiki/template&#39;</span><span class="p">,</span>
+    \    <span class="s1">&#39;template_default&#39;</span>: <span class="s2">&quot;default.tpl&quot;</span>}]
+</pre></div>
+
+
+<p>并将默认的模板作为模板进行修改</p>
+<div class="highlight"><pre>mkdir -p ~/vimwiki/template
+cp ...</pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/vim.html">Vim</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/vim.html">vim </a>
+    <a href="http://www.linuxzen.com/tag/vimwiki.html">vimwiki </a>
+    <a href="http://www.linuxzen.com/tag/wiki.html">wiki </a>
+    <a href="http://www.linuxzen.com/tag/zhi-shi.html">知识 </a>
+    <a href="http://www.linuxzen.com/tag/guan-li.html">管理 </a>
+    <a href="http://www.linuxzen.com/tag/git.html">git </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/jiang-pelicanban-ben-geng-xin-dao-33.html"><h3 class="article-title">将Pelican版本更新到3.3</h3></a>
 <h6 class="subheader" title="2013-12-24T00:00:00">二 24 十二月 2013
 </h6>
@@ -381,42 +428,9 @@ git push origin temp:temp
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h3 class="article-title">Pual 更新支持SimSimi可以进行互动</h3></a>
-<h6 class="subheader" title="2013-05-30T09:50:00">四 30 五月 2013
-</h6>
-
-
-<p><a href="http://www.linuxzen.com/jie-yong-tornadoshi-xian-gao-xiao-de-webqqji-qi-ren.html">Pual</a> 跑了许久, 通过一段时间的修改现在Pual主要支持以下功能:</p>
-<ul>
-<li>英汉互译</li>
-<li>为每个用户分配一个session的含有上下文的Python shell</li>
-<li>贴代码</li>
-</ul>
-<hr />
-<p>总而言之就是一个被动型的辅助机器人, 群里有同学建议<code>AI</code>功能, 但是我水平不够没办法设计和实现<code>AI</code>部分, 所以想调用<code>SimSimi</code>实现<code>AI</code>, 发现官方Key才免费7天, 我这等穷苦人如何是买不起key的, google发现有一个非官方API可以调用, 但是被封了.但咱不是个容易放弃的人, 经过一番折腾非官方API可以正常调用, 所以Pual也有<code>AI</code>功能了, 只要在有Pual的群里发送<code>Pual</code>打头的消息 就可以和<code>Pual</code>互动</p>
-<p><a href="https://github.com/coldnight/pual_bot">项目地址</a></p>
-<p>Pual帐号是:1685359365, 大家可以先加好友回答验证问题:cold, 然后将它拉入群内进行调戏</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/pual.html">Pual </a>
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/bot.html">bot </a>
-    <a href="http://www.linuxzen.com/tag/simsimi.html">SimSimi </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 2 of 9</h6>
+<h6 class="subheader">Page 2 of 10</h6>
 
 <p>
             <a href="http://www.linuxzen.com/index.html">&laquo; Prev</a>

@@ -47,6 +47,147 @@
         
 
             <article>
+                <a href="http://www.linuxzen.com/python-mock-shi-yong-xin-de.html"><h3 class="article-title">Python mock 使用心得</h3></a>
+<h6 class="subheader" title="2016-04-03T11:42:00">日 03 四月 2016
+</h6>
+
+
+<p>好久没有更新博客, 趁着清明节小长假和我儿子正在睡觉更新一篇刷刷存在感.
+近来变化很多, 儿子也有了, 工作上也有很多收获. 这篇博客就分享一下关于 <code>mock</code> 的使用的心得体会.</p>
+<p>很长一段时间以来写单元测试都类似写执行脚本, 运行一下然后看一下结果. 
+这里面有一部分原因是因为无法规避外部的依赖组件, 比如:</p>
+<ul>
+<li>数据库操作</li>
+<li>外部接口调用</li>
+<li>外部其他不可控因素</li>
+</ul>
+<p>这样写测试只关心当前测试的结果, 而不去管其他测试是否 <code>passed</code>.</p>
+<p>后面随着团队开始进新人, 由于团队里每个人的标准和水平不同, 
+开始不得不重视整体项目的质量, 发现没有好的测试就没有统一的标准来衡量提交代码的质量,
+当然说到代码质量还有另外一个和测试放在一起的标准就是代码风格, 这不是本文的主题所里这里就暂且不提.</p>
+<p>为了能写好测试就不得不面对现实项目的复杂性, 诸如外部接口数据库操作等. 
+这时开始将目光转向 <code>mock</code>, 因为之前有听过类似概念, 但是还是有误解, 
+以为把要测的东西都模拟掉了还测试什么呢? 但是真正的了解 <code>mock</code> 之后才完整的理解了单元测试.</p>
+<p><strong>单元测试应该只针对当前单元进行测试, 所有的外部依赖应该是稳定的, 在别处进行测试过的.</strong>
+使用 <code>mock</code> 就可以对外部依赖组件实现进行模拟并且替换掉, 从而隐藏外部组件的实现,
+使得单元测试将焦点只放在当前的逻辑(当前单元),</p>
+<h2>安装</h2>
+<p><code>mock</code> 在 Python3 中是内置的, 直接 <code>import unittest.mock</code> 即可, 
+但是在 Python2 中是需要额外安装的, 安装完 <code>import mock</code> 即可</p>
+<div class="highlight"><pre>pip install -U mock
+</pre></div>
+
+
+<h2>技巧</h2>
+<p>在本文不详细介绍如何使用, 具体请参见<a href="https://docs.python.org/3/library/unittest.mock.html">官方文档</a>.
+这里分享几个技巧.</p>
+<p>安装官方文档给的示例一开始像下面这么使用 mock</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">):</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="c"># real test code</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>但是当整个测试都依赖这个组件时上面的使用方式就会产生大量的相同的初始化代码, 
+所以定义了一个装饰器向下面这样</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="kn">import</span> <span class="nn">mock</span>
+
+<span class="k">def</span> <span class="nf">_mock_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">)</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@_mock_wrapper</span>
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">):</span>
+        <span class="c"># real test code</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>上面操作是很方便, 但是有几个缺点:</p>
+<ul>
+<li>代码不够清晰</li>
+<li>如果增加 mock 组件则需要修改每一个被装饰函数接收的参数</li>
+</ul>
+<p>所以在仔细阅读官方文档后发现, <code>mock.patch</code> 返回一个对象, 可以通过 <code>start</code>/<code>stop</code> 方法来应用.
+所以产生了下面的代码.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
+        <span class="c"># cleanup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># real test code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>当然如果有多个依赖组件需要 <code>mock</code> 可以将 <code>patcher</code> 存在一个列表里在 <code>tearDown</code> 方法里统一清理.</p>
+<p><strong>不要忘记清理, 因为当前 <code>mock</code> 的组件应当仅在当前测试里生效, 如果忘记了清理可能会影响到其他测试.</strong></p>
+<p>如果当前单元测试仅有部分测试依赖该组件也可以通过上下文管理的方式进行管理, 更加灵活.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">contextlib</span>
+
+<span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@contextlib.contextmanger</span>
+    <span class="k">def</span> <span class="nf">_mock_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">patcher</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">func_mock</span> <span class="o">=</span> <span class="n">patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">yield</span> <span class="n">func_mock</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">patcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mock_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">func_mock</span><span class="p">:</span>
+            <span class="c"># real test code</span>
+            <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>写在后面的话</h2>
+<p>测试对一个项目很重要, 特别是对上了规模的项目, 上了 <code>mock</code> 之后我花了很长时间将已有项目的测试整理完毕, 
+使测试有效并且可以全部 <code>passed</code>. 
+有了良好的基础之后接下来就很方便的使用了一些集成工具来限制不规范的代码提交到长期分支, 
+这部分内容将放在下一篇去分享.</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/mock.html">mock </a>
+    <a href="http://www.linuxzen.com/tag/unittest.html">unittest </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/python-mock-shi-yong-xin-de.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html"><h3 class="article-title">Python 内存泄露实战分析</h3></a>
 <h6 class="subheader" title="2015-03-30T17:29:00">一 30 三月 2015
 </h6>
@@ -70,99 +211,7 @@
 <h2>调试方法</h2>
 <p>由于不知道具体是哪里引起的内存泄露, 所以要耐心的一点点调试. </p>
 <p>由于知道了断开连接时没有释放, 所以我就不停的模拟创建连接然后发送一些包后断开连接, 
-然后通过下面一行 shell 来观察内存占用情况:</p>
-<div class="highlight"><pre><span class="nv">PID</span><span class="o">=</span>50662<span class="p">;</span><span class="k">while</span> <span class="nb">true</span><span class="p">;</span> <span class="k">do</span><span class="p">;</span> ps aux <span class="p">|</span> grep <span class="nv">$PID</span> <span class="p">|</span> grep -v grep <span class="p">|</span> awk <span class="s1">&#39;{print $5&quot; &quot;$6}&#39;</span> &gt;&gt; t<span class="p">;</span> sleep 1<span class="p">;</span> <span class="k">done</span>
-</pre></div>
-
-
-<p>如果在增长了一定的量后保持住就说明已经没有产生泄露.</p>
-<p>同时可以在对象该释放的时候查看对象的引用计数, 通过 <code>sys.getrefcount(obj)</code>. 如果引用计数变为了 <code>2</code> 
-则说明该对象在跳出命名空间后就会被正确回收.</p>
-<h2>产生原因</h2>
-<p>项目中两种情况导致对象没有被正确回收:</p>
-<ul>
-<li>被退出才回收的对象引用</li>
-<li>交叉引用</li>
-</ul>
-<h3>被退出才回收的对象引用</h3>
-<p>为了追踪连接所以把连接对象同时放在一个列表里, 而这个列表只有在程序退出时才会被回收, 
-如果不正确处理, 那么分配的对象将也会只在程序退出时才会被回收.</p>
-<p>全局变量和类变量都只会在程序退出的时候才会被回收:</p>
-<div class="highlight"><pre><span class="n">_CONNECTIONS</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c"># ...</span>
-<span class="k">class</span> <span class="nc">Connection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-        <span class="k">pass</span>
-
-<span class="k">def</span> <span class="nf">server_loop</span><span class="p">():</span>
-    <span class="c"># ...</span>
-    <span class="n">sock</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">server_sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-    <span class="n">_CONNECTIONS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
-    <span class="c"># ...</span>
-    <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</pre></div>
-
-
-<p>上面把所有建立的连接都放在全局变量 <code>_CONNECTIONS</code> 里, 如果在关闭的时候不从这个列表
-里取出(减少引用)则 connection 对象就不会被回收, 则每建立一次连接就会有个连接对象和连接
-对象引用的对象不会被回收.</p>
-<p>如果把对象放在一个类属性里也是一样的, 因为类对象在程序一开始就分配, 并在程序退出时才被回收.</p>
-<p>解决办法就是在退出时从列表(或其他对象)里解除对对象的引用(删除)</p>
-<div class="highlight"><pre><span class="n">_CONNECTIONS</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c"># ...</span>
-<span class="k">class</span> <span class="nc">Connection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-        <span class="k">pass</span>
-
-<span class="k">def</span> <span class="nf">server_loop</span><span class="p">():</span>
-    <span class="c"># ...</span>
-    <span class="n">sock</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="n">server_sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
-    <span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-    <span class="n">_CONNECTIONS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c"># ...</span>
-        <span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="n">_CONNECTIONS</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span> <span class="c"># XXX</span>
-</pre></div>
-
-
-<h3>交叉引用</h3>
-<p>有时候我们为对象分配一个实例属性时需要将自己本身赋值给实例属性, 作为实例属性的实例属性,
-说着很拗口, 看一下代码:</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">ConnectionHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span> <span class="o">=</span> <span class="n">connection</span>
-
-
-<span class="k">class</span> <span class="nc">Connection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conn_handler</span> <span class="o">=</span> <span class="n">ConnectionHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="c"># XXX</span>
-</pre></div>
-
-
-<p>上面的代码就会产生交叉引用, 交叉引用会让解释器困惑, 从而之后只能靠2代和3代回收, 这个过程可能会很慢.</p>
-<p>解决这种问题的方法就是使用 <code>弱引用</code></p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">weakref</span>
-
-<span class="k">class</span> <span class="nc">ConnectionHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span> <span class="o">=</span> <span class="n">connection</span>
-
-
-<span class="k">class</span> <span class="nc">Connection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_conn_handler</span> <span class="o">=</span> <span class="n">ConnectionHandler</span><span class="p">(</span><span class="n">weakref</span><span class="o">.</span><span class="n">proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span> <span class="c"># XXX</span>
-</pre></div>
-
-
-<h3>日志模块</h3>
-<p>参见 <a href="http://www.linuxzen.com/logging-mo-kuai-wu-yong-dao-zhi-de-nei-cun-xie-lu.html">logging 模块导致的内存泄露</a>.</p>
-<h2>参考</h2>
-<p><a href="http://www.cnblogs.com/vamei/p/3232088.html">Python 垃圾回收</a></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+然后通过下面一行 shell 来观察内存占用情况 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="http://www.linuxzen.com/tag/python.html">Python </a>
@@ -175,11 +224,9 @@
 
 
 
-<p><a href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-nei-cun-xie-lu-shi-zhan-fen-xi.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -488,54 +535,6 @@ python setup.py install
 
 
 <p><a href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h3 class="article-title">说说Python装饰器</h3></a>
-<h6 class="subheader" title="2013-05-20T14:52:00">一 20 五月 2013
-</h6>
-
-
-<p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
-<p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-        <span class="k">return</span> <span class="n">r</span>
-    <span class="k">return</span> <span class="n">wrapper</span>
-</pre></div>
-
-
-<p>我们用这个装饰器装饰一个<code>test</code>函数</p>
-<div class="highlight"><pre><span class="nd">@run_time</span>
-<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
-</pre></div>
-
-
-<p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
-<div class="highlight"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-</pre></div>
-
-
-<p>装饰器将在解释器运行一开始就被加载 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="http://www.linuxzen.com/tag/zhuang-shi-qi.html">装饰器 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

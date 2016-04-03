@@ -48,6 +48,49 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html"><h3 class="article-title">AppArmor引起的无法启动Evince</h3></a>
+<h6 class="subheader" title="2012-11-15T16:05:00">四 15 十一月 2012
+</h6>
+
+
+<p>今天在Ubuntu上使用文档查看器(Evince),总是打开没有响应,在命令行下使用命令:
+evince
+却提示:</p>
+<div class="highlight"><pre><span class="n">No</span> <span class="n">protocol</span> <span class="n">specified</span>
+<span class="n">Cannot</span> <span class="n">parse</span> <span class="n">arguments</span><span class="o">:</span> <span class="err">无法打开显示：</span>
+</pre></div>
+
+
+<p>google说是$XAUTHORITY权限的问题,于是查看:</p>
+<div class="highlight"><pre>ls -l <span class="nv">$XAUTHORITY</span>
+-rw------- 1 vim vim 51 2012-11-15 12:12 /data/home/vim/.Xauthority
+</pre></div>
+
+
+<p>更改为如下:</p>
+<div class="highlight"><pre>chmod +rw <span class="nv">$XAUTHORITY</span>
+</pre></div>
+
+
+<p>还是不行,这时候猛然想起查看日志,日志有如下一行:</p>
+<div class="highlight"><pre><span class="n">Nov</span> <span class="mi">15</span> <span class="mi">15</span><span class="o">:</span><span class="mi">48</span><span class="o">:</span><span class="mi">53</span> <span class="n">Vostro</span> <span class="n">kernel</span><span class="o">:</span> <span class="p">[</span><span class="mf">13010.203241</span><span class="p">]</span> <span class="n">type</span><span class="o">=</span><span class="mi">1400</span> <span class="n">audit ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/linux.html">Linux</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/ubuntu.html">Ubuntu </a>
+    <a href="http://www.linuxzen.com/tag/evince.html">evince </a>
+    <a href="http://www.linuxzen.com/tag/apparmor.html">apparmor </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/apparmoryin-qi-de-wu-fa-qi-dong-evince.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html"><h3 class="article-title">python 使用pyxmpp2编写gtalk群</h3></a>
 <h6 class="subheader" title="2012-10-29T14:48:00">一 29 十月 2012
 </h6>
@@ -433,49 +476,9 @@ fugitive 可以在git获得:</p>
                 <hr  class="gradient"/>
             </article>
 
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html"><h3 class="article-title">Python 字典和列表陷阱</h3></a>
-<h6 class="subheader" title="2012-09-17T10:22:00">一 17 九月 2012
-</h6>
-
-
-<p>Python 中有三个非常好用的数据结构,列表,元组和字典,
-元组是不可变的,列表可以保存任意类型的Python对象,并可以随意扩展没有大小限制,
-字典是一个key-value的键值映射的类型,可以存放任何Python对象,可以嵌套字典,
-值可以是字典元组或者字典</p>
-<p>这里说是Python 字典和列表的陷阱不如说是Python的一些特性,如果不了解这些特性
-就会引发一些难以寻找的bug</p>
-<p>下面我们来介绍这些特性</p>
-<p>Python中所有对列表和字典的使用仅仅是对原来对象的引用而不是创建一个新的对象
-如下面代码:</p>
-<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;cold&#39;</span><span class="p">,</span> <span class="n">blog</span><span class="o">=</span><span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">)</span> <span class="c"># 创建字典{&#39;name&#39;:&#39;cold&#39;, &#39;blog&#39;:&#39;www.linuxzen.com&#39;}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">info</span>     <span class="c"># 赋值给info2</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;cold night&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info2</span>
-<span class="p">{</span><span class="s">&#39;blog&#39;</span><span class="p">:</span> <span class="s">&#39;www.linuxzen.com&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;cold night&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">info ...</span></pre></div><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/xian-jing.html">陷阱 </a>
-    <a href="http://www.linuxzen.com/tag/yin-yong.html">引用 </a>
-    <a href="http://www.linuxzen.com/tag/zi-dian.html">字典 </a>
-    <a href="http://www.linuxzen.com/tag/lie-biao.html">列表 </a>
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
             <!-- /#posts-list -->
 <div class="pagination-centered">
-<h6 class="subheader">Page 5 of 9</h6>
+<h6 class="subheader">Page 5 of 10</h6>
 
 <p>
             <a href="http://www.linuxzen.com/index4.html">&laquo; Prev</a>

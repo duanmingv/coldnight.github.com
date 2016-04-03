@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <!-- Set the viewport width to device width for mobile -->
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Python mock 使用心得</title>
+
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/normalize.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/style.css" />
+    <link rel="stylesheet" href="http://www.linuxzen.com/theme/css/pygments.css" />	
+    <script src="http://www.linuxzen.com/theme/js/vendor/custom.modernizr.js"></script>
+</head>
+
+<body>
+
+<!-- Nav Bar -->
+<nav>
+<div class="top-bar">
+<div class="row">
+    <div class="large-9 large-centered columns">
+	    <h1><a href="http://www.linuxzen.com">cold's world</a></h1>
+    </div>
+</div>
+</div>
+
+<!-- Show menu items and pages -->
+<div class="row">
+<div class="large-9 columns">
+    <ul class="button-group navigation">
+
+    </ul>
+</div>
+</div>
+</nav>
+<!-- End Nav -->
+
+
+<!-- Main Page Content and Sidebar -->
+<div class="row">
+
+    <!-- Main Blog Content -->
+    <div class="large-9 columns">
+<article>
+    <header>
+        <h3 class="article-title"><a href="http://www.linuxzen.com/python-mock-shi-yong-xin-de.html" rel="bookmark"
+        title="Permalink to Python mock 使用心得">Python mock 使用心得</a></h3>
+    </header>
+
+<h6 class="subheader" title="2016-04-03T11:42:00">日 03 四月 2016
+</h6>
+
+
+    <p>好久没有更新博客, 趁着清明节小长假和我儿子正在睡觉更新一篇刷刷存在感.
+近来变化很多, 儿子也有了, 工作上也有很多收获. 这篇博客就分享一下关于 <code>mock</code> 的使用的心得体会.</p>
+<p>很长一段时间以来写单元测试都类似写执行脚本, 运行一下然后看一下结果. 
+这里面有一部分原因是因为无法规避外部的依赖组件, 比如:</p>
+<ul>
+<li>数据库操作</li>
+<li>外部接口调用</li>
+<li>外部其他不可控因素</li>
+</ul>
+<p>这样写测试只关心当前测试的结果, 而不去管其他测试是否 <code>passed</code>.</p>
+<p>后面随着团队开始进新人, 由于团队里每个人的标准和水平不同, 
+开始不得不重视整体项目的质量, 发现没有好的测试就没有统一的标准来衡量提交代码的质量,
+当然说到代码质量还有另外一个和测试放在一起的标准就是代码风格, 这不是本文的主题所里这里就暂且不提.</p>
+<p>为了能写好测试就不得不面对现实项目的复杂性, 诸如外部接口数据库操作等. 
+这时开始将目光转向 <code>mock</code>, 因为之前有听过类似概念, 但是还是有误解, 
+以为把要测的东西都模拟掉了还测试什么呢? 但是真正的了解 <code>mock</code> 之后才完整的理解了单元测试.</p>
+<p><strong>单元测试应该只针对当前单元进行测试, 所有的外部依赖应该是稳定的, 在别处进行测试过的.</strong>
+使用 <code>mock</code> 就可以对外部依赖组件实现进行模拟并且替换掉, 从而隐藏外部组件的实现,
+使得单元测试将焦点只放在当前的逻辑(当前单元),</p>
+<h2>安装</h2>
+<p><code>mock</code> 在 Python3 中是内置的, 直接 <code>import unittest.mock</code> 即可, 
+但是在 Python2 中是需要额外安装的, 安装完 <code>import mock</code> 即可</p>
+<div class="highlight"><pre>pip install -U mock
+</pre></div>
+
+
+<h2>技巧</h2>
+<p>在本文不详细介绍如何使用, 具体请参见<a href="https://docs.python.org/3/library/unittest.mock.html">官方文档</a>.
+这里分享几个技巧.</p>
+<p>安装官方文档给的示例一开始像下面这么使用 mock</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">):</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="c"># real test code</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>但是当整个测试都依赖这个组件时上面的使用方式就会产生大量的相同的初始化代码, 
+所以定义了一个装饰器向下面这样</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="kn">import</span> <span class="nn">mock</span>
+
+<span class="k">def</span> <span class="nf">_mock_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">)</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@_mock_wrapper</span>
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">):</span>
+        <span class="c"># real test code</span>
+        <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>上面操作是很方便, 但是有几个缺点:</p>
+<ul>
+<li>代码不够清晰</li>
+<li>如果增加 mock 组件则需要修改每一个被装饰函数接收的参数</li>
+</ul>
+<p>所以在仔细阅读官方文档后发现, <code>mock.patch</code> 返回一个对象, 可以通过 <code>start</code>/<code>stop</code> 方法来应用.
+所以产生了下面的代码.</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DemoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
+        <span class="c"># cleanup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># real test code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>当然如果有多个依赖组件需要 <code>mock</code> 可以将 <code>patcher</code> 存在一个列表里在 <code>tearDown</code> 方法里统一清理.</p>
+<p><strong>不要忘记清理, 因为当前 <code>mock</code> 的组件应当仅在当前测试里生效, 如果忘记了清理可能会影响到其他测试.</strong></p>
+<p>如果当前单元测试仅有部分测试依赖该组件也可以通过上下文管理的方式进行管理, 更加灵活.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">contextlib</span>
+
+<span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@contextlib.contextmanger</span>
+    <span class="k">def</span> <span class="nf">_mock_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">patcher</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">func_mock</span> <span class="o">=</span> <span class="n">patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">yield</span> <span class="n">func_mock</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">patcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mock_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">func_mock</span><span class="p">:</span>
+            <span class="c"># real test code</span>
+            <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>写在后面的话</h2>
+<p>测试对一个项目很重要, 特别是对上了规模的项目, 上了 <code>mock</code> 之后我花了很长时间将已有项目的测试整理完毕, 
+使测试有效并且可以全部 <code>passed</code>. 
+有了良好的基础之后接下来就很方便的使用了一些集成工具来限制不规范的代码提交到长期分支, 
+这部分内容将放在下一篇去分享.</p>
+<p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/mock.html">mock </a>
+    <a href="http://www.linuxzen.com/tag/unittest.html">unittest </a>
+</p>
+
+
+
+
+	<h4>Comments</h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'linuxzen'
+        var disqus_identifier = "Python mock 使用心得";
+        var disqus_url = "http://www.linuxzen.com/python-mock-shi-yong-xin-de.html";
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
+    </div>
+    <!-- End Main Content -->
+
+    <!-- Sidebar -->
+    <aside class="large-3 columns">
+        <h5 class="sidebar-title">Site</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/archives.html">Archives</a>
+            <li><a href="http://www.linuxzen.com/tags.html">Tags</a>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml" rel="alternate">Atom feed</a></li>
+                  <li><a href="http://www.linuxzen.com/pages/about.html">About</a></li>
+        </ul>
+
+		
+        <h5 class="sidebar-title">Categories</h5>
+        <ul class="side-nav">
+            <li><a href="http://www.linuxzen.com/category/fu-zai-jun-heng.html">负载均衡</a></li>
+            <li><a href="http://www.linuxzen.com/category/git.html">git</a></li>
+            <li><a href="http://www.linuxzen.com/category/jian-kong.html">监控</a></li>
+            <li><a href="http://www.linuxzen.com/category/linux.html">Linux</a></li>
+            <li><a href="http://www.linuxzen.com/category/mysql.html">MySQL</a></li>
+            <li><a href="http://www.linuxzen.com/category/pyqt.html">PyQt</a></li>
+            <li><a href="http://www.linuxzen.com/category/python.html">Python</a></li>
+            <li><a href="http://www.linuxzen.com/category/shell.html">shell</a></li>
+            <li><a href="http://www.linuxzen.com/category/vim.html">Vim</a></li>
+   
+        </ul>
+
+        <h5 class="sidebar-title">Links</h5>
+        <ul class="side-nav">
+            <li><a href="http://eleveni386.7axu.com">eleven</a></li>
+            <li><a href="http://neteue.com">小邪兽_deepin</a></li>
+            <li><a href="http://frantic1048.com/">Frantic1048</a></li>
+            <li><a href="http://www.dongxf.com/">晓风'Blog</a></li>
+            <li><a href="http://evilbinary.org/">邪恶的二进制</a></li>
+            <li><a href="http://www.icnws.com">城南往事</a></li>
+            <li><a href="http://jeepxiaozi.github.io/">一把汤勺</a></li>
+            <li><a href="http://www.zeython.com/">Zey's Blog</a></li>
+        </ul>
+		
+        <h5 class="sidebar-title">Social</h5>
+        <ul class="side-nav social">
+            <li><a href="https://plus.google.com/u/0/118104100603784013039">G+</a></li>
+            <li><a href="https://github.com/coldnight">Github</a></li>
+            <li><a href="http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719">Linkedin</a></li>
+            <li><a href="http://www.linuxzen.com/feeds/all.atom.xml">Atom Feed</a></li>
+        </ul>
+
+    </aside> <!-- End Sidebar -->
+
+</div> <!-- End Main Content and Sidebar -->
+
+
+<!-- Footer -->
+<footer class="row">
+    <div class="large-12 columns">
+        <hr />
+        <div class="row">
+            <div class="large-6 columns">
+              <p><a href="http://www.linuxzen.com">cold's world</a> &copy; cold 2014
+                
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_3767683'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s96.cnzz.com/stat.php%3Fid%3D3767683%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+            </div>
+        </div>
+    </div>
+</footer>
+<a href="https://github.com/coldnight/coldnight.github.com">
+<img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub" />
+</a>
+</html>

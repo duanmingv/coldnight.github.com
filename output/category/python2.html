@@ -48,6 +48,54 @@
 
 
             <article>
+                <a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html"><h3 class="article-title">说说Python装饰器</h3></a>
+<h6 class="subheader" title="2013-05-20T14:52:00">一 20 五月 2013
+</h6>
+
+
+<p>装饰器对与Python新手以至于熟悉Python的人都是一个难理解, 难写的东西. 那么今天就分享一下我对Python 装饰器的理解</p>
+<p>所谓装饰器仅仅是一种语法糖, 可作用的对象可以是函数也可以是类, 装饰器本身是一个函数, 其主要工作方式就是将被装饰的类或者函数当作参数传递给装饰器函数, 比如定义如下装饰器</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">run_time</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="k">return</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+
+
+<p>我们用这个装饰器装饰一个<code>test</code>函数</p>
+<div class="highlight"><pre><span class="nd">@run_time</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&quot;just a test&quot;</span>
+</pre></div>
+
+
+<p>前面说过其实装饰器就是一个语法糖, 就是将被装饰的函数作为参数传递给装饰器函数, 所以上面可以展开为</p>
+<div class="highlight"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">run_time</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</pre></div>
+
+
+<p>装饰器将在解释器运行一开始就被加载 ...</p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="http://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="http://www.linuxzen.com/tag/zhuang-shi-qi.html">装饰器 </a>
+</p>
+
+
+
+<p><a href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shuo-shuo-pythonzhuang-shi-qi.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="http://www.linuxzen.com/clubotgeng-xin-shi-yong-sqlalchemyzhong-xie-shu-ju-ku-bu-fen-he-gai-yong-tornado-mainloop.html"><h3 class="article-title">clubot更新: 使用SQLAlchemy重写数据库部分和改用Tornado MainLoop</h3></a>
 <h6 class="subheader" title="2013-04-26T15:40:00">五 26 四月 2013
 </h6>
@@ -358,37 +406,6 @@ make clean ...</pre></div><p class="subheader">Category: <a href="http://www.lin
 
 
 <p><a href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h3 class="article-title">Python 重复安装包报错</h3></a>
-<h6 class="subheader" title="2013-01-25T14:55:00">五 25 一月 2013
-</h6>
-
-
-<p>最近写程序用到argparse总是会报错</p>
-<div class="highlight"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pygments</span><span class="o">/</span><span class="n">plugin</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">39</span><span class="o">:</span> <span class="n">UserWarning</span><span class="o">:</span> <span class="n">Module</span> <span class="n">argparse</span> <span class="n">was</span> <span class="n">already</span> <span class="n">imported</span> <span class="n">from</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">argparse</span><span class="p">.</span><span class="n">pyc</span><span class="p">,</span> <span class="n">but</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">is</span> <span class="n">being</span> <span class="n">added</span> <span class="n">to</span> <span class="n">sys</span><span class="p">.</span><span class="n">path</span>
-</pre></div>
-
-
-<p>一开始也没怎么在意,不影响什么,但是后来总是出来严重影响心情,google 了没啥明确的报错,后来仔细看报错信息,想起来以前可能庄过argparse这个包测试,但是没有删除
-执行<code>ls /usr/local ...</code></p><p class="subheader">Category: <a href="http://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="http://www.linuxzen.com/tag/python.html">python </a>
-    <a href="http://www.linuxzen.com/tag/bao.html">包 </a>
-    <a href="http://www.linuxzen.com/tag/zhong-fu.html">重复 </a>
-    <a href="http://www.linuxzen.com/tag/an-zhuang.html">安装 </a>
-    <a href="http://www.linuxzen.com/tag/xie-zai.html">卸载 </a>
-</p>
-
-
-
-<p><a href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="http://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
