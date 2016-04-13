@@ -3,7 +3,7 @@
 
 AUTHOR = u'cold'
 SITENAME = u"cold's world"
-SITEURL = u'http://www.linuxzen.com'
+SITEURL = u'https://www.linuxzen.com'
 # SITEURL = u'http://localhost:8000'
 SITE_SOURCE = u"https://github.com/coldnight/coldnight.github.com"
 SITE_TAGLINE = u"木秀于林"
@@ -62,7 +62,7 @@ LINKS = (('eleven', 'http://eleveni386.7axu.com'),
 SOCIAL = (("G+", "https://plus.google.com/u/0/118104100603784013039"),
           ('Github', 'https://github.com/coldnight'),
           ("Linkedin", "http://www.linkedin.com/pub/%E4%BC%9A-%E7%8E%8B/91/571/719"),
-          ("Atom Feed", "http://www.linuxzen.com/feeds/all.atom.xml"),
+          ("Atom Feed", "https://www.linuxzen.com/feeds/all.atom.xml"),
           )
 
 DEFAULT_PAGINATION = 10
