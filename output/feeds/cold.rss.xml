@@ -133,7 +133,7 @@ Changes to be committed:
 &lt;li&gt;通过主题分支开发并往长期分支提交 PR&lt;/li&gt;
 &lt;li&gt;reviewer 在 &lt;code&gt;LGTM&lt;/code&gt; 后提交评论 &lt;code&gt;r+&lt;/code&gt; 并 @ Homu 账号(@homu r+)&lt;/li&gt;
 &lt;li&gt;之后 Homu 会合并 PR 变更到 &lt;code&gt;auto&lt;/code&gt; 分支&lt;/li&gt;
-&lt;li&gt;buildbot 监听到 &lt;code&gt;auto&lt;/code&gt; 分支的变更后就会运行相应构建并在成功后通知 Homu&lt;/li&gt;
+&lt;li&gt;buildbot 监听到 &lt;code&gt;auto&lt;/code&gt; 分支的变更后就会运行相应构建并在完成后后通知 Homu&lt;/li&gt;
 &lt;li&gt;Homu 在收到成功的通知后合并 PR 到长期分支&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;4. 已知问题&lt;/h2&gt;
