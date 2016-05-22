@@ -5,7 +5,7 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <title>cold's world - 可持续集成</title>
+    <title>Python github 私有项目可持续集成(Review)方案</title>
 
     <link rel="stylesheet" href="https://www.linuxzen.com/theme/css/normalize.css" />
     <link rel="stylesheet" href="https://www.linuxzen.com/theme/css/foundation.min.css" />
@@ -43,16 +43,17 @@
 
     <!-- Main Blog Content -->
     <div class="large-9 columns">
-        
-        
+<article>
+    <header>
+        <h3 class="article-title"><a href="https://www.linuxzen.com/python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-reviewfang-an.html" rel="bookmark"
+        title="Permalink to Python github 私有项目可持续集成(Review)方案">Python github 私有项目可持续集成(Review)方案</a></h3>
+    </header>
 
-            <article>
-                <a href="https://www.linuxzen.com/python-github-si-you-xiang-mu-tong-guo-buildbot-jin-xing-review.html"><h3 class="article-title">Python github 私有项目通过 buildbot 进行 Review</h3></a>
 <h6 class="subheader" title="2016-05-22T00:00:00">日 22 五月 2016
 </h6>
 
 
-<h2>背景</h2>
+    <h2>背景</h2>
 <p>随着公司开发团队的壮大, 团队中每个人的水平参差不齐, 为了保证项目质量我们打算对
 提交的代码进行 review, 但是苦于一直没有好的 review 机制. 前段时间我在逛 
 <a href="https://github.com/rust-lang/rust">Rust</a> 社区是发现了他们有一个 review 机器人 <a href="https://github.com/barosl/homu">Homu</a> 非常不错, 
@@ -191,7 +192,8 @@ Changes to be committed:
 <h2>4. 已知问题</h2>
 <p>Homu 在将 <code>auto</code> 分支合并到长期分支时会采用 <code>fast-forward</code> 的方式进行合并, 
 所以不会产生新的 commit, buildbot 0.8 对同一提交(sha 相同) 仅触发一次 build.
-所以会导致其他一些比如自动部署的 builder 无法触发.</p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
+所以会导致其他一些比如自动部署的 builder 无法触发.</p>
+<p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="https://www.linuxzen.com/tag/python.html">Python </a>
@@ -205,20 +207,22 @@ Changes to be committed:
 
 
 
-<p><a href="https://www.linuxzen.com/python-github-si-you-xiang-mu-tong-guo-buildbot-jin-xing-review.html#disqus_thread">comments</a></p>            </article>
 
-<div class="pagination-centered">
-<h6 class="subheader">Page 1 of 1</h6>
+	<h4>Comments</h4>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'linuxzen'
+        var disqus_identifier = "Python github 私有项目可持续集成(Review)方案";
+        var disqus_url = "https://www.linuxzen.com/python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-reviewfang-an.html";
 
-<p>
-
-</p>
-</div>
-
-
-
-            <!-- /#posts-list -->
-
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
     </div>
     <!-- End Main Content -->
 

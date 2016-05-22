@@ -1,7 +1,7 @@
-Title: Python github 私有项目可持续集成方案
+Title: Python github 私有项目通过 buildbot 进行 Review
 Date: 2016-05-22
 Category: Python
-Tags: Python, github, 私有, 可持续集成, homu, buildbot
+Tags: Python, github, 私有, 可持续集成, homu, buildbot, review
 
 ## 背景
 随着公司开发团队的壮大, 团队中每个人的水平参差不齐, 为了保证项目质量我们打算对
