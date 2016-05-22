@@ -48,6 +48,51 @@
 
 
             <article>
+                <a href="https://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h3 class="article-title">nginx平台搭建nagios监控系统</h3></a>
+<h6 class="subheader" title="2012-02-26T10:48:00">日 26 二月 2012
+</h6>
+
+
+<p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
+<p>Nagios 功能:</p>
+<ul>
+<li>监视网络服务 (SMTP, POP3, HTTP, NNTP, PING等)</li>
+<li>监视主机资源 (进程, 磁盘等)</li>
+<li>简单的插件设计可以轻松扩展Nagios的监视功能</li>
+<li>服务等监视的并发处理</li>
+<li>错误通知功能 (通过email, pager, 或其他用户自定义方法)</li>
+<li>可指定自定义的事件处理控制器</li>
+<li>可选的基于浏览器的WEB界面以方便系统管理人员查看网络状态，各种系统问题，以及日志等等</li>
+<li>可以通过手机查看系统监控信息</li>
+</ul>
+<p>本文环境:</p>
+<ul>
+<li>系统:CentOS 5.5 32bit</li>
+<li>ip:192.168.3.3</li>
+<li>nagios core:nagios-3.3.1.tar.gz</li>
+<li>web:nginx(nginx-1 ...</li></ul><p class="subheader">Category: <a href="https://www.linuxzen.com/category/jian-kong.html">监控</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/pei-zhi.html">配置 </a>
+    <a href="https://www.linuxzen.com/tag/jian-kong.html">监控 </a>
+    <a href="https://www.linuxzen.com/tag/rewrite.html">rewrite </a>
+    <a href="https://www.linuxzen.com/tag/nginxren-zheng.html">nginx认证 </a>
+    <a href="https://www.linuxzen.com/tag/nginxzhi-chi-cgi.html">nginx支持cgi </a>
+    <a href="https://www.linuxzen.com/tag/nginx.html">nginx </a>
+    <a href="https://www.linuxzen.com/tag/nagios.html">nagios </a>
+    <a href="https://www.linuxzen.com/tag/linux.html">Linux </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/da-jian-ntopjian-ce-ju-yu-wang-nei-liu-liang.html"><h3 class="article-title">搭建ntop监测局域网内流量</h3></a>
 <h6 class="subheader" title="2012-02-20T17:37:00">一 20 二月 2012
 </h6>
@@ -400,46 +445,6 @@ mount -o loop iso路径 /mnt
 
 
 <p><a href="https://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/gen-ju-centosding-zhi-zi-ji-de-fa-xing-ban.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html"><h3 class="article-title">安装配置cfengine实现自动化配置Linux/Unix服务器</h3></a>
-<h6 class="subheader" title="2012-01-17T23:06:00">二 17 一月 2012
-</h6>
-
-
-<p>cfengine（配置引擎）是一种 UNIX 管理工具，其目的是使简单的管理的任务自动化，使困难的任务变得较容易。Cfengine 适用于管理各种环境，从一台主机到上万台主机的机群均可使用. cfengine的版本2和版本3存在很大差异,这里使用最新版本的cfengine3:</p>
-<p>cfengine执行和分发的策略被称为承诺,cfengine建议的结构是:</p>
-<ul>
-<li>一个版本控制器(subversion)用来创建策略</li>
-<li>多个策略分发器(cfenginehub)用来分发策略----server</li>
-<li>多个策略执行器(cfengine host)用来执行策略-----client,</li>
-</ul>
-<p>本文使用的环境为:</p>
-<ul>
-<li>cfhub: 172.16.1.1/24</li>
-<li>cfhost: 172.16.1.2/24</li>
-</ul>
-<p>系统为CentOS 5.5 32位最小化安装,本文将不会解释一些基本命令,如有疑问请移步google.</p>
-<p>下载:</p>
-<div class="highlight"><pre>wget https://cfengine.com/source-code/download ...</pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/linux.html">Linux</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/zi-dong-pei-zhi.html">自动配置 </a>
-    <a href="https://www.linuxzen.com/tag/zi-dong-hua.html">自动化 </a>
-    <a href="https://www.linuxzen.com/tag/fu-wu-qi.html">服务器 </a>
-    <a href="https://www.linuxzen.com/tag/unix.html">Unix </a>
-    <a href="https://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="https://www.linuxzen.com/tag/cfengine.html">cfengine </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/an-zhuang-pei-zhi-cfengineshi-xian-zi-dong-hua-pei-zhi-linuxunixfu-wu-qi.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

@@ -1,5 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="https://www.linuxzen.com/" rel="alternate"></link><link href="https://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>https://www.linuxzen.com/</id><updated>2016-04-03T11:42:00+08:00</updated><entry><title>Python mock 使用心得</title><link href="https://www.linuxzen.com/python-mock-shi-yong-xin-de.html" rel="alternate"></link><updated>2016-04-03T11:42:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2016-04-03:python-mock-shi-yong-xin-de.html</id><summary type="html">&lt;p&gt;好久没有更新博客, 趁着清明节小长假和我儿子正在睡觉更新一篇刷刷存在感.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>cold's world</title><link href="https://www.linuxzen.com/" rel="alternate"></link><link href="https://www.linuxzen.com/feeds/all.atom.xml" rel="self"></link><id>https://www.linuxzen.com/</id><updated>2016-05-22T00:00:00+08:00</updated><entry><title>Python github 私有项目可持续集成方案</title><link href="https://www.linuxzen.com/python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-fang-an.html" rel="alternate"></link><updated>2016-05-22T00:00:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2016-05-22:python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-fang-an.html</id><summary type="html">&lt;h2&gt;背景&lt;/h2&gt;
+&lt;p&gt;随着公司开发团队的壮大, 团队中每个人的水平参差不齐, 为了保证项目质量我们打算对
+提交的代码进行 review, 但是苦于一直没有好的 review 机制. 前段时间我在逛 
+&lt;a href="https://github.com/rust-lang/rust"&gt;Rust&lt;/a&gt; 社区是发现了他们有一个 review 机器人 &lt;a href="https://github.com/barosl/homu"&gt;Homu&lt;/a&gt; 非常不错, 
+研究一下后我将其应用到我们当前 Python 项目中来配合 review, 我感觉非常棒, 
+今天抽空就分享给大家.&lt;/p&gt;
+&lt;h2&gt;技术栈&lt;/h2&gt;
+&lt;p&gt;本文涉及的项目和技术有:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/barosl/homu"&gt;Homu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/buildbot/buildbot"&gt;buildbot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/sebdah/git-pylint-commit-hook"&gt;git-pylint-commit-hook&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.docker.com"&gt;Docker&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;0. 隔离 Github 部署 Key&lt;/h2&gt;
+&lt;p&gt;Github 可以添加部署 Key 来实现部署, 但是每个项目必须是不同的部署 key. 这就给
+多个私有项目的可持续集成带来一定的困难, 因为 buildbot 是通过轮询来获取 git 分支
+变更的, 并且 buildbot 不支持指定私钥. &lt;/p&gt;
+&lt;p&gt;我们前期想到的是通过 &lt;a href="https://www.docker.com"&gt;Docker&lt;/a&gt; 来分别跑每个项目的 buildbot, 这样部署 key 就
+可以很容易进行隔离. 后面我们找到一种更好的方式来指定部署 Key: 通过 &lt;code&gt;ssh_config&lt;/code&gt;
+来指定别名.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat ~/.ssh/config
+Host github-project-a-alias
+    Hostname github.com
+    IdentityFile &lt;span class="s2"&gt;&amp;quot;~/.ssh/project_a_deploy_key&amp;quot;&lt;/span&gt;
+
+Host github-project-b-alias
+    Hostname github.com
+    IdentityFile &lt;span class="s2"&gt;&amp;quot;~/.ssh/project_b_deploy_key&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就可以将原有的项目地址做如下转换&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gd"&gt;- git@github.com:Owner/a&lt;/span&gt;
+&lt;span class="gi"&gt;+ git@github-project-a-alias:Owner/a&lt;/span&gt;
+
+&lt;span class="gd"&gt;- git@github.com:Owner/b&lt;/span&gt;
+&lt;span class="gi"&gt;+ git@github-project-b-alias:Owner/b&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;1. 搭建 homu&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://github.com/barosl/homu"&gt;Homu&lt;/a&gt; 是一个构建在 Github 和 buildbot(或 Travis) 之上的工具, 它通过监听
+PR 里的评论来触发 buildbot 构建, 并监听构建结果, 如果构建成功则自动合并 PR&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/barosl/homu"&gt;Homu&lt;/a&gt; 的搭建可以参见其项目地址有简单的介绍, 非常简单这里就不在赘述.&lt;/p&gt;
+&lt;p&gt;Homu 是针对 Rust 开发, 并没有考虑私有项目, 所以其信息都是公开的, 为了减少
+暴漏信息带来的安全性问题, 我们将 Homu 搭建在内网并通过 ssh 端口转发将 Homu 的
+端口发送到一台公网服务器:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh -o &lt;span class="nv"&gt;TCPKeepAlive&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes -CfNgR 127.0.0.1:54856:127.0.0.1:54856 user@remote.ip.address
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;然后通过以下 nginx 配置文件来仅暴漏供 Github webhook 调用的地址:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;upstream&lt;/span&gt; &lt;span class="nt"&gt;homu&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;54856&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+
+&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="n"&gt;public&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;address&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;54856&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_set_header&lt;/span&gt; &lt;span class="n"&gt;Host&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;http_host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_redirect&lt;/span&gt; &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_set_header&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Real&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;IP&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_set_header&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Scheme&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;scheme&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_pass&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;homu&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~*&lt;/span&gt; &lt;span class="o"&gt;(?:^|/)&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;deny&lt;/span&gt; &lt;span class="n"&gt;all&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就可以隐藏 Homu 暴露的信息, 其他完整功能可以通过内网访问.&lt;/p&gt;
+&lt;h2&gt;2. 搭建 buildbot&lt;/h2&gt;
+&lt;p&gt;buildbot 其官方文档也比较详细, 可以参考其官方文档进行搭建, 需要注意的是目前 
+&lt;a href="https://github.com/barosl/homu"&gt;homu&lt;/a&gt; 适配的 buildbot 是 0.8, 目前 buildbot-0.9 正在发布 beta, 和 0.8
+有很多地方都不兼容, 这里着重说一下结合 pylint 做代码检查.&lt;/p&gt;
+&lt;h3&gt;代码检查&lt;/h3&gt;
+&lt;p&gt;我们希望通过 buildbot 使用 pylint 来做代码检查, 但是考虑到历史遗留问题我们仅
+希望对当前提交的变更做检查. 综合一下几个方面 &lt;a href="https://github.com/sebdah/git-pylint-commit-hook"&gt;git-pylint-commit-hook&lt;/a&gt; 可
+以完美的满足需求:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/sebdah/git-pylint-commit-hook"&gt;git-pylint-commit-hook&lt;/a&gt; 配置成 pre-commit 可以对&lt;code&gt;将要被提交(git add 过)的文件&lt;/code&gt;进行检查&lt;/li&gt;
+&lt;li&gt;通过 &lt;code&gt;git reset HEAD^ --soft&lt;/code&gt; 可以将上一次提交的文件变成&lt;code&gt;将要被提交的文件&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/barosl/homu"&gt;Homu&lt;/a&gt; 在接受(r+)某一 PR 时会将变更通过 &lt;code&gt;--no-ff&lt;/code&gt;(no fast-forward) 的方式合并到 &lt;code&gt;auto&lt;/code&gt; 分支&lt;/li&gt;
+&lt;li&gt;通过 no fast-forward 合并相当于将所涉及的提交打了一个节点, 在通过 &lt;code&gt;git reset HEAD^ --soft&lt;/code&gt; 进行重置时会将所涉及的提交的文件都变成&lt;code&gt;将要被提交的文件&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout -b feature-test
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="c"&gt;# edit file a&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git add a &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git commit -m &lt;span class="s1"&gt;&amp;#39;Change file a&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="c"&gt;# edit file b&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git add b &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; git commit -m &lt;span class="s1"&gt;&amp;#39;Change file b&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout master
+&lt;span class="nv"&gt;$ &lt;/span&gt;git merge --no-ff feature-test
+&lt;span class="nv"&gt;$ &lt;/span&gt;git reset HEAD^ --soft
+&lt;span class="nv"&gt;$ &lt;/span&gt;git status
+On branch master
+Changes to be committed:
+  &lt;span class="o"&gt;(&lt;/span&gt;use &lt;span class="s2"&gt;&amp;quot;git reset HEAD &amp;lt;file&amp;gt;...&amp;quot;&lt;/span&gt; to unstage&lt;span class="o"&gt;)&lt;/span&gt;
+
+        modified:   a
+        modified:   b
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;buildbot 配置文件片段如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;lint_factory&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;BuildFactory&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;lint_factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addStep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Git&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;repourl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;full&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;auto&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;progress&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;lint_factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addStep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ShellCommand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pip&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;install&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-U&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-r&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;requirements.txt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;span class="n"&gt;lint_factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addStep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ShellCommand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;git&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;reset&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;HEAD^&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;--soft&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;span class="n"&gt;lint_factory&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;addStep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;steps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ShellCommand&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;git-pylint-commit-hook&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;--limit=8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;--pylintrc=./.pylintrc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+
+&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;builders&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;BuilderConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;auto-lint&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+      &lt;span class="n"&gt;slavenames&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;example-slave&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+      &lt;span class="n"&gt;factory&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;lint_factory&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可根据自身需求做变更, 比如 &lt;code&gt;--limit=8&lt;/code&gt; 来限制最低分数, 低于这个分数将导致构建
+失败.&lt;/p&gt;
+&lt;p&gt;buildbot 可自定义性很强, homu 是可以支持多个 builder 的. 所以除了代码检查我们
+还有测试. Homu 在检测这两个 Builder 都构建成功后才会合并当前 PR.&lt;/p&gt;
+&lt;h2&gt;3. 工作流&lt;/h2&gt;
+&lt;p&gt;实现了如上功能之后我们对工作流进行了调整:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;通过主题分支开发并往长期分支提交 PR&lt;/li&gt;
+&lt;li&gt;reviewer 在 &lt;code&gt;LGTM&lt;/code&gt; 后提交评论 &lt;code&gt;r+&lt;/code&gt; 并 @ Homu 账号(@homu r+)&lt;/li&gt;
+&lt;li&gt;之后 Homu 会合并 PR 变更到 &lt;code&gt;auto&lt;/code&gt; 分支&lt;/li&gt;
+&lt;li&gt;buildbot 监听到 &lt;code&gt;auto&lt;/code&gt; 分支的变更后就会运行相应构建成功后通知 Homu&lt;/li&gt;
+&lt;li&gt;Homu 在收到成功的通知后合并 PR 到长期分支&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;4. 已知问题&lt;/h2&gt;
+&lt;p&gt;Homu 在将 &lt;code&gt;auto&lt;/code&gt; 分支合并到长期分支时会采用 &lt;code&gt;fast-forward&lt;/code&gt; 的方式进行合并, 
+所以不会产生新的 commit, buildbot 0.8 对同一提交(sha 相同) 仅触发一次 build.
+所以会导致其他一些比如自动部署的 builder 无法触发.&lt;/p&gt;</summary><category term="Python"></category><category term="github"></category><category term="私有"></category><category term="可持续集成"></category><category term="homu"></category><category term="buildbot"></category></entry><entry><title>Python mock 使用心得</title><link href="https://www.linuxzen.com/python-mock-shi-yong-xin-de.html" rel="alternate"></link><updated>2016-04-03T11:42:00+08:00</updated><author><name>cold</name></author><id>tag:www.linuxzen.com,2016-04-03:python-mock-shi-yong-xin-de.html</id><summary type="html">&lt;p&gt;好久没有更新博客, 趁着清明节小长假和我儿子正在睡觉更新一篇刷刷存在感.
 近来变化很多, 儿子也有了, 工作上也有很多收获. 这篇博客就分享一下关于 &lt;code&gt;mock&lt;/code&gt; 的使用的心得体会.&lt;/p&gt;
 &lt;p&gt;很长一段时间以来写单元测试都类似写执行脚本, 运行一下然后看一下结果. 
 这里面有一部分原因是因为无法规避外部的依赖组件, 比如:&lt;/p&gt;

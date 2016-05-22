@@ -48,6 +48,50 @@
 
 
             <article>
+                <a href="https://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html"><h3 class="article-title">解决git提交敏感信息(回退git版本库到某一个commit)</h3></a>
+<h6 class="subheader" title="2013-06-07T00:00:00">五 07 六月 2013
+</h6>
+
+
+<p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
+<h2>备份本地代码</h2>
+<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
+<h2>回退本地代码的commit</h2>
+<p>备份完数据, 我们就可以先回退本地的版本库</p>
+<div class="highlight"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
+</pre></div>
+
+
+<h2>回退远端版本库</h2>
+<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
+<h3>新建一个分支, 并提交</h3>
+<div class="highlight"><pre>git checkout -b temp
+git push origin temp:temp
+</pre></div>
+
+
+<h3>重建主分支</h3>
+<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
+<div class="highlight"><pre>git push origin --delete ...</pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/git.html">git</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/git.html">git </a>
+    <a href="https://www.linuxzen.com/tag/min-gan-xin-xi.html">敏感信息 </a>
+    <a href="https://www.linuxzen.com/tag/hui-tui.html">回退 </a>
+    <a href="https://www.linuxzen.com/tag/commit.html">commit </a>
+    <a href="https://www.linuxzen.com/tag/ban-ben-ku.html">版本库 </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/pual-geng-xin-zhi-chi-simsimike-yi-jin-xing-hu-dong.html"><h3 class="article-title">Pual 更新支持SimSimi可以进行互动</h3></a>
 <h6 class="subheader" title="2013-05-30T09:50:00">四 30 五月 2013
 </h6>
@@ -361,39 +405,6 @@
 
 
 <p><a href="https://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/shi-yong-webqqxie-yi-qiao-jie-xmpphe-qqqun.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html"><h3 class="article-title">使用Pelican博客静态生成系统</h3></a>
-<h6 class="subheader" title="2013-03-14T15:12:00">四 14 三月 2013
-</h6>
-
-
-<h1>介绍</h1>
-<p>最近流行使用静态生成的博客, 看了很多感觉很棒总想尝试一下, 大名鼎鼎的<code>Jekyll</code>使用ruby,看了很多文档介绍,依旧不能入门使用,也许是用Ruby编写,对它比较迟钝.看到了一款Python编写的静态生成系统<code>Pelican</code>, 试用后除了模板较少外感觉还是不错的,使用<code>Markdown</code>和<code>Rst</code>编写.</p>
-<h1>安装</h1>
-<p>可以试用<code>pip</code>来安装<code>Pelican</code>, 通过<code>pelican-quickstart</code>脚本可以快速构建一个站点,详细不在描述.可以看看它的文档</p>
-<h2>模板</h2>
-<p>模板采用<code>neat</code>,这个模板设计简单(看我的页面就知道有多简单了)我非常喜欢, 但是有几个链接<code>bug</code>,bug不是很难找,很轻松就能找出来, 这里不列出来, 基于这个模板我做了一点更改.</p>
-<h1>使用</h1>
-<p>在执行<code>pelican-quickstart</code>是开启Makefile, 可以通过make很简单的生成html.</p>
-<div class="highlight"><pre>make html   <span class="c"># 生成html</span>
-make clean ...</pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/bo-ke.html">博客 </a>
-    <a href="https://www.linuxzen.com/tag/pelican.html">Pelican </a>
-    <a href="https://www.linuxzen.com/tag/jing-tai.html">静态 </a>
-    <a href="https://www.linuxzen.com/tag/qian-yi.html">迁移 </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/shi-yong-pelicanbo-ke-jing-tai-sheng-cheng-xi-tong.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

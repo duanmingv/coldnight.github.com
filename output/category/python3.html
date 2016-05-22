@@ -48,6 +48,40 @@
 
 
             <article>
+                <a href="https://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html"><h3 class="article-title">使用更加高效的epoll作为pyxmpp2的主循环</h3></a>
+<h6 class="subheader" title="2013-02-05T16:06:00">二 05 二月 2013
+</h6>
+
+
+<h2>引子</h2>
+<p>之前<a href="/python-shi-yong-pyxmpp2bian-xie-gtalkqun.html">clubot</a>使用的pyxmpp2的默认mainloop也就是一个poll的主循环,但是<code>clubot</code>上线后资源占用非常厉害,使用<code>strace</code>跟踪发现<code>clubot</code>在不停的<code>poll</code>,查看<code>pyxmpp2</code>代码发现<code>pyxmpp2</code>的<code>poll</code>在使用超时阻塞时使用<code>最小</code>超时时间,而<code>最小</code>超时时间一直是0,所以会变成一个没有超时的非阻塞<code>poll</code>很浪费资源,不打算更改库代码,所以自己仿照poll的mainloop写了一个更加高效的<code>epoll</code>的mainloop</p>
+<h2>实现</h2>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/06 10 ...</span></pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/epoll.html">epoll </a>
+    <a href="https://www.linuxzen.com/tag/python.html">python </a>
+    <a href="https://www.linuxzen.com/tag/gtalk.html">gtalk </a>
+    <a href="https://www.linuxzen.com/tag/qun.html">群 </a>
+    <a href="https://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="https://www.linuxzen.com/tag/clubot.html">clubot </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/shi-yong-geng-jia-gao-xiao-de-epollzuo-wei-pyxmpp2de-zhu-xun-huan.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/python-zhong-fu-an-zhuang-bao-bao-cuo.html"><h3 class="article-title">Python 重复安装包报错</h3></a>
 <h6 class="subheader" title="2013-01-25T14:55:00">五 25 一月 2013
 </h6>
@@ -409,38 +443,6 @@ prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲�
 
 
 <p><a href="https://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h3 class="article-title">用bottle+mongodb写的blog程序支持mysql啦</h3></a>
-<h6 class="subheader" title="2012-08-14T09:16:00">二 14 八月 2012
-</h6>
-
-
-<p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
-<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
-<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
-<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
-<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
-<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/zhi-chi-mysql.html">支持mysql </a>
-    <a href="https://www.linuxzen.com/tag/web.html">web </a>
-    <a href="https://www.linuxzen.com/tag/python.html">python </a>
-    <a href="https://www.linuxzen.com/tag/mysql.html">MySQL </a>
-    <a href="https://www.linuxzen.com/tag/mongodb.html">mongodb </a>
-    <a href="https://www.linuxzen.com/tag/bottle.html">bottle </a>
-    <a href="https://www.linuxzen.com/tag/blog.html">blog </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

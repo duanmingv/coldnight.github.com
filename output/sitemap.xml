@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.linuxzen.com/index.html</loc>
-<lastmod>2016-04-13T10:39:18-00:00</lastmod>
+<lastmod>2016-05-22T18:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.linuxzen.com/archives.html</loc>
-<lastmod>2016-04-13T10:39:18-00:00</lastmod>
+<lastmod>2016-05-22T18:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.linuxzen.com/tags.html</loc>
-<lastmod>2016-04-13T10:39:18-00:00</lastmod>
+<lastmod>2016-05-22T18:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://www.linuxzen.com/categories.html</loc>
-<lastmod>2016-04-13T10:39:18-00:00</lastmod>
+<lastmod>2016-05-22T18:42:38-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -36,6 +36,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2013-03-14T00:00:00-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.3</priority>
+</url>
+
+<url>
+<loc>https://www.linuxzen.com/python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-fang-an.html</loc>
+<lastmod>2016-05-22T00:00:00-00:00</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
 </url>
 
 <url>
@@ -719,7 +726,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.linuxzen.com/category/python.html</loc>
-<lastmod>2016-04-03T11:42:00+08:06</lastmod>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -762,6 +769,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.linuxzen.com/tag/compsxml.html</loc>
 <lastmod>2012-01-18T11:13:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.linuxzen.com/tag/homu.html</loc>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1019,6 +1033,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://www.linuxzen.com/tag/si-you.html</loc>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://www.linuxzen.com/tag/iptables.html</loc>
 <lastmod>2012-09-29T19:11:00+08:06</lastmod>
 <changefreq>daily</changefreq>
@@ -1062,7 +1083,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.linuxzen.com/tag/python.html</loc>
-<lastmod>2016-04-03T11:42:00+08:06</lastmod>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1229,6 +1250,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>https://www.linuxzen.com/tag/bo-ke.html</loc>
+<lastmod>2013-04-18T09:40:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
 <loc>https://www.linuxzen.com/tag/gtalk.html</loc>
 <lastmod>2013-04-26T15:40:00+08:06</lastmod>
 <changefreq>daily</changefreq>
@@ -1355,8 +1383,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.linuxzen.com/tag/syntastic.html</loc>
-<lastmod>2013-08-14T00:00:00+08:06</lastmod>
+<loc>https://www.linuxzen.com/tag/buildbot.html</loc>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1565,8 +1593,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.linuxzen.com/tag/shu-ji.html</loc>
-<lastmod>2014-05-23T14:29:00+08:06</lastmod>
+<loc>https://www.linuxzen.com/tag/ke-chi-xu-ji-cheng.html</loc>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1588,6 +1616,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.linuxzen.com/tag/jian-cha.html</loc>
 <lastmod>2013-08-14T00:00:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.linuxzen.com/tag/shu-ji.html</loc>
+<lastmod>2014-05-23T14:29:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -1637,6 +1672,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.linuxzen.com/tag/cookie.html</loc>
 <lastmod>2012-06-02T17:51:00+08:06</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.5</priority>
+</url>
+
+<url>
+<loc>https://www.linuxzen.com/tag/bundle.html</loc>
+<lastmod>2012-12-14T08:57:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2594,8 +2636,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.linuxzen.com/tag/bundle.html</loc>
-<lastmod>2012-12-14T08:57:00+08:06</lastmod>
+<loc>https://www.linuxzen.com/tag/syntastic.html</loc>
+<lastmod>2013-08-14T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2692,8 +2734,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>https://www.linuxzen.com/tag/bo-ke.html</loc>
-<lastmod>2013-04-18T09:40:00+08:06</lastmod>
+<loc>https://www.linuxzen.com/tag/github.html</loc>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -2826,7 +2868,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://www.linuxzen.com/author/cold.html</loc>
-<lastmod>2016-04-03T11:42:00+08:06</lastmod>
+<lastmod>2016-05-22T00:00:00+08:06</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>

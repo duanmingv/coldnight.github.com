@@ -48,6 +48,41 @@
 
 
             <article>
+                <a href="https://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html"><h3 class="article-title">使用 Pygments 对 Vimwiki 进行代码高亮</h3></a>
+<h6 class="subheader" title="2013-12-27T00:00:00">五 27 十二月 2013
+</h6>
+
+
+<p>Vimwiki 推荐的代码高亮机制是通过一个 JavaScript 插件来完成的, 那样需要加载很多 js,
+所以不想使用, 比较倾向使用 Pygments 在 Vimwiki 生成 HTML 的时候对代码进行高亮.</p>
+<h1>尝试</h1>
+<h2>使用 custom_wiki2html 选项</h2>
+<p>仔细的看了 Vimwiki 的帮助文档, 发现有一个 custom_wiki2html 
+(<code>:h vimwiki-option-custom_wiki2html</code>) 的选项可以指定自己
+的脚本来处理 wiki2html, 尝试了一下, 发现这个脚本是在生成 HTML 之前调用,
+而且如果对 wiki 文件处理之后无法替换回原来的内容(后来发现这个仅仅是对使用 Markdown
+语法作为 Wiki 语法设定的), 所以放弃了.</p>
+<h2>Fork 仓库, 更改代码</h2>
+<p>后来想想既然原生的没有解决办法, 所以就干脆在 github 上 fork 了仓库 ...</p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/vim.html">Vim</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/vim.html">vim </a>
+    <a href="https://www.linuxzen.com/tag/vimwiki.html">vimwiki </a>
+    <a href="https://www.linuxzen.com/tag/pygments.html">pygments </a>
+    <a href="https://www.linuxzen.com/tag/python.html">python </a>
+    <a href="https://www.linuxzen.com/tag/highlight.html">highlight </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/shi-yong-pygments-dui-vimwiki-jin-xing-dai-ma-gao-liang.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/shi-yong-vimwiki-git-zuo-zhi-shi-guan-li.html"><h3 class="article-title">使用 Vimwiki + git 做知识管理</h3></a>
 <h6 class="subheader" title="2013-12-26T00:00:00">四 26 十二月 2013
 </h6>
@@ -381,50 +416,6 @@ python setup.py install
 
 
 <p><a href="https://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/fa-bu-yi-ge-ji-yu-tornadode-gao-xiao-yi-bu-de-httpke-hu-duan-ku.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html"><h3 class="article-title">解决git提交敏感信息(回退git版本库到某一个commit)</h3></a>
-<h6 class="subheader" title="2013-06-07T00:00:00">五 07 六月 2013
-</h6>
-
-
-<p>git是一个很好的版本库, 现在很多人用它, 并在github上创建项目, 相信大家都有过将敏感信息提交版本的经历, 如何删除? 好像只有删除版本库来解决, 其实我们可以通过回退版本库删除相应的commit来将提交的敏感信息去掉.</p>
-<h2>备份本地代码</h2>
-<p>首先我们将本地代码的更改备份一下, 以防丢失更改</p>
-<h2>回退本地代码的commit</h2>
-<p>备份完数据, 我们就可以先回退本地的版本库</p>
-<div class="highlight"><pre>git reset --hard HEAD~1        <span class="c"># 回退到上一次的提交, 如果是上n次就将1改成对应的数字</span>
-</pre></div>
-
-
-<h2>回退远端版本库</h2>
-<p>接下来如果你直接提交会发现提交不了, 说远端做了更改需要先pull一下, 如果pull咱们就白白做上面的操作, 所以我们可以在别的分支操作</p>
-<h3>新建一个分支, 并提交</h3>
-<div class="highlight"><pre>git checkout -b temp
-git push origin temp:temp
-</pre></div>
-
-
-<h3>重建主分支</h3>
-<p>下面我们可以删除并重建主分支, 如果是<code>github</code>的话需要将<code>Default Branch</code>切换到别的分支(项目主页-&gt;Settings即可看到)</p>
-<div class="highlight"><pre>git push origin --delete ...</pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/git.html">git</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/git.html">git </a>
-    <a href="https://www.linuxzen.com/tag/min-gan-xin-xi.html">敏感信息 </a>
-    <a href="https://www.linuxzen.com/tag/hui-tui.html">回退 </a>
-    <a href="https://www.linuxzen.com/tag/commit.html">commit </a>
-    <a href="https://www.linuxzen.com/tag/ban-ben-ku.html">版本库 </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/jie-jue-gitti-jiao-min-gan-xin-xi-hui-tui-gitban-ben-ku-dao-mou-yi-ge-commit.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

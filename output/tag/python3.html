@@ -48,6 +48,43 @@
 
 
             <article>
+                <a href="https://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html"><h3 class="article-title">vLog使用Tornado框架结合memcached缓存页面</h3></a>
+<h6 class="subheader" title="2013-01-16T16:14:00">三 16 一月 2013
+</h6>
+
+
+<h2>原因</h2>
+<p>Blog是一个更新并不很频繁的一套系统,但是每次刷新页面都要更新数据库反而很浪费资源,添加静态页面生成是一个解决办法,同时缓存是一个更好的主意,可以结合Memcached添加少量的代码进行缓存,而且免去去了每次更新文章都要重新生成静态页面,特别当页面特别多时.</p>
+<h2>实现</h2>
+<p>主要通过页面的uri进行缓存,结合tornado.web.RequestHandler的prepare和on_finish方法函数,
+prepare 主要是请求前执行,on_finish()是请求结束之前执行.在渲染模板时缓存页面内容,然后在请求前检测是否有缓存,如果有直接输出缓存,结束请求,在POST提交之后清空所有缓存,重新生成缓存,从而保证内容实时性.由于登录用户和普通用户的页面不相同,所以不缓存登录用户页面(代码中没有体现,请自行实现).主要python代码(省略了模板渲染的代码):</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding:utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c">#   Author  :   cold</span>
+<span class="c">#   E-mail  :   wh_linux@126.com</span>
+<span class="c">#   Date    :   13/01/14 09:57:31</span>
+<span class="c">#   Desc ...</span></pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/linux.html">Linux </a>
+    <a href="https://www.linuxzen.com/tag/python.html">python </a>
+    <a href="https://www.linuxzen.com/tag/memcached.html">Memcached </a>
+    <a href="https://www.linuxzen.com/tag/pylibmc.html">pylibmc </a>
+    <a href="https://www.linuxzen.com/tag/huan-cun.html">缓存 </a>
+    <a href="https://www.linuxzen.com/tag/vlog.html">vLog </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/vlogshi-yong-tornadokuang-jia-jie-he-memcachedhuan-cun-ye-mian.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/vim-jie-he-pythonbian-xie-de-fan-yi-cha-jian.html"><h3 class="article-title">Vim 结合Python编写的翻译插件</h3></a>
 <h6 class="subheader" title="2013-01-04T17:58:00">五 04 一月 2013
 </h6>
@@ -413,38 +450,6 @@
 
 
 <p><a href="https://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/python-zi-dian-he-lie-biao-xian-jing.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html"><h3 class="article-title">用bottle+mongodb写的blog程序支持mysql啦</h3></a>
-<h6 class="subheader" title="2012-08-14T09:16:00">二 14 八月 2012
-</h6>
-
-
-<p>前面博文提到过,本人用bottle+mongodb实现了以blog程序,</p>
-<p>最近有些空闲时间,就重新用mvc的模式重写了一下,因为mongodb太过耗费内存,对一些小型的vps太过吃力所以加入了mysql的支持,</p>
-<p>虽然较上次有些完善,但是还是有很多不足代码放在了googlecode上,由于最近一直在使用git,索性也就新建了一个git的项目,之前svn的项目也会更新.</p>
-<p>所以大家想浏览代码可以到下面两个地方去,有什么不足和建议还请指教,如果你也想加入进来,可以留言或发email给我:</p>
-<p>git:<a href="http://code.google.com/p/linuxzen/source/browse/water">http://code.google.com/p/linuxzen/source/browse/water</a></p>
-<p>svn:http://code.google.com/p/sharepythoncode/source/browse/water/</p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/zhi-chi-mysql.html">支持mysql </a>
-    <a href="https://www.linuxzen.com/tag/web.html">web </a>
-    <a href="https://www.linuxzen.com/tag/python.html">python </a>
-    <a href="https://www.linuxzen.com/tag/mysql.html">MySQL </a>
-    <a href="https://www.linuxzen.com/tag/mongodb.html">mongodb </a>
-    <a href="https://www.linuxzen.com/tag/bottle.html">bottle </a>
-    <a href="https://www.linuxzen.com/tag/blog.html">blog </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/yong-bottlemongodbxie-de-blogcheng-xu-zhi-chi-mysqlla.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

@@ -48,6 +48,46 @@
 
 
             <article>
+                <a href="https://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html"><h3 class="article-title">用python发带附件的邮件用来定时备份mysql数据库</h3></a>
+<h6 class="subheader" title="2012-04-21T18:26:00">六 21 四月 2012
+</h6>
+
+
+<p>最近迁移了wordpress,系统升级为CentOS 6,很奇怪的一个问题,在原来CentOS 5.8下用的很正常的定时备份数据库并通过邮件发送的脚本不能发送附件,其他都正常,邮件内容也是uuencode生成的文件编码,但是就是不产生附件.而且找不出原因,望有知道的不吝赐教.</p>
+<p>为了解决这一问题,我用Python写了一个mail客户端,可以发送附件,是一个命令行程序.废话不多说.贴代码:</p>
+<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c">#-*- coding: utf8 -*-</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">#=============================================================================</span>
+<span class="sd">#     FileName: mail.py</span>
+<span class="sd">#         Desc: To send email</span>
+<span class="sd">#       Author: cold</span>
+<span class="sd">#        Email: wh_linux@126.com</span>
+<span class="sd">#     HomePage: http://www.linuxzen.com</span>
+<span class="sd">#      Version: 0.0.1</span>
+<span class="sd">#   LastChange: 2012-04-21 16:37 ...</span></pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/fu-jian.html">附件 </a>
+    <a href="https://www.linuxzen.com/tag/you-jian.html">邮件 </a>
+    <a href="https://www.linuxzen.com/tag/ding-shi.html">定时 </a>
+    <a href="https://www.linuxzen.com/tag/bei-fen.html">备份 </a>
+    <a href="https://www.linuxzen.com/tag/python.html">python </a>
+    <a href="https://www.linuxzen.com/tag/pymail.html">pymail </a>
+    <a href="https://www.linuxzen.com/tag/mysql.html">MySQL </a>
+    <a href="https://www.linuxzen.com/tag/mail.html">mail </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/yong-pythonfa-dai-fu-jian-de-you-jian-yong-lai-ding-shi-bei-fen-mysqlshu-ju-ku.html">Read More</a>
+                <hr  class="gradient"/>
+            </article>
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/centosxia-da-jian-python-websheng-chan-huan-jing-nginxwebpyuwsgi.html"><h3 class="article-title">CentOS下搭建python web生产环境(nginx+web.py+uwsgi)</h3></a>
 <h6 class="subheader" title="2012-04-19T17:59:00">四 19 四月 2012
 </h6>
@@ -364,51 +404,6 @@ wget http://nginx ...</pre></div><p class="subheader">Category: <a href="https:/
 
 
 <p><a href="https://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/lnmphuan-jing-da-jian-wan-quan-shou-ce-yi-xi-tong-an-zhuang.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html"><h3 class="article-title">nginx平台搭建nagios监控系统</h3></a>
-<h6 class="subheader" title="2012-02-26T10:48:00">日 26 二月 2012
-</h6>
-
-
-<p>Nagios是一款开源的免费网络监视工具，能有效监控Windows、Linux和Unix的主机状态，交换机路由器等网络设置，打印机等。在系统或服务状态异常时发出邮件或短信报警第一时间通知网站运维人员，在状态恢复后发出正常的邮件或短信通知。</p>
-<p>Nagios 功能:</p>
-<ul>
-<li>监视网络服务 (SMTP, POP3, HTTP, NNTP, PING等)</li>
-<li>监视主机资源 (进程, 磁盘等)</li>
-<li>简单的插件设计可以轻松扩展Nagios的监视功能</li>
-<li>服务等监视的并发处理</li>
-<li>错误通知功能 (通过email, pager, 或其他用户自定义方法)</li>
-<li>可指定自定义的事件处理控制器</li>
-<li>可选的基于浏览器的WEB界面以方便系统管理人员查看网络状态，各种系统问题，以及日志等等</li>
-<li>可以通过手机查看系统监控信息</li>
-</ul>
-<p>本文环境:</p>
-<ul>
-<li>系统:CentOS 5.5 32bit</li>
-<li>ip:192.168.3.3</li>
-<li>nagios core:nagios-3.3.1.tar.gz</li>
-<li>web:nginx(nginx-1 ...</li></ul><p class="subheader">Category: <a href="https://www.linuxzen.com/category/jian-kong.html">监控</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/pei-zhi.html">配置 </a>
-    <a href="https://www.linuxzen.com/tag/jian-kong.html">监控 </a>
-    <a href="https://www.linuxzen.com/tag/rewrite.html">rewrite </a>
-    <a href="https://www.linuxzen.com/tag/nginxren-zheng.html">nginx认证 </a>
-    <a href="https://www.linuxzen.com/tag/nginxzhi-chi-cgi.html">nginx支持cgi </a>
-    <a href="https://www.linuxzen.com/tag/nginx.html">nginx </a>
-    <a href="https://www.linuxzen.com/tag/nagios.html">nagios </a>
-    <a href="https://www.linuxzen.com/tag/linux.html">Linux </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/nginxping-tai-da-jian-nagiosjian-kong-xi-tong.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 

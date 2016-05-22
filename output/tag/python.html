@@ -47,6 +47,173 @@
         
 
             <article>
+                <a href="https://www.linuxzen.com/python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-fang-an.html"><h3 class="article-title">Python github 私有项目可持续集成方案</h3></a>
+<h6 class="subheader" title="2016-05-22T00:00:00">日 22 五月 2016
+</h6>
+
+
+<h2>背景</h2>
+<p>随着公司开发团队的壮大, 团队中每个人的水平参差不齐, 为了保证项目质量我们打算对
+提交的代码进行 review, 但是苦于一直没有好的 review 机制. 前段时间我在逛 
+<a href="https://github.com/rust-lang/rust">Rust</a> 社区是发现了他们有一个 review 机器人 <a href="https://github.com/barosl/homu">Homu</a> 非常不错, 
+研究一下后我将其应用到我们当前 Python 项目中来配合 review, 我感觉非常棒, 
+今天抽空就分享给大家.</p>
+<h2>技术栈</h2>
+<p>本文涉及的项目和技术有:</p>
+<ul>
+<li><a href="https://github.com/barosl/homu">Homu</a></li>
+<li><a href="https://github.com/buildbot/buildbot">buildbot</a></li>
+<li><a href="https://github.com/sebdah/git-pylint-commit-hook">git-pylint-commit-hook</a></li>
+<li><a href="https://www.docker.com">Docker</a></li>
+</ul>
+<h2>0. 隔离 Github 部署 Key</h2>
+<p>Github 可以添加部署 Key 来实现部署, 但是每个项目必须是不同的部署 key. 这就给
+多个私有项目的可持续集成带来一定的困难, 因为 buildbot 是通过轮询来获取 git 分支
+变更的, 并且 buildbot 不支持指定私钥. </p>
+<p>我们前期想到的是通过 <a href="https://www.docker.com">Docker</a> 来分别跑每个项目的 buildbot, 这样部署 key 就
+可以很容易进行隔离. 后面我们找到一种更好的方式来指定部署 Key: 通过 <code>ssh_config</code>
+来指定别名.</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat ~/.ssh/config
+Host github-project-a-alias
+    Hostname github.com
+    IdentityFile <span class="s2">&quot;~/.ssh/project_a_deploy_key&quot;</span>
+
+Host github-project-b-alias
+    Hostname github.com
+    IdentityFile <span class="s2">&quot;~/.ssh/project_b_deploy_key&quot;</span>
+</pre></div>
+
+
+<p>这样就可以将原有的项目地址做如下转换</p>
+<div class="highlight"><pre><span class="gd">- git@github.com:Owner/a</span>
+<span class="gi">+ git@github-project-a-alias:Owner/a</span>
+
+<span class="gd">- git@github.com:Owner/b</span>
+<span class="gi">+ git@github-project-b-alias:Owner/b</span>
+</pre></div>
+
+
+<h2>1. 搭建 homu</h2>
+<p><a href="https://github.com/barosl/homu">Homu</a> 是一个构建在 Github 和 buildbot(或 Travis) 之上的工具, 它通过监听
+PR 里的评论来触发 buildbot 构建, 并监听构建结果, 如果构建成功则自动合并 PR</p>
+<p><a href="https://github.com/barosl/homu">Homu</a> 的搭建可以参见其项目地址有简单的介绍, 非常简单这里就不在赘述.</p>
+<p>Homu 是针对 Rust 开发, 并没有考虑私有项目, 所以其信息都是公开的, 为了减少
+暴漏信息带来的安全性问题, 我们将 Homu 搭建在内网并通过 ssh 端口转发将 Homu 的
+端口发送到一台公网服务器:</p>
+<div class="highlight"><pre>ssh -o <span class="nv">TCPKeepAlive</span><span class="o">=</span>yes -CfNgR 127.0.0.1:54856:127.0.0.1:54856 user@remote.ip.address
+</pre></div>
+
+
+<p>然后通过以下 nginx 配置文件来仅暴漏供 Github webhook 调用的地址:</p>
+<div class="highlight"><pre><span class="nt">upstream</span> <span class="nt">homu</span> <span class="p">{</span>
+    <span class="n">server</span> <span class="m">127</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">1</span><span class="o">:</span><span class="m">54856</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="nt">server</span> <span class="p">{</span>
+    <span class="n">listen</span> <span class="n">public</span><span class="o">.</span><span class="n">ip</span><span class="o">.</span><span class="n">address</span><span class="o">:</span><span class="m">54856</span><span class="p">;</span>
+
+    <span class="n">location</span> <span class="o">/</span><span class="n">github</span> <span class="err">{</span>
+        <span class="n">proxy_set_header</span> <span class="n">Host</span> <span class="err">$</span><span class="n">http_host</span><span class="p">;</span>
+        <span class="n">proxy_redirect</span> <span class="n">off</span><span class="p">;</span>
+        <span class="n">proxy_set_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Real</span><span class="o">-</span><span class="n">IP</span> <span class="err">$</span><span class="n">remote_addr</span><span class="p">;</span>
+        <span class="n">proxy_set_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Scheme</span> <span class="err">$</span><span class="n">scheme</span><span class="p">;</span>
+        <span class="n">proxy_pass</span> <span class="n">http</span><span class="o">://</span><span class="n">homu</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">location</span> <span class="o">~*</span> <span class="o">(?:^|/)</span><span class="err">\</span><span class="o">.</span> <span class="p">{</span>
+        <span class="n">deny</span> <span class="n">all</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>这样就可以隐藏 Homu 暴露的信息, 其他完整功能可以通过内网访问.</p>
+<h2>2. 搭建 buildbot</h2>
+<p>buildbot 其官方文档也比较详细, 可以参考其官方文档进行搭建, 需要注意的是目前 
+<a href="https://github.com/barosl/homu">homu</a> 适配的 buildbot 是 0.8, 目前 buildbot-0.9 正在发布 beta, 和 0.8
+有很多地方都不兼容, 这里着重说一下结合 pylint 做代码检查.</p>
+<h3>代码检查</h3>
+<p>我们希望通过 buildbot 使用 pylint 来做代码检查, 但是考虑到历史遗留问题我们仅
+希望对当前提交的变更做检查. 综合一下几个方面 <a href="https://github.com/sebdah/git-pylint-commit-hook">git-pylint-commit-hook</a> 可
+以完美的满足需求:</p>
+<ul>
+<li><a href="https://github.com/sebdah/git-pylint-commit-hook">git-pylint-commit-hook</a> 配置成 pre-commit 可以对<code>将要被提交(git add 过)的文件</code>进行检查</li>
+<li>通过 <code>git reset HEAD^ --soft</code> 可以将上一次提交的文件变成<code>将要被提交的文件</code></li>
+<li><a href="https://github.com/barosl/homu">Homu</a> 在接受(r+)某一 PR 时会将变更通过 <code>--no-ff</code>(no fast-forward) 的方式合并到 <code>auto</code> 分支</li>
+<li>通过 no fast-forward 合并相当于将所涉及的提交打了一个节点, 在通过 <code>git reset HEAD^ --soft</code> 进行重置时会将所涉及的提交的文件都变成<code>将要被提交的文件</code></li>
+</ul>
+<div class="highlight"><pre><span class="nv">$ </span>git checkout -b feature-test
+<span class="nv">$ </span><span class="c"># edit file a</span>
+<span class="nv">$ </span>git add a <span class="o">&amp;&amp;</span> git commit -m <span class="s1">&#39;Change file a&#39;</span>
+<span class="nv">$ </span><span class="c"># edit file b</span>
+<span class="nv">$ </span>git add b <span class="o">&amp;&amp;</span> git commit -m <span class="s1">&#39;Change file b&#39;</span>
+<span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git merge --no-ff feature-test
+<span class="nv">$ </span>git reset HEAD^ --soft
+<span class="nv">$ </span>git status
+On branch master
+Changes to be committed:
+  <span class="o">(</span>use <span class="s2">&quot;git reset HEAD &lt;file&gt;...&quot;</span> to unstage<span class="o">)</span>
+
+        modified:   a
+        modified:   b
+</pre></div>
+
+
+<p>buildbot 配置文件片段如下:</p>
+<div class="highlight"><pre><span class="n">lint_factory</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">BuildFactory</span><span class="p">()</span>
+<span class="n">lint_factory</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">steps</span><span class="o">.</span><span class="n">Git</span><span class="p">(</span><span class="n">repourl</span><span class="o">=</span><span class="n">repo</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;full&#39;</span><span class="p">,</span> <span class="n">branch</span><span class="o">=</span><span class="s">&#39;auto&#39;</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+<span class="n">lint_factory</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">steps</span><span class="o">.</span><span class="n">ShellCommand</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;pip&quot;</span><span class="p">,</span> <span class="s">&quot;install&quot;</span><span class="p">,</span> <span class="s">&quot;-U&quot;</span><span class="p">,</span> <span class="s">&quot;-r&quot;</span><span class="p">,</span> <span class="s">&quot;requirements.txt&quot;</span><span class="p">]))</span>
+<span class="n">lint_factory</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">steps</span><span class="o">.</span><span class="n">ShellCommand</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;git&quot;</span><span class="p">,</span> <span class="s">&quot;reset&quot;</span><span class="p">,</span> <span class="s">&quot;HEAD^&quot;</span><span class="p">,</span> <span class="s">&quot;--soft&quot;</span><span class="p">]))</span>
+<span class="n">lint_factory</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">steps</span><span class="o">.</span><span class="n">ShellCommand</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;git-pylint-commit-hook&quot;</span><span class="p">,</span> <span class="s">&quot;--limit=8&quot;</span><span class="p">,</span> <span class="s">&quot;--pylintrc=./.pylintrc&quot;</span><span class="p">]))</span>
+
+<span class="n">c</span><span class="p">[</span><span class="s">&#39;builders&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+    <span class="n">util</span><span class="o">.</span><span class="n">BuilderConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;auto-lint&quot;</span><span class="p">,</span>
+      <span class="n">slavenames</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;example-slave&quot;</span><span class="p">],</span>
+      <span class="n">factory</span><span class="o">=</span><span class="n">lint_factory</span><span class="p">))</span>
+</pre></div>
+
+
+<p>可根据自身需求做变更, 比如 <code>--limit=8</code> 来限制最低分数, 低于这个分数将导致构建
+失败.</p>
+<p>buildbot 可自定义性很强, homu 是可以支持多个 builder 的. 所以除了代码检查我们
+还有测试. Homu 在检测这两个 Builder 都构建成功后才会合并当前 PR.</p>
+<h2>3. 工作流</h2>
+<p>实现了如上功能之后我们对工作流进行了调整:</p>
+<ol>
+<li>通过主题分支开发并往长期分支提交 PR</li>
+<li>reviewer 在 <code>LGTM</code> 后提交评论 <code>r+</code> 并 @ Homu 账号(@homu r+)</li>
+<li>之后 Homu 会合并 PR 变更到 <code>auto</code> 分支</li>
+<li>buildbot 监听到 <code>auto</code> 分支的变更后就会运行相应构建成功后通知 Homu</li>
+<li>Homu 在收到成功的通知后合并 PR 到长期分支</li>
+</ol>
+<h2>4. 已知问题</h2>
+<p>Homu 在将 <code>auto</code> 分支合并到长期分支时会采用 <code>fast-forward</code> 的方式进行合并, 
+所以不会产生新的 commit, buildbot 0.8 对同一提交(sha 相同) 仅触发一次 build.
+所以会导致其他一些比如自动部署的 builder 无法触发.</p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
+
+    Tagged: 
+    <a href="https://www.linuxzen.com/tag/python.html">Python </a>
+    <a href="https://www.linuxzen.com/tag/github.html">github </a>
+    <a href="https://www.linuxzen.com/tag/si-you.html">私有 </a>
+    <a href="https://www.linuxzen.com/tag/ke-chi-xu-ji-cheng.html">可持续集成 </a>
+    <a href="https://www.linuxzen.com/tag/homu.html">homu </a>
+    <a href="https://www.linuxzen.com/tag/buildbot.html">buildbot </a>
+</p>
+
+
+
+<p><a href="https://www.linuxzen.com/python-github-si-you-xiang-mu-ke-chi-xu-ji-cheng-fang-an.html#disqus_thread">comments</a></p>            </article>
+
+
+                <hr  class="gradient"/>
+
+
+        
+
+
+            <article>
                 <a href="https://www.linuxzen.com/python-mock-shi-yong-xin-de.html"><h3 class="article-title">Python mock 使用心得</h3></a>
 <h6 class="subheader" title="2016-04-03T11:42:00">日 03 四月 2016
 </h6>
@@ -72,103 +239,7 @@
 使用 <code>mock</code> 就可以对外部依赖组件实现进行模拟并且替换掉, 从而隐藏外部组件的实现,
 使得单元测试将焦点只放在当前的逻辑(当前单元),</p>
 <h2>安装</h2>
-<p><code>mock</code> 在 Python3 中是内置的, 直接 <code>import unittest.mock</code> 即可, 
-但是在 Python2 中是需要额外安装的, 安装完 <code>import mock</code> 即可</p>
-<div class="highlight"><pre>pip install -U mock
-</pre></div>
-
-
-<h2>技巧</h2>
-<p>在本文不详细介绍如何使用, 具体请参见<a href="https://docs.python.org/3/library/unittest.mock.html">官方文档</a>.
-这里分享几个技巧.</p>
-<p>安装官方文档给的示例一开始像下面这么使用 mock</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">):</span>
-        <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
-
-        <span class="c"># real test code</span>
-        <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
-</pre></div>
-
-
-<p>但是当整个测试都依赖这个组件时上面的使用方式就会产生大量的相同的初始化代码, 
-所以定义了一个装饰器向下面这样</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">import</span> <span class="nn">functools</span>
-
-<span class="kn">import</span> <span class="nn">mock</span>
-
-<span class="k">def</span> <span class="nf">_mock_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
-    <span class="nd">@mock.patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">)</span>
-        <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
-        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">wrapper</span>
-
-<span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="nd">@_mock_wrapper</span>
-    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_mock</span><span class="p">):</span>
-        <span class="c"># real test code</span>
-        <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
-</pre></div>
-
-
-<p>上面操作是很方便, 但是有几个缺点:</p>
-<ul>
-<li>代码不够清晰</li>
-<li>如果增加 mock 组件则需要修改每一个被装饰函数接收的参数</li>
-</ul>
-<p>所以在仔细阅读官方文档后发现, <code>mock.patch</code> 返回一个对象, 可以通过 <code>start</code>/<code>stop</code> 方法来应用.
-所以产生了下面的代码.</p>
-<div class="highlight"><pre><span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DemoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DemoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
-        <span class="c"># cleanup</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_patcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c"># real test code</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
-</pre></div>
-
-
-<p>当然如果有多个依赖组件需要 <code>mock</code> 可以将 <code>patcher</code> 存在一个列表里在 <code>tearDown</code> 方法里统一清理.</p>
-<p><strong>不要忘记清理, 因为当前 <code>mock</code> 的组件应当仅在当前测试里生效, 如果忘记了清理可能会影响到其他测试.</strong></p>
-<p>如果当前单元测试仅有部分测试依赖该组件也可以通过上下文管理的方式进行管理, 更加灵活.</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">contextlib</span>
-
-<span class="k">class</span> <span class="nc">DemoTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="nd">@contextlib.contextmanger</span>
-    <span class="k">def</span> <span class="nf">_mock_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">patcher</span> <span class="o">=</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&quot;pkg.mod.dep_mod.func&quot;</span><span class="p">,</span> <span class="n">autospec</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">func_mock</span> <span class="o">=</span> <span class="n">patcher</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-            <span class="n">func_mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">yield</span> <span class="n">func_mock</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="n">patcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">test_demo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mock_context</span><span class="p">()</span> <span class="k">as</span> <span class="n">func_mock</span><span class="p">:</span>
-            <span class="c"># real test code</span>
-            <span class="n">func_mock</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">)</span>
-</pre></div>
-
-
-<h2>写在后面的话</h2>
-<p>测试对一个项目很重要, 特别是对上了规模的项目, 上了 <code>mock</code> 之后我花了很长时间将已有项目的测试整理完毕, 
-使测试有效并且可以全部 <code>passed</code>. 
-有了良好的基础之后接下来就很方便的使用了一些集成工具来限制不规范的代码提交到长期分支, 
-这部分内容将放在下一篇去分享.</p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
+<p><code>mock</code> 在 Python3 中是内置的, 直接 <code>import ...</code></p><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
 
     Tagged: 
     <a href="https://www.linuxzen.com/tag/python.html">Python </a>
@@ -178,11 +249,9 @@
 
 
 
-<p><a href="https://www.linuxzen.com/python-mock-shi-yong-xin-de.html#disqus_thread">comments</a></p>            </article>
-
-
+<p><a href="https://www.linuxzen.com/python-mock-shi-yong-xin-de.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/python-mock-shi-yong-xin-de.html">Read More</a>
                 <hr  class="gradient"/>
-
+            </article>
 
         
 
@@ -492,50 +561,6 @@ Python 现在主流应该还是 Python 2.7, Python 2.7 将会是 Python 2.x 的�
 
 
 <p><a href="https://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/pyqt4-xin-hao-he-cao-xiang-jie.html">Read More</a>
-                <hr  class="gradient"/>
-            </article>
-
-        
-
-
-            <article>
-                <a href="https://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html"><h3 class="article-title">Linux 下 Python 实现按任意键退出</h3></a>
-<h6 class="subheader" title="2013-08-20T09:54:00">二 20 八月 2013
-</h6>
-
-
-<p>初学Python时在总想实现一个按任意键继续/退出的程序(受.bat毒害), 奈何一直写不出来, 最近学习Unix C时发现可以通过<code>termios.h</code>库来实现, 尝试一下发现Python也有这个库, 所以终于写出一个这样的程序. 下面是代码:</p>
-<div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding:utf-8 -*-</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">termios</span>
-
-
-<span class="k">def</span> <span class="nf">press_any_key_exit</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="c"># 获取标准输入的描述符</span>
-    <span class="n">fd</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">fileno</span><span class="p">()</span>
-
-    <span class="c"># 获取标准输入(终端)的设置</span>
-    <span class="n">old_ttyinfo</span> <span class="o">=</span> <span class="n">termios</span><span class="o">.</span><span class="n">tcgetattr</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-
-    <span class="c"># 配置终端</span>
-    <span class="n">new_ttyinfo</span> <span class="o">=</span> <span class="n">old_ttyinfo</span><span class="p">[:]</span>
-
-    <span class="c"># 使用非规范模式(索引3是c_lflag 也就是本地模式)</span>
-    <span class="n">new_ttyinfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="n">termios</span><span class="o">.</span><span class="n">ICANON ...</span></pre></div><p class="subheader">Category: <a href="https://www.linuxzen.com/category/python.html">Python</a>
-
-    Tagged: 
-    <a href="https://www.linuxzen.com/tag/python.html">Python </a>
-    <a href="https://www.linuxzen.com/tag/linux.html">Linux </a>
-    <a href="https://www.linuxzen.com/tag/ren-yi-jian.html">任意键 </a>
-    <a href="https://www.linuxzen.com/tag/tui-chu.html">退出 </a>
-    <a href="https://www.linuxzen.com/tag/an.html">按 </a>
-</p>
-
-
-
-<p><a href="https://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html#disqus_thread">comments</a></p>                <a class="button radius secondary small right" href="https://www.linuxzen.com/linux-xia-python-shi-xian-an-ren-yi-jian-tui-chu.html">Read More</a>
                 <hr  class="gradient"/>
             </article>
 
