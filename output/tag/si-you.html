@@ -132,7 +132,8 @@ PR 里的评论来触发 buildbot 构建, 并监听构建结果, 如果构建成
 <h2>2. 搭建 buildbot</h2>
 <p>buildbot 其官方文档也比较详细, 可以参考其官方文档进行搭建, 需要注意的是目前 
 <a href="https://github.com/barosl/homu">homu</a> 适配的 buildbot 是 0.8, 目前 buildbot-0.9 正在发布 beta, 和 0.8
-有很多地方都不兼容, 这里着重说一下结合 pylint 做代码检查.</p>
+有很多地方都不兼容.</p>
+<p>这里着重说一下结合 pylint 做代码检查.</p>
 <h3>代码检查</h3>
 <p>我们希望通过 buildbot 使用 pylint 来做代码检查, 但是考虑到历史遗留问题我们仅
 希望对当前提交的变更做检查. 综合一下几个方面 <a href="https://github.com/sebdah/git-pylint-commit-hook">git-pylint-commit-hook</a> 可
