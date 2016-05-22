@@ -154,7 +154,7 @@ buildbot 可自定义性很强, homu 是可以支持多个 builder 的. 所以�
 1. 通过主题分支开发并往长期分支提交 PR
 2. reviewer 在 `LGTM` 后提交评论 `r+` 并 @ Homu 账号(@homu r+)
 3. 之后 Homu 会合并 PR 变更到 `auto` 分支
-4. buildbot 监听到 `auto` 分支的变更后就会运行相应构建成功后通知 Homu
+4. buildbot 监听到 `auto` 分支的变更后就会运行相应构建并在成功后通知 Homu
 5. Homu 在收到成功的通知后合并 PR 到长期分支
 
 ## 4. 已知问题
